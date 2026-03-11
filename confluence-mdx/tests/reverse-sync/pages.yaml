@@ -99,7 +99,7 @@
   description: '**예시:**  (이중 공백) 형태가 라운드트립 후 **예시:** (단일 공백)으로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 'Bold 뒤 이중 공백 소실 (예시:  → 예시:)'
   mdx_path: administrator-manual/general/company-management/general.mdx
@@ -183,7 +183,7 @@
   description: '**Request Header (JSON)**  : 형태가 **Request Header (JSON)** : 로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 (Request Header (JSON)  :)
   mdx_path: administrator-manual/general/company-management/channels.mdx
@@ -380,7 +380,7 @@
   description: '**Enable Attribute Synchronization :**  (이중 공백) 및 **Dry Run :**  형태가 단일 공백으로 변환됨. 2개 항목 영향.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 'Bold 뒤 이중 공백 소실 (Enable Attribute Synchronization :  , Dry Run :  )'
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-ldap.mdx
@@ -743,7 +743,7 @@
   description: '*  `+Add` 버튼 형태에서 목록 마커 뒤 이중 공백이 단일 공백으로 변환됨. 또한 **Access Token Timeout (Minutes)**  : 형태의 이중 공백도 소실됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 목록 항목 앞 이중 공백 소실 (*  `+Add` → * `+Add`)
   mdx_path: administrator-manual/general/system/integrations/oauth-client-application.mdx
@@ -775,7 +775,7 @@
     동일 패턴)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 'Bold 뒤 이중 공백 소실 (Enable Attribute Synchronization :  )'
   mdx_path: administrator-manual/general/system/integrations/identity-providers.mdx
@@ -1113,7 +1113,7 @@
   description: '팝업이 나타나면  *DELETE*  문구 형태에서 이탤릭 앞뒤 이중 공백이 단일 공백으로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Italic 앞뒤 공백 소실 ( *DELETE* → *DELETE*)
   mdx_path: administrator-manual/kubernetes/connection-management/cloud-providers.mdx
@@ -1201,7 +1201,7 @@
   description: '**(Title)**  : 형태가 **(Title)** : 로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 ((Title)  :)
   mdx_path: administrator-manual/kubernetes/k8s-access-control/policies.mdx
