@@ -136,11 +136,11 @@ def _detect_language(descriptor: str) -> str:
 
 
 def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str,
-                     language: str = 'ko') -> str:
+                     language: str = 'ko', page_dir: str = None) -> str:
     """patched XHTML 파일을 forward converter로 MDX로 변환한다.
 
-    입력 파일이 var/<page_id>/ 에 직접 있으므로 메타데이터를 자동 발견한다.
     모든 경로를 절대 경로로 변환하여 cwd에 의존하지 않도록 한다.
+    page_dir이 주어지면 converter에 --page-dir로 전달하여 page.v1.yaml을 읽는다.
     """
     bin_dir = Path(__file__).parent
     converter = bin_dir / 'converter' / 'cli.py'
@@ -149,15 +149,17 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
     abs_input = Path(patched_xhtml_path).resolve()
     abs_output = Path(output_mdx_path).resolve()
     attachment_dir = _resolve_attachment_dir(page_id)
-    result = subprocess.run(
-        [sys.executable, str(converter), '--log-level', 'warning',
-         str(abs_input), str(abs_output),
-         '--public-dir', str(var_dir.parent),
-         '--attachment-dir', attachment_dir,
-         '--skip-image-copy',
-         '--language', language],
-        capture_output=True, text=True,
-    )
+
+    cmd = [sys.executable, str(converter), '--log-level', 'warning',
+           str(abs_input), str(abs_output),
+           '--public-dir', str(var_dir.parent),
+           '--attachment-dir', attachment_dir,
+           '--skip-image-copy',
+           '--language', language]
+    if page_dir:
+        cmd += ['--page-dir', str(Path(page_dir).resolve())]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
         raise RuntimeError(f"Forward converter failed: {result.stderr}")
     return abs_output.read_text()
@@ -241,6 +243,7 @@ def run_verify(
     xhtml_path: str = None,
     lenient: bool = False,
     language: str = None,
+    page_dir: str = None,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
 
@@ -338,6 +341,7 @@ def run_verify(
         str(var_dir / 'verify.mdx'),
         page_id,
         language=lang,
+        page_dir=page_dir,
     )
     verify_mdx = (var_dir / 'verify.mdx').read_text()
 
@@ -614,7 +618,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
                         help='브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 처리')
     parser.add_argument('--original-mdx',
                         help='원본 MDX (ref:path 또는 파일 경로, 기본: main:<improved 경로>)')
-    parser.add_argument('--xhtml', help='원본 XHTML 경로 (기본: var/<page-id>/page.xhtml)')
+    parser.add_argument('--page-dir',
+                        help='page.xhtml / page.v1.yaml 등 페이지 데이터 디렉토리 (var/<page-id>/를 대체)')
     parser.add_argument('--page-id',
                         help='page ID를 직접 지정 (기본: improved_mdx 경로에서 자동 유도)')
     parser.add_argument('--limit', type=int, default=0,
@@ -637,12 +642,18 @@ def _do_verify(args) -> dict:
         page_id = args.page_id
     else:
         page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
+
+    # --page-dir: var/<page_id>/ 를 대체하는 디렉토리 (page.xhtml, page.v1.yaml 제공)
+    page_dir = getattr(args, 'page_dir', None)
+    xhtml_path = str(Path(page_dir) / 'page.xhtml') if page_dir else None
+
     return run_verify(
         page_id=page_id,
         original_src=original_src,
         improved_src=improved_src,
-        xhtml_path=args.xhtml,
+        xhtml_path=xhtml_path,
         lenient=getattr(args, 'lenient', False),
+        page_dir=page_dir,
     )
 
 
@@ -668,7 +679,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
         try:
             args = argparse.Namespace(
                 improved_mdx=f"{branch}:{ko_path}",
-                original_mdx=None, xhtml=None,
+                original_mdx=None,
                 lenient=lenient,
             )
             result = _do_verify(args)
@@ -776,8 +787,8 @@ def main():
             if args.improved_mdx and getattr(args, 'branch', None):
                 print('Error: <mdx>와 --branch는 동시에 사용할 수 없습니다.', file=sys.stderr)
                 sys.exit(1)
-            if getattr(args, 'branch', None) and (args.original_mdx or args.xhtml):
-                print('Error: --branch와 --original-mdx/--xhtml는 동시에 사용할 수 없습니다.', file=sys.stderr)
+            if getattr(args, 'branch', None) and args.original_mdx:
+                print('Error: --branch와 --original-mdx는 동시에 사용할 수 없습니다.', file=sys.stderr)
                 sys.exit(1)
 
             use_json = getattr(args, 'json', False)

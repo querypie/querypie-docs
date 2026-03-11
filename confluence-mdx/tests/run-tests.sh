@@ -204,7 +204,7 @@ run_reverse_sync_test() {
     run_cmd bin/reverse_sync_cli.py verify \
         --page-id "${test_id}" \
         --original-mdx "tests/${test_path}/original.mdx" \
-        --xhtml "tests/${test_path}/page.xhtml" \
+        --page-dir "tests/${test_path}" \
         "tests/${test_path}/improved.mdx"
     popd > /dev/null
 
