@@ -73,6 +73,13 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
+            if 'ol_start' in patch and isinstance(element, Tag) and element.name == 'ol':
+                new_start = patch['ol_start']
+                if new_start == 1:
+                    if 'start' in element.attrs:
+                        del element['start']
+                else:
+                    element['start'] = str(new_start)
         else:
             old_text = patch['old_plain_text']
             new_text = patch['new_plain_text']
@@ -83,6 +90,13 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
             _apply_text_changes(element, old_text, new_text)
+            if 'ol_start' in patch and isinstance(element, Tag) and element.name == 'ol':
+                new_start = patch['ol_start']
+                if new_start == 1:
+                    if 'start' in element.attrs:
+                        del element['start']
+                else:
+                    element['start'] = str(new_start)
 
     result = str(soup)
     result = _restore_cdata(result)
