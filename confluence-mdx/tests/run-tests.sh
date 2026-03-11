@@ -193,6 +193,57 @@ has_skeleton_input() {
     [[ -f "${TEST_DIR}/${test_id}/output.mdx" ]] && [[ -f "${TEST_DIR}/${test_id}/expected.skel.mdx" ]]
 }
 
+# pages.yaml의 expected_status와 실제 verify 결과를 비교한다.
+# pages.yaml이 없거나 해당 page_id에 expected_status가 없으면 검증을 생략한다.
+# Args:
+#   $1: test_id
+#   $2: test_path (result.yaml 위치)
+verify_expected_status() {
+    local test_id="$1"
+    local test_path="$2"
+    local pages_yaml="${TEST_DIR}/pages.yaml"
+
+    [[ -f "${pages_yaml}" ]] || return 0
+
+    local actual_status expected_status
+    actual_status=$(python3 -c "
+import yaml
+result = yaml.safe_load(open('${test_path}/output.reverse-sync.result.yaml'))
+print(result.get('status', ''))
+")
+    expected_status=$(python3 -c "
+import sys, yaml
+pages = yaml.safe_load(open('${pages_yaml}'))
+for p in pages:
+    if str(p.get('page_id', '')) == '${test_id}':
+        es = p.get('expected_status')
+        if es is None:
+            print('__no_expected_status__')
+        else:
+            print(es)
+        sys.exit(0)
+print('__not_found__')
+")
+
+    # expected_status가 설정되지 않은 경우(catalog-only 항목 등) 검증 생략
+    if [[ "${expected_status}" == "__not_found__" || "${expected_status}" == "__no_expected_status__" ]]; then
+        return 0
+    fi
+
+    # actual_status: pass/no_changes → pass; 그 외 → fail
+    local actual_group
+    if [[ "${actual_status}" == "pass" || "${actual_status}" == "no_changes" ]]; then
+        actual_group="pass"
+    else
+        actual_group="${actual_status}"
+    fi
+
+    if [[ "${actual_group}" != "${expected_status}" ]]; then
+        echo "  Error: expected_status=${expected_status} 이지만 실제 status=${actual_status}"
+        return 1
+    fi
+}
+
 # Run reverse-sync test for a single test case
 run_reverse_sync_test() {
     local test_id="$1"
@@ -201,12 +252,19 @@ run_reverse_sync_test() {
     # verify 실행 (cwd를 confluence-mdx root로 이동 — run_verify()가 var/<page_id>/에 중간 파일을 쓰므로)
     mkdir -p "../var/${test_id}"
     pushd .. > /dev/null
+    local verify_exit=0
     run_cmd bin/reverse_sync_cli.py verify \
         --page-id "${test_id}" \
         --original-mdx "tests/${test_path}/original.mdx" \
         --page-dir "tests/${test_path}" \
-        "tests/${test_path}/improved.mdx"
+        "tests/${test_path}/improved.mdx" || verify_exit=$?
     popd > /dev/null
+
+    # 비정상 종료 시 즉시 실패
+    if [[ ${verify_exit} -ne 0 ]]; then
+        echo "  Error: verify 비정상 종료 (exit code ${verify_exit})"
+        return 1
+    fi
 
     # var/에 생성된 중간 파일을 output.*으로 복사
     local var_dir="../var/${test_id}"
@@ -252,6 +310,9 @@ run_reverse_sync_test() {
         diff -u <(grep -v 'created_at\|source_xhtml' "${test_path}/expected.reverse-sync.mapping.patched.yaml") \
                 <(grep -v 'created_at\|source_xhtml' "${test_path}/output.reverse-sync.mapping.patched.yaml")
     fi
+
+    # pages.yaml expected_status 검증 (pages.yaml이 있는 경우에만)
+    verify_expected_status "${test_id}" "${test_path}"
 }
 
 has_reverse_sync_input() {
