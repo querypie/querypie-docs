@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import re
 
 from .link_resolver import LinkResolver
@@ -63,7 +64,7 @@ def convert_inline(text: str, link_resolver: LinkResolver | None = None) -> str:
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
-        return f"<code>{placeholders[idx]}</code>"
+        return f"<code>{html.escape(placeholders[idx])}</code>"
 
     converted = re.sub(r"\x00CODE(\d+)\x00", _restore_code, converted)
     return converted
@@ -91,7 +92,7 @@ def convert_heading_inline(
 
     def _restore_code(match: re.Match[str]) -> str:
         idx = int(match.group(1))
-        return f"<code>{placeholders[idx]}</code>"
+        return f"<code>{html.escape(placeholders[idx])}</code>"
 
     converted = re.sub(r"\x00CODE(\d+)\x00", _restore_code, converted)
     return converted

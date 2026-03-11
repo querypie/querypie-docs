@@ -3,6 +3,7 @@
 MDX 블록의 content를 파싱하여 대상 XHTML 요소의 innerHTML로
 직접 교체할 수 있는 HTML 문자열을 생성한다.
 """
+import html
 import re
 from typing import List
 
@@ -119,7 +120,7 @@ def _convert_html_block_inner(text: str) -> str:
 
 def _convert_code_spans(text: str) -> str:
     """code span만 변환 (`text` → <code>text</code>)."""
-    return re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
+    return re.sub(r'`([^`]+)`', lambda m: f'<code>{html.escape(m.group(1))}</code>', text)
 
 
 def _convert_links(text: str) -> str:
