@@ -1,4 +1,5 @@
 import pytest
+from bs4 import BeautifulSoup
 from reverse_sync.xhtml_patcher import patch_xhtml
 
 
@@ -440,3 +441,51 @@ def test_list_patch_with_emoticon_uses_mapping_plain_text():
     result = patch_xhtml(xhtml, patches)
     assert '검색할 수 있습니다.' in result, f'리스트 텍스트 변경이 적용되지 않음: {result}'
     assert '검색이 가능합니다.' not in result, f'기존 문구가 남아 있음: {result}'
+
+
+class TestOlStartPatch:
+    """<ol start="N"> 속성 변경 패치 테스트."""
+
+    def test_set_start_attribute_via_inner_xhtml(self):
+        """new_inner_xhtml 경로에서 ol_start로 start 속성을 설정한다."""
+        xhtml = '<ol><li><p>first</p></li><li><p>second</p></li></ol>'
+        patches = [{
+            'xhtml_xpath': 'ol[1]',
+            'old_plain_text': 'firstsecond',
+            'new_inner_xhtml': '<li><p>updated first</p></li><li><p>second</p></li>',
+            'ol_start': 3,
+        }]
+        result = patch_xhtml(xhtml, patches)
+        soup = BeautifulSoup(result, 'html.parser')
+        ol = soup.find('ol')
+        assert ol['start'] == '3'
+        assert 'updated first' in result
+
+    def test_remove_start_attribute_when_ol_start_is_one(self):
+        """ol_start=1이면 기존 start 속성을 제거한다."""
+        xhtml = '<ol start="3"><li><p>first</p></li></ol>'
+        patches = [{
+            'xhtml_xpath': 'ol[1]',
+            'old_plain_text': 'first',
+            'new_inner_xhtml': '<li><p>first item</p></li>',
+            'ol_start': 1,
+        }]
+        result = patch_xhtml(xhtml, patches)
+        soup = BeautifulSoup(result, 'html.parser')
+        ol = soup.find('ol')
+        assert ol.get('start') is None
+
+    def test_set_start_attribute_via_text_transfer(self):
+        """텍스트 전이 경로에서도 ol_start가 start 속성으로 적용된다."""
+        xhtml = '<ol><li>first item</li></ol>'
+        patches = [{
+            'xhtml_xpath': 'ol[1]',
+            'old_plain_text': 'first item',
+            'new_plain_text': 'updated item',
+            'ol_start': 5,
+        }]
+        result = patch_xhtml(xhtml, patches)
+        soup = BeautifulSoup(result, 'html.parser')
+        ol = soup.find('ol')
+        assert ol['start'] == '5'
+        assert 'updated' in result

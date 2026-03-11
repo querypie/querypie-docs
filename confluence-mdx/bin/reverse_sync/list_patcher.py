@@ -98,6 +98,15 @@ def split_list_items(content: str) -> List[str]:
     return items
 
 
+def _get_ordered_list_start(content: str) -> Optional[int]:
+    """MDX 리스트 콘텐츠에서 첫 번째 순서 번호를 반환한다."""
+    for line in content.split('\n'):
+        m = re.match(r'^\s*(\d+)\.\s+', line)
+        if m:
+            return int(m.group(1))
+    return None
+
+
 def _regenerate_list_from_parent(
     change: BlockChange,
     parent: Optional[BlockMapping],
@@ -125,11 +134,16 @@ def _regenerate_list_from_parent(
             change.new_block.content, change.new_block.type)
         xhtml_text = transfer_text_changes(
             old_plain, new_plain, parent.xhtml_plain_text)
-        return [{
+        fallback_patch: Dict[str, object] = {
             'xhtml_xpath': parent.xhtml_xpath,
             'old_plain_text': parent.xhtml_plain_text,
             'new_plain_text': xhtml_text,
-        }]
+        }
+        old_start = _get_ordered_list_start(change.old_block.content)
+        new_start = _get_ordered_list_start(change.new_block.content)
+        if old_start is not None and new_start is not None and old_start != new_start:
+            fallback_patch['ol_start'] = new_start
+        return [fallback_patch]
 
     new_inner = mdx_block_to_inner_xhtml(
         change.new_block.content, change.new_block.type)
@@ -139,11 +153,16 @@ def _regenerate_list_from_parent(
         if block_lost:
             new_inner = apply_lost_info(new_inner, block_lost)
 
-    return [{
+    patch: Dict[str, object] = {
         'xhtml_xpath': parent.xhtml_xpath,
         'old_plain_text': parent.xhtml_plain_text,
         'new_inner_xhtml': new_inner,
-    }]
+    }
+    old_start = _get_ordered_list_start(change.old_block.content)
+    new_start = _get_ordered_list_start(change.new_block.content)
+    if old_start is not None and new_start is not None and old_start != new_start:
+        patch['ol_start'] = new_start
+    return [patch]
 
 
 def build_list_item_patches(
