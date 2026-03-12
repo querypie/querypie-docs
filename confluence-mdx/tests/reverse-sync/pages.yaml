@@ -156,7 +156,7 @@
   description: '용어 교정이 XHTML 원본 기준으로 되돌아감. 예: 출력됩니다 → 표시됩니다 (교정) → 출력됩니다 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 용어 변경 (출력됩니다→표시됩니다)
   mdx_path: administrator-manual/general/company-management/allowed-zones.mdx
@@ -212,7 +212,7 @@
   description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이 삭제되고 20줄로 축소됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 14
   label: 테이블 전체 소실 (알림 유형 표)
   mdx_path: administrator-manual/general/company-management/alerts.mdx
@@ -433,7 +433,7 @@
   description: '띄어쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: 붙여넣기합니다 → 붙여 넣습니다 (교정) → 붙여넣기합니다 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 띄어쓰기 (붙여넣기합니다→붙여 넣습니다)
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-aws-sso.mdx
@@ -464,7 +464,7 @@
   description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는... → [li]\n2단계 페이지에서는...
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 17
   label: 리스트 항목에 [li] 태그 노출
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-google-saml.mdx
@@ -575,7 +575,7 @@
   description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  : 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 (Audience URI  :, Attribute Statements  :)
   mdx_path: administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
@@ -652,7 +652,7 @@
   description: '<Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 7
   label: Callout 블록 전체 삭제
   mdx_path: administrator-manual/general/system/integrations/integrating-with-syslog.mdx
@@ -682,7 +682,7 @@
   - Integrating with Email
   description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test 버튼** : ...<br/>\\n(공백라인)\\n    <figure>\
     \ →\n    11. ...<br/>\\n    12.\\n      <figure>\n"
-  expected_status: fail
+  expected_status: pass
   failure_type: 17
   label: 리스트 번호 오류 및 <br/> 뒤 항목 누락
   mdx_path: administrator-manual/general/system/integrations/integrating-with-email.mdx
@@ -1003,7 +1003,7 @@
     원래 교정: Callout 파서 에러 본문 삽입은 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 앞뒤 이중 공백 소실 (**Rule Name**  :, **Approval Steps**  등)
   mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
@@ -1031,7 +1031,7 @@
   description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — Bold 병합 (Client Name)
   mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
@@ -1255,7 +1255,7 @@
     삽입됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 15
   label: 테이블 셀 내 빈 줄 추가 (Kubernetes policy YAML 스키마 표)
   mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
@@ -1401,7 +1401,7 @@
   description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 조사 띄어쓰기 (MySQL 을→MySQL을)
   mdx_path: installation/prerequisites/configuring-rootless-mode-with-podman.mdx
@@ -1466,7 +1466,7 @@
   description: '어휘·표현 교정이 XHTML 원본 기준으로 되돌아감. 예: 갈음하여 → 대체하여, 주의하여 주세요 → 주의해 주세요
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 어휘·표현 변경 (갈음하여→대체하여, 주의하여→주의해)
   mdx_path: installation/post-installation-setup.mdx

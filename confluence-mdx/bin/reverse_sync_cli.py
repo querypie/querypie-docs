@@ -236,6 +236,26 @@ def _compile_result(
     return result
 
 
+def _validate_improved_mdx(content: str, descriptor: str) -> None:
+    """improved MDX 입력값을 검증한다. 문제가 있으면 ValueError를 raise한다."""
+    trailing_ws_lines = [
+        (i + 1, line)
+        for i, line in enumerate(content.splitlines())
+        if line != line.rstrip()
+    ]
+    if trailing_ws_lines:
+        locations = '\n'.join(
+            f'  line {lineno}: {repr(line)}'
+            for lineno, line in trailing_ws_lines
+        )
+        raise ValueError(
+            f"Trailing whitespace found in improved MDX ({descriptor}).\n"
+            f"This is an input error, not a reverse-sync bug. "
+            f"Please remove trailing whitespace before running reverse-sync.\n"
+            f"Locations:\n{locations}"
+        )
+
+
 def run_verify(
     page_id: str,
     original_src: MdxSource,
@@ -256,6 +276,9 @@ def run_verify(
 
     original_mdx = original_src.content
     improved_mdx = improved_src.content
+
+    _validate_improved_mdx(improved_mdx, improved_src.descriptor)
+
     if not xhtml_path:
         xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
     xhtml = Path(xhtml_path).read_text()

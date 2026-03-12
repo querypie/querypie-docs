@@ -345,7 +345,7 @@ run_reverse_sync_verify_test() {
             bin/reverse_sync_cli.py verify
             --page-id "${test_id}"
             --original-mdx "tests/${test_path}/original.mdx"
-            --xhtml "tests/${test_path}/page.xhtml"
+            --page-dir "tests/${test_path}"
             "tests/${test_path}/improved.mdx"
         )
         # 실행 명령을 파일에 저장
@@ -356,20 +356,22 @@ run_reverse_sync_verify_test() {
 
         # var/에 생성된 중간 결과물을 output.* 으로 복사
         local var_dir="../var/${test_id}"
-        cp "${var_dir}/reverse-sync.result.yaml"          "${test_path}/output.reverse-sync.result.yaml"
+        cp "${var_dir}/reverse-sync.result.yaml"          "${test_path}/output.reverse-sync.result.yaml"         2>/dev/null || true
         cp "${var_dir}/reverse-sync.diff.yaml"             "${test_path}/output.reverse-sync.diff.yaml"             2>/dev/null || true
         cp "${var_dir}/reverse-sync.patched.xhtml"         "${test_path}/output.reverse-sync.patched.xhtml"         2>/dev/null || true
         cp "${var_dir}/reverse-sync.mapping.original.yaml" "${test_path}/output.reverse-sync.mapping.original.yaml" 2>/dev/null || true
         cp "${var_dir}/reverse-sync.mapping.patched.yaml"  "${test_path}/output.reverse-sync.mapping.patched.yaml"  2>/dev/null || true
     fi
 
-    # result.yaml에서 상태 확인
-    local status
-    status=$(python3 -c "
+    # result.yaml에서 상태 확인 (없으면 error — CLI가 조기 종료한 경우)
+    local status="error"
+    if [[ -f "${result_file}" ]]; then
+        status=$(python3 -c "
 import yaml, sys
 r = yaml.safe_load(open(sys.argv[1]))
 print(r.get('status', 'error'))
 " "${result_file}")
+    fi
 
     # 저장된 CLI 출력 표시
     if [[ -f "${output_log}" ]]; then
