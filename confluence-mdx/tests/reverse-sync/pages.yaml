@@ -72,7 +72,7 @@
   description: '링크 요소 뒤에 빈 <strong></strong>가 위치하여 **** 가 삽입됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 4
   label: 빈 Bold 태그 삽입 (링크 뒤)
   mdx_path: administrator-manual/general/company-management.mdx
@@ -156,7 +156,7 @@
   description: '용어 교정이 XHTML 원본 기준으로 되돌아감. 예: 출력됩니다 → 표시됩니다 (교정) → 출력됩니다 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 용어 변경 (출력됩니다→표시됩니다)
   mdx_path: administrator-manual/general/company-management/allowed-zones.mdx
@@ -332,7 +332,7 @@
     원래 교정: 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)는 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: trailing whitespace 소실 (improved.mdx 줄 끝 trailing space가 verify.mdx에서 제거됨)
   mdx_path: administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
@@ -433,7 +433,7 @@
   description: '띄어쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: 붙여넣기합니다 → 붙여 넣습니다 (교정) → 붙여넣기합니다 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 띄어쓰기 (붙여넣기합니다→붙여 넣습니다)
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-aws-sso.mdx
@@ -544,7 +544,7 @@
   description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 10
   label: Unsupported XHTML Node 중복 (provisioning)
   mdx_path: administrator-manual/general/user-management/provisioning/activating-provisioning.mdx
@@ -604,7 +604,7 @@
   description: '**Allow Assignee selection (All Users)**  :, **참조자 지정 방식:** , **신규 옵션 활성화 시:** 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 (approval-rules, 4개 항목)
   mdx_path: administrator-manual/general/workflow-management/approval-rules.mdx
@@ -652,7 +652,7 @@
   description: '<Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 7
   label: Callout 블록 전체 삭제
   mdx_path: administrator-manual/general/system/integrations/integrating-with-syslog.mdx
@@ -952,7 +952,7 @@
     원래 교정: 띄어쓰기 (활성화 되어→활성화되어)는 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: trailing whitespace 소실 + Bold 앞뒤 이중 공백 소실 (**SSL / SSH Setting**)
   mdx_path: administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
@@ -1003,7 +1003,7 @@
     원래 교정: Callout 파서 에러 본문 삽입은 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 앞뒤 이중 공백 소실 (**Rule Name**  :, **Approval Steps**  등)
   mdx_path: administrator-manual/databases/ledger-management/ledger-approval-rules.mdx
@@ -1061,7 +1061,7 @@
   description: '닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐. 예: `Verify Deletion Key` 버튼 → `Verify Deletion Key 버튼을 클릭합니다.`
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 12
   label: 백틱 코드 스팬 포맷 깨짐
   mdx_path: administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
@@ -1336,7 +1336,7 @@
     또한 줄 끝 trailing whitespace 제거.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 'Bold 앞뒤 이중 공백 소실 (**Name**  : → **Name** :) + trailing whitespace'
   mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
@@ -1443,7 +1443,7 @@
     원래 교정: 경어체 통일 (참고하십시오→참조하세요)은 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 코드 블록 내 trailing whitespace 소실 ($ → $[trailing space 제거])
   mdx_path: installation/installation/installation-guide-setupv2sh.mdx
