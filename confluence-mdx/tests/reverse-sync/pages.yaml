@@ -72,7 +72,7 @@
   description: '링크 요소 뒤에 빈 <strong></strong>가 위치하여 **** 가 삽입됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 4
   label: 빈 Bold 태그 삽입 (링크 뒤)
   mdx_path: administrator-manual/general/company-management.mdx
@@ -212,7 +212,7 @@
   description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이 삭제되고 20줄로 축소됨.
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 14
   label: 테이블 전체 소실 (알림 유형 표)
   mdx_path: administrator-manual/general/company-management/alerts.mdx
@@ -332,7 +332,7 @@
     원래 교정: 조사 누락 (삭제 버튼 비활성화→삭제 버튼이 비활성화)는 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: trailing whitespace 소실 (improved.mdx 줄 끝 trailing space가 verify.mdx에서 제거됨)
   mdx_path: administrator-manual/general/user-management/users/password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account.mdx
@@ -464,7 +464,7 @@
   description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는... → [li]\n2단계 페이지에서는...
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 17
   label: 리스트 항목에 [li] 태그 노출
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-google-saml.mdx
@@ -544,7 +544,7 @@
   description: '(Unsupported xhtml node: ...) 플레이스홀더가 라운드트립 후 중복 출력됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 10
   label: Unsupported XHTML Node 중복 (provisioning)
   mdx_path: administrator-manual/general/user-management/provisioning/activating-provisioning.mdx
@@ -575,7 +575,7 @@
   description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  : 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 (Audience URI  :, Attribute Statements  :)
   mdx_path: administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
@@ -604,7 +604,7 @@
   description: '**Allow Assignee selection (All Users)**  :, **참조자 지정 방식:** , **신규 옵션 활성화 시:** 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 뒤 이중 공백 소실 (approval-rules, 4개 항목)
   mdx_path: administrator-manual/general/workflow-management/approval-rules.mdx
@@ -682,7 +682,7 @@
   - Integrating with Email
   description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test 버튼** : ...<br/>\\n(공백라인)\\n    <figure>\
     \ →\n    11. ...<br/>\\n    12.\\n      <figure>\n"
-  expected_status: pass
+  expected_status: fail
   failure_type: 17
   label: 리스트 번호 오류 및 <br/> 뒤 항목 누락
   mdx_path: administrator-manual/general/system/integrations/integrating-with-email.mdx
@@ -952,7 +952,7 @@
     원래 교정: 띄어쓰기 (활성화 되어→활성화되어)는 적용되나 공백 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: trailing whitespace 소실 + Bold 앞뒤 이중 공백 소실 (**SSL / SSH Setting**)
   mdx_path: administrator-manual/databases/connection-management/db-connections/documentdb-specific-guide.mdx
@@ -1031,7 +1031,7 @@
   description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 11
   label: 교정 내용 원복 — Bold 병합 (Client Name)
   mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
@@ -1061,7 +1061,7 @@
   description: '닫는 백틱 위치가 이동하여 인라인 코드 스팬이 깨짐. 예: `Verify Deletion Key` 버튼 → `Verify Deletion Key 버튼을 클릭합니다.`
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 12
   label: 백틱 코드 스팬 포맷 깨짐
   mdx_path: administrator-manual/servers/connection-management/server-agents-for-rdp/installing-and-removing-server-agent.mdx
@@ -1255,7 +1255,7 @@
     삽입됨.
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 15
   label: 테이블 셀 내 빈 줄 추가 (Kubernetes policy YAML 스키마 표)
   mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
@@ -1336,7 +1336,7 @@
     또한 줄 끝 trailing whitespace 제거.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 'Bold 앞뒤 이중 공백 소실 (**Name**  : → **Name** :) + trailing whitespace'
   mdx_path: administrator-manual/audit/kubernetes-logs/pod-session-recordings.mdx
@@ -1401,7 +1401,7 @@
   description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을 (원복)
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 11
   label: 교정 내용 원복 — 조사 띄어쓰기 (MySQL 을→MySQL을)
   mdx_path: installation/prerequisites/configuring-rootless-mode-with-podman.mdx
@@ -1443,7 +1443,7 @@
     원래 교정: 경어체 통일 (참고하십시오→참조하세요)은 적용되나 trailing whitespace 차이로 검증 실패.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: 코드 블록 내 trailing whitespace 소실 ($ → $[trailing space 제거])
   mdx_path: installation/installation/installation-guide-setupv2sh.mdx
@@ -1466,7 +1466,7 @@
   description: '어휘·표현 교정이 XHTML 원본 기준으로 되돌아감. 예: 갈음하여 → 대체하여, 주의하여 주세요 → 주의해 주세요
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 11
   label: 교정 내용 원복 — 어휘·표현 변경 (갈음하여→대체하여, 주의하여→주의해)
   mdx_path: installation/post-installation-setup.mdx
