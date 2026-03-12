@@ -65,14 +65,6 @@ def _normalize_trailing_blank_lines(text: str) -> str:
     return stripped + '\n' if stripped else text
 
 
-def _normalize_blank_line_after_blockquote(text: str) -> str:
-    """blockquote(>) 줄 바로 다음의 단일 빈 줄을 제거한다.
-
-    Forward converter가 blockquote 다음에 빈 줄을 추가하는 경우가 있으므로,
-    비교 시 제거한다.
-    """
-    return re.sub(r'^(>[ \t]*.+)\n\n', r'\1\n', text, flags=re.MULTILINE)
-
 
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
@@ -88,7 +80,6 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_table_cell_padding(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')
-    text = _normalize_blank_line_after_blockquote(text)
     text = _normalize_trailing_blank_lines(text)
     return text
 
