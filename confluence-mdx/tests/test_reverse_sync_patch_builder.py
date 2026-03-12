@@ -1,9 +1,8 @@
 """patch_builder 유닛 테스트.
 
-기존 _find_containing_mapping 테스트 + build_patches 6개 분기 경로
+build_patches 분기 경로
 + helper 함수 (is_markdown_table, split_table_rows, normalize_table_row,
-split_list_items, _resolve_child_mapping,
-build_table_row_patches, build_list_item_patches) 테스트.
+split_list_items, build_table_row_patches, build_list_item_patches) 테스트.
 """
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
@@ -11,7 +10,6 @@ from reverse_sync.mdx_block_parser import MdxBlock
 from reverse_sync.sidecar import SidecarEntry
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
-    _find_containing_mapping,
     _flush_containing_changes,
     _resolve_mapping_for_change,
     build_patches,
@@ -31,7 +29,6 @@ from reverse_sync.inline_detector import (
 from reverse_sync.list_patcher import (
     build_list_item_patches,
     split_list_items,
-    _resolve_child_mapping,
 )
 
 
@@ -81,130 +78,6 @@ def _make_change(
 def _make_sidecar(xpath: str, mdx_blocks: list) -> SidecarEntry:
     return SidecarEntry(xhtml_xpath=xpath, xhtml_type='paragraph', mdx_blocks=mdx_blocks)
 
-
-# ── _find_containing_mapping (기존 7개 테스트 유지) ──
-
-
-class TestFindContainingMapping:
-    def test_finds_mapping_containing_old_plain(self):
-        m1 = _make_mapping('m1', 'Command Audit : Server내 수행 명령어 이력')
-        m2 = _make_mapping('m2', 'General User Access History Activity Logs Servers Command Audit : Server내 수행 명령어 이력 Account Lock History')
-        mappings = [m1, m2]
-        result = _find_containing_mapping(
-            'Command Audit : Server내 수행 명령어 이력', mappings, set())
-        assert result is m1
-
-    def test_skips_used_ids(self):
-        m1 = _make_mapping('m1', 'Command Audit : Server내 수행 명령어 이력')
-        m2 = _make_mapping('m2', 'General Servers Command Audit : Server내 수행 명령어 이력 Account Lock')
-        mappings = [m1, m2]
-        used = {'m1'}
-        result = _find_containing_mapping(
-            'Command Audit : Server내 수행 명령어 이력', mappings, used)
-        assert result is m2
-
-    def test_returns_none_for_short_text(self):
-        m1 = _make_mapping('m1', 'hello world foo bar')
-        result = _find_containing_mapping('abc', [m1], set())
-        assert result is None
-
-    def test_returns_none_for_empty_text(self):
-        m1 = _make_mapping('m1', 'hello world foo bar')
-        result = _find_containing_mapping('', [m1], set())
-        assert result is None
-
-    def test_returns_none_when_no_mapping_contains_text(self):
-        m1 = _make_mapping('m1', 'completely different text here')
-        result = _find_containing_mapping(
-            'Command Audit : Server내 수행 명령어 이력', [m1], set())
-        assert result is None
-
-    def test_ignores_whitespace_differences(self):
-        m1 = _make_mapping('m1', 'Command  Audit :  Server내   수행 명령어   이력')
-        result = _find_containing_mapping(
-            'Command Audit : Server내 수행 명령어 이력', [m1], set())
-        assert result is m1
-
-    def test_ignores_invisible_unicode_chars(self):
-        m1 = _make_mapping(
-            'm1',
-            'Account Lock History\u3164 : QueryPie\u200b사용자별 서버 접속 계정')
-        result = _find_containing_mapping(
-            'Account Lock History : QueryPie사용자별 서버 접속 계정',
-            [m1], set())
-        assert result is m1
-
-
-# ── _resolve_child_mapping ──
-
-
-class TestResolveChildMapping:
-    def test_exact_match_first_pass(self):
-        child = _make_mapping('c1', 'child text')
-        parent = _make_mapping('p1', 'parent text', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('child text', parent, id_map)
-        assert result is child
-
-    def test_whitespace_collapsed_match(self):
-        child = _make_mapping('c1', 'child  text  here')
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('child text here', parent, id_map)
-        assert result is child
-
-    def test_nospace_match(self):
-        child = _make_mapping('c1', 'child  text')
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        # collapse_ws doesn't match, but nospace does
-        result = _resolve_child_mapping('childtext', parent, id_map)
-        assert result is child
-
-    def test_xhtml_list_marker_stripped(self):
-        child = _make_mapping('c1', '- item text')
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('item text', parent, id_map)
-        assert result is child
-
-    def test_mdx_list_marker_stripped(self):
-        child = _make_mapping('c1', 'item text')
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('- item text', parent, id_map)
-        assert result is child
-
-    def test_returns_none_when_no_match(self):
-        child = _make_mapping('c1', 'completely different')
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('no match text here', parent, id_map)
-        assert result is None
-
-    def test_returns_none_for_empty_text(self):
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        child = _make_mapping('c1', 'child')
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping('', parent, id_map)
-        assert result is None
-
-    def test_missing_child_id(self):
-        parent = _make_mapping('p1', 'parent', children=['missing'])
-        id_map = {'p1': parent}
-        result = _resolve_child_mapping('some text here', parent, id_map)
-        assert result is None
-
-    def test_prefix_match_rejects_long_text(self):
-        # 5차 prefix: old_plain이 child보다 훨씬 길 때 잘못된 매칭 방지
-        # callout 전체 텍스트가 내부 paragraph와 같은 prefix를 공유하는 경우
-        child_text = '11.4.0부터 속성 기반 승인자 지정시 여러개의 속성을 지정할 수 있도록 개선되었습니다.'
-        long_old = child_text + ' ' + '기존 Attribute 기반 승인자 지정시 하나의 Attribute만 지정할 수 있었으나...' * 3
-        child = _make_mapping('c1', child_text)
-        parent = _make_mapping('p1', 'parent', children=['c1'])
-        id_map = {'c1': child, 'p1': parent}
-        result = _resolve_child_mapping(long_old, parent, id_map)
-        assert result is None
 
 
 # ── Helper 함수 테스트 ──
@@ -297,15 +170,15 @@ class TestBuildPatches:
         mdx_to_sidecar = {mdx_idx: entry}
         return mdx_to_sidecar
 
-    # Path 1: sidecar 매칭 → children 있음 → child 해석 성공 → 직접 패치
-    def test_path1_sidecar_match_child_resolved(self):
+    # Path 1: sidecar 매칭 → list type + children → list 전략 → 전체 리스트 재생성
+    def test_path1_sidecar_match_list_with_children_regenerates(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
                                type_='list', children=['c1'])
         mappings = [parent, child]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-        change = _make_change(0, 'child text', 'updated child')
+        change = _make_change(0, '- child text', '- updated child', type_='list')
         mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
 
         patches = build_patches(
@@ -313,8 +186,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0]['xhtml_xpath'] == 'li[1]'
-        assert 'updated child' in patches[0]['new_inner_xhtml']
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert 'new_inner_xhtml' in patches[0]
 
     # Path 2: sidecar 매칭 → children 있음 → child 해석 실패
     #          → 텍스트 불일치 → list 분리 (item 수 불일치 → inner XHTML 재생성)
@@ -360,21 +233,20 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'div[1]'
 
-    # Path 4: sidecar 미스 → 텍스트 포함 검색 → containing block
+    # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):
         m1 = _make_mapping('m1', 'this mapping contains the search text here')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
         change = _make_change(0, 'search text', 'replaced text')
-        mdx_to_sidecar = {}  # 빈 sidecar → sidecar 미스
+        mdx_to_sidecar = {}  # 빈 sidecar → sidecar 미스 → skip
 
         patches = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        assert len(patches) == 1
-        assert patches[0]['xhtml_xpath'] == m1.xhtml_xpath
+        assert len(patches) == 0
 
     # Path 5: sidecar 미스 → list/table 분리
     def test_path5_sidecar_miss_table_split(self):
@@ -391,9 +263,9 @@ class TestBuildPatches:
 
         assert patches == []
 
-    # Path 6: sidecar 매칭 → children 없음 → 텍스트 불일치 → 재매핑
+    # Path 6: sidecar 매칭 → children 없음 → sidecar를 신뢰하여 직접 매핑
     def test_path6_sidecar_match_text_mismatch_remapping(self):
-        # sidecar 매핑이 있지만 텍스트가 포함되지 않음 → better 매핑 찾기
+        # sidecar가 p[1]을 가리키면 텍스트 불일치와 무관하게 p[1]로 직접 패치
         wrong = _make_mapping('wrong', 'completely wrong mapping', xpath='p[1]')
         better = _make_mapping('better', 'contains the target text here', xpath='p[2]')
         mappings = [wrong, better]
@@ -407,7 +279,7 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0]['xhtml_xpath'] == 'p[2]'
+        assert patches[0]['xhtml_xpath'] == 'p[1]'
 
     # 직접 매칭 + text_transfer 사용
     def test_direct_match_with_transfer(self):
@@ -499,7 +371,7 @@ class TestBuildPatches:
         assert 'new_inner_xhtml' in patches[0]
         assert 'new_plain_text' not in patches[0]
 
-    # 여러 변경이 동일 containing block에 그룹화
+    # sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_multiple_changes_grouped_to_containing(self):
         container = _make_mapping(
             'm1', 'first part and second part', xpath='p[1]')
@@ -508,7 +380,7 @@ class TestBuildPatches:
 
         change1 = _make_change(0, 'first part', 'first UPDATED')
         change2 = _make_change(1, 'second part', 'second UPDATED')
-        mdx_to_sidecar = {}  # sidecar 미스 → containing 검색
+        mdx_to_sidecar = {}  # sidecar 미스 → skip
 
         patches = build_patches(
             [change1, change2],
@@ -516,8 +388,7 @@ class TestBuildPatches:
             [change1.new_block, change2.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        assert len(patches) == 1
-        assert 'UPDATED' in patches[0]['new_plain_text']
+        assert len(patches) == 0
 
     def test_direct_heading_inline_code_added(self):
         """heading에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
@@ -1143,7 +1014,7 @@ class TestResolveMappingForChange:
     """_resolve_mapping_for_change 매핑 해석 함수 테스트."""
 
     def _make_context(self, mappings=None, mdx_to_sidecar=None,
-                      xpath_to_mapping=None, id_to_mapping=None):
+                      xpath_to_mapping=None):
         """공통 컨텍스트 dict를 구성한다."""
         mappings = mappings or []
         return {
@@ -1151,7 +1022,6 @@ class TestResolveMappingForChange:
             'used_ids': set(),
             'mdx_to_sidecar': mdx_to_sidecar or {},
             'xpath_to_mapping': xpath_to_mapping or {},
-            'id_to_mapping': id_to_mapping or {m.block_id: m for m in mappings},
         }
 
     def _old_plain(self, change):
@@ -1181,7 +1051,7 @@ class TestResolveMappingForChange:
         assert strategy == 'direct'
         assert mapping.block_id == 'b1'
 
-    def test_sidecar_match_with_children_resolved_returns_direct(self):
+    def test_sidecar_match_with_children_returns_containing(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text', xpath='ul[1]',
                                children=['c1'])
@@ -1194,8 +1064,8 @@ class TestResolveMappingForChange:
         change = _make_change(0, 'child text', 'new child')
         strategy, mapping = _resolve_mapping_for_change(
             change, self._old_plain(change), **ctx)
-        assert strategy == 'direct'
-        assert mapping.block_id == 'c1'
+        assert strategy == 'containing'
+        assert mapping.block_id == 'p1'
 
     def test_no_sidecar_list_type_returns_list(self):
         change = _make_change(0, '- item1\n- item2', '- item1\n- changed', type_='list')
@@ -1212,14 +1082,14 @@ class TestResolveMappingForChange:
             change, self._old_plain(change), **ctx)
         assert strategy == 'table'
 
-    def test_no_sidecar_containing_match_returns_containing(self):
+    def test_no_sidecar_containing_match_returns_skip(self):
         m = _make_mapping('b1', 'hello world full text here', xpath='div[1]')
         change = _make_change(0, 'hello world', 'hi world')
         ctx = self._make_context(mappings=[m])
         strategy, mapping = _resolve_mapping_for_change(
             change, self._old_plain(change), **ctx)
-        assert strategy == 'containing'
-        assert mapping.block_id == 'b1'
+        assert strategy == 'skip'
+        assert mapping is None
 
 
 # ── Inline format 변경 감지 테스트 ──

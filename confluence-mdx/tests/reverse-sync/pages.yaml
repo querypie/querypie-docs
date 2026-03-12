@@ -1401,7 +1401,7 @@
   description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: MySQL 을 → MySQL을 (교정) → MySQL 을 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 조사 띄어쓰기 (MySQL 을→MySQL을)
   mdx_path: installation/prerequisites/configuring-rootless-mode-with-podman.mdx
@@ -1466,7 +1466,7 @@
   description: '어휘·표현 교정이 XHTML 원본 기준으로 되돌아감. 예: 갈음하여 → 대체하여, 주의하여 주세요 → 주의해 주세요
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 어휘·표현 변경 (갈음하여→대체하여, 주의하여→주의해)
   mdx_path: installation/post-installation-setup.mdx

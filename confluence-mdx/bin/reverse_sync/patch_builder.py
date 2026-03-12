@@ -1,5 +1,4 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
-import re
 from typing import Dict, List, Optional
 
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
@@ -7,7 +6,6 @@ from reverse_sync.mapping_recorder import BlockMapping
 from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
-    strip_for_compare,
 )
 from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
@@ -15,7 +13,6 @@ from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
 from reverse_sync.list_patcher import (
     build_list_item_patches,
-    _resolve_child_mapping,
 )
 from reverse_sync.table_patcher import (
     build_table_row_patches,
@@ -23,41 +20,6 @@ from reverse_sync.table_patcher import (
     normalize_table_row,
     is_markdown_table,
 )
-
-
-_BLOCK_MARKER_RE = re.compile(r'#{1,6}|\d+\.')
-
-
-def _strip_block_markers(text: str) -> str:
-    """containment 비교를 위해 heading/list 마커를 제거한다."""
-    return _BLOCK_MARKER_RE.sub('', text)
-
-
-def _find_containing_mapping(
-    old_plain: str,
-    mappings: List[BlockMapping],
-    used_ids: set,
-) -> Optional[BlockMapping]:
-    """old_plain 텍스트를 포함하는 XHTML 매핑을 찾는다 (sidecar 폴백)."""
-    old_norm = collapse_ws(old_plain)
-    if not old_norm or len(old_norm) < 5:
-        return None
-    old_nospace = strip_for_compare(old_norm)
-    for m in mappings:
-        if m.block_id in used_ids:
-            continue
-        m_nospace = strip_for_compare(m.xhtml_plain_text)
-        if m_nospace and old_nospace in m_nospace:
-            return m
-    # 폴백: heading/list 마커를 제거하고 재시도
-    old_stripped = _strip_block_markers(old_nospace)
-    for m in mappings:
-        if m.block_id in used_ids:
-            continue
-        m_stripped = _strip_block_markers(strip_for_compare(m.xhtml_plain_text))
-        if m_stripped and old_stripped in m_stripped:
-            return m
-    return None
 
 
 def _flush_containing_changes(
@@ -92,7 +54,6 @@ def _resolve_mapping_for_change(
     used_ids: set,
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
-    id_to_mapping: Dict[str, BlockMapping],
 ) -> tuple:
     """변경에 대한 매핑과 처리 전략을 결정한다.
 
@@ -106,44 +67,23 @@ def _resolve_mapping_for_change(
     mapping = find_mapping_by_sidecar(
         change.index, mdx_to_sidecar, xpath_to_mapping)
 
-    # Parent mapping → child 해석 시도
-    if mapping is not None and mapping.children:
-        child = _resolve_child_mapping(old_plain, mapping, id_to_mapping)
-        if child is not None:
-            # callout 블록은 direct 전략 시 _convert_callout_inner가
-            # <li><p> 구조를 생성할 수 없으므로 containing 전략 사용
-            if change.old_block.type == 'callout':
-                return ('containing', mapping)
-            return ('direct', child)
-        # 블록 텍스트가 parent에 포함되는지 확인
-        _old_ns = strip_for_compare(old_plain)
-        _map_ns = strip_for_compare(mapping.xhtml_plain_text)
-        if _old_ns and _map_ns and _old_ns not in _map_ns:
-            if change.old_block.type == 'list':
-                return ('list', mapping)
-        return ('containing', mapping)
-
     if mapping is None:
-        # 폴백: 텍스트 포함 검색으로 containing mapping 찾기
-        containing = _find_containing_mapping(old_plain, mappings, used_ids)
-        if containing is not None:
-            return ('containing', containing)
         if change.old_block.type == 'list':
             return ('list', None)
         if is_markdown_table(change.old_block.content):
             return ('table', None)
         return ('skip', None)
 
-    # 매핑 텍스트에 old_plain이 포함되지 않으면 더 나은 매핑 찾기
-    if not mapping.children:
-        old_nospace = strip_for_compare(old_plain)
-        map_nospace = strip_for_compare(mapping.xhtml_plain_text)
-        if old_nospace and map_nospace and old_nospace not in map_nospace:
-            better = _find_containing_mapping(old_plain, mappings, used_ids)
-            if better is not None:
-                return ('containing', better)
-            if change.old_block.type == 'list':
-                return ('list', mapping)
+    # callout 블록은 항상 containing 전략 사용
+    # (_convert_callout_inner가 <li><p> 구조를 생성할 수 없으므로)
+    if change.old_block.type == 'callout':
+        return ('containing', mapping)
+
+    # Parent mapping이 children을 가지면 containing 전략으로 위임
+    if mapping.children:
+        if change.old_block.type == 'list':
+            return ('list', mapping)
+        return ('containing', mapping)
 
     # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
     if change.old_block.type == 'list':
@@ -257,7 +197,7 @@ def build_patches(
 
         strategy, mapping = _resolve_mapping_for_change(
             change, old_plain, mappings, used_ids,
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
+            mdx_to_sidecar, xpath_to_mapping)
 
         if strategy == 'skip':
             continue

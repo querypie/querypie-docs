@@ -7,7 +7,6 @@ reverse_sync/sidecar.py의 핵심 기능을 검증한다:
   - xhtml_xpath → BlockMapping 인덱스 구축
   - 2-hop 조회: MDX index → SidecarEntry → BlockMapping
   - XHTML + MDX로부터 mapping.yaml 생성 (generate_sidecar_mapping)
-  - 텍스트 매칭 내부 함수들 (_find_text_match, _strip_all_ws)
 """
 import pytest
 import yaml
@@ -21,13 +20,12 @@ from reverse_sync.sidecar import (
     sha256_text,
     write_sidecar,
     SidecarEntry,
+    SidecarChildEntry,
     load_sidecar_mapping,
     build_mdx_to_sidecar_index,
     build_xpath_to_mapping,
     find_mapping_by_sidecar,
     generate_sidecar_mapping,
-    _find_text_match,
-    _strip_all_ws,
 )
 from reverse_sync.mapping_recorder import BlockMapping
 
@@ -230,104 +228,6 @@ class TestFindMappingBySidecar:
         assert result is None
 
 
-# ── _strip_all_ws ─────────────────────────────────────────────
-
-class TestStripAllWs:
-    def test_basic(self):
-        assert _strip_all_ws('hello world') == 'helloworld'
-
-    def test_tabs_and_newlines(self):
-        assert _strip_all_ws('a\tb\nc d') == 'abcd'
-
-    def test_empty(self):
-        assert _strip_all_ws('') == ''
-
-    def test_only_whitespace(self):
-        assert _strip_all_ws('   \t\n  ') == ''
-
-
-# ── _find_text_match ──────────────────────────────────────────
-
-class TestFindTextMatch:
-    def test_exact_match_at_start(self):
-        """1차: collapse_ws 후 완전 일치."""
-        indices = [0, 1, 2]
-        plains = {0: 'Hello World', 1: 'Foo Bar', 2: 'Baz'}
-        result = _find_text_match('Hello World', indices, plains, 0, 5)
-        assert result == 0
-
-    def test_exact_match_at_offset(self):
-        indices = [0, 1, 2]
-        plains = {0: 'AAA', 1: 'BBB', 2: 'CCC'}
-        result = _find_text_match('BBB', indices, plains, 0, 5)
-        assert result == 1
-
-    def test_whitespace_insensitive_match(self):
-        """2차: 공백 무시 완전 일치."""
-        indices = [0, 1]
-        plains = {0: 'Hello  World', 1: 'Foo'}
-        # xhtml_plain 'HelloWorld' vs mdx 'Hello  World' → strip_all_ws 비교
-        result = _find_text_match('Hello World', indices, plains, 0, 5)
-        # 1차에서 실패하지만 2차 공백무시에서 매칭
-        assert result is not None
-
-    def test_prefix_match(self):
-        """3차: prefix 포함 매칭."""
-        indices = [0]
-        long_text = 'A' * 60
-        plains = {0: long_text + ' extra'}
-        # xhtml_plain의 앞 50자가 mdx에 포함
-        result = _find_text_match(long_text, indices, plains, 0, 5)
-        assert result is not None
-
-    def test_no_match(self):
-        indices = [0, 1]
-        plains = {0: 'AAA', 1: 'BBB'}
-        result = _find_text_match('CCC', indices, plains, 0, 5)
-        assert result is None
-
-    def test_start_ptr_skips_earlier(self):
-        """start_ptr 이전의 블록은 검색하지 않는다."""
-        indices = [0, 1, 2]
-        plains = {0: 'Target', 1: 'Other', 2: 'More'}
-        result = _find_text_match('Target', indices, plains, 1, 5)
-        assert result is None  # index 0은 검색 범위 밖
-
-    def test_lookahead_limit(self):
-        """lookahead 범위를 초과하면 매칭하지 않는다."""
-        indices = [0, 1, 2, 3, 4, 5]
-        plains = {i: f'block-{i}' for i in range(6)}
-        result = _find_text_match('block-5', indices, plains, 0, 3)
-        assert result is None  # lookahead=3이므로 index 0,1,2만 검색
-
-    def test_short_text_no_prefix_match(self):
-        """10자 미만의 짧은 텍스트는 prefix 매칭을 시도하지 않는다."""
-        indices = [0]
-        plains = {0: 'AB extra'}
-        result = _find_text_match('AB', indices, plains, 0, 5)
-        assert result is None
-
-    def test_short_prefix_match_with_emoticon_difference(self):
-        """4차: emoticon 차이가 있어도 앞부분 20자 prefix가 일치하면 매칭한다."""
-        # XHTML에서 ac:emoticon이 텍스트로 추출되지 않는 경우,
-        # 끝부분에 이모지가 빠져서 전체 문자열 비교가 실패하지만
-        # 앞부분 prefix로 매칭할 수 있어야 한다.
-        xhtml_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. )'
-        mdx_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. 🔎 )'
-        indices = [0]
-        plains = {0: mdx_text}
-        result = _find_text_match(xhtml_text, indices, plains, 0, 5)
-        assert result == 0
-
-    def test_short_prefix_match_with_metadata_prefix(self):
-        """4차: XHTML에 파라미터 메타데이터 prefix가 있어도 MDX prefix로 매칭한다."""
-        xhtml_text = ':purple_circle:1f7e3🟣#F4F5F79.12.0 이후부터 적용되는 신규 메뉴 가이드입니다.'
-        mdx_text = '9.12.0 이후부터 적용되는 신규 메뉴 가이드입니다. (클릭해서 확대해서 보세요. 🔎 )'
-        indices = [0]
-        plains = {0: mdx_text}
-        result = _find_text_match(xhtml_text, indices, plains, 0, 5)
-        assert result == 0
-
 
 # ── generate_sidecar_mapping ──────────────────────────────────
 
@@ -345,7 +245,7 @@ class TestGenerateSidecarMapping:
         result = generate_sidecar_mapping(xhtml, mdx, '12345')
         data = yaml.safe_load(result)
 
-        assert data['version'] == 2
+        assert data['version'] == 3
         assert data['source_page_id'] == '12345'
         assert len(data['mappings']) >= 2
 
@@ -356,6 +256,9 @@ class TestGenerateSidecarMapping:
             e for e in data['mappings'] if e['xhtml_type'] == 'paragraph')
         assert len(heading_entry['mdx_blocks']) >= 1
         assert len(para_entry['mdx_blocks']) >= 1
+        # v3: line range 필드 포함
+        assert heading_entry.get('mdx_line_start', 0) > 0
+        assert para_entry.get('mdx_line_start', 0) > 0
 
     def test_empty_xhtml_block_gets_empty_mdx_blocks(self):
         """이미지 등 텍스트가 없는 XHTML 블록은 빈 mdx_blocks를 받는다."""
@@ -417,7 +320,7 @@ class TestGenerateSidecarMapping:
         assert all_indices == sorted(all_indices)
 
     def test_callout_macro_with_children(self):
-        """Callout 매크로 (ac:structured-macro) → 컨테이너 + children 매핑."""
+        """Callout 매크로 (ac:structured-macro) → 단일 MDX callout 블록에 매핑, children 포함."""
         xhtml = (
             '<ac:structured-macro ac:name="info">'
             '<ac:rich-text-body>'
@@ -426,21 +329,26 @@ class TestGenerateSidecarMapping:
             '</ac:rich-text-body>'
             '</ac:structured-macro>'
         )
+        # 실제 프로젝트 MDX 포맷: <Callout> 태그 사용
         mdx = (
             '---\ntitle: Test\n---\n\n'
-            ':::info\n\n'
+            'import { Callout } from \'nextra/components\'\n\n'
+            '<Callout type="info">\n'
             'Info paragraph 1.\n\n'
-            'Info paragraph 2.\n\n'
-            ':::\n'
+            'Info paragraph 2.\n'
+            '</Callout>\n'
         )
         result = generate_sidecar_mapping(xhtml, mdx)
         data = yaml.safe_load(result)
 
-        # 컨테이너 매핑이 여러 MDX 블록을 포함해야 함
-        container_entries = [
-            e for e in data['mappings'] if len(e.get('mdx_blocks', [])) > 1
-        ]
-        assert len(container_entries) >= 1
+        # v3: 컨테이너가 단일 MDX 블록 (callout)에 매핑됨
+        html_entries = [e for e in data['mappings'] if e.get('xhtml_type') == 'html_block']
+        assert len(html_entries) >= 1
+        container = html_entries[0]
+        assert len(container['mdx_blocks']) == 1
+        # v3: children 필드에 XHTML children 정렬 결과 포함
+        children = container.get('children', [])
+        assert len(children) == 2
 
     def test_callout_panel_with_emoticon_maps_to_mdx(self):
         """panel callout + emoticon이 있는 XHTML이 MDX callout에 매핑된다."""

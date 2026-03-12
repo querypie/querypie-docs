@@ -65,6 +65,7 @@ def _normalize_trailing_blank_lines(text: str) -> str:
     return stripped + '\n' if stripped else text
 
 
+
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
