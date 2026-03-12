@@ -55,6 +55,16 @@ def _normalize_br_space(text: str) -> str:
     return re.sub(r' +(<br\s*/>)', r'\1', text)
 
 
+def _normalize_trailing_blank_lines(text: str) -> str:
+    """텍스트 끝의 빈 줄을 정규화한다.
+
+    Forward converter가 마지막 줄 뒤에 빈 줄을 추가하는 경우가 있으므로,
+    텍스트 끝의 빈 줄을 모두 제거하고 마지막 줄바꿈 하나만 유지한다.
+    """
+    stripped = text.rstrip('\n')
+    return stripped + '\n' if stripped else text
+
+
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
@@ -66,6 +76,10 @@ def _apply_minimal_normalizations(text: str) -> str:
     """
     text = _normalize_consecutive_spaces_in_text(text)
     text = _normalize_br_space(text)
+    text = _normalize_table_cell_padding(text)
+    text = _strip_first_heading(text)
+    text = text.lstrip('\n')
+    text = _normalize_trailing_blank_lines(text)
     return text
 
 
@@ -91,17 +105,22 @@ def _normalize_dates(text: str) -> str:
 
 
 def _normalize_table_cell_padding(text: str) -> str:
-    """Markdown table 행의 셀 패딩 공백을 정규화한다.
+    """Markdown table 행의 셀 패딩 공백과 구분자 행 대시 수를 정규화한다.
 
     XHTML→MDX forward 변환 시 테이블 셀의 컬럼 폭 계산이 원본 MDX와
-    1~2자 차이날 수 있으므로, 연속 공백을 단일 공백으로 축약한다.
+    1~N자 차이날 수 있으므로:
+    - 셀 내 연속 공백을 단일 공백으로 축약한다.
+    - 구분자 행(| --- | --- |)의 대시 수를 3개로 정규화한다.
     """
+    _SEP_RE = re.compile(r'^\|[\s\-:|]+\|$')
     lines = text.split('\n')
     result = []
     for line in lines:
         stripped = line.strip()
         if stripped.startswith('|') and stripped.endswith('|'):
             line = re.sub(r'  +', ' ', line)
+            if _SEP_RE.match(stripped):
+                line = re.sub(r'-{3,}', '---', line)
         result.append(line)
     return '\n'.join(result)
 
@@ -230,8 +249,6 @@ def _apply_normalizations(text: str) -> str:
     """모든 정규화를 순서대로 적용한다."""
     text = _normalize_trailing_ws(text)
     text = _normalize_dates(text)
-    text = _normalize_table_cell_padding(text)
-    text = _strip_first_heading(text)
     text = _normalize_table_cell_lines(text)
     text = _normalize_html_entities_in_code(text)
     text = _normalize_inline_code_boundaries(text)
