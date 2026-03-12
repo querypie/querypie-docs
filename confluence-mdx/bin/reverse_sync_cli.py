@@ -236,6 +236,36 @@ def _compile_result(
     return result
 
 
+def _find_blockquotes_missing_blank_line(content: str) -> list:
+    """blockquote 다음에 빈 줄이 없는 줄 목록을 반환한다.
+
+    forward converter 가 blockquote 이후 항상 빈 줄을 추가하므로,
+    improved.mdx 도 동일하게 blockquote 이후 빈 줄을 요구한다.
+
+    fenced code block(```) 내부는 검사하지 않는다.
+    multi-line blockquote (연속된 > 줄) 에서는 마지막 줄에서만 검사한다.
+
+    Returns:
+        (1-based line number, line content) 튜플의 리스트.
+    """
+    lines = content.splitlines()
+    in_code_block = False
+    violations = []
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+        if in_code_block:
+            continue
+        if stripped.startswith('>'):
+            next_line = lines[i + 1] if i + 1 < len(lines) else ''
+            next_stripped = next_line.strip()
+            # 다음 줄이 빈 줄이 아니고 blockquote 도 아닌 경우
+            if next_stripped and not next_stripped.startswith('>'):
+                violations.append((i + 1, line))
+    return violations
+
+
 def _validate_improved_mdx(content: str, descriptor: str) -> None:
     """improved MDX 입력값을 검증한다. 문제가 있으면 ValueError를 raise한다."""
     trailing_ws_lines = [
@@ -252,6 +282,19 @@ def _validate_improved_mdx(content: str, descriptor: str) -> None:
             f"Trailing whitespace found in improved MDX ({descriptor}).\n"
             f"This is an input error, not a reverse-sync bug. "
             f"Please remove trailing whitespace before running reverse-sync.\n"
+            f"Locations:\n{locations}"
+        )
+
+    missing_blank = _find_blockquotes_missing_blank_line(content)
+    if missing_blank:
+        locations = '\n'.join(
+            f'  line {lineno}: {repr(line)}'
+            for lineno, line in missing_blank
+        )
+        raise ValueError(
+            f"Blockquote not followed by a blank line in improved MDX ({descriptor}).\n"
+            f"Forward converter always adds a blank line after blockquotes. "
+            f"Please add a blank line after each blockquote.\n"
             f"Locations:\n{locations}"
         )
 

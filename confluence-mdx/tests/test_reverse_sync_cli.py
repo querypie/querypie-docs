@@ -8,7 +8,8 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result,
-    _detect_language,
+    _detect_language, _validate_improved_mdx,
+    _find_blockquotes_missing_blank_line,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.text_transfer import (
@@ -1179,3 +1180,63 @@ def test_detect_language_defaults_to_ko():
     """src/content/{lang}/ 패턴이 없으면 기본값 'ko'를 반환한다."""
     assert _detect_language('/tmp/improved.mdx') == 'ko'
     assert _detect_language('original.mdx') == 'ko'
+
+
+class TestFindBlockquotesMissingBlankLine:
+    def test_no_blockquote(self):
+        assert _find_blockquotes_missing_blank_line("paragraph\n\nanother\n") == []
+
+    def test_blockquote_followed_by_blank_line(self):
+        text = "> quote\n\nnext paragraph\n"
+        assert _find_blockquotes_missing_blank_line(text) == []
+
+    def test_blockquote_at_end_of_file(self):
+        """파일 마지막 줄 blockquote 는 다음 줄이 없으므로 위반 아님."""
+        text = "> quote\n"
+        assert _find_blockquotes_missing_blank_line(text) == []
+
+    def test_blockquote_not_followed_by_blank_line(self):
+        text = "> quote\nnext paragraph\n"
+        result = _find_blockquotes_missing_blank_line(text)
+        assert result == [(1, "> quote")]
+
+    def test_multi_line_blockquote_only_last_line_checked(self):
+        """연속된 blockquote 줄에서는 마지막 줄만 검사한다."""
+        text = "> line1\n> line2\nnext paragraph\n"
+        result = _find_blockquotes_missing_blank_line(text)
+        assert len(result) == 1
+        assert result[0][1] == "> line2"
+
+    def test_multi_line_blockquote_with_blank_after_last(self):
+        text = "> line1\n> line2\n\nnext paragraph\n"
+        assert _find_blockquotes_missing_blank_line(text) == []
+
+    def test_blockquote_inside_fenced_code_block_ignored(self):
+        text = "```\n> not a blockquote\n```\n"
+        assert _find_blockquotes_missing_blank_line(text) == []
+
+    def test_multiple_violations(self):
+        text = "> quote1\nnext1\n\n> quote2\nnext2\n"
+        result = _find_blockquotes_missing_blank_line(text)
+        assert len(result) == 2
+        assert result[0] == (1, "> quote1")
+        assert result[1] == (4, "> quote2")
+
+
+class TestValidateImprovedMdxBlockquote:
+    def test_passes_when_blank_line_after_blockquote(self):
+        """blockquote 이후 빈 줄이 있으면 검증 통과."""
+        _validate_improved_mdx("> quote\n\nparagraph\n", "test.mdx")
+
+    def test_raises_when_no_blank_line_after_blockquote(self):
+        """blockquote 이후 빈 줄이 없으면 ValueError."""
+        with pytest.raises(ValueError, match="Blockquote not followed by a blank line"):
+            _validate_improved_mdx("> quote\nparagraph\n", "test.mdx")
+
+    def test_error_message_includes_descriptor(self):
+        with pytest.raises(ValueError, match="my_file.mdx"):
+            _validate_improved_mdx("> quote\nparagraph\n", "my_file.mdx")
+
+    def test_error_message_includes_line_number(self):
+        with pytest.raises(ValueError, match="line 1"):
+            _validate_improved_mdx("> quote\nparagraph\n", "test.mdx")
