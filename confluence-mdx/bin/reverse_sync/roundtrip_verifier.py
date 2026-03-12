@@ -16,6 +16,59 @@ def _normalize_trailing_ws(text: str) -> str:
     return re.sub(r'[ \t]+$', '', text, flags=re.MULTILINE)
 
 
+def _normalize_consecutive_spaces_in_text(text: str) -> str:
+    """코드 블록 외 텍스트에서 인라인 연속 공백을 단일 공백으로 정규화한다.
+
+    Forward converter가 XHTML에서 생성한 MDX는 단일 공백만 사용하므로,
+    improved.mdx의 이중 공백(예: **bold**  :, *  `item`)과의 차이를 무시한다.
+    줄 앞 들여쓰기(leading whitespace)는 보존한다.
+
+    fenced code block(```) 내부는 변경하지 않는다.
+    인라인 code span(` `` `) 내부의 연속 공백도 정규화 대상에 포함된다.
+    이는 HTML 렌더링 시 <code>a  b</code>와 <code>a b</code>가 동일하게
+    표시되는 것과 일치한다.
+    """
+    lines = text.split('\n')
+    result = []
+    in_code_block = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+            result.append(line)
+            continue
+        if in_code_block:
+            result.append(line)
+            continue
+        leading = len(line) - len(line.lstrip(' \t'))
+        rest = re.sub(r' {2,}', ' ', line[leading:])
+        result.append(line[:leading] + rest)
+    return '\n'.join(result)
+
+
+def _normalize_br_space(text: str) -> str:
+    """<br/> 앞의 공백을 제거한다.
+
+    Forward converter가 list item 구성 시 ' '.join(li_itself)로
+    <br/> 앞에 공백을 추가하므로, 비교 시 이를 제거한다.
+    """
+    return re.sub(r' +(<br\s*/>)', r'\1', text)
+
+
+def _apply_minimal_normalizations(text: str) -> str:
+    """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
+
+    forward converter의 체계적 출력 특성에 의한 차이만 처리한다:
+    - 인라인 이중 공백 → 단일 공백 (_normalize_consecutive_spaces_in_text)
+    - <br/> 앞 공백 제거 (_normalize_br_space)
+
+    lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
+    """
+    text = _normalize_consecutive_spaces_in_text(text)
+    text = _normalize_br_space(text)
+    return text
+
+
 _MONTH_KO_TO_EN = {
     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
     '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
@@ -194,11 +247,11 @@ def verify_roundtrip(
 ) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
-    기본 동작(엄격 모드): 정규화 없이 문자 그대로 비교한다.
-    모든 공백, 줄바꿈, 문자가 동일해야 PASS.
+    기본 동작(엄격 모드): forward converter의 체계적 차이(이중 공백, <br/> 앞 공백)를
+    정규화한 후 문자 그대로 비교한다. 그 외 공백, 줄바꿈, 문자가 동일해야 PASS.
 
-    lenient=True(관대 모드): trailing whitespace, 날짜 형식 등 XHTML↔MDX 변환기
-    한계에 의한 차이를 정규화한 후 전체 행에서 exact match를 검증한다.
+    lenient=True(관대 모드): trailing whitespace, 날짜 형식, 테이블 패딩 등
+    XHTML↔MDX 변환기 한계에 의한 추가 차이를 정규화한 후 exact match를 검증한다.
 
     Args:
         expected_mdx: 개선 MDX (의도한 결과)
@@ -208,6 +261,10 @@ def verify_roundtrip(
     Returns:
         VerifyResult: passed=True면 통과, 아니면 diff_report 포함
     """
+    # 항상 최소 정규화 적용 (forward converter 특성에 의한 체계적 차이 처리)
+    expected_mdx = _apply_minimal_normalizations(expected_mdx)
+    actual_mdx = _apply_minimal_normalizations(actual_mdx)
+
     if lenient:
         expected_mdx = _apply_normalizations(expected_mdx)
         actual_mdx = _apply_normalizations(actual_mdx)
