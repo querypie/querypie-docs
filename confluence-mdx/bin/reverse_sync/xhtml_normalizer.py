@@ -48,8 +48,9 @@ IGNORED_ATTRIBUTES: frozenset[str] = frozenset({
 def extract_plain_text(fragment: str) -> str:
     """XHTML fragment에서 plain text를 추출한다.
 
-    ac:plain-text-body(코드 블록 본문)는 제외하고,
-    ac:emoticon의 fallback 텍스트는 포함한다.
+    ac:emoticon의 fallback 텍스트를 포함하고,
+    ac:image만 preservation unit으로 제외한다.
+    코드 블록 본문(ac:plain-text-body)과 링크 label(ac:link-body)은 포함한다.
 
     이 함수의 출력은 reconstruction에서 anchor offset 좌표의 기준이 된다.
     """
@@ -64,9 +65,6 @@ def _extract_text_from_element(element) -> str:
         if isinstance(child, NavigableString):
             parts.append(str(child))
         elif isinstance(child, Tag):
-            # 코드 블록 본문은 제외
-            if child.name == "ac:plain-text-body":
-                continue
             # emoticon은 fallback 텍스트 사용
             if child.name == "ac:emoticon":
                 fallback = child.get("ac:emoji-fallback", "")

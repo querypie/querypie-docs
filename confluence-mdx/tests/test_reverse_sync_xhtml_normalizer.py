@@ -75,15 +75,16 @@ class TestExtractPlainText:
         )
         assert extract_plain_text(fragment) == ":check_mark: Success"
 
-    def test_code_macro_body_excluded(self):
-        """ac:plain-text-body(코드 블록 본문)는 제외된다."""
+    def test_code_macro_body_included(self):
+        """코드 블록 본문(ac:plain-text-body)이 plain text에 포함된다."""
         fragment = (
             '<ac:structured-macro ac:name="code">'
             '<ac:parameter ac:name="language">python</ac:parameter>'
             '<ac:plain-text-body><![CDATA[print("hello")]]></ac:plain-text-body>'
             '</ac:structured-macro>'
         )
-        assert extract_plain_text(fragment).strip() == "python"
+        text = extract_plain_text(fragment)
+        assert 'print("hello")' in text
 
     def test_list_plain_text(self):
         fragment = "<ul><li><p>Item 1</p></li><li><p>Item 2</p></li></ul>"
