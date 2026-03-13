@@ -45,6 +45,9 @@ class _ListNode:
         self.children: list["_ListNode"] = []
 
 
+ListNode = _ListNode
+
+
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
     """Emit XHTML for a single block."""
     if context is None:
@@ -151,12 +154,18 @@ def _extract_code_body(content: str) -> str:
 
 
 def _emit_single_depth_list(content: str, link_resolver: Optional[LinkResolver] = None) -> str:
+    roots = parse_list_tree(content)
+    if not roots:
+        return ""
+    return _render_list_nodes(roots, link_resolver=link_resolver)
+
+
+def parse_list_tree(content: str) -> list[ListNode]:
+    """Parse Markdown list text into a nested tree for reuse outside the emitter."""
     parsed = _parse_list_items(content)
     if not parsed:
-        return ""
-
-    roots = _build_list_tree(parsed)
-    return _render_list_nodes(roots, link_resolver=link_resolver)
+        return []
+    return _build_list_tree(parsed)
 
 
 def _parse_list_items(content: str) -> list[_ListNode]:

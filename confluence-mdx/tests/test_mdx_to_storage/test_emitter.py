@@ -1,5 +1,5 @@
 from mdx_to_storage import emit_document, parse_mdx
-from mdx_to_storage.emitter import emit_block
+from mdx_to_storage.emitter import emit_block, parse_list_tree
 from mdx_to_storage import emitter as emitter_module
 from mdx_to_storage.parser import Block
 
@@ -133,6 +133,17 @@ def test_emit_list_with_continuation_line():
     mdx = "* first line\n  continued line\n* second\n"
     xhtml = emit_document(parse_mdx(mdx))
     assert xhtml == "<ul><li><p>first line continued line</p></li><li><p>second</p></li></ul>"
+
+
+def test_parse_list_tree_returns_nested_structure():
+    roots = parse_list_tree("- parent\n    - child\n- sibling\n")
+
+    assert len(roots) == 2
+    assert roots[0].text == "parent"
+    assert roots[0].ordered is False
+    assert len(roots[0].children) == 1
+    assert roots[0].children[0].text == "child"
+    assert roots[1].text == "sibling"
 
 
 def test_emit_unknown_block_type_returns_empty():
