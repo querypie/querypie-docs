@@ -1,1270 +1,709 @@
 # Reverse Sync 전면 재구성 설계
 
 > 작성일: 2026-03-13
-> 연관 분석: `analysis-reverse-sync-refactoring.md`
+> 대상 PR: #913
+> 연관 문서:
+> - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
+> - `docs/analysis-reverse-sync-refactoring.md`
 
-> **설계 범위 원칙**
-> 이 문서의 모든 설계와 구현은 `tests/testcases/`에 실제로 존재하는 XHTML/MDX 사례에 기반한다.
-> 실제 사례로 확인되지 않은 가설적 케이스에 대한 예외 처리는 이 설계의 커버 범위 밖이다.
-> 새로운 케이스가 발견되면 testcase를 먼저 추가하고, 그 이후 설계·구현을 보완하는 사이클로 진행한다.
+## 1. 문서 목적
 
----
+이 문서는 PR #913의 reverse-sync 설계를 전면 재작성한 버전이다.
 
-## 1. 배경 및 동기
+목표는 세 가지다.
 
-### 1.1 현재 아키텍처의 문제
+1. MDX 변경을 XHTML로 재구성하여 Confluence 문서를 안정적으로 업데이트한다.
+2. 현재의 heuristic 텍스트 패치 체인을 구조적 재구성 경로로 치환한다.
+3. 현재 저장소에 이미 존재하는 `tests/testcases/` 와 `tests/reverse-sync/` 자산을 중심으로, 구현·회귀·유지보수가 가능한 테스트 체계를 만든다.
 
-Reverse Sync의 현재 접근 방식은 **"XHTML을 최대한 건드리지 않고 텍스트 차이만 이식"** 하는 전략이다. 이 전략은 Confluence 전용 요소(`<ac:image>`, `<ac:link>` 등)를 보호하기 위해 선택되었지만, 구현이 진행될수록 다음과 같은 기술부채가 쌓이고 있다.
+이 문서는 "방향 제안"이 아니라, 구현 착수 전에 필요한 설계 전제와 테스트 게이트를 코드베이스 기준으로 확정하는 문서다.
 
-- `patch_builder.py`의 전략 분기가 5가지(direct / containing / list / table / skip)로 늘어났고, 각 분기마다 예외 케이스가 추가되고 있다.
-- `_resolve_child_mapping()`이 4단계, `_resolve_mapping_for_change()`가 6단계 폴백 체인을 갖는다.
-- 버그를 수정할수록 새로운 edge case가 발견되는 패턴이 반복된다 (PR #852, #853, #866, #888, #903).
-- `text_transfer.py`의 문자 단위 위치 정렬은 두 좌표계(MDX ↔ XHTML) 사이의 매핑으로, 본질적으로 불안정하다.
+## 2. 현재 문제와 재설계 목표
 
-### 1.2 대안적 접근: MDX → XHTML 전체 재구성
+현재 reverse-sync 파이프라인은 다음 흐름이다.
 
-변경된 MDX 블록을 **XHTML로 직접 재구성**하고, 소실된 Confluence 요소만 원본에서 선택적으로 복원하면 위의 복잡도를 근본적으로 제거할 수 있다.
+`MDX diff -> mapping 추론 -> text/plain 기준 패치 -> patched XHTML -> forward convert -> MDX 재검증`
 
-```
-[현재] MDX diff → 텍스트 변경 추출 → XHTML 내 텍스트 위치 매핑 → 문자 단위 치환
-[제안] MDX diff → 변경 블록 재구성 → lossy 요소 재주입 → XHTML 교체
-```
+핵심 병목은 `patch_builder.py` 와 `text_transfer.py` 에 있다.
 
-`mdx_block_to_xhtml_element()`는 이미 `_build_insert_patch()`에서 사용되고 있다. 이를 **수정(modified) 블록에도 적용**하는 것이 이 설계의 핵심이다.
+- 변경 블록을 XHTML로 다시 만드는 대신, 기존 XHTML 내부 텍스트만 이식한다.
+- list, table, callout, containing block, direct replacement 등 전략 분기가 계속 늘어난다.
+- Confluence 전용 요소(`<ac:image>`, `<ac:link>`, `<ac:structured-macro>`, `ac:adf-extension`)는 텍스트 좌표계 밖에 있기 때문에, 텍스트만 옮기는 방식이 구조적으로 불안정하다.
 
----
+이번 재설계의 목표는 분명하다.
 
-## 2. 재구성이 막히는 두 가지 근본 문제
+- 변경된 MDX 블록은 가능한 한 "다시 emit한 XHTML fragment"로 교체한다.
+- emitter가 재현할 수 없는 Confluence 전용 정보만 sidecar metadata로 보존 후 재주입한다.
+- modified block 처리의 기본 전략을 `transfer_text_changes()` 가 아니라 `reconstruct_fragment()` 로 바꾼다.
 
-### 문제 A: 리스트 항목 내 lossy 요소의 위치를 모름
+즉 새 기본 경로는 다음과 같다.
 
-리스트 항목 안에 `<ac:image>`, `<ac:link>`, `<span style=...>` 같은 요소가 있어도 MDX에는 표현되지 않는다. 재구성 시 이 요소들을 어느 `<li>`의 어느 위치에 넣어야 할지 알 수 없다.
+`MDX diff -> changed block identify -> emit XHTML fragment -> restore preserved anchors/lost info -> replace top-level fragment -> forward verify`
 
-```xml
-<!-- 원본 XHTML -->
-<ul>
-  <li><p>item 1</p><ac:image><ri:attachment ri:filename="img.png"/></ac:image></li>
-  <li><p>item 2</p></li>
-</ul>
+## 3. 리뷰에서 확정된 수정 요구
 
-<!-- MDX — ac:image 없음 -->
-* item 1
-* item 2
-```
+리뷰 문서에서 지적한 사항 중 설계 착수 전에 반드시 확정해야 하는 항목은 아래 네 가지다.
 
-재구성 후 `<ac:image>`를 어디에 넣어야 할지 알려주는 정보가 현재 sidecar에 없다.
+### 3.1 Paragraph 좌표계
 
-### 문제 B: Callout 내부 복합 구조를 재구성하지 못함
+기존 문서는 `convert_inline()` 를 사실상 "XHTML -> MDX 역변환기"처럼 가정했다. 실제 코드에서는 성립하지 않는다.
 
-MDX에서 callout 내부는 단순한 텍스트 블록이지만, XHTML에서는 `<p>`, `<ul>`, `<ac:structured-macro ac:name="code">` 등이 중첩된 구조다. 현재 `_convert_callout_inner()`는 내부를 단일 paragraph로만 변환하므로, 내부에 리스트나 코드 블록이 있으면 구조가 무너진다.
+- `convert_inline()` 는 `mdx_to_storage.inline.convert_inline`
+- 역할은 MDX inline -> XHTML inline 변환
+- XHTML fragment를 넣어도 MDX로 돌아오지 않는다
 
-```mdx
-<Callout type="info">
-  단락 텍스트
+따라서 새 설계는 다음 원칙을 따른다.
 
-  * 리스트 항목 1
-  * 리스트 항목 2
-</Callout>
-```
+- paragraph/list-item anchor 매핑의 기준 좌표계는 "MDX literal"이 아니다
+- 기준 좌표계는 "XHTML DOM 에서 추출한 normalized plain text"다
+- old/new 비교는 `old_mdx_text` 가 아니라 `old_plain_text -> new_plain_text` 로 수행한다
 
-→ 현재: `<p>단락 텍스트 * 리스트 항목 1 * 리스트 항목 2</p>` (틀림)
-→ 목표: `<p>단락 텍스트</p><ul><li><p>리스트 항목 1</p></li>...` (맞음)
+이 결정으로 XHTML -> MDX inverse 가정을 제거한다.
 
----
+### 3.2 테스트 oracle
 
-## 3. 해결 방안
+`mapping.yaml` 은 runtime lookup 용이지, fragment oracle 용이 아니다. 실제 저장소의 `load_sidecar_mapping()` 도 fragment 본문을 읽지 않는다.
 
-### 3.1 문제 A 해결: Sidecar 플랫 매핑 + ref 참조 구조
+새 설계의 oracle은 다음 순서로 사용한다.
 
-#### 핵심 원칙
+1. `expected.roundtrip.json`
+   - 모든 `tests/testcases/*` 21개에 존재
+   - top-level `xhtml_fragment` 를 exact oracle로 제공
+2. `page.xhtml`
+   - sidecar에 없는 nested fragment나 sub-xpath 비교에 사용
+3. `expected.reverse-sync.patched.xhtml`
+   - 변경 시나리오 16개에 대한 golden page oracle
 
-`<ul>`/`<ol>`과 `<li>` 모두 **최상위 sidecar entry**로 나열하고, 부모-자식 관계는 `children` ref 목록으로 표현한다.
+즉 unit/integration 테스트는 `mapping.yaml` 에 의존하지 않는다.
 
-- `ul`/`ol` entry → `children: [li xhtml_xpath 목록]`
-- `li` entry → `plain_text`, `inline_trailing_html`, `children: [block child xhtml_xpath 목록]`
-- `<li>` 내부의 block 요소 (`<ul>`, `<ol>`, `<ac:structured-macro>` 등)도 독립 entry — `li` entry의 `children`에서 참조
+### 3.3 XHTML normalization
 
-이 구조는 `ul`-`li` 관계와 `li`-block child 관계를 동일한 패턴으로 처리하므로, 어떤 깊이의 nesting도 추가 설계 없이 커버된다. nested list의 이중 삽입 문제가 구조적으로 제거된다.
+새 비교 전략은 `lxml` 을 도입하지 않는다.
 
-#### Sidecar 스키마 변경
+이 저장소에는 이미 다음 자산이 있다.
 
-```yaml
-# 기존
-mappings:
-  - xhtml_xpath: ul[1]
-    xhtml_type: list
-    mdx_blocks: [5]
+- `bin/reverse_sync/mdx_to_storage_xhtml_verify.py`
+- `xhtml_beautify_diff.py`
+- BeautifulSoup 기반 attribute stripping / layout stripping / macro stripping
 
-# 변경 후 — ul, li 모두 최상위 entry, 관계는 children ref 로 표현
-# xhtml_type 은 XHTML 태그명 그대로 사용 (ul, ol, li, p, ac:image 등)
-mappings:
-  - xhtml_xpath: ul[1]
-    xhtml_type: ul
-    mdx_blocks: [5]
-    children:
-      - ref: "ul[1]/li[1]"
-      - ref: "ul[1]/li[2]"
+새 설계는 이 경로를 공용 normalizer로 승격한다.
 
-  - xhtml_xpath: ul[1]/li[1]
-    xhtml_type: li
-    plain_text: "item 1 설명 텍스트"           # inline 매칭 키
-    inline_trailing_html: >-
-      <ac:image><ri:attachment
-      ri:filename="img.png"/></ac:image>        # <p> 직후 non-block lossy 요소만
-    children:
-      - ref: "ul[1]/li[1]/ul[1]"               # block child 참조
+- 새 공용 모듈: `reverse_sync/xhtml_normalizer.py`
+- 구현 기반: BeautifulSoup + 기존 ignored-attribute 규칙 재사용
+- 비교 단위: page 전체와 fragment 모두 지원
 
-  - xhtml_xpath: ul[1]/li[1]/ul[1]
-    xhtml_type: ul
-    children:
-      - ref: "ul[1]/li[1]/ul[1]/li[1]"
+이로써 새 의존성 없이 테스트 가능성을 확보한다.
 
-  - xhtml_xpath: ul[1]/li[1]/ul[1]/li[1]
-    xhtml_type: li
-    plain_text: "sub-item A"
-    inline_trailing_html: ""
-    children: []
+### 3.4 block identity
 
-  - xhtml_xpath: ul[1]/li[2]
-    xhtml_type: li
-    plain_text: "item 2 텍스트"
-    inline_trailing_html: ""
-    children: []
-```
+`mdx_content_hash` 단독 매칭은 충분하지 않다.
 
-`inline_trailing_html`은 `<p>` 직후의 **non-block** 요소만 저장한다. `<ul>`, `<ol>`, `<ac:structured-macro>` 등 block 요소는 `children` ref로 분리하므로 저장 대상이 아니다.
+현재 실제 데이터에서도 중복 content가 존재한다. 특히 `reverse_sync.mdx_block_parser` 기준으로는 `</Callout>` 같은 동일 블록이 여러 번 잡히는 케이스가 이미 보인다.
 
-#### 생성: `_process_element()` 재귀 처리
+새 설계의 block identity는 아래를 함께 사용한다.
 
-```python
-def _process_element(elem, xpath: str) -> list[SidecarEntry]:
-    """ul/ol/li 요소를 재귀 처리하여 독립 SidecarEntry 목록을 반환한다.
+- `block_index`
+- `mdx_line_range`
+- `mdx_content_hash`
+- 필요 시 동일 hash 후보군 내 상대 순서
 
-    모든 요소는 최상위 entry 로 생성되고, 부모-자식 관계는 children ref 로 표현된다.
-    """
-    entries = []
+즉 lookup key는 "hash 하나"가 아니라 "hash + line range + order"다.
 
-    if elem.name in ('ul', 'ol'):
-        children_refs = []
-        for li_idx, li in enumerate(elem.find_all('li', recursive=False), start=1):
-            li_xpath = f"{xpath}/li[{li_idx}]"
-            children_refs.append({'ref': li_xpath})
-            entries.extend(_process_element(li, li_xpath))
+## 4. 현재 코드베이스와 자산 분석
 
-        entries.insert(0, SidecarEntry(
-            xhtml_xpath=xpath,
-            xhtml_type=elem.name,   # 'ul' 또는 'ol' — XHTML 태그명 그대로
-            children=children_refs,
-        ))
+### 4.1 코드베이스에서 재사용할 축
 
-    elif elem.name == 'li':
-        # Confluence storage format에서 <li> 내부는 항상 <p>로 래핑됨.
-        # <p> 없는 <li>는 실제로 존재하지 않는 케이스이므로 별도 처리 불필요.
-        p_elem = elem.find('p')
-        plain_text = p_elem.get_text(separator=' ', strip=True) if p_elem else ''
+이미 있는 구현 중 이번 설계에서 그대로 활용할 축은 다음과 같다.
 
-        # inline trailing: <p> 직후 non-block 형제 요소
-        inline_trailing = []
-        block_children_refs = []
-        block_counters = {}
+- `reverse_sync_cli.py`
+  - verify / push orchestration
+  - forward convert 후 strict roundtrip 검증
+- `reverse_sync.sidecar`
+  - `RoundtripSidecar`, `SidecarBlock`, `expected.roundtrip.json`
+- `reverse_sync.mapping_recorder`
+  - XHTML top-level / callout child mapping 추출
+- `mdx_to_storage.parser`, `mdx_to_storage.emitter`
+  - MDX 구조 파싱과 XHTML emission
+  - callout child 재귀 emission 가능
+  - nested list tree 구성 함수 보유
+- `reverse_sync.lost_info_patcher`
+  - 링크, 이모티콘, filename, image, ADF extension 복원 로직
 
-        if p_elem:
-            for sib in p_elem.next_siblings:
-                if not hasattr(sib, 'name'):
-                    continue
-                if sib.name in ('ul', 'ol') or _is_block_macro(sib):
-                    tag = sib.name
-                    block_counters[tag] = block_counters.get(tag, 0) + 1
-                    child_xpath = f"{xpath}/{tag}[{block_counters[tag]}]"
-                    block_children_refs.append({'ref': child_xpath})
-                    entries.extend(_process_element(sib, child_xpath))
-                else:
-                    inline_trailing.append(str(sib))
+반대로 이번 재설계에서 더 이상 중심축이 되어서는 안 되는 부분은 다음과 같다.
 
-        entries.insert(0, SidecarEntry(
-            xhtml_xpath=xpath,
-            xhtml_type='li',        # XHTML 태그명 그대로
-            plain_text=plain_text,
-            inline_trailing_html=''.join(inline_trailing),
-            children=block_children_refs,
-        ))
+- `transfer_text_changes()` 기반 modified block 패치
+- `mapping.yaml` 을 fragment oracle처럼 사용하는 방식
+- block 내부 구조를 content text만으로 추론하는 방식
 
-    return entries
-```
+### 4.2 테스트 자산 현황
 
-#### 소비: `reconstruct_ul_entry()` / `reconstruct_li_entry()` — `_ListNode` tree 위치 기반 매칭
+현재 확보된 테스트 자산은 설계 검증에 충분히 강하다.
 
-MDX 파서(`parse_mdx_blocks()`)는 nested list 전체를 하나의 `list` 블록으로 반환하고, 구조화는 하지 않는다. `emitter.py`에 이미 존재하는 `_parse_list_items()` + `_build_list_tree()`를 재사용하여 `_ListNode` tree를 생성하고, sidecar `children` refs와 **위치 기반(zip)** 으로 매칭한다.
+#### `tests/testcases/`
 
-텍스트 기반 큐(`pop_inline_item()`) 없이 위치 기반으로만 동작하므로, 동일 텍스트 항목이 여럿 있어도 충돌이 없다.
+- 총 21개 케이스
+- `page.xhtml`: 21개
+- `expected.mdx`: 21개
+- `expected.roundtrip.json`: 21개
+- `original.mdx` + `improved.mdx` + `expected.reverse-sync.*`: 16개
+- `attachments.v1.yaml`: 19개
+- `page.v1.yaml`: 19개
+- `page.v2.yaml`, `children.v2.yaml`: 각 19개
+- `page.adf`: 18개
 
-```python
-def reconstruct_ul_entry(
-    entry: SidecarEntry,
-    sidecar_index: dict,
-    mdx_nodes: list[_ListNode],    # 이 ul/ol 레벨의 MDX 항목들 (_ListNode)
-) -> str:
-    """ul/ol entry를 재구성한다.
+구조적 커버리지:
 
-    sidecar children refs와 mdx_nodes를 위치(zip)로 매칭한다.
-    emitter._parse_list_items() + _build_list_tree()로 생성한 _ListNode tree를 인자로 받는다.
+- list: 20개
+- table: 9개
+- image: 13개
+- callout macro/ADF panel: 12개
+- `ac:adf-extension`: 3개
+- 링크: 12개
+- code macro: 4개
 
-    항목 수 불일치 처리:
-      - MDX 항목이 더 많음(추가): zip 이후 남은 mdx_nodes를 sidecar 없이 재구성
-      - MDX 항목이 더 적음(삭제): zip이 짧은 쪽에서 멈추므로 삭제 항목은 자동 생략
-    """
-    tag = entry.xhtml_type  # 'ul' or 'ol' — XHTML 태그명 그대로
-    sidecar_refs = entry.children or []
-    parts = []
+대표 케이스:
 
-    # sidecar가 있는 항목: ref + node 위치 매칭
-    for ref_dict, node in zip(sidecar_refs, mdx_nodes):
-        li_entry = sidecar_index.get(ref_dict['ref'])
-        if li_entry:
-            parts.append(reconstruct_li_entry(li_entry, sidecar_index, node))
+- list item + image: `544113141`, `544145591`, `692355151`, `880181257`, `883654669`
+- callout + nested list: `1454342158`, `544145591`, `692355151`, `880181257`, `883654669`
+- callout + code macro: `544112828`
+- ADF panel: `1454342158`, `544379140`, `panels`
 
-    # sidecar보다 MDX 항목이 많으면 — 새로 추가된 항목, sidecar 없이 재구성
-    for node in mdx_nodes[len(sidecar_refs):]:
-        parts.append(f'<li><p>{convert_inline(node.text)}</p></li>')
+#### `tests/reverse-sync/`
 
-    return f'<{tag}>{"".join(parts)}</{tag}>'
+- 총 42개 실제 reverse-sync 회귀 케이스
+- `pages.yaml` 기준: `pass` 28개, `fail` 14개, `catalog_only` 24개
 
+구조적 커버리지:
 
-def reconstruct_li_entry(
-    entry: SidecarEntry,
-    sidecar_index: dict,
-    node: _ListNode,               # 이 li에 대응하는 MDX _ListNode
-) -> str:
-    """li entry를 재구성한다.
+- list: 42개
+- image: 38개
+- callout: 28개
+- table: 10개
+- 링크: 19개
+- code macro: 7개
 
-    node.text — li 본문 MDX 텍스트
-    node.children — 이 li의 nested list 항목들 (nested ul/ol 재구성에 전달)
-    """
-    li_inner = f'<p>{convert_inline(node.text)}</p>'
-    li_inner += entry.inline_trailing_html or ''
+특히 중요한 실사례:
 
-    for ref_dict in (entry.children or []):
-        child = sidecar_index.get(ref_dict['ref'])
-        if child is None:
-            continue
-        if child.xhtml_type in ('ul', 'ol'):
-            # node.children = 이 li의 nested list 항목들
-            li_inner += reconstruct_ul_entry(child, sidecar_index, node.children)
-        else:
-            # block macro 등 기타 block children — 원본 xhtml_fragment 그대로
-            li_inner += child.xhtml_fragment or ''
-    return f'<li>{li_inner}</li>'
+- paragraph/list item 내부 inline image: `544376004`
+- callout + code: `544112828`
+- 다수의 이미지/링크/callout 혼합 페이지: `544145591`, `1454342158`
 
+#### 결론
 
-# 진입점 (patch_builder.py에서 list 블록 처리 시)
-# emitter.py의 기존 함수 재사용
-items = _parse_list_items(new_block.content)   # bin/mdx_to_storage/emitter.py
-roots = _build_list_tree(items)                # bin/mdx_to_storage/emitter.py
-xhtml = reconstruct_ul_entry(sidecar_entry, sidecar_index, roots)
-```
+새 설계는 "fixture가 부족해서 추상 설계를 해야 하는 상태"가 아니다. 오히려 반대다.
+
+- unchanged fragment oracle: 이미 충분함
+- changed-page golden oracle: 16개 존재
+- failure reproduction corpus: 42개 존재
+
+부족한 것은 fixture 양이 아니라, 이 자산을 설계 검증 단계별로 재배치하는 일이다.
+
+## 5. 제안 아키텍처
+
+### 5.1 최상위 원칙
+
+1. modified block는 whole-fragment replacement가 기본이다
+2. preserved 정보는 "text"가 아니라 "raw XHTML preservation unit" 으로 다룬다
+3. anchor 재주입은 MDX 좌표가 아니라 normalized plain-text 좌표에서 수행한다
+4. list / callout / details / ADF panel 은 child order 기반으로 재구성한다
+5. 지원 범위 밖 구조는 fuzzy patch 하지 않고 명시적으로 fail 한다
+
+### 5.2 sidecar 전략
+
+기존 `RoundtripSidecar` 를 primary runtime artifact 로 승격한다.
+
+- `mapping.yaml`
+  - 역할 축소: top-level routing, 사람이 읽는 디버그 용도
+- `expected.roundtrip.json`
+  - 역할 확대: exact fragment oracle + reconstruction metadata
+
+새 스키마는 `RoundtripSidecar schema_version = 3` 으로 정의한다.
+
+핵심 변화:
+
+- 각 `SidecarBlock` 에 reconstruction metadata 추가
+- modified block 재구성에 필요한 preserved anchor/unit 을 block 단위로 저장
+
+예시:
+
+```json
+{
+  "block_index": 12,
+  "xhtml_xpath": "p[3]",
+  "xhtml_fragment": "<p>A <ac:image ... /> B</p>",
+  "mdx_content_hash": "...",
+  "mdx_line_range": [40, 40],
+  "lost_info": {},
+  "reconstruction": {
+    "kind": "paragraph",
+    "old_plain_text": "A  B",
+    "anchors": [
+      {
+        "anchor_id": "p[3]/ac:image[1]",
+        "raw_xhtml": "<ac:image ... />",
+        "old_plain_offset": 2,
+        "affinity": "after"
+      }
+    ]
+  }
+}
 ```
 
-#### 처리 가능한 케이스 분류
+리스트 예시:
 
-| 케이스 | 처리 방법 |
-|--------|-----------|
-| 항목 내용 변경 + lossy 없음 | `li` entry 재구성 (clean) |
-| 항목 내용 변경 + inline lossy 있음 | 재구성 + `inline_trailing_html` 재주입 |
-| 항목 내 nested list 있음 | `li` entry의 `children` → `ul`/`ol` entry 재구성 (이중 삽입 구조적 불가) |
-| 항목 추가 (MDX > sidecar) | `zip()` 이후 남은 `mdx_nodes`를 sidecar 없이 재구성 — `inline_trailing_html` 없음 |
-| 항목 삭제 (MDX < sidecar) | `zip()`이 짧은 쪽에서 멈추므로 삭제 항목 자동 생략 |
-| 깊이 무관한 nesting | `reconstruct_entry()` 재귀로 동일하게 처리 |
-
----
-
-> **TODO — 구현 전 조사 필요**
->
-> 1. **[Phase 1 선결] 현재 `generate_sidecar_mapping()`의 `li` 처리 여부**: `<li>`에 대해 독립 entry를 이미 생성하는지, 아니면 `<ul>`/`<ol>` entry 안에 포함하는지 확인. `_process_element()` 도입 시 기존 entry 생성 로직과의 충돌 범위 파악 필요.
->
-> 2. **[Phase 1 선결] `xhtml_type` 태그명 일치 확인**: `xhtml_type`은 XHTML 태그명 그대로 사용한다 (`ul`, `ol`, `li`, `p`, `ac:image` 등). 기존 sidecar에 추상 타입(`list`, `list_item`)이 저장된 경우 마이그레이션 또는 역직렬화 시 변환 필요 여부 확인.
->
-> 3. **[Phase 1 선결] `xhtml_xpath` 포맷**: nested element의 xpath `ul[1]/li[1]/ul[1]` 형식이 현재 `mapping_recorder.py`의 xpath 생성 방식과 일치하는지 확인 필요.
->
-> 4. **[Phase 1 선결] `_parse_list_items()` / `_build_list_tree()` 접근성 확인**: `emitter.py`의 두 함수가 모듈 외부에서 import 가능한지 확인. private 함수(`_`prefix)이므로 `reverse_sync` 패키지에서 호출 가능한 형태로 노출 필요 여부 검토.
->
-> 5. **[Phase 1 선결] `_is_block_macro()` 판별 기준**: `<ac:structured-macro>`가 block child로 분류되어야 할 케이스와 inline trailing으로 남아야 할 케이스 구분 기준 확인 필요.
->
-> 6. **[조사] 다단락 `<li>` 존재 여부**: `<li><p>para1</p><p>para2</p></li>` 형태가 실제 Confluence XHTML에 존재하는지 testcase 전수 조사. 추측으로는 존재하지 않으며, 단일 `<p>` 내에서 `<br/>` 줄바꿈만 사용하는 것으로 보임. 존재하지 않음이 확인되면 단순 케이스로 간주하고 별도 처리 불필요. 존재하면 두 번째 `<p>`를 `inline_trailing_html`에 보존하는 방향 검토.
-
----
-
-### 3.1.1 Paragraph 내 inline-block 요소 처리 — ParagraphEditSequence 기반
-
-`<p>` 내부에 텍스트와 lossy inline-block 요소(`<ac:image>` 등)가 혼재하는 경우, list-item과 동일한 원칙을 적용한다: lossy 요소는 **독립 sidecar entry**로 분리하고, `paragraph` entry의 `children`에서 ref로 참조한다.
-
-텍스트 편집이 발생한 경우, old MDX → new MDX의 **ParagraphEditSequence**(Myers diff 기반)를 구하여 각 `AnchorSegment`의 삽입 위치를 old 좌표에서 new 좌표로 정확히 매핑한다. fuzzy 매칭은 사용하지 않는다. 설계가 커버하지 못하는 케이스는 명시적으로 실패시키고, 테스트케이스를 보강하는 사이클로 해결한다.
-
-#### 용어 정의
-
-```
-ParagraphEditSequence = list[InlineSegment]
-
-InlineSegment
-├── TextSegment(text: str)      # diff 대상 텍스트 조각
-└── AnchorSegment(ref: str)     # ac:image 등 lossy inline-block — 위치 고정 앵커
+```json
+{
+  "block_index": 8,
+  "xhtml_xpath": "ul[1]",
+  "xhtml_fragment": "<ul>...</ul>",
+  "reconstruction": {
+    "kind": "list",
+    "ordered": false,
+    "items": [
+      {
+        "item_xpath": "ul[1]/li[1]",
+        "old_plain_text": "item 1",
+        "anchors": [],
+        "child_blocks": []
+      },
+      {
+        "item_xpath": "ul[1]/li[2]",
+        "old_plain_text": "item 2",
+        "anchors": [
+          {
+            "anchor_id": "ul[1]/li[2]/ac:image[1]",
+            "raw_xhtml": "<ac:image ... />",
+            "old_plain_offset": 6,
+            "affinity": "after"
+          }
+        ],
+        "child_blocks": [
+          {
+            "kind": "list",
+            "xpath": "ul[1]/li[2]/ol[1]"
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
-`<p>` 하나는 하나의 `ParagraphEditSequence`로 표현된다. `TextSegment`와 `AnchorSegment`가 교차하는 시퀀스이며, edit(Myers diff)는 `TextSegment`에만 적용된다. `AnchorSegment`는 인접 `TextSegment`의 위치 변화를 따라 new 좌표로 매핑된다.
-
-#### Sidecar 스키마
-
-`<p>` 내부를 `TextSegment`(`kind: text`)와 `AnchorSegment`(`kind: ref`) 교차 시퀀스로 표현한다. `TextSegment.text`는 MDX 텍스트 조각(`convert_inline()` 출력)이며, `AnchorSegment`의 위치를 정의하는 좌표 기준이 된다. TextSegments를 이어 붙이면 해당 단락의 MDX 텍스트(`old_mdx_text`)와 정확히 일치한다.
-
-```yaml
-- xhtml_xpath: p[1]
-  xhtml_type: p
-  children:
-    - kind: text
-      text: "텍스트A "            # TextSegment — MDX 텍스트 조각 (convert_inline 출력)
-    - kind: ref
-      ref: "p[1]/ac:image[1]"    # AnchorSegment — 이 TextSegment 직후 위치
-    - kind: text
-      text: " 텍스트B"            # TextSegment — MDX 텍스트 조각
-    - kind: ref
-      ref: "p[1]/ac:image[2]"    # AnchorSegment
-
-- xhtml_xpath: p[1]/ac:image[1]
-  xhtml_type: ac:image
-  html: "<ac:image><ri:attachment ri:filename='img1.png'/></ac:image>"
-
-- xhtml_xpath: p[1]/ac:image[2]
-  xhtml_type: ac:image
-  html: "<ac:image><ri:attachment ri:filename='img2.png'/></ac:image>"
-```
-
-신규 sidecar는 `ac:image` 존재 여부와 무관하게 **항상** `children`을 구성한다. `ac:image`가 없는 경우 `children = [{'kind': 'text', 'text': '전체텍스트'}]` 형태가 된다. `children`이 없는 entry는 구 sidecar에 대한 backward compat 폴백으로만 사용된다.
-
-#### 생성: `_process_paragraph()` — 항상 교차 시퀀스로 구성
-
-`TextSegment.text`는 XHTML plain text가 아닌 **MDX 텍스트 조각**을 저장한다. XHTML 조각을 누적한 뒤 `convert_inline()`을 적용하면, TextSegments를 이어 붙인 결과가 해당 단락의 MDX 텍스트와 정확히 일치한다. 이로써 `reconstruct_paragraph()`에서 별도 normalization 없이 `old_text == old_mdx_text`가 항상 성립한다.
-
-```python
-def _process_paragraph(elem, xpath: str) -> list[SidecarEntry]:
-    """<p> 요소를 처리하여 ParagraphEditSequence 구조의 sidecar entry를 생성한다.
-
-    ac:image 존재 여부와 무관하게 항상 TextSegment/AnchorSegment 교차 시퀀스로 children을 구성한다.
-      - ac:image 없음: children = [{'kind': 'text', 'text': '전체MDX텍스트'}]
-      - ac:image 있음: [text, ref, text, ref, ..., text] 교차 시퀀스
-
-    TextSegment.text는 MDX 텍스트 조각이다 — XHTML 조각(strong, em, code 등)을
-    convert_inline()으로 변환한 결과. TextSegments 연결 = 해당 단락의 MDX 텍스트.
-    """
-    entries = []
-    children = []
-    image_counters = {}
-    cursor_xhtml = ''  # <p> 내 텍스트/인라인 요소의 XHTML 조각 누적
-
-    for child in elem.children:
-        if hasattr(child, 'name') and child.name == 'ac:image':
-            # 직전 TextSegment flush — 누적 XHTML을 MDX 텍스트로 변환 (빈 문자열도 포함)
-            children.append({'kind': 'text', 'text': convert_inline(cursor_xhtml)})
-            cursor_xhtml = ''
-            # AnchorSegment
-            image_counters['ac:image'] = image_counters.get('ac:image', 0) + 1
-            img_xpath = f"{xpath}/ac:image[{image_counters['ac:image']}]"
-            children.append({'kind': 'ref', 'ref': img_xpath})
-            # ac:image 독립 entry
-            entries.append(SidecarEntry(
-                xhtml_xpath=img_xpath,
-                xhtml_type='ac:image',
-                html=str(child),
-            ))
-        else:
-            # 텍스트 노드(NavigableString) 또는 인라인 요소(strong, em, code 등) — XHTML 조각 누적
-            cursor_xhtml += str(child)
-
-    # 마지막 TextSegment flush (항상 추가 — ac:image 없어도 전체 텍스트가 여기에 들어감)
-    children.append({'kind': 'text', 'text': convert_inline(cursor_xhtml)})
-
-    entries.insert(0, SidecarEntry(
-        xhtml_xpath=xpath,
-        xhtml_type='p',
-        children=children,
-    ))
-    return entries
-```
-
-#### ParagraphEditSequence를 이용한 AnchorSegment 위치 매핑
-
-```
-old_seq = ParagraphEditSequence from sidecar:
-  [TextSegment("텍스트A "), AnchorSegment(ref[1]), TextSegment(" 텍스트B"), AnchorSegment(ref[2])]
-
-old_text = TextSegment 연결: "텍스트A  텍스트B"
-new_text = 새 MDX: "수정된텍스트A 수정된텍스트B"
-
-AnchorSegment 위치 (old 좌표):
-  ref[1]: old_pos = len("텍스트A ")  = 5   (TextSegment[0] 끝)
-  ref[2]: old_pos = len("텍스트A  텍스트B") = 11  (TextSegment[1] 끝)
-
-Myers diff edit ops (TextSegment 연결 텍스트 기준):
-  DELETE  "텍스트A"   (old 0..4)
-  INSERT  "수정된텍스트A"
-  RETAIN  " "         (old 5)    ← ref[1] old_pos=5 → new_pos 여기서 결정
-  DELETE  " 텍스트B"  (old 6..11)
-  INSERT  " 수정된텍스트B"
-                                 ← ref[2] old_pos=11 → new_pos 여기서 결정
-
-매핑 결과:
-  ref[1]: new_pos = 8   ("수정된텍스트A " 이후)
-  ref[2]: new_pos = 18  (" 수정된텍스트B" 이후)
-
-재구성:
-  new_text[:8] + image[1].html + new_text[8:18] + image[2].html + new_text[18:]
-  = "수정된텍스트A " + <ac:image[1]> + " 수정된텍스트B" + <ac:image[2]>
-```
-
-#### 구현
-
-```python
-def map_anchor_positions(
-    old_text: str,
-    new_text: str,
-    old_positions: list[int],   # unit: Python str index (Unicode code point)
-) -> list[int]:                 # unit: Python str index (Unicode code point)
-    """Myers diff edit sequence로 AnchorSegment의 old 좌표를 new 좌표로 매핑한다.
-
-    좌표 단위: Python str index (Unicode code point).
-    한국어/영어 텍스트에서 code point = grapheme cluster이므로 실용상 문제 없음.
-    이모지 결합 문자(ZWJ sequence) 등 edge case가 발생하면 그때 testcase 추가 후 대응한다.
-
-    edit op:
-      ('retain', n) — old n code points 유지 → old_ptr += n, new_ptr += n
-      ('delete', n) — old n code points 삭제 → old_ptr += n
-      ('insert', s) — new s 삽입 → new_ptr += len(s)  (len = code point 수)
-
-    AnchorSegment position은 TextSegment 끝(직후)에 위치하므로:
-      old_ptr 이 old_pos 에 도달하는 시점의 new_ptr 를 기록한다.
-    """
-    ops = myers_diff(old_text, new_text)  # → list of (op, value)
-    old_ptr = 0
-    new_ptr = 0
-    pos_iter = iter(sorted(old_positions))
-    next_pos = next(pos_iter, None)
-    new_positions = []
-
-    for op, value in ops:
-        if next_pos is None:
-            break
-        if op == 'retain':
-            n = value
-            while next_pos is not None and old_ptr + n >= next_pos:
-                offset = next_pos - old_ptr
-                new_positions.append(new_ptr + offset)
-                next_pos = next(pos_iter, None)
-            old_ptr += n
-            new_ptr += n
-        elif op == 'delete':
-            n = value
-            while next_pos is not None and old_ptr + n >= next_pos:
-                # 삭제 구간 안에 AnchorSegment → delete 직후 new_ptr 로 매핑
-                new_positions.append(new_ptr)
-                next_pos = next(pos_iter, None)
-            old_ptr += n
-        elif op == 'insert':
-            new_ptr += len(value)
-
-    # 남은 position은 old_text 끝 이후 → new_text 끝으로 매핑
-    while next_pos is not None:
-        new_positions.append(len(new_text))
-        next_pos = next(pos_iter, None)
-
-    return new_positions
-
-
-def reconstruct_paragraph(
-    old_mdx_text: str,
-    new_mdx_text: str,
-    entry: SidecarEntry,
-    sidecar_index: dict,
-) -> str:
-    """paragraph를 ParagraphEditSequence 기반으로 재구성한다.
-
-    children이 없으면 새 MDX 텍스트를 그대로 변환한다 (구 sidecar backward compat 폴백).
-    children이 있으면:
-      - TextSegment 연결 = 해당 단락의 MDX 텍스트 → old_mdx_text와 직접 비교 (normalization 불필요)
-      - AnchorSegment가 없는 경우(ac:image 없음): convert_inline 적용
-      - AnchorSegment가 있는 경우: map_anchor_positions()로 위치 매핑 후 new_text에 삽입
-    old_mdx_text가 TextSegment 연결과 일치하지 않으면 SidecarMismatchError를 발생시킨다.
-    """
-    if not entry.children:
-        return f'<p>{convert_inline(new_mdx_text)}</p>'
-
-    # ParagraphEditSequence 복원
-    text_segments = [c['text'] for c in entry.children if c['kind'] == 'text']  # TextSegment
-    anchor_refs = [c['ref'] for c in entry.children if c['kind'] == 'ref']      # AnchorSegment
-    old_text = ''.join(text_segments)
-
-    if old_text != old_mdx_text:
-        raise SidecarMismatchError(
-            f"paragraph TextSegment mismatch:\n"
-            f"  sidecar: {old_text!r}\n"
-            f"  actual:  {old_mdx_text!r}\n"
-            f"  → sidecar 재생성 필요 (testcase fixture 업데이트)"
-        )
-
-    # AnchorSegment old 좌표 계산 (TextSegment 누적 길이)
-    old_positions = []
-    cursor = 0
-    seg_iter = iter(text_segments)
-    for child in entry.children:
-        if child['kind'] == 'text':
-            cursor += len(next(seg_iter))
-        elif child['kind'] == 'ref':
-            old_positions.append(cursor)
-
-    # Myers diff로 AnchorSegment new 좌표 매핑
-    new_positions = map_anchor_positions(old_text, new_mdx_text, old_positions)
-
-    # new_mdx_text를 MDX 좌표로 먼저 분할한 뒤, 각 조각에 convert_inline() 적용
-    result = ''
-    prev = 0
-    for ref, new_pos in zip(anchor_refs, new_positions):
-        mdx_piece = new_mdx_text[prev:new_pos]          # MDX 좌표로 MDX 텍스트 분할
-        result += convert_inline(mdx_piece)              # 분할 후 XHTML 변환
-        ref_entry = sidecar_index.get(ref)
-        if ref_entry is None:
-            raise SidecarMismatchError(f"AnchorSegment ref not found in sidecar_index: {ref!r}")
-        result += ref_entry.html
-        prev = new_pos
-    result += convert_inline(new_mdx_text[prev:])       # 마지막 조각
-
-    return f'<p>{result}</p>'
-```
-
-#### 명시적 실패 케이스
-
-| 케이스 | 동작 |
-|--------|------|
-| `old_text != TextSegment 연결` | `SidecarMismatchError` — sidecar 재생성 후 testcase 업데이트 |
-| `AnchorSegment ref`가 `sidecar_index`에 없음 | `SidecarMismatchError` — sidecar 구조 오류 |
-| 삭제 구간 안에 `AnchorSegment` | `new_ptr`(삭제 직후) 로 매핑 (정의된 동작) |
-| children이 없는 paragraph | 기존 경로 — `convert_inline(new_mdx_text)` 그대로 사용 |
-
-실패가 발생하면:
-1. 실패 케이스를 재현하는 testcase fixture를 추가한다
-2. `SidecarMismatchError`면 sidecar 생성 로직을 수정하고 fixture를 재생성한다
-3. 정의되지 않은 구조적 케이스면 설계를 보완하고 다시 사이클을 돈다
-
----
-
-> **TODO — 구현 전 조사 필요**
->
-> 1. **[확정] `myers_diff()` 좌표 단위**: Python str index (Unicode code point) 단위로 확정. 함수 시그니처 주석에 명시됨. 이모지 결합 문자 등 edge case는 발생 시 testcase 추가 대응.
->
-> 2. **[Phase 1 선결] `old_mdx_text` 추출 방법**: `patch_builder.py`에서 paragraph 블록의 old MDX 텍스트를 어떻게 가져오는지 확인. `block_diff.py`의 `Change.old_block.content`가 이 역할을 하는지 확인.
->
-> 3. **[Phase 1 선결] `<ac:image>`의 위치 유형 구분**: `<p>` 내부 inline vs `<p>` 외부 독립 block 케이스를 `mapping_recorder.py`가 어떻게 구분하는지 확인. 독립 block이면 이 설계 대상 밖.
->
-> 4. **[확정] `convert_inline()` 적용 시점**: MDX 좌표로 MDX 텍스트를 먼저 분할한 뒤 각 조각에 `convert_inline()` 적용 — 좌표계 불일치 구조적 해소. `reconstruct_paragraph()` 구현에 반영됨.
-
----
-
-### 3.2 문제 B 해결: Callout 내부 재귀 파싱
-
-#### 아이디어
-
-`_convert_callout_inner()`에서 내부 텍스트를 paragraph로 변환하는 대신, `parse_mdx_blocks()`로 내부를 블록 시퀀스로 파싱한 뒤 `mdx_block_to_xhtml_element()`를 재귀 적용한다.
-
-#### 구현
-
-```python
-def _convert_callout_inner_full(text: str) -> str:
-    """callout 내부를 재귀적으로 블록 파싱하여 XHTML을 재구성한다."""
-    from mdx_to_storage.parser import parse_mdx_blocks
-
-    # <Callout> 래퍼 제거 후 들여쓰기 보정
-    inner = _strip_callout_wrapper(text)
-    inner = _dedent_callout_body(inner)
-
-    # 내부를 MDX 블록으로 파싱 (이미 존재하는 파서 재사용)
-    inner_blocks = [b for b in parse_mdx_blocks(inner)
-                    if b.type not in ('frontmatter', 'import_statement', 'empty')]
-
-    if not inner_blocks:
-        return ''
-
-    # 각 블록을 재귀 재구성
-    parts = [mdx_block_to_xhtml_element(b) for b in inner_blocks]
-    return ''.join(parts)
-
-
-def _dedent_callout_body(text: str) -> str:
-    """callout 내부 들여쓰기(공통 선행 공백)를 제거한다."""
-    lines = text.splitlines()
-    non_empty = [l for l in lines if l.strip()]
-    if not non_empty:
-        return text
-    indent = min(len(l) - len(l.lstrip()) for l in non_empty)
-    return '\n'.join(l[indent:] for l in lines)
-```
-
-#### Callout 외부 wrapper: sidecar xhtml_type 활용
-
-callout을 재구성할 때 원래 macro 포맷(`ac:structured-macro` vs `ac:adf-extension`)을 유지해야 한다. `sidecar_entry.xhtml_type`이 이미 이 정보를 갖고 있다.
-
-```python
-def mdx_callout_to_xhtml(block, sidecar_entry) -> str:
-    """MDX callout 블록을 XHTML macro로 재구성한다."""
-    callout_type = _extract_callout_type(block.content)   # "info" | "warning" | ...
-    inner_xhtml = _convert_callout_inner_full(block.content)
-
-    if sidecar_entry and sidecar_entry.xhtml_type == 'adf_extension':
-        return _wrap_adf_callout(inner_xhtml, callout_type)
-    else:
-        return _wrap_structured_macro_callout(inner_xhtml, callout_type)
-```
-
-#### 재귀 파싱의 안전성
-
-`parse_mdx_blocks()`는 현재 최상위 MDX 문서를 대상으로 작성되어 있다. callout 내부에 적용할 때 주의할 점:
-
-- frontmatter, import_statement는 callout 내부에 없으므로 무시해도 됨 (이미 필터 적용)
-- callout 내부에 다시 `<Callout>`이 있는 중첩 케이스: `mdx_block_to_xhtml_element()`의 callout 분기가 재귀 호출됨 → 자연스럽게 처리됨
-- callout 내부의 `<figure>`, `<details>`, `<Badge>` 등 HTML 블록: `html_block` 타입으로 파싱되어 그대로 통과됨 → 문제 없음
-
----
-
-## 4. 새로운 Reverse Sync 흐름
-
-두 가지 문제가 해결되면 `build_patches()`의 로직이 다음과 같이 단순해진다.
-
-### 4.1 변경된 블록 처리 (수정)
-
-```
-[현재]
-modified 블록
-  → _resolve_mapping_for_change() (6단계 폴백)
-    → strategy: direct | containing | list | table | skip
-      → (각 strategy마다 별도 처리)
-
-[제안]
-modified 블록
-  → sidecar O(1) 조회 → BlockMapping
-  → mdx_block_to_xhtml_element(new_block, sidecar_entry)
-    → heading, paragraph, code_block: 직접 재구성
-    → list: reconstruct_ul_entry() (trailing_html 재주입 포함)
-    → callout: mdx_callout_to_xhtml() (재귀 파싱 + macro wrap)
-    → 그 외: 기존 폴백
-  → xhtml_xpath에 new_inner_xhtml 교체
-```
-
-### 4.2 삭제되는 코드
-
-| 모듈/함수 | 이유 |
-|-----------|------|
-| `_resolve_mapping_for_change()` | 단순 sidecar O(1) 조회로 대체 |
-| `_find_containing_mapping()` | containing 전략 불필요 |
-| `_resolve_child_mapping()` 4단계 폴백 | sidecar가 정확하면 불필요 |
-| `text_transfer.py` (대부분) | 텍스트 위치 매핑 불필요 |
-| `has_inline_format_change()` | 재구성이 기본이므로 감지 불필요 |
-| `has_inline_boundary_change()` | 동상 |
-| `lost_info_patcher.py` 블록 레벨 heuristic | `inline_trailing_html` 재주입으로 대체 |
-| `build_list_item_patches()` 매칭 로직 | `reconstruct_entry()` ref 순회로 대체 |
-| `_convert_callout_inner()` → paragraph 폴백 | 재귀 파싱으로 대체 |
-
-### 4.3 유지되는 코드
-
-| 모듈/함수 | 이유 |
-|-----------|------|
-| `block_diff.py` | diff 로직 그대로 사용 |
-| `sidecar.py` O(1) 인덱스 | 그대로 사용 (children/plain_text/inline_trailing_html 필드 추가) |
-| `mdx_to_xhtml_inline.py` | 재구성의 핵심 — 확장 |
-| `xhtml_patcher.py` `_replace_inner_html()` | XHTML 교체 메커니즘 |
-| `roundtrip_verifier.py` | 검증 로직 |
-| `table_patcher.py` | 테이블은 별도 처리 (표 구조가 복잡) |
-
----
-
-## 5. 구현 계획
-
-### Phase 1: Sidecar 플랫 매핑 + children ref 구조 도입
-
-**목표:** `ul`/`ol`/`li` 및 `<p>` 내 `ac:image`를 최상위 SidecarEntry로 생성하고, 관계를 `children: [ref]`로 표현
-
-**작업:**
-1. `SidecarEntry` dataclass에 `children`, `plain_text`, `inline_trailing_html` 필드 추가
-   - `children: List[ChildRef]` — `{'ref': xhtml_xpath}` 목록 (ul→li, li→block child, p→ac:image)
-   - `plain_text: str` — li entry의 MDX 항목 텍스트 (zip 매칭 키)
-   - `inline_trailing_html: str` — `<p>` 직후 non-block lossy 요소 원본 HTML
-2. `_process_element(elem, xpath)` 구현 — `ul`/`ol`/`li`를 최상위 entry로 재귀 생성
-   - `xhtml_type`은 XHTML 태그명 그대로 (`ul`, `ol`, `li`)
-   - `<li>` 내 block 요소(`<ul>`, `<ol>`, block macro) → 독립 entry + `children` ref
-   - `<li>` 내 non-block lossy 요소(`<ac:image>` 등) → `inline_trailing_html`에 저장
-3. `_process_paragraph(elem, xpath)` 구현 — `<p>` 내 `ac:image` 를 독립 entry + `children` ref로 생성
-   - `ParagraphEditSequence` 구조(`kind: text` / `kind: ref`) sidecar에 기록
-4. `generate_sidecar_mapping()`의 list/paragraph 처리를 위 두 함수 호출로 교체
-5. `load_sidecar_mapping()`에서 `children`, `plain_text`, `inline_trailing_html` 역직렬화
-6. `mapping.yaml` 스키마 버전 업 (`version: 2`)
-
-**검증 testcase:**
-
-| testcase ID | 검증 대상 | 근거 |
-|-------------|-----------|------|
-| `544145591` | `ac:image` 포함 li 9개, nested list 21개 | li+image, nested 모두 풍부 |
-| `880181257` | `ac:image` 포함 li 12개 | ac:image 포함 li 집중 검증 |
-| `883654669` | `ac:image` 포함 li 16개 | ac:image 포함 li 최다 |
-
-> **TODO:** Phase 1 시작 전 "TODO — 구현 전 조사 필요" 항목(Section 3.1) 중 1~5번 확인 후 구현 방향 확정
-
----
-
-### Phase 2: `_convert_callout_inner` 재귀 파싱
-
-**목표:** callout 내부 리스트/코드 블록을 올바르게 재구성
-
-**작업:**
-1. `_strip_callout_wrapper()` 및 `_dedent_callout_body()` 유틸리티 추가
-2. `_convert_callout_inner_full()` 구현 (재귀 파싱)
-3. `mdx_block_to_xhtml_element()`의 callout 분기에서 sidecar_entry를 인자로 받아 macro 포맷 결정
-4. `mdx_block_to_xhtml_element()` 시그니처에 optional `sidecar_entry` 추가
-
-**검증 testcase:**
-
-| testcase ID | 검증 대상 | 근거 |
-|-------------|-----------|------|
-| `1454342158` | callout 내부 list 4개 | callout+list 가장 많음 |
-| `880181257` | callout 내부 list 2개 | Phase 1+2 복합 케이스 (ac:image 포함 li도 존재) |
-
----
-
-### Phase 3: `build_patches()` 재구성 경로 전환
-
-**목표:** modified 블록 처리를 재구성 기반으로 전환
-
-**작업:**
-1. `reconstruct_ul_entry()` / `reconstruct_li_entry()` 구현 및 단위 테스트
-2. `build_patches()`에서 modified 블록의 처리를 `mdx_block_to_xhtml_element()` 기반으로 전환
-3. 기존 전략 분기(containing, list, text_transfer) 단계적 제거
-4. 전체 테스트 케이스 통과 확인 (`make test-reverse-sync`)
-
-**검증 기준:** `tests/reverse-sync/pages.yaml`의 모든 `expected_status: pass` 케이스 유지
-
----
-
-## 6. 위험 및 대응
-
-### 위험 1: inline 항목 텍스트 변경으로 `inline_trailing_html` 매칭 실패
-
-**증상:** 리스트 항목 내용이 크게 바뀌면 `plain_text` 키가 일치하지 않아 `inline_trailing_html`을 찾지 못함
-
-**대응:**
-- `_match_mdx_inline_item()`에서 순서(index) 기반 폴백 우선 사용
-  - `list_items` 시퀀스에서 `kind: inline` 항목의 순서(inline_ptr)와 MDX 항목의 순서를 매칭
-  - 텍스트 완전 일치 → prefix 20자 매칭 → 순서 기반 매칭 순으로 폴백
-- 매칭 실패 시 `inline_trailing_html` 없이 재구성 → lossy 요소 손실이지만 구조 파괴보다 안전
-
-> **TODO (W-3):** prefix 20자 매칭의 충돌 가능성을 기존 testcase 전수 조사로 확인. 충돌이 빈번하면 prefix 폴백을 제거하고 순서 기반만 유지하는 방향 검토.
-
-### 위험 2: Callout 내부 들여쓰기 처리 오류
-
-**증상:** `_dedent_callout_body()`가 내부 코드 블록의 들여쓰기를 과도하게 제거
-
-**대응:**
-- code_block 내부는 `parse_mdx_blocks()`가 펜스 마커 기준으로 파싱하므로, 들여쓰기 제거가 코드 내용에 영향 없음
-- 단위 테스트로 코드 블록 포함 callout 케이스 커버
-
-### 위험 3: Sidecar 버전 비호환
-
-**증상:** `list_items` 필드가 없는 구 버전 `mapping.yaml`을 읽을 때 오류
-
-**대응:**
-- `list_items`를 optional 필드로 선언 (기본값 `[]`)
-- 구 버전 sidecar에서 `list_items`가 없으면 trailing 없이 재구성 → 기존 동작과 동일
-
----
-
-## 7. 기대 효과 요약
-
-| 지표 | 현재 | 개선 후 |
-|------|------|---------|
-| `patch_builder.py` 전략 수 | 5 (direct / containing / list / table / skip) | 2 (reconstruct / skip) |
-| `_resolve_child_mapping()` 폴백 단계 | 4 | 0 (삭제) |
-| 인라인 변경 감지 함수 | 2 (`has_inline_format_change`, `has_inline_boundary_change`) | 0 (삭제) |
-| callout 내부 리스트 처리 | text_transfer 우회 | 재귀 재구성 |
-| 신규 edge case 시 대응 | 전략 분기 추가 | `mdx_to_xhtml_inline.py` 개선 |
-| 기술부채 방향 | 분기 누적 | 단일 재구성 경로 개선으로 집중 |
-
----
-
-## 8. 테스트 설계
-
-### 8.1 테스트 목표: 재구성의 "완전함"을 증명하는 방법
-
-"완전함"을 다음 두 가지 명제로 구분하여 증명한다.
-
-**명제 1 — 재구성 정확성:** `mdx_block_to_xhtml_element(block)`이 각 블록 타입에 대해 XHTML을 올바르게 생성한다.
-
-**명제 2 — 손실 복원 완전성:** `trailing_html` 재주입 후 재구성된 XHTML이 원본 `page.xhtml`과 블록 수준에서 등가이다.
-
-두 명제 모두 기존 `tests/testcases/`와 `tests/reverse-sync/`의 데이터로 검증할 수 있다. **새로운 테스트 입력 파일을 만들 필요가 없다.**
-
----
-
-### 8.2 테스트 가능성 분류: 블록 타입별 재구성 가능성
-
-주어진 testcase 내의 블록을 재구성 가능성에 따라 세 범주로 나눈다.
-
-| 범주 | 설명 | 재구성 후 기대 결과 | 예시 |
-|------|------|---------------------|------|
-| **가역 블록** | MDX로 완전히 표현 가능한 블록 | 원본 XHTML과 byte-equal | heading, paragraph, code_block, 단순 list |
-| **손실 복원 블록** | MDX에 표현 안 되는 요소가 있지만 trailing_html로 복원 가능 | trailing_html 포함 시 원본과 등가 | `<ac:image>` 포함 list item, `<span style>` 포함 항목 |
-| **비가역 블록** | 정보 손실이 불가역적 | 기능적으로 무해한 변환만 허용 | `ac:adf-extension` callout, `ac:link` 포함 paragraph |
-
-비가역 블록은 이미 `architecture.md`의 "정보 손실 카테고리"에 문서화된 항목들이다. 이 범주는 재구성 목표 밖이며, 테스트에서 skip 처리한다.
-
----
-
-### 8.3 테스트 수준 구조 (5단계)
-
-```
-Level 0: 보조 함수 단위 테스트              (unit)
-    ↓
-Level 1: 블록 단위 재구성 정확성            (unit)
-    ↓
-Level 2: 전체 문서 재구성 + block-level 비교  (integration)
-    ↓
-Level 3: lossy 요소 재주입 후 byte-equal    (integration)
-    ↓
-Level 4: E2E reverse-sync 회귀 방지         (e2e)
-```
-
----
-
-### 8.3.1 Level 0: 보조 함수 단위 테스트
-
-**목적:** 신규 추가되는 보조 함수 각각이 독립적으로 올바르게 동작하는지 확인한다. Level 1보다 먼저 실행하여 버그 위치를 좁힌다.
-
-**실행 방법:**
-```bash
-python3 -m pytest tests/test_reconstruction_helpers.py -v --tb=short
-```
-
-#### 테스트 대상 함수 및 케이스
-
-**`_process_element(ul_or_ol, xpath)`** — sidecar entry 생성
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| 단순 `<ul><li><p>text</p></li></ul>` | `xhtml_type: ul` entry + `xhtml_type: li` entry 생성, children ref 정확성 |
-| `<li>` 내부 `<ac:image>` 포함 | `inline_trailing_html` 추출, block child가 아님을 확인 |
-| `<li>` 내부 nested `<ul>` | 부모 li의 `children`에 ref, nested ul의 독립 entry 생성 (`xhtml_type: ul`) |
-| 빈 `<li>` (`<li></li>`) | `plain_text=""`, `children=[]` |
-| `<li>` 내부 block macro (`<ac:structured-macro>`) | `children`에 ref, 독립 entry 생성 |
-| `<ol>` | `xhtml_type: ol`로 생성 확인 |
-
-**`map_anchor_positions(old_text, new_text, old_positions)`** — AnchorSegment 위치 매핑
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| `old_text == new_text` | 모든 AnchorSegment position 그대로 유지 |
-| 앞부분 삽입 (`"AB"` → `"XAB"`) | position이 삽입 길이만큼 뒤로 이동 |
-| 앞부분 삭제 (`"AB"` → `"B"`) | position이 삭제 길이만큼 앞으로 이동 |
-| 삭제 구간 안에 AnchorSegment (`"AB"` → `"B"`, position=1) | 삭제 직후 위치(0)로 매핑 |
-| 전체 교체 | AnchorSegment가 new_text 끝으로 매핑 |
-| AnchorSegment 2개, 중간 TextSegment 수정 | 각각 독립적으로 정확히 매핑 |
-
-**`reconstruct_paragraph(old_mdx_text, new_mdx_text, entry, sidecar_index)`**
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| `children` 없음 | `convert_inline(new_mdx_text)` 그대로 반환 |
-| `old_mdx_text != TextSegment 연결` | `SidecarMismatchError` 발생 |
-| AnchorSegment 1개, 텍스트 변경 없음 | AnchorSegment가 정확한 위치에 삽입 |
-| AnchorSegment 2개, TextSegment 수정 | Myers diff로 두 AnchorSegment 위치 모두 정확히 매핑 |
-| ref가 `sidecar_index`에 없음 | `SidecarMismatchError` 발생 |
-
-**`_process_paragraph(elem, xpath)`** — ParagraphEditSequence sidecar entry 생성
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| `<p>text only</p>` | `children = [{'kind': 'text', 'text': 'text only'}]` — TextSegment 1개 |
-| `<p><strong>bold</strong></p>` | `children = [{'kind': 'text', 'text': 'bold'}]` — TextSegment 1개 (inline element는 get_text() 처리) |
-| `<p>텍스트A <ac:image/> 텍스트B</p>` | `children = [text, ref, text]` 교차 시퀀스, `ac:image` 독립 entry 생성 |
-| `<p><ac:image/><ac:image/></p>` | `children = [text(''), ref, text(''), ref, text('')]` — 빈 TextSegment 포함 |
-| `<p>텍스트A <ac:image/></p>` | `children = [text, ref, text('')]` — 마지막 빈 TextSegment 포함 |
-
-**`reconstruct_ul_entry(entry, sidecar_index, mdx_nodes)`** — ul/ol 재구성
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| 단순 ul (sidecar 2개, mdx 2개 항목) | `<ul><li>...</li><li>...</li></ul>` 정상 재구성 |
-| ol 재구성 | `xhtml_type: ol` → `<ol>` 출력 |
-| sidecar 2개, mdx 3개 (항목 추가) | 새 항목이 `<li><p>...</p></li>` 로 출력에 포함 |
-| sidecar 3개, mdx 2개 (항목 삭제) | 삭제 항목 생략, 2개 `<li>` 출력 |
-| nested ul (li → ul → li 2단계) | 재귀 재구성 정확성 — `<ul><li><p>...</p><ul><li>...</li></ul></li></ul>` |
-
-**`reconstruct_li_entry(entry, sidecar_index, node)`** — li 재구성
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| 단순 li (텍스트만) | `<li><p>텍스트</p></li>` |
-| `inline_trailing_html` 있는 li | `<li><p>텍스트</p><ac:image.../></li>` — trailing html 재주입 확인 |
-| nested ul children 있는 li | `<li><p>텍스트</p><ul>...</ul></li>` |
-| block macro children 있는 li | `xhtml_fragment` 그대로 삽입 |
-
-**`normalize_xhtml(xhtml)`**
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| 속성 순서 다른 두 XHTML | normalize 후 equal |
-| `<br/>` vs `<br />` | normalize 후 equal |
-| `<tag />` vs `<tag></tag>` (빈 속성값) | normalize 후 equal |
-| trailing 공백 다른 텍스트 노드 | normalize 후에도 **not equal** |
-| 다른 namespace prefix | normalize 후에도 **not equal** |
-
-**`_strip_callout_wrapper(text)` / `_dedent_callout_body(text)`**
-
-| 테스트 케이스 | 검증 내용 |
-|---------------|-----------|
-| `<Callout type="info">...</Callout>` | wrapper 제거 후 내부 텍스트만 반환 |
-| 들여쓰기 2칸 callout body | 공통 선행 공백 제거 |
-| 내부 코드 블록 포함 | 코드 블록 내 들여쓰기 보존 |
-
----
-
-### 8.4 Level 1: 블록 단위 재구성 정확성 테스트
-
-**목적:** `mdx_block_to_xhtml_element()`이 각 블록 타입에 대해 올바른 XHTML을 생성하는지 확인한다.
-
-**데이터 소스:** `tests/testcases/{page_id}/mapping.yaml` + `expected.mdx`
-
-**방법:**
-
-`mapping.yaml`은 각 MDX 블록의 `xhtml_xpath`와 원본 XHTML 내 `xhtml_text`를 갖고 있다. `expected.mdx`를 파싱하여 각 블록을 재구성하면, `mapping.yaml`의 `xhtml_text`와 비교할 수 있다.
-
-```python
-# tests/test_reconstruction_unit.py
-
-def test_block_reconstruction(page_id, block_idx):
-    """각 MDX 블록을 재구성하여 원본 XHTML 텍스트와 비교한다."""
-    mapping = load_mapping(f"testcases/{page_id}/mapping.yaml")
-    mdx_blocks = parse_mdx_blocks(open(f"testcases/{page_id}/expected.mdx").read())
-
-    for entry in mapping.entries:
-        mdx_idx = entry.mdx_blocks[0] if entry.mdx_blocks else None
-        if mdx_idx is None:
-            continue  # 비가역 블록 skip
-
-        block = mdx_blocks[mdx_idx]
-        reconstructed = mdx_block_to_xhtml_element(block)
-
-        # normalize_xhtml() 정규화 범위:
-        #   정규화 O — 속성 순서, 빈 태그 형식(<br/> vs <br />), 빈 속성값 형식
-        #   정규화 X — 텍스트 노드 trailing 공백, 네임스페이스 prefix
-        # trailing 공백 차이나 namespace prefix 차이는 실제 버그로 판정한다.
-        assert normalize_xhtml(reconstructed) == normalize_xhtml(entry.xhtml_text), \
-            f"Block {block_idx} ({block.type}) mismatch"
-```
-
-#### `normalize_xhtml()` 스펙
-
-| 항목 | 정규화 여부 | 이유 |
-|------|------------|------|
-| 속성 순서 | ✅ 정렬 | `mdx_block_to_xhtml_element()` 출력 순서가 원본과 다를 수 있음 |
-| 빈 태그 형식 (`<br/>` vs `<br />`) | ✅ 통일 | XML 파서/직렬화 도구마다 출력이 다름 |
-| 빈 속성값 형식 (`<ac:parameter ... />` vs `<ac:parameter ...></ac:parameter>`) | ✅ 통일 | BeautifulSoup 출력 방식에 따라 달라짐 |
-| 텍스트 노드 trailing 공백 | ❌ 유지 | 공백 차이는 실제 버그로 판정 |
-| 네임스페이스 prefix (`ac:`, `ri:`) | ❌ 유지 | prefix는 항상 동일하게 유지되어야 함 — 차이 발생 시 실제 버그 |
-
-```python
-def normalize_xhtml(xhtml: str) -> str:
-    """비교용 XHTML 정규화.
-
-    정규화 O: 속성 순서, 빈 태그 형식, 빈 속성값 형식
-    정규화 X: 텍스트 노드 공백, 네임스페이스 prefix
-    """
-    from lxml import etree
-    root = etree.fromstring(f"<root>{xhtml}</root>")
-    for elem in root.iter():
-        # 속성 순서 정렬
-        elem.attrib = dict(sorted(elem.attrib.items()))
-    # 직렬화 — 빈 태그/속성값 형식은 lxml 기본 출력으로 통일
-    result = etree.tostring(root, encoding="unicode")
-    # <root>...</root> 제거
-    return result[6:-7]
-```
-
-이 함수 자체에 대한 단위 테스트(Level 0)가 필요하다 — Section 8.3 Level 0 참고.
-
-**측정 지표:** `passed_blocks / total_blocks` — 목표 80% 이상 (비가역 블록 제외)
-
-**실행 방법:**
-```bash
-python3 -m pytest tests/test_reconstruction_unit.py -v \
-    --tb=short --no-header 2>&1 | tail -20
-```
-
----
-
-### 8.5 Level 2: 전체 문서 재구성 커버리지 테스트
-
-**목적:** `tests/testcases/`의 모든 페이지에 대해 재구성이 가능한 블록의 비율(커버리지)을 측정한다.
-
-**방법:** 각 페이지의 `expected.mdx`를 전체 재구성한 뒤, 원본 `page.xhtml`의 beautified diff와 비교한다. 비가역 블록 위치에서 발생하는 diff만 허용한다.
-
-```
-tests/testcases/{page_id}/
-    page.xhtml                ← 원본
-    expected.mdx              ← MDX 입력
-    mapping.yaml              ← 블록 매핑
-    output.reconstruct.xhtml  ← 재구성 결과 (신규 생성)
-    output.reconstruct.diff   ← beautify-diff (신규 생성)
-```
-
-#### 핵심 함수 인터페이스
-
-```python
-def reconstruct_full_xhtml(
-    mdx_text: str,
-    mapping: SidecarMapping,
-    page_xhtml: str,              # 비가역 블록 원본 보존용
-) -> str:
-    """MDX 전체를 sidecar mapping 기반으로 재구성한다.
-
-    처리 순서:
-      1. mapping의 각 entry를 순회
-      2. 가역 블록 → mdx_block_to_xhtml_element()로 재구성
-      3. 비가역 블록(ac:link 포함, adf_extension 등) → page_xhtml에서 원본 fragment 추출하여 그대로 사용
-      4. document envelope(prefix/suffix) → sidecar에서 복원 (RoundtripSidecar.reassemble_xhtml() 참고)
-    """
-
-
-def compare_reversible_blocks(
-    original: str,
-    reconstructed: str,
-    mapping: SidecarMapping,
-) -> list[str]:
-    """가역 블록에서 발생한 diff 목록을 반환한다.
-
-    반환값이 [] 이면 전원 일치.
-    mapping의 각 entry를 순회하며:
-      - 비가역 블록(ac:link 포함, adf_extension 등) → skip
-      - 가역 블록 → original vs reconstructed의 해당 xhtml_xpath fragment 비교
-      - 불일치 시 f"{xhtml_xpath}: {diff}" 형태의 문자열을 목록에 추가
-    normalize_xhtml()로 정규화 후 비교한다.
-    """
-```
-
-**실행 스크립트 (기존 run-tests.sh 확장):**
-
-```bash
-# run-tests.sh에 추가할 타입
-# --type reconstruct
-# page.xhtml의 모든 블록을 expected.mdx로 재구성하여 diff를 생성한다.
-```
-
-```python
-# tests/test_reconstruction_coverage.py
-
-@pytest.mark.parametrize("page_id", list_testcase_ids())
-def test_reconstruction_coverage(page_id):
-    """MDX → XHTML 재구성 커버리지: 가역 블록은 원본과 일치해야 한다."""
-    page_xhtml = open(f"testcases/{page_id}/page.xhtml").read()
-    mdx_text = open(f"testcases/{page_id}/expected.mdx").read()
-    mapping = load_mapping(f"testcases/{page_id}/mapping.yaml")
-
-    reconstructed_xhtml = reconstruct_full_xhtml(mdx_text, mapping, page_xhtml)
-
-    reversible_diffs = compare_reversible_blocks(
-        original=page_xhtml,
-        reconstructed=reconstructed_xhtml,
-        mapping=mapping,
-    )
-    # 가역 블록에서 diff가 없어야 함
-    assert reversible_diffs == [], \
-        f"Reversible block diff found:\n" + "\n".join(reversible_diffs)
-```
-
-**`compare_reversible_blocks()`의 동작:**
-
-1. `mapping.yaml`의 각 엔트리를 순회
-2. 비가역 블록(ac:link 포함, adf_extension 등) → skip
-3. 가역 블록 → `original_block_xhtml` vs `reconstructed_block_xhtml` 비교
-4. 불일치 시 diff를 반환
-
----
-
-### 8.6 Level 3: 재구성 후 byte-equal 테스트
-
-**목적:** 손실 복원 블록(`ac:image`, `inline_trailing_html` 포함 항목 등)에 대해 재구성 결과가 원본 XHTML fragment와 byte-equal임을 증명한다.
-
-#### 기존 인프라 (신규 파일 불필요)
-
-다음 구현이 이미 존재한다:
-
-| 항목 | 구현 위치 | 설명 |
-|------|-----------|------|
-| `expected.roundtrip.json` 파일 | `tests/testcases/{page_id}/` | `SidecarBlock.xhtml_fragment` (byte-exact), `SidecarBlock.mdx_content_hash` (SHA-256) 포함 |
-| `SidecarBlock.mdx_content_hash` | `bin/reverse_sync/sidecar.py` L53 | MDX 블록 content의 SHA-256 — MDX 블록 식별 키 |
-| `RoundtripSidecar`, `load_sidecar()` | `bin/reverse_sync/sidecar.py` L59, L233 | JSON 역직렬화 |
-| `build_sidecar()` | `bin/reverse_sync/sidecar.py` L159 | `page.xhtml` + `expected.mdx` → `RoundtripSidecar` 생성 |
-| 생성 CLI | `bin/mdx_to_storage_roundtrip_sidecar_cli.py` | `batch-generate` 서브커맨드로 전체 testcase 일괄 생성 |
-| splice 경로 | `bin/reverse_sync/rehydrator.py` L62 `splice_rehydrate_xhtml()` | `mdx_content_hash` 기반 블록 매칭 — `find_mdx_block_by_hash()` 역할 수행 |
-
-**데이터 소스:** `tests/testcases/{page_id}/expected.roundtrip.json` + `tests/testcases/{page_id}/expected.mdx`
-
-#### 테스트 코드
-
-```python
-# tests/test_reconstruction_lossless.py
+이 구조의 의도는 단순하다.
 
-from reverse_sync.sidecar import load_sidecar, sha256_text, load_sidecar_mapping
-from reverse_sync.mdx_block_parser import parse_mdx_blocks
-
-@pytest.mark.parametrize("page_id", list_testcase_ids())
-def test_lossless_reconstruction(page_id):
-    """재구성 결과가 원본 XHTML fragment와 byte-equal인지 검증한다."""
-    sidecar = load_sidecar(Path(f"testcases/{page_id}/expected.roundtrip.json"))
-    # load_sidecar: bin/reverse_sync/sidecar.py L233
-    mapping_entries = load_sidecar_mapping(f"testcases/{page_id}/mapping.yaml")
-    # load_sidecar_mapping: bin/reverse_sync/sidecar.py L257
-    xpath_index = {e.xhtml_xpath: e for e in mapping_entries}
+- top-level fragment는 `xhtml_fragment` 가 책임진다
+- list/paragraph/container 내부 보존 정보는 `reconstruction` 이 책임진다
+- 테스트 oracle와 runtime metadata가 같은 artifact 안에 있게 한다
 
-    mdx_text = open(f"testcases/{page_id}/expected.mdx").read()
-    mdx_blocks = parse_mdx_blocks(mdx_text)
-    # parse_mdx_blocks: bin/reverse_sync/mdx_block_parser.py
+### 5.3 block 분류
 
-    # mdx_content_hash → MDX 블록 인덱스 (splice 경로와 동일 방식)
-    # rehydrator.py L96: content_hash == sb.mdx_content_hash 비교와 동일
-    hash_to_block = {sha256_text(b.content): b for b in mdx_blocks if b.content}
+새 재구성기는 top-level block를 네 종류로 나눈다.
 
-    for sb in sidecar.blocks:
-        if not sb.mdx_content_hash:
-            continue  # MDX 대응 없는 블록 skip (image, TOC 등)
-            # SidecarBlock.mdx_content_hash: sidecar.py L53
+#### A. Clean block
 
-        mdx_block = hash_to_block.get(sb.mdx_content_hash)
-        if mdx_block is None:
-            pytest.skip(f"hash not found: {sb.mdx_content_hash[:8]}...")
+대상:
 
-        sidecar_entry = xpath_index.get(sb.xhtml_xpath)
-        reconstructed = mdx_block_to_xhtml_element(mdx_block, sidecar_entry)
+- heading
+- code macro
+- table
+- hr
+- paragraph without preserved anchors
 
-        assert reconstructed == sb.xhtml_fragment, (
-            f"Fragment mismatch at {sb.xhtml_xpath}:\n"
-            f"  expected: {sb.xhtml_fragment!r}\n"
-            f"  got:      {reconstructed!r}"
-        )
-```
+처리:
 
-#### 기존 `byte_verify`와의 관계
+- `mdx_to_storage.emit_block()` 또는 `mdx_block_to_xhtml_element()` 로 새 fragment emit
+- block-level `lost_info` 적용
+- 기존 fragment 전체 replace
 
-| 검증 | 구현 | 목적 |
-|------|------|------|
-| 기존 `byte_verify` | `bin/reverse_sync/byte_verify.py` | MDX 무변경 시 XHTML byte-equal 보장 (fast path) |
-| Level 3 `test_reconstruction_lossless` | 신규 | 재구성 경로로 변환해도 byte-equal임을 보장 |
+#### B. Inline-anchor block
 
-Level 3이 통과하면 "재구성 = fast path"임이 증명된다.
+대상:
 
-**측정 목표: failed = 0** (mdx_content_hash 없는 블록 skip 제외)
+- paragraph 안의 `ac:image`, `ac:link` 류 preservation unit
+- list item 안의 inline image / trailing preserved node
 
----
+처리:
 
-### 8.7 Level 4: E2E 회귀 방지 테스트
+1. improved MDX block를 먼저 XHTML로 emit
+2. emit 결과에서 plain text를 추출
+3. sidecar의 `old_plain_text` 와 anchor offset을 기준으로 old -> new offset 매핑
+4. 매핑된 위치에 raw anchor XHTML 삽입
 
-**목적:** 재구성 기반 reverse-sync가 기존 테스트케이스를 회귀시키지 않음을 보장한다.
+중요한 점:
 
-**데이터 소스:** `tests/reverse-sync/{page_id}/` (기존 인프라 그대로 사용)
+- old/new 비교는 plain-text 좌표
+- 삽입 대상은 "생성된 XHTML DOM"
+- raw 문자열 위치 삽입이 아니라 DOM walk 기반 삽입
 
-**방법:** 기존 `run-tests.sh --type reverse-sync-verify`를 그대로 사용하되, reverse-sync 내부 경로가 재구성 기반으로 전환된 후 동일하게 실행한다.
+#### C. Ordered child block
 
-```bash
-# 기존 명령 그대로
-cd tests && ./run-tests.sh --type reverse-sync-verify
+대상:
 
-# 검증 기준: pages.yaml의 expected_status와 일치
-# pass 26건 유지, fail 16건 유지 (신규 pass 전환만 허용)
-```
+- nested list
+- callout / details / ADF panel body
 
-**회귀 판정 기준:**
+처리:
 
-| 상태 전환 | 판정 |
-|-----------|------|
-| `pass` → `pass` | ✅ 유지 |
-| `fail` → `pass` | ✅ 개선 (expected_status 업데이트 필요) |
-| `pass` → `fail` | ❌ 회귀 — PR 차단 |
-| `fail` → `fail` | ✅ 유지 |
+- original XHTML 의 child order를 sidecar에 저장
+- improved MDX 는 `mdx_to_storage.parser.parse_mdx()` 로 child blocks 파싱
+- child type과 순서를 기준으로 재귀 reconstruct
 
-**Phase 3 구현 완료 기준:** 26건 `expected_status: pass` 전원 유지 + 신규 pass 전환 확인
+여기서는 text matching을 하지 않는다. 위치와 child slot이 기준이다.
 
----
+#### D. Opaque block
 
-### 8.8 테스트 실행 순서와 피드백 루프
+대상:
 
-구현 변경 후 아래 순서로 테스트를 실행한다. 각 단계는 이전 단계가 전원 통과한 후 진행한다.
+- emitter가 재구성하지 못하는 custom macro
+- 현재 testcase에 없거나 metadata 규칙이 정의되지 않은 구조
 
-#### Step 1 — Level 1 실행
+처리:
 
-```bash
-python3 -m pytest tests/test_reconstruction_unit.py -v --tb=short
-```
+- `UnsupportedReconstructionError`
+- verify는 fail
+- 해당 페이지를 testcase로 승격 후 설계 범위 확장
 
-**무엇을 확인하는가:** 블록 하나를 재구성했을 때 XHTML이 올바른가.
+이 fail-closed 정책이 중요하다. unsupported structure에서 silent corruption이 가장 위험하다.
 
-**실패 시 수정 위치:** `bin/reverse_sync/mdx_to_xhtml_inline.py` — 해당 블록 타입의 변환 로직.
+### 5.4 paragraph / list item anchor 재주입
 
----
+이 설계의 핵심 차별점은 "anchor를 plain-text offset에 고정"하는 것이다.
 
-#### Step 2 — Level 2 실행
+#### 좌표계
 
-```bash
-python3 -m pytest tests/test_reconstruction_coverage.py -v --tb=short
-```
+- `old_plain_text`: original XHTML fragment에서 DOM text를 뽑아 정규화한 값
+- `new_plain_text`: improved MDX 를 emit한 XHTML fragment에서 같은 규칙으로 뽑은 값
+- `old_plain_offset`: original plain text 기준 anchor 위치
+- `new_plain_offset`: old -> new diff로 계산된 삽입 위치
 
-**무엇을 확인하는가:** 문서 전체를 재구성했을 때 블록 조립 순서와 envelope(문서 앞뒤 고정 텍스트)가 올바른가.
+#### 알고리즘
 
-**실패 시 수정 위치:** 블록 조립 순서 오류라면 `reconstruct_entry()`, envelope 오류라면 `RoundtripSidecar.reassemble_xhtml()` (`bin/reverse_sync/sidecar.py` L70).
+1. `extract_plain_text(fragment)` 로 old/new plain text 생성
+2. `map_offsets(old_plain, new_plain, offsets)` 로 new offset 계산
+3. `insert_raw_anchor_at_plain_offset(soup, raw_xhtml, offset)` 로 DOM 삽입
 
----
+이 방식은 review에서 지적된 "XHTML inline fragment를 MDX text로 역변환해야 하는가" 문제를 제거한다.
 
-#### Step 3 — Level 3 실행
+### 5.5 list 재구성
 
-```bash
-python3 -m pytest tests/test_reconstruction_lossless.py -v --tb=short
-```
+리스트는 text queue가 아니라 tree + order 매칭으로 재구성한다.
 
-**무엇을 확인하는가:** `ac:image` 등 lossy 요소를 재주입한 후 원본 XHTML fragment와 byte-equal인가.
+재사용 자산:
 
-**실패 시 수정 위치:** sidecar 생성 로직 — `_process_element()` 또는 `reconstruct_entry()`의 `inline_trailing_html` / `children ref` 처리.
+- `mdx_to_storage.emitter._parse_list_items()`
+- `mdx_to_storage.emitter._build_list_tree()`
 
----
+다만 private 함수 직접 import는 피한다. 이번 작업에서 public helper로 승격한다.
 
-#### Step 4 — Level 4 실행
+제안:
 
-```bash
-cd tests && ./run-tests.sh --type reverse-sync-verify
-```
+- 새 public API: `mdx_to_storage.emitter.parse_list_tree(content: str) -> list[ListNode]`
 
-**무엇을 확인하는가:** 기존에 통과하던 reverse-sync E2E 케이스가 재구성 경로 전환 후에도 동일하게 통과하는가.
+재구성 로직:
 
-**실패 시 수정 위치:** `bin/reverse_sync/patch_builder.py`의 재구성 경로 — Level 1/2/3에서 놓친 블록 타입이 있다는 신호이므로, 해당 케이스를 Level 1 단위 테스트로 먼저 재현하고 수정한다.
+1. improved MDX list block -> list tree 생성
+2. sidecar list item sequence와 index 기반 zip
+3. 각 item에 대해
+   - item text emit
+   - item-level anchors 재삽입
+   - child list / block child 재귀 재구성
+4. top-level `<ul>` / `<ol>` wrapper regenerate
 
----
+이렇게 하면 다음이 가능하다.
 
-#### 판정 기준 요약
+- 동일 텍스트 item이 여러 번 나와도 안정적
+- nested list의 중복 삽입 방지
+- image가 들어간 list item도 text patch 없이 처리
 
-| 단계 | 통과 기준 | 실패 의미 |
-|------|-----------|-----------|
-| Level 1 | 모든 블록 타입 재구성 정확 | 변환 로직 버그 |
-| Level 2 | 문서 단위 조립 정확 | 블록 순서 또는 envelope 버그 |
-| Level 3 | lossy 요소 재주입 후 byte-equal | sidecar children/trailing 추출 버그 |
-| Level 4 | 기존 pass 케이스 전원 유지 | Level 1~3에서 놓친 케이스 존재 |
+### 5.6 callout / details / ADF panel 재구성
 
----
+callout은 이번 설계에서 "containing block에 text만 이식"하지 않는다.
 
-### 8.9 기존 인프라와의 관계 정리
+이미 있는 자산:
 
-| 기존 테스트 | 역할 | 재구성 후 변화 |
-|-------------|------|----------------|
-| `run-tests.sh --type convert` | XHTML → MDX forward 변환 검증 | 변화 없음 |
-| `run-tests.sh --type reverse-sync` | expected 파일 비교 | Phase 3 완료 후 expected 파일 재생성 필요 |
-| `run-tests.sh --type reverse-sync-verify` | `expected_status` 검증 | 그대로 사용 (회귀 게이트) |
-| `byte_verify` | roundtrip sidecar byte-equal | 변화 없음 (fast path 그대로) |
-| `test_reconstruction_unit.py` | **신규** — 블록 단위 재구성 | Level 1 |
-| `test_reconstruction_lossless.py` | **신규** — trailing_html byte-equal | Level 3 |
+- `mapping_recorder.record_mapping()` 는 callout의 child xpath를 생성한다
+- `mdx_to_storage.parser.parse_mdx()` 와 `_emit_callout()` 은 child block 재귀 emission 을 지원한다
+
+따라서 새 경로는 아래와 같다.
+
+1. original callout body child order를 sidecar metadata에 저장
+2. improved MDX callout body를 `parse_mdx()` 로 child block sequence로 파싱
+3. child slot 단위로 reconstruct
+4. 최종 body를 `<ac:rich-text-body>` 또는 `ac:adf-content` 아래에 다시 조립
+
+주의:
+
+- `macro-panel` 과 `ac:adf-extension` 은 body 구조는 같지만 outer wrapper가 다르다
+- outer wrapper 보존은 `lost_info_patcher` 가 아니라 reconstruction metadata가 책임진다
+- ADF panel raw outer fragment가 필요한 경우 sidecar에 raw wrapper를 저장한다
+
+### 5.7 patch 적용 단위
+
+modified block는 `new_inner_xhtml` 보다 `new_element_xhtml` 교체가 기본이다.
+
+이유:
+
+- top-level element 전체를 교체해야 wrapper, attribute, child structure를 한 번에 통제할 수 있다
+- innerHTML 교체만으로는 callout outer wrapper, list root tag, table root tag의 일관성을 강제하기 어렵다
+
+따라서 `xhtml_patcher.py` 에 새 액션을 추가한다.
+
+- `replace_fragment`
+  - 입력: `xhtml_xpath`, `new_element_xhtml`
+  - 의미: xpath 대상 top-level element 전체를 새 fragment로 치환
+
+기존 `insert` / `delete` 는 유지한다.
+
+### 5.8 block identity와 planner
+
+기존 `patch_builder.py` 는 전략 분기와 fallback이 많다. 새 설계는 planner를 분리한다.
+
+제안 모듈:
+
+- `reverse_sync/reconstruction_planner.py`
+  - changed block -> reconstruction strategy 결정
+- `reverse_sync/reconstruction_sidecar.py`
+  - sidecar schema v3 load/build
+- `reverse_sync/reconstructors.py`
+  - paragraph/list/container별 fragment rebuild
+- `reverse_sync/xhtml_normalizer.py`
+  - shared normalization / plain-text extraction
+
+`patch_builder.py` 는 최종적으로 orchestration thin layer가 된다.
+
+## 6. 구현 범위와 비범위
+
+### 이번 설계 범위
+
+- modified top-level block의 whole-fragment reconstruction
+- paragraph/list item inline anchor 재주입
+- nested list reconstruction
+- callout/details/ADF panel body reconstruction
+- block identity 안정화
+- golden/oracle 기반 테스트 체계 구축
+
+### 이번 설계 비범위
+
+- sidecar/rehydrator 전체를 단일 parser 체계로 통합하는 대형 리팩토링
+- testcase에 없는 custom macro 일반화
+- Confluence storage 전체에 대한 generic DOM diff 엔진
+
+parser 통합은 후속 과제로 남긴다. 이번 작업은 "reverse-sync를 구조적 재구성 경로로 전환"하는 데 집중한다.
+
+## 7. 테스트 설계
+
+테스트는 두 묶음으로 나눈다.
+
+1. 설계 검증 테스트
+2. 회귀 방지 테스트
+
+### 7.1 설계 검증 테스트
+
+#### Level 0. Helper / invariant
+
+새 파일 제안:
+
+- `tests/test_reverse_sync_xhtml_normalizer.py`
+- `tests/test_reverse_sync_reconstruction_offsets.py`
+- `tests/test_reverse_sync_reconstruction_insert.py`
+
+검증 항목:
+
+- plain-text extraction이 original/emitted fragment에서 같은 규칙으로 동작하는지
+- old -> new offset mapping이 삽입/삭제/대체에 대해 안정적인지
+- raw anchor insertion이 DOM 파괴 없이 수행되는지
+- `hash + line_range` disambiguation이 duplicate content에서도 안정적인지
+
+여기서 review의 Critical 이슈를 먼저 red test로 고정한다.
+
+필수 red cases:
+
+1. paragraph + inline image
+2. list item + image
+3. duplicate hash candidate
+4. namespace-bearing fragment normalization
+
+#### Level 1. Block reconstruction against exact fragment oracle
+
+새 파일 제안:
+
+- `tests/test_reverse_sync_reconstruct_paragraph.py`
+- `tests/test_reverse_sync_reconstruct_list.py`
+- `tests/test_reverse_sync_reconstruct_container.py`
+
+oracle:
+
+- 기본: `expected.roundtrip.json.blocks[].xhtml_fragment`
+- nested child: `page.xhtml` 에서 xpath extraction
+
+검증 방식:
+
+- unchanged MDX block를 reconstruct 했을 때 oracle fragment와 normalize-equal
+
+대표 파라미터:
+
+- list item + image: `544113141`, `544145591`, `692355151`, `880181257`, `883654669`
+- callout + list: `1454342158`, `544145591`, `692355151`, `880181257`, `883654669`
+- callout + code: `544112828`
+- ADF panel: `1454342158`, `544379140`, `panels`
+- inline paragraph image: `tests/reverse-sync/544376004`
+
+`544376004` 는 `tests/testcases` 가 아니므로, unit test에서는 해당 page에서 관련 fragment만 추출한 minimal fixture를 추가해도 된다. 이것은 review의 "새 fixture가 아예 불필요하다고 말하면 안 된다"는 지적에 대한 현실적 대응이다.
+
+#### Level 2. Changed block golden reconstruction
+
+새 파일 제안:
+
+- `tests/test_reverse_sync_reconstruction_goldens.py`
+
+oracle:
+
+- `expected.reverse-sync.patched.xhtml`
+- 필요한 경우 `expected.reverse-sync.mapping.original.yaml` / `expected.reverse-sync.result.yaml`
+
+대상:
+
+- `original.mdx` + `improved.mdx` + `expected.reverse-sync.*` 가 존재하는 16개 `tests/testcases`
+
+검증 방식:
+
+- changed block만 reconstruct + page assembly 후 `expected.reverse-sync.patched.xhtml` 와 normalize-equal
+- `expected.reverse-sync.result.yaml` 의 `status: pass` 케이스는 forward verify까지 exact pass
+
+### 7.2 회귀 방지 테스트
+
+#### Level 3. Existing sidecar / byte-equal gates
+
+기존 테스트를 유지하고 schema v3에 맞춰 확장한다.
+
+- `tests/test_reverse_sync_sidecar_v2.py`
+- `tests/test_reverse_sync_rehydrator.py`
+- `tests/test_reverse_sync_byte_verify.py`
+
+변경점:
+
+- `expected.roundtrip.json` builder/loader가 reconstruction metadata를 읽고 써야 한다
+- unchanged case에서는 여전히 21/21 byte-equal 유지
+
+#### Level 4. CLI / E2E
+
+기존 테스트를 유지하되 reconstruction path를 기본 경로로 바꾼다.
+
+- `tests/test_reverse_sync_cli.py`
+- `tests/test_reverse_sync_e2e.py`
+- `tests/test_reverse_sync_structural.py`
+
+여기에 다음을 추가한다.
+
+- `tests/reverse-sync/pages.yaml` 의 `expected_status: pass` 케이스는 새 경로에서도 계속 pass
+- `expected_status: fail` 케이스는 failure type별로 하나씩 우선 red -> green 전환
+
+우선순위는 아래 순으로 둔다.
+
+1. list/image
+2. callout/code
+3. callout/list
+4. ADF panel
+
+### 7.3 현재 자산 활용 계획 요약
+
+| 자산 | 수량 | 새 설계에서의 역할 |
+|------|------|--------------------|
+| `tests/testcases/*/page.xhtml` | 21 | exact source page, nested fragment extraction |
+| `tests/testcases/*/expected.roundtrip.json` | 21 | unchanged top-level fragment oracle |
+| `tests/testcases/*/original.mdx` | 16 | reverse-sync original input |
+| `tests/testcases/*/improved.mdx` | 16 | reverse-sync changed input |
+| `tests/testcases/*/expected.reverse-sync.patched.xhtml` | 16 | changed-page golden oracle |
+| `tests/testcases/*/expected.reverse-sync.result.yaml` | 16 | expected verify outcome |
+| `tests/testcases/*/attachments.v1.yaml` | 19 | image filename / asset context |
+| `tests/testcases/*/page.v1.yaml`, `page.v2.yaml`, `children.v2.yaml`, `page.adf` | 18~19 | forward converter context, ADF/callout/link validation |
+| `tests/reverse-sync/*` | 42 | 실사례 회귀 및 failure reproduction |
+
+## 8. 단계별 구현 계획
+
+### Phase 0. 공용 helper 추출
+
+- `xhtml_normalizer.py` 추가
+- `extract_plain_text()`, `normalize_fragment()`, `extract_fragment_by_xpath()` 구현
+- list tree helper public API 승격
+
+게이트:
+
+- Level 0 helper tests green
+
+### Phase 1. sidecar schema v3
+
+- `RoundtripSidecar` 에 reconstruction metadata 추가
+- builder/load/write/update 구현
+- `hash + line_range` 기반 identity helper 도입
+
+게이트:
+
+- existing sidecar tests green
+- unchanged 21개 `expected.roundtrip.json` roundtrip 유지
+
+### Phase 2. clean block whole-fragment replacement
+
+- heading/code/table/simple paragraph modified block를 reconstruction path로 전환
+- `replace_fragment` patch 추가
+
+게이트:
+
+- simple modified golden cases green
+- `transfer_text_changes()` 경로 없이 clean block 변경 처리 가능
+
+### Phase 3. paragraph/list anchor reconstruction
+
+- inline anchor metadata builder
+- offset mapping + DOM insertion helper
+- list item + nested list reconstruction
+
+게이트:
+
+- `544113141`, `544145591`, `692355151`, `880181257`, `883654669`
+- `544376004` helper/unit case
+
+### Phase 4. container reconstruction
+
+- callout/details/ADF panel body reconstruction
+- child slot order 기반 재귀 rebuild
+
+게이트:
+
+- `544112828`
+- `1454342158`
+- `544379140`
+- `panels`
+
+### Phase 5. planner 전환과 batch 회귀
+
+- `patch_builder.py` modified path를 reconstruction planner로 위임
+- legacy text-transfer path는 fallback 또는 제거
+
+게이트:
+
+- `tests/testcases` 16개 reverse-sync golden green
+- `tests/reverse-sync/pages.yaml` pass 케이스 유지
+
+## 9. 승인 기준
+
+이 설계는 아래를 만족해야 구현 완료로 본다.
+
+1. modified block의 기본 경로가 whole-fragment reconstruction 이다
+2. paragraph/list anchor 처리가 plain-text 좌표계 기준으로 구현된다
+3. test oracle이 `mapping.yaml` 이 아니라 `expected.roundtrip.json` / `page.xhtml` / `expected.reverse-sync.patched.xhtml` 로 확정된다
+4. XHTML normalization은 BeautifulSoup 기반 공용 helper로 통일된다
+5. duplicate content에서도 `hash + line_range` 기반 identity가 동작한다
+6. 기존 `tests/testcases` / `tests/reverse-sync` 자산을 그대로 회귀 게이트로 사용할 수 있다
+
+## 10. 최종 판단
+
+PR #913의 원래 방향은 맞다. 다만 기존 문서는 "재구성으로 간다"는 선언에 비해, 실제 구현이 의존할 좌표계, oracle, sidecar 책임 분리가 부족했다.
+
+새 설계의 핵심 차이는 다음 세 가지다.
+
+- `convert_inline()` 역변환 가정을 버리고 plain-text 좌표계를 채택한다
+- `mapping.yaml` 을 oracle 자리에서 내리고 `expected.roundtrip.json` 을 중심 artifact 로 올린다
+- 기존 testcase 자산을 설계 검증 테스트와 회귀 테스트로 분리해 사용한다
+
+이 기준으로 구현하면, 최종 목표인 "MDX 변경을 XHTML로 재구성하여 Confluence 문서를 업데이트"하는 기능을 현재 코드베이스 위에서 더 안정적으로 구현하고 유지보수할 수 있다.
