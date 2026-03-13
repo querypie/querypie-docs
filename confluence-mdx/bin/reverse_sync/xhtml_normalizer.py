@@ -73,8 +73,8 @@ def _extract_text_from_element(element) -> str:
                 if fallback:
                     parts.append(fallback)
                 continue
-            # ac:image, ac:link 등 preservation unit은 텍스트 없음 (anchor로 처리)
-            if child.name in ("ac:image", "ac:link"):
+            # ac:image는 preservation unit — 텍스트 없음 (anchor로 처리)
+            if child.name == "ac:image":
                 continue
             parts.append(_extract_text_from_element(child))
     return "".join(parts)

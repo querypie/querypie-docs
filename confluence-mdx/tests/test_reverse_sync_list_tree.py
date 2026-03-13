@@ -26,6 +26,9 @@ class TestParseListTree:
         assert len(roots) == 3
         assert all(node.ordered for node in roots)
         assert roots[0].text == "First"
+        assert roots[0].start == 1
+        assert roots[1].start == 2
+        assert roots[2].start == 3
 
     def test_nested_list(self):
         content = "- Parent\n    - Child 1\n    - Child 2"
@@ -71,5 +74,16 @@ class TestParseListTree:
         roots = parse_list_tree(content)
         assert len(roots) == 1
         assert not roots[0].ordered
+        assert roots[0].start is None  # unordered → no start
         assert len(roots[0].children) == 1
         assert roots[0].children[0].ordered
+        assert roots[0].children[0].start == 1
+
+    def test_ordered_list_start_number_preserved(self):
+        """중간부터 시작하는 ordered list의 marker number가 보존된다."""
+        content = "2. Second\n3. Third\n4. Fourth"
+        roots = parse_list_tree(content)
+        assert len(roots) == 3
+        assert roots[0].start == 2
+        assert roots[1].start == 3
+        assert roots[2].start == 4

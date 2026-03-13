@@ -48,14 +48,23 @@ class TestExtractPlainText:
         )
         assert extract_plain_text(fragment) == "A  B"
 
-    def test_paragraph_with_inline_link_excluded(self):
-        """ac:link는 preservation unit이므로 plain text에서 제외된다."""
+    def test_paragraph_with_inline_link_no_body(self):
+        """ac:link에 link-body가 없으면 텍스트가 비어있다."""
         fragment = (
             '<p>Before '
             '<ac:link><ri:page ri:content-title="Page" /></ac:link>'
             ' After</p>'
         )
         assert extract_plain_text(fragment) == "Before  After"
+
+    def test_paragraph_with_inline_link_with_body(self):
+        """ac:link에 link-body가 있으면 visible label이 plain text에 포함된다."""
+        fragment = (
+            '<p>참조: '
+            '<ac:link><ri:page ri:content-title="Page" />'
+            '<ac:link-body>Click here</ac:link-body></ac:link></p>'
+        )
+        assert extract_plain_text(fragment) == "참조: Click here"
 
     def test_paragraph_with_emoticon(self):
         """ac:emoticon의 fallback 텍스트가 포함된다."""
