@@ -57,6 +57,17 @@ class TestExtractPlainText:
         )
         assert extract_plain_text(fragment).strip() == "python"
 
+    def test_adf_extension_callout_joins_child_blocks_with_spaces(self):
+        fragment = (
+            "<ac:adf-extension>"
+            '<ac:adf-node type="panel">'
+            '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+            "<ac:adf-content><p>First</p><p>Second</p></ac:adf-content>"
+            "</ac:adf-node>"
+            "</ac:adf-extension>"
+        )
+        assert extract_plain_text(fragment) == "First Second"
+
     def test_empty_fragment(self):
         assert extract_plain_text("") == ""
         assert extract_plain_text("<p />") == ""
@@ -155,3 +166,16 @@ class TestExtractFragmentByXpath:
 
     def test_missing_xpath_returns_none(self):
         assert extract_fragment_by_xpath("<p>Only</p>", "p[2]") is None
+
+    def test_invalid_xpath_segment_raises_value_error(self):
+        with pytest.raises(ValueError, match="invalid xpath segment"):
+            extract_fragment_by_xpath("<p>Only</p>", "not-an-index")
+
+    def test_invalid_nested_xpath_segment_raises_value_error(self):
+        xhtml = (
+            '<ac:structured-macro ac:name="info">'
+            "<ac:rich-text-body><p>First</p></ac:rich-text-body>"
+            "</ac:structured-macro>"
+        )
+        with pytest.raises(ValueError, match="invalid xpath segment"):
+            extract_fragment_by_xpath(xhtml, "macro-info[1]/bad-segment")
