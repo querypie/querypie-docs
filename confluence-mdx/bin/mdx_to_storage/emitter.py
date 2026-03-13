@@ -37,12 +37,21 @@ _TRAILING_BR_RE = re.compile(r'\s*<br\s*/?\s*>\s*$')
 _IMG_ATTR_RE = re.compile(r'(\w[\w-]*)=(?:"([^"]*)"|\'([^\']*)\')')
 
 
-class _ListNode:
+class ListNode:
+    """List item node for tree-based list representation.
+
+    Public API for reconstruction pipeline.
+    """
+
     def __init__(self, ordered: bool, text: str, depth: int) -> None:
         self.ordered = ordered
         self.text = text
         self.depth = depth
-        self.children: list["_ListNode"] = []
+        self.children: list["ListNode"] = []
+
+
+# backward compat alias (internal)
+_ListNode = ListNode
 
 
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
@@ -157,6 +166,15 @@ def _emit_single_depth_list(content: str, link_resolver: Optional[LinkResolver] 
 
     roots = _build_list_tree(parsed)
     return _render_list_nodes(roots, link_resolver=link_resolver)
+
+
+def parse_list_tree(content: str) -> list[ListNode]:
+    """MDX list content를 파싱하여 tree 구조의 ListNode 리스트를 반환한다.
+
+    Public API — reverse-sync reconstruction pipeline에서 사용한다.
+    """
+    items = _parse_list_items(content)
+    return _build_list_tree(items)
 
 
 def _parse_list_items(content: str) -> list[_ListNode]:
