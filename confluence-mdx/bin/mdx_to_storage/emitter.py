@@ -11,7 +11,7 @@ from .link_resolver import LinkResolver
 from .parser import Block, HEADING_PATTERN
 
 
-_ORDERED_LIST_PATTERN = re.compile(r"^\d+\.\s+(.*)$")
+_ORDERED_LIST_PATTERN = re.compile(r"^(\d+)\.\s+(.*)$")
 _UNORDERED_LIST_PATTERN = re.compile(r"^[-*+]\s+(.*)$")
 _HEADING_LINE_PATTERN = HEADING_PATTERN
 _CALLOUT_TYPE_TO_MACRO = {
@@ -37,12 +37,22 @@ _TRAILING_BR_RE = re.compile(r'\s*<br\s*/?\s*>\s*$')
 _IMG_ATTR_RE = re.compile(r'(\w[\w-]*)=(?:"([^"]*)"|\'([^\']*)\')')
 
 
-class _ListNode:
-    def __init__(self, ordered: bool, text: str, depth: int) -> None:
+class ListNode:
+    """List item node for tree-based list representation.
+
+    Public API for reconstruction pipeline.
+    """
+
+    def __init__(self, ordered: bool, text: str, depth: int, start: int | None = None) -> None:
         self.ordered = ordered
         self.text = text
         self.depth = depth
-        self.children: list["_ListNode"] = []
+        self.start = start  # ordered list marker number (e.g. 2 for "2. item")
+        self.children: list["ListNode"] = []
+
+
+# backward compat alias (internal)
+_ListNode = ListNode
 
 
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
@@ -159,6 +169,15 @@ def _emit_single_depth_list(content: str, link_resolver: Optional[LinkResolver] 
     return _render_list_nodes(roots, link_resolver=link_resolver)
 
 
+def parse_list_tree(content: str) -> list[ListNode]:
+    """MDX list content를 파싱하여 tree 구조의 ListNode 리스트를 반환한다.
+
+    Public API — reverse-sync reconstruction pipeline에서 사용한다.
+    """
+    items = _parse_list_items(content)
+    return _build_list_tree(items)
+
+
 def _parse_list_items(content: str) -> list[_ListNode]:
     items: list[_ListNode] = []
     for line in content.splitlines():
@@ -171,7 +190,8 @@ def _parse_list_items(content: str) -> list[_ListNode]:
 
         ordered_match = _ORDERED_LIST_PATTERN.match(stripped)
         if ordered_match:
-            items.append(_ListNode(True, ordered_match.group(1), depth))
+            marker_num = int(ordered_match.group(1))
+            items.append(_ListNode(True, ordered_match.group(2), depth, start=marker_num))
             continue
 
         unordered_match = _UNORDERED_LIST_PATTERN.match(stripped)
@@ -216,7 +236,8 @@ def _render_list_nodes(
 
         body = "".join(_render_list_item(node, link_resolver=link_resolver) for node in group)
         if tag == "ol":
-            parts.append(f'<ol start="1">{body}</ol>')
+            start = group[0].start if group[0].start is not None else 1
+            parts.append(f'<ol start="{start}">{body}</ol>')
         else:
             parts.append(f"<ul>{body}</ul>")
     return "".join(parts)

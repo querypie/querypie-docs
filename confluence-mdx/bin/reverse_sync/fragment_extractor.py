@@ -14,7 +14,7 @@ from typing import List, Tuple
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from reverse_sync.mapping_recorder import _iter_block_children
+from reverse_sync.mapping_recorder import iter_block_children
 
 
 @dataclass
@@ -43,7 +43,7 @@ def extract_block_fragments(xhtml_text: str) -> FragmentExtractionResult:
 
     # Top-level element 순서 파악
     top_elements: List[Tuple[str, str]] = []
-    for child in _iter_block_children(soup):
+    for child in iter_block_children(soup):
         if isinstance(child, Tag):
             top_elements.append(("tag", child.name))
         elif isinstance(child, NavigableString):
