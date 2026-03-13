@@ -3,20 +3,14 @@
 from __future__ import annotations
 
 import re
+from typing import Optional
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from reverse_sync.mapping_recorder import (
-    _CALLOUT_MACRO_NAMES,
-    _get_adf_content_body,
-    _get_adf_panel_type,
-    _get_text_with_emoticons,
-    _iter_block_children,
-)
 from xhtml_beautify_diff import beautify_xhtml
 
 
-_IGNORED_ATTRIBUTES = {
+IGNORED_ATTRIBUTES: frozenset[str] = frozenset({
     "ac:macro-id",
     "ac:local-id",
     "local-id",
@@ -36,24 +30,23 @@ _IGNORED_ATTRIBUTES = {
     "ri:space-key",
     "style",
     "class",
-}
+})
 
+_CALLOUT_MACRO_NAMES = frozenset({"tip", "info", "note", "warning", "panel"})
 _XPATH_SEGMENT_RE = re.compile(r"^(?P<name>.+)\[(?P<index>\d+)\]$")
 
 
-def normalize_fragment(xhtml: str, ignore_ri_filename: bool = False) -> str:
-    """Normalize a page or fragment for structural comparison."""
-    soup = BeautifulSoup(xhtml, "html.parser")
-    _strip_layout_sections(soup)
-    _strip_nonreversible_macros(soup)
-    _strip_decorations(soup)
-    _strip_ignored_attributes(soup, ignore_ri_filename=ignore_ri_filename)
-    return beautify_xhtml(str(soup)).strip()
+def extract_plain_text(fragment: str) -> str:
+    """Extract plain text for reconstruction coordinates.
 
-
-def extract_plain_text(xhtml: str) -> str:
-    """Extract normalized plain text from a fragment using reverse-sync rules."""
-    soup = BeautifulSoup(xhtml, "html.parser")
+    Rules:
+    - preserve ordinary text spacing
+    - exclude preservation-unit tags such as `ac:image` and `ac:link`
+    - exclude `ac:plain-text-body`
+    - include `ac:emoticon` fallback text
+    - join container child blocks with single spaces
+    """
+    soup = BeautifulSoup(fragment, "html.parser")
     _strip_layout_sections(soup)
     _strip_nonreversible_macros(soup)
     _strip_decorations(soup)
@@ -62,29 +55,72 @@ def extract_plain_text(xhtml: str) -> str:
     if root is None:
         return ""
     if isinstance(root, NavigableString):
-        return _collapse_ws(str(root))
-    if root.name == "ac:structured-macro":
-        macro_name = root.get("ac:name", "")
-        if macro_name == "code":
-            body = root.find("ac:plain-text-body")
-            return _collapse_ws(body.get_text() if body else "")
-        if macro_name in _CALLOUT_MACRO_NAMES:
-            rich_body = root.find("ac:rich-text-body")
-            return _collapse_ws(_get_text_with_emoticons(rich_body) if rich_body else "")
-    if root.name == "ac:adf-extension" and _get_adf_panel_type(root) in _CALLOUT_MACRO_NAMES:
-        content_body = _get_adf_content_body(root)
-        return _collapse_ws(_get_text_with_emoticons(content_body) if content_body else "")
-    return _collapse_ws(_get_text_with_emoticons(root))
+        return str(root)
+
+    content_container = _find_content_container(root)
+    if content_container is not None:
+        return _extract_text_from_container(content_container)
+    return _extract_text_from_element(root)
 
 
-def extract_fragment_by_xpath(xhtml: str, xpath: str) -> str:
-    """Return the fragment located at the simplified mapping XPath."""
-    soup = BeautifulSoup(xhtml, "html.parser")
-    current: BeautifulSoup | Tag = soup
+def normalize_fragment(
+    fragment: str,
+    ignore_ri_filename: bool = False,
+    strip_ignored_attrs: bool = True,
+) -> str:
+    """Normalize an XHTML page or fragment for comparison."""
+    soup = BeautifulSoup(fragment, "html.parser")
+    _strip_layout_sections(soup)
+    _strip_nonreversible_macros(soup)
+    _strip_decorations(soup)
+    if strip_ignored_attrs:
+        _strip_ignored_attributes(soup, ignore_ri_filename=ignore_ri_filename)
+    return beautify_xhtml(str(soup)).strip()
+
+
+def extract_fragment_by_xpath(page_xhtml: str, xpath: str) -> Optional[str]:
+    """Extract an outerHTML fragment using the simplified mapping XPath."""
+    soup = BeautifulSoup(page_xhtml, "html.parser")
+    current: BeautifulSoup | Tag | None = soup
     for segment in xpath.split("/"):
+        if current is None:
+            return None
         tag_name, target_index = _parse_xpath_segment(segment)
         current = _find_xpath_child(current, tag_name, target_index)
-    return str(current)
+    return str(current) if current is not None else None
+
+
+def _extract_text_from_element(element) -> str:
+    parts: list[str] = []
+    for child in element.children:
+        if isinstance(child, NavigableString):
+            parts.append(str(child))
+        elif isinstance(child, Tag):
+            if child.name == "ac:plain-text-body":
+                continue
+            if child.name == "ac:emoticon":
+                fallback = child.get("ac:emoji-fallback", "")
+                if fallback:
+                    parts.append(fallback)
+                continue
+            if child.name in ("ac:image", "ac:link"):
+                continue
+            parts.append(_extract_text_from_element(child))
+    return "".join(parts)
+
+
+def _extract_text_from_container(container: Tag) -> str:
+    parts = []
+    for child in container.children:
+        if isinstance(child, NavigableString):
+            text = _collapse_ws(str(child))
+            if text:
+                parts.append(text)
+        elif isinstance(child, Tag):
+            text = _collapse_ws(_extract_text_from_element(child))
+            if text:
+                parts.append(text)
+    return " ".join(parts)
 
 
 def _find_first_meaningful_node(soup: BeautifulSoup) -> Tag | NavigableString | None:
@@ -96,30 +132,30 @@ def _find_first_meaningful_node(soup: BeautifulSoup) -> Tag | NavigableString | 
     return None
 
 
-def _find_xpath_child(parent: BeautifulSoup | Tag, tag_name: str, target_index: int) -> Tag:
-    matches = []
+def _find_xpath_child(
+    parent: BeautifulSoup | Tag,
+    tag_name: str,
+    target_index: int,
+) -> Tag | None:
+    count = 0
     for child in _iter_xpath_children(parent):
         if _segment_matches(child, tag_name):
-            matches.append(child)
-            if len(matches) == target_index:
+            count += 1
+            if count == target_index:
                 return child
-    raise KeyError(f"xpath segment not found: {tag_name}[{target_index}]")
+    return None
 
 
 def _iter_xpath_children(parent: BeautifulSoup | Tag):
     if isinstance(parent, BeautifulSoup):
         yield from (child for child in _iter_block_children(parent) if isinstance(child, Tag))
         return
-    if parent.name == "ac:structured-macro" and parent.get("ac:name", "") in _CALLOUT_MACRO_NAMES:
-        rich_body = parent.find("ac:rich-text-body")
-        if rich_body is not None:
-            yield from (child for child in rich_body.children if isinstance(child, Tag))
+
+    content_container = _find_content_container(parent)
+    if content_container is not None:
+        yield from (child for child in content_container.children if isinstance(child, Tag))
         return
-    if parent.name == "ac:adf-extension" and _get_adf_panel_type(parent) in _CALLOUT_MACRO_NAMES:
-        content_body = _get_adf_content_body(parent)
-        if content_body is not None:
-            yield from (child for child in content_body.children if isinstance(child, Tag))
-        return
+
     yield from (child for child in parent.children if isinstance(child, Tag))
 
 
@@ -140,13 +176,19 @@ def _collapse_ws(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def _strip_ignored_attributes(soup: BeautifulSoup, ignore_ri_filename: bool = False) -> None:
-    ignored_attrs = set(_IGNORED_ATTRIBUTES)
+def _strip_ignored_attributes(
+    soup: BeautifulSoup,
+    ignore_ri_filename: bool = False,
+    extra: Optional[frozenset[str]] = None,
+) -> None:
+    ignored = set(IGNORED_ATTRIBUTES)
     if ignore_ri_filename:
-        ignored_attrs.add("ri:filename")
+        ignored.add("ri:filename")
+    if extra:
+        ignored.update(extra)
     for tag in soup.find_all(True):
         for attr in list(tag.attrs.keys()):
-            if attr in ignored_attrs:
+            if attr in ignored:
                 del tag.attrs[attr]
 
 
@@ -171,3 +213,33 @@ def _strip_decorations(soup: BeautifulSoup) -> None:
     for p in soup.find_all("p"):
         if not p.get_text(strip=True) and not p.find_all(True):
             p.decompose()
+
+
+def _iter_block_children(parent):
+    for child in parent.children:
+        if isinstance(child, Tag) and child.name == "ac:layout":
+            for section in child.find_all("ac:layout-section", recursive=False):
+                for cell in section.find_all("ac:layout-cell", recursive=False):
+                    yield from cell.children
+        else:
+            yield child
+
+
+def _get_adf_panel_type(element: Tag) -> str:
+    node = element.find("ac:adf-node")
+    if node is None:
+        return ""
+    attr = node.find("ac:adf-attribute", attrs={"key": "panel-type"})
+    if attr is None:
+        return ""
+    return attr.get_text().strip()
+
+
+def _find_content_container(parent: Tag) -> Tag | None:
+    if parent.name == "ac:structured-macro" and parent.get("ac:name", "") in _CALLOUT_MACRO_NAMES:
+        return parent.find("ac:rich-text-body")
+    if parent.name == "ac:adf-extension" and _get_adf_panel_type(parent) in _CALLOUT_MACRO_NAMES:
+        node = parent.find("ac:adf-node")
+        if node is not None:
+            return node.find("ac:adf-content")
+    return None

@@ -37,15 +37,17 @@ _TRAILING_BR_RE = re.compile(r'\s*<br\s*/?\s*>\s*$')
 _IMG_ATTR_RE = re.compile(r'(\w[\w-]*)=(?:"([^"]*)"|\'([^\']*)\')')
 
 
-class _ListNode:
+class ListNode:
+    """List item node for tree-based list representation."""
+
     def __init__(self, ordered: bool, text: str, depth: int) -> None:
         self.ordered = ordered
         self.text = text
         self.depth = depth
-        self.children: list["_ListNode"] = []
+        self.children: list["ListNode"] = []
 
 
-ListNode = _ListNode
+_ListNode = ListNode
 
 
 def emit_block(block: Block, context: Optional[dict] = None) -> str:
