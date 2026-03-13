@@ -17,10 +17,13 @@ class BlockMapping:
 
 HEADING_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
 
-_CALLOUT_MACRO_NAMES = frozenset({'tip', 'info', 'note', 'warning', 'panel'})
+CALLOUT_MACRO_NAMES = frozenset({'tip', 'info', 'note', 'warning', 'panel'})
+
+# backward-compat aliases
+_CALLOUT_MACRO_NAMES = CALLOUT_MACRO_NAMES
 
 
-def _get_text_with_emoticons(element) -> str:
+def get_text_with_emoticons(element) -> str:
     """get_text()와 동일하지만 ac:emoticon의 fallback 텍스트를 포함한다.
 
     Confluence의 <ac:emoticon> 태그는 self-closing으로 텍스트 노드가 없어서
@@ -38,11 +41,14 @@ def _get_text_with_emoticons(element) -> str:
                 if fallback:
                     parts.append(fallback)
             else:
-                parts.append(_get_text_with_emoticons(item))
+                parts.append(get_text_with_emoticons(item))
     return ''.join(parts)
 
+# backward-compat alias
+_get_text_with_emoticons = get_text_with_emoticons
 
-def _iter_block_children(parent):
+
+def iter_block_children(parent):
     """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
     for child in parent.children:
         if isinstance(child, Tag) and child.name == 'ac:layout':
@@ -52,6 +58,9 @@ def _iter_block_children(parent):
         else:
             yield child
 
+# backward-compat alias
+_iter_block_children = iter_block_children
+
 
 def record_mapping(xhtml: str) -> List[BlockMapping]:
     """XHTML에서 블록 레벨 요소를 추출하여 매핑 레코드를 생성한다."""
@@ -59,7 +68,7 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
     mappings: List[BlockMapping] = []
     counters: dict = {}
 
-    for child in _iter_block_children(soup):
+    for child in iter_block_children(soup):
         if isinstance(child, NavigableString):
             if child.strip():
                 _add_mapping(mappings, counters, 'p', child.strip(), child.strip())
@@ -93,24 +102,24 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
                              block_type='code')
             else:
                 # Callout 매크로: body 텍스트만 추출 (파라미터 메타데이터 제외)
-                if macro_name in _CALLOUT_MACRO_NAMES:
+                if macro_name in CALLOUT_MACRO_NAMES:
                     rich_body = child.find('ac:rich-text-body')
-                    plain = _get_text_with_emoticons(rich_body) if rich_body else child.get_text()
+                    plain = get_text_with_emoticons(rich_body) if rich_body else child.get_text()
                 else:
                     plain = child.get_text()
                 _add_mapping(mappings, counters, f'macro-{macro_name}', str(child), plain,
                              block_type='html_block')
                 # Callout 매크로: 자식 요소 개별 매핑 추가
-                if macro_name in _CALLOUT_MACRO_NAMES:
+                if macro_name in CALLOUT_MACRO_NAMES:
                     parent_mapping = mappings[-1]
                     _add_rich_text_body_children(
                         child, parent_mapping, mappings, counters)
         elif tag_name == 'ac:adf-extension':
-            panel_type = _get_adf_panel_type(child)
+            panel_type = get_adf_panel_type(child)
             plain = child.get_text()
             _add_mapping(mappings, counters, tag_name, str(child), plain,
                          block_type='html_block')
-            if panel_type in _CALLOUT_MACRO_NAMES:
+            if panel_type in CALLOUT_MACRO_NAMES:
                 parent_mapping = mappings[-1]
                 _add_adf_content_children(
                     child, parent_mapping, mappings, counters)
@@ -172,7 +181,7 @@ def _add_container_children(
         child_counters[tag] = child_counters.get(tag, 0) + 1
         child_xpath = f"{parent_xpath}/{tag}[{child_counters[tag]}]"
 
-        plain = _get_text_with_emoticons(child)
+        plain = get_text_with_emoticons(child)
         if tag in ('ul', 'ol', 'table'):
             inner = str(child)
         else:
@@ -206,7 +215,7 @@ def _add_rich_text_body_children(
     _add_container_children(rich_body, parent_mapping, mappings, counters)
 
 
-def _get_adf_panel_type(element: Tag) -> str:
+def get_adf_panel_type(element: Tag) -> str:
     """ac:adf-extension 요소에서 panel-type을 추출한다."""
     node = element.find('ac:adf-node')
     if node is None:
@@ -216,13 +225,19 @@ def _get_adf_panel_type(element: Tag) -> str:
         return ''
     return attr.get_text().strip()
 
+# backward-compat alias
+_get_adf_panel_type = get_adf_panel_type
 
-def _get_adf_content_body(element: Tag):
+
+def get_adf_content_body(element: Tag):
     """ac:adf-extension 요소에서 ac:adf-content를 찾는다."""
     node = element.find('ac:adf-node')
     if node is None:
         return None
     return node.find('ac:adf-content')
+
+# backward-compat alias
+_get_adf_content_body = get_adf_content_body
 
 
 def _add_adf_content_children(
@@ -232,5 +247,5 @@ def _add_adf_content_children(
     counters: dict,
 ):
     """ac:adf-extension의 ac:adf-content 내 자식 요소를 개별 매핑으로 추가한다."""
-    content_body = _get_adf_content_body(adf_element)
+    content_body = get_adf_content_body(adf_element)
     _add_container_children(content_body, parent_mapping, mappings, counters)

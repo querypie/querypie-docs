@@ -201,6 +201,21 @@ class TestNormalizeFragment:
         assert "ac:macro-id" not in with_strip
         assert "ac:macro-id" in without_strip
 
+    def test_ignore_ri_filename_option(self):
+        """ignore_ri_filename=True면 ri:filename 속성도 제거된다."""
+        fragment = '<ri:attachment ri:filename="test.png" />'
+        normal = normalize_fragment(fragment)
+        ignored = normalize_fragment(fragment, ignore_ri_filename=True)
+        assert 'ri:filename' in normal
+        assert 'ri:filename' not in ignored
+
+    def test_empty_paragraph_removed(self):
+        """빈 <p> 요소가 decoration unwrap 후 제거된다."""
+        fragment = '<p><ac:inline-comment-marker ac:ref="x"></ac:inline-comment-marker></p><p>keep</p>'
+        result = normalize_fragment(fragment)
+        # 빈 <p>는 제거되고 keep만 남음
+        assert "keep" in result
+
 
 # ---------------------------------------------------------------------------
 # normalize_fragment — real testcase round-trip

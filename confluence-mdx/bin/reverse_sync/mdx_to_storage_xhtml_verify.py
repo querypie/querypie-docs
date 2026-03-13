@@ -14,30 +14,8 @@ from typing import Iterable
 from bs4 import BeautifulSoup
 from mdx_to_storage import emit_document, parse_mdx
 from mdx_to_storage.link_resolver import LinkResolver
+from reverse_sync.xhtml_normalizer import normalize_soup
 from xhtml_beautify_diff import beautify_xhtml, xhtml_diff
-
-
-_IGNORED_ATTRIBUTES = {
-    "ac:macro-id",
-    "ac:local-id",
-    "local-id",
-    "ac:schema-version",
-    "ri:version-at-save",
-    "ac:original-height",
-    "ac:original-width",
-    "ac:custom-width",
-    "ac:alt",
-    "ac:layout",
-    "data-table-width",
-    "data-layout",
-    "data-highlight-colour",
-    "data-card-appearance",
-    "ac:breakout-mode",
-    "ac:breakout-width",
-    "ri:space-key",
-    "style",
-    "class",
-}
 
 
 @dataclass
@@ -77,10 +55,7 @@ def mdx_to_storage_xhtml_fragment(
 
 def _normalize_xhtml(xhtml: str, ignore_ri_filename: bool = False) -> str:
     soup = BeautifulSoup(xhtml, "html.parser")
-    _strip_layout_sections(soup)
-    _strip_nonreversible_macros(soup)
-    _strip_decorations(soup)
-    _strip_ignored_attributes(soup, ignore_ri_filename=ignore_ri_filename)
+    normalize_soup(soup, ignore_ri_filename=ignore_ri_filename)
     return beautify_xhtml(str(soup)).strip()
 
 
@@ -104,39 +79,6 @@ def verify_expected_mdx_against_page_xhtml(
     if not diff_lines:
         return True, generated, ""
     return False, generated, "\n".join(diff_lines)
-
-
-def _strip_ignored_attributes(soup: BeautifulSoup, ignore_ri_filename: bool = False) -> None:
-    ignored_attrs = set(_IGNORED_ATTRIBUTES)
-    if ignore_ri_filename:
-        ignored_attrs.add("ri:filename")
-    for tag in soup.find_all(True):
-        for attr in list(tag.attrs.keys()):
-            if attr in ignored_attrs:
-                del tag.attrs[attr]
-
-
-def _strip_layout_sections(soup: BeautifulSoup) -> None:
-    for tag_name in ("ac:layout", "ac:layout-section", "ac:layout-cell"):
-        for tag in soup.find_all(tag_name):
-            tag.unwrap()
-
-
-def _strip_nonreversible_macros(soup: BeautifulSoup) -> None:
-    for macro in soup.find_all("ac:structured-macro"):
-        if macro.get("ac:name") in {"toc", "view-file"}:
-            macro.decompose()
-
-
-def _strip_decorations(soup: BeautifulSoup) -> None:
-    for tag_name in ("ac:adf-mark", "ac:inline-comment-marker"):
-        for tag in soup.find_all(tag_name):
-            tag.unwrap()
-    for colgroup in soup.find_all("colgroup"):
-        colgroup.decompose()
-    for p in soup.find_all("p"):
-        if not p.get_text(strip=True) and not p.find_all(True):
-            p.decompose()
 
 
 def iter_testcase_dirs(testcases_dir: Path) -> Iterable[Path]:

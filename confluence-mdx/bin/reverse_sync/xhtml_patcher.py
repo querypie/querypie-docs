@@ -3,9 +3,7 @@ from typing import List, Dict
 from bs4 import BeautifulSoup, NavigableString, Tag
 import difflib
 import re
-from reverse_sync.mapping_recorder import _iter_block_children
-
-from reverse_sync.mapping_recorder import _get_text_with_emoticons
+from reverse_sync.mapping_recorder import get_text_with_emoticons, iter_block_children
 
 
 def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
@@ -69,7 +67,7 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
             # patch 적용 시에는 기본 비교를 get_text()로 수행하고, 필요 시 emoticon fallback 텍스트 비교를 허용한다.
             current_plain = element.get_text()
             if old_text and current_plain.strip() != old_text.strip():
-                current_plain_with_emoticons = _get_text_with_emoticons(element)
+                current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
@@ -86,7 +84,7 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
             # mapping plain(old_text)과의 비교는 get_text() 우선, 실패 시 emoticon fallback 포함 텍스트로 재확인한다.
             current_plain = element.get_text()
             if current_plain.strip() != old_text.strip():
-                current_plain_with_emoticons = _get_text_with_emoticons(element)
+                current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
             _apply_text_changes(element, old_text, new_text)
@@ -130,7 +128,7 @@ def _insert_element_resolved(soup: BeautifulSoup, anchor, new_html: str):
 
 def _find_first_block_element(soup: BeautifulSoup):
     """soup의 첫 번째 블록 레벨 요소를 찾는다."""
-    for child in _iter_block_children(soup):
+    for child in iter_block_children(soup):
         if isinstance(child, Tag):
             return child
     return None
@@ -212,7 +210,7 @@ def _find_element_by_simple_xpath(soup: BeautifulSoup, xpath: str):
         macro_name = tag_name[len('macro-'):]
 
     count = 0
-    for child in _iter_block_children(soup):
+    for child in iter_block_children(soup):
         if not isinstance(child, Tag):
             continue
         if macro_name:

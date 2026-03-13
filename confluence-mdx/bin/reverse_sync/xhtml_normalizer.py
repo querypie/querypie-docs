@@ -11,6 +11,8 @@ from typing import Optional
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
+from reverse_sync.mapping_recorder import iter_block_children
+
 
 # ---------------------------------------------------------------------------
 # Ignored attributes — 비교 시 무시하는 Confluence 메타데이터 속성
@@ -82,21 +84,42 @@ def _extract_text_from_element(element) -> str:
 # Fragment normalization
 # ---------------------------------------------------------------------------
 
-def normalize_fragment(fragment: str, strip_ignored_attrs: bool = True) -> str:
-    """XHTML fragment를 비교 가능한 정규화된 형태로 변환한다.
+def normalize_soup(
+    soup: BeautifulSoup,
+    *,
+    strip_ignored_attrs: bool = True,
+    ignore_ri_filename: bool = False,
+) -> None:
+    """BeautifulSoup 객체를 in-place로 정규화한다.
 
-    - layout section unwrap
-    - non-reversible macro 제거
-    - decoration unwrap
-    - ignored attribute 제거 (선택)
-    - BeautifulSoup prettify로 노드별 줄바꿈
+    normalize_fragment()와 verify 모듈이 공유하는 핵심 정규화 로직.
     """
-    soup = BeautifulSoup(fragment, "html.parser")
     _strip_layout_sections(soup)
     _strip_nonreversible_macros(soup)
     _strip_decorations(soup)
     if strip_ignored_attrs:
-        _strip_ignored_attributes(soup)
+        _strip_ignored_attributes(soup, ignore_ri_filename=ignore_ri_filename)
+
+
+def normalize_fragment(
+    fragment: str,
+    strip_ignored_attrs: bool = True,
+    ignore_ri_filename: bool = False,
+) -> str:
+    """XHTML fragment를 비교 가능한 정규화된 형태로 변환한다.
+
+    - layout section unwrap
+    - non-reversible macro 제거
+    - decoration unwrap + 빈 <p> 제거
+    - ignored attribute 제거 (선택)
+    - BeautifulSoup prettify로 노드별 줄바꿈
+    """
+    soup = BeautifulSoup(fragment, "html.parser")
+    normalize_soup(
+        soup,
+        strip_ignored_attrs=strip_ignored_attrs,
+        ignore_ri_filename=ignore_ri_filename,
+    )
     return soup.prettify(formatter="minimal").strip()
 
 
@@ -118,13 +141,20 @@ def _strip_decorations(soup: BeautifulSoup) -> None:
             tag.unwrap()
     for colgroup in soup.find_all("colgroup"):
         colgroup.decompose()
+    # 빈 <p> 제거 (decoration unwrap 후 남는 빈 요소)
+    for p in soup.find_all("p"):
+        if not p.get_text(strip=True) and not p.find_all(True):
+            p.decompose()
 
 
 def _strip_ignored_attributes(
     soup: BeautifulSoup,
     extra: Optional[frozenset[str]] = None,
+    ignore_ri_filename: bool = False,
 ) -> None:
-    ignored = IGNORED_ATTRIBUTES | extra if extra else IGNORED_ATTRIBUTES
+    ignored = IGNORED_ATTRIBUTES | extra if extra else set(IGNORED_ATTRIBUTES)
+    if ignore_ri_filename:
+        ignored = set(ignored) | {"ri:filename"}
     for tag in soup.find_all(True):
         for attr in list(tag.attrs.keys()):
             if attr in ignored:
@@ -186,7 +216,7 @@ def _find_element_by_simple_xpath(parent, xpath: str):
         macro_name = tag_name[len("macro-"):]
 
     count = 0
-    for child in _iter_block_children(parent):
+    for child in iter_block_children(parent):
         if not isinstance(child, Tag):
             continue
         if macro_name:
@@ -199,17 +229,6 @@ def _find_element_by_simple_xpath(parent, xpath: str):
             if count == index:
                 return child
     return None
-
-
-def _iter_block_children(parent):
-    """블록 레벨 자식을 순회한다. ac:layout은 cell 내부로 진입한다."""
-    for child in parent.children:
-        if isinstance(child, Tag) and child.name == "ac:layout":
-            for section in child.find_all("ac:layout-section", recursive=False):
-                for cell in section.find_all("ac:layout-cell", recursive=False):
-                    yield from cell.children
-        else:
-            yield child
 
 
 def _find_content_container(parent: Tag):
