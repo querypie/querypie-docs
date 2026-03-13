@@ -707,3 +707,242 @@ PR #913의 원래 방향은 맞다. 다만 기존 문서는 "재구성으로 간
 - 기존 testcase 자산을 설계 검증 테스트와 회귀 테스트로 분리해 사용한다
 
 이 기준으로 구현하면, 최종 목표인 "MDX 변경을 XHTML로 재구성하여 Confluence 문서를 업데이트"하는 기능을 현재 코드베이스 위에서 더 안정적으로 구현하고 유지보수할 수 있다.
+
+## 11. 기존 코드 삭제 및 정리 범위
+
+새 구현이 기본 경로가 되면, 현재 코드베이스에는 "과거 heuristic text patch 경로"가 상당 부분 중복 상태로 남는다. 이 섹션은 무엇을 삭제할 수 있고, 무엇을 단계적으로 축소해야 하는지를 명시한다.
+
+삭제 원칙은 단순하다.
+
+1. `tests/testcases` 16개 reverse-sync golden 과 `tests/reverse-sync/pages.yaml` 의 `expected_status: pass` 게이트가 새 경로에서 안정화되기 전에는 삭제하지 않는다.
+2. 새 경로가 green 이 된 뒤에는 동일 책임의 구 구현을 남겨두지 않는다.
+3. debug artifact는 기본 동작에서 제거하고, 필요하면 명시적 debug flag 뒤로 보낸다.
+
+### 11.1 완전 삭제 대상
+
+아래 모듈은 새 설계가 완료되면 역할이 완전히 대체된다.
+
+#### `bin/reverse_sync/text_transfer.py`
+
+삭제 사유:
+
+- MDX plain text와 XHTML plain text를 문자 단위로 정렬해 수정분만 이식하는 구현이다.
+- 새 설계는 modified block 기본 경로를 whole-fragment reconstruction으로 바꾸므로 더 이상 중심 경로가 아니다.
+- paragraph/list anchor 처리도 이 모듈이 아니라 plain-text offset + DOM insertion helper가 담당한다.
+
+함께 삭제/교체할 테스트:
+
+- `tests/test_reverse_sync_text_transfer.py`
+- `tests/test_reverse_sync_cli.py` 내 `align_chars`, `find_insert_pos`, `transfer_text_changes` 관련 테스트
+
+#### `bin/reverse_sync/list_patcher.py`
+
+삭제 사유:
+
+- 리스트를 item-level text patch 또는 전체 innerHTML 재생성으로 처리하는 전용 heuristic 모듈이다.
+- 새 설계에서는 list tree + sidecar reconstruction metadata 기반 재구성기로 대체된다.
+- 특히 `_regenerate_list_from_parent()` 의 `transfer_text_changes()` 폴백은 새 경로와 철학적으로 충돌한다.
+
+함께 삭제/교체할 테스트:
+
+- `tests/test_reverse_sync_patch_builder.py` 내 `build_list_item_patches`, `split_list_items` 관련 테스트
+- `tests/test_reverse_sync_cli.py` 내 `build_list_item_patches` 직접 호출 테스트
+
+#### `bin/reverse_sync/table_patcher.py`
+
+삭제 사유:
+
+- table row별 plain text patch를 containing block에 누적 적용하는 구 경로다.
+- 새 설계에서는 table도 clean block로 whole-fragment replacement 대상이다.
+- row-level text patch는 더 이상 유지할 가치가 없다.
+
+함께 삭제/교체할 테스트:
+
+- `tests/test_reverse_sync_patch_builder.py` 내 `build_table_row_patches`, `split_table_rows`, `normalize_table_row` 관련 테스트
+
+#### `bin/reverse_sync/inline_detector.py`
+
+삭제 사유:
+
+- inline marker 변화 여부를 감지해 기존 heuristic branch를 선택하기 위한 보조 모듈이다.
+- 새 경로는 inline marker 변화 감지로 분기하지 않고, block kind와 reconstruction metadata로 분기한다.
+- 따라서 `has_inline_format_change()` / `has_inline_boundary_change()` 는 planner 설계에서 더 이상 필요하지 않다.
+
+함께 삭제/교체할 테스트:
+
+- `tests/test_reverse_sync_patch_builder.py` 내 `has_inline_format_change`, `has_inline_boundary_change` 관련 테스트
+
+### 11.2 부분 삭제 또는 대폭 축소 대상
+
+아래 코드는 즉시 파일 전체를 지우기보다는, 새 경로가 기본이 된 뒤 내부 범위를 줄여야 한다.
+
+#### `bin/reverse_sync/patch_builder.py`
+
+삭제할 범위:
+
+- `_flush_containing_changes()`
+- `_resolve_mapping_for_change()`
+- `'direct' | 'containing' | 'list' | 'table' | 'skip'` 전략 분기
+- `transfer_text_changes()` 를 호출하는 modified path
+- `mdx_block_to_inner_xhtml()` 기반 `new_inner_xhtml` 패치 경로
+
+남길 가능성이 있는 범위:
+
+- insert/delete orchestration
+- alignment를 이용한 insert anchor 계산
+
+권장 최종 형태:
+
+- `patch_builder.py` 는 사실상 thin wrapper가 되거나,
+- 새 `reconstruction_planner.py` / `reconstructors.py` 로 책임을 이동한 후 삭제한다.
+
+#### `bin/reverse_sync/xhtml_patcher.py`
+
+삭제할 범위:
+
+- `old_plain_text` + `new_plain_text` modify path
+- `_apply_text_changes()` 와 그에 딸린 text-only patch 로직
+
+남겨야 할 범위:
+
+- XPath resolve
+- `insert`
+- `delete`
+- 새로 추가할 `replace_fragment`
+- CDATA 복원
+
+즉 이 모듈은 "텍스트 패처"가 아니라 "fragment-level DOM patcher"로 축소되어야 한다.
+
+함께 정리할 테스트:
+
+- `tests/test_reverse_sync_xhtml_patcher.py` 의 `new_plain_text` 중심 테스트는 제거하거나 `replace_fragment` 중심 테스트로 교체한다.
+
+#### `bin/reverse_sync/mdx_to_xhtml_inline.py`
+
+삭제 후보 범위:
+
+- `mdx_block_to_inner_xhtml()`
+
+삭제 검토 사유:
+
+- 새 설계의 기본 emitter는 `mdx_to_storage.emit_block()` 이다.
+- `mdx_block_to_inner_xhtml()` 는 innerHTML 단위 패치에 최적화된 구 계층이다.
+
+권장 방향:
+
+- 단기: `mdx_block_to_xhtml_element()` 만 compatibility wrapper로 유지 가능
+- 최종: planner가 `emit_block()` 을 직접 사용하면 모듈 전체 삭제 가능
+
+함께 정리할 테스트:
+
+- `tests/test_reverse_sync_mdx_to_xhtml_inline.py` 의 innerHTML 중심 테스트는 축소하거나 새 reconstruction helper 테스트로 대체한다.
+
+#### `bin/reverse_sync/sidecar.py` 의 mapping.yaml 계층
+
+축소 또는 삭제 대상:
+
+- `SidecarEntry`
+- `SidecarChildEntry`
+- `load_sidecar_mapping()`
+- `build_mdx_to_sidecar_index()`
+- `build_xpath_to_mapping()`
+- `generate_sidecar_mapping()`
+- `find_mapping_by_sidecar()`
+
+삭제 조건:
+
+- `RoundtripSidecar schema v3` 가 top-level routing + reconstruction metadata 책임까지 흡수한 뒤
+- `reverse_sync_cli.py` 와 `converter/cli.py` 가 더 이상 `mapping.yaml` 을 읽고 쓰지 않을 때
+
+즉 이 계층은 "즉시 삭제"가 아니라 "sidecar v3 정착 후 제거" 대상이다.
+
+#### `bin/reverse_sync_cli.py` 의 debug artifact 경로
+
+축소 또는 삭제 대상:
+
+- `reverse-sync.mapping.original.yaml`
+- `reverse-sync.mapping.patched.yaml`
+- runtime 중간 산출물로서의 `mapping.yaml`
+
+권장 방향:
+
+- 기본 verify/push 경로에서는 생성하지 않는다
+- 필요 시 `--debug-mapping` 같은 명시적 플래그 뒤로 이동한다
+
+#### `bin/converter/cli.py` 의 자동 `mapping.yaml` 생성
+
+삭제 또는 optional 화 대상:
+
+- `generate_sidecar_mapping()` 호출 블록 전체
+
+사유:
+
+- forward convert 성공 여부와 mapping.yaml 생성은 본질적으로 분리되어야 한다
+- 새 설계의 중심 artifact는 `mapping.yaml` 이 아니라 `expected.roundtrip.json` / sidecar v3 다
+
+### 11.3 유지 대상
+
+아래 모듈은 새 설계에서도 유지한다.
+
+#### 유지: `bin/reverse_sync/mapping_recorder.py`
+
+이유:
+
+- callout / ADF panel child xpath 추출
+- debug와 fixture 분석
+- nested fragment extraction helper
+
+다만 역할은 "runtime truth"가 아니라 "XHTML 분석/보조 도구"로 한정한다.
+
+#### 유지: `bin/reverse_sync/lost_info_patcher.py`
+
+이유:
+
+- 링크, emoticon, filename, image, adf-extension 복원은 여전히 필요하다
+- 다만 적용 위치는 modified fragment emit 후의 post-process 단계로 고정한다
+
+#### 유지: `bin/reverse_sync/sidecar.py` 의 roundtrip core
+
+유지 범위:
+
+- `RoundtripSidecar`
+- `SidecarBlock`
+- `build_sidecar()`
+- `load_sidecar()`
+- `write_sidecar()`
+- `verify_sidecar_integrity()`
+
+즉 sidecar 모듈 전체를 지우는 것이 아니라, 그 안의 `mapping.yaml` 서브계층만 걷어내는 방향이다.
+
+### 11.4 테스트 코드 삭제 범위
+
+새 구현으로 전환되면 다음 테스트 묶음은 제거 또는 대체되어야 한다.
+
+- `tests/test_reverse_sync_text_transfer.py`
+- `tests/test_reverse_sync_patch_builder.py` 의 heuristic branch 테스트
+- `tests/test_reverse_sync_xhtml_patcher.py` 의 `new_plain_text` 기반 modify 테스트
+- `tests/test_reverse_sync_cli.py` 내부의 text-transfer helper 직접 테스트
+- `tests/test_reverse_sync_sidecar.py` 중 `mapping.yaml` 전용 테스트
+
+대신 아래 묶음이 새 기본 세트가 된다.
+
+- `tests/test_reverse_sync_xhtml_normalizer.py`
+- `tests/test_reverse_sync_reconstruction_offsets.py`
+- `tests/test_reverse_sync_reconstruction_insert.py`
+- `tests/test_reverse_sync_reconstruct_paragraph.py`
+- `tests/test_reverse_sync_reconstruct_list.py`
+- `tests/test_reverse_sync_reconstruct_container.py`
+- `tests/test_reverse_sync_reconstruction_goldens.py`
+
+### 11.5 실제 삭제 순서
+
+삭제는 아래 순서로 진행한다.
+
+1. 새 reconstruction path 구현
+2. 새 helper / block / golden / E2E 테스트 green
+3. `patch_builder.py` 에서 구 heuristic path unreachable 상태 확인
+4. `text_transfer.py`, `list_patcher.py`, `table_patcher.py`, `inline_detector.py` 삭제
+5. 관련 테스트 삭제
+6. 마지막으로 `mapping.yaml` 계층과 debug artifact 생성 경로 제거
+
+이 순서를 지키면 "새 경로 추가 + 구 경로 잔존" 상태를 최소화할 수 있고, 유지보수 비용도 빠르게 줄일 수 있다.
