@@ -10,6 +10,7 @@
 > - `#915` Phase 1 sidecar schema v3 (`reconstruction`, identity helper)
 > 연관 문서:
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
+> - `docs/plans/2026-03-14-reverse-sync-reconstruction-cleanup-scope.md`
 > - `docs/analysis-reverse-sync-refactoring.md`
 
 ## 1. 문서 목적
@@ -470,6 +471,8 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 | `tests/reverse-sync/pages.yaml` | 1 manifest | catalog + expected_status/failure_type/severity |
 
 ## 8. legacy 코드 정리 기준
+
+상세 삭제 대상과 범위는 `docs/plans/2026-03-14-reverse-sync-reconstruction-cleanup-scope.md` 에 별도로 정리한다.
 
 다음 코드는 새 경로가 기본이 되기 전에는 제거하지 않는다.
 
