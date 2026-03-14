@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "lists",
   "mdx_sha256": "67e914c155a6e962cae05eb72f50df55353bade9ea51740c5f4c15a260a0d33e",
   "source_xhtml_sha256": "9d0d9a133f46555437bd107ea630d34d06edff8520f0c8cb5af825cfb42d1233",
@@ -13,7 +13,11 @@
         1,
         1
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Unordered List"
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +28,13 @@
         3,
         17
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "\n\none\n\n\neleven\n\ntwelve\n\n\none twenty one\n\none twenty two\n\none twenty three\n\ntwo\n\n\ntwenty one\n\n\ntwo eleven\n\ntwo twelve\n\ntwenty two\n\nthree\n\n\nthirty one\n\nthirty two\n\nfour",
+        "ordered": false,
+        "items": []
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +45,11 @@
         19,
         19
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Ordered List"
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +60,13 @@
         21,
         31
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "\n\nhello 1\n\n\nworld 1\n\nworld 2\n\n\nlove 1\n\nlove 2\n\n\npeace 1\n\npeace 2\n\nlove 3\n\nworld 3\n\nhello 2\n\nhello 3",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +77,11 @@
         33,
         33
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Mixed List"
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +92,13 @@
         35,
         47
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "\n\nhello 1\n\nhello 2\n\n\none\n\n\nworld 1\n\nworld 2\n\n\neleven\n\ntwelve\n\nthirteen\n\nworld 3\n\ntwo\n\nthree\n\nhello 3\n\nhello 4",
+        "ordered": true,
+        "items": []
+      }
     }
   ],
   "separators": [

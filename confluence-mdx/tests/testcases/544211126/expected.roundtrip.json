@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "544211126",
   "mdx_sha256": "dc392f1d1969be71110411580eb638e2c5f916c90811de2a534288cc247e2ad9",
   "source_xhtml_sha256": "dbe191b85ab99880b209776f4e806bdcb333550e2c1d71325b701536a8cef73f",
@@ -13,7 +13,11 @@
         6,
         6
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "환영합니다."
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +28,12 @@
         8,
         8
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "이곳에서 QueryPie의 사용자가 어떻게 QueryPie Web에 접속하여 리소스(DB, System, Cluster)에 대한 접근 권한을 받고, 원하는 리소스에 안전하게 접속할 수 있는지에 대한 가이드를 제공합니다. ",
+        "anchors": []
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +44,12 @@
         10,
         10
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +60,11 @@
         13,
         13
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "QueryPie가 처음이신가요?"
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +75,12 @@
         15,
         16
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "아래 순서를 따라 사용해 보세요. 각 항목을 클릭하면 자세한 사용 방법을 확인하실 수 있습니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +91,11 @@
         18,
         123
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "사용 순서기능1로그인 2대시보드 둘러보기 3Workflow로 권한 받기 4QueryPie Web에서 접속하기 Database Access Control Server Access Control Kubernetes Access ControlWeb Access Control5QueryPie Agent로 접속하기6개인 설정 둘러보기"
+      }
     },
     {
       "block_index": 6,
@@ -79,7 +106,12 @@
         0,
         0
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     }
   ],
   "separators": [

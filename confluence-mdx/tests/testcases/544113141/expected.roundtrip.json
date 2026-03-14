@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "544113141",
   "mdx_sha256": "f525580771fff8d47c148392987504b03903936fe26c5ecfe747dcfc4d6257c2",
   "source_xhtml_sha256": "4ae9cf549fddbc8f6fa3a9164f51a99fb22474f470f2c8f8a6a71b48830927f6",
@@ -13,7 +13,11 @@
         6,
         6
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Overview"
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +28,12 @@
         8,
         8
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "조직에서 관리하는 DB 커넥션 연결 및 연결해제 이력을 기록합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +44,11 @@
         10,
         10
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "DB Access History 조회하기 "
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +59,11 @@
         12,
         12
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": "Administrator > Audit > Databases > DB Access History"
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +74,13 @@
         14,
         19
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "Administrator > Audit > Databases > DB Access History 메뉴로 이동합니다.현재 월 기준으로 로그가 내림차순으로 조회됩니다.테이블 좌측 상단의 검색란을 통해 이하의 조건으로 검색이 가능합니다.Name : 사용자 이름Error Message : 접근 에러 메시지 내 구문 Client IP : 사용자 IP검색 필드 우측 필터 버튼을 클릭하여 AND/OR 조건으로 이하의 필터링이 가능합니다.Connection Name : 접속한 DB 커넥션명Database Type : 데이터베이스 유형Action Type : Connect / Disconnect 여부Result : 접속 성공/실패 여부Action At : 접속 시점테이블 우측 상단의 새로고침 버튼을 통해 로그 목록을 최신화할 수 있습니다.테이블에서 이하의 컬럼 정보를 제공합니다:No : 이벤트 식별 번호Action At : 서버 접속 시도 일시Action Type : Connect / Disconnect 여부Result : 접속 성공/실패 여부:check_mark: Success:cross_mark: FailureName : 대상 사용자 이름Email : 대상 사용자 이메일Cloud Provider : 대상 클라우드 프로바이더명Connection Name : 대상 DB 커넥션명Database Type : 대상 데이터베이스 유형Privilege Name : 사용자 접속 권한 Client IP : 사용자 클라이언트 IP 주소Replication Type : DB Replication 유형DB Host : 접속한 DB 호스트DB User : DB 사용자 IDDB Name : DB명Client Name : 이용 클라이언트명 (DataGrip 등)Error Message : 접속 실패 등 특이사항에 대한 기록Connected From : 접속 방식",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +91,11 @@
         21,
         57
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "DB Access History 상세 내역 조회하기"
+      }
     },
     {
       "block_index": 6,
@@ -79,7 +106,12 @@
         59,
         59
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "각 행을 클릭하면 세부 정보 조회가 가능합니다. ",
+        "anchors": []
+      }
     },
     {
       "block_index": 7,
@@ -90,7 +122,11 @@
         61,
         61
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": "Administrator > Audit > Databases > DB Access History > DB Access History Details"
+      }
     },
     {
       "block_index": 8,
@@ -101,7 +137,13 @@
         63,
         68
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "우측 드로워에는 이하의 정보를 노출합니다:Result : 접속 성공/실패 여부:check_mark: Success:cross_mark: FailureName : 대상 사용자 이름Action At : 접속 시점Action Type : Connect / Disconnect 여부Privilege Name : 사용자 접속 권한 Connection Name : 대상 DB 커넥션명Host Name : 접속 실행 호스트명Connected From : 접속 방식Client Name : 이용 클라이언트명 (DataGrip 등)Client IP : 사용자 클라이언트 IP 주소Replication Type : DB Replication 유형Database Type : 대상 데이터베이스 유형DB Host : 접속한 DB 호스트DB Name : DB명DB User : DB 사용자 IDError Message : 접속 실패 등 특이사항에 대한 기록",
+        "ordered": false,
+        "items": []
+      }
     }
   ],
   "separators": [

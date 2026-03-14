@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "883654669",
   "mdx_sha256": "59e5ebfe4b348dc33ff27d394f61940996f58303cb23dd73fc90411e8436879e",
   "source_xhtml_sha256": "4c79226b0a847e7cc4faf0b39127a7b02510347c4653b0e18129de8c59e7e1f7",
@@ -13,7 +13,11 @@
         8,
         8
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Overview"
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +28,12 @@
         10,
         10
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림을 수신할 수 있습니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +44,15 @@
         12,
         12
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": "본 문서는 10.2.6 또는 그 이상의 버전에 적용됩니다. 10.2.5 또는 그 이하 버전의 Slack 연동 방법은 10.1.0 버전 매뉴얼 문서를 참고해주세요.",
+        "child_xpaths": [
+          "macro-info[1]/p[1]",
+          "macro-info[1]/p[2]"
+        ]
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +63,11 @@
         14,
         16
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": ""
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +78,11 @@
         17,
         17
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "구성 시 사전에 필요한 권한"
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +93,13 @@
         19,
         19
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "Slack Workspace 관리자 권한 계정 (Slack Workspace에 App을 설치하기 위해 필요)QueryPie Owner 및 Approval Admin 권한 계정",
+        "ordered": false,
+        "items": []
+      }
     },
     {
       "block_index": 6,
@@ -79,7 +110,11 @@
         21,
         22
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Slack API 에서 DM App 생성 (via Manifest Files)"
+      }
     },
     {
       "block_index": 7,
@@ -90,7 +125,12 @@
         24,
         24
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "App Manifest를 이용하여 QueryPie DM 연동 전용 Slack App을 생성합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 8,
@@ -101,7 +141,12 @@
         26,
         26
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     },
     {
       "block_index": 9,
@@ -112,7 +157,13 @@
         29,
         75
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "https://api.slack.com/apps 으로 이동하여 Create an App 을 클릭합니다.Create an app 모달에서, App 생성 방식을 선택합니다. From a manifest 를 클릭합니다.Pick a workspace 모달에서 QueryPie와 연동할 Slack Workspace를 선택한 뒤 다음 단계로 진행합니다.Create app from manifest 모달에서 JSON 형식의 App Manifest를 입력합니다. 미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 붙여넣은 뒤 다음 단계로 진행합니다.:light_bulb_on: {{..}}  안의 값은 원하는 값으로 변경해 주세요.설정 내용을 검토하고 Create 버튼을 클릭하여 App 생성을 완료합니다.",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 10,
@@ -123,7 +174,11 @@
         77,
         77
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Slack Workspace에 Slack App 설치"
+      }
     },
     {
       "block_index": 11,
@@ -134,7 +189,13 @@
         79,
         87
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "Settings > Install App에서 Install to Workspace 버튼을 클릭하여 생성된 앱을 Slack Workspace에 설치합니다. 권한 요청 페이지에서, 허용을 클릭합니다.설정한 Slack Workspace에서 Slack DM 전용 App이 생성된 것을 확인할 수 있습니다.",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 12,
@@ -145,7 +206,11 @@
         89,
         89
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Bot User OAuth Token 획득"
+      }
     },
     {
       "block_index": 13,
@@ -156,7 +221,12 @@
         91,
         91
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Features > OAuth & Permissions 메뉴 내 OAuth Tokens for Your Workspace 섹션에서, Bot User OAuth Token 을 복사하여 기록해 둡니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 14,
@@ -167,7 +237,11 @@
         93,
         95
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": ""
+      }
     },
     {
       "block_index": 15,
@@ -178,7 +252,12 @@
         98,
         98
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     },
     {
       "block_index": 16,
@@ -189,7 +268,11 @@
         100,
         101
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "App-Level Token 생성"
+      }
     },
     {
       "block_index": 17,
@@ -200,7 +283,15 @@
         102,
         103
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "html_block",
+        "old_plain_text": "App manifest로 Slack app을 생성할 때 Socket Mode와 관련 권한들을 활성화할 수는 있지만, App Level Token(xapp-)은 자동으로 생성되지 않습니다. App Level Token은 보안 자격 증명(security credential)이기 때문에 manifest로 자동 생성/노출되면 보안상 위험App manifest는 앱의 구성(configuration)만 정의하고, 실제 인증 토큰들은 별도로 생성/관리됨",
+        "child_xpaths": [
+          "macro-info[2]/p[1]",
+          "macro-info[2]/ul[1]"
+        ]
+      }
     },
     {
       "block_index": 18,
@@ -211,7 +302,12 @@
         104,
         104
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "다음 단계를 수행하여 App-Level Token을 수동으로 생성합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 19,
@@ -222,7 +318,13 @@
         106,
         106
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "앱 설정 페이지의 Settings > Basic Information 메뉴의 App-Level Tokens 섹션으로 이동하고, Generate Token and Scope 버튼을 클릭합니다.Generate an app-level token 모달에서, Add Scope 버튼을 클릭한 뒤 connections:write 를 추가합니다.생성된 App-Level Token 모달에서, 앱 토큰을 복사하여 따로 기록해 둡니다. App-Level Token은 xapp- 으로 시작합니다.",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 20,
@@ -233,7 +335,11 @@
         108,
         116
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "QueryPie에서 Slack DM 설정하기"
+      }
     },
     {
       "block_index": 21,
@@ -244,7 +350,13 @@
         118,
         118
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "Admin > General > System > Integrations > Slack 메뉴로 진입한 뒤, Configure 버튼을 클릭하여 설정 모달을 엽니다.설정 모달에 아까 기록해둔 App Token과 Bot User OAuth Token을 입력합니다.추가 설정 값은 다음과 같습니다. DM으로 Workflow 알림을 받고 메시지 안에서 승인/거절을 수행하려면 모든 설정 토글을 활성화 합니다.Send Workflow Notification via Slack DM : 워크플로우 요청에 대한 Slack DM 전송 활성화Allow Users to approve or reject on Slack DM : Slack DM 내에서 승인 또는 거절 기능 활성화Save 버튼을 누르고 설정을 완료합니다.",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 22,
@@ -255,7 +367,11 @@
         120,
         137
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Slack DM 설정 관리하기"
+      }
     },
     {
       "block_index": 23,
@@ -266,7 +382,13 @@
         139,
         139
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "Slack Configuration을 등록한 뒤, 현재 설정 상태를 화면에서 확인할 수 있습니다.Edit 버튼을 클릭하여 입력한 설정을 변경할 수 있습니다.",
+        "ordered": true,
+        "items": []
+      }
     },
     {
       "block_index": 24,
@@ -277,7 +399,12 @@
         141,
         154
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     },
     {
       "block_index": 25,
@@ -288,7 +415,11 @@
         157,
         157
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Workflow 요청 시 Slack DM 테스트"
+      }
     },
     {
       "block_index": 26,
@@ -299,7 +430,12 @@
         159,
         159
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "DB Access Request를 예시로, Slack DM 기능이 정상적으로 작동하는지 테스트를 수행합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 27,
@@ -310,7 +446,13 @@
         161,
         172
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "QueryPie User > Workflow 페이지에서 Submit Request 버튼을 클릭한 뒤, DB Access Request를 선택하여 요청 작성 화면으로 진입합니다. 요청 작성 화면에서 필요한 정보를 입력하고, 요청을 상신합니다.승인자는 앞에서 추가한 Slack App과의 DM으로 승인해야 할 요청 알림을 수신할 수 있습니다.Allow Users to approve or reject on Slack DM 설정이 켜져 있으므로, DM에서 직접 사유를 입력하고 요청을 승인 또는 거절할 수 있습니다.DM에서 Details 버튼을 클릭 시, QueryPie Admin에서 결재 요청에 대한 상세 내용을 확인하고 승인 또는 거절할 수 있습니다.",
+        "ordered": true,
+        "items": []
+      }
     }
   ],
   "separators": [

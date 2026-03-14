@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "1911652402",
   "mdx_sha256": "e619817bf71ddde9c08b75428dabfd343fff13c100d88ed41f1135fc1e76e5ea",
   "source_xhtml_sha256": "dd7e858544cbe4c994c4844b5d55812b3effdaeb21538e4ff12e0f014e86cbc9",
@@ -13,7 +13,12 @@
         6,
         6
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "QueryPie ACP 제품을 설치하는 방법은 Container 실행방식, 설치 도우미 프로그램의 버전에 따라, 안내 문서가 구분되어 제공됩니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +29,11 @@
         8,
         8
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Compose Tool 로 Container 를 실행하기"
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +44,12 @@
         10,
         10
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "일반적인 설치, 실행 방법이며, 제조사에서 권장하는 설치 방법입니다. Docker Compose 를 활용하여, Container Image 를 내려받고, 실행, 종료하는 방식입니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +60,12 @@
         12,
         13
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "이 경우, 설치 도우미 프로그램의 버전에 따라, 두 가지 설치 방식이 제공됩니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +76,11 @@
         15,
         15
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "setup.v2.sh 로 설치하기"
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +91,12 @@
         17,
         17
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "2025년 8월 출시된 QueryPie ACP Community Edition 의 출시와 함께 최종 고객사와 파트너 엔지니어에게 제공되는 설치 도우미 프로그램입니다. Docker Hub 에 공개된 Container Image 를 내려받아 설치하는 방식입니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 6,
@@ -79,7 +107,12 @@
         19,
         20
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "설치 과정이 자동화되어, 처음 설치하는 이용자가 제품을 쉽게 설치할 수 있습니다. setup.v2.sh 가 실제로 실행하는 설치 과정은 setup.sh 의 설치 방식과 동등합니다. setup.v2.sh 는 그 과정이 자동화되었고, Version 10 등 구버전의 설치를 지원하지 않는다는 차이가 있습니다. 더 상세한 차이점은 이 문서를 참조하세요: ",
+        "anchors": []
+      }
     },
     {
       "block_index": 7,
@@ -90,7 +123,12 @@
         22,
         25
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Apple Silicon 을 사용하는 macOS 환경의 설치를 지원합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 8,
@@ -101,7 +139,12 @@
         27,
         27
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "자세한 설치 방법은 이 문서를 참조하세요: ",
+        "anchors": []
+      }
     },
     {
       "block_index": 9,
@@ -112,7 +155,11 @@
         29,
         29
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "setup.sh 로 설치하기"
+      }
     },
     {
       "block_index": 10,
@@ -123,7 +170,12 @@
         31,
         31
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "QueryPie ACP Version 9 시절부터 파트너 엔지니어에게 제공된 설치 도우미 프로그램입니다. Harbor 라는 Container Registry 에 계정을 발급받아 Container Image 를 내려받을 수 있습니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 11,
@@ -134,7 +186,12 @@
         33,
         34
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "자세한 설치 방법은 이 문서를 참조하세요: ",
+        "anchors": []
+      }
     },
     {
       "block_index": 12,
@@ -145,7 +202,11 @@
         36,
         36
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Kubernetes 환경에 설치하기"
+      }
     },
     {
       "block_index": 13,
@@ -156,7 +217,12 @@
         38,
         38
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "QueryPie ACP 는 Container 환경에서 작동하는 소프트웨어 제품입니다. Compose Tool 을 이용해 설치, 실행하는 것이 일반적이지만, Kubernetes 환경에서도 매끄럽게 작동합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 14,
@@ -167,7 +233,12 @@
         40,
         41
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Kubenetes 환경에서 제품을 설치하는 경우, AWS EKS, GCP GKE 등 Managed Kubernetes Cluster 와 Self-Hosted Cluster, 모두 사용 가능합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 15,
@@ -178,7 +249,13 @@
         43,
         43
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "list",
+        "old_plain_text": "AWS EKS 환경 :  Helm Chart : https://github.com/chequer-io/querypie-deployment ",
+        "ordered": false,
+        "items": []
+      }
     },
     {
       "block_index": 16,
@@ -189,7 +266,12 @@
         45,
         46
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "",
+        "anchors": []
+      }
     }
   ],
   "separators": [
