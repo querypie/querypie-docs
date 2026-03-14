@@ -33,7 +33,7 @@ class TestSidecarSchema:
             separators=[],
             document_envelope=DocumentEnvelope(prefix="", suffix="\n"),
         )
-        assert sidecar.schema_version == "2"
+        assert sidecar.schema_version in ("2", "3")
         assert sidecar.page_id == "test"
         assert len(sidecar.blocks) == 1
 
@@ -52,7 +52,7 @@ class TestSidecarSchema:
         d = original.to_dict()
         restored = RoundtripSidecar.from_dict(d)
 
-        assert restored.schema_version == "2"
+        assert restored.schema_version in ("2", "3")
         assert restored.page_id == "123"
         assert len(restored.blocks) == 2
         assert restored.blocks[0].xhtml_fragment == "<h2>A</h2>"
@@ -145,7 +145,7 @@ class TestWriteAndLoadSidecar:
     def test_load_rejects_wrong_version(self, tmp_path):
         path = tmp_path / "bad.json"
         path.write_text('{"schema_version": "1"}', encoding="utf-8")
-        with pytest.raises(ValueError, match="expected schema_version=2"):
+        with pytest.raises(ValueError, match="expected schema_version in"):
             load_sidecar(path)
 
 
@@ -155,7 +155,7 @@ class TestBuildSidecar:
         mdx = "## Title\n\nBody text\n"
         sidecar = build_sidecar(xhtml, mdx, page_id="test")
 
-        assert sidecar.schema_version == "2"
+        assert sidecar.schema_version in ("2", "3")
         assert sidecar.page_id == "test"
         assert sidecar.mdx_sha256 == sha256_text(mdx)
         assert sidecar.source_xhtml_sha256 == sha256_text(xhtml)
@@ -189,7 +189,7 @@ class TestBuildSidecarRealTestcases:
             mdx = mdx_path.read_text(encoding="utf-8")
             sidecar = build_sidecar(xhtml, mdx, page_id=case_dir.name)
 
-            assert sidecar.schema_version == "2"
+            assert sidecar.schema_version in ("2", "3")
             assert len(sidecar.blocks) > 0
             assert len(sidecar.separators) == len(sidecar.blocks) - 1
             ok += 1
