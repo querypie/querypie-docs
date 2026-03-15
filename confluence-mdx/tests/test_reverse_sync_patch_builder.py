@@ -399,6 +399,28 @@ class TestBuildPatches:
         assert patches[0].get('action', 'modify') == 'modify'
         assert 'new_element_xhtml' not in patches[0]
 
+    def test_roundtrip_sidecar_non_paragraph_reconstruction_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={'kind': 'html_block', 'old_plain_text': 'hello world'},
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_element_xhtml' not in patches[0]
+
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
         m1 = _make_mapping('m1', 'text', xpath='p[1]')
@@ -564,6 +586,31 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert patches[0].get('action', 'modify') == 'modify'
         assert patches[0]['new_plain_text'] != patches[0]['old_plain_text']
+
+    def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
+        m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'h2[1]', '<h2>Old Title</h2>', 'hash1', (1, 1))
+        ])
+
+        old_block = _make_block('## Old Title\n', 'heading')
+        new_block = _make_block('### New Title\n', 'heading')
+        changes = [
+            BlockChange(index=0, change_type='deleted', old_block=old_block, new_block=None),
+            BlockChange(index=0, change_type='added', old_block=None, new_block=new_block),
+        ]
+
+        patches = build_patches(
+            changes, [old_block], [new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<h2>New Title</h2>'
 
 
 # ── build_table_row_patches ──

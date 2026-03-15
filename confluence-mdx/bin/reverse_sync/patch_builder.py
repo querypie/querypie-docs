@@ -244,7 +244,7 @@ def build_patches(
             continue
         sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
         if _is_clean_block(
-            del_change.old_block.type,
+            add_change.new_block.type,
             mapping,
             sidecar_block,
         ) or _can_replace_table_fragment(del_change, mapping, roundtrip_sidecar):
