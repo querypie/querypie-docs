@@ -280,7 +280,7 @@ def _build_anchor_entries(fragment: str) -> list:
     from bs4 import BeautifulSoup, NavigableString, Tag
     soup = BeautifulSoup(fragment, 'html.parser')
     anchors = []
-    for p in soup.find_all('p'):
+    for p in soup.find_all('p', recursive=False):
         offset = 0
         for child in p.children:
             if isinstance(child, NavigableString):
