@@ -6,10 +6,14 @@ anchor offset 매핑 + DOM 삽입 + fragment 재구성 공용 helper.
 from __future__ import annotations
 
 import difflib
+from typing import TYPE_CHECKING, Optional
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from reverse_sync.xhtml_normalizer import extract_plain_text
+
+if TYPE_CHECKING:
+    from reverse_sync.sidecar import SidecarBlock
 
 
 def map_anchor_offset(old_plain: str, new_plain: str, old_offset: int) -> int:
@@ -120,6 +124,42 @@ def insert_anchor_at_offset(p_element: Tag, offset: int, anchor_xhtml: str) -> N
         cloned = BeautifulSoup(str(anchor_node), 'html.parser')
         for n in list(cloned.children):
             p_element.append(n.extract())
+
+
+def sidecar_block_requires_reconstruction(
+    sidecar_block: Optional['SidecarBlock'],
+) -> bool:
+    """sidecar block에 Phase 3 재구성이 필요한 metadata가 있으면 True를 반환한다.
+
+    offset + raw_xhtml이 모두 있는 유효한 anchor가 하나 이상 있어야 True를 반환한다.
+    """
+    if sidecar_block is None or sidecar_block.reconstruction is None:
+        return False
+    recon = sidecar_block.reconstruction
+    if recon.get('kind') == 'paragraph':
+        return any(
+            'offset' in a and 'raw_xhtml' in a
+            for a in recon.get('anchors', [])
+        )
+    return False
+
+
+def reconstruct_fragment_with_sidecar(
+    new_fragment: str,
+    sidecar_block: Optional['SidecarBlock'],
+) -> str:
+    """new_fragment에 sidecar block의 anchor metadata를 재주입한다."""
+    if sidecar_block is None or sidecar_block.reconstruction is None:
+        return new_fragment
+    recon = sidecar_block.reconstruction
+    kind = recon.get('kind')
+    if kind == 'paragraph':
+        anchors = recon.get('anchors', [])
+        valid_anchors = [a for a in anchors if 'offset' in a and 'raw_xhtml' in a]
+        if valid_anchors:
+            old_plain = recon.get('old_plain_text', '')
+            return reconstruct_inline_anchor_fragment(old_plain, valid_anchors, new_fragment)
+    return new_fragment
 
 
 def reconstruct_inline_anchor_fragment(
