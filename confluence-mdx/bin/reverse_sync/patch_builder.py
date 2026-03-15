@@ -394,7 +394,6 @@ def build_patches(
             )
             block_lost = (mapping_lost_info or {}).get(mapping.block_id, {})
             if block_lost:
-                from reverse_sync.lost_info_patcher import apply_lost_info
                 reconstructed = apply_lost_info(reconstructed, block_lost)
             patches.append({
                 'action': 'replace_fragment',
