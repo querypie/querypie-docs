@@ -14,6 +14,8 @@ from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
     find_mapping_by_sidecar,
+    find_sidecar_block_by_identity,
+    sha256_text,
     SidecarEntry,
 )
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
@@ -103,6 +105,57 @@ def _build_replace_fragment_patch(
         "xhtml_xpath": mapping.xhtml_xpath,
         "new_element_xhtml": new_element,
     }
+
+
+def _find_roundtrip_sidecar_block(
+    change: BlockChange,
+    mapping: Optional[BlockMapping],
+    roundtrip_sidecar: Optional[RoundtripSidecar],
+    xpath_to_sidecar_block: Dict[str, SidecarBlock],
+) -> Optional[SidecarBlock]:
+    """xpath → identity hash 순으로 roundtrip sidecar block을 탐색한다.
+
+    1. xpath로 빠른 조회
+    2. mdx_content_hash + mdx_line_range로 검증 → 일치하면 확정 반환
+    3. 검증 실패 시 find_sidecar_block_by_identity로 더 정확한 블록 탐색
+    4. identity도 없으면 xpath 결과를 fallback으로 반환
+    """
+    if roundtrip_sidecar is None:
+        return None
+
+    identity_block = change.old_block or change.new_block
+
+    # xpath 조회
+    xpath_match: Optional[SidecarBlock] = None
+    if mapping is not None:
+        xpath_match = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
+
+    # hash + line range 검증 → 확정 일치
+    if xpath_match is not None and identity_block is not None:
+        expected_hash = sha256_text(identity_block.content) if identity_block.content else ""
+        expected_range = (identity_block.line_start, identity_block.line_end)
+        if (
+            xpath_match.mdx_content_hash == expected_hash
+            and tuple(xpath_match.mdx_line_range) == expected_range
+        ):
+            return xpath_match
+
+    # identity fallback: mapping.yaml이 어긋난 경우 hash 기반으로 재탐색
+    # xpath 태그 타입(p, ul, ol, table 등)이 일치하는 경우에만 반환하여 cross-type 오매칭 방지
+    if identity_block is not None and identity_block.content:
+        identity_match = find_sidecar_block_by_identity(
+            roundtrip_sidecar.blocks,
+            sha256_text(identity_block.content),
+            (identity_block.line_start, identity_block.line_end),
+        )
+        if identity_match is not None:
+            mapping_tag = mapping.xhtml_xpath.split('[')[0] if mapping else ''
+            identity_tag = identity_match.xhtml_xpath.split('[')[0] if identity_match.xhtml_xpath else ''
+            if mapping_tag == identity_tag:
+                return identity_match
+
+    # xpath 결과를 마지막 fallback으로 반환 (hash 불일치라도 없는 것보다 나음)
+    return xpath_match
 
 
 def _flush_containing_changes(
@@ -351,7 +404,9 @@ def build_patches(
                 and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
             continue
 
-        sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+        )
         if _can_replace_table_fragment(change, mapping, roundtrip_sidecar):
             patches.append(
                 _build_replace_fragment_patch(
