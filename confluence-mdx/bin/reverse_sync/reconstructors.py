@@ -126,6 +126,55 @@ def insert_anchor_at_offset(p_element: Tag, offset: int, anchor_xhtml: str) -> N
             p_element.append(n.extract())
 
 
+def _find_list_item_by_path(root: Tag, path: list) -> Optional[Tag]:
+    """path 인덱스 경로를 따라 li 요소를 탐색한다."""
+    current_list: Optional[Tag] = root
+    current_li: Optional[Tag] = None
+    for index in path:
+        if current_list is None:
+            return None
+        items = [c for c in current_list.children if isinstance(c, Tag) and c.name == 'li']
+        if index < 0 or index >= len(items):
+            return None
+        current_li = items[index]
+        current_list = next(
+            (c for c in current_li.children if isinstance(c, Tag) and c.name in ('ul', 'ol')),
+            None,
+        )
+    return current_li
+
+
+def _find_direct_list_item_paragraph(li: Tag) -> Tag:
+    """li의 직접 자식 p 요소를 반환한다. 없으면 li 자체를 반환."""
+    for child in li.children:
+        if isinstance(child, Tag) and child.name == 'p':
+            return child
+    return li
+
+
+def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
+    """list fragment에 sidecar anchor entries를 경로 기반으로 재주입한다."""
+    soup = BeautifulSoup(new_fragment, 'html.parser')
+    root = soup.find(['ul', 'ol'])
+    if root is None:
+        return new_fragment
+
+    old_plain = recon.get('old_plain_text', '')
+    for entry in recon.get('items', []):
+        if not entry.get('raw_xhtml') or 'offset' not in entry:
+            continue
+        path = entry.get('path', [])
+        li = _find_list_item_by_path(root, path)
+        if li is None:
+            continue
+        p = _find_direct_list_item_paragraph(li)
+        new_p_plain = extract_plain_text(str(p))
+        new_offset = map_anchor_offset(old_plain, new_p_plain, entry['offset'])
+        insert_anchor_at_offset(p, new_offset, entry['raw_xhtml'])
+
+    return str(soup)
+
+
 def sidecar_block_requires_reconstruction(
     sidecar_block: Optional['SidecarBlock'],
 ) -> bool:
@@ -140,6 +189,11 @@ def sidecar_block_requires_reconstruction(
         return any(
             'offset' in a and 'raw_xhtml' in a
             for a in recon.get('anchors', [])
+        )
+    if recon.get('kind') == 'list':
+        return any(
+            'offset' in item and 'raw_xhtml' in item
+            for item in recon.get('items', [])
         )
     return False
 
@@ -159,6 +213,8 @@ def reconstruct_fragment_with_sidecar(
         if valid_anchors:
             old_plain = recon.get('old_plain_text', '')
             return reconstruct_inline_anchor_fragment(old_plain, valid_anchors, new_fragment)
+    if kind == 'list':
+        return _rebuild_list_fragment(new_fragment, recon)
     return new_fragment
 
 

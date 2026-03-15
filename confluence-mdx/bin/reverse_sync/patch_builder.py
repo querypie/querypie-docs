@@ -367,6 +367,22 @@ def build_patches(
             continue
 
         if strategy == 'list':
+            list_sidecar = _find_roundtrip_sidecar_block(
+                change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+            )
+            if (mapping is not None
+                    and not _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and sidecar_block_requires_reconstruction(list_sidecar)):
+                _mark_used(mapping.block_id, mapping)
+                patches.append(
+                    _build_replace_fragment_patch(
+                        mapping,
+                        change.new_block,
+                        sidecar_block=list_sidecar,
+                        mapping_lost_info=mapping_lost_info,
+                    )
+                )
+                continue
             patches.extend(
                 build_list_item_patches(
                     change, mappings, used_ids,

@@ -209,3 +209,60 @@ class TestPatchBuilderInlineAnchor:
         assert 'ri:attachment' in result
         assert 'Changed text' in result
         assert 'Original text' not in result
+
+
+class TestBuildListAnchorEntries:
+    def test_list_with_inline_image(self):
+        from reverse_sync.sidecar import _build_list_anchor_entries
+        fragment = (
+            '<ul>'
+            '<li><p>item '
+            '<ac:image ac:width="50"><ri:attachment ri:filename="a.png"/></ac:image>'
+            ' text</p></li>'
+            '</ul>'
+        )
+        entries = _build_list_anchor_entries(fragment)
+        assert len(entries) == 1
+        assert entries[0]['path'] == [0]
+        assert entries[0]['offset'] == len('item ')
+        assert 'a.png' in entries[0]['raw_xhtml']
+
+    def test_nested_list_with_image(self):
+        from reverse_sync.sidecar import _build_list_anchor_entries
+        fragment = (
+            '<ul><li><p>outer</p>'
+            '<ul><li><p>'
+            '<ac:image ac:width="50"><ri:attachment ri:filename="b.png"/></ac:image>'
+            'nested</p></li></ul>'
+            '</li></ul>'
+        )
+        entries = _build_list_anchor_entries(fragment)
+        assert len(entries) == 1
+        assert entries[0]['path'] == [0, 0]
+        assert entries[0]['offset'] == 0
+
+    def test_list_without_images_returns_empty(self):
+        from reverse_sync.sidecar import _build_list_anchor_entries
+        fragment = '<ul><li><p>plain text</p></li></ul>'
+        entries = _build_list_anchor_entries(fragment)
+        assert entries == []
+
+    def test_multiple_items_with_images(self):
+        from reverse_sync.sidecar import _build_list_anchor_entries
+        fragment = (
+            '<ul>'
+            '<li><p>first '
+            '<ac:image ac:width="50"><ri:attachment ri:filename="x.png"/></ac:image>'
+            '</p></li>'
+            '<li><p>second</p></li>'
+            '<li><p>'
+            '<ac:image ac:width="50"><ri:attachment ri:filename="y.png"/></ac:image>'
+            ' after</p></li>'
+            '</ul>'
+        )
+        entries = _build_list_anchor_entries(fragment)
+        assert len(entries) == 2
+        assert entries[0]['path'] == [0]
+        assert entries[0]['offset'] == len('first ')
+        assert entries[1]['path'] == [2]
+        assert entries[1]['offset'] == 0
