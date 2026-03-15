@@ -267,6 +267,37 @@ def build_sidecar(
     return sidecar
 
 
+def _build_anchor_entries(fragment: str) -> list:
+    """fragment 내 p 요소 안의 ac:image를 anchor entry 목록으로 추출한다.
+
+    각 anchor entry:
+        kind: "image"
+        offset: old_plain_text 기준 앞쪽 텍스트 길이 (삽입 위치)
+        raw_xhtml: ac:image 원본 XHTML 문자열
+
+    li 직속 자식 ac:image(p 밖)는 포함하지 않는다.
+    """
+    from bs4 import BeautifulSoup, NavigableString, Tag
+    soup = BeautifulSoup(fragment, 'html.parser')
+    anchors = []
+    for p in soup.find_all('p'):
+        offset = 0
+        for child in p.children:
+            if isinstance(child, NavigableString):
+                offset += len(str(child))
+            elif isinstance(child, Tag):
+                if child.name == 'ac:image':
+                    anchors.append({
+                        'kind': 'image',
+                        'offset': offset,
+                        'raw_xhtml': str(child),
+                    })
+                else:
+                    # ac:link 등 텍스트를 포함하는 inline 요소는 텍스트 추출
+                    offset += len(extract_plain_text(str(child)))
+    return anchors
+
+
 def _build_reconstruction_metadata(
     fragment: str,
     mapping: BlockMapping | None,
@@ -280,7 +311,7 @@ def _build_reconstruction_metadata(
         "old_plain_text": extract_plain_text(fragment),
     }
     if mapping.type == "paragraph":
-        metadata["anchors"] = []
+        metadata["anchors"] = _build_anchor_entries(fragment)
     elif mapping.type == "list":
         metadata["ordered"] = mapping.xhtml_xpath.startswith("ol[")
         metadata["items"] = []
