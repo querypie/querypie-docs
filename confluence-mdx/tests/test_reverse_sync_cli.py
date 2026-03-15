@@ -787,7 +787,12 @@ def testbuild_patches_table_block():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar import SidecarEntry
+    from reverse_sync.sidecar import (
+        DocumentEnvelope,
+        RoundtripSidecar,
+        SidecarBlock,
+        SidecarEntry,
+    )
 
     old_table = '<table>\n<th>\n**Databased Access Control**\n</th>\n</table>\n'
     new_table = '<table>\n<th>\n**Database Access Control**\n</th>\n</table>\n'
@@ -809,10 +814,17 @@ def testbuild_patches_table_block():
     mdx_to_sidecar = {
         0: SidecarEntry(xhtml_xpath='table[1]', xhtml_type='table', mdx_blocks=[0]),
     }
+    roundtrip_sidecar = RoundtripSidecar(
+        page_id='test',
+        blocks=[SidecarBlock(0, 'table[1]', '<table>...</table>', 'hash1', (1, 5))],
+        separators=[],
+        document_envelope=DocumentEnvelope(prefix='', suffix='\n'),
+    )
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
-                            mdx_to_sidecar, xpath_to_mapping)
+                            mdx_to_sidecar, xpath_to_mapping,
+                            roundtrip_sidecar=roundtrip_sidecar)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'

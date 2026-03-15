@@ -10,7 +10,12 @@ from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
 )
 from reverse_sync.text_transfer import transfer_text_changes
-from reverse_sync.sidecar import find_mapping_by_sidecar, SidecarEntry
+from reverse_sync.sidecar import (
+    RoundtripSidecar,
+    SidecarBlock,
+    find_mapping_by_sidecar,
+    SidecarEntry,
+)
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
 from reverse_sync.list_patcher import (
@@ -28,29 +33,49 @@ _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
 
 
 def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
-    """paragraph 내 preservation unit이 있으면 clean block이 아니다."""
+    """preservation unit이 있으면 clean whole-fragment replacement 대상이 아니다."""
     return "<ac:" in xhtml_text or "<ri:" in xhtml_text
 
 
-def _is_clean_block(change: BlockChange, mapping: Optional[BlockMapping]) -> bool:
-    """Phase 2 whole-fragment replacement 대상인지 판별한다."""
+def _is_clean_block(
+    block_type: str,
+    mapping: Optional[BlockMapping],
+    sidecar_block: Optional[SidecarBlock],
+) -> bool:
+    """Phase 2 clean block 여부를 판별한다."""
     if mapping is None:
         return False
 
-    block = change.new_block or change.old_block
-    has_preserved_anchor = _contains_preserved_anchor_markup(mapping.xhtml_text)
-    if block.type in _CLEAN_BLOCK_TYPES:
+    if block_type in _CLEAN_BLOCK_TYPES:
         return True
 
-    if block.type == "html_block" and block.content.lstrip().startswith("<table"):
-        return not has_preserved_anchor
+    if sidecar_block is not None:
+        recon = sidecar_block.reconstruction
+        if recon is None:
+            return False
+        if recon.get("kind") == "paragraph":
+            return len(recon.get("anchors", [])) == 0
+        return False
 
-    if is_markdown_table(change.old_block.content):
-        return not has_preserved_anchor
+    return block_type == "paragraph" and not _contains_preserved_anchor_markup(
+        mapping.xhtml_text
+    )
 
+
+def _can_replace_table_fragment(
+    change: BlockChange,
+    mapping: Optional[BlockMapping],
+    roundtrip_sidecar: Optional[RoundtripSidecar],
+) -> bool:
+    """table 계열을 whole-fragment replacement로 처리할 수 있는지 판별한다."""
+    if roundtrip_sidecar is None or mapping is None:
+        return False
+    if _contains_preserved_anchor_markup(mapping.xhtml_text):
+        return False
+    block = change.new_block or change.old_block
     return (
-        block.type == "paragraph"
-        and not has_preserved_anchor
+        (block.type == "html_block" and block.content.lstrip().startswith("<table"))
+        or is_markdown_table(change.old_block.content)
     )
 
 
@@ -142,9 +167,6 @@ def _resolve_mapping_for_change(
             return ('list', mapping)
         return ('containing', mapping)
 
-    if _is_clean_block(change, mapping):
-        return ('replace_fragment', mapping)
-
     # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
     if change.old_block.type == 'list':
         return ('list', mapping)
@@ -165,12 +187,18 @@ def build_patches(
     xpath_to_mapping: Dict[str, 'BlockMapping'],
     alignment: Optional[Dict[int, int]] = None,
     page_lost_info: Optional[dict] = None,
+    roundtrip_sidecar: Optional[RoundtripSidecar] = None,
 ) -> List[Dict[str, str]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
     sidecar 인덱스를 사용하여 O(1) 직접 조회를 수행한다.
     """
     patches = []
+    xpath_to_sidecar_block: Dict[str, SidecarBlock] = {}
+    if roundtrip_sidecar is not None:
+        xpath_to_sidecar_block = {
+            block.xhtml_xpath: block for block in roundtrip_sidecar.blocks
+        }
     used_ids: set = set()  # 이미 매칭된 mapping block_id (중복 매칭 방지)
     # child → parent 역참조 맵 (부모-자식 간 중복 매칭 방지)
     child_to_parent: dict = {}
@@ -214,15 +242,12 @@ def build_patches(
             idx, mdx_to_sidecar, xpath_to_mapping)
         if mapping is None:
             continue
+        sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
         if _is_clean_block(
-            BlockChange(
-                index=idx,
-                change_type='modified',
-                old_block=del_change.old_block,
-                new_block=add_change.new_block,
-            ),
+            del_change.old_block.type,
             mapping,
-        ):
+            sidecar_block,
+        ) or _can_replace_table_fragment(del_change, mapping, roundtrip_sidecar):
             patches.append(
                 _build_replace_fragment_patch(
                     mapping,
@@ -281,17 +306,6 @@ def build_patches(
         if strategy == 'skip':
             continue
 
-        if strategy == 'replace_fragment':
-            _mark_used(mapping.block_id, mapping)
-            patches.append(
-                _build_replace_fragment_patch(
-                    mapping,
-                    change.new_block,
-                    mapping_lost_info,
-                )
-            )
-            continue
-
         if strategy == 'list':
             patches.extend(
                 build_list_item_patches(
@@ -301,10 +315,20 @@ def build_patches(
             continue
 
         if strategy == 'table':
-            patches.extend(
-                build_table_row_patches(
-                    change, mappings, used_ids,
-                    mdx_to_sidecar, xpath_to_mapping))
+            if _can_replace_table_fragment(change, mapping, roundtrip_sidecar):
+                _mark_used(mapping.block_id, mapping)
+                patches.append(
+                    _build_replace_fragment_patch(
+                        mapping,
+                        change.new_block,
+                        mapping_lost_info,
+                    )
+                )
+            else:
+                patches.extend(
+                    build_table_row_patches(
+                        change, mappings, used_ids,
+                        mdx_to_sidecar, xpath_to_mapping))
             continue
 
         new_plain = normalize_mdx_to_plain(
@@ -324,6 +348,27 @@ def build_patches(
         # (old != xhtml 이고 new == xhtml → 이미 적용된 변경)
         if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
                 and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+            continue
+
+        sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
+        if _can_replace_table_fragment(change, mapping, roundtrip_sidecar):
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    change.new_block,
+                    mapping_lost_info,
+                )
+            )
+            continue
+
+        if _is_clean_block(change.old_block.type, mapping, sidecar_block):
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    change.new_block,
+                    mapping_lost_info,
+                )
+            )
             continue
 
         # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백

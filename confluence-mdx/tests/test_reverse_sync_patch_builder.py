@@ -7,7 +7,12 @@ split_list_items, build_table_row_patches, build_list_item_patches) 테스트.
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.sidecar import SidecarEntry
+from reverse_sync.sidecar import (
+    DocumentEnvelope,
+    RoundtripSidecar,
+    SidecarBlock,
+    SidecarEntry,
+)
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _flush_containing_changes,
@@ -77,6 +82,15 @@ def _make_change(
 
 def _make_sidecar(xpath: str, mdx_blocks: list) -> SidecarEntry:
     return SidecarEntry(xhtml_xpath=xpath, xhtml_type='paragraph', mdx_blocks=mdx_blocks)
+
+
+def _make_roundtrip_sidecar(blocks):
+    return RoundtripSidecar(
+        page_id='test',
+        blocks=blocks,
+        separators=['\n'] * (len(blocks) - 1) if len(blocks) > 1 else [],
+        document_envelope=DocumentEnvelope(prefix='', suffix='\n'),
+    )
 
 
 
@@ -318,6 +332,73 @@ class TestBuildPatches:
         assert patches[0].get('action', 'modify') == 'modify'
         assert patches[0]['new_plain_text'] == 'hello earth'
 
+    def test_roundtrip_sidecar_paragraph_without_anchors_uses_replace_fragment(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={'kind': 'paragraph', 'old_plain_text': 'hello world', 'anchors': []},
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
+
+    def test_roundtrip_sidecar_paragraph_with_anchors_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={
+                    'kind': 'paragraph',
+                    'old_plain_text': 'hello world',
+                    'anchors': [{'anchor_id': 'a1'}],
+                },
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_plain_text' in patches[0] or 'new_inner_xhtml' in patches[0]
+
+    def test_roundtrip_sidecar_without_reconstruction_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1), reconstruction=None)
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_element_xhtml' not in patches[0]
+
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
         m1 = _make_mapping('m1', 'text', xpath='p[1]')
@@ -442,6 +523,9 @@ class TestBuildPatches:
                            type_='table')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'table[1]', '<table><tbody></tbody></table>', 'hash1', (1, 3))
+        ])
 
         change = _make_change(
             0,
@@ -452,12 +536,34 @@ class TestBuildPatches:
 
         patches = build_patches(
             [change], [change.old_block], [change.new_block],
-            mappings, mdx_to_sidecar, xpath_to_mapping)
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
 
         assert len(patches) == 1
         assert patches[0]['action'] == 'replace_fragment'
         assert '<table>' in patches[0]['new_element_xhtml']
         assert 'new_val' in patches[0]['new_element_xhtml']
+
+    def test_markdown_table_without_roundtrip_sidecar_keeps_row_patch_path(self):
+        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
+                           type_='table')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        change = _make_change(
+            0,
+            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
+            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        )
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert patches[0]['new_plain_text'] != patches[0]['old_plain_text']
 
 
 # ── build_table_row_patches ──
@@ -1073,7 +1179,7 @@ class TestResolveMappingForChange:
         change = _make_change(0, 'hello', 'world')
         strategy, mapping = _resolve_mapping_for_change(
             change, self._old_plain(change), **ctx)
-        assert strategy == 'replace_fragment'
+        assert strategy == 'direct'
         assert mapping.block_id == 'b1'
 
     def test_sidecar_match_with_children_returns_containing(self):

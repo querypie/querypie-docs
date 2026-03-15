@@ -354,6 +354,7 @@ def run_verify(
     from reverse_sync.sidecar import (
         SidecarEntry, SidecarChildEntry, generate_sidecar_mapping,
         build_mdx_to_sidecar_index, build_xpath_to_mapping,
+        build_sidecar,
     )
     # forward converter가 생성한 mapping.yaml에서 lost_info를 보존
     existing_mapping = var_dir / 'mapping.yaml'
@@ -386,12 +387,14 @@ def run_verify(
             children=children,
         ))
     mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
+    roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id=page_id)
     xpath_to_mapping = build_xpath_to_mapping(original_mappings)
 
     # Step 4: XHTML 패치 → patched.xhtml 저장
     patches = build_patches(changes, original_blocks, improved_blocks,
                             original_mappings, mdx_to_sidecar, xpath_to_mapping,
-                            alignment, page_lost_info=page_lost_info)
+                            alignment, page_lost_info=page_lost_info,
+                            roundtrip_sidecar=roundtrip_sidecar)
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
