@@ -6,7 +6,6 @@ anchor offset 매핑 + DOM 삽입 + fragment 재구성 공용 helper.
 from __future__ import annotations
 
 import difflib
-from typing import List
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
