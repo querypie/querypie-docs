@@ -6,7 +6,7 @@ import yaml
 
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
-from reverse_sync.mdx_block_parser import parse_mdx_blocks
+from mdx_to_storage.parser import parse_mdx_blocks
 from reverse_sync.patch_builder import build_patches
 from reverse_sync.sidecar import (
     SidecarEntry,
@@ -23,8 +23,8 @@ TESTCASES = Path(__file__).parent / "testcases"
 
 
 def _run_pipeline_with_sidecar(xhtml: str, original_mdx: str, improved_mdx: str):
-    original_blocks = parse_mdx_blocks(original_mdx)
-    improved_blocks = parse_mdx_blocks(improved_mdx)
+    original_blocks = list(parse_mdx_blocks(original_mdx))
+    improved_blocks = list(parse_mdx_blocks(improved_mdx))
     changes, alignment = diff_blocks(original_blocks, improved_blocks)
 
     mappings = record_mapping(xhtml)
@@ -85,6 +85,62 @@ class TestSimpleModifiedGoldens:
 
     def test_544178405_paragraph_and_table_change(self):
         case = _load_testcase('544178405')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_1911652402_inline_anchor_paragraph(self):
+        case = _load_testcase('1911652402')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_544113141_list_with_trailing_image(self):
+        case = _load_testcase('544113141')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_544145591_list_change_with_inline_images(self):
+        case = _load_testcase('544145591')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_544377869_paragraph_with_link(self):
+        case = _load_testcase('544377869')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_568918170_paragraph_with_link(self):
+        case = _load_testcase('568918170')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_692355151_heading_change_with_link_para(self):
+        case = _load_testcase('692355151')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_880181257_list_with_nested_image(self):
+        case = _load_testcase('880181257')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_883654669_list_with_image(self):
+        case = _load_testcase('883654669')
         result = _run_pipeline_with_sidecar(
             case['xhtml'], case['original_mdx'], case['improved_mdx']
         )
