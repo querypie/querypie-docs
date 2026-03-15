@@ -267,6 +267,92 @@ def build_sidecar(
     return sidecar
 
 
+def _build_anchor_entries(fragment: str) -> list:
+    """fragment 내 p 요소 안의 ac:image를 anchor entry 목록으로 추출한다.
+
+    각 anchor entry:
+        kind: "image"
+        offset: old_plain_text 기준 앞쪽 텍스트 길이 (삽입 위치)
+        raw_xhtml: ac:image 원본 XHTML 문자열
+
+    li 직속 자식 ac:image(p 밖)는 포함하지 않는다.
+    """
+    from bs4 import BeautifulSoup, NavigableString, Tag
+    soup = BeautifulSoup(fragment, 'html.parser')
+    anchors = []
+    for p in soup.find_all('p', recursive=False):
+        offset = 0
+        for child in p.children:
+            if isinstance(child, NavigableString):
+                offset += len(str(child))
+            elif isinstance(child, Tag):
+                if child.name == 'ac:image':
+                    anchors.append({
+                        'kind': 'image',
+                        'offset': offset,
+                        'raw_xhtml': str(child),
+                    })
+                else:
+                    # ac:link 등 텍스트를 포함하는 inline 요소는 텍스트 추출
+                    offset += len(extract_plain_text(str(child)))
+    return anchors
+
+
+def _extract_anchors_from_p(p_el) -> list:
+    """p 요소에서 ac:image anchor entry (offset, raw_xhtml) 목록을 추출한다."""
+    from bs4 import NavigableString, Tag
+    anchors = []
+    offset = 0
+    for child in p_el.children:
+        if isinstance(child, NavigableString):
+            offset += len(str(child))
+        elif isinstance(child, Tag):
+            if child.name == 'ac:image':
+                anchors.append({
+                    'kind': 'image',
+                    'offset': offset,
+                    'raw_xhtml': str(child),
+                })
+            else:
+                offset += len(extract_plain_text(str(child)))
+    return anchors
+
+
+def _walk_list(list_el, path: list, entries: list) -> None:
+    """list 요소를 재귀 순회하며 anchor entry를 수집한다."""
+    from bs4 import Tag
+    items = [c for c in list_el.children if isinstance(c, Tag) and c.name == 'li']
+    for idx, li in enumerate(items):
+        current_path = path + [idx]
+        for child in li.children:
+            if not isinstance(child, Tag):
+                continue
+            if child.name == 'p':
+                for a in _extract_anchors_from_p(child):
+                    entries.append({**a, 'path': current_path})
+            elif child.name in ('ul', 'ol'):
+                _walk_list(child, current_path, entries)
+
+
+def _build_list_anchor_entries(fragment: str) -> list:
+    """list fragment 내 li > p > ac:image를 path 기반 anchor entry로 추출한다.
+
+    각 entry:
+        kind: "image"
+        path: li 인덱스 경로 (중첩 지원, e.g. [0, 1])
+        offset: p 내 plain text 기준 삽입 위치
+        raw_xhtml: ac:image 원본 XHTML 문자열
+    """
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(fragment, 'html.parser')
+    root = soup.find(['ul', 'ol'])
+    if root is None:
+        return []
+    entries = []
+    _walk_list(root, [], entries)
+    return entries
+
+
 def _build_reconstruction_metadata(
     fragment: str,
     mapping: BlockMapping | None,
@@ -280,10 +366,10 @@ def _build_reconstruction_metadata(
         "old_plain_text": extract_plain_text(fragment),
     }
     if mapping.type == "paragraph":
-        metadata["anchors"] = []
+        metadata["anchors"] = _build_anchor_entries(fragment)
     elif mapping.type == "list":
         metadata["ordered"] = mapping.xhtml_xpath.startswith("ol[")
-        metadata["items"] = []
+        metadata["items"] = _build_list_anchor_entries(fragment)
     elif mapping.children:
         child_plain_texts = [
             id_to_mapping[child_id].xhtml_plain_text.strip()
