@@ -85,7 +85,7 @@ def _content_blocks_for_splice(mdx_text: str) -> List[MdxBlock]:
     if not content_blocks:
         return content_blocks
 
-    frontmatter_title = _extract_frontmatter_title(mdx_blocks).strip()
+    frontmatter_title = _extract_frontmatter_title(mdx_blocks)
     first_block = content_blocks[0]
     if (
         first_block.type == "heading"

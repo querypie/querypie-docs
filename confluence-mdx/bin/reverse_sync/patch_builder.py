@@ -169,6 +169,11 @@ def _xpath_root_tag(xpath: str) -> str:
 
 
 def _xpath_block_family(xpath: str) -> str:
+    """xpath의 최상위 태그를 block family 문자열로 변환한다.
+
+    알 수 없는 태그(pre, blockquote, ac:* 등)는 raw tag를 반환하여
+    cross-type 보호 목적상 보수적으로 동작한다.
+    """
     root_tag = _xpath_root_tag(xpath)
     if root_tag == "p":
         return "paragraph"
@@ -393,6 +398,8 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
+            # roundtrip sidecar가 있지만 이 list에 매칭되는 block이 없을 때
+            # (cross-type 거부 또는 mapping drift) clean list는 whole-fragment 재생성으로 처리
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)

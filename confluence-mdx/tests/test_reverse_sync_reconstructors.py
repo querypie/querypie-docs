@@ -116,6 +116,11 @@ def test_reconstruct_fragment_with_sidecar_rehydrates_list_item_anchor():
     assert "<img" not in result
 
 
+def test_reconstruct_fragment_with_sidecar_returns_unchanged_when_no_sidecar():
+    result = reconstruct_fragment_with_sidecar("<p>text</p>", None)
+    assert result == "<p>text</p>"
+
+
 def test_sidecar_block_requires_reconstruction_false_without_anchors():
     sidecar_block = SidecarBlock(
         0,
