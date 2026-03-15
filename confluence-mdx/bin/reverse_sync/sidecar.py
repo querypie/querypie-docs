@@ -3,8 +3,7 @@
 Block-level sidecar (schema v3):
   RoundtripSidecar, SidecarBlock, DocumentEnvelope,
   build_sidecar, verify_sidecar_integrity,
-  write_sidecar, load_sidecar, sha256_text,
-  find_block_by_identity
+  write_sidecar, load_sidecar, sha256_text
 
 Mapping lookup (mapping.yaml v3 기반):
   SidecarChildEntry, SidecarEntry, load_sidecar_mapping, build_mdx_to_sidecar_index,
@@ -14,6 +13,7 @@ Mapping lookup (mapping.yaml v3 기반):
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
@@ -23,6 +23,7 @@ import yaml
 
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.block_diff import NON_CONTENT_TYPES
+from reverse_sync.xhtml_normalizer import extract_plain_text
 
 
 # ---------------------------------------------------------------------------
@@ -30,9 +31,6 @@ from reverse_sync.block_diff import NON_CONTENT_TYPES
 # ---------------------------------------------------------------------------
 
 ROUNDTRIP_SCHEMA_VERSION = "3"
-
-# v2 스키마도 로드 허용 (하위 호환)
-_COMPATIBLE_SCHEMA_VERSIONS = frozenset({"2", "3"})
 
 
 def sha256_text(text: str) -> str:
@@ -49,12 +47,7 @@ class DocumentEnvelope:
 
 @dataclass
 class SidecarBlock:
-    """Individual XHTML block + metadata.
-
-    schema v3에서 reconstruction 필드가 추가됨:
-    - reconstruction: dict | None — block 재구성에 필요한 metadata
-      kind, old_plain_text, anchors, items(list), child_blocks 등을 포함
-    """
+    """Individual XHTML block + metadata."""
 
     block_index: int
     xhtml_xpath: str
@@ -63,6 +56,29 @@ class SidecarBlock:
     mdx_line_range: tuple = (0, 0)
     lost_info: dict = field(default_factory=dict)
     reconstruction: Optional[dict] = None
+
+    def to_dict(self) -> dict:
+        return {
+            "block_index": self.block_index,
+            "xhtml_xpath": self.xhtml_xpath,
+            "xhtml_fragment": self.xhtml_fragment,
+            "mdx_content_hash": self.mdx_content_hash,
+            "mdx_line_range": list(self.mdx_line_range),
+            "lost_info": self.lost_info,
+            "reconstruction": self.reconstruction,
+        }
+
+    @staticmethod
+    def from_dict(data: dict) -> "SidecarBlock":
+        return SidecarBlock(
+            block_index=data["block_index"],
+            xhtml_xpath=data["xhtml_xpath"],
+            xhtml_fragment=data["xhtml_fragment"],
+            mdx_content_hash=data.get("mdx_content_hash", ""),
+            mdx_line_range=tuple(data.get("mdx_line_range", (0, 0))),
+            lost_info=data.get("lost_info", {}),
+            reconstruction=data.get("reconstruction"),
+        )
 
 
 @dataclass
@@ -89,25 +105,12 @@ class RoundtripSidecar:
 
     def to_dict(self) -> dict:
         """JSON 직렬화."""
-        blocks = []
-        for b in self.blocks:
-            d: dict = {
-                "block_index": b.block_index,
-                "xhtml_xpath": b.xhtml_xpath,
-                "xhtml_fragment": b.xhtml_fragment,
-                "mdx_content_hash": b.mdx_content_hash,
-                "mdx_line_range": list(b.mdx_line_range),
-                "lost_info": b.lost_info,
-            }
-            if b.reconstruction is not None:
-                d["reconstruction"] = b.reconstruction
-            blocks.append(d)
         return {
             "schema_version": self.schema_version,
             "page_id": self.page_id,
             "mdx_sha256": self.mdx_sha256,
             "source_xhtml_sha256": self.source_xhtml_sha256,
-            "blocks": blocks,
+            "blocks": [b.to_dict() for b in self.blocks],
             "separators": self.separators,
             "document_envelope": {
                 "prefix": self.document_envelope.prefix,
@@ -117,19 +120,8 @@ class RoundtripSidecar:
 
     @staticmethod
     def from_dict(data: dict) -> "RoundtripSidecar":
-        """JSON 역직렬화. v2/v3 모두 지원."""
-        blocks = [
-            SidecarBlock(
-                block_index=b["block_index"],
-                xhtml_xpath=b["xhtml_xpath"],
-                xhtml_fragment=b["xhtml_fragment"],
-                mdx_content_hash=b.get("mdx_content_hash", ""),
-                mdx_line_range=tuple(b.get("mdx_line_range", (0, 0))),
-                lost_info=b.get("lost_info", {}),
-                reconstruction=b.get("reconstruction"),
-            )
-            for b in data.get("blocks", [])
-        ]
+        """JSON 역직렬화."""
+        blocks = [SidecarBlock.from_dict(b) for b in data.get("blocks", [])]
         env = data.get("document_envelope", {})
         return RoundtripSidecar(
             schema_version=data.get("schema_version", ROUNDTRIP_SCHEMA_VERSION),
@@ -143,6 +135,43 @@ class RoundtripSidecar:
                 suffix=env.get("suffix", ""),
             ),
         )
+
+
+def build_sidecar_identity_index(
+    blocks: List[SidecarBlock],
+) -> Dict[str, List[SidecarBlock]]:
+    """Group sidecar blocks by content hash in deterministic line-range order."""
+    grouped: Dict[str, List[SidecarBlock]] = defaultdict(list)
+    for block in blocks:
+        if not block.mdx_content_hash:
+            continue
+        grouped[block.mdx_content_hash].append(block)
+    for content_hash, content_blocks in grouped.items():
+        grouped[content_hash] = sorted(
+            content_blocks,
+            key=lambda block: (tuple(block.mdx_line_range), block.block_index),
+        )
+    return dict(grouped)
+
+
+def find_sidecar_block_by_identity(
+    blocks: List[SidecarBlock],
+    mdx_content_hash: str,
+    mdx_line_range: tuple[int, int] | None = None,
+    occurrence_index: int = 0,
+) -> Optional[SidecarBlock]:
+    """Resolve a block using hash first, then line range, then stable order."""
+    candidates = build_sidecar_identity_index(blocks).get(mdx_content_hash, [])
+    if not candidates:
+        return None
+    if mdx_line_range is not None:
+        ranged = [
+            block for block in candidates
+            if tuple(block.mdx_line_range) == tuple(mdx_line_range)
+        ]
+        if ranged:
+            return ranged[occurrence_index] if occurrence_index < len(ranged) else None
+    return candidates[occurrence_index] if occurrence_index < len(candidates) else None
 
 
 def verify_sidecar_integrity(
@@ -170,54 +199,6 @@ def verify_sidecar_integrity(
         )
 
 
-def _build_reconstruction_metadata(
-    fragment: str,
-    xhtml_type: str,
-) -> Optional[dict]:
-    """XHTML fragment에서 reconstruction metadata를 생성한다.
-
-    현재 지원하는 kind:
-    - paragraph: old_plain_text + anchors
-    - heading: old_plain_text
-    - list: old_plain_text + items (placeholder)
-    - code: (None — clean block)
-    - table: (None — clean block)
-    - html_block: kind + old_plain_text
-
-    Phase 3에서 anchor 분석이 추가될 예정.
-    """
-    from reverse_sync.xhtml_normalizer import extract_plain_text
-
-    # code, table은 clean block — reconstruction metadata 불필요
-    if xhtml_type in ("code", "table"):
-        return None
-
-    plain_text = extract_plain_text(fragment)
-
-    kind_map = {
-        "heading": "heading",
-        "paragraph": "paragraph",
-        "list": "list",
-        "html_block": "container",
-    }
-    kind = kind_map.get(xhtml_type, xhtml_type)
-
-    meta: dict = {
-        "kind": kind,
-        "old_plain_text": plain_text,
-    }
-
-    # list는 items placeholder (Phase 3에서 실제 item 분석)
-    if xhtml_type == "list":
-        meta["items"] = []
-
-    # paragraph/heading은 anchors placeholder
-    if xhtml_type in ("heading", "paragraph"):
-        meta["anchors"] = []
-
-    return meta
-
-
 def build_sidecar(
     page_xhtml_text: str,
     mdx_text: str,
@@ -225,8 +206,7 @@ def build_sidecar(
 ) -> RoundtripSidecar:
     """Block-level sidecar를 생성한다.
 
-    Fragment 추출 → MDX alignment → reconstruction metadata 빌드 →
-    무결성 검증 → RoundtripSidecar 반환.
+    Fragment 추출 → MDX alignment → 무결성 검증 → RoundtripSidecar 반환.
     """
     from reverse_sync.fragment_extractor import extract_block_fragments
     from reverse_sync.mapping_recorder import record_mapping
@@ -236,6 +216,7 @@ def build_sidecar(
     xhtml_mappings = record_mapping(page_xhtml_text)
     frag_result = extract_block_fragments(page_xhtml_text)
     mdx_blocks = parse_mdx_blocks(mdx_text)
+    id_to_mapping = {mapping.block_id: mapping for mapping in xhtml_mappings}
 
     # 2. top-level mapping 필터링
     child_ids = set()
@@ -250,14 +231,12 @@ def build_sidecar(
     sidecar_blocks: List[SidecarBlock] = []
     for i, fragment in enumerate(frag_result.fragments):
         xpath = top_mappings[i].xhtml_xpath if i < len(top_mappings) else f"unknown[{i}]"
-        xhtml_type = top_mappings[i].type if i < len(top_mappings) else ""
 
         # 순차 1:1 대응 (향후 block alignment로 개선)
         mdx_block = mdx_content_blocks[i] if i < len(mdx_content_blocks) else None
         mdx_hash = sha256_text(mdx_block.content) if mdx_block else ""
         mdx_range = (mdx_block.line_start, mdx_block.line_end) if mdx_block else (0, 0)
-
-        reconstruction = _build_reconstruction_metadata(fragment, xhtml_type)
+        mapping = top_mappings[i] if i < len(top_mappings) else None
 
         sidecar_blocks.append(
             SidecarBlock(
@@ -266,7 +245,7 @@ def build_sidecar(
                 xhtml_fragment=fragment,
                 mdx_content_hash=mdx_hash,
                 mdx_line_range=mdx_range,
-                reconstruction=reconstruction,
+                reconstruction=_build_reconstruction_metadata(fragment, mapping, id_to_mapping),
             )
         )
 
@@ -288,6 +267,39 @@ def build_sidecar(
     return sidecar
 
 
+def _build_reconstruction_metadata(
+    fragment: str,
+    mapping: BlockMapping | None,
+    id_to_mapping: Dict[str, BlockMapping],
+) -> Optional[dict]:
+    if mapping is None:
+        return None
+
+    metadata: dict[str, Any] = {
+        "kind": mapping.type,
+        "old_plain_text": extract_plain_text(fragment),
+    }
+    if mapping.type == "paragraph":
+        metadata["anchors"] = []
+    elif mapping.type == "list":
+        metadata["ordered"] = mapping.xhtml_xpath.startswith("ol[")
+        metadata["items"] = []
+    elif mapping.children:
+        child_plain_texts = [
+            id_to_mapping[child_id].xhtml_plain_text.strip()
+            for child_id in mapping.children
+            if child_id in id_to_mapping and id_to_mapping[child_id].xhtml_plain_text.strip()
+        ]
+        if child_plain_texts:
+            metadata["old_plain_text"] = " ".join(child_plain_texts)
+        metadata["child_xpaths"] = [
+            id_to_mapping[child_id].xhtml_xpath
+            for child_id in mapping.children
+            if child_id in id_to_mapping
+        ]
+    return metadata
+
+
 def write_sidecar(sidecar: RoundtripSidecar, path: Path) -> None:
     """RoundtripSidecar를 JSON 파일로 저장한다."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -298,18 +310,14 @@ def write_sidecar(sidecar: RoundtripSidecar, path: Path) -> None:
 
 
 def load_sidecar(path: Path) -> RoundtripSidecar:
-    """JSON 파일에서 RoundtripSidecar를 로드한다.
-
-    v2와 v3 스키마를 모두 지원한다. v2 파일은 reconstruction=None으로 로드된다.
-    """
+    """JSON 파일에서 RoundtripSidecar를 로드한다."""
     data: Any = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError("invalid sidecar payload")
-    version = data.get("schema_version")
-    if version not in _COMPATIBLE_SCHEMA_VERSIONS:
+    if data.get("schema_version") != ROUNDTRIP_SCHEMA_VERSION:
         raise ValueError(
-            f"expected schema_version in {sorted(_COMPATIBLE_SCHEMA_VERSIONS)}, "
-            f"got {version}"
+            f"expected schema_version={ROUNDTRIP_SCHEMA_VERSION}, "
+            f"got {data.get('schema_version')}"
         )
     return RoundtripSidecar.from_dict(data)
 
@@ -597,53 +605,3 @@ def find_mapping_by_sidecar(
     if entry is None:
         return None
     return xpath_to_mapping.get(entry.xhtml_xpath)
-
-
-# ---------------------------------------------------------------------------
-# Block identity — hash + line_range 기반 disambiguation
-# ---------------------------------------------------------------------------
-
-@dataclass
-class _IdentityKey:
-    """Internal identity lookup key."""
-    mdx_content_hash: str
-    mdx_line_range: tuple
-
-
-def build_block_identity_index(
-    sidecar: RoundtripSidecar,
-) -> Dict[str, List[SidecarBlock]]:
-    """mdx_content_hash → SidecarBlock 리스트 인덱스를 구축한다.
-
-    동일 hash를 가진 블록이 여러 개일 때 line_range로 disambiguation할 수 있도록
-    리스트로 저장한다.
-    """
-    index: Dict[str, List[SidecarBlock]] = {}
-    for block in sidecar.blocks:
-        if not block.mdx_content_hash:
-            continue
-        index.setdefault(block.mdx_content_hash, []).append(block)
-    return index
-
-
-def find_block_by_identity(
-    mdx_content_hash: str,
-    mdx_line_range: tuple,
-    identity_index: Dict[str, List[SidecarBlock]],
-) -> Optional[SidecarBlock]:
-    """hash + line_range로 SidecarBlock을 찾는다.
-
-    1. hash가 유일하면 바로 반환
-    2. 같은 hash가 여러 개면 line_range가 일치하는 블록을 반환
-    3. line_range도 일치하지 않으면 None
-    """
-    candidates = identity_index.get(mdx_content_hash)
-    if not candidates:
-        return None
-    if len(candidates) == 1:
-        return candidates[0]
-    # line_range로 disambiguation
-    for block in candidates:
-        if block.mdx_line_range == mdx_line_range:
-            return block
-    return None

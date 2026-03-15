@@ -1,5 +1,5 @@
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "793608206",
   "mdx_sha256": "e09ae89468435eeaee1732434a330f5bf2def6f875feec5d5d65adc6b7a83243",
   "source_xhtml_sha256": "1fe717056eda284c8e41946fa98b25a00dae0e421798cccd34abcd2c0ae80c3c",
@@ -13,7 +13,12 @@
         6,
         6
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Alert Type을 New Request로 선택한 경우, Request Type에 따른 템플릿 변수 지원 내용은 다음과 같습니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 1,
@@ -24,7 +29,11 @@
         8,
         8
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "공통 변수"
+      }
     },
     {
       "block_index": 2,
@@ -35,7 +44,12 @@
         10,
         10
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "모든 요청 타입에서 지원하는 변수 목록입니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 3,
@@ -46,7 +60,12 @@
         12,
         12
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "paragraph",
+        "old_plain_text": "Request Type을 전체 선택한 경우에도 공통 변수는 사용 가능합니다.",
+        "anchors": []
+      }
     },
     {
       "block_index": 4,
@@ -57,7 +76,11 @@
         14,
         14
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Request Title             {{requestTitle}}    요청 제목예: 서비스 DB 접근 요청-Assignees                 {{assignees}}       요청 승인 담당자예: STEP 1(Katie Wells), STEP 2(Kenny Park), STEP 3(Brant Hwang)-Comment                   {{comment}}         요청 코멘트예: 서비스 운영 목적으로 DB 접근 권한 요청드립니다.-User Name                 {{userName}}        요청자 이름  예: Keira Yoon-Email                     {{email}}           요청자 이메일예: keira@email.com-Access Type               {{accessType}}      요청 유형DB Access RequestSQL RequestSQL Export RequestUnmasking RequestServer Access RequestAccess Role Request-Link                      {{link}}            요청 상세 페이지 링크예: https://{querypie_domain}/workflow/received-requests/to-do/detail/{workflow_uuid}-Workflow Uuid             {{workflowUuid}}    요청 UUID 예: b63f9f94-11e5-4095-a399-be7d96e9ce06-Workflow Id               {{id}}              요청 ID예: 12-Urgent                    {{urgent}}          긴급 요청 여부true 또는 false10.2.0"
+      }
     },
     {
       "block_index": 5,
@@ -68,7 +91,11 @@
         16,
         194
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "DB Access Request"
+      }
     },
     {
       "block_index": 6,
@@ -79,7 +106,11 @@
         196,
         196
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Expiration Date                  {{expirationDate}}            만료 일자10.2.211.2.0 - DeprecatedApproval Expiration Date{{approvalExpirationDate}}승인 만료일자11.2.0Access Expiration Date{{accessExpirationDate}}권한 만료일자11.2.0Requested Privilege per Connection {{connectionPrivilegeNames}}  커넥션 별 요청된 Privilege를 목록으로 표시예:Connection A : Read/WriteConnection B : Read-Only10.2.2"
+      }
     },
     {
       "block_index": 7,
@@ -90,7 +121,11 @@
         198,
         281
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "SQL Request"
+      }
     },
     {
       "block_index": 8,
@@ -101,7 +136,11 @@
         283,
         283
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점SQL Text                  {{sqlText}}              SQL 구문최대 100자 (TEXT, FILE 동일)10.2.2Content Type              {{contentType}}          SQL 구문 입력 방식TEXT 또는 FILE10.2.2Cluster Group Uuid        {{clusterGroupUuid}}     DB 커넥션 UUID10.2.2Cluster Group Name        {{clusterGroupName}}     DB 커넥션 이름10.2.2Cluster Id                {{clusterId}}            DB 커넥션 ID10.2.2Database Type             {{databaseType}}         데이터베이스 유형10.2.2Database Name             {{databaseName}}         데이터베이스 이름10.2.2Use Ledger Approval Rule  {{useLedgerApprovalRule}}원장 승인 규칙 사용 여부10.2.2Target Date               {{targetDate}}           실행 목표 일자10.2.211.2.0 - DeprecatedPreferred Execution Date{{preferredExecutionDate}}실행 목표 일자11.2.0Due Date                  {{dueDate}}              승인/실행 만료 일자10.2.211.2.0 - DeprecatedApproval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Execution Expiration Date{{executionExpirationDate}}실행 만료 일자11.2.0"
+      }
     },
     {
       "block_index": 9,
@@ -112,7 +151,11 @@
         285,
         494
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "SQL Export Request"
+      }
     },
     {
       "block_index": 10,
@@ -123,7 +166,11 @@
         496,
         496
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Cluster Group Uuid        {{clusterGroupUuid}}     DB 커넥션 UUID10.2.2Cluster Group Name        {{clusterGroupName}}     DB 커넥션 이름10.2.2Cluster Id                {{clusterId}}            DB 커넥션 ID10.2.2Database Type             {{databaseType}}         데이터베이스 유형10.2.2Database Name             {{databaseName}}         데이터베이스 이름10.2.2Export Type               {{exportType}}           내보내기 유형QUERY 또는 TABLE10.2.2Export Detail             {{exportDetail}}         내보내기 세부 정보Query인 경우, 최대 100자의 쿼리Table인 경우, 테이블 이름10.2.2Target Date               {{targetDate}}           실행 목표 일자10.2.2Preferred Execution Date{{preferredExecutionDate}}실행 목표 일자11.2.0Due Date                  {{dueDate}}              승인/실행 만료 일자10.2.2Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Execution Expiration Date{{executionExpirationDate}}실행 만료 일자11.2.0"
+      }
     },
     {
       "block_index": 11,
@@ -134,7 +181,11 @@
         498,
         692
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Unmasking Request"
+      }
     },
     {
       "block_index": 12,
@@ -145,7 +196,11 @@
         694,
         694
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Cluster Group Uuid        {{clusterGroupUuid}}     DB 커넥션 UUID10.2.2Cluster Group Name        {{clusterGroupName}}     DB 커넥션 이름10.2.2Database Type             {{databaseType}}         데이터베이스 유형10.2.2Database Name             {{databaseName}}         데이터베이스 이름10.2.2Table Name                {{tableName}}            테이블 이름10.2.2Column Names              {{columnNames}}          컬럼 이름을 목록으로 표시예: [actor_id, first_name, last_name, last_update]10.2.2Unmasking Expiration      {{unmaskingExpiration}}  마스킹 해제 만료 시점 예: 10 Minutes2024-12-03T14:59:00 10.2.2Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0"
+      }
     },
     {
       "block_index": 13,
@@ -156,7 +211,11 @@
         696,
         835
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Restricted Data Access Request"
+      }
     },
     {
       "block_index": 14,
@@ -167,7 +226,11 @@
         837,
         837
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Cluster Group Uuid        {{clusterGroupUuid}}     DB 커넥션 UUID11.0.0Cluster Group Name        {{clusterGroupName}}     DB 커넥션 이름11.0.0Database Type             {{databaseType}}         데이터베이스 유형11.0.0Database Name             {{databaseName}}         데이터베이스 이름11.0.0Table Name                {{tableName}}            테이블 이름11.0.0Column Names              {{columnNames}}          컬럼 이름을 목록으로 표시예: [actor_id, first_name, last_name, last_update]11.0.0Restricted Data Access Expiration{{restrictedDataAccessExpiration}}  접근 허용 만료 시점 예: 10 Minutes2024-12-03T14:59:00 11.0.0Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0"
+      }
     },
     {
       "block_index": 15,
@@ -178,7 +241,11 @@
         839,
         978
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "DB Policy Exception Request"
+      }
     },
     {
       "block_index": 16,
@@ -189,7 +256,11 @@
         980,
         980
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Cluster Group Uuid        {{clusterGroupUuid}}     DB 커넥션 UUID11.0.0Cluster Group Name        {{clusterGroupName}}     DB 커넥션 이름11.0.0Data Scope Type{{dataScopeType}}Data Path와 Tag중 하나를 선택11.0.0Database Type             {{databaseType}}         데이터베이스 유형11.0.0Database Name             {{databaseName}}         데이터베이스 이름11.0.0Table Name                {{tableName}}            테이블 이름11.0.0Column Names              {{columnNames}}          컬럼 이름을 목록으로 표시예: [actor_id, first_name, last_name, last_update]11.0.0Expiration{{expiration}}  예외 허용 만료 시점 예: 10 Minutes2024-12-03T14:59:00 11.0.0Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0"
+      }
     },
     {
       "block_index": 17,
@@ -200,7 +271,11 @@
         982,
         1135
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Server Access Request"
+      }
     },
     {
       "block_index": 18,
@@ -211,7 +286,11 @@
         1137,
         1137
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Server Group Name         {{serverGroupName}}      서버 그룹 이름10.2.2Server Names              {{serverNames}}          서버 이름을 목록으로 표시예: Server AServer B10.2.2Server Accounts           {{serverAccounts}}       서버 계정을 목록으로 표시예: devec2-user10.2.2Expiration Date           {{expirationDate}}       만료 일자10.2.211.2.0 - DeprecatedApproval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Access Expiration Date{{accessExpirationDate}}권한 만료일자11.2.0Trigger Condition{{triggerCondition}}권한 부여 시작 조건11.2.0Duration{{duration}}분(Minutes) 단위 서버 접근 권한이 유효한 시간11.2.0"
+      }
     },
     {
       "block_index": 19,
@@ -222,7 +301,11 @@
         1139,
         1281
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Server Privilege Request"
+      }
     },
     {
       "block_index": 20,
@@ -233,7 +316,11 @@
         1283,
         1283
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Server Group Name         {{serverGroupName}}      서버 그룹 이름10.2.2Server Names              {{serverNames}}          서버 이름을 목록으로 표시예: Server AServer B10.2.2Server Accounts           {{serverAccounts}}       서버 계정을 목록으로 표시예: devec2-user10.2.2Expiration Date           {{expirationDate}}       만료 일자10.2.211.2.0 - DeprecatedApproval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Privilege Expiration Date{{accessExpirationDate}}권한 만료일자11.2.0Trigger Condition{{triggerCondition}}권한 부여 시작 조건11.2.0Duration{{duration}}분(Minutes) 단위 서버 특권이 유효한 시간11.2.0"
+      }
     },
     {
       "block_index": 21,
@@ -244,7 +331,11 @@
         1285,
         1427
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Access Role Request"
+      }
     },
     {
       "block_index": 22,
@@ -255,7 +346,11 @@
         1429,
         1429
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Service                   {{service}}              역할 요청 대상 서비스SAC, KAC, WAC10.2.2Role Name                 {{roleName}}             역할 이름10.2.2Expiration Date           {{expirationDate}}       만료 일자10.2.211.2.0 - DeprecatedApproval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Role Expiration Date{{roleExpirationDate}}권한 만료 일자 11.2.0"
+      }
     },
     {
       "block_index": 23,
@@ -266,7 +361,11 @@
         1431,
         1526
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "Web APP Just-In-Time Access Request"
+      }
     },
     {
       "block_index": 24,
@@ -277,7 +376,11 @@
         1528,
         1528
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0Web App Name{{webAppName}}요청 대상 웹앱11.0.0Access Duration{{accessDuration}}             분(Minutes) 단위 웹앱 접근 권한이 유효한 시간11.0.0"
+      }
     },
     {
       "block_index": 25,
@@ -288,7 +391,11 @@
         1530,
         1534
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "heading",
+        "old_plain_text": "IP Registration Request"
+      }
     },
     {
       "block_index": 26,
@@ -299,7 +406,11 @@
         1536,
         1536
       ],
-      "lost_info": {}
+      "lost_info": {},
+      "reconstruction": {
+        "kind": "table",
+        "old_plain_text": "변수명변수설명추가 시점Approval Expiration Date{{approvalExpirationDate}}승인 만료 일자11.2.0IP Addresses                {{ipAddresses}}             IP 주소 11.0.0"
+      }
     }
   ],
   "separators": [
