@@ -468,8 +468,9 @@ class TestBuildPatches:
             roundtrip_sidecar=roundtrip_sidecar)
 
         assert len(patches) == 1
-        assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        # cross-type sidecar(table[2])가 거부되어 list 재생성 경로로 처리됨
+        assert 'new_inner_xhtml' in patches[0]
 
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):

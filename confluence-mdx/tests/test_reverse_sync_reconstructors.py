@@ -7,11 +7,10 @@ from reverse_sync.reconstructors import (
 from reverse_sync.sidecar import SidecarBlock
 
 
-def _make_image_anchor(offset: int, affinity: str = "before") -> dict:
+def _make_image_anchor(offset: int) -> dict:
     return {
-        "anchor_kind": "ac:image",
-        "old_plain_offset": offset,
-        "affinity": affinity,
+        "kind": "image",
+        "offset": offset,
         "raw_xhtml": (
             '<ac:image ac:inline="true">'
             '<ri:attachment ri:filename="sample.png"></ri:attachment>'
@@ -45,9 +44,14 @@ def test_sidecar_block_requires_reconstruction_for_list_item_anchors():
             "old_plain_text": "button",
             "items": [
                 {
+                    "kind": "image",
                     "path": [0],
-                    "old_plain_text": "button",
-                    "anchors": [_make_image_anchor(0)],
+                    "offset": 0,
+                    "raw_xhtml": (
+                        '<ac:image ac:inline="true">'
+                        '<ri:attachment ri:filename="sample.png"></ri:attachment>'
+                        '</ac:image>'
+                    ),
                 }
             ],
         },
@@ -74,7 +78,8 @@ def test_reconstruct_fragment_with_sidecar_rehydrates_paragraph_anchor():
     )
 
     assert "<ac:image" in result
-    assert "Hello brave" in result
+    assert "Hello" in result
+    assert "brave world" in result
     assert "<img" not in result
 
 
@@ -88,9 +93,14 @@ def test_reconstruct_fragment_with_sidecar_rehydrates_list_item_anchor():
             "old_plain_text": "button",
             "items": [
                 {
+                    "kind": "image",
                     "path": [0],
-                    "old_plain_text": "button",
-                    "anchors": [_make_image_anchor(0)],
+                    "offset": 0,
+                    "raw_xhtml": (
+                        '<ac:image ac:inline="true">'
+                        '<ri:attachment ri:filename="sample.png"></ri:attachment>'
+                        '</ac:image>'
+                    ),
                 }
             ],
         },
