@@ -151,3 +151,61 @@ class TestReconstructInlineAnchorFragment:
         assert 'ac:image' in result
         assert 'New text' in result
         assert 'rest' in result
+
+
+class TestPatchBuilderInlineAnchor:
+    """patch_builder가 anchor가 있는 paragraph를 올바르게 처리하는지 통합 테스트."""
+
+    def test_changed_paragraph_with_image_preserves_image(self):
+        """텍스트가 변경된 paragraph의 ac:image가 보존된다."""
+        import yaml
+        from mdx_to_storage.parser import parse_mdx_blocks
+        from reverse_sync.block_diff import diff_blocks
+        from reverse_sync.mapping_recorder import record_mapping
+        from reverse_sync.patch_builder import build_patches
+        from reverse_sync.sidecar import (
+            SidecarEntry, build_mdx_to_sidecar_index, build_sidecar,
+            build_xpath_to_mapping, generate_sidecar_mapping,
+        )
+        from reverse_sync.xhtml_patcher import patch_xhtml
+
+        xhtml = (
+            '<p>Original text '
+            '<ac:image ac:width="100"><ri:attachment ri:filename="img.png"/></ac:image>'
+            ' more text</p>'
+        )
+        original_mdx = '---\ntitle: test\n---\n\n# Test\n\nOriginal text more text\n'
+        improved_mdx = '---\ntitle: test\n---\n\n# Test\n\nChanged text more text\n'
+
+        orig_blocks = list(parse_mdx_blocks(original_mdx))
+        imp_blocks = list(parse_mdx_blocks(improved_mdx))
+        changes, alignment = diff_blocks(orig_blocks, imp_blocks)
+
+        mappings = record_mapping(xhtml)
+        roundtrip_sidecar = build_sidecar(xhtml, original_mdx)
+        sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx)
+        sidecar_data = yaml.safe_load(sidecar_yaml) or {}
+        sidecar_entries = [
+            SidecarEntry(
+                xhtml_xpath=item['xhtml_xpath'],
+                xhtml_type=item.get('xhtml_type', ''),
+                mdx_blocks=item.get('mdx_blocks', []),
+                mdx_line_start=item.get('mdx_line_start', 0),
+                mdx_line_end=item.get('mdx_line_end', 0),
+            )
+            for item in sidecar_data.get('mappings', [])
+        ]
+        mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
+        xpath_to_mapping = build_xpath_to_mapping(mappings)
+
+        patches = build_patches(
+            changes, orig_blocks, imp_blocks,
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            alignment, roundtrip_sidecar=roundtrip_sidecar,
+        )
+        result = patch_xhtml(xhtml, patches)
+
+        assert 'ac:image' in result
+        assert 'ri:attachment' in result
+        assert 'Changed text' in result
+        assert 'Original text' not in result

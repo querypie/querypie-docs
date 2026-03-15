@@ -18,6 +18,7 @@ from reverse_sync.sidecar import (
 )
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
+from reverse_sync.reconstructors import reconstruct_inline_anchor_fragment
 from reverse_sync.list_patcher import (
     build_list_item_patches,
 )
@@ -369,6 +370,37 @@ def build_patches(
                     mapping_lost_info,
                 )
             )
+            continue
+
+        # Phase 3: sidecar anchor가 있는 paragraph → inline-anchor reconstruction
+        # anchor entry에 offset/raw_xhtml이 없으면 text-transfer 경로로 폴백
+        _anchors = (
+            sidecar_block.reconstruction.get('anchors', [])
+            if sidecar_block is not None and sidecar_block.reconstruction is not None
+            else []
+        )
+        _valid_anchors = [
+            a for a in _anchors if 'offset' in a and 'raw_xhtml' in a
+        ]
+        if (sidecar_block is not None
+                and sidecar_block.reconstruction is not None
+                and sidecar_block.reconstruction.get('kind') == 'paragraph'
+                and _valid_anchors):
+            new_element = _emit_replacement_fragment(change.new_block)
+            reconstructed = reconstruct_inline_anchor_fragment(
+                mapping.xhtml_text,
+                _valid_anchors,
+                new_element,
+            )
+            block_lost = (mapping_lost_info or {}).get(mapping.block_id, {})
+            if block_lost:
+                from reverse_sync.lost_info_patcher import apply_lost_info
+                reconstructed = apply_lost_info(reconstructed, block_lost)
+            patches.append({
+                'action': 'replace_fragment',
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'new_element_xhtml': reconstructed,
+            })
             continue
 
         # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
