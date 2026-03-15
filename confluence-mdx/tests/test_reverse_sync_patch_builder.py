@@ -471,6 +471,52 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
 
+    def test_roundtrip_identity_fallback_accepts_ul_ol_same_list_family(self):
+        mapping = _make_mapping('m1', 'same text', xpath='ul[1]', type_='list')
+        change = _make_change(0, '- same text', '- updated text', type_='list')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'ol[2]',
+                '<ol><li><p>same text</p></li></ol>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            mapping,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is not None
+        assert sidecar_block.xhtml_xpath == 'ol[2]'
+
+    def test_roundtrip_identity_fallback_accepts_heading_family(self):
+        mapping = _make_mapping('m1', 'same heading', xpath='h2[1]', type_='heading')
+        change = _make_change(0, '## same heading', '## updated heading', type_='heading')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'h3[4]',
+                '<h3>same heading</h3>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            mapping,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is not None
+        assert sidecar_block.xhtml_xpath == 'h3[4]'
+
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
         m1 = _make_mapping('m1', 'text', xpath='p[1]')
