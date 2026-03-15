@@ -567,8 +567,8 @@ def testbuild_patches_index_mapping():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
-    assert patches[0]['old_plain_text'] == 'Old text.'
-    assert patches[0]['new_inner_xhtml'] == 'New text.'
+    assert patches[0]['action'] == 'replace_fragment'
+    assert patches[0]['new_element_xhtml'] == '<p>New text.</p>'
 
 
 def testbuild_patches_skips_non_content():
@@ -787,7 +787,12 @@ def testbuild_patches_table_block():
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
-    from reverse_sync.sidecar import SidecarEntry
+    from reverse_sync.sidecar import (
+        DocumentEnvelope,
+        RoundtripSidecar,
+        SidecarBlock,
+        SidecarEntry,
+    )
 
     old_table = '<table>\n<th>\n**Databased Access Control**\n</th>\n</table>\n'
     new_table = '<table>\n<th>\n**Database Access Control**\n</th>\n</table>\n'
@@ -809,19 +814,23 @@ def testbuild_patches_table_block():
     mdx_to_sidecar = {
         0: SidecarEntry(xhtml_xpath='table[1]', xhtml_type='table', mdx_blocks=[0]),
     }
+    roundtrip_sidecar = RoundtripSidecar(
+        page_id='test',
+        blocks=[SidecarBlock(0, 'table[1]', '<table>...</table>', 'hash1', (1, 5))],
+        separators=[],
+        document_envelope=DocumentEnvelope(prefix='', suffix='\n'),
+    )
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
-                            mdx_to_sidecar, xpath_to_mapping)
+                            mdx_to_sidecar, xpath_to_mapping,
+                            roundtrip_sidecar=roundtrip_sidecar)
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
-    assert patches[0]['old_plain_text'] == 'Databased Access Control'
-    # bold content가 변경되어 has_inline_format_change()가 True →
-    # new_inner_xhtml 패치가 생성됨 (outer <table> 없이 innerHTML만 포함)
-    assert 'new_inner_xhtml' in patches[0]
-    assert '<strong>Database Access Control</strong>' in patches[0]['new_inner_xhtml']
-    assert not patches[0]['new_inner_xhtml'].startswith('<table')
+    assert patches[0]['action'] == 'replace_fragment'
+    assert '<strong>Database Access Control</strong>' in patches[0]['new_element_xhtml']
+    assert patches[0]['new_element_xhtml'].startswith('<table')
 
 
 # --- sidecar 전용 매칭 코드 경로 테스트 ---

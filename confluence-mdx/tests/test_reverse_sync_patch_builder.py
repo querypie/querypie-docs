@@ -7,7 +7,12 @@ split_list_items, build_table_row_patches, build_list_item_patches) 테스트.
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mdx_block_parser import MdxBlock
-from reverse_sync.sidecar import SidecarEntry
+from reverse_sync.sidecar import (
+    DocumentEnvelope,
+    RoundtripSidecar,
+    SidecarBlock,
+    SidecarEntry,
+)
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _flush_containing_changes,
@@ -77,6 +82,15 @@ def _make_change(
 
 def _make_sidecar(xpath: str, mdx_blocks: list) -> SidecarEntry:
     return SidecarEntry(xhtml_xpath=xpath, xhtml_type='paragraph', mdx_blocks=mdx_blocks)
+
+
+def _make_roundtrip_sidecar(blocks):
+    return RoundtripSidecar(
+        page_id='test',
+        blocks=blocks,
+        separators=['\n'] * (len(blocks) - 1) if len(blocks) > 1 else [],
+        document_envelope=DocumentEnvelope(prefix='', suffix='\n'),
+    )
 
 
 
@@ -281,8 +295,7 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'p[1]'
 
-    # 직접 매칭 + text_transfer 사용
-    def test_direct_match_with_transfer(self):
+    def test_clean_paragraph_generates_replace_fragment(self):
         m1 = _make_mapping('m1', 'hello  world', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -295,12 +308,16 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        # R1: 항상 inner XHTML 재생성
-        assert 'earth' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
-    # 직접 매칭 + text_transfer 미사용 (텍스트 동일)
-    def test_direct_match_no_transfer(self):
-        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+    def test_paragraph_with_preserved_anchor_uses_legacy_modify_patch(self):
+        m1 = _make_mapping(
+            'm1',
+            'hello world',
+            xpath='p[1]',
+        )
+        m1.xhtml_text = '<p>hello <ac:link><ri:page ri:content-title="world" /></ac:link></p>'
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
@@ -312,7 +329,97 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0]['new_inner_xhtml'] == 'hello earth'
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert patches[0]['new_plain_text'] == 'hello earth'
+
+    def test_roundtrip_sidecar_paragraph_without_anchors_uses_replace_fragment(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={'kind': 'paragraph', 'old_plain_text': 'hello world', 'anchors': []},
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
+
+    def test_roundtrip_sidecar_paragraph_with_anchors_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={
+                    'kind': 'paragraph',
+                    'old_plain_text': 'hello world',
+                    'anchors': [{'anchor_id': 'a1'}],
+                },
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_plain_text' in patches[0] or 'new_inner_xhtml' in patches[0]
+
+    def test_roundtrip_sidecar_without_reconstruction_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1), reconstruction=None)
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_element_xhtml' not in patches[0]
+
+    def test_roundtrip_sidecar_non_paragraph_reconstruction_stays_modify(self):
+        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0, 'p[1]', '<p>hello world</p>', 'hash1', (1, 1),
+                reconstruction={'kind': 'html_block', 'old_plain_text': 'hello world'},
+            )
+        ])
+
+        change = _make_change(0, 'hello world', 'hello earth')
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert 'new_element_xhtml' not in patches[0]
 
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
@@ -331,9 +438,8 @@ class TestBuildPatches:
 
         assert patches == []
 
-    # Inline format 변경 → new_inner_xhtml 패치 생성
-    def test_direct_inline_code_added_generates_inner_xhtml(self):
-        """paragraph에서 backtick이 추가되면 new_inner_xhtml 패치를 생성한다."""
+    def test_direct_inline_code_added_generates_replace_fragment(self):
+        """simple paragraph는 inline formatting 변화도 fragment replacement를 사용한다."""
         m1 = _make_mapping('m1', 'QueryPie는 https://example.com/과 같은 URL', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -350,12 +456,12 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<code>https://example.com/</code>' in patches[0]['new_inner_xhtml']
-        assert 'new_plain_text' not in patches[0]
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<code>https://example.com/</code>' in patches[0]['new_element_xhtml']
+        assert patches[0]['new_element_xhtml'].startswith('<p>')
 
-    def test_direct_text_only_change_uses_inner_xhtml_patch(self):
-        """R1: 텍스트만 바뀌어도 inner XHTML 재생성 패치를 사용한다."""
+    def test_direct_text_only_change_uses_replace_fragment(self):
+        """Phase 2: simple paragraph의 기본 경로는 whole-fragment replacement다."""
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -368,8 +474,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert 'new_plain_text' not in patches[0]
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
     # sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_multiple_changes_grouped_to_containing(self):
@@ -391,7 +497,7 @@ class TestBuildPatches:
         assert len(patches) == 0
 
     def test_direct_heading_inline_code_added(self):
-        """heading에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        """heading은 fragment replacement를 사용한다."""
         m1 = _make_mapping('m1', 'kubectl 명령어 가이드', xpath='h2[1]',
                            type_='heading')
         mappings = [m1]
@@ -399,8 +505,8 @@ class TestBuildPatches:
 
         change = _make_change(
             0,
-            '## kubectl 명령어 가이드\n',
-            '## `kubectl` 명령어 가이드\n',
+            '### kubectl 명령어 가이드\n',
+            '### `kubectl` 명령어 가이드\n',
             type_='heading',
         )
         mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
@@ -410,11 +516,11 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<h2><code>kubectl</code> 명령어 가이드</h2>'
 
-    def test_direct_bold_added_generates_inner_xhtml(self):
-        """paragraph에서 bold가 추가되면 new_inner_xhtml 패치를 생성한다."""
+    def test_direct_bold_added_generates_replace_fragment(self):
+        """simple paragraph에서 bold가 추가되면 fragment replacement를 생성한다."""
         m1 = _make_mapping('m1', '중요한 설정입니다', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -431,8 +537,80 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<strong>중요한</strong>' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p><strong>중요한</strong> 설정입니다</p>'
+
+    def test_markdown_table_change_generates_replace_fragment(self):
+        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
+                           type_='table')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'table[1]', '<table><tbody></tbody></table>', 'hash1', (1, 3))
+        ])
+
+        change = _make_change(
+            0,
+            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
+            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        )
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<table>' in patches[0]['new_element_xhtml']
+        assert 'new_val' in patches[0]['new_element_xhtml']
+
+    def test_markdown_table_without_roundtrip_sidecar_keeps_row_patch_path(self):
+        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
+                           type_='table')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        change = _make_change(
+            0,
+            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
+            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        )
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert patches[0]['new_plain_text'] != patches[0]['old_plain_text']
+
+    def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
+        m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'h2[1]', '<h2>Old Title</h2>', 'hash1', (1, 1))
+        ])
+
+        old_block = _make_block('## Old Title\n', 'heading')
+        new_block = _make_block('### New Title\n', 'heading')
+        changes = [
+            BlockChange(index=0, change_type='deleted', old_block=old_block, new_block=None),
+            BlockChange(index=0, change_type='added', old_block=None, new_block=new_block),
+        ]
+
+        patches = build_patches(
+            changes, [old_block], [new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<h2>New Title</h2>'
 
 
 # ── build_table_row_patches ──

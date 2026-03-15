@@ -1,4 +1,4 @@
-"""XHTML Patcher — 매핑과 diff를 이용해 XHTML의 텍스트를 패치한다."""
+"""XHTML Patcher — fragment 단위 DOM patch를 적용한다."""
 from typing import List, Dict
 from bs4 import BeautifulSoup, NavigableString, Tag
 import difflib
@@ -12,10 +12,11 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     Args:
         xhtml: 원본 XHTML 문자열
         patches: 패치 목록. 각 패치는 dict:
-            - action: "modify" (기본) | "delete" | "insert"
+            - action: "modify" (기본) | "delete" | "insert" | "replace_fragment"
             - modify: xhtml_xpath, old_plain_text, new_plain_text 또는 new_inner_xhtml
             - delete: xhtml_xpath
             - insert: after_xpath (None이면 맨 앞), new_element_xhtml
+            - replace_fragment: xhtml_xpath, new_element_xhtml
 
     Returns:
         패치된 XHTML 문자열
@@ -25,6 +26,7 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     # 패치를 action별로 분류
     delete_patches = [p for p in patches if p.get('action') == 'delete']
     insert_patches = [p for p in patches if p.get('action') == 'insert']
+    replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
     modify_patches = [p for p in patches
                       if p.get('action', 'modify') == 'modify']
 
@@ -51,6 +53,12 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
         if el is not None:
             resolved_modifies.append((el, p))
 
+    resolved_replacements = []
+    for p in replace_patches:
+        el = _find_element_by_xpath(soup, p['xhtml_xpath'])
+        if el is not None:
+            resolved_replacements.append((el, p))
+
     # 1단계: delete
     for element in resolved_deletes:
         element.decompose()
@@ -59,7 +67,11 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     for anchor, patch in resolved_inserts:
         _insert_element_resolved(soup, anchor, patch['new_element_xhtml'])
 
-    # 3단계: modify
+    # 3단계: replace fragment
+    for element, patch in resolved_replacements:
+        _replace_element_resolved(element, patch['new_element_xhtml'])
+
+    # 4단계: modify
     for element, patch in resolved_modifies:
         if 'new_inner_xhtml' in patch:
             old_text = patch.get('old_plain_text', '')
@@ -158,6 +170,22 @@ def _replace_inner_html(element: Tag, new_inner_xhtml: str):
     new_content = BeautifulSoup(new_inner_xhtml, 'html.parser')
     for child in list(new_content.children):
         element.append(child.extract())
+
+
+def _replace_element_resolved(element: Tag, new_html: str):
+    """요소 전체를 새 fragment로 교체한다."""
+    new_content = BeautifulSoup(new_html, 'html.parser')
+    replacements = [child.extract() for child in list(new_content.children)]
+    if not replacements:
+        element.decompose()
+        return
+
+    first = replacements[0]
+    element.replace_with(first)
+    prev = first
+    for child in replacements[1:]:
+        prev.insert_after(child)
+        prev = child
 
 
 def _find_element_by_xpath(soup: BeautifulSoup, xpath: str):
