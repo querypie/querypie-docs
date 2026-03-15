@@ -1,21 +1,22 @@
 # Reverse Sync 전면 재구성 설계
 
 > 최초 작성일: 2026-03-13
-> 갱신일: 2026-03-14
+> 갱신일: 2026-03-15
 > 기준 브랜치: `main`
-> 기준 커밋: `e8d11c5c2e9dbf3d7b6a6929b61990ee7976a9f6`
+> 기준 커밋: `9e0d43b91c2e47088274e13e82a5c2750e1529f9`
 > 반영된 선행 PR:
 > - `#913` reverse-sync 재구성 설계 초안
 > - `#914` Phase 0 공용 helper 추출 (`xhtml_normalizer`, list tree public API)
-> - `#915` Phase 1 sidecar schema v3 (`reconstruction`, identity helper)
+> - `#915` Phase 1 sidecar schema v3
+> - `#917` Phase 1 후속 정리 (`strict v3`, identity helper API 통일, reconstruction metadata 보강)
 > 연관 문서:
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
-> - `docs/plans/2026-03-14-reverse-sync-reconstruction-cleanup-scope.md`
+> - `docs/plans/2026-03-15-reverse-sync-reconstruction-cleanup-scope.md`
 > - `docs/analysis-reverse-sync-refactoring.md`
 
 ## 1. 문서 목적
 
-이 문서는 2026-03-14 기준 `main` 브랜치 상태를 반영해, 기존 reverse-sync 재구성 계획을 다시 정리한 버전이다.
+이 문서는 2026-03-15 기준 `main` 브랜치 상태를 반영해, reverse-sync 재구성 계획을 다시 정리한 버전이다.
 
 핵심 목적은 두 가지다.
 
@@ -24,7 +25,7 @@
 
 즉 이 문서는 더 이상 PR #913 시점의 순수 제안서가 아니다. 현재 `main`이 어디까지 와 있는지, 그리고 다음 단계가 정확히 무엇인지 정의하는 기준 문서다.
 
-## 2. 2026-03-14 기준 main의 실제 상태
+## 2. 2026-03-15 기준 main의 실제 상태
 
 ### 2.1 현재 런타임 기본 경로
 
@@ -44,7 +45,7 @@
 
 ### 2.2 이미 main에 머지된 기반 작업
 
-PR #914와 PR #915로 인해, 원래 설계 문서에서 제안했던 선행 기반 중 일부는 이미 코드로 들어와 있다.
+PR `#914`, `#915`, `#917`으로 인해, 원래 설계 문서에서 제안했던 선행 기반 중 상당 부분은 이미 코드로 들어와 있다.
 
 #### Phase 0 완료: 공용 helper 추출
 
@@ -71,18 +72,25 @@ PR #914와 PR #915로 인해, 원래 설계 문서에서 제안했던 선행 기
 - `bin/reverse_sync/sidecar.py`
   - `ROUNDTRIP_SCHEMA_VERSION = "3"`
   - `SidecarBlock.reconstruction`
-  - `build_block_identity_index()`
-  - `find_block_by_identity()`
-- v2 하위 호환 로드 유지
+  - `SidecarBlock.to_dict()` / `from_dict()`
+  - `build_sidecar_identity_index()`
+  - `find_sidecar_block_by_identity()`
+- `build_sidecar()` 의 reconstruction metadata 생성 고도화
+  - paragraph: `anchors`
+  - list: `ordered`, `items`
+  - container 계열: `child_xpaths`
+- `load_sidecar()` 는 이제 v3 strict 검증만 허용
 - 관련 테스트:
   - `tests/test_reverse_sync_sidecar_v3.py`
-  - 기존 `tests/test_reverse_sync_sidecar_v2.py` 호환 검증
+  - `expected.roundtrip.json` fixture 갱신
 
 중요한 현재 상태:
 
-- `reconstruction` 필드는 들어왔지만 대부분 placeholder 수준이다.
-- paragraph/heading의 `anchors`, list의 `items` 는 현재 빈 구조를 생성하는 수준이다.
-- identity helper는 구현되었지만 아직 reverse-sync planning 기본 경로에 연결되어 있지 않다.
+- `reconstruction` 은 더 이상 완전한 placeholder-only 필드는 아니다.
+- 하지만 paragraph/list의 실제 preserved anchor/unit 정보는 아직 비어 있다.
+- list는 `ordered` 와 `items` 틀만 있고, item-level anchor/child block 정보는 아직 없다.
+- container는 `child_xpaths` 까지 기록하지만, runtime reconstruction 에 필요한 raw preservation unit 까지는 저장하지 않는다.
+- identity helper는 sidecar 레벨에서 정리됐지만, reverse-sync planner 기본 경로에는 아직 연결되어 있지 않다.
 
 #### 보조 기반: rehydrator 존재
 
@@ -120,21 +128,22 @@ PR #914와 PR #915로 인해, 원래 설계 문서에서 제안했던 선행 기
 
 #### `tests/reverse-sync/`
 
-- 실제 회귀 케이스 디렉터리 42개
+- 실제 fixture 디렉터리 42개
 - 각 케이스에 `original.mdx`, `improved.mdx`, `page.xhtml` 존재
-- `pages.yaml` 은 이제 단순 카탈로그가 아니라 다음 역할을 함께 가진다.
-  - forward converter용 페이지 카탈로그
-  - reverse-sync 테스트 메타데이터
-  - `expected_status`, `failure_type`, `severity` 관리
+- `pages.yaml` 전체 엔트리: 66개
+- 이 중 reverse-sync 테스트 메타데이터(`failure_type`)를 가진 실제 테스트 케이스: 42개
+- `expected_status` 기준:
+  - `pass`: 28개
+  - `fail`: 14개
 
-중요한 차이:
+의미:
 
-- `tests/reverse-sync/` 는 예전 문서처럼 `pass/fail/catalog_only` 숫자 요약만으로 설명하면 부정확하다.
-- 현재는 `pages.yaml` 내부 메타데이터가 실질적인 판정 기준이다.
+- `pages.yaml` 은 단순 카탈로그가 아니라 forward converter용 페이지 카탈로그와 reverse-sync 테스트 메타데이터를 함께 담당한다.
+- 예전 문서의 `catalog_only` 요약보다, 지금은 `pages.yaml` 내 메타데이터가 실제 기준이다.
 
 ## 3. 원래 설계에서 유지되는 핵심 결정
 
-PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대로 유지해야 하는 결정은 아래 다섯 가지다.
+PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대로 유지해야 하는 결정은 아래 다섯 가지다.
 
 ### 3.1 좌표계는 MDX literal이 아니라 normalized plain text다
 
@@ -162,13 +171,17 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 
 ### 3.4 block identity는 hash 단독으로 끝내지 않는다
 
-현재 `main`에는 `hash + line_range` helper가 들어와 있다.
+현재 `main`에는 `build_sidecar_identity_index()` 와 `find_sidecar_block_by_identity()` 가 들어와 있다.
+
+기본 기준은 아래와 같다.
+
+- `mdx_content_hash`
+- `mdx_line_range`
+- 동일 hash 후보군 내 stable order
 
 다만 planner 단계에서는 필요 시 아래까지 함께 고려한다.
 
 - `block_index`
-- `mdx_line_range`
-- `mdx_content_hash`
 - 동일 hash 후보군 내 상대 순서
 
 즉 현재 helper는 최소 기반선이고, planner integration 단계에서 최종 identity 규칙을 완성해야 한다.
@@ -199,15 +212,16 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 
 이 구조는 list, table, callout, inline image/link 같은 Confluence 전용 구조를 안정적으로 다루기 어렵다.
 
-### 4.2 `reconstruction` metadata가 아직 실제 재구성 정보를 담지 않는다
+### 4.2 `reconstruction` metadata가 아직 runtime reconstruction 에 충분하지 않다
 
-현재 `build_sidecar()` 의 `_build_reconstruction_metadata()` 는 다음 수준에 머물러 있다.
+현재 `build_sidecar()` 는 `BlockMapping` 기반으로 metadata를 기록하지만, 아직 다음 공백이 남아 있다.
 
-- paragraph/heading: `old_plain_text`, 빈 `anchors`
-- list: `old_plain_text`, 빈 `items`
-- code/table: `None`
+- paragraph: `anchors` 는 비어 있다.
+- list: `ordered` 는 기록되지만 `items` 내부 정보는 비어 있다.
+- container: `child_xpaths` 는 기록되지만 preserved raw unit 은 저장하지 않는다.
+- paragraph/list/container 모두 anchor offset, affinity, raw_xhtml 같은 실제 재주입 정보는 아직 없다.
 
-즉 schema는 준비됐지만, runtime reconstruction에 필요한 실제 anchor/unit 정보는 아직 sidecar에 기록되지 않는다.
+즉 schema와 최소 메타 구조는 준비됐지만, runtime reconstruction 에 필요한 실제 preservation metadata 는 아직 충분하지 않다.
 
 ### 4.3 patcher가 fragment replacement 중심으로 바뀌지 않았다
 
@@ -347,12 +361,13 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 완료 기준:
 
 - `reconstruction` 필드 추가
-- v2 하위 호환 유지
-- `hash + line_range` identity helper 추가
+- strict v3 load 정착
+- `build_sidecar_identity_index()` / `find_sidecar_block_by_identity()` 도입
+- `BlockMapping` 기반 reconstruction metadata 생성
 
 남은 후속 작업:
 
-- placeholder metadata를 실제 metadata로 채우기
+- placeholder 수준의 anchor/item metadata를 실제 metadata로 채우기
 - planner 경로에서 identity helper 사용하기
 
 ### Phase 2. clean block whole-fragment replacement
@@ -468,11 +483,11 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 | `tests/testcases/*/improved.mdx` | 16 | reverse-sync changed 입력 |
 | `tests/testcases/*/expected.reverse-sync.patched.xhtml` | 16 | changed-page golden |
 | `tests/reverse-sync/*` | 42 | 실제 회귀 케이스 및 failure reproduction |
-| `tests/reverse-sync/pages.yaml` | 1 manifest | catalog + expected_status/failure_type/severity |
+| `tests/reverse-sync/pages.yaml` | 66 entries | catalog + expected_status/failure_type/severity |
 
 ## 8. legacy 코드 정리 기준
 
-상세 삭제 대상과 범위는 `docs/plans/2026-03-14-reverse-sync-reconstruction-cleanup-scope.md` 에 별도로 정리한다.
+상세 삭제 대상과 범위는 `docs/plans/2026-03-15-reverse-sync-reconstruction-cleanup-scope.md` 에 별도로 정리한다.
 
 다음 코드는 새 경로가 기본이 되기 전에는 제거하지 않는다.
 
@@ -499,17 +514,18 @@ PR #913 시점에 제안된 방향 중, 2026-03-14 기준 `main`에서도 그대
 1. modified block 기본 경로가 whole-fragment reconstruction 으로 전환된다.
 2. paragraph/list anchor 재주입이 plain-text 좌표계 기준으로 구현된다.
 3. test oracle이 `mapping.yaml` 이 아니라 `expected.roundtrip.json`, `page.xhtml`, `expected.reverse-sync.patched.xhtml` 로 고정된다.
-4. `RoundtripSidecar v3` 의 `reconstruction` 필드가 placeholder가 아니라 실제 runtime metadata를 담는다.
-5. `hash + line_range` 기반 identity가 planner에 통합되고, duplicate content에서도 안정적으로 동작한다.
+4. `RoundtripSidecar v3` 의 `reconstruction` 필드가 실제 runtime metadata를 담는다.
+5. `build_sidecar_identity_index()` / `find_sidecar_block_by_identity()` 기준 identity 가 planner에 통합되고, duplicate content에서도 안정적으로 동작한다.
 6. unsupported 구조에서 silent corruption 없이 fail-closed가 유지된다.
 
 ## 10. 판단
 
-2026-03-14 기준 `main`은 재구성 설계의 출발점이 아니라 이미 Phase 0과 Phase 1을 흡수한 상태다. 따라서 앞으로의 계획은 "설계를 시작한다"가 아니라 "이미 들어온 기반선 위에서 modified path를 실제 fragment reconstruction으로 전환한다"여야 한다.
+2026-03-15 기준 `main`은 재구성 설계의 출발점이 아니라 이미 Phase 0과 Phase 1을 흡수한 상태다. 따라서 앞으로의 계획은 "설계를 시작한다"가 아니라 "이미 들어온 기반선 위에서 modified path를 실제 fragment reconstruction으로 전환한다"여야 한다.
 
 정리하면 현재의 정확한 방향은 다음과 같다.
 
 - `xhtml_normalizer` 와 sidecar v3는 이미 완료된 기반선으로 본다.
+- `#917` 이후 sidecar는 strict v3 와 개선된 metadata shape 를 가지지만, 아직 runtime reconstruction 에 필요한 preservation 정보는 충분하지 않다.
 - reverse-sync 기본 경로는 아직 legacy patch 체인에 있으므로 Phase 2 이후가 본 작업이다.
 - 다음 구현의 승패는 sidecar metadata를 실제 재구성 정보로 채우고, patcher/planner를 fragment replacement 중심으로 바꾸는 데 달려 있다.
 

@@ -1,8 +1,8 @@
 # Reverse Sync 재구성 후 삭제 대상 범위
 
-> 작성일: 2026-03-14
+> 작성일: 2026-03-15
 > 기준 브랜치: `main`
-> 기준 커밋: `e8d11c5c2e9dbf3d7b6a6929b61990ee7976a9f6`
+> 기준 커밋: `9e0d43b91c2e47088274e13e82a5c2750e1529f9`
 > 선행 문서:
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design.md`
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
@@ -295,7 +295,7 @@
 
 - `RoundtripSidecar v3` 가 runtime primary artifact 로 올라가면 이 계층은 중복 책임이 된다.
 - 현재는 reverse-sync CLI 와 converter 에서 legacy routing artifact 로 사용한다.
-- 사람 읽기 쉬운 debug mapping 으로는 남길 수 있지만, runtime truth 로는 내려야 한다.
+- `#917`에서 strict v3 sidecar 정리는 이미 끝났으므로, 남은 cleanup 초점은 v2 호환이 아니라 `mapping.yaml` runtime 계층 제거다.
 
 정리 방향:
 
@@ -390,8 +390,8 @@ cleanup 이후에도 유지해야 할 코드를 분리해 둔다.
 - `load_sidecar()`
 - `write_sidecar()`
 - `verify_sidecar_integrity()`
-- `build_block_identity_index()`
-- `find_block_by_identity()`
+- `build_sidecar_identity_index()`
+- `find_sidecar_block_by_identity()`
 
 즉 sidecar 모듈 전체 삭제가 아니라, 그 안의 legacy mapping 계층 분리가 목표다.
 
