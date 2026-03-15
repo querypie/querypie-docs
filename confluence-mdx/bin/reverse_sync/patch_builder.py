@@ -393,9 +393,18 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
+            should_replace_clean_list = (
+                mapping is not None
+                and not _contains_preserved_anchor_markup(mapping.xhtml_text)
+                and roundtrip_sidecar is not None
+                and list_sidecar is None
+            )
             if (mapping is not None
                     and not _contains_preserved_anchor_markup(mapping.xhtml_text)
-                    and sidecar_block_requires_reconstruction(list_sidecar)):
+                    and (
+                        sidecar_block_requires_reconstruction(list_sidecar)
+                        or should_replace_clean_list
+                    )):
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(
