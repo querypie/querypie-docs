@@ -155,7 +155,7 @@ def _find_roundtrip_sidecar_block(
             (identity_block.line_start, identity_block.line_end),
         )
         if identity_match is not None:
-            if mapping is None or _mapping_block_family(mapping) == _xpath_block_family(identity_match.xhtml_xpath):
+            if mapping is not None and _mapping_block_family(mapping) == _xpath_block_family(identity_match.xhtml_xpath):
                 return identity_match
 
     # xpath 결과를 마지막 fallback으로 반환 (hash 불일치라도 없는 것보다 나음)

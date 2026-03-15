@@ -517,6 +517,27 @@ class TestBuildPatches:
         assert sidecar_block is not None
         assert sidecar_block.xhtml_xpath == 'h3[4]'
 
+    def test_roundtrip_identity_fallback_does_not_guess_without_mapping(self):
+        change = _make_change(0, '- same text', '- updated text', type_='list')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'ol[2]',
+                '<ol><li><p>same text</p></li></ol>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            None,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is None
+
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
         m1 = _make_mapping('m1', 'text', xpath='p[1]')
