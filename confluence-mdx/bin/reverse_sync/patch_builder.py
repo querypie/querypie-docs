@@ -147,7 +147,7 @@ def _find_roundtrip_sidecar_block(
             return xpath_match
 
     # identity fallback: mapping.yaml이 어긋난 경우 hash 기반으로 재탐색
-    # xpath 태그 타입(p, ul, ol, table 등)이 일치하는 경우에만 반환하여 cross-type 오매칭 방지
+    # block family(paragraph/list/table 등)가 일치하는 경우에만 반환하여 cross-type 오매칭 방지
     if identity_block is not None and identity_block.content:
         identity_match = find_sidecar_block_by_identity(
             roundtrip_sidecar.blocks,
@@ -155,13 +155,41 @@ def _find_roundtrip_sidecar_block(
             (identity_block.line_start, identity_block.line_end),
         )
         if identity_match is not None:
-            mapping_tag = mapping.xhtml_xpath.split('[')[0] if mapping else ''
-            identity_tag = identity_match.xhtml_xpath.split('[')[0] if identity_match.xhtml_xpath else ''
-            if mapping_tag == identity_tag:
+            if mapping is not None and _mapping_block_family(mapping) == _xpath_block_family(identity_match.xhtml_xpath):
                 return identity_match
 
     # xpath 결과를 마지막 fallback으로 반환 (hash 불일치라도 없는 것보다 나음)
     return xpath_match
+
+
+def _xpath_root_tag(xpath: str) -> str:
+    """Extract the top-level tag portion from an xpath-like storage path."""
+    head = xpath.split("/", 1)[0]
+    return head.split("[", 1)[0]
+
+
+def _xpath_block_family(xpath: str) -> str:
+    """xpath의 최상위 태그를 block family 문자열로 변환한다.
+
+    알 수 없는 태그(pre, blockquote, ac:* 등)는 raw tag를 반환하여
+    cross-type 보호 목적상 보수적으로 동작한다.
+    """
+    root_tag = _xpath_root_tag(xpath)
+    if root_tag == "p":
+        return "paragraph"
+    if root_tag in {"ul", "ol"}:
+        return "list"
+    if root_tag == "table":
+        return "table"
+    if root_tag.startswith("h") and root_tag[1:].isdigit():
+        return "heading"
+    return root_tag
+
+
+def _mapping_block_family(mapping: BlockMapping) -> str:
+    if mapping.type in {"paragraph", "list", "heading", "table"}:
+        return mapping.type
+    return _xpath_block_family(mapping.xhtml_xpath)
 
 
 def _flush_containing_changes(
@@ -370,9 +398,20 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
+            # roundtrip sidecar가 있지만 이 list에 매칭되는 block이 없을 때
+            # (cross-type 거부 또는 mapping drift) clean list는 whole-fragment 재생성으로 처리
+            should_replace_clean_list = (
+                mapping is not None
+                and not _contains_preserved_anchor_markup(mapping.xhtml_text)
+                and roundtrip_sidecar is not None
+                and list_sidecar is None
+            )
             if (mapping is not None
                     and not _contains_preserved_anchor_markup(mapping.xhtml_text)
-                    and sidecar_block_requires_reconstruction(list_sidecar)):
+                    and (
+                        sidecar_block_requires_reconstruction(list_sidecar)
+                        or should_replace_clean_list
+                    )):
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(

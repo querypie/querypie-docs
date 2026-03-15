@@ -59,6 +59,45 @@ def _mdx_block_to_parser_block(mdx_block: MdxBlock) -> Block:
     return Block(type=block_type, content=mdx_block.content)
 
 
+def _extract_frontmatter_title(mdx_blocks: List[MdxBlock]) -> str:
+    for block in mdx_blocks:
+        if block.type != "frontmatter":
+            continue
+        for raw_line in block.content.splitlines():
+            line = raw_line.strip()
+            if not line.startswith("title:"):
+                continue
+            value = line.split(":", 1)[1].strip()
+            if (
+                len(value) >= 2
+                and value[0] == value[-1]
+                and value[0] in {"'", '"'}
+            ):
+                return value[1:-1]
+            return value
+    return ""
+
+
+def _content_blocks_for_splice(mdx_text: str) -> List[MdxBlock]:
+    mdx_blocks = parse_mdx_blocks(mdx_text)
+    content_blocks = [b for b in mdx_blocks if b.type not in _NON_CONTENT]
+
+    if not content_blocks:
+        return content_blocks
+
+    frontmatter_title = _extract_frontmatter_title(mdx_blocks)
+    first_block = content_blocks[0]
+    if (
+        first_block.type == "heading"
+        and frontmatter_title
+        and first_block.content.startswith("# ")
+        and first_block.content[2:].strip() == frontmatter_title
+    ):
+        return content_blocks[1:]
+
+    return content_blocks
+
+
 def splice_rehydrate_xhtml(
     mdx_text: str,
     sidecar: RoundtripSidecar,
@@ -71,8 +110,27 @@ def splice_rehydrate_xhtml(
     - 해시가 일치하는 블록: 원본 xhtml_fragment 사용
     - 해시가 불일치하는 블록: emitter로 재생성
     """
-    mdx_blocks = parse_mdx_blocks(mdx_text)
-    content_blocks = [b for b in mdx_blocks if b.type not in _NON_CONTENT]
+    if sidecar_matches_mdx(mdx_text, sidecar):
+        details: List[dict] = []
+        matched_count = 0
+        for i, sb in enumerate(sidecar.blocks):
+            method = "sidecar" if sb.mdx_content_hash else "preserved"
+            if method == "sidecar":
+                matched_count += 1
+            details.append({
+                "index": i,
+                "method": method,
+                "xpath": sb.xhtml_xpath,
+            })
+        return SpliceResult(
+            xhtml=sidecar.reassemble_xhtml(),
+            matched_count=matched_count,
+            emitted_count=0,
+            total_blocks=len(sidecar.blocks),
+            block_details=details,
+        )
+
+    content_blocks = _content_blocks_for_splice(mdx_text)
 
     matched_count = 0
     emitted_count = 0

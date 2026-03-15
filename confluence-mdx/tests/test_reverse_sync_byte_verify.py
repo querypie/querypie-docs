@@ -87,6 +87,23 @@ def test_verify_case_dir_splice_fails_when_sidecar_missing(tmp_path):
     assert result.reason.startswith("sidecar_missing")
 
 
+def test_verify_case_dir_splice_skips_page_title_heading(tmp_path):
+    case = tmp_path / "100"
+    case.mkdir()
+    xhtml = "<h2>Overview</h2>\n<p>Body</p>"
+    mdx = "---\ntitle: T\n---\n\n# T\n\n### Overview\n\nBody\n"
+    (case / "expected.mdx").write_text(mdx, encoding="utf-8")
+    (case / "page.xhtml").write_text(xhtml, encoding="utf-8")
+    write_sidecar(build_sidecar(xhtml, mdx, page_id="100"), case / "expected.roundtrip.json")
+
+    result = verify_case_dir_splice(case)
+
+    assert result.passed is True
+    assert result.reason == "byte_equal_splice"
+    assert result.matched_count == 2
+    assert result.emitted_count == 0
+
+
 class TestSpliceRealTestcases:
     """실제 testcase에 대한 forced-splice byte-equal 검증."""
 

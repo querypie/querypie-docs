@@ -12,9 +12,11 @@ from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
     SidecarEntry,
+    sha256_text,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
+    _find_roundtrip_sidecar_block,
     _flush_containing_changes,
     _resolve_mapping_for_change,
     build_patches,
@@ -420,6 +422,121 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert patches[0].get('action', 'modify') == 'modify'
         assert 'new_element_xhtml' not in patches[0]
+
+    def test_roundtrip_identity_fallback_rejects_cross_type_sidecar_block(self):
+        mapping = _make_mapping('m1', 'same text', xpath='p[6]')
+        change = _make_change(0, 'same text', 'updated text')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'table[2]',
+                '<table><tr><td>same text</td></tr></table>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            mapping,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is None
+
+    def test_list_roundtrip_identity_fallback_rejects_cross_type_mapping(self):
+        m1 = _make_mapping('m1', 'same text', xpath='ul[1]', type_='list')
+        m1.xhtml_text = '<ul><li><p>same text</p></li></ul>'
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
+        change = _make_change(0, '- same text', '- updated text', type_='list')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'table[2]',
+                '<table><tr><td>same text</td></tr></table>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+
+    def test_roundtrip_identity_fallback_accepts_ul_ol_same_list_family(self):
+        mapping = _make_mapping('m1', 'same text', xpath='ul[1]', type_='list')
+        change = _make_change(0, '- same text', '- updated text', type_='list')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'ol[2]',
+                '<ol><li><p>same text</p></li></ol>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            mapping,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is not None
+        assert sidecar_block.xhtml_xpath == 'ol[2]'
+
+    def test_roundtrip_identity_fallback_accepts_heading_family(self):
+        mapping = _make_mapping('m1', 'same heading', xpath='h2[1]', type_='heading')
+        change = _make_change(0, '## same heading', '## updated heading', type_='heading')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'h3[4]',
+                '<h3>same heading</h3>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            mapping,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is not None
+        assert sidecar_block.xhtml_xpath == 'h3[4]'
+
+    def test_roundtrip_identity_fallback_does_not_guess_without_mapping(self):
+        change = _make_change(0, '- same text', '- updated text', type_='list')
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'ol[2]',
+                '<ol><li><p>same text</p></li></ol>',
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            )
+        ])
+
+        sidecar_block = _find_roundtrip_sidecar_block(
+            change,
+            None,
+            roundtrip_sidecar,
+            {block.xhtml_xpath: block for block in roundtrip_sidecar.blocks},
+        )
+
+        assert sidecar_block is None
 
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):

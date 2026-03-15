@@ -114,6 +114,17 @@ class TestSpliceRehydrateXhtml:
         result = splice_rehydrate_xhtml(mdx, sidecar)
         assert result.xhtml == xhtml
 
+    def test_skips_page_title_heading_that_matches_frontmatter(self):
+        xhtml = "<h2>Overview</h2>\n<p>Body</p>"
+        mdx = "---\ntitle: T\n---\n\n# T\n\n### Overview\n\nBody\n"
+        sidecar = build_sidecar(xhtml, mdx)
+
+        result = splice_rehydrate_xhtml(mdx, sidecar)
+
+        assert result.xhtml == xhtml
+        assert result.matched_count == 2
+        assert result.emitted_count == 0
+
 
 class TestSpliceRealTestcases:
     """실제 testcase에 대한 forced-splice byte-equal 검증."""
