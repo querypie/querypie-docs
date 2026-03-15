@@ -1,6 +1,8 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 from typing import Dict, List, Optional
 
+from mdx_to_storage.emitter import emit_block
+from mdx_to_storage.parser import parse_mdx
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
 from reverse_sync.mapping_recorder import BlockMapping
 from mdx_to_storage.parser import Block as MdxBlock
@@ -20,6 +22,61 @@ from reverse_sync.table_patcher import (
     normalize_table_row,
     is_markdown_table,
 )
+
+
+_CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
+
+
+def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
+    """paragraph 내 preservation unit이 있으면 clean block이 아니다."""
+    return "<ac:" in xhtml_text or "<ri:" in xhtml_text
+
+
+def _is_clean_block(change: BlockChange, mapping: Optional[BlockMapping]) -> bool:
+    """Phase 2 whole-fragment replacement 대상인지 판별한다."""
+    if mapping is None:
+        return False
+
+    block = change.new_block or change.old_block
+    has_preserved_anchor = _contains_preserved_anchor_markup(mapping.xhtml_text)
+    if block.type in _CLEAN_BLOCK_TYPES:
+        return True
+
+    if block.type == "html_block" and block.content.lstrip().startswith("<table"):
+        return not has_preserved_anchor
+
+    if is_markdown_table(change.old_block.content):
+        return not has_preserved_anchor
+
+    return (
+        block.type == "paragraph"
+        and not has_preserved_anchor
+    )
+
+
+def _emit_replacement_fragment(block: MdxBlock) -> str:
+    """Block content를 현재 forward emitter 기준 fragment로 변환한다."""
+    parsed_blocks = [parsed for parsed in parse_mdx(block.content) if parsed.type != "empty"]
+    if len(parsed_blocks) == 1:
+        return emit_block(parsed_blocks[0])
+    return mdx_block_to_xhtml_element(block)
+
+
+def _build_replace_fragment_patch(
+    mapping: BlockMapping,
+    new_block: MdxBlock,
+    mapping_lost_info: Optional[dict] = None,
+) -> Dict[str, str]:
+    """whole-fragment replacement patch를 생성한다."""
+    new_element = _emit_replacement_fragment(new_block)
+    block_lost = (mapping_lost_info or {}).get(mapping.block_id, {})
+    if block_lost:
+        new_element = apply_lost_info(new_element, block_lost)
+    return {
+        "action": "replace_fragment",
+        "xhtml_xpath": mapping.xhtml_xpath,
+        "new_element_xhtml": new_element,
+    }
 
 
 def _flush_containing_changes(
@@ -84,6 +141,9 @@ def _resolve_mapping_for_change(
         if change.old_block.type == 'list':
             return ('list', mapping)
         return ('containing', mapping)
+
+    if _is_clean_block(change, mapping):
+        return ('replace_fragment', mapping)
 
     # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
     if change.old_block.type == 'list':
@@ -154,6 +214,25 @@ def build_patches(
             idx, mdx_to_sidecar, xpath_to_mapping)
         if mapping is None:
             continue
+        if _is_clean_block(
+            BlockChange(
+                index=idx,
+                change_type='modified',
+                old_block=del_change.old_block,
+                new_block=add_change.new_block,
+            ),
+            mapping,
+        ):
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    add_change.new_block,
+                    mapping_lost_info,
+                )
+            )
+            _paired_indices.add(idx)
+            _mark_used(mapping.block_id, mapping)
+            continue
         old_plain = normalize_mdx_to_plain(
             del_change.old_block.content, del_change.old_block.type)
         new_plain = normalize_mdx_to_plain(
@@ -200,6 +279,17 @@ def build_patches(
             mdx_to_sidecar, xpath_to_mapping)
 
         if strategy == 'skip':
+            continue
+
+        if strategy == 'replace_fragment':
+            _mark_used(mapping.block_id, mapping)
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    change.new_block,
+                    mapping_lost_info,
+                )
+            )
             continue
 
         if strategy == 'list':

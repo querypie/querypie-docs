@@ -567,8 +567,8 @@ def testbuild_patches_index_mapping():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'p[1]'
-    assert patches[0]['old_plain_text'] == 'Old text.'
-    assert patches[0]['new_inner_xhtml'] == 'New text.'
+    assert patches[0]['action'] == 'replace_fragment'
+    assert patches[0]['new_element_xhtml'] == '<p>New text.</p>'
 
 
 def testbuild_patches_skips_non_content():
@@ -816,12 +816,9 @@ def testbuild_patches_table_block():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
-    assert patches[0]['old_plain_text'] == 'Databased Access Control'
-    # bold content가 변경되어 has_inline_format_change()가 True →
-    # new_inner_xhtml 패치가 생성됨 (outer <table> 없이 innerHTML만 포함)
-    assert 'new_inner_xhtml' in patches[0]
-    assert '<strong>Database Access Control</strong>' in patches[0]['new_inner_xhtml']
-    assert not patches[0]['new_inner_xhtml'].startswith('<table')
+    assert patches[0]['action'] == 'replace_fragment'
+    assert '<strong>Database Access Control</strong>' in patches[0]['new_element_xhtml']
+    assert patches[0]['new_element_xhtml'].startswith('<table')
 
 
 # --- sidecar 전용 매칭 코드 경로 테스트 ---

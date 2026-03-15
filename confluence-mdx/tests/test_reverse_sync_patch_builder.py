@@ -281,8 +281,7 @@ class TestBuildPatches:
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'p[1]'
 
-    # 직접 매칭 + text_transfer 사용
-    def test_direct_match_with_transfer(self):
+    def test_clean_paragraph_generates_replace_fragment(self):
         m1 = _make_mapping('m1', 'hello  world', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -295,12 +294,16 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        # R1: 항상 inner XHTML 재생성
-        assert 'earth' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
-    # 직접 매칭 + text_transfer 미사용 (텍스트 동일)
-    def test_direct_match_no_transfer(self):
-        m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
+    def test_paragraph_with_preserved_anchor_uses_legacy_modify_patch(self):
+        m1 = _make_mapping(
+            'm1',
+            'hello world',
+            xpath='p[1]',
+        )
+        m1.xhtml_text = '<p>hello <ac:link><ri:page ri:content-title="world" /></ac:link></p>'
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
@@ -312,7 +315,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0]['new_inner_xhtml'] == 'hello earth'
+        assert patches[0].get('action', 'modify') == 'modify'
+        assert patches[0]['new_plain_text'] == 'hello earth'
 
     # NON_CONTENT_TYPES 스킵
     def test_skips_non_content_types(self):
@@ -331,9 +335,8 @@ class TestBuildPatches:
 
         assert patches == []
 
-    # Inline format 변경 → new_inner_xhtml 패치 생성
-    def test_direct_inline_code_added_generates_inner_xhtml(self):
-        """paragraph에서 backtick이 추가되면 new_inner_xhtml 패치를 생성한다."""
+    def test_direct_inline_code_added_generates_replace_fragment(self):
+        """simple paragraph는 inline formatting 변화도 fragment replacement를 사용한다."""
         m1 = _make_mapping('m1', 'QueryPie는 https://example.com/과 같은 URL', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -350,12 +353,12 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<code>https://example.com/</code>' in patches[0]['new_inner_xhtml']
-        assert 'new_plain_text' not in patches[0]
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<code>https://example.com/</code>' in patches[0]['new_element_xhtml']
+        assert patches[0]['new_element_xhtml'].startswith('<p>')
 
-    def test_direct_text_only_change_uses_inner_xhtml_patch(self):
-        """R1: 텍스트만 바뀌어도 inner XHTML 재생성 패치를 사용한다."""
+    def test_direct_text_only_change_uses_replace_fragment(self):
+        """Phase 2: simple paragraph의 기본 경로는 whole-fragment replacement다."""
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -368,8 +371,8 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert 'new_plain_text' not in patches[0]
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
     # sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_multiple_changes_grouped_to_containing(self):
@@ -391,7 +394,7 @@ class TestBuildPatches:
         assert len(patches) == 0
 
     def test_direct_heading_inline_code_added(self):
-        """heading에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
+        """heading은 fragment replacement를 사용한다."""
         m1 = _make_mapping('m1', 'kubectl 명령어 가이드', xpath='h2[1]',
                            type_='heading')
         mappings = [m1]
@@ -399,8 +402,8 @@ class TestBuildPatches:
 
         change = _make_change(
             0,
-            '## kubectl 명령어 가이드\n',
-            '## `kubectl` 명령어 가이드\n',
+            '### kubectl 명령어 가이드\n',
+            '### `kubectl` 명령어 가이드\n',
             type_='heading',
         )
         mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
@@ -410,11 +413,11 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<h2><code>kubectl</code> 명령어 가이드</h2>'
 
-    def test_direct_bold_added_generates_inner_xhtml(self):
-        """paragraph에서 bold가 추가되면 new_inner_xhtml 패치를 생성한다."""
+    def test_direct_bold_added_generates_replace_fragment(self):
+        """simple paragraph에서 bold가 추가되면 fragment replacement를 생성한다."""
         m1 = _make_mapping('m1', '중요한 설정입니다', xpath='p[1]')
         mappings = [m1]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
@@ -431,8 +434,30 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<strong>중요한</strong>' in patches[0]['new_inner_xhtml']
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['new_element_xhtml'] == '<p><strong>중요한</strong> 설정입니다</p>'
+
+    def test_markdown_table_change_generates_replace_fragment(self):
+        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
+                           type_='table')
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
+            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        )
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<table>' in patches[0]['new_element_xhtml']
+        assert 'new_val' in patches[0]['new_element_xhtml']
 
 
 # ── build_table_row_patches ──
@@ -1048,7 +1073,7 @@ class TestResolveMappingForChange:
         change = _make_change(0, 'hello', 'world')
         strategy, mapping = _resolve_mapping_for_change(
             change, self._old_plain(change), **ctx)
-        assert strategy == 'direct'
+        assert strategy == 'replace_fragment'
         assert mapping.block_id == 'b1'
 
     def test_sidecar_match_with_children_returns_containing(self):

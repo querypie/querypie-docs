@@ -139,7 +139,52 @@ def test_compound_xpath_adf_extension():
     assert 'Second para.' in result
 
 
-# --- Phase 2: delete/insert 테스트 ---
+# --- Phase 2: replace_fragment / delete / insert 테스트 ---
+
+
+class TestReplaceFragmentPatch:
+    def test_replace_simple_paragraph(self):
+        xhtml = '<p>Old text</p><p>Keep</p>'
+        patches = [{
+            'action': 'replace_fragment',
+            'xhtml_xpath': 'p[1]',
+            'new_element_xhtml': '<p><strong>New</strong> text</p>',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p><strong>New</strong> text</p>' in result
+        assert '<p>Keep</p>' in result
+        assert 'Old text' not in result
+
+    def test_replace_code_macro_restores_cdata(self):
+        xhtml = '<ac:structured-macro ac:name="code"><ac:plain-text-body><![CDATA[old]]></ac:plain-text-body></ac:structured-macro>'
+        patches = [{
+            'action': 'replace_fragment',
+            'xhtml_xpath': 'ac:structured-macro[1]',
+            'new_element_xhtml': (
+                '<ac:structured-macro ac:name="code">'
+                '<ac:plain-text-body>SELECT * FROM test;</ac:plain-text-body>'
+                '</ac:structured-macro>'
+            ),
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert '<![CDATA[SELECT * FROM test;]]>' in result
+
+    def test_replace_fragment_preserves_inserted_siblings(self):
+        xhtml = '<h1>Title</h1><p>Old text</p>'
+        patches = [
+            {
+                'action': 'insert',
+                'after_xpath': 'h1[1]',
+                'new_element_xhtml': '<p>Inserted</p>',
+            },
+            {
+                'action': 'replace_fragment',
+                'xhtml_xpath': 'h1[1]',
+                'new_element_xhtml': '<h1>Renamed</h1>',
+            },
+        ]
+        result = patch_xhtml(xhtml, patches)
+        assert '<h1>Renamed</h1><p>Inserted</p><p>Old text</p>' in result
 
 
 class TestDeletePatch:
