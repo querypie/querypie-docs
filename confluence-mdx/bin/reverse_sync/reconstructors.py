@@ -16,7 +16,12 @@ if TYPE_CHECKING:
     from reverse_sync.sidecar import SidecarBlock
 
 
-def map_anchor_offset(old_plain: str, new_plain: str, old_offset: int) -> int:
+def map_anchor_offset(
+    old_plain: str,
+    new_plain: str,
+    old_offset: int,
+    affinity: str = 'before',
+) -> int:
     """old_plain에서의 anchor offset을 new_plain 기준 offset으로 변환한다.
 
     difflib SequenceMatcher opcode를 사용해 old 좌표계를 new 좌표계로 매핑한다.
@@ -25,7 +30,7 @@ def map_anchor_offset(old_plain: str, new_plain: str, old_offset: int) -> int:
     anchor 앞쪽 텍스트에 적용된 변경만 offset에 반영한다:
     - equal: 그대로 유지
     - replace: new 길이로 비례 매핑
-    - insert (i1==i2 <= old_offset): new 텍스트 길이를 더함
+    - insert at boundary: affinity='before'이면 삽입 포함, 'after'이면 제외
     - delete: 삭제된 길이만큼 뺌
     """
     matcher = difflib.SequenceMatcher(None, old_plain, new_plain, autojunk=False)
@@ -57,7 +62,10 @@ def map_anchor_offset(old_plain: str, new_plain: str, old_offset: int) -> int:
                 consumed_old += old_take
 
         elif tag == 'insert':
-            if i1 <= old_offset:
+            # 경계(i1 == old_offset)에서 affinity로 배치 방향 결정:
+            # 'before': anchor가 삽입된 텍스트 뒤에 위치 (삽입 포함)
+            # 'after': anchor가 삽입된 텍스트 앞에 위치 (삽입 제외)
+            if i1 < old_offset or (i1 == old_offset and affinity == 'before'):
                 new_offset += j2 - j1
 
     if consumed_old < old_offset:
