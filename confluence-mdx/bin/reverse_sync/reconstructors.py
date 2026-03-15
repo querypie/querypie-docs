@@ -71,50 +71,48 @@ def insert_anchor_at_offset(p_element: Tag, offset: int, anchor_xhtml: str) -> N
     """
     anchor_soup = BeautifulSoup(anchor_xhtml, 'html.parser')
     anchor_nodes = list(anchor_soup.children)
+    if not anchor_nodes:
+        return
 
     remaining = offset
     children = list(p_element.children)
 
-    for i, child in enumerate(children):
+    for child in children:
         if isinstance(child, NavigableString):
             text_len = len(str(child))
             if remaining <= text_len:
                 text = str(child)
-                before = text[:remaining]
-                after = text[remaining:]
+                before_text = text[:remaining]
+                after_text = text[remaining:]
 
-                # Replace original text node with the "before" part
-                child.replace_with(NavigableString(before))
+                # 직접 참조를 유지하여 before_node 뒤에 순서대로 삽입
+                before_node = NavigableString(before_text)
+                child.replace_with(before_node)
 
-                ref_node = p_element.find(string=before) if before else None
-
-                for anchor_node in reversed(anchor_nodes):
+                pivot = before_node
+                for anchor_node in anchor_nodes:
                     cloned = BeautifulSoup(str(anchor_node), 'html.parser')
                     for n in list(cloned.children):
-                        if ref_node is not None:
-                            ref_node.insert_after(n.extract())
-                        else:
-                            p_element.insert(0, n.extract())
+                        extracted = n.extract()
+                        pivot.insert_after(extracted)
+                        pivot = extracted
 
-                if after:
-                    anchor_node_last = p_element.find('ac:image')
-                    if anchor_node_last:
-                        anchor_node_last.insert_after(NavigableString(after))
-                    else:
-                        p_element.append(NavigableString(after))
+                if after_text:
+                    pivot.insert_after(NavigableString(after_text))
                 return
             else:
                 remaining -= text_len
         elif isinstance(child, Tag):
-            if child.name == 'ac:image':
-                pass
-            else:
+            if child.name != 'ac:image':
                 child_text = extract_plain_text(str(child))
                 if remaining <= len(child_text):
-                    for anchor_node in reversed(anchor_nodes):
+                    pivot = child
+                    for anchor_node in anchor_nodes:
                         cloned = BeautifulSoup(str(anchor_node), 'html.parser')
                         for n in list(cloned.children):
-                            child.insert_after(n.extract())
+                            extracted = n.extract()
+                            pivot.insert_after(extracted)
+                            pivot = extracted
                     return
                 remaining -= len(child_text)
 
