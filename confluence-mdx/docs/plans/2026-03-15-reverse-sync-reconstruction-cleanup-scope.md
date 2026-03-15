@@ -1,8 +1,9 @@
 # Reverse Sync 재구성 후 삭제 대상 범위
 
 > 작성일: 2026-03-15
+> 갱신일: 2026-03-16
 > 기준 브랜치: `main`
-> 기준 커밋: `9e0d43b91c2e47088274e13e82a5c2750e1529f9`
+> 기준 커밋: `e40877afec06306bec99b86f15f492f88177c424`
 > 선행 문서:
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design.md`
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
