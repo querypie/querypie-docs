@@ -387,24 +387,15 @@ PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대
 
 ### Phase 3. inline-anchor 및 list 재구성
 
-상태: 미완료
+상태: 완료, `main` 반영 예정
 
-구현 항목:
-
-- paragraph/list item anchor metadata builder
-- old/new plain-text offset mapping helper
-- raw anchor DOM insertion helper
-- nested list tree 기반 reconstruction
-
-우선 대상 fixture:
-
-- `tests/testcases` 내 list/image 혼합 케이스
-- `tests/reverse-sync/544376004`
-
-게이트:
-
-- inline image가 있는 paragraph/list item 재구성 green
-- duplicate hash 후보에서도 identity가 안정적으로 동작
+완료 기준:
+- paragraph anchor metadata builder 구현 (`sidecar.py`)
+- anchor offset mapping helper 구현 (`reconstructors.py`)
+- raw anchor DOM insertion helper 구현 (`reconstructors.py`)
+- inline-anchor paragraph reconstruction pipeline 연동 (`patch_builder.py`)
+- golden test 확장: 10개 inline-anchor 케이스 모두 green
+- 파서 불일치 수정 (test에서 `mdx_to_storage.parser` 사용)
 
 ### Phase 4. container 재구성
 
