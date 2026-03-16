@@ -15,8 +15,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is an info panel.",
+        "children": [
+          {
+            "xpath": "macro-info[1]/p[1]",
+            "fragment": "<p>This is an info panel.</p>",
+            "plain_text": "This is an info panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[1]/p[1]"
         ]
@@ -48,8 +56,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is a note panel.",
+        "children": [
+          {
+            "xpath": "ac:adf-extension[1]/p[1]",
+            "fragment": "<p>This is a note panel.</p>",
+            "plain_text": "This is a note panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "ac:adf-extension[1]/p[1]"
         ]
@@ -81,8 +97,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is an error panel.",
+        "children": [
+          {
+            "xpath": "macro-warning[1]/p[1]",
+            "fragment": "<p>This is an error panel.</p>",
+            "plain_text": "This is an error panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-warning[1]/p[1]"
         ]
@@ -114,8 +138,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is a success panel.",
+        "children": [
+          {
+            "xpath": "macro-tip[1]/p[1]",
+            "fragment": "<p>This is a success panel.</p>",
+            "plain_text": "This is a success panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-tip[1]/p[1]"
         ]
@@ -147,8 +179,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is a warning panel.",
+        "children": [
+          {
+            "xpath": "macro-note[1]/p[1]",
+            "fragment": "<p>This is a warning panel.</p>",
+            "plain_text": "This is a warning panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-note[1]/p[1]"
         ]
@@ -180,8 +220,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "This is a custom panel.",
+        "children": [
+          {
+            "xpath": "macro-panel[1]/p[1]",
+            "fragment": "<p>This is a custom panel.</p>",
+            "plain_text": "This is a custom panel.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-panel[1]/p[1]"
         ]

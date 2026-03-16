@@ -46,8 +46,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.",
+        "children": [
+          {
+            "xpath": "macro-note[1]/p[1]",
+            "fragment": "<p>Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.</p>",
+            "plain_text": "Audit Log Export 기능 추가에 따라, 각 로그 화면에서 제공되던 ‘Excel File Download’ 버튼은 QueryPie v9.15.0부터 지원이 중단되었습니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-note[1]/p[1]"
         ]
@@ -111,7 +119,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Administrator > Audit > General > Audit Log Export"
+        "old_plain_text": ""
       }
     },
     {
@@ -190,7 +198,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Administrator > Audit > General > Audit Log Export > Create New Task"
+        "old_plain_text": ""
       }
     },
     {
@@ -221,8 +229,22 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "유의 사항 당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.",
+        "children": [
+          {
+            "xpath": "macro-info[1]/p[1]",
+            "fragment": "<p><strong>유의 사항</strong></p>",
+            "plain_text": "유의 사항",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[1]/p[2]",
+            "fragment": "<p>당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.</p>",
+            "plain_text": "당일 날짜를 선택하여 로그를 추출하는 경우, 실시간으로 데이터가 쌓이기 때문에 Preview 시점의 결과와 실제 Create를 통해 생성된 파일의 내용이 다를 수 있습니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[1]/p[1]",
           "macro-info[1]/p[2]"
@@ -240,8 +262,142 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
-        "old_plain_text": "필터 표현식 (1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다. (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다. - Number Type 지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10` - String Type 지원하는 표현식 : == (equals), != (not equals), contains예 : x == 'abc', x != 'abc', contains(x, 'ab') - Boolean Type 지원하는 표현식 : == (equals), != (not equals), && (and), || (or)예 : x == `true`, x && y, (x > `0`) && (y == `0`) - Array Type 예 : x[? @ == 'value'], list[? @ > `10`] (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다. - AND 조건 : && 연산자를 활용합니다. - OR 조건 : || 연산자를 활용합니다. - 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다. (4) 예시 - Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION' - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR' - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName == 'database1' || connectionName == 'database2' - DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'",
+        "kind": "container",
+        "old_plain_text": "필터 표현식 (1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다. (2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다. - Number Type 지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10` - String Type 지원하는 표현식 :  == (equals), != (not equals), contains예 : x == 'abc', x != 'abc', contains(x, 'ab') - Boolean Type 지원하는 표현식 : == (equals), != (not equals), && (and), || (or)예 : x == `true`, x && y, (x > `0`) && (y == `0`) - Array Type 예 : x[? @ == 'value'], list[? @ > `10`] (3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다. - AND 조건 : && 연산자를 활용합니다. - OR 조건 : || 연산자를 활용합니다. - 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다. (4) 예시 - Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION' - Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR' - DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName == 'database1' || connectionName == 'database2' - DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'",
+        "children": [
+          {
+            "xpath": "ac:adf-extension[1]/p[1]",
+            "fragment": "<p><strong>필터 표현식</strong></p>",
+            "plain_text": "필터 표현식",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[2]",
+            "fragment": "<p>(1) 필터 표현식을 사용하시기 위해 '<span style=\"color: rgb(76,154,255);\">See Log Template and Description</span>'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.<br/></p>",
+            "plain_text": "(1) 필터 표현식을 사용하시기 위해 'See Log Template and Description'을 통해 로그별 key와 각각의 type 및 포함하는 value를 참고해주시기 바랍니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[3]",
+            "fragment": "<p>(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.</p>",
+            "plain_text": "(2) 사용 가능한 필터 표현식은 데이터의 종류에 따라 아래와 같이 나뉩니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[4]",
+            "fragment": "<p>- Number Type</p>",
+            "plain_text": "- Number Type",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[5]",
+            "fragment": "<p>지원하는 표현식 : <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code><br/>예 : <code>x &gt; `10`</code>, <code>x == `10`</code></p>",
+            "plain_text": "지원하는 표현식 : >, <, <=, >=, ==, !=예 : x > `10`, x == `10`",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[6]",
+            "fragment": "<p>- String Type</p>",
+            "plain_text": "- String Type",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[7]",
+            "fragment": "<p>지원하는 표현식 :  <code>== (equals)</code>, <code>!= (not equals)</code>, <code>contains</code><br/>예 : <code>x == 'abc'</code>, <code>x != 'abc'</code>, <code>contains(x, 'ab')</code></p>",
+            "plain_text": "지원하는 표현식 :  == (equals), != (not equals), contains예 : x == 'abc', x != 'abc', contains(x, 'ab')",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[8]",
+            "fragment": "<p>- Boolean Type</p>",
+            "plain_text": "- Boolean Type",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[9]",
+            "fragment": "<p>지원하는 표현식 : <code>== (equals)</code>, <code>!= (not equals)</code>, <code>&amp;&amp; (and)</code>, <code>|| (or)</code><br/>예 : <code>x == `true`</code>,<code> x &amp;&amp; y</code>, <code>(x &gt; `0`) &amp;&amp; (y == `0`)</code></p>",
+            "plain_text": "지원하는 표현식 : == (equals), != (not equals), && (and), || (or)예 : x == `true`, x && y, (x > `0`) && (y == `0`)",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[10]",
+            "fragment": "<p>- Array Type</p>",
+            "plain_text": "- Array Type",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[11]",
+            "fragment": "<p>예 : <code>x[? @ == 'value']</code>, <code>list[? @ &gt; `10`]</code></p>",
+            "plain_text": "예 : x[? @ == 'value'], list[? @ > `10`]",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[12]",
+            "fragment": "<p></p>",
+            "plain_text": "",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[13]",
+            "fragment": "<p>(3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.</p>",
+            "plain_text": "(3) 여러 조건을 함께 사용하기 위해 아래의 문자를 활용할 수 있습니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[14]",
+            "fragment": "<p>- AND 조건 : <code>&amp;&amp;</code> 연산자를 활용합니다.</p>",
+            "plain_text": "- AND 조건 : && 연산자를 활용합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[15]",
+            "fragment": "<p>- OR 조건 : <code>||</code> 연산자를 활용합니다.</p>",
+            "plain_text": "- OR 조건 : || 연산자를 활용합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[16]",
+            "fragment": "<p>- 복합 조건 : 함께 처리해야하는 조건은 괄호(<code>( )</code>)로 묶어서 활용합니다.</p>",
+            "plain_text": "- 복합 조건 : 함께 처리해야하는 조건은 괄호(( ))로 묶어서 활용합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[17]",
+            "fragment": "<p></p>",
+            "plain_text": "",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[18]",
+            "fragment": "<p>(4) 예시</p>",
+            "plain_text": "(4) 예시",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[19]",
+            "fragment": "<p>- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION'</code></p>",
+            "plain_text": "- Query Audit 중 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION'",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[20]",
+            "fragment": "<p>- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : <code>actionType == 'SQL_EXECUTION' &amp;&amp; executedFrom == 'WEB_EDITOR'</code></p>",
+            "plain_text": "- Query Audit 중 웹에디터에 수행한 쿼리 실행 로그만 추출하려는 경우 필요한 표현식 : actionType == 'SQL_EXECUTION' && executedFrom == 'WEB_EDITOR'",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[21]",
+            "fragment": "<p>- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : <code>connectionName == 'database1' || connectionName == 'database2'</code></p>",
+            "plain_text": "- DB Access History 중 특정 데이터베이스 2종류 대해서만 추출하려는 경우 필요한 표현식 : connectionName == 'database1' || connectionName == 'database2'",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[1]/p[22]",
+            "fragment": "<p>- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : <code>(connectionName == 'database1' || connectionName == 'database2') &amp;&amp; replicationType == 'SINGLE'</code></p>",
+            "plain_text": "- DB Access History 중 특정 데이터베이스 2종류이면서 Replication Type이 SINGLE인 경우에 대해서만 추출하려는 경우 필요한 표현식 : (connectionName == 'database1' || connectionName == 'database2') && replicationType == 'SINGLE'",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "ac:adf-extension[1]/p[1]",
           "ac:adf-extension[1]/p[2]",
@@ -295,8 +451,28 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "Query Audit의 내보내기 파일의 Privilege Type 명시 기준 내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다. 기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이 명시됩니다.",
+        "children": [
+          {
+            "xpath": "ac:adf-extension[2]/p[1]",
+            "fragment": "<p><strong>Query Audit의 내보내기 파일의 Privilege Type 명시 기준</strong></p>",
+            "plain_text": "Query Audit의 내보내기 파일의 Privilege Type 명시 기준",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[2]/p[2]",
+            "fragment": "<p>내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.</p>",
+            "plain_text": "내보내기 파일의 ‘Privilege Type’ 컬럼에는 실행시점에는 어느 권한이 필요했는지가 기록됩니다. 아래와 같이 작동합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[2]/ol[1]",
+            "fragment": "<ol start=\"1\"><li><p>기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.</p></li><li><p>INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. </p></li><li><p>Redis의 경우에는 커맨드명이 명시됩니다.</p></li></ol>",
+            "plain_text": "기본 권한으로 실행되는 명령어(SET, SHOW 등)는 해당 컬럼의 값이 공백입니다.INSERT 등 권한에 따라 수행된 로그에는 SQL Type이 명시됩니다. Redis의 경우에는 커맨드명이 명시됩니다.",
+            "type": "list"
+          }
+        ],
         "child_xpaths": [
           "ac:adf-extension[2]/p[1]",
           "ac:adf-extension[2]/p[2]",
@@ -395,8 +571,28 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "다운로드 파일에 암호 포함하기 다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다. 해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 Export a file with Encryption 옵션을 ‘Required’로 지정해야 합니다.",
+        "children": [
+          {
+            "xpath": "ac:adf-extension[3]/p[1]",
+            "fragment": "<p><strong>다운로드 파일에 암호 포함하기</strong></p>",
+            "plain_text": "다운로드 파일에 암호 포함하기",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[3]/p[2]",
+            "fragment": "<p>다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.</p>",
+            "plain_text": "다운로드 대상 파일은 ‘*.csv 또는 *.json 파일을 압축한 *.zip 파일’입니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "ac:adf-extension[3]/p[3]",
+            "fragment": "<p>해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 <code>Export a file with Encryption</code> 옵션을 ‘Required’로 지정해야 합니다.</p>",
+            "plain_text": "해당 압축 파일에 대한 암호를 지정하기 위해서는 ‘General Setting > Security’ 메뉴에서 Export a file with Encryption 옵션을 ‘Required’로 지정해야 합니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "ac:adf-extension[3]/p[1]",
           "ac:adf-extension[3]/p[2]",
