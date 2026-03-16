@@ -217,6 +217,28 @@ def _flush_containing_changes(
     return patches
 
 
+def _find_best_list_mapping_by_text(
+    old_plain: str,
+    mappings: List[BlockMapping],
+    used_ids: set,
+) -> Optional[BlockMapping]:
+    """old_plain prefix로 미사용 list mapping을 찾는다.
+
+    sidecar lookup이 잘못된 list mapping을 반환했을 때 plain text로 올바른
+    mapping을 복원하기 위한 fallback이다.
+    prefix 40자를 기준으로 xhtml_plain_text를 검색한다.
+    """
+    prefix = old_plain[:40].strip()
+    if not prefix:
+        return None
+    for m in mappings:
+        if m.type != 'list' or m.block_id in used_ids:
+            continue
+        if prefix in m.xhtml_plain_text:
+            return m
+    return None
+
+
 def _resolve_mapping_for_change(
     change: BlockChange,
     old_plain: str,
@@ -391,6 +413,34 @@ def build_patches(
             change, old_plain, mappings, used_ids,
             mdx_to_sidecar, xpath_to_mapping)
 
+        # legacy sidecar mapping이 커버하지 못한 list 블록:
+        # roundtrip sidecar v3 identity로 fallback하여 mapping 복원
+        mapping_via_v3_fallback = False
+        if mapping is None and strategy == 'list' and roundtrip_sidecar is not None:
+            id_block = change.old_block or change.new_block
+            if id_block and id_block.content:
+                fallback_sc = find_sidecar_block_by_identity(
+                    roundtrip_sidecar.blocks,
+                    sha256_text(id_block.content),
+                    (id_block.line_start, id_block.line_end),
+                )
+                if fallback_sc is not None:
+                    resolved = xpath_to_mapping.get(fallback_sc.xhtml_xpath)
+                    if resolved is not None:
+                        mapping = resolved
+                        mapping_via_v3_fallback = True
+
+        # sidecar가 잘못된 list mapping을 반환한 경우 (ac: 포함 + plain text 불일치):
+        # plain text prefix로 올바른 mapping 복원
+        if (strategy == 'list' and mapping is not None
+                and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                and old_plain[:40].strip() not in mapping.xhtml_plain_text):
+            text_fallback = _find_best_list_mapping_by_text(
+                old_plain, mappings, used_ids)
+            if text_fallback is not None:
+                mapping = text_fallback
+                mapping_via_v3_fallback = True
+
         if strategy == 'skip':
             continue
 
@@ -404,12 +454,13 @@ def build_patches(
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
                 and roundtrip_sidecar is not None
-                and list_sidecar is None
+                and (list_sidecar is None or mapping_via_v3_fallback)
             )
             if (mapping is not None
-                    and not _contains_preserved_anchor_markup(mapping.xhtml_text)
                     and (
+                        # anchor case: sidecar anchor metadata가 있으면 ac: 포함 여부 무관
                         sidecar_block_requires_reconstruction(list_sidecar)
+                        # clean case: preserved anchor 없는 clean list
                         or should_replace_clean_list
                     )):
                 _mark_used(mapping.block_id, mapping)

@@ -145,3 +145,27 @@ class TestSimpleModifiedGoldens:
             case['xhtml'], case['original_mdx'], case['improved_mdx']
         )
         assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_544112828_list_change(self):
+        """544112828: list 아이템 텍스트 변경 (여러개→여러 개, 필요시→필요 시).
+
+        legacy sidecar mapping이 index 80(ul[3])을 커버하지 못할 때
+        roundtrip sidecar v3 identity fallback으로 mapping을 복원하고
+        replace_fragment로 처리한다.
+        """
+        case = _load_testcase('544112828')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_544379140_callout_and_paragraph_changes(self):
+        """544379140: paragraph/list/callout/heading 복합 변경 (시 띄어쓰기 등).
+
+        callout 내부 텍스트 변경 (ADF extension panel) + paragraph/heading 변경.
+        """
+        case = _load_testcase('544379140')
+        result = _run_pipeline_with_sidecar(
+            case['xhtml'], case['original_mdx'], case['improved_mdx']
+        )
+        assert normalize_fragment(result) == normalize_fragment(case['expected'])
