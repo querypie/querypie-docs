@@ -203,7 +203,6 @@ def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
 
     return str(soup)
 
-
 # ── container 재구성 헬퍼 ──────────────────────────────────────────────────────
 
 
@@ -379,6 +378,21 @@ def _reconstruct_child_with_anchors(child_frag: str, child_meta: dict) -> str:
     return str(soup)
 
 
+def _find_container_body(root: Tag) -> Optional[Tag]:
+    """Container fragment에서 child slot이 들어가는 body wrapper를 찾는다."""
+    return root.find('ac:rich-text-body') or root.find('ac:adf-content')
+
+
+def _replace_container_body_children(body: Tag, children: list[str]) -> None:
+    """Container body의 직계 child를 새 fragment 목록으로 교체한다."""
+    for child in list(body.contents):
+        child.extract()
+    for fragment in children:
+        fragment_soup = BeautifulSoup(fragment, 'html.parser')
+        for child in list(fragment_soup.contents):
+            body.append(child.extract())
+
+
 def sidecar_block_requires_reconstruction(
     sidecar_block: Optional['SidecarBlock'],
 ) -> bool:
@@ -456,6 +470,7 @@ def reconstruct_container_fragment(
     1. inline markup 보존: 원본 fragment를 template으로 bold·italic·link 유지
     2. anchor 재삽입: ac:image를 offset 매핑으로 복원
     3. outer wrapper 보존: sidecar xhtml_fragment를 template으로 macro 속성 유지
+    anchor가 없는 clean container도 emitted child를 template wrapper 안에 다시 배치한다.
     """
     if sidecar_block is None or sidecar_block.reconstruction is None:
         return new_fragment
@@ -467,11 +482,21 @@ def reconstruct_container_fragment(
 
     # emitted new_fragment에서 body children 추출
     emitted_soup = BeautifulSoup(new_fragment, 'html.parser')
-    emitted_body = emitted_soup.find('ac:rich-text-body') or emitted_soup.find('ac:adf-content')
+    emitted_root = next((child for child in emitted_soup.contents if isinstance(child, Tag)), None)
+    if emitted_root is None:
+        return new_fragment
+    emitted_body = _find_container_body(emitted_root)
     if emitted_body is None:
         return new_fragment
 
-    emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
+    template_fragment = sidecar_block.xhtml_fragment or new_fragment
+    template_soup = BeautifulSoup(template_fragment, 'html.parser')
+    template_root = next((child for child in template_soup.contents if isinstance(child, Tag)), None)
+    if template_root is None:
+        return new_fragment
+    template_body = _find_container_body(template_root)
+    if template_body is None:
+        return new_fragment
 
     # clean container 처리:
     # 1) 단락 병합 (emitted 수 < stored 수): stored body를 template으로 텍스트 재배분
@@ -506,6 +531,7 @@ def reconstruct_container_fragment(
 
     # 각 child 재구성
     rebuilt_fragments = []
+    emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
     for i, child_tag in enumerate(emitted_children):
         if i >= len(children_meta):
             rebuilt_fragments.append(str(child_tag))
@@ -524,6 +550,14 @@ def reconstruct_container_fragment(
         # Step 2: anchor 재삽입
         if has_anchors and child_meta.get('anchors'):
             child_frag = _reconstruct_child_with_anchors(child_frag, child_meta)
+        elif child_meta.get('items'):
+            child_frag = _rebuild_list_fragment(
+                child_frag,
+                {
+                    'old_plain_text': child_meta.get('plain_text', ''),
+                    'items': child_meta.get('items', []),
+                },
+            )
 
         rebuilt_fragments.append(child_frag)
 

@@ -364,6 +364,42 @@ class TestReconstructContainerFragment:
         result = reconstruct_container_fragment(new_frag, None)
         assert result == new_frag
 
+    def test_clean_container_preserves_template_wrapper(self):
+        """clean container도 원본 wrapper 종류는 유지해야 한다."""
+        new_frag = (
+            '<ac:structured-macro ac:name="note">'
+            '<ac:rich-text-body><p>Updated note panel.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='ac:adf-extension[1]',
+            xhtml_fragment=(
+                '<ac:adf-extension><ac:adf-node type="panel">'
+                '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+                '<ac:adf-content><p>This is a note panel.</p></ac:adf-content>'
+                '</ac:adf-node></ac:adf-extension>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'ac:adf-extension[1]/p[1]',
+                        'fragment': '<p>This is a note panel.</p>',
+                        'plain_text': 'This is a note panel.',
+                        'type': 'paragraph',
+                    }
+                ],
+                'child_xpaths': ['ac:adf-extension[1]/p[1]'],
+            },
+        )
+
+        result = reconstruct_container_fragment(new_frag, block)
+
+        assert '<ac:adf-extension>' in result
+        assert 'Updated note panel.' in result
+        assert '<ac:structured-macro ac:name="note">' not in result
+
 
 @pytest.mark.parametrize("page_id", ['544112828', '1454342158', '544379140', 'panels'])
 def test_container_child_fragment_oracle(page_id):
