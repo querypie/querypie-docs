@@ -16,7 +16,10 @@
     "fetch-openapi-spec": "npx tsx scripts/fetch-openapi-spec/index.ts",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "build-doc-search-index": "npx tsx scripts/build-doc-search-index/index.ts",
+    "predev": "npm run build-doc-search-index",
+    "prebuild": "npm run build-doc-search-index"
   },
   "repository": {
     "type": "git",

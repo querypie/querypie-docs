@@ -10,6 +10,7 @@ const SKIP_MIDDLEWARE_URIS = new Map<string, string>([
   ['robots.txt', 'Handled by route handler'],
   ['.well-known', 'Handled by route handler'],
   ['api', 'Handled by API route handler'],
+  ['mcp', 'Handled by MCP route handler'],
   // slugs[0] - Served in public
   ['BingSiteAuth.xml', 'Served in public'],
   ['google7b73baf7a3209e6f.html', 'Served in public'],
