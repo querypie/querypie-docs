@@ -6,7 +6,7 @@ import pytest
 
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
-from reverse_sync.mdx_block_parser import parse_mdx_blocks
+from mdx_to_storage.parser import parse_mdx_blocks
 from reverse_sync.patch_builder import build_patches
 from reverse_sync.sidecar import (
     build_sidecar,
