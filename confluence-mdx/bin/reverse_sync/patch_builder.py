@@ -26,9 +26,6 @@ from reverse_sync.reconstructors import (
     reconstruct_fragment_with_sidecar,
     container_sidecar_requires_reconstruction,
 )
-from reverse_sync.list_patcher import (
-    build_list_item_patches,
-)
 from reverse_sync.table_patcher import (
     is_markdown_table,
 )
@@ -483,13 +480,12 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # roundtrip sidecar가 있지만 이 list에 매칭되는 block이 없을 때
-            # (cross-type 거부 또는 mapping drift) clean list는 whole-fragment 재생성으로 처리
+            # roundtrip sidecar가 있는 clean list는 항상 whole-fragment 재생성으로 처리
+            # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
                 and roundtrip_sidecar is not None
-                and (list_sidecar is None or mapping_via_v3_fallback)
             )
             if (mapping is not None
                     and (
@@ -508,11 +504,7 @@ def build_patches(
                     )
                 )
                 continue
-            patches.extend(
-                build_list_item_patches(
-                    change, mappings, used_ids,
-                    mdx_to_sidecar, xpath_to_mapping, id_to_mapping,
-                    mapping_lost_info=mapping_lost_info))
+            # skip — reconstruction path 없는 list는 패치하지 않는다 (Phase 5 Axis 3)
             continue
 
         if strategy == 'table':
