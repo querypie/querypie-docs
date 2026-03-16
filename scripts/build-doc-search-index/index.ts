@@ -6,6 +6,7 @@ import { extractTableOfContents } from '@/lib/doc-search/normalize-mdx';
 import { buildChunksFromDocument } from './chunker';
 import { inferDocMetadata } from './metadata';
 import { parseMdxDocument } from './mdx-parser';
+import { serializeMiniSearchIndex } from './build-minisearch';
 
 const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
 type SupportedLang = (typeof SUPPORTED_LANGS)[number];
@@ -88,6 +89,7 @@ export function writeDocSearchArtifacts(langs: SupportedLang[] = [...SUPPORTED_L
     const { index, pages } = buildDocSearchArtifacts(lang);
     fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-index.json`), JSON.stringify(index));
     fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-pages.json`), JSON.stringify(pages));
+    fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-minisearch.json`), serializeMiniSearchIndex(index.chunks));
     console.log(`Generated docs search artifacts for lang: ${lang}`);
   }
 }

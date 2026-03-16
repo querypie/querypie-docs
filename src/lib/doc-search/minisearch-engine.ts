@@ -28,18 +28,23 @@ function segmentText(text: string): string[] {
 
 type DocWithHeadingText = DocSearchChunk & { headingText: string };
 
+// loadJSON 시 동일한 옵션을 전달하기 위해 export합니다.
+export const MINISEARCH_LOAD_OPTIONS = {
+  fields: ['title', 'headingText', 'content'] as string[],
+  tokenize: segmentText,
+  processTerm: (term: string) => term.toLowerCase(),
+  searchOptions: {
+    boost: { title: 3, headingText: 2, content: 1 },
+    fuzzy: 0.1,
+    prefix: true,
+  },
+};
+
 export function buildMiniSearchInstance(chunks: DocSearchChunk[]): MiniSearch<DocWithHeadingText> {
   const ms = new MiniSearch<DocWithHeadingText>({
     idField: 'id',
-    fields: ['title', 'headingText', 'content'],
     storeFields: ['id', 'pagePath', 'url', 'title', 'description', 'headingPath', 'content', 'excerpt', 'metadata'],
-    tokenize: segmentText,
-    processTerm: term => term.toLowerCase(),
-    searchOptions: {
-      boost: { title: 3, headingText: 2, content: 1 },
-      fuzzy: 0.1,
-      prefix: true,
-    },
+    ...MINISEARCH_LOAD_OPTIONS,
   });
 
   // headingPath 배열을 단일 문자열 필드로 변환하여 인덱싱
