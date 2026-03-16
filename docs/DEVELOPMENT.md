@@ -27,6 +27,9 @@ npm run build-doc-search-index
 npx tsx scripts/build-doc-search-index/index.ts ko
 ```
 
+> `build-doc-search-index` 실행 시 커스텀 검색 인덱스(`{lang}-index.json`, `{lang}-pages.json`)와
+> MiniSearch BM25+ 인덱스(`{lang}-minisearch.json`)가 함께 생성됩니다.
+
 > `public/_doc-search/`는 `.gitignore`에 포함되어 있으며, 배포 시 `npm run build`(`prebuild` 훅)가 자동으로 생성합니다.
 
 ## 빌드 및 실행
