@@ -48,10 +48,18 @@ export function buildMiniSearchInstance(chunks: DocSearchChunk[]): MiniSearch<Do
   });
 
   // headingPath 배열을 단일 문자열 필드로 변환하여 인덱싱
-  const docs = chunks.map(chunk => ({
-    ...chunk,
-    headingText: chunk.headingPath.join(' '),
-  }));
+  // 동일한 ID를 가진 청크는 제거합니다 (MiniSearch는 중복 ID를 허용하지 않습니다)
+  const seen = new Set<string>();
+  const docs = chunks
+    .filter(chunk => {
+      if (seen.has(chunk.id)) return false;
+      seen.add(chunk.id);
+      return true;
+    })
+    .map(chunk => ({
+      ...chunk,
+      headingText: chunk.headingPath.join(' '),
+    }));
 
   ms.addAll(docs);
   return ms as unknown as MiniSearch<DocSearchChunk>;
