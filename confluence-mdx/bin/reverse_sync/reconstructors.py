@@ -160,6 +160,25 @@ def _find_direct_list_item_paragraph(li: Tag) -> Tag:
     return li
 
 
+def _remove_html_img_if_same_image(p: Tag, anchor_xhtml: str) -> None:
+    """anchor_xhtml이 ac:image인 경우 p 내의 동일 파일명 <img> 태그를 제거한다.
+
+    emit_block이 MDX <img> 태그를 HTML <img>로 변환하지 않고 유지하는 경우,
+    anchor 재삽입 시 ac:image와 중복되지 않도록 기존 <img>를 제거한다.
+    """
+    anchor_soup = BeautifulSoup(anchor_xhtml, 'html.parser')
+    ri_attachment = anchor_soup.find('ri:attachment')
+    if ri_attachment is None:
+        return
+    filename = ri_attachment.get('ri:filename', '')
+    if not filename:
+        return
+    for img in list(p.find_all('img')):
+        src = img.get('src', '')
+        if src and (src.endswith('/' + filename) or src == filename):
+            img.decompose()
+
+
 def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
     """list fragment에 sidecar anchor entries를 경로 기반으로 재주입한다."""
     soup = BeautifulSoup(new_fragment, 'html.parser')
@@ -178,6 +197,7 @@ def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
         p = _find_direct_list_item_paragraph(li)
         new_p_plain = extract_plain_text(str(p))
         new_offset = map_anchor_offset(old_plain, new_p_plain, entry['offset'])
+        _remove_html_img_if_same_image(p, entry['raw_xhtml'])
         insert_anchor_at_offset(p, new_offset, entry['raw_xhtml'])
 
     return str(soup)
@@ -337,6 +357,7 @@ def _reconstruct_child_with_anchors(child_frag: str, child_meta: dict) -> str:
     new_plain = extract_plain_text(child_frag)
     for anchor in reversed(anchors):
         new_offset = map_anchor_offset(old_plain, new_plain, anchor['offset'])
+        _remove_html_img_if_same_image(p, anchor['raw_xhtml'])
         insert_anchor_at_offset(p, new_offset, anchor['raw_xhtml'])
     return str(soup)
 
@@ -504,6 +525,7 @@ def reconstruct_inline_anchor_fragment(
     # offset을 역순으로 처리하여 앞쪽 삽입이 뒤쪽 offset에 영향 미치지 않게 함
     for anchor in reversed(anchors):
         new_offset = map_anchor_offset(old_plain, new_plain, anchor['offset'])
+        _remove_html_img_if_same_image(p, anchor['raw_xhtml'])
         insert_anchor_at_offset(p, new_offset, anchor['raw_xhtml'])
 
     return str(soup)
