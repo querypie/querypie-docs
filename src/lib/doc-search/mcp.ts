@@ -3,8 +3,11 @@ import { getDocPage } from '@/lib/doc-search/get-page';
 import { loadDocSearchArtifact } from '@/lib/doc-search/load-index';
 import { searchDocs } from '@/lib/doc-search/search';
 
-export const MCP_PROTOCOL_VERSION = '2025-06-18';
-export const SUPPORTED_PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2025-11-25'] as const;
+// Versions listed in descending order (newest first).
+// Default is set to the latest supported version per MCP spec:
+// the server should advertise the highest version it supports.
+export const MCP_PROTOCOL_VERSION = '2025-11-25';
+export const SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'] as const;
 
 interface JsonRpcRequest {
   jsonrpc: '2.0';
@@ -40,7 +43,7 @@ function getTools() {
         type: 'object',
         properties: {
           query: { type: 'string', description: 'Natural language or keyword query.' },
-          lang: { type: 'string', enum: ['ko'], default: 'ko' },
+          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'ko' },
           topK: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
           manualType: {
             type: 'string',
@@ -58,7 +61,7 @@ function getTools() {
         type: 'object',
         properties: {
           pagePath: { type: 'string', description: 'Page path without locale prefix.' },
-          lang: { type: 'string', enum: ['ko'], default: 'ko' },
+          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'ko' },
         },
         required: ['pagePath'],
         additionalProperties: false,

@@ -18,7 +18,6 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "build-doc-search-index": "npx tsx scripts/build-doc-search-index/index.ts",
-    "predev": "npm run build-doc-search-index",
     "prebuild": "npm run build-doc-search-index"
   },
   "repository": {
