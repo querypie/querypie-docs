@@ -40,7 +40,7 @@ export const MINISEARCH_LOAD_OPTIONS = {
   },
 };
 
-export function buildMiniSearchInstance(chunks: DocSearchChunk[]): MiniSearch<DocWithHeadingText> {
+export function buildMiniSearchInstance(chunks: DocSearchChunk[]): MiniSearch<DocSearchChunk> {
   const ms = new MiniSearch<DocWithHeadingText>({
     idField: 'id',
     storeFields: ['id', 'pagePath', 'url', 'title', 'description', 'headingPath', 'content', 'excerpt', 'metadata'],
@@ -54,11 +54,11 @@ export function buildMiniSearchInstance(chunks: DocSearchChunk[]): MiniSearch<Do
   }));
 
   ms.addAll(docs);
-  return ms;
+  return ms as unknown as MiniSearch<DocSearchChunk>;
 }
 
 export function searchWithMiniSearch(
-  ms: MiniSearch<DocWithHeadingText>,
+  ms: MiniSearch<DocSearchChunk>,
   params: SearchDocsParams,
 ): SearchEngineResult {
   const { query, topK = 5, manualType } = params;

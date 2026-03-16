@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { DocSearchArtifact, DocSearchPagesArtifact } from '@/lib/doc-search/types';
 import { handleMcpJsonRpc, MCP_PROTOCOL_VERSION } from '@/lib/doc-search/mcp';
+import { buildMiniSearchInstance } from '@/lib/doc-search/minisearch-engine';
 
 const artifact: DocSearchArtifact = {
   version: 1,
@@ -122,5 +123,51 @@ describe('handleMcpJsonRpc', () => {
     );
 
     expect(response.error.code).toBe(-32601);
+  });
+
+  it('calls search_docs with searchEngine=minisearch', async () => {
+    const miniSearchInstance = buildMiniSearchInstance(artifact.chunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 10,
+        method: 'tools/call',
+        params: {
+          name: 'search_docs',
+          arguments: { query: 'Running Queries', topK: 3, searchEngine: 'minisearch' },
+        },
+      },
+      { artifact, pages, miniSearchInstance },
+    );
+
+    expect(response.result).toBeDefined();
+    const content = response.result.structuredContent;
+    expect(content.engine).toBe('minisearch');
+    expect(Array.isArray(content.results)).toBe(true);
+  });
+
+  it('calls search_docs with searchEngine=both', async () => {
+    const miniSearchInstance = buildMiniSearchInstance(artifact.chunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 11,
+        method: 'tools/call',
+        params: {
+          name: 'search_docs',
+          arguments: { query: 'Running Queries', topK: 3, searchEngine: 'both' },
+        },
+      },
+      { artifact, pages, miniSearchInstance },
+    );
+
+    expect(response.result).toBeDefined();
+    const content = response.result.structuredContent;
+    expect(content.custom).toBeDefined();
+    expect(content.minisearch).toBeDefined();
+    expect(content.custom.engine).toBe('custom');
+    expect(content.minisearch.engine).toBe('minisearch');
+    expect(typeof content.custom.durationMs).toBe('number');
+    expect(typeof content.minisearch.durationMs).toBe('number');
   });
 });
