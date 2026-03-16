@@ -7,7 +7,9 @@ import { buildChunksFromDocument } from './chunker';
 import { inferDocMetadata } from './metadata';
 import { parseMdxDocument } from './mdx-parser';
 
-const CONTENT_ROOT = path.join(process.cwd(), 'src', 'content', 'ko');
+const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
+type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+
 const OUTPUT_ROOT = path.join(process.cwd(), 'public', '_doc-search');
 
 function listMdxFiles(dir: string): string[] {
@@ -27,8 +29,9 @@ function toRepoRelative(filePath: string): string {
   return path.relative(process.cwd(), filePath).split(path.sep).join('/');
 }
 
-export function buildDocSearchArtifacts(): { index: DocSearchArtifact; pages: DocSearchPagesArtifact } {
-  const files = listMdxFiles(CONTENT_ROOT);
+export function buildDocSearchArtifacts(lang: SupportedLang): { index: DocSearchArtifact; pages: DocSearchPagesArtifact } {
+  const contentRoot = path.join(process.cwd(), 'src', 'content', lang);
+  const files = listMdxFiles(contentRoot);
   const chunks = [] as DocSearchArtifact['chunks'];
   const pages: Record<string, DocSearchPage> = {};
   const generatedAt = new Date().toISOString();
@@ -36,10 +39,10 @@ export function buildDocSearchArtifacts(): { index: DocSearchArtifact; pages: Do
   for (const file of files) {
     const source = fs.readFileSync(file, 'utf8');
     const relativeFilePath = toRepoRelative(file);
-    const document = parseMdxDocument(source, { filePath: relativeFilePath, lang: 'ko' });
+    const document = parseMdxDocument(source, { filePath: relativeFilePath, lang });
     const metadata = inferDocMetadata({
       filePath: relativeFilePath,
-      lang: 'ko',
+      lang,
       title: document.title,
       description: document.description,
       content: document.content,
@@ -67,26 +70,30 @@ export function buildDocSearchArtifacts(): { index: DocSearchArtifact; pages: Do
     index: {
       version: 1,
       generatedAt,
-      lang: 'ko',
+      lang,
       chunks,
     },
     pages: {
       version: 1,
       generatedAt,
-      lang: 'ko',
+      lang,
       pages,
     },
   };
 }
 
-export function writeDocSearchArtifacts(): void {
+export function writeDocSearchArtifacts(langs: SupportedLang[] = [...SUPPORTED_LANGS]): void {
   ensureOutputDir();
-  const { index, pages } = buildDocSearchArtifacts();
-  fs.writeFileSync(path.join(OUTPUT_ROOT, 'ko-index.json'), JSON.stringify(index));
-  fs.writeFileSync(path.join(OUTPUT_ROOT, 'ko-pages.json'), JSON.stringify(pages));
+  for (const lang of langs) {
+    const { index, pages } = buildDocSearchArtifacts(lang);
+    fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-index.json`), JSON.stringify(index));
+    fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-pages.json`), JSON.stringify(pages));
+    console.log(`Generated docs search artifacts for lang: ${lang}`);
+  }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  writeDocSearchArtifacts();
-  console.log('Generated docs search artifacts');
+  const langArg = process.argv[2] as SupportedLang | undefined;
+  const langs = langArg ? [langArg] : [...SUPPORTED_LANGS];
+  writeDocSearchArtifacts(langs);
 }

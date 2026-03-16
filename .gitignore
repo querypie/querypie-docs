@@ -43,6 +43,7 @@ next-env.d.ts
 .vscode
 .env*.local
 /public/_pagefind
+/public/_doc-search
 /public/sitemap.xml
 /public/*/sitemap.xml
 

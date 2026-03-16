@@ -14,6 +14,21 @@ QueryPie 제품의 Docs를 관리하는 Git Repository입니다.
 npm run dev
 ```
 
+### MCP 문서 검색 인덱스 빌드 (로컬)
+
+`/mcp` 엔드포인트가 사용하는 검색 인덱스(`public/_doc-search/`)는 빌드 시 자동 생성됩니다.
+`npm run dev`에서는 자동 실행되지 않으므로, 처음 실행하거나 콘텐츠가 변경된 경우 아래 명령을 수동으로 실행하세요.
+
+```shell
+# 전체 언어(ko, en, ja) 인덱스 빌드
+npm run build-doc-search-index
+
+# 특정 언어만 빌드 (예: ko)
+npx tsx scripts/build-doc-search-index/index.ts ko
+```
+
+> `public/_doc-search/`는 `.gitignore`에 포함되어 있으며, 배포 시 `npm run build`(`prebuild` 훅)가 자동으로 생성합니다.
+
 ## 빌드 및 실행
 - 빌드 후 실행하면 Production과 마찬가지로 빠릅니다.
 - `http://localhost:3000`

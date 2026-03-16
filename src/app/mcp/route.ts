@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { handleMcpJsonRpc, MCP_PROTOCOL_VERSION, SUPPORTED_PROTOCOL_VERSIONS } from '@/lib/doc-search/mcp';
 
 const MAX_REQUESTS_PER_MINUTE = 120;
+// TODO(#922): This in-memory store is ineffective in serverless environments — each cold start
+// resets the counter and multiple instances each have their own store. Expired entries also
+// accumulate indefinitely. Replace with a distributed KV store (e.g. Upstash) when stricter
+// rate limiting is required. https://github.com/querypie/querypie-docs/issues/922
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 const ALLOWED_CORS_HEADERS = [
   'content-type',
@@ -15,6 +19,9 @@ const ALLOWED_CORS_HEADERS = [
 
 function getClientKey(request: NextRequest): string {
   const forwardedFor = request.headers.get('x-forwarded-for');
+  // NOTE(#922): Clients without x-forwarded-for share the 'unknown' bucket, which can cause
+  // unrelated clients to block each other. Acceptable until a distributed rate limiter is in place.
+  // https://github.com/querypie/querypie-docs/issues/922
   return forwardedFor?.split(',')[0]?.trim() || 'unknown';
 }
 
@@ -50,6 +57,8 @@ function isAllowedOrigin(origin: string, requestHost: string): boolean {
       return true;
     }
 
+    // /mcp is a public API — all HTTPS origins are intentionally allowed so that any
+    // MCP client or web application can call this endpoint without CORS restrictions.
     return originUrl.protocol === 'https:';
   } catch {
     return false;
