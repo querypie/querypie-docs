@@ -540,6 +540,44 @@ class TestContainerPipelineEndToEnd:
         )
         assert 'Updated text' in patched
 
+    def test_adf_panel_with_anchor_preserves_adf_wrapper(self):
+        """ADF panel이 replace_fragment 경로를 타도 ac:adf-extension wrapper를 유지한다."""
+        xhtml = (
+            '<ac:adf-extension><ac:adf-node type="panel">'
+            '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+            '<ac:adf-content>'
+            '<p>Original <ac:image ac:inline="true">'
+            '<ri:attachment ri:filename="sample.png"/>'
+            '</ac:image> note.</p>'
+            '</ac:adf-content>'
+            '</ac:adf-node>'
+            '<ac:adf-fallback><div class="panel"><div class="panelContent">'
+            '<p>Original note.</p>'
+            '</div></div></ac:adf-fallback>'
+            '</ac:adf-extension>'
+        )
+        original_mdx = (
+            'import { Callout } from "nextra/components"\n\n'
+            '<Callout type="important">\n'
+            'Original <img src="/sample.png" alt="sample.png"/> note.\n'
+            '</Callout>\n'
+        )
+        improved_mdx = (
+            'import { Callout } from "nextra/components"\n\n'
+            '<Callout type="important">\n'
+            'Updated <img src="/sample.png" alt="sample.png"/> note.\n'
+            '</Callout>\n'
+        )
+
+        patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
+
+        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert len(replace_patches) == 1
+        assert replace_patches[0]['xhtml_xpath'] == 'ac:adf-extension[1]'
+        assert '<ac:adf-extension>' in patched
+        assert '<ac:structured-macro ac:name="note">' not in patched
+        assert '<ac:image' in patched
+
     def test_clean_callout_structure_change_keeps_emitted_list(self):
         """clean container의 구조 변경은 stored paragraph 템플릿으로 덮어쓰면 안 된다."""
         sidecar_block = SidecarBlock(
