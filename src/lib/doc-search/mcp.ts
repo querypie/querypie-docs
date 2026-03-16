@@ -1,6 +1,9 @@
-import type { DocSearchArtifact, DocSearchPagesArtifact, ManualType } from '@/lib/doc-search/types';
+import type MiniSearch from 'minisearch';
+
+import type { DocSearchArtifact, DocSearchChunk, DocSearchPagesArtifact, ManualType, SearchEngine } from '@/lib/doc-search/types';
 import { getDocPage } from '@/lib/doc-search/get-page';
-import { loadDocSearchArtifact } from '@/lib/doc-search/load-index';
+import { loadDocSearchArtifact, loadMiniSearchIndex } from '@/lib/doc-search/load-index';
+import { searchWithMiniSearch } from '@/lib/doc-search/minisearch-engine';
 import { searchDocs } from '@/lib/doc-search/search';
 
 // Versions listed in descending order (newest first).
@@ -49,6 +52,12 @@ function getTools() {
             type: 'string',
             enum: ['overview', 'user-manual', 'administrator-manual', 'installation', 'release-notes', 'api-reference', 'support', 'unreleased'],
           },
+          searchEngine: {
+            type: 'string',
+            enum: ['custom', 'minisearch', 'both'],
+            default: 'custom',
+            description: 'Search engine to use. "both" returns side-by-side comparison for quality evaluation.',
+          },
         },
         required: ['query'],
         additionalProperties: false,
@@ -81,7 +90,7 @@ function serializeTextContent(payload: unknown) {
 
 export async function handleMcpJsonRpc(
   request: JsonRpcRequest,
-  context?: { artifact?: DocSearchArtifact; pages?: DocSearchPagesArtifact },
+  context?: { artifact?: DocSearchArtifact; pages?: DocSearchPagesArtifact; miniSearchInstance?: MiniSearch<DocSearchChunk> },
 ): Promise<JsonRpcResponse> {
   if (request.jsonrpc !== '2.0') {
     return buildError(request.id, -32600, 'Invalid JSON-RPC version');
@@ -116,7 +125,8 @@ export async function handleMcpJsonRpc(
     case 'tools/call': {
       const toolName = String(request.params?.name || '');
       const args = (request.params?.arguments as Record<string, unknown> | undefined) ?? {};
-      const artifact = context?.artifact ?? loadDocSearchArtifact(String(args.lang || 'ko'));
+      const lang = String(args.lang || 'ko');
+      const artifact = context?.artifact ?? loadDocSearchArtifact(lang);
 
       if (toolName === 'search_docs') {
         const query = String(args.query || '').trim();
@@ -124,12 +134,44 @@ export async function handleMcpJsonRpc(
           return buildError(request.id, -32602, 'search_docs requires a non-empty query');
         }
 
-        const results = searchDocs({
-          artifact,
-          query,
-          topK: typeof args.topK === 'number' ? args.topK : 5,
-          manualType: args.manualType as ManualType | undefined,
-        });
+        const searchEngine = (args.searchEngine as SearchEngine | undefined) ?? 'custom';
+        const topK = typeof args.topK === 'number' ? args.topK : 5;
+        const manualType = args.manualType as ManualType | undefined;
+
+        if (searchEngine === 'both') {
+          const customStart = performance.now();
+          const customResults = searchDocs({ artifact, query, topK, manualType });
+          const customDuration = Math.round((performance.now() - customStart) * 100) / 100;
+
+          // instance 취득(캐시 미스 시 파일 로드 포함)부터 검색 완료까지 전체 시간을 측정합니다.
+          const msStart = performance.now();
+          const ms = context?.miniSearchInstance ?? loadMiniSearchIndex(lang);
+          const msResult = searchWithMiniSearch(ms, { artifact, query, topK, manualType });
+          msResult.durationMs = Math.round((performance.now() - msStart) * 100) / 100;
+
+          const comparison = {
+            custom: { engine: 'custom' as const, results: customResults, durationMs: customDuration },
+            minisearch: msResult,
+          };
+          return buildSuccess(request.id, {
+            content: serializeTextContent(comparison),
+            structuredContent: comparison,
+          });
+        }
+
+        if (searchEngine === 'minisearch') {
+          // instance 취득(캐시 미스 시 파일 로드 포함)부터 검색 완료까지 전체 시간을 측정합니다.
+          const msStart = performance.now();
+          const ms = context?.miniSearchInstance ?? loadMiniSearchIndex(lang);
+          const msResult = searchWithMiniSearch(ms, { artifact, query, topK, manualType });
+          msResult.durationMs = Math.round((performance.now() - msStart) * 100) / 100;
+          return buildSuccess(request.id, {
+            content: serializeTextContent(msResult),
+            structuredContent: msResult,
+          });
+        }
+
+        const results = searchDocs({ artifact, query, topK, manualType });
 
         return buildSuccess(request.id, {
           content: serializeTextContent({ results }),

@@ -59,3 +59,16 @@ export interface SearchDocsParams {
   topK?: number;
   manualType?: ManualType;
 }
+
+export type SearchEngine = 'custom' | 'minisearch' | 'both';
+
+export interface SearchEngineResult {
+  engine: 'custom' | 'minisearch';
+  results: DocSearchChunk[];
+  durationMs: number;
+}
+
+export interface ComparisonResult {
+  custom: SearchEngineResult;
+  minisearch: SearchEngineResult;
+}
