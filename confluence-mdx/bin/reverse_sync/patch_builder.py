@@ -229,6 +229,8 @@ def _flush_containing_changes(
     for bid, (mapping, item_changes) in containing_changes.items():
         xhtml_text = mapping.xhtml_plain_text
         for old_plain, new_plain in item_changes:
+            # Explicit fallback: containing block은 내부 구조 보존이 필요하므로
+            # text_transfer로 plain text만 변경한다 (callout, 중첩 list 등)
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, xhtml_text)
         patches.append({
@@ -404,6 +406,8 @@ def build_patches(
             del_change.old_block.content, del_change.old_block.type)
         new_plain = normalize_mdx_to_plain(
             add_change.new_block.content, add_change.new_block.type)
+        # Explicit fallback: clean/table fragment 교체 불가이면 text_transfer로 전이
+        # (paired delete+add이지만 reconstruction 불가인 경우)
         xhtml_text = transfer_text_changes(
             old_plain, new_plain, mapping.xhtml_plain_text)
         patches.append({
@@ -591,6 +595,8 @@ def build_patches(
         # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
         if ('<ac:link' in mapping.xhtml_text
                 or '<ri:attachment' in mapping.xhtml_text):
+            # Explicit fallback: <ac:link> / <ri:attachment> 포함 블록은
+            # inner XHTML 재생성 시 소실 위험 → text_transfer로 plain text만 변경
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
             patches.append({
