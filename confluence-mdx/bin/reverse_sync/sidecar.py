@@ -482,7 +482,7 @@ def load_sidecar(path: Path) -> RoundtripSidecar:
 # XHTML record_mapping type → 호환 MDX parse_mdx type
 _TYPE_COMPAT: Dict[str, frozenset] = {
     'heading':    frozenset({'heading'}),
-    'paragraph':  frozenset({'paragraph'}),
+    'paragraph':  frozenset({'paragraph', 'list'}),
     'list':       frozenset({'list'}),
     'code':       frozenset({'code_block'}),
     'table':      frozenset({'table', 'html_block'}),
