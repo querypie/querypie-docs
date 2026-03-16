@@ -271,8 +271,6 @@ def build_sidecar(
                         mdx_block = candidate
                         mdx_ptr += 1
                     elif mapping.type == 'heading':
-                        # heading lookahead: 현재 MDX 블록이 heading이 아닌 경우
-                        # content 매칭 heading을 전방 탐색하여 구조 정렬 복원
                         la_ptr = _heading_lookahead(
                             mapping.xhtml_plain_text, mdx_content_indexed, mdx_ptr)
                         if la_ptr is not None:
@@ -484,7 +482,7 @@ def load_sidecar(path: Path) -> RoundtripSidecar:
 # XHTML record_mapping type → 호환 MDX parse_mdx type
 _TYPE_COMPAT: Dict[str, frozenset] = {
     'heading':    frozenset({'heading'}),
-    'paragraph':  frozenset({'paragraph'}),
+    'paragraph':  frozenset({'paragraph', 'list'}),
     'list':       frozenset({'list'}),
     'code':       frozenset({'code_block'}),
     'table':      frozenset({'table', 'html_block'}),
@@ -505,11 +503,6 @@ def _should_skip_xhtml(xm: Any) -> bool:
     return False
 
 
-def _type_compatible(xhtml_type: str, mdx_type: str) -> bool:
-    """XHTML 타입과 MDX 블록 타입이 호환되는지 확인한다."""
-    return mdx_type in _TYPE_COMPAT.get(xhtml_type, frozenset())
-
-
 def _normalize_heading_text(text: str) -> str:
     """heading 텍스트에서 `#` prefix와 앞뒤 공백을 제거한다."""
     return text.lstrip('#').strip()
@@ -526,6 +519,14 @@ def _heading_lookahead(
     XHTML heading이 타입 불일치(MISS)일 때 전방 탐색으로 구조적 정렬을 복원한다.
     두 텍스트 중 하나가 다른 텍스트에 포함(substring)되면 일치로 판단한다.
 
+    ⚠️ TECH DEBT — 반드시 제거해야 할 중대한 부채.
+    `parse_mdx_blocks`가 list item 뒤 빈 줄 없이 이어지는 연속행을 별도 paragraph
+    블록으로 잘못 파싱하여 sidecar two-pointer alignment가 어긋난다.
+    Markdown 규칙상 paragraph 분리는 빈 줄이 있어야 하므로, 빈 줄 없이 이어지는
+    줄은 동일 list 블록의 연속행이다. 올바른 수정은 `parse_mdx_blocks`에서 list item
+    연속행을 같은 블록으로 합치는 것이며, 그러면 이 함수는 불필요해진다.
+    추적 케이스: page 544112828, XHTML p[6] → MDX list(L48) + paragraph(L49) 오분리.
+
     Returns:
         일치하는 MDX block의 포인터 인덱스, 없으면 None
     """
@@ -540,6 +541,12 @@ def _heading_lookahead(
             if xhtml_norm in mdx_norm or mdx_norm in xhtml_norm:
                 return ptr
     return None
+
+
+def _type_compatible(xhtml_type: str, mdx_type: str) -> bool:
+    """XHTML 타입과 MDX 블록 타입이 호환되는지 확인한다."""
+    return mdx_type in _TYPE_COMPAT.get(xhtml_type, frozenset())
+
 
 
 
@@ -747,8 +754,6 @@ def generate_sidecar_mapping(
         mdx_idx, mdx_block = mdx_content_indexed[mdx_ptr]
 
         if not _type_compatible(xm.type, mdx_block.type) and xm.type == 'heading':
-            # heading lookahead: 현재 MDX 블록이 heading이 아닌 경우
-            # content 매칭 heading을 전방 탐색하여 구조 정렬 복원
             la_ptr = _heading_lookahead(xm.xhtml_plain_text, mdx_content_indexed, mdx_ptr)
             if la_ptr is not None:
                 mdx_ptr = la_ptr
