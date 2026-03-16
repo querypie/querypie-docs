@@ -17,6 +17,7 @@ from reverse_sync.sidecar import (
     find_sidecar_block_by_identity,
     sha256_text,
     SidecarEntry,
+    build_mdx_line_range_index,
 )
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
@@ -37,6 +38,34 @@ from reverse_sync.table_patcher import (
 
 
 _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
+
+
+def _build_mdx_to_sidecar_from_v3(
+    roundtrip_sidecar: RoundtripSidecar,
+    original_blocks: List[MdxBlock],
+) -> Dict[int, SidecarEntry]:
+    """roundtrip sidecar v3와 original_blocks에서 mdx_to_sidecar 인덱스를 생성한다.
+
+    mapping.yaml 없이 v3 sidecar의 mdx_line_range를 기준으로
+    original_blocks의 절대 인덱스 → SidecarEntry를 구축한다.
+    find_mapping_by_sidecar()가 entry.xhtml_xpath만 사용하므로
+    xhtml_xpath 필드만 채운다.
+    """
+    from reverse_sync.block_diff import NON_CONTENT_TYPES as _NON_CONTENT
+    line_range_idx = build_mdx_line_range_index(roundtrip_sidecar)
+    result: Dict[int, SidecarEntry] = {}
+    for idx, block in enumerate(original_blocks):
+        if block.type in _NON_CONTENT:
+            continue
+        sc_block = line_range_idx.get((block.line_start, block.line_end))
+        if sc_block is None:
+            continue
+        result[idx] = SidecarEntry(
+            xhtml_xpath=sc_block.xhtml_xpath,
+            xhtml_type="",
+            mdx_blocks=[idx],
+        )
+    return result
 
 
 def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
@@ -294,16 +323,24 @@ def build_patches(
     original_blocks: List[MdxBlock],
     improved_blocks: List[MdxBlock],
     mappings: List[BlockMapping],
-    mdx_to_sidecar: Dict[int, SidecarEntry],
-    xpath_to_mapping: Dict[str, 'BlockMapping'],
+    mdx_to_sidecar: Optional[Dict[int, SidecarEntry]] = None,
+    xpath_to_mapping: Optional[Dict[str, 'BlockMapping']] = None,
     alignment: Optional[Dict[int, int]] = None,
     page_lost_info: Optional[dict] = None,
     roundtrip_sidecar: Optional[RoundtripSidecar] = None,
 ) -> List[Dict[str, str]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
-    sidecar 인덱스를 사용하여 O(1) 직접 조회를 수행한다.
+    mdx_to_sidecar=None (기본값)이면 roundtrip_sidecar v3에서 자동으로 구축한다.
     """
+    # v3 sidecar 기반 경로: mdx_to_sidecar가 없으면 roundtrip_sidecar에서 구축
+    if mdx_to_sidecar is None:
+        if roundtrip_sidecar is not None:
+            mdx_to_sidecar = _build_mdx_to_sidecar_from_v3(
+                roundtrip_sidecar, original_blocks)
+        else:
+            mdx_to_sidecar = {}
+    xpath_to_mapping = xpath_to_mapping or {}
     patches = []
     xpath_to_sidecar_block: Dict[str, SidecarBlock] = {}
     if roundtrip_sidecar is not None:

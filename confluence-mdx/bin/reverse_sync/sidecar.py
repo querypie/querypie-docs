@@ -154,6 +154,21 @@ def build_sidecar_identity_index(
     return dict(grouped)
 
 
+def build_mdx_line_range_index(
+    sidecar: "RoundtripSidecar",
+) -> Dict[tuple, "SidecarBlock"]:
+    """(line_start, line_end) → SidecarBlock 인덱스를 구축한다.
+
+    roundtrip sidecar v3 기반 mapping lookup에 사용된다.
+    mdx_line_range가 (0, 0)인 블록(MDX 대응 없음)은 제외된다.
+    """
+    return {
+        tuple(b.mdx_line_range): b
+        for b in sidecar.blocks
+        if b.mdx_line_range != (0, 0)
+    }
+
+
 def find_sidecar_block_by_identity(
     blocks: List[SidecarBlock],
     mdx_content_hash: str,
@@ -206,11 +221,13 @@ def build_sidecar(
 ) -> RoundtripSidecar:
     """Block-level sidecar를 생성한다.
 
+    generate_sidecar_mapping()과 동일한 type-compatible two-pointer 매칭으로
+    XHTML top-level block과 MDX content block을 정렬한다.
     Fragment 추출 → MDX alignment → 무결성 검증 → RoundtripSidecar 반환.
     """
     from reverse_sync.fragment_extractor import extract_block_fragments
     from reverse_sync.mapping_recorder import record_mapping
-    from reverse_sync.mdx_block_parser import parse_mdx_blocks
+    from mdx_to_storage.parser import parse_mdx_blocks
 
     # 1. XHTML mapping + fragment 추출
     xhtml_mappings = record_mapping(page_xhtml_text)
@@ -224,19 +241,49 @@ def build_sidecar(
         child_ids.update(m.children)
     top_mappings = [m for m in xhtml_mappings if m.block_id not in child_ids]
 
-    # 3. MDX content 블록 (frontmatter, empty, import 제외)
-    mdx_content_blocks = [b for b in mdx_blocks if b.type not in NON_CONTENT_TYPES]
+    # 3. MDX content 블록 — NON_CONTENT_TYPES 제외, 원본 인덱스 보존
+    mdx_content_indexed = [
+        (i, b) for i, b in enumerate(mdx_blocks) if b.type not in NON_CONTENT_TYPES
+    ]
 
-    # 4. Block 생성 — fragment와 top-level mapping을 정렬
+    # 4. MDX H1 헤딩(페이지 제목) 건너뜀
+    # forward converter가 MDX 첫 줄에 `# <페이지 제목>`을 자동 생성하며,
+    # 이 블록은 Confluence XHTML의 페이지 제목(본문 외부)에 해당한다.
+    mdx_ptr = 0
+    while (mdx_ptr < len(mdx_content_indexed)
+           and mdx_content_indexed[mdx_ptr][1].type == 'heading'
+           and mdx_content_indexed[mdx_ptr][1].content.startswith('# ')):
+        mdx_ptr += 1
+
+    # 5. type-compatible two-pointer 매칭으로 fragment-MDX block 쌍 생성
     sidecar_blocks: List[SidecarBlock] = []
     for i, fragment in enumerate(frag_result.fragments):
         xpath = top_mappings[i].xhtml_xpath if i < len(top_mappings) else f"unknown[{i}]"
+        mapping = top_mappings[i] if i < len(top_mappings) else None
 
-        # 순차 1:1 대응 (향후 block alignment로 개선)
-        mdx_block = mdx_content_blocks[i] if i < len(mdx_content_blocks) else None
+        mdx_block = None
+        if mapping is not None and not _should_skip_xhtml(mapping):
+            # 빈 paragraph: MDX 대응 없음
+            if mapping.xhtml_plain_text.strip() or mapping.type != 'paragraph':
+                if mdx_ptr < len(mdx_content_indexed):
+                    _, candidate = mdx_content_indexed[mdx_ptr]
+                    if _type_compatible(mapping.type, candidate.type):
+                        mdx_block = candidate
+                        mdx_ptr += 1
+                    elif mapping.type == 'heading':
+                        # heading lookahead: 현재 MDX 블록이 heading이 아닌 경우
+                        # content 매칭 heading을 전방 탐색하여 구조 정렬 복원
+                        la_ptr = _heading_lookahead(
+                            mapping.xhtml_plain_text, mdx_content_indexed, mdx_ptr)
+                        if la_ptr is not None:
+                            mdx_ptr = la_ptr
+                            _, candidate = mdx_content_indexed[mdx_ptr]
+                            mdx_block = candidate
+                            mdx_ptr += 1
+                    # else: 타입 불일치 → XHTML 블록이 MDX 출력을 생성하지 않음
+
         mdx_hash = sha256_text(mdx_block.content) if mdx_block else ""
         mdx_range = (mdx_block.line_start, mdx_block.line_end) if mdx_block else (0, 0)
-        mapping = top_mappings[i] if i < len(top_mappings) else None
 
         sidecar_blocks.append(
             SidecarBlock(
@@ -437,7 +484,7 @@ def load_sidecar(path: Path) -> RoundtripSidecar:
 # XHTML record_mapping type → 호환 MDX parse_mdx type
 _TYPE_COMPAT: Dict[str, frozenset] = {
     'heading':    frozenset({'heading'}),
-    'paragraph':  frozenset({'paragraph'}),
+    'paragraph':  frozenset({'paragraph', 'list'}),
     'list':       frozenset({'list'}),
     'code':       frozenset({'code_block'}),
     'table':      frozenset({'table', 'html_block'}),
@@ -461,6 +508,38 @@ def _should_skip_xhtml(xm: Any) -> bool:
 def _type_compatible(xhtml_type: str, mdx_type: str) -> bool:
     """XHTML 타입과 MDX 블록 타입이 호환되는지 확인한다."""
     return mdx_type in _TYPE_COMPAT.get(xhtml_type, frozenset())
+
+
+def _normalize_heading_text(text: str) -> str:
+    """heading 텍스트에서 `#` prefix와 앞뒤 공백을 제거한다."""
+    return text.lstrip('#').strip()
+
+
+def _heading_lookahead(
+    xhtml_plain: str,
+    mdx_content_indexed: List,
+    mdx_ptr: int,
+    lookahead_limit: int = 20,
+) -> Optional[int]:
+    """XHTML heading의 plain text와 content-matching MDX heading을 lookahead로 탐색한다.
+
+    XHTML heading이 타입 불일치(MISS)일 때 전방 탐색으로 구조적 정렬을 복원한다.
+    두 텍스트 중 하나가 다른 텍스트에 포함(substring)되면 일치로 판단한다.
+
+    Returns:
+        일치하는 MDX block의 포인터 인덱스, 없으면 None
+    """
+    xhtml_norm = _normalize_heading_text(xhtml_plain)
+    if len(xhtml_norm) < 8:
+        return None
+    end = min(mdx_ptr + lookahead_limit, len(mdx_content_indexed))
+    for ptr in range(mdx_ptr, end):
+        _, candidate = mdx_content_indexed[ptr]
+        if candidate.type == 'heading':
+            mdx_norm = _normalize_heading_text(candidate.content)
+            if xhtml_norm in mdx_norm or mdx_norm in xhtml_norm:
+                return ptr
+    return None
 
 
 
@@ -666,6 +745,14 @@ def generate_sidecar_mapping(
             continue
 
         mdx_idx, mdx_block = mdx_content_indexed[mdx_ptr]
+
+        if not _type_compatible(xm.type, mdx_block.type) and xm.type == 'heading':
+            # heading lookahead: 현재 MDX 블록이 heading이 아닌 경우
+            # content 매칭 heading을 전방 탐색하여 구조 정렬 복원
+            la_ptr = _heading_lookahead(xm.xhtml_plain_text, mdx_content_indexed, mdx_ptr)
+            if la_ptr is not None:
+                mdx_ptr = la_ptr
+                mdx_idx, mdx_block = mdx_content_indexed[mdx_ptr]
 
         if _type_compatible(xm.type, mdx_block.type):
             entry: Dict[str, Any] = {

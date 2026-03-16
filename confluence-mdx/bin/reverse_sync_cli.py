@@ -350,49 +350,20 @@ def run_verify(
     (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
 
-    # Step 3.5: Sidecar mapping 생성 + 인덱스 구축
+    # Step 3.5: Roundtrip sidecar v3 구축 — mapping.yaml 재생성 없이 v3 경로로 동작
     from reverse_sync.sidecar import (
-        SidecarEntry, SidecarChildEntry, generate_sidecar_mapping,
-        build_mdx_to_sidecar_index, build_xpath_to_mapping,
+        build_xpath_to_mapping,
         build_sidecar,
+        load_page_lost_info,
     )
-    # forward converter가 생성한 mapping.yaml에서 lost_info를 보존
-    existing_mapping = var_dir / 'mapping.yaml'
-    existing_lost_info = None
-    if existing_mapping.exists():
-        existing_data = yaml.safe_load(existing_mapping.read_text()) or {}
-        existing_lost_info = existing_data.get('lost_info') or None
-    sidecar_yaml = generate_sidecar_mapping(
-        xhtml, original_mdx, page_id, lost_infos=existing_lost_info)
-    (var_dir / 'mapping.yaml').write_text(sidecar_yaml)
-    sidecar_data = yaml.safe_load(sidecar_yaml) or {}
-    page_lost_info = sidecar_data.get('lost_info', {})
-    sidecar_entries = []
-    for item in sidecar_data.get('mappings', []):
-        children = [
-            SidecarChildEntry(
-                xhtml_xpath=ch.get('xhtml_xpath', ''),
-                xhtml_block_id=ch.get('xhtml_block_id', ''),
-                mdx_line_start=ch.get('mdx_line_start', 0),
-                mdx_line_end=ch.get('mdx_line_end', 0),
-            )
-            for ch in item.get('children', [])
-        ]
-        sidecar_entries.append(SidecarEntry(
-            xhtml_xpath=item['xhtml_xpath'],
-            xhtml_type=item.get('xhtml_type', ''),
-            mdx_blocks=item.get('mdx_blocks', []),
-            mdx_line_start=item.get('mdx_line_start', 0),
-            mdx_line_end=item.get('mdx_line_end', 0),
-            children=children,
-        ))
-    mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
+    # forward converter가 생성한 mapping.yaml에서 lost_info만 로드
+    page_lost_info = load_page_lost_info(str(var_dir / 'mapping.yaml'))
     roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id=page_id)
     xpath_to_mapping = build_xpath_to_mapping(original_mappings)
 
-    # Step 4: XHTML 패치 → patched.xhtml 저장
+    # Step 4: XHTML 패치 → patched.xhtml 저장 (mdx_to_sidecar=None → v3 자동 구축)
     patches = build_patches(changes, original_blocks, improved_blocks,
-                            original_mappings, mdx_to_sidecar, xpath_to_mapping,
+                            original_mappings, None, xpath_to_mapping,
                             alignment, page_lost_info=page_lost_info,
                             roundtrip_sidecar=roundtrip_sidecar)
     patched_xhtml = patch_xhtml(xhtml, patches)
