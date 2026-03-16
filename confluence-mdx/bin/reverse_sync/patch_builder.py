@@ -30,9 +30,6 @@ from reverse_sync.list_patcher import (
     build_list_item_patches,
 )
 from reverse_sync.table_patcher import (
-    build_table_row_patches,
-    split_table_rows,
-    normalize_table_row,
     is_markdown_table,
 )
 
@@ -528,11 +525,7 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
-            else:
-                patches.extend(
-                    build_table_row_patches(
-                        change, mappings, used_ids,
-                        mdx_to_sidecar, xpath_to_mapping))
+            # else: skip — preserved anchor table은 안전한 패치 경로 없음 (Phase 5 Axis 3)
             continue
 
         new_plain = normalize_mdx_to_plain(

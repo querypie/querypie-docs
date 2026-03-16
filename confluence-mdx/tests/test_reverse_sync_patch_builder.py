@@ -1,8 +1,7 @@
 """patch_builder 유닛 테스트.
 
 build_patches 분기 경로
-+ helper 함수 (is_markdown_table, split_table_rows, normalize_table_row,
-split_list_items, build_table_row_patches, build_list_item_patches) 테스트.
++ helper 함수 (is_markdown_table, split_list_items, build_list_item_patches) 테스트.
 """
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
@@ -23,10 +22,7 @@ from reverse_sync.patch_builder import (
 )
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.table_patcher import (
-    build_table_row_patches,
     is_markdown_table,
-    split_table_rows,
-    normalize_table_row,
 )
 from reverse_sync.list_patcher import (
     build_list_item_patches,
@@ -107,43 +103,6 @@ class TestIsMarkdownTable:
 
     def test_only_separator(self):
         assert is_markdown_table('| --- | --- |') is False
-
-
-class TestSplitTableRows:
-    def test_splits_data_rows(self):
-        content = '| h1 | h2 |\n| --- | --- |\n| a | b |\n| c | d |'
-        rows = split_table_rows(content)
-        assert rows == ['| h1 | h2 |', '| a | b |', '| c | d |']
-
-    def test_skips_separator(self):
-        content = '| h |\n| --- |\n| v |'
-        rows = split_table_rows(content)
-        assert '| --- |' not in rows
-
-    def test_skips_empty_lines(self):
-        content = '| a |\n\n| b |'
-        rows = split_table_rows(content)
-        assert rows == ['| a |', '| b |']
-
-
-class TestNormalizeTableRow:
-    def test_extracts_cell_text(self):
-        assert normalize_table_row('| hello | world |') == 'hello world'
-
-    def test_strips_bold(self):
-        assert normalize_table_row('| **bold** | text |') == 'bold text'
-
-    def test_strips_code(self):
-        assert normalize_table_row('| `code` | text |') == 'code text'
-
-    def test_strips_link(self):
-        assert normalize_table_row('| [Title](url) | x |') == 'Title x'
-
-    def test_empty_cells_skipped(self):
-        assert normalize_table_row('|  | text |') == 'text'
-
-    def test_unescapes_html(self):
-        assert normalize_table_row('| A &amp; B | x |') == 'A & B x'
 
 
 class TestSplitListItems:
@@ -678,27 +637,6 @@ class TestBuildPatches:
         assert '<table>' in patches[0]['new_element_xhtml']
         assert 'new_val' in patches[0]['new_element_xhtml']
 
-    def test_markdown_table_without_roundtrip_sidecar_keeps_row_patch_path(self):
-        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
-                           type_='table')
-        mappings = [m1]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
-
-        change = _make_change(
-            0,
-            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
-            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
-        )
-
-        patches = build_patches(
-            [change], [change.old_block], [change.new_block],
-            mappings, mdx_to_sidecar, xpath_to_mapping)
-
-        assert len(patches) == 1
-        assert patches[0].get('action', 'modify') == 'modify'
-        assert patches[0]['new_plain_text'] != patches[0]['old_plain_text']
-
     def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
         mappings = [m1]
@@ -724,48 +662,33 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['new_element_xhtml'] == '<h2>New Title</h2>'
 
+    def test_table_without_roundtrip_sidecar_returns_no_patch(self):
+        """roundtrip_sidecar가 없는 table 변경은 Phase 5 Axis 3 이후 skip한다.
 
-# ── build_table_row_patches ──
-
-
-class TestBuildTableRowPatches:
-    def test_patches_changed_row(self):
-        container = _make_mapping(
-            'm1', 'Header1 Header2 old_val other', xpath='table[1]',
-            type_='table')
-        mappings = [container]
+        현재: _can_replace_table_fragment(roundtrip_sidecar=None) → False →
+              build_table_row_patches가 text-transfer 패치를 생성한다.
+        Phase 5 Axis 3 이후: fallback 제거 → patches == [].
+        """
+        mapping = _make_mapping('m1', 'Header old_val', xpath='table[1]', type_='table')
+        change = _make_change(
+            0,
+            '| Header |\n| --- |\n| old_val |',
+            '| Header |\n| --- |\n| new_val |',
+        )
         mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
-        xpath_to_mapping = {'table[1]': container}
+        xpath_to_mapping = {'table[1]': mapping}
 
-        change = _make_change(
-            0,
-            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
-            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        patches = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
         )
 
-        patches = build_table_row_patches(
-            change, mappings, set(), mdx_to_sidecar, xpath_to_mapping)
-
-        assert len(patches) == 1
-        assert 'new_val' in patches[0]['new_plain_text']
-
-    def test_row_count_mismatch_returns_empty(self):
-        container = _make_mapping('m1', 'text', xpath='table[1]')
-        change = _make_change(
-            0,
-            '| a |\n| --- |\n| b |',
-            '| a |\n| --- |\n| b |\n| c |',
-        )
-        patches = build_table_row_patches(
-            change, [container], set(),
-            {0: _make_sidecar('table[1]', [0])}, {'table[1]': container})
-        assert patches == []
-
-    def test_no_sidecar_returns_empty(self):
-        change = _make_change(
-            0, '| a |\n| --- |\n| b |', '| a |\n| --- |\n| c |')
-        patches = build_table_row_patches(change, [], set(), {}, {})
-        assert patches == []
+        assert patches == [], "fallback 제거 후 roundtrip_sidecar 없는 table은 skip이어야 한다"
 
 
 # ── build_list_item_patches ──
