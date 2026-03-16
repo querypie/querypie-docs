@@ -23,6 +23,7 @@ from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_blo
 from reverse_sync.reconstructors import (
     sidecar_block_requires_reconstruction,
     reconstruct_fragment_with_sidecar,
+    container_sidecar_requires_reconstruction,
 )
 from reverse_sync.list_patcher import (
     build_list_item_patches,
@@ -501,6 +502,20 @@ def build_patches(
             change.new_block.content, change.new_block.type)
 
         if strategy == 'containing':
+            sidecar_block = _find_roundtrip_sidecar_block(
+                change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+            )
+            if container_sidecar_requires_reconstruction(sidecar_block):
+                _mark_used(mapping.block_id, mapping)
+                patches.append(
+                    _build_replace_fragment_patch(
+                        mapping,
+                        change.new_block,
+                        sidecar_block=sidecar_block,
+                        mapping_lost_info=mapping_lost_info,
+                    )
+                )
+                continue
             bid = mapping.block_id
             if bid not in containing_changes:
                 containing_changes[bid] = (mapping, [])

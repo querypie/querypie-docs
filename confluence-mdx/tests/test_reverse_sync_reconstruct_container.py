@@ -224,3 +224,104 @@ def test_container_child_fragment_oracle(page_id):
     # 알려진 container-bearing fixture는 반드시 container가 1개 이상이어야 한다
     if page_id in ('panels', '1454342158'):
         assert container_count > 0, f"{page_id}: expected container blocks, got zero"
+
+
+# ── end-to-end pipeline 연결 테스트 ──────────────────────────────────────────
+
+import yaml
+from reverse_sync.block_diff import diff_blocks
+from reverse_sync.mapping_recorder import record_mapping as _record_mapping
+from reverse_sync.mdx_block_parser import parse_mdx_blocks
+from reverse_sync.patch_builder import build_patches
+from reverse_sync.sidecar import (
+    SidecarEntry,
+    build_mdx_to_sidecar_index,
+    build_xpath_to_mapping,
+    generate_sidecar_mapping,
+)
+from reverse_sync.xhtml_patcher import patch_xhtml
+
+
+def _run_pipeline(xhtml, original_mdx, improved_mdx):
+    original_blocks = parse_mdx_blocks(original_mdx)
+    improved_blocks = parse_mdx_blocks(improved_mdx)
+    changes, alignment = diff_blocks(original_blocks, improved_blocks)
+    mappings = _record_mapping(xhtml)
+    roundtrip_sidecar = build_sidecar(xhtml, original_mdx)
+    sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx)
+    sidecar_data = yaml.safe_load(sidecar_yaml) or {}
+    entries = [
+        SidecarEntry(
+            xhtml_xpath=item['xhtml_xpath'],
+            xhtml_type=item.get('xhtml_type', ''),
+            mdx_blocks=item.get('mdx_blocks', []),
+            mdx_line_start=item.get('mdx_line_start', 0),
+            mdx_line_end=item.get('mdx_line_end', 0),
+        )
+        for item in sidecar_data.get('mappings', [])
+    ]
+    mdx_to_sidecar = build_mdx_to_sidecar_index(entries)
+    xpath_to_mapping = build_xpath_to_mapping(mappings)
+    patches = build_patches(
+        changes, original_blocks, improved_blocks, mappings,
+        mdx_to_sidecar, xpath_to_mapping, alignment,
+        roundtrip_sidecar=roundtrip_sidecar,
+    )
+    return patches, patch_xhtml(xhtml, patches)
+
+
+class TestContainerPipelineEndToEnd:
+    """container reconstruction이 실제 patch 파이프라인에 연결됐는지 검증한다."""
+
+    def test_callout_with_image_routes_to_replace_fragment(self):
+        """ac:image 포함 callout 변경 시 containing 전략이 replace_fragment를 생성한다."""
+        image_xhtml = '<ac:image ac:inline="true"><ri:attachment ri:filename="diagram.png"/></ac:image>'
+        xhtml = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            f'<p>Original text {image_xhtml} end.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        original_mdx = (
+            "<Callout type='info'>\n"
+            "Original text <img src='/diagram.png' alt='diagram.png'/> end.\n"
+            "</Callout>\n"
+        )
+        improved_mdx = (
+            "<Callout type='info'>\n"
+            "Updated text <img src='/diagram.png' alt='diagram.png'/> end.\n"
+            "</Callout>\n"
+        )
+
+        patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
+
+        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert replace_patches, "container with image should produce replace_fragment patch"
+        assert 'ac:image' in patched, "ac:image should be preserved in output"
+        assert 'diagram.png' in patched
+        assert 'Updated text' in patched
+        # img 태그는 Confluence 마크업으로 교체되어야 한다
+        assert '<img src=' not in patched
+
+    def test_clean_callout_still_uses_text_transfer(self):
+        """ac:image 없는 clean callout은 기존 text-transfer 경로를 유지한다."""
+        xhtml = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            '<p>Original text.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        original_mdx = "<Callout type='info'>\nOriginal text.\n</Callout>\n"
+        improved_mdx = "<Callout type='info'>\nUpdated text.\n</Callout>\n"
+
+        patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
+
+        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        # clean callout은 replace_fragment가 아닌 text-transfer 경로
+        assert not replace_patches or all(
+            p.get('xhtml_xpath') != 'macro-info[1]'
+            for p in replace_patches
+        )
+        assert 'Updated text' in patched

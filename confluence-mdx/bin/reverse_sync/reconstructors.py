@@ -203,6 +203,8 @@ def sidecar_block_requires_reconstruction(
             'offset' in item and 'raw_xhtml' in item
             for item in recon.get('items', [])
         )
+    if recon.get('kind') == 'container':
+        return container_sidecar_requires_reconstruction(sidecar_block)
     return False
 
 
@@ -223,6 +225,8 @@ def reconstruct_fragment_with_sidecar(
             return reconstruct_inline_anchor_fragment(old_plain, valid_anchors, new_fragment)
     if kind == 'list':
         return _rebuild_list_fragment(new_fragment, recon)
+    if kind == 'container':
+        return reconstruct_container_fragment(new_fragment, sidecar_block)
     return new_fragment
 
 
