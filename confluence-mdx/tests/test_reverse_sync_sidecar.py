@@ -542,3 +542,92 @@ class TestSidecarTwoHopLookup:
         for idx in [3, 5, 7, 9]:
             result = find_mapping_by_sidecar(idx, mdx_to_sidecar, xpath_to_mapping)
             assert result is container
+
+
+class TestHeadingLookahead:
+    """_heading_lookahead 엣지 케이스 회귀 테스트."""
+
+    from dataclasses import dataclass
+
+    @staticmethod
+    def _make_mdx(blocks):
+        """(type, content, line) 튜플 목록을 mdx_content_indexed 형식으로 변환한다."""
+        from dataclasses import dataclass
+
+        @dataclass
+        class FakeBlock:
+            type: str
+            content: str
+            line_start: int
+            line_end: int
+
+        return [(i, FakeBlock(t, c, ln, ln)) for i, (t, c, ln) in enumerate(blocks)]
+
+    def test_basic_match(self):
+        """heading XHTML이 전방 MDX heading과 content로 매칭된다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        mdx = self._make_mdx([
+            ('list', '1. some item', 1),
+            ('heading', '## 에이전트를 통한 서버 접속', 3),
+        ])
+        result = _heading_lookahead('에이전트를 통한 서버 접속', mdx, 0)
+        assert result == 1
+
+    def test_short_heading_skipped(self):
+        """8자 미만 heading은 false positive 방지를 위해 None을 반환한다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        mdx = self._make_mdx([
+            ('list', '1. item', 1),
+            ('heading', '## 설정', 3),
+        ])
+        result = _heading_lookahead('설정', mdx, 0)
+        assert result is None
+
+    def test_similar_headings_picks_first(self):
+        """유사한 heading이 여러 개일 때 전방 탐색에서 가장 가까운 것을 반환한다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        mdx = self._make_mdx([
+            ('list', '1. item', 1),
+            ('heading', '## QueryPie Agent에 로그인하기', 3),
+            ('list', '2. item', 5),
+            ('heading', '## QueryPie Agent에 로그인하기 (Mac)', 7),
+        ])
+        # XHTML heading이 두 번째와 매핑되어야 하는 케이스라도
+        # 현재 구현은 첫 번째를 반환한다 — 이 동작을 명시적으로 문서화
+        result = _heading_lookahead('QueryPie Agent에 로그인하기', mdx, 0)
+        assert result == 1  # 첫 번째 매칭 반환
+
+    def test_repeated_heading_ptr_advances_correctly(self):
+        """반복된 heading이 있을 때 두 번째 섹션은 ptr를 앞으로 시작한다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        mdx = self._make_mdx([
+            ('heading', '## 섹션 A — 서버 접속 방법', 1),
+            ('list', '1. item in A', 3),
+            ('heading', '## 섹션 B — 서버 접속 방법', 5),
+            ('list', '1. item in B', 7),
+        ])
+        # ptr=0에서 탐색: 섹션 A가 가장 먼저 매칭
+        r1 = _heading_lookahead('섹션 A — 서버 접속 방법', mdx, 0)
+        assert r1 == 0
+        # ptr=2에서 탐색: 섹션 B가 매칭 (섹션 A는 이미 소비됨)
+        r2 = _heading_lookahead('섹션 B — 서버 접속 방법', mdx, 2)
+        assert r2 == 2
+
+    def test_no_match_beyond_lookahead_limit(self):
+        """lookahead_limit 밖의 heading은 반환되지 않는다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        filler = [('list', f'{i}. item', i * 2) for i in range(25)]
+        mdx = self._make_mdx(filler + [('heading', '## 에이전트를 통한 서버 접속', 60)])
+        result = _heading_lookahead('에이전트를 통한 서버 접속', mdx, 0, lookahead_limit=20)
+        assert result is None  # 25번째 블록은 limit 밖
+
+    def test_substring_asymmetry(self):
+        """XHTML이 MDX의 substring이어도, MDX가 XHTML의 substring이어도 매칭된다."""
+        from reverse_sync.sidecar import _heading_lookahead
+        mdx = self._make_mdx([
+            ('list', '1. item', 1),
+            ('heading', '### QueryPie Agent에 로그인하기 ', 3),
+        ])
+        # XHTML plain ⊂ MDX content
+        r = _heading_lookahead('QueryPie Agent에 로그인하기', mdx, 0)
+        assert r == 1
