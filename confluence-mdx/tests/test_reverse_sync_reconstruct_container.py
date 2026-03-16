@@ -13,6 +13,8 @@ from reverse_sync.xhtml_normalizer import (
 from reverse_sync.reconstructors import (
     reconstruct_container_fragment,
     container_sidecar_requires_reconstruction,
+    _has_inline_markup,
+    _rewrite_paragraph_on_template,
 )
 from reverse_sync.sidecar import SidecarBlock
 
@@ -93,6 +95,65 @@ class TestContainerReconstructionMetadata:
         assert 'test.png' in child['anchors'][0]['raw_xhtml']
 
 
+class TestHasInlineMarkup:
+    def test_plain_text_returns_false(self):
+        assert _has_inline_markup('<p>simple text</p>') is False
+
+    def test_strong_returns_true(self):
+        assert _has_inline_markup('<p>text <strong>bold</strong></p>') is True
+
+    def test_link_returns_true(self):
+        assert _has_inline_markup(
+            '<p>see <ac:link><ri:page ri:content-title="X"/></ac:link></p>'
+        ) is True
+
+    def test_image_only_returns_false(self):
+        """ac:image는 anchor로 별도 처리되므로 inline markup 아님."""
+        assert _has_inline_markup('<p>text<ac:image/></p>') is False
+
+    def test_empty_fragment_returns_false(self):
+        assert _has_inline_markup('') is False
+
+    def test_no_p_tag_returns_false(self):
+        assert _has_inline_markup('<ul><li>text</li></ul>') is False
+
+
+class TestRewriteParagraphOnTemplate:
+    def test_plain_text_change_preserves_strong(self):
+        """bold 태그를 유지하며 텍스트만 업데이트한다."""
+        template = '<p>Click <strong>here</strong> to continue.</p>'
+        new_frag = '<p>Click here to proceed.</p>'
+        result = _rewrite_paragraph_on_template(template, new_frag)
+        assert '<strong>' in result
+        assert 'proceed' in result
+
+    def test_link_preserved_on_text_change(self):
+        """ac:link 구조를 유지하며 주변 텍스트를 갱신한다."""
+        template = (
+            '<p>자세한 내용은 <ac:link>'
+            '<ri:page ri:content-title="가이드"/>'
+            '<ac:plain-text-link-body><![CDATA[가이드]]></ac:plain-text-link-body>'
+            '</ac:link> 참고.</p>'
+        )
+        new_frag = '<p>자세한 내용은 가이드 참고하세요.</p>'
+        result = _rewrite_paragraph_on_template(template, new_frag)
+        assert 'ac:link' in result
+        assert '가이드' in result
+
+    def test_same_text_returns_template(self):
+        """텍스트가 동일하면 template_fragment를 그대로 반환한다."""
+        template = '<p>text <strong>bold</strong></p>'
+        new_frag = '<p>text bold</p>'
+        result = _rewrite_paragraph_on_template(template, new_frag)
+        assert result == template
+
+    def test_em_tag_preserved(self):
+        template = '<p>이것은 <em>강조</em>된 텍스트입니다.</p>'
+        new_frag = '<p>이것은 강조된 다른 텍스트입니다.</p>'
+        result = _rewrite_paragraph_on_template(template, new_frag)
+        assert '<em>' in result
+
+
 class TestContainerSidecarRequiresReconstruction:
     def test_returns_false_for_none(self):
         assert container_sidecar_requires_reconstruction(None) is False
@@ -131,6 +192,30 @@ class TestContainerSidecarRequiresReconstruction:
             },
         )
         assert container_sidecar_requires_reconstruction(block) is True
+
+    def test_returns_false_when_only_inline_markup(self):
+        """inline markup만 있고 anchor가 없는 container는 reconstruction 불필요.
+
+        reconstruction은 anchor(ac:image) 기반으로만 트리거된다.
+        inline markup 보존은 anchor로 트리거된 reconstruction 내에서 함께 처리된다.
+        """
+        block = SidecarBlock(
+            block_index=0, xhtml_xpath='macro-info[1]',
+            xhtml_fragment='<ac:structured-macro ac:name="info"/>',
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'macro-info[1]/p[1]',
+                        'fragment': '<p>Click <strong>here</strong> to continue.</p>',
+                        'plain_text': 'Click here to continue.',
+                        'type': 'paragraph',
+                    },
+                ],
+                'child_xpaths': ['macro-info[1]/p[1]'],
+            },
+        )
+        assert container_sidecar_requires_reconstruction(block) is False
 
 
 class TestReconstructContainerFragment:
@@ -180,6 +265,95 @@ class TestReconstructContainerFragment:
         result = reconstruct_container_fragment(new_fragment, block)
         assert 'ac:image' in result
         assert 'test.png' in result
+
+    def test_container_with_inline_markup_preserves_strong_when_anchor_present(self):
+        """anchor child가 있어 reconstruction이 트리거되면, inline markup child도 함께 보존된다.
+
+        anchor 없는 child라도 inline markup이 있으면 _rewrite_paragraph_on_template으로 보존.
+        """
+        image_xhtml = '<ac:image><ri:attachment ri:filename="diagram.png"/></ac:image>'
+        xhtml_fragment = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            '<p><strong>Title</strong></p>'
+            f'<p>See diagram {image_xhtml} for details.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        new_fragment = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            '<p>Title</p>'
+            '<p>See diagram for details.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-info[1]',
+            xhtml_fragment=xhtml_fragment,
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'macro-info[1]/p[1]',
+                        'fragment': '<p><strong>Title</strong></p>',
+                        'plain_text': 'Title',
+                        'type': 'paragraph',
+                    },
+                    {
+                        'xpath': 'macro-info[1]/p[2]',
+                        'fragment': f'<p>See diagram {image_xhtml} for details.</p>',
+                        'plain_text': 'See diagram for details.',
+                        'type': 'paragraph',
+                        'anchors': [{'kind': 'image', 'offset': 12, 'raw_xhtml': image_xhtml}],
+                    },
+                ],
+                'child_xpaths': ['macro-info[1]/p[1]', 'macro-info[1]/p[2]'],
+            },
+        )
+        result = reconstruct_container_fragment(new_fragment, block)
+        # anchor child: ac:image 재삽입됨
+        assert 'diagram.png' in result
+        # inline markup child: <strong> 보존됨
+        assert '<strong>' in result
+
+    def test_outer_wrapper_macro_attributes_preserved(self):
+        """sidecar xhtml_fragment의 macro 속성이 결과 wrapper에 유지된다."""
+        xhtml_fragment = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:parameter ac:name="icon">false</ac:parameter>'
+            '<ac:rich-text-body><p>Original.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        image_xhtml = '<ac:image><ri:attachment ri:filename="x.png"/></ac:image>'
+        new_fragment = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body><p>Updated</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-info[1]',
+            xhtml_fragment=xhtml_fragment,
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'macro-info[1]/p[1]',
+                        'fragment': f'<p>Original {image_xhtml}</p>',
+                        'plain_text': 'Original',
+                        'type': 'paragraph',
+                        'anchors': [{'kind': 'image', 'offset': 9, 'raw_xhtml': image_xhtml}],
+                    },
+                ],
+                'child_xpaths': ['macro-info[1]/p[1]'],
+            },
+        )
+        result = reconstruct_container_fragment(new_fragment, block)
+        assert 'ac:schema-version="1"' in result
+        assert 'ac:parameter' in result
+        assert 'x.png' in result
 
     def test_no_sidecar_block_returns_new_fragment(self):
         new_frag = (
