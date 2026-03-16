@@ -212,18 +212,27 @@ def _parse_code_block(lines: list[str], start: int) -> tuple[Block, int]:
 
 def _parse_list_block(lines: list[str], start: int) -> tuple[Block, int]:
     i = start + 1
+    after_blank = False
     while i < len(lines):
         current = lines[i]
         if current == "":
+            after_blank = True
             if i + 1 < len(lines) and _is_list_continuation(lines[i + 1]):
                 i += 1
                 continue
             break
 
-        if not _is_list_continuation(current):
-            break
+        if _is_list_continuation(current):
+            after_blank = False
+            i += 1
+            continue
 
-        i += 1
+        # FC 패턴: 빈 줄 없이 이어지는 비들여쓰기 연속행 — 동일 list 항목의 일부
+        if not after_blank and not _starts_new_block(current):
+            i += 1
+            continue
+
+        break
 
     content = "\n".join(lines[start:i]) + "\n"
     return Block(type="list", content=content), i

@@ -129,6 +129,36 @@ def test_parse_list_with_continuation_and_blank_line():
     assert "continuation" in blocks[0].content
 
 
+def test_parse_list_item_with_direct_continuation_no_blank():
+    """FC 출력 패턴: list item 뒤 빈 줄 없는 연속행은 같은 list 블록이어야 한다.
+
+    추적 케이스: page 544112828 — XHTML p[6]이 MDX에서 list(L48) + paragraph(L49)로 오분리됨.
+    FC는 list item 내 문장을 빈 줄 없이 줄바꿈하므로, 연속행은 별도 블록이 아니라 동일 list 항목이다.
+    """
+    text = "4. 설치된 Agent를 실행합니다.\nQueryPie URL을 입력하고 Next 버튼을 클릭합니다.\n"
+    blocks = parse_mdx(text)
+    assert len(blocks) == 1
+    assert blocks[0].type == "list"
+    assert "QueryPie URL을 입력하고" in blocks[0].content
+
+
+def test_parse_list_then_blank_then_text_stays_separate():
+    """list item 다음 빈 줄 있으면 이후 텍스트는 별도 paragraph 블록이어야 한다."""
+    text = "* item\n\nparagraph text\n"
+    blocks = [b for b in parse_mdx(text) if b.type != "empty"]
+    assert blocks[0].type == "list"
+    assert blocks[1].type == "paragraph"
+    assert "paragraph text" in blocks[1].content
+
+
+def test_parse_list_item_then_heading_starts_new_block():
+    """list item 직후 heading은 새 블록으로 분리되어야 한다."""
+    text = "* item\n## Heading\n"
+    blocks = parse_mdx(text)
+    assert blocks[0].type == "list"
+    assert blocks[1].type == "heading"
+
+
 def test_parse_html_block_stops_before_heading():
     text = "<div>line1\nline2\n## Heading\n"
     blocks = parse_mdx(text)

@@ -265,7 +265,21 @@ PR #903에서 해결됨. 구현 내용:
 - `RoundtripSidecar v3` 가 primary runtime artifact가 된다.
 - `mapping.yaml` 계층은 디버그/보조 용도로 축소한다.
 
-### 4.3 해결된 문제 (참고)
+### 4.3 `_heading_lookahead` 기술 부채 (sidecar.py)
+
+`sidecar.py`의 `_heading_lookahead()` 함수는 제거해야 할 설계 부채다.
+
+**문제:** `parse_mdx_blocks`가 list item 뒤 빈 줄 없이 이어지는 연속행을 별도 `paragraph` 블록으로 잘못 파싱하여, sidecar two-pointer alignment가 어긋난다. `_heading_lookahead`는 heading을 anchor 삼아 이 어긋남을 임시 보상하는 heuristic이다.
+
+**근본 원인:** Markdown 규칙상 paragraph 분리는 반드시 빈 줄이 있어야 한다. forward converter는 한 문장을 한 줄에 표현하는 스펙에 따라 list item 내 문장을 빈 줄 없이 줄바꿈한다. 이 연속행은 동일 list item의 일부이며 별도 블록이 아니다.
+
+> **교훈 (architecture.md §참고):** `_heading_lookahead()`처럼 "XHTML-MDX 구조 불일치를 heading으로 재동기화"하는 heuristic이 필요하다고 느껴지면, `sidecar.py`를 수정할 것이 아니라 forward converter의 변환 결과가 왜 XHTML 구조를 정확히 반영하지 못하는지를 먼저 조사해야 한다.
+
+**제거 조건:** `parse_mdx_blocks`에서 list item 연속행(빈 줄 없이 이어지는 non-list-marker 줄)을 같은 블록으로 합치면 alignment 오류가 발생하지 않으며 이 함수를 제거할 수 있다.
+
+**추적 케이스:** page `544112828` — XHTML `p[6]`이 MDX에서 `list`(L48) + `paragraph`(L49)로 오분리됨.
+
+### 4.4 해결된 문제 (참고)
 
 아래 문제들은 Phase 2, Phase 3, #888, #903 이후 해결됐다.
 
@@ -446,6 +460,7 @@ PR #903에서 해결됨. 구현 내용:
 - `reverse_sync_cli.py`에서 `record_mapping()` → `build_sidecar()` 단일 경로로 전환
 - `SidecarEntry` / `build_mdx_to_sidecar_index()` / `generate_sidecar_mapping()` 계층을 debug 전용 또는 제거
 - legacy text-transfer 경로를 explicit fallback 또는 제거 대상으로 전환
+- `_heading_lookahead()` 제거: `parse_mdx_blocks`에서 list item 연속행을 같은 블록으로 합치도록 수정 → alignment heuristic 불필요 (§4.3 참조)
 
 게이트:
 
