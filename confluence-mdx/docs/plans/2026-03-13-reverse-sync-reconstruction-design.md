@@ -1,9 +1,9 @@
 # Reverse Sync 전면 재구성 설계
 
 > 최초 작성일: 2026-03-13
-> 갱신일: 2026-03-16
+> 갱신일: 2026-03-16 (2차 — Phase 4 완료 반영)
 > 기준 브랜치: `main`
-> 기준 커밋: `e40877afec06306bec99b86f15f492f88177c424`
+> 기준 커밋: `a8662480` (PR #903 머지)
 > 반영된 선행 PR:
 > - `#913` reverse-sync 재구성 설계 초안
 > - `#914` Phase 0 공용 helper 추출 (`xhtml_normalizer`, list tree public API)
@@ -12,6 +12,7 @@
 > - `#886` Phase 2 clean block whole-fragment replacement
 > - `#902` Phase 2 + Phase 3 재구성 파이프라인 구현
 > - `#888` splice rehydrator 개선 및 sidecar identity fallback 강화
+> - `#903` Phase 4 container 재구성 및 list anchor 정확도 개선
 > 연관 문서:
 > - `docs/plans/2026-03-13-reverse-sync-reconstruction-design-review.md`
 > - `docs/plans/2026-03-15-reverse-sync-reconstruction-cleanup-scope.md`
@@ -19,7 +20,7 @@
 
 ## 1. 문서 목적
 
-이 문서는 2026-03-16 기준 `main` 브랜치 상태를 반영해, reverse-sync 재구성 계획을 다시 정리한 버전이다.
+이 문서는 2026-03-16 기준 `main` 브랜치 상태를 반영해, reverse-sync 재구성 계획을 다시 정리한 버전이다. 2차 갱신에서 Phase 4 완료(PR #903)를 반영하고 Phase 5 현황 점검 결과를 추가했다.
 
 핵심 목적은 두 가지다.
 
@@ -174,8 +175,12 @@ PR `#914`, `#915`, `#917`으로 인해, 원래 설계 문서에서 제안했던 
 - `pages.yaml` 전체 엔트리: 66개
 - 이 중 reverse-sync 테스트 메타데이터(`failure_type`)를 가진 실제 테스트 케이스: 42개
 - `expected_status` 기준:
-  - `pass`: 28개
-  - `fail`: 14개
+  - `pass`: 28개 — **현재 전부 통과**
+  - `fail`: 14개 — **현재 전부 실패 (예상됨)**
+
+#### pytest 전체
+
+- 2026-03-16 기준: **916 passed, 0 failed**
 
 의미:
 
@@ -239,16 +244,17 @@ PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대
 
 ## 4. 현재 main에서 아직 해결되지 않은 문제
 
-### 4.1 container 재구성이 없다 (구 4.4)
+### 4.1 container 재구성 — 해결됨 (구 4.4)
 
-아직 남은 핵심 공백:
+PR #903에서 해결됨. 구현 내용:
 
-- nested list child order 기반 재구성
-- callout body 재구성
-- details 재구성
-- ADF panel body 재구성
+- `sidecar.py` — container child metadata 기록 (`child_xpaths`, `children`, `old_plain_text`)
+- `reconstructors.py` — `reconstruct_container_fragment()`, `container_sidecar_requires_reconstruction()`, `_rewrite_paragraph_on_template()` 구현
+- callout/ADF panel body child slot 기반 재구성 동작
+- inline markup(bold/italic/link) 보존, macro 속성(`ac:schema-version`, `<ac:parameter>`) 유지
+- anchor 재삽입 시 중복 `<img>` 제거 (`_remove_html_img_if_same_image`)
 
-이 부분이 해결되지 않으면 container 블록에서 계속 heuristic fallback에 의존하게 된다.
+완료 fixture: `544112828`, `544379140`, `panels`, `1454342158`
 
 ### 4.2 mapping 계층이 여전히 런타임 기본 경로를 잡고 있다 (구 4.5)
 
@@ -261,12 +267,13 @@ PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대
 
 ### 4.3 해결된 문제 (참고)
 
-아래 문제들은 Phase 2, Phase 3, #888 이후 해결됐다.
+아래 문제들은 Phase 2, Phase 3, #888, #903 이후 해결됐다.
 
 - ~~modified block 기본 경로가 heuristic text patch~~ → clean block은 `replace_fragment` 기본 경로로 전환
 - ~~`reconstruction` metadata가 runtime reconstruction에 충분하지 않음~~ → paragraph/list anchor metadata 추출 구현 (`_build_anchor_entries`, `_build_list_anchor_entries`)
 - ~~patcher에 `replace_fragment`가 없음~~ → `xhtml_patcher.py`에 추가됨
 - ~~inline anchor 재주입 helper 없음~~ → `reconstructors.py` 신규 구현 (`map_anchor_offset`, `insert_anchor_at_offset`)
+- ~~container 재구성이 없다~~ → `reconstruct_container_fragment()` 구현, `_rewrite_paragraph_on_template()`으로 inline markup 보존 (#903)
 
 
 ## 5. 목표 아키텍처
@@ -410,41 +417,42 @@ PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대
 
 ### Phase 4. container 재구성
 
-상태: 미완료
+상태: 완료, `main` 반영됨 (`#903`)
 
-구현 항목:
+완료 기준:
 
-- callout/details/ADF panel body child order 저장
-- child slot 기반 재귀 rebuild
-- outer wrapper와 inner body 책임 분리
-
-우선 대상 fixture:
-
-- `544112828`
-- `1454342158`
-- `544379140`
-- `panels`
-
-게이트:
-
-- container fragment oracle normalize-equal
-- changed-page golden 검증 통과
+- `sidecar.py` — container child metadata 기록 (`children` list: xpath, fragment, plain_text, type)
+- `reconstructors.py` — `reconstruct_container_fragment()`, `container_sidecar_requires_reconstruction()` 구현
+- `_rewrite_paragraph_on_template()` — inline markup(bold/italic/link) 보존
+- `_remove_html_img_if_same_image()` — anchor 재삽입 시 중복 `<img>` 제거
+- outer wrapper template 보존: `sidecar_block.xhtml_fragment`로 macro 속성 유지
+- anchor 트리거 조건: anchor/items 있는 child에만 reconstruction 트리거 (child count mismatch 방지)
+- changed-page golden 검증 통과: `test_544379140_callout_and_paragraph_changes` green
+- `tests/testcases/panels/expected.roundtrip.json` 갱신
 
 ### Phase 5. 기본 경로 전환 및 legacy 축소
 
-상태: 미완료
+상태: 미완료 — 진입 게이트 충족, 시작 가능
+
+현재 상태:
+
+- `reverse_sync_cli.py`는 여전히 `record_mapping()`, `SidecarEntry`, `build_mdx_to_sidecar_index()`, `generate_sidecar_mapping()`에 의존함
+- `patch_builder.py` (664줄, 17개 함수)는 여전히 `transfer_text_changes`, `build_list_item_patches`, `build_table_row_patches`를 기본 경로에서 호출함
+- `mapping.yaml` runtime 의존이 제거되지 않아 `RoundtripSidecar v3`가 primary artifact로 전환되지 못한 상태
 
 구현 항목:
 
-- `patch_builder.py` modified path를 reconstruction planner로 위임
-- `mapping.yaml` runtime 의존 축소
+- `patch_builder.py` modified path를 reconstruction planner로 위임 (thin orchestration layer로 전환)
+- `reverse_sync_cli.py`에서 `record_mapping()` → `build_sidecar()` 단일 경로로 전환
+- `SidecarEntry` / `build_mdx_to_sidecar_index()` / `generate_sidecar_mapping()` 계층을 debug 전용 또는 제거
 - legacy text-transfer 경로를 explicit fallback 또는 제거 대상으로 전환
 
 게이트:
 
-- `tests/testcases` 의 16개 changed golden 통과
-- `tests/reverse-sync/pages.yaml` 의 `expected_status: pass` 케이스 유지
-- unsupported 구조는 silent corruption 없이 명시적 fail
+- `tests/testcases` 의 16개 changed golden 통과 — ✅ 이미 충족
+- `tests/reverse-sync/pages.yaml` 의 `expected_status: pass` 케이스 유지 — ✅ 이미 충족
+- unsupported 구조는 silent corruption 없이 명시적 fail — ✅ 이미 충족
+- `mapping.yaml` 없이 sidecar v3만으로 runtime planning 가능 — ⬜ Phase 5 구현 후 달성 목표
 
 ## 7. 테스트 계획
 
@@ -522,15 +530,50 @@ PR #913 시점에 제안된 방향 중, 2026-03-15 기준 `main`에서도 그대
 
 ## 10. 판단
 
-2026-03-16 기준 `main`은 Phase 0 ~ Phase 3을 모두 흡수한 상태다. clean block과 inline-anchor paragraph/list에 대해 whole-fragment reconstruction이 기본 경로로 동작하고 있다.
+### 2026-03-16 (2차 갱신) 기준 상태
 
-현재의 정확한 상태는 다음과 같다.
+PR #903 머지로 `main`은 Phase 0 ~ Phase 4를 모두 흡수했다. clean block, inline-anchor paragraph/list, container(callout/ADF panel) 전부에 whole-fragment reconstruction이 적용됐다.
 
-- Phase 0 ~ Phase 3은 완료됐다. `reconstructors.py`, `xhtml_normalizer.py`, sidecar v3 anchor metadata가 모두 `main`에 들어와 있다.
+현재의 정확한 상태:
+
+- **Phase 0 ~ Phase 4 완료.** `reconstructors.py`, `xhtml_normalizer.py`, sidecar v3 anchor/container metadata가 모두 `main`에 들어와 있다.
 - clean block modified path는 `replace_fragment` 기반으로 전환됐다.
 - inline-anchor paragraph/list는 offset 매핑과 DOM 재삽입으로 재구성된다.
+- container(callout/ADF panel)는 child slot 기반 재구성 + inline markup 보존 + macro 속성 유지로 동작한다.
 - identity fallback은 block family 기반으로 강화돼 cross-type 오매칭이 방지된다.
-- 남은 핵심 작업은 Phase 4 (container 재구성)와 Phase 5 (기본 경로 전환 및 legacy 축소)다.
-- container (callout, details, ADF panel)는 아직 heuristic fallback에 의존하며, `mapping.yaml` runtime 계층 제거도 미완료다.
+- **남은 핵심 작업은 Phase 5 (기본 경로 전환 및 legacy 축소) 하나다.**
 
-앞으로의 작업 방향: Phase 4에서 child order 기반 container reconstruction을 구현하고, Phase 5에서 legacy text-transfer 체인을 순차적으로 제거한다.
+### Phase 5 진입 게이트 현황 (§6, §8 기준)
+
+| 게이트 조건 | 상태 |
+|-------------|------|
+| `tests/testcases` 16개 changed golden 통과 | ✅ 16 passed, 0 failed |
+| `expected_status: pass` 28개 회귀 케이스 유지 | ✅ 28 passed, 0 unexpected |
+| unsupported 구조는 silent corruption 없이 명시적 fail | ✅ 14개 모두 `expected_status: fail`로 명시 등록 |
+| `mapping.yaml` 없이도 sidecar v3 기반 runtime planning 가능 | ⬜ Phase 5 구현 대상 |
+
+게이트 1~3은 충족됐다. 게이트 4는 Phase 5 자체가 해결하는 항목이다.
+
+### 현재 `expected_status: fail` 14개의 failure_type 분류
+
+현재 통과하지 못하는 14개 케이스의 원인 분류:
+
+| failure_type | 건수 | 설명 |
+|---|---|---|
+| ft=13 | 4 | Bold 경계/공백 문제 (text-transfer heuristic 한계) |
+| ft=14 | 2 | 테이블 전체 소실 (표 재구성 미지원) |
+| ft=17 | 3 | 리스트 항목 [li] 태그 노출, 번호 오류 |
+| ft=11 | 2 | 교정 내용 원복 (mapping 오탐) |
+| ft=4 | 1 | 빈 Bold 태그 삽입 (emitter 버그) |
+| ft=15 | 1 | 테이블 셀 내 빈 줄 추가 |
+| ft=16 | 1 | 리스트 항목 내 코드 블록 인라인 병합 |
+
+이 중 ft=13, ft=11, ft=17의 일부는 Phase 5에서 legacy text-transfer를 제거하고 reconstruction 경로로 전환하면 자연히 개선되거나 명확한 fail-closed 처리로 정리될 것으로 예상된다.
+
+### 앞으로의 작업 방향
+
+Phase 5에서 아래 세 축을 순서대로 진행한다.
+
+1. **`patch_builder.py` thin orchestration 전환**: legacy heuristic 분기(text-transfer, list_patcher, table_patcher)를 explicit fallback으로 격리하고, reconstruction planner가 기본 경로를 담당하게 한다.
+2. **`mapping.yaml` runtime 의존 축소**: `record_mapping()` → `build_sidecar()` 기반으로 전환하고, `SidecarEntry` / `build_mdx_to_sidecar_index()` 계층을 제거하거나 debug 전용으로 축소한다.
+3. **legacy 모듈 정리**: `text_transfer.py`, `list_patcher.py`, `table_patcher.py`, `inline_detector.py`를 fallback 또는 삭제 대상으로 전환한다. 단, Phase 5 시작 전에는 제거하지 않는다 (§8 참조).
