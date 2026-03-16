@@ -87,15 +87,24 @@ def parse_mdx_blocks(text: str) -> List[MdxBlock]:
         if _is_list_line(line):
             start = i
             i += 1
-            while i < n and (lines[i] == '' or _is_list_continuation(lines[i])):
-                # 빈 줄 다음에 리스트가 아니면 종료
-                if lines[i] == '':
+            after_blank = False
+            while i < n:
+                current = lines[i]
+                if current == '':
+                    after_blank = True
                     if i + 1 < n and _is_list_continuation(lines[i + 1]):
                         i += 1
                         continue
                     else:
                         break
-                i += 1
+                elif _is_list_continuation(current):
+                    after_blank = False
+                    i += 1
+                elif not after_blank and not _is_block_start(current):
+                    # FC 패턴: 빈 줄 없이 이어지는 비들여쓰기 연속행 — 동일 list 항목의 일부
+                    i += 1
+                else:
+                    break
             content = '\n'.join(lines[start:i]) + '\n'
             blocks.append(MdxBlock('list', content, start + 1, i))
             continue
@@ -112,6 +121,17 @@ def parse_mdx_blocks(text: str) -> List[MdxBlock]:
         continue
 
     return blocks
+
+
+def _is_block_start(line: str) -> bool:
+    """해당 줄이 새 블록을 시작하는지 확인한다 (list 연속행 판정에 사용)."""
+    return (
+        line.startswith('#')
+        or line.startswith('```')
+        or line.startswith('<')
+        or line.startswith('import ')
+        or _is_list_line(line)
+    )
 
 
 def _is_list_line(line: str) -> bool:
