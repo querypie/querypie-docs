@@ -215,9 +215,23 @@ class TestBuildSidecar:
         sidecar = build_sidecar(xhtml, mdx, page_id="test")
 
         assert sidecar.blocks[0].reconstruction == {
-            "kind": "html_block",
+            "kind": "container",
             "old_plain_text": "First Second",
             "child_xpaths": ["macro-info[1]/p[1]", "macro-info[1]/p[2]"],
+            "children": [
+                {
+                    "xpath": "macro-info[1]/p[1]",
+                    "fragment": "<p>First</p>",
+                    "plain_text": "First",
+                    "type": "paragraph",
+                },
+                {
+                    "xpath": "macro-info[1]/p[2]",
+                    "fragment": "<p>Second</p>",
+                    "plain_text": "Second",
+                    "type": "paragraph",
+                },
+            ],
         }
 
 

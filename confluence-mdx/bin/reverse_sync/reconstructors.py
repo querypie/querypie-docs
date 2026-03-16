@@ -226,6 +226,65 @@ def reconstruct_fragment_with_sidecar(
     return new_fragment
 
 
+def container_sidecar_requires_reconstruction(
+    sidecar_block: Optional['SidecarBlock'],
+) -> bool:
+    """container sidecar block에 anchor가 있는 child가 있으면 True를 반환한다."""
+    if sidecar_block is None or sidecar_block.reconstruction is None:
+        return False
+    recon = sidecar_block.reconstruction
+    if recon.get('kind') != 'container':
+        return False
+    return any(
+        c.get('anchors') or c.get('items')
+        for c in recon.get('children', [])
+    )
+
+
+def reconstruct_container_fragment(
+    new_fragment: str,
+    sidecar_block: Optional['SidecarBlock'],
+) -> str:
+    """Container (callout/ADF panel) fragment에 sidecar child anchor를 재주입한다.
+
+    anchor가 없는 clean container라면 new_fragment를 그대로 반환한다.
+    anchor가 있는 child는 Phase 3 offset 매핑으로 ac:image를 재삽입한다.
+    outer wrapper (ac:structured-macro, ac:adf-extension)는 그대로 유지된다.
+    """
+    if sidecar_block is None or sidecar_block.reconstruction is None:
+        return new_fragment
+    recon = sidecar_block.reconstruction
+    if recon.get('kind') != 'container':
+        return new_fragment
+    children_meta = recon.get('children', [])
+    if not any(c.get('anchors') or c.get('items') for c in children_meta):
+        return new_fragment  # clean container — emit_block result 그대로 사용
+
+    soup = BeautifulSoup(new_fragment, 'html.parser')
+    body = soup.find('ac:rich-text-body') or soup.find('ac:adf-content')
+    if body is None:
+        return new_fragment
+
+    body_children = [c for c in body.children if isinstance(c, Tag)]
+    for i, child_tag in enumerate(body_children):
+        if i >= len(children_meta):
+            break
+        child_meta = children_meta[i]
+        anchors = child_meta.get('anchors', [])
+        if not anchors:
+            continue
+        old_plain = child_meta.get('plain_text', '')
+        new_plain = extract_plain_text(str(child_tag))
+        p = child_tag if child_tag.name == 'p' else child_tag.find('p')
+        if p is None:
+            continue
+        for anchor in reversed(anchors):
+            new_offset = map_anchor_offset(old_plain, new_plain, anchor['offset'])
+            insert_anchor_at_offset(p, new_offset, anchor['raw_xhtml'])
+
+    return str(soup)
+
+
 def reconstruct_inline_anchor_fragment(
     old_fragment: str,
     anchors: list,
