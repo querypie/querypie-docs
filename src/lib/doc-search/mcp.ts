@@ -1,9 +1,9 @@
-import MiniSearch from 'minisearch';
+import type MiniSearch from 'minisearch';
 
 import type { DocSearchArtifact, DocSearchChunk, DocSearchPagesArtifact, ManualType, SearchEngine } from '@/lib/doc-search/types';
 import { getDocPage } from '@/lib/doc-search/get-page';
-import { loadDocSearchArtifact } from '@/lib/doc-search/load-index';
-import { buildMiniSearchInstance, searchWithMiniSearch } from '@/lib/doc-search/minisearch-engine';
+import { loadDocSearchArtifact, loadMiniSearchIndex } from '@/lib/doc-search/load-index';
+import { searchWithMiniSearch } from '@/lib/doc-search/minisearch-engine';
 import { searchDocs } from '@/lib/doc-search/search';
 
 // Versions listed in descending order (newest first).
@@ -125,7 +125,8 @@ export async function handleMcpJsonRpc(
     case 'tools/call': {
       const toolName = String(request.params?.name || '');
       const args = (request.params?.arguments as Record<string, unknown> | undefined) ?? {};
-      const artifact = context?.artifact ?? loadDocSearchArtifact(String(args.lang || 'ko'));
+      const lang = String(args.lang || 'ko');
+      const artifact = context?.artifact ?? loadDocSearchArtifact(lang);
 
       if (toolName === 'search_docs') {
         const query = String(args.query || '').trim();
@@ -142,8 +143,11 @@ export async function handleMcpJsonRpc(
           const customResults = searchDocs({ artifact, query, topK, manualType });
           const customDuration = Math.round((performance.now() - customStart) * 100) / 100;
 
-          const ms = context?.miniSearchInstance ?? buildMiniSearchInstance(artifact.chunks);
+          // instance 취득(캐시 미스 시 파일 로드 포함)부터 검색 완료까지 전체 시간을 측정합니다.
+          const msStart = performance.now();
+          const ms = context?.miniSearchInstance ?? loadMiniSearchIndex(lang);
           const msResult = searchWithMiniSearch(ms, { artifact, query, topK, manualType });
+          msResult.durationMs = Math.round((performance.now() - msStart) * 100) / 100;
 
           const comparison = {
             custom: { engine: 'custom' as const, results: customResults, durationMs: customDuration },
@@ -156,8 +160,11 @@ export async function handleMcpJsonRpc(
         }
 
         if (searchEngine === 'minisearch') {
-          const ms = context?.miniSearchInstance ?? buildMiniSearchInstance(artifact.chunks);
+          // instance 취득(캐시 미스 시 파일 로드 포함)부터 검색 완료까지 전체 시간을 측정합니다.
+          const msStart = performance.now();
+          const ms = context?.miniSearchInstance ?? loadMiniSearchIndex(lang);
           const msResult = searchWithMiniSearch(ms, { artifact, query, topK, manualType });
+          msResult.durationMs = Math.round((performance.now() - msStart) * 100) / 100;
           return buildSuccess(request.id, {
             content: serializeTextContent(msResult),
             structuredContent: msResult,
