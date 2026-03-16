@@ -371,18 +371,40 @@ def _build_reconstruction_metadata(
         metadata["ordered"] = mapping.xhtml_xpath.startswith("ol[")
         metadata["items"] = _build_list_anchor_entries(fragment)
     elif mapping.children:
+        children_meta = []
+        for child_id in mapping.children:
+            if child_id not in id_to_mapping:
+                continue
+            child_m = id_to_mapping[child_id]
+            # mapping_recorder가 paragraph의 xhtml_text를 inner content(래퍼 제거)로
+            # 저장하므로 fragment 필드에는 전체 태그 형태로 복원한다
+            if child_m.type == "paragraph":
+                child_fragment = f'<p>{child_m.xhtml_text}</p>'
+            else:
+                child_fragment = child_m.xhtml_text
+            child_data: Dict[str, Any] = {
+                "xpath": child_m.xhtml_xpath,
+                "fragment": child_fragment,
+                "plain_text": child_m.xhtml_plain_text,
+                "type": child_m.type,
+            }
+            if child_m.type == "paragraph":
+                anchors = _build_anchor_entries(child_fragment)
+                if anchors:
+                    child_data["anchors"] = anchors
+            elif child_m.type == "list":
+                items = _build_list_anchor_entries(child_m.xhtml_text)
+                if items:
+                    child_data["items"] = items
+            children_meta.append(child_data)
+        metadata["kind"] = "container"
+        metadata["children"] = children_meta
+        metadata["child_xpaths"] = [c["xpath"] for c in children_meta]
         child_plain_texts = [
-            id_to_mapping[child_id].xhtml_plain_text.strip()
-            for child_id in mapping.children
-            if child_id in id_to_mapping and id_to_mapping[child_id].xhtml_plain_text.strip()
+            c["plain_text"].strip() for c in children_meta if c["plain_text"].strip()
         ]
         if child_plain_texts:
             metadata["old_plain_text"] = " ".join(child_plain_texts)
-        metadata["child_xpaths"] = [
-            id_to_mapping[child_id].xhtml_xpath
-            for child_id in mapping.children
-            if child_id in id_to_mapping
-        ]
     return metadata
 
 

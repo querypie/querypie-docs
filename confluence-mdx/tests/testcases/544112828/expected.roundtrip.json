@@ -47,7 +47,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": ""
+        "old_plain_text": "21falseOverviewdefaultlisttrue"
       }
     },
     {
@@ -109,7 +109,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "QueryPie Web > 프로필 메뉴"
+        "old_plain_text": ""
       }
     },
     {
@@ -140,7 +140,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "QueryPie Web > Agent Downloads 팝업창"
+        "old_plain_text": ""
       }
     },
     {
@@ -154,8 +154,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[1]/p[1]",
+            "fragment": "<p>QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.</p>",
+            "plain_text": "QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[1]/p[1]"
         ]
@@ -189,7 +197,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Mac OS 설치 프로그램"
+        "old_plain_text": ""
       }
     },
     {
@@ -220,7 +228,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > QueryPie Host 입력"
+        "old_plain_text": ""
       }
     },
     {
@@ -313,7 +321,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "QueryPie Web > Agent Login Page"
+        "old_plain_text": ""
       }
     },
     {
@@ -344,7 +352,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "QueryPie Web > Agent Login Success Page"
+        "old_plain_text": ""
       }
     },
     {
@@ -375,7 +383,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Chrome - Agent App 열기 모달"
+        "old_plain_text": ""
       }
     },
     {
@@ -421,7 +429,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > DB Connection Information"
+        "old_plain_text": ""
       }
     },
     {
@@ -452,7 +460,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "3rd Party Client를 이용한 DB 커넥션 접속"
+        "old_plain_text": ""
       }
     },
     {
@@ -546,7 +554,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Server > Select a Role"
+        "old_plain_text": ""
       }
     },
     {
@@ -560,8 +568,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[2]/p[1]",
+            "fragment": "<p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p>",
+            "plain_text": "역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[2]/p[1]"
         ]
@@ -611,7 +627,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Server > Open Connection with"
+        "old_plain_text": ""
       }
     },
     {
@@ -643,7 +659,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Server >  Open New Session"
+        "old_plain_text": ""
       }
     },
     {
@@ -705,7 +721,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760$ cd .ssh"
       }
     },
     {
@@ -736,7 +752,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760$ vi config"
       }
     },
     {
@@ -767,7 +783,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760Host {{Server Name}}\n  Hostname {{Server URL}}\n  Port {{Server SSH Port}}\n  ProxyCommand qpa ssh %r %h %p"
       }
     },
     {
@@ -781,8 +797,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[3]/p[1]",
+            "fragment": "<p>config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p>",
+            "plain_text": "config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[3]/p[1]"
         ]
@@ -816,7 +840,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760$ ssh deploy@{{Server Name}}"
       }
     },
     {
@@ -925,7 +949,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Kubernetes > Select a Role"
+        "old_plain_text": ""
       }
     },
     {
@@ -939,8 +963,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[4]/p[1]",
+            "fragment": "<p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p>",
+            "plain_text": "역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[4]/p[1]"
         ]
@@ -1005,7 +1037,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Policy Information"
+        "old_plain_text": ""
       }
     },
     {
@@ -1051,7 +1083,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Settings > Configure Kubeconfig Path"
+        "old_plain_text": ""
       }
     },
     {
@@ -1099,7 +1131,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "경로 지정 팝업"
+        "old_plain_text": ""
       }
     },
     {
@@ -1147,7 +1179,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760export KUBECONFIG=\"${HOME}/.kube/config:${HOME}/.kube/querypie-kubeconfig\""
       }
     },
     {
@@ -1178,7 +1210,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760export KUBECONFIG=\"${KUBECONFIG}:<user-specified-path>\""
       }
     },
     {
@@ -1242,7 +1274,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "code",
-        "old_plain_text": "wide760"
+        "old_plain_text": "wide760export KUBECONFIG=\"${KUBECONFIG}:${HOME}/.kube/querypie-kubeconfig\""
       }
     },
     {
@@ -1335,7 +1367,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > Settings"
+        "old_plain_text": ""
       }
     },
     {
@@ -1397,7 +1429,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Agent > App menu"
+        "old_plain_text": ""
       }
     },
     {

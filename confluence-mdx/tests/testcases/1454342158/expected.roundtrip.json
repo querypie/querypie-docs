@@ -16,7 +16,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": ""
+        "old_plain_text": "none"
       }
     },
     {
@@ -94,8 +94,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다. 11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal DB의 MFA 설정에 의해 제어됩니다.Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[1]/ul[1]",
+            "fragment": "<ul local-id=\"547528e7-aafd-430b-ba34-9ed1e900ca31\"><li local-id=\"15d5ccf9-dbfb-417a-b74f-508c0491b67f\"><p local-id=\"aed13c8a-9a60-4c1c-93ec-22e678f4dd8b\">현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.</p></li><li local-id=\"1c801a91-eaaf-400a-8ae7-5ca6128be941\"><p local-id=\"38d6b143-7ffb-4412-96b5-4a6ac945ee6e\">MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다. </p></li><li local-id=\"df6078f9-0c46-480a-92f0-65a778d5824c\"><p local-id=\"ba46e062-e86b-4f9c-9d64-8f0295758702\">11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.<br/>예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal DB의 MFA 설정에 의해 제어됩니다.</p></li><li local-id=\"f98093ff-8e09-4f18-aa7f-ffbe18d3ad3b\"><p local-id=\"cf109ff3-20ce-4eea-834b-451078901b40\">Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.</p></li></ul>",
+            "plain_text": "현재 여러개의 Identity Provider를 동시에 지원하지 않습니다. Internal database (QueryPie 사용자 ID/PW) 인증외에 하나의 IdP를 사용해야 합니다.MFA (Multi-factor Authentication) 지원은 Internal DB, LDAP, Custom Identity Provider에서만 가능합니다. 11.5.0 부터 Internal DB와 LDAP 또는 Internal DB와 Custom Identity Provider를 설정해서 사용할 경우 각각의 설정에서 MFA를 사용할 수 있습니다.예) LDAP에서 MFA를 설정하고 Internal DB에 MFA를 설정한 경우 사용자 계정이 LDAP 계정이면 LDAP의 MFA 설정에 의해 제어되고 Internal DB의 사용자 계정은 Internal DB의 MFA 설정에 의해 제어됩니다.Schedule에 의한 주기적 동기화는 LDAP, Okta, One Login, Custom Identity Provider에서만 가능합니다.",
+            "type": "list"
+          }
+        ],
         "child_xpaths": [
           "macro-info[1]/ul[1]"
         ]
@@ -176,7 +184,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Internal database의 상세 설정"
+        "old_plain_text": ""
       }
     },
     {
@@ -190,8 +198,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.",
+        "children": [
+          {
+            "xpath": "macro-note[1]/p[1]",
+            "fragment": "<p>주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.</p>",
+            "plain_text": "주의: 설정 후 한번이라도 사용자를 동기화 했다면, 설정한 IdP를 삭제(삭제후 다른 IdP로 변경)하는 것이 불가능합니다. IdP를 변경하거나 삭제를 해야하는 경우 Customer Portal 을 통해 문의 부탁드립니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-note[1]/p[1]"
         ]
@@ -257,7 +273,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "LDAP 상세설정"
+        "old_plain_text": ""
       }
     },
     {
@@ -428,8 +444,34 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "LDAP Attribute Mapping LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다. 우측 상단의 Add Row 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다. 해당 기능은 Admin > General > User Management > Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.QueryPie Attribute인 Username (loginId), Primary Email (email) 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다. 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.",
+        "children": [
+          {
+            "xpath": "macro-info[2]/p[1]",
+            "fragment": "<p><strong>LDAP Attribute Mapping</strong></p>",
+            "plain_text": "LDAP Attribute Mapping",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[2]/p[2]",
+            "fragment": "<p>LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.</p>",
+            "plain_text": "LDAP에서 관리 중인 사용자 속성을 QueryPie 내 Attribute와 매핑하여 동기화하려면, Enable Attribute Synchronization 옵션을 활성화하고 아래 정보를 입력합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[2]/p[3]",
+            "fragment": "<p>우측 상단의 <code>Add Row</code> 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.</p>",
+            "plain_text": "우측 상단의 Add Row 버튼을 클릭하면 새로운 매핑 행이 추가되며, 각 행마다 LDAP Attribute와 대응되는 QueryPie Attribute를 지정할 수 있습니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[2]/ol[1]",
+            "fragment": "<ol local-id=\"571c3c3b-cc85-4876-bb70-703f9f1ccf68\" start=\"1\"><li local-id=\"33079fcd-4944-4136-af93-05e4606832f0\"><p local-id=\"a0cbbc66-233d-49ac-8c2c-d2b0cbe7ab65\">해당 기능은 Admin &gt; General &gt; User Management &gt; Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.</p></li><li local-id=\"ff9e5c76-2fa7-47ba-b395-c048124fe8c0\"><p local-id=\"b3835627-f4b3-4c2c-8513-d88714b38494\">QueryPie Attribute인 <code>Username (loginId)</code>, <code>Primary Email (email)</code> 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다.</p></li><li local-id=\"ba3c265b-a2c8-4738-b3f6-34cb6f821972\"><p local-id=\"5ba4ad57-cab6-484c-9a81-6bfdd019183f\"> 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.</p></li></ol>",
+            "plain_text": "해당 기능은 Admin > General > User Management > Profile Editor에서 Source Priority가 Inherit from profile source로 설정된 QueryPie Attribute에 한해 적용됩니다.QueryPie Attribute인 Username (loginId), Primary Email (email) 항목은 LDAP 연동 설정 시 별도로 입력되므로, 해당 항목은 LDAP–QueryPie Attribute Mapping UI에는 노출되지 않습니다. 매핑 행 삭제 또는 변경 시, Save 버튼을 클릭해야 UI 상에서 변경 사항이 반영되며, Synchronize를 추가로 클릭해야 LDAP과 실제 동기화가 수행됩니다. 즉, Save는 화면상 변경, Synchronize는 시스템 반영을 의미합니다.",
+            "type": "list"
+          }
+        ],
         "child_xpaths": [
           "macro-info[2]/p[1]",
           "macro-info[2]/p[2]",
@@ -449,8 +491,16 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "Active Directory를 LDAP 연동할 경우 Anonymous 항목을 반드시 false로 설정해야합니다. AD는 기본적으로 익명 바인드 상태에서의 검색 작업을 허용하지 않습니다.",
+        "children": [
+          {
+            "xpath": "ac:adf-extension[1]/p[1]",
+            "fragment": "<p>Active Directory를 LDAP 연동할 경우 Anonymous 항목을 반드시 false로 설정해야합니다. AD는 기본적으로 익명 바인드 상태에서의 검색 작업을 허용하지 않습니다.</p>",
+            "plain_text": "Active Directory를 LDAP 연동할 경우 Anonymous 항목을 반드시 false로 설정해야합니다. AD는 기본적으로 익명 바인드 상태에서의 검색 작업을 허용하지 않습니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "ac:adf-extension[1]/p[1]"
         ]
@@ -498,7 +548,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Applications > Applications > Browse App Catalog > QueryPie 검색"
+        "old_plain_text": ""
       }
     },
     {
@@ -545,7 +595,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Directory > Profile Editor > QueryPie User > Add Attribute"
+        "old_plain_text": ""
       }
     },
     {
@@ -577,7 +627,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Directory > Profile Editor > QueryPie User > Mappings"
+        "old_plain_text": ""
       }
     },
     {
@@ -609,7 +659,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "paragraph",
-        "old_plain_text": "",
+        "old_plain_text": " ",
         "anchors": []
       }
     },
@@ -640,7 +690,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Applications > Applications > QueryPie App"
+        "old_plain_text": ""
       }
     },
     {
@@ -672,7 +722,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "paragraph",
-        "old_plain_text": "",
+        "old_plain_text": " ",
         "anchors": []
       }
     },
@@ -703,7 +753,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Applications > Applications > QueryPie App"
+        "old_plain_text": ""
       }
     },
     {
@@ -735,7 +785,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "paragraph",
-        "old_plain_text": "",
+        "old_plain_text": " ",
         "anchors": []
       }
     },
@@ -815,7 +865,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin Console > Security > Administrators > Roles > Create new role"
+        "old_plain_text": ""
       }
     },
     {
@@ -878,7 +928,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta 상세설정 (1)"
+        "old_plain_text": ""
       }
     },
     {
@@ -909,8 +959,94 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
-        "old_plain_text": "Assertion Consumer Service (ACS): SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다. Assertion Consumer Service Index의 필요성 및 역할 하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다. SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다. 이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다. 주요 사용 사례 다양한 프로토콜 바인딩(Binding) 지원: SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index=\"0\"은 HTTP POST를 위한 ACS URL을, index=\"1\"은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다. 다중 테넌트(Multi-tenant) 아키텍처 지원: 하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다. 애플리케이션 내 다른 인증 흐름 구분: 같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다. 동적 또는 특수한 ACS URL 처리: 특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다. okta app 설정의 Audience URI(SP Entity ID) Other Requestable SSO URLs 의 Index",
+        "kind": "container",
+        "old_plain_text": "Assertion Consumer Service (ACS): SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다. Assertion Consumer Service Index의 필요성 및 역할 하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다. SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다. 이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다. 주요 사용 사례 다양한 프로토콜 바인딩(Binding) 지원: SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index=\"0\"은 HTTP POST를 위한 ACS URL을, index=\"1\"은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다. 다중 테넌트(Multi-tenant) 아키텍처 지원: 하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다. 애플리케이션 내 다른 인증 흐름 구분: 같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다. 동적 또는 특수한 ACS URL 처리: 특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.",
+        "children": [
+          {
+            "xpath": "macro-info[3]/p[1]",
+            "fragment": "<p><strong>Assertion Consumer Service (ACS)</strong>: SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다.</p>",
+            "plain_text": "Assertion Consumer Service (ACS): SP(Service provider)에 위치한 특정 Endpoint(URL)로, IdP로부터 SAML Assertion을 수신하여 검증하고 사용자의 로그인을 처리하는 역할을 합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/p[2]",
+            "fragment": "<p><br/><strong>Assertion Consumer Service Index의 필요성 및 역할</strong></p>",
+            "plain_text": "Assertion Consumer Service Index의 필요성 및 역할",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/p[3]",
+            "fragment": "<p>하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다.</p>",
+            "plain_text": "하나의 SP는 다양한 이유로 여러 개의 ACS URL을 가질 수 있습니다. 이때AssertionConsumerServiceIndex가 필수적인 역할을 합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/p[4]",
+            "fragment": "<p>SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다.</p>",
+            "plain_text": "SP가 인증을 요청하는 SAML 메시지(AuthnRequest)에 이 인덱스 값을 포함하여 IdP에 보내면, IdP는 해당 인덱스에 매핑된 ACS URL로 정확하게 SAML 어설션을 전송합니다. 만약 이 인덱스가 명시되지 않으면, 일반적으로 미리 약속된 기본(Default) ACS URL로 어설션을 보내게 됩니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/p[5]",
+            "fragment": "<p>이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다.</p>",
+            "plain_text": "이러한 인덱스 기반의 라우팅은 다음과 같은 구체적인 상황에서 매우 유용합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/p[6]",
+            "fragment": "<p><strong>주요 사용 사례</strong></p>",
+            "plain_text": "주요 사용 사례",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/ul[1]",
+            "fragment": "<ul local-id=\"5bab435f-eac7-477b-8b68-0c79cacf242a\"><li local-id=\"fc84509a-eaf6-4423-aaf2-0c14e0413f1d\"><p local-id=\"9add9093-a1f2-4123-9af5-759947631579\">다양한 프로토콜 바인딩(Binding) 지원:</p></li></ul>",
+            "plain_text": "다양한 프로토콜 바인딩(Binding) 지원:",
+            "type": "list"
+          },
+          {
+            "xpath": "macro-info[3]/p[7]",
+            "fragment": "<p>SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index=\"0\"은 HTTP POST를 위한 ACS URL을, index=\"1\"은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다.</p>",
+            "plain_text": "SAML 어설션은 HTTP POST, HTTP-Artifact 등 여러 방식으로 전송될 수 있습니다. SP는 각 바인딩 방식에 따라 별도의 ACS URL을 운영할 수 있습니다. 예를 들어, index=\"0\"은 HTTP POST를 위한 ACS URL을, index=\"1\"은 HTTP-Artifact를 위한 ACS URL을 가리키도록 설정할 수 있습니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/ul[2]",
+            "fragment": "<ul local-id=\"af72bf57-8f3c-4387-849b-04691d324149\"><li local-id=\"fb23141a-9fc5-45e1-b0cb-d09b681b40ce\"><p local-id=\"c1b361f5-b7d9-4e05-aa60-7629761eb5d8\">다중 테넌트(Multi-tenant) 아키텍처 지원:</p></li></ul>",
+            "plain_text": "다중 테넌트(Multi-tenant) 아키텍처 지원:",
+            "type": "list"
+          },
+          {
+            "xpath": "macro-info[3]/p[8]",
+            "fragment": "<p>하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다.</p>",
+            "plain_text": "하나의 SaaS 애플리케이션이 여러 고객사(테넌트)를 지원하는 경우, 각 테넌트별로 고유한 ACS URL을 할당할 수 있습니다. 이를 통해 각 고객사의 인증 흐름을 격리하고 맞춤형으로 관리할 수 있습니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/ul[3]",
+            "fragment": "<ul local-id=\"6236af1c-30d7-417a-9583-d241f2981f64\"><li local-id=\"1c87f554-ac5b-4420-96ac-98d5aa43d53f\"><p local-id=\"c5d27ab9-1e1c-4575-a061-fdf3912eb45b\">애플리케이션 내 다른 인증 흐름 구분:</p></li></ul>",
+            "plain_text": "애플리케이션 내 다른 인증 흐름 구분:",
+            "type": "list"
+          },
+          {
+            "xpath": "macro-info[3]/p[9]",
+            "fragment": "<p>같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다.</p>",
+            "plain_text": "같은 애플리케이션이라도 사용자의 역할이나 접근 경로에 따라 다른 인증 후 처리가 필요할 수 있습니다. 예를 들어, 일반 사용자와 관리자의 로그인 후 리디렉션 페이지를 다르게 설정하고 싶을 때, 각각 다른 ACS URL을 사용하고 이를 인덱스로 구분할 수 있습니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[3]/ul[4]",
+            "fragment": "<ul local-id=\"5bca6c79-7185-46f4-997e-5e262f0dc302\"><li local-id=\"937b7b13-a750-4640-b3dd-c3d2c4bd7000\"><p local-id=\"22652b66-ffcb-4a4a-9be8-97af864027d3\">동적 또는 특수한 ACS URL 처리:</p></li></ul>",
+            "plain_text": "동적 또는 특수한 ACS URL 처리:",
+            "type": "list"
+          },
+          {
+            "xpath": "macro-info[3]/p[10]",
+            "fragment": "<p>특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.</p>",
+            "plain_text": "특정 상황이나 클라이언트의 요구에 따라 동적으로 생성된 ACS URL로 어설션을 받아야 할 때, 인덱스를 통해 정적으로 정의된 여러 URL 중 하나를 선택하도록 유도할 수 있습니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[3]/p[1]",
           "macro-info[3]/p[2]",
@@ -941,7 +1077,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta 상세설정 (2)"
+        "old_plain_text": ""
       }
     },
     {
@@ -988,8 +1124,22 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "Application ID 확인하는 방법 2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin > Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.",
+        "children": [
+          {
+            "xpath": "macro-info[4]/p[1]",
+            "fragment": "<p><strong>Application ID 확인하는 방법</strong></p>",
+            "plain_text": "Application ID 확인하는 방법",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[4]/p[2]",
+            "fragment": "<p>2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin > Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.</p>",
+            "plain_text": "2개 이상의 QueryPie Application 을 사용하는 경우, Okta Admin > Applications 으로 이동하여 QueryPie 앱의 디테일 화면으로 들어가면 상단 URL 에서 위의 스크린샷에 표시된 것과 같은 Application ID 를 확인하실 수 있습니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[4]/p[1]",
           "macro-info[4]/p[2]"
@@ -1008,7 +1158,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Okta Admin > Applications > QueryPie App 상단 URL"
+        "old_plain_text": ""
       }
     },
     {
@@ -1023,7 +1173,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "paragraph",
-        "old_plain_text": "",
+        "old_plain_text": " ",
         "anchors": []
       }
     },
@@ -1085,8 +1235,22 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
+        "kind": "container",
         "old_plain_text": "해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다. SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [Okta] 프로비저닝 연동 가이드 내 절차대로 대신 진행하여 주시기 바랍니다.",
+        "children": [
+          {
+            "xpath": "macro-info[5]/p[1]",
+            "fragment": "<p>해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.</p>",
+            "plain_text": "해당 연동 방식으로는 사용자 및 그룹은 Okta → QueryPie로의 단방향 동기화를 지원합니다.",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[5]/p[2]",
+            "fragment": "<p>SCIM 프로비저닝 연동까지 구현하고자 하는 경우, <a href=\"https://chequer.atlassian.net/wiki/spaces/QM/pages/544376394\"><u>[Okta] 프로비저닝 연동 가이드</u></a> 내 절차대로 대신 진행하여 주시기 바랍니다.</p>",
+            "plain_text": "SCIM 프로비저닝 연동까지 구현하고자 하는 경우, [Okta] 프로비저닝 연동 가이드 내 절차대로 대신 진행하여 주시기 바랍니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[5]/p[1]",
           "macro-info[5]/p[2]"
@@ -1152,8 +1316,28 @@
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
-        "old_plain_text": "One Login SAML Custom Connector 설정 및 Metadata XML 다운로드 OneLogin에 접속한 후 화면 상단의 Applications > Applications 메뉴를 클릭합니다.Add App 버튼을 클릭합니다.검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator, ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.Save 버튼을 눌러 저장합니다. 화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions > SAML Metadata를 클릭합니다.다운로드된 XML 파일을 확인합니다. One Login SAML Custom Connector 설정에 대한 자세한 내용은 https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f 의 내용을 참고 바랍니다.",
+        "kind": "container",
+        "old_plain_text": "One Login SAML Custom Connector 설정 및 Metadata XML 다운로드 OneLogin에 접속한 후 화면 상단의 Applications > Applications 메뉴를 클릭합니다.Add App 버튼을 클릭합니다.검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator,  ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.Save 버튼을 눌러 저장합니다. 화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions > SAML Metadata를 클릭합니다.다운로드된 XML 파일을 확인합니다. One Login SAML Custom Connector 설정에 대한 자세한 내용은 https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f 의 내용을 참고 바랍니다.",
+        "children": [
+          {
+            "xpath": "macro-info[6]/p[1]",
+            "fragment": "<p>One Login SAML Custom Connector 설정 및 Metadata XML 다운로드</p>",
+            "plain_text": "One Login SAML Custom Connector 설정 및 Metadata XML 다운로드",
+            "type": "paragraph"
+          },
+          {
+            "xpath": "macro-info[6]/ul[1]",
+            "fragment": "<ul local-id=\"89238760-f0e9-4a52-9615-fbce9a3a9d88\"><li local-id=\"8d114134-ba87-4d6f-aba9-9f708741e3b4\"><p local-id=\"dae1231d-73f2-4e3f-a40a-130cd0b34a84\">OneLogin에 접속한 후 화면 상단의 Applications &gt; Applications 메뉴를 클릭합니다.</p></li><li local-id=\"c120ffef-09c6-4e4a-bcce-3adfc60bc8a9\"><p local-id=\"3644ce3b-bb37-401d-996a-0e5c15b645d4\"><code>Add App</code> 버튼을 클릭합니다.</p></li><li local-id=\"989ea0b8-6ee6-4fa6-913e-9c6d5f018be1\"><p local-id=\"58b12de2-95d5-447b-96a2-89fc14466a8d\">검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.</p></li><li local-id=\"a3cf81ec-3002-4f85-81e6-a6c5ac3a02f3\"><p local-id=\"0698f378-67e8-4158-9e39-058e86abde83\">Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator,  ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.</p></li><li local-id=\"950211e4-e8a3-48e6-beda-b9d8a00b915f\"><p local-id=\"37c9f49a-ba48-415a-9702-4884f1237f0a\"><code>Save</code> 버튼을 눌러 저장합니다. </p></li><li local-id=\"3a4000f9-38e7-4708-9b5b-055d78599df4\"><p local-id=\"ce96dd6f-e43d-4532-aaf3-8358bd6aca25\">화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions &gt; SAML Metadata를 클릭합니다.</p></li><li local-id=\"2276d0e5-d4d9-4d11-b551-e64e4575dda8\"><p local-id=\"91c09747-22da-4c1d-a071-5d83a50e9e42\">다운로드된 XML 파일을 확인합니다.</p></li></ul>",
+            "plain_text": "OneLogin에 접속한 후 화면 상단의 Applications > Applications 메뉴를 클릭합니다.Add App 버튼을 클릭합니다.검색 영역에 'SAML Custom Connector (Advanced)'을 입력한 후 검색 결과를 클릭합니다.Display Name에 QueryPie에서 확인된 Application Name to be used in OneLogin의 내용을 복사해서 붙여넣고 Audiance (Entity ID), Recipient, ACS (Consumer) URL Validator,  ACS (Consumer) URL도 각각 정보를 복사하여 One Login 설정에 붙여 넣습니다.Save 버튼을 눌러 저장합니다. 화면 좌측의 Configuration 메뉴를 선택한 뒤 화면 우측 상단의 More Actions > SAML Metadata를 클릭합니다.다운로드된 XML 파일을 확인합니다.",
+            "type": "list"
+          },
+          {
+            "xpath": "macro-info[6]/p[2]",
+            "fragment": "<p>One Login SAML Custom Connector 설정에 대한 자세한 내용은 <a data-card-appearance=\"inline\" href=\"https://onelogin.service-now.com/support?id=kb_article&amp;sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&amp;kb_category=de885d2187372d10695f0f66cebb351f\" local-id=\"c63fb6aa-e140-448f-8909-9298951a9783\">https://onelogin.service-now.com/support?id=kb_article&amp;sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&amp;kb_category=de885d2187372d10695f0f66cebb351f</a> 의 내용을 참고 바랍니다.</p>",
+            "plain_text": "One Login SAML Custom Connector 설정에 대한 자세한 내용은 https://onelogin.service-now.com/support?id=kb_article&sys_id=8a1f3d501b392510c12a41d5ec4bcbcc&kb_category=de885d2187372d10695f0f66cebb351f 의 내용을 참고 바랍니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[6]/p[1]",
           "macro-info[6]/ul[1]",
@@ -1190,7 +1374,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "One Login 상세설정 (1)"
+        "old_plain_text": ""
       }
     },
     {
@@ -1222,7 +1406,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "One Login 상세설정 (2)"
+        "old_plain_text": ""
       }
     },
     {
@@ -1317,7 +1501,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "paragraph",
-        "old_plain_text": "< 참고 >  ",
+        "old_plain_text": "< 참고 > AWS SSO 연동 ",
         "anchors": []
       }
     },
