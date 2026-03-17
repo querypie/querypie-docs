@@ -66,17 +66,28 @@ def _normalize_trailing_blank_lines(text: str) -> str:
 
 
 
+def _normalize_link_text_spacing(text: str) -> str:
+    """MDX 인라인 링크 텍스트의 앞뒤 공백을 제거한다.
+
+    Forward converter가 [text](url) 형식에서 text 앞뒤 공백을 제거하므로,
+    improved.mdx의 [ **text** ](url)와 verify.mdx의 [**text**](url)를 동일하게 취급한다.
+    """
+    return re.sub(r'\[ +(.+?) +\]\(', r'[\1](', text)
+
+
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
     forward converter의 체계적 출력 특성에 의한 차이만 처리한다:
     - 인라인 이중 공백 → 단일 공백 (_normalize_consecutive_spaces_in_text)
     - <br/> 앞 공백 제거 (_normalize_br_space)
+    - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
     text = _normalize_consecutive_spaces_in_text(text)
     text = _normalize_br_space(text)
+    text = _normalize_link_text_spacing(text)
     text = _normalize_table_cell_padding(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')

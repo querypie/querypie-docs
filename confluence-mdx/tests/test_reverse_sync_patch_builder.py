@@ -183,6 +183,57 @@ class TestBuildPatches:
 
         assert patches == []
 
+    # Path 1d: type-based sidecar 타입 불일치로 mapping=None → text fallback으로 복원
+    #          → real content change → replace_fragment
+    # 재현: CI 환경의 544382060 패턴 — type-based 매칭 실패 시에도 패치가 적용되어야 한다
+    def test_path1d_no_sidecar_match_text_fallback_applies_replace_fragment(self):
+        """type-based sidecar가 mapping을 찾지 못해도 text fallback으로 복원 후 replace_fragment."""
+        list_mapping = _make_mapping(
+            'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = '1. 검색이 가능합니다 조건으로 검색\n'
+        new_content = '1. 검색할 수 있습니다 조건으로 검색\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+
+        # mdx_to_sidecar에 해당 블록 없음 — type-based 매칭 실패
+        mdx_to_sidecar = {}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p>검색이 가능합니다 조건으로 검색</p></li>',
+                         'different_hash', (10, 10)),
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        # text fallback이 mapping 복원 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
+
+    # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None → text fallback으로도 skip
+    def test_path1e_no_sidecar_match_no_roundtrip_sidecar_skips(self):
+        """roundtrip_sidecar가 없으면 text fallback으로 mapping 복원해도 replace_fragment 불가."""
+        list_mapping = _make_mapping(
+            'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = '1. 검색이 가능합니다 조건으로 검색\n'
+        new_content = '1. 검색할 수 있습니다 조건으로 검색\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = {}
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        # roundtrip_sidecar 없음 → should_replace_clean_list=False → skip
+        assert patches == []
+
     # Path 2: sidecar 매칭 → children 있음 → roundtrip_sidecar 없음 → skip (Phase 5 Axis 3)
     def test_path2_sidecar_match_list_no_roundtrip_sidecar_skips(self):
         parent = _make_mapping('p1', 'totally different parent', xpath='ul[1]',

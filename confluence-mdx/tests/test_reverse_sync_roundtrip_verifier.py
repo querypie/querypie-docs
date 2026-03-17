@@ -4,6 +4,7 @@ from reverse_sync.roundtrip_verifier import (
     VerifyResult,
     _normalize_consecutive_spaces_in_text,
     _normalize_br_space,
+    _normalize_link_text_spacing,
 )
 
 
@@ -155,6 +156,38 @@ class TestNormalizeBrSpace:
         assert _normalize_br_space("a <br/>b") == "a<br/>b"
 
 
+# --- _normalize_link_text_spacing 단위 테스트 ---
+
+
+class TestNormalizeLinkTextSpacing:
+    def test_spaces_inside_brackets_removed(self):
+        """링크 텍스트 앞뒤 공백이 제거된다."""
+        assert _normalize_link_text_spacing(
+            "[ **General** ](url)") == "[**General**](url)"
+
+    def test_bold_link_with_spaces_normalized(self):
+        """* [ **text** ](url) 패턴이 정규화된다."""
+        assert _normalize_link_text_spacing(
+            "* [ **Security** ](company-management/security) : desc") == \
+            "* [**Security**](company-management/security) : desc"
+
+    def test_no_spaces_unchanged(self):
+        """공백 없는 링크는 변경되지 않는다."""
+        assert _normalize_link_text_spacing(
+            "[**General**](url)") == "[**General**](url)"
+
+    def test_regular_link_unchanged(self):
+        """일반 텍스트 링크는 변경되지 않는다."""
+        assert _normalize_link_text_spacing(
+            "[some text](url)") == "[some text](url)"
+
+    def test_multiple_links_all_normalized(self):
+        """여러 링크가 모두 정규화된다."""
+        result = _normalize_link_text_spacing(
+            "* [ **A** ](a) and [ **B** ](b)")
+        assert result == "* [**A**](a) and [**B**](b)"
+
+
 # --- verify_roundtrip에서의 최소 정규화 동작 ---
 
 
@@ -172,6 +205,34 @@ def test_minimal_norm_br_space_passes():
     result = verify_roundtrip(
         expected_mdx="item <br/>next\n",
         actual_mdx="item<br/>next\n",
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_link_spacing_passes():
+    """링크 텍스트 공백 차이는 strict 모드에서도 정규화된다.
+
+    재현: CI 543948978 패턴 — improved.mdx의 [ **General** ](url)와
+    FC가 생성한 verify.mdx의 [**General**](url)가 동일하게 취급된다.
+    """
+    result = verify_roundtrip(
+        expected_mdx="* [ **General** ](company-management/general) : desc\n",
+        actual_mdx="* [**General**](company-management/general) : desc\n",
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_link_spacing_multiple_items():
+    """여러 링크 항목의 공백이 정규화된다."""
+    result = verify_roundtrip(
+        expected_mdx=(
+            "* [ **General** ](url1) : desc1\n"
+            "* [ **Security** ](url2) : desc2\n"
+        ),
+        actual_mdx=(
+            "* [**General**](url1) : desc1\n"
+            "* [**Security**](url2) : desc2\n"
+        ),
     )
     assert result.passed is True
 
