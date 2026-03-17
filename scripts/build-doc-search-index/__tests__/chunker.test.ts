@@ -71,6 +71,51 @@ describe('inferDocMetadata', () => {
   });
 });
 
+describe('normalizeMdxForLLM (via parseMdxDocument)', () => {
+  it('does not treat lines inside fenced code blocks as headings or imports', () => {
+    const mdxWithCodeFence = `---
+title: 'Code Fence Test'
+description: 'Testing code fence handling'
+---
+
+# Code Fence Test
+
+## Setup
+
+Install the package:
+
+\`\`\`bash
+# This is a shell comment, not a heading
+import pandas as pd
+\`\`\`
+
+## Usage
+
+Use the API.
+`;
+
+    const document = parseMdxDocument(mdxWithCodeFence, {
+      filePath: 'src/content/ko/test/code-fence-test.mdx',
+      lang: 'ko',
+    });
+
+    expect(document.content).not.toContain('import pandas as pd');
+    expect(document.content).not.toContain('# This is a shell comment');
+
+    const metadata = inferDocMetadata({
+      filePath: document.filePath,
+      lang: document.lang,
+      title: document.title,
+      description: document.description,
+      content: document.content,
+    });
+
+    const chunks = buildChunksFromDocument(document, metadata);
+    const headingTexts = chunks.flatMap(c => c.headingPath);
+    expect(headingTexts).not.toContain('This is a shell comment, not a heading');
+  });
+});
+
 describe('buildChunksFromDocument', () => {
   it('builds heading-based chunks with breadcrumbs and rich text', () => {
     const document = parseMdxDocument(sampleMdx, {

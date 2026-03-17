@@ -11,6 +11,10 @@ function decodeHtmlEntities(input: string): string {
     .replace(/&#39;/g, "'");
 }
 
+function stripFencedCodeBlocks(content: string): string {
+  return content.replace(/^```[\s\S]*?^```\s*$/gm, '');
+}
+
 function stripImports(content: string): string {
   return content
     .split('\n')
@@ -48,7 +52,8 @@ function normalizeWhitespace(content: string): string {
 
 export function normalizeMdxForLLM(source: string): string {
   const parsed = source.match(FRONTMATTER_SEPARATOR) ? matter(source) : { content: source };
-  const strippedImports = stripImports(parsed.content);
+  const withoutCodeBlocks = stripFencedCodeBlocks(parsed.content);
+  const strippedImports = stripImports(withoutCodeBlocks);
   const withImageAlt = replaceImageTags(strippedImports);
   const withoutTags = stripWrapperTags(withImageAlt);
   return normalizeWhitespace(decodeHtmlEntities(withoutTags));
