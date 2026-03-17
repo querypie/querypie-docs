@@ -211,7 +211,7 @@ export async function POST(request: NextRequest) {
     void err;
     responseBody = {
       jsonrpc: '2.0',
-      id: (body as { id?: unknown }).id ?? null,
+      id: body.id as string | number | null,
       error: { code: -32603, message: 'Internal error' },
     };
   }
