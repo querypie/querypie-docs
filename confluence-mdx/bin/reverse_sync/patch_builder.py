@@ -253,14 +253,18 @@ def _find_best_list_mapping_by_text(
     sidecar lookup이 잘못된 list mapping을 반환했을 때 plain text로 올바른
     mapping을 복원하기 위한 fallback이다.
     prefix 40자를 기준으로 xhtml_plain_text를 검색한다.
+
+    FC가 한국어 조사(을/를/이/가 등) 앞에 공백을 삽입하므로,
+    공백을 제거한 상태로 비교한다 (예: "App을" vs "App 을").
     """
     prefix = old_plain[:40].strip()
     if not prefix:
         return None
+    prefix_nospace = prefix.replace(' ', '')
     for m in mappings:
         if m.type != 'list' or m.block_id in used_ids:
             continue
-        if prefix in m.xhtml_plain_text:
+        if prefix_nospace in m.xhtml_plain_text.replace(' ', ''):
             return m
     return None
 
