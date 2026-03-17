@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 
+import type { JsonRpcResponse } from '@/lib/doc-search/mcp';
 import { handleMcpJsonRpc, MCP_PROTOCOL_VERSION, SUPPORTED_PROTOCOL_VERSIONS } from '@/lib/doc-search/mcp';
 
 const MAX_REQUESTS_PER_MINUTE = 120;
@@ -203,6 +204,16 @@ export async function POST(request: NextRequest) {
     return withCommonHeaders(new NextResponse(null, { status: 202 }), request, protocolVersion);
   }
 
-  const responseBody = await handleMcpJsonRpc(body as never);
+  let responseBody: JsonRpcResponse;
+  try {
+    responseBody = await handleMcpJsonRpc(body as never);
+  } catch (err) {
+    void err;
+    responseBody = {
+      jsonrpc: '2.0',
+      id: (body as { id?: unknown }).id ?? null,
+      error: { code: -32603, message: 'Internal error' },
+    };
+  }
   return withCommonHeaders(NextResponse.json(responseBody, { status: 200 }), request, protocolVersion);
 }

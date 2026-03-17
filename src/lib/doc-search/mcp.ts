@@ -11,6 +11,8 @@ import { searchWithMiniSearch } from '@/lib/doc-search/minisearch-engine';
 export const MCP_PROTOCOL_VERSION = '2025-11-25';
 export const SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'] as const;
 
+export const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
+
 interface JsonRpcRequest {
   jsonrpc: '2.0';
   id?: string | number | null;
@@ -18,7 +20,7 @@ interface JsonRpcRequest {
   params?: Record<string, unknown>;
 }
 
-interface JsonRpcResponse {
+export interface JsonRpcResponse {
   jsonrpc: '2.0';
   id: string | number | null;
   result?: unknown;
@@ -119,6 +121,9 @@ export async function handleMcpJsonRpc(
       const toolName = String(request.params?.name || '');
       const args = (request.params?.arguments as Record<string, unknown> | undefined) ?? {};
       const lang = String(args.lang || 'ko');
+      if (!SUPPORTED_LANGS.includes(lang as (typeof SUPPORTED_LANGS)[number])) {
+        return buildError(request.id, -32602, `Unsupported lang: ${lang}. Must be one of: ${SUPPORTED_LANGS.join(', ')}`);
+      }
 
       if (toolName === 'search_docs') {
         const query = String(args.query || '').trim();
