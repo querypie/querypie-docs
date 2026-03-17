@@ -1,0 +1,89 @@
+---
+title: 'QueryPie ACP Community Edition 업그레이드 방법'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1990000673/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP Community Edition 업그레이드 방법
+
+### Overview
+
+업그레이드는 설치 스크립트(`setup.v2.sh`)의 `--upgrade` 옵션을 사용합니다.
+기존 데이터와 설정을 유지한 채로 새 버전으로 전환하며, DB 마이그레이션까지 자동으로 수행합니다.
+
+<Callout type="info">
+**업그레이드 환경**
+* &lt;설치경로&gt;/current 심볼릭 링크가 존재해야합니다.<br/>홈디렉토리에 설치한 경우 예시 : ~/querypie/current
+* querypie 컨테이너가 실행 중인 상태로 업그레이드 해야 합니다. <br/>중지되어 있으면 업그레이드 할 수 없습니다.
+</Callout>
+______
+
+### 업그레이드 절차
+
+#### Step 1: 현재 버전 확인 및 업그레이드 전제조건 확인
+
+```
+# Check which version the `current` symbolic link points to
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether all required containers are running (app, mysql, redis)
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+
+#### Step 2: 설치 가능한 버전 확인
+
+[제품 버전](../product-versions) 문서에서 설치 가능한 버전을 확인합니다.
+
+#### Step 3: 업그레이드 실행
+
+서버에 SSH로 직접 로그인한 후 실행합니다 (TTY 필요):
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade <version>
+```
+
+예시:
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade 11.6.0
+```
+
+동일 버전이나 낮은 버전으로는 업그레이드가 진행되지 않습니다.
+
+#### Step 4: 업그레이드 완료 확인
+
+```
+# Check whether the `current` symbolic link points to the new version
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether the new version containers are running
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+______
+
+<Callout type="info">
+### 업그레이드 내부 동작 순서
+
+스크립트가 자동으로 수행하는 작업:
+
+1. 컨테이너 엔진 및 현재 QueryPie 상태 확인
+2. 현재 실행 버전과 설정 버전 일치 여부 검증 (불일치 시 중단)
+3. 대상 버전이 현재보다 높은지 확인 (같거나 낮으면 스킵)
+4. 새 버전 설정 파일 다운로드 및 구성
+5. 새 버전 Docker 이미지 pull
+6. 기존 버전 컨테이너 중지
+7. DB 마이그레이션 실행 (`migrate.sh runall` 2회)
+8. 새 버전 컨테이너 시작 및 준비 상태 확인
+9. `~/querypie/current` 심볼릭 링크를 새 버전으로 업데이트
+</Callout>
+______
+
+### 주의사항
+
+* **직접 로그인 필요**: 설치와 마찬가지로 TTY가 필요하므로 SSH로 서버에 직접 접속 후 실행합니다.
+* **버전 순서**: 동일 버전이나 낮은 버전으로는 업그레이드가 진행되지 않습니다.
+* **이전 버전 디렉토리 보존**: 업그레이드 후 이전 버전 디렉토리(`~/querypie/<이전버전>/`)는 자동 삭제되지 않습니다. 확인 후 필요 없다면 수동으로 삭제해야 합니다. (인증서 등 이전 버전에서 사용하던 파일 중 복사가 필요한 파일이 있다면 복사한 뒤 삭제합니다.)
+  ```
+  rm -rf ~/querypie/<previous version>
+  ```
+* **다운타임**: 컨테이너 교체 과정에서 짧은 서비스 중단이 발생합니다.
+* **라이선스**: Community Edition 라이선스 유효기간은 발급일로부터 1년입니다. 업그레이드 후 라이선스 만료 여부를 확인합니다.
