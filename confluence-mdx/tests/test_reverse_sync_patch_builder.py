@@ -1,8 +1,7 @@
 """patch_builder 유닛 테스트.
 
 build_patches 분기 경로
-+ helper 함수 (is_markdown_table, split_table_rows, normalize_table_row,
-split_list_items, build_table_row_patches, build_list_item_patches) 테스트.
++ helper 함수 (is_markdown_table) 테스트.
 """
 from reverse_sync.block_diff import BlockChange
 from reverse_sync.mapping_recorder import BlockMapping
@@ -23,21 +22,8 @@ from reverse_sync.patch_builder import (
 )
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.table_patcher import (
-    build_table_row_patches,
     is_markdown_table,
-    split_table_rows,
-    normalize_table_row,
 )
-from reverse_sync.inline_detector import (
-    has_inline_format_change,
-    has_inline_boundary_change,
-    _extract_inline_markers,
-)
-from reverse_sync.list_patcher import (
-    build_list_item_patches,
-    split_list_items,
-)
-
 
 # ── 헬퍼 팩토리 ──
 
@@ -114,66 +100,6 @@ class TestIsMarkdownTable:
         assert is_markdown_table('| --- | --- |') is False
 
 
-class TestSplitTableRows:
-    def test_splits_data_rows(self):
-        content = '| h1 | h2 |\n| --- | --- |\n| a | b |\n| c | d |'
-        rows = split_table_rows(content)
-        assert rows == ['| h1 | h2 |', '| a | b |', '| c | d |']
-
-    def test_skips_separator(self):
-        content = '| h |\n| --- |\n| v |'
-        rows = split_table_rows(content)
-        assert '| --- |' not in rows
-
-    def test_skips_empty_lines(self):
-        content = '| a |\n\n| b |'
-        rows = split_table_rows(content)
-        assert rows == ['| a |', '| b |']
-
-
-class TestNormalizeTableRow:
-    def test_extracts_cell_text(self):
-        assert normalize_table_row('| hello | world |') == 'hello world'
-
-    def test_strips_bold(self):
-        assert normalize_table_row('| **bold** | text |') == 'bold text'
-
-    def test_strips_code(self):
-        assert normalize_table_row('| `code` | text |') == 'code text'
-
-    def test_strips_link(self):
-        assert normalize_table_row('| [Title](url) | x |') == 'Title x'
-
-    def test_empty_cells_skipped(self):
-        assert normalize_table_row('|  | text |') == 'text'
-
-    def test_unescapes_html(self):
-        assert normalize_table_row('| A &amp; B | x |') == 'A & B x'
-
-
-class TestSplitListItems:
-    def test_dash_items(self):
-        content = '- item one\n- item two\n- item three'
-        items = split_list_items(content)
-        assert items == ['- item one', '- item two', '- item three']
-
-    def test_numbered_items(self):
-        content = '1. first\n2. second'
-        items = split_list_items(content)
-        assert items == ['1. first', '2. second']
-
-    def test_multiline_item(self):
-        content = '- item one\n  continued\n- item two'
-        items = split_list_items(content)
-        assert len(items) == 2
-        assert 'continued' in items[0]
-
-    def test_blank_line_separator(self):
-        content = '- item one\n\n- item two'
-        items = split_list_items(content)
-        assert items == ['- item one', '- item two']
-
-
 # ── build_patches 분기 경로 테스트 ──
 
 
@@ -186,8 +112,63 @@ class TestBuildPatches:
         mdx_to_sidecar = {mdx_idx: entry}
         return mdx_to_sidecar
 
-    # Path 1: sidecar 매칭 → list type + children → list 전략 → 전체 리스트 재생성
-    def test_path1_sidecar_match_list_with_children_regenerates(self):
+    # Path 1: 직접 sidecar 매칭 + 실제 텍스트 변경 → replace_fragment (has_content_change=True)
+    # (Phase 5 Axis 3: build_list_item_patches 제거, 실제 변경 시 replace_fragment로 라우팅)
+    def test_path1_direct_sidecar_match_list_with_content_change_regenerates(self):
+        child = _make_mapping('c1', 'child text', xpath='li[1]')
+        parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(0, '- child text', '- updated child', type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p>child text</p></li>', 'hash1', (1, 1))
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        # 실제 텍스트 변경(child text→updated child) → has_content_change=True → replace_fragment
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
+
+    # Path 1b: 직접 sidecar 매칭 + 형식 전용 변경 (텍스트 동일) → skip
+    # 예: [ **General** ] → [**General**] (링크 내 공백, collapse_ws 후 텍스트 동일)
+    def test_path1b_direct_sidecar_format_only_change_skips(self):
+        child = _make_mapping('c1', 'General text', xpath='li[1]')
+        parent = _make_mapping('p1', 'General text more', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        # 링크 공백 변경만: [**General**](url) → [ **General** ](url), 텍스트 동일
+        change = _make_change(
+            0,
+            '* [**General**](company-management/general) text\n',
+            '* [ **General** ](company-management/general) text\n',
+            type_='list',
+        )
+        mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p><a href="">General</a> text</p></li>', 'hash1', (1, 1))
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        # 형식만 변경(링크 공백), normalize+collapse_ws 후 텍스트 동일 → skip
+        assert patches == []
+
+    # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 + content change
+    #          → clean list이면 replace_fragment (Phase 5: has_content_change → patch)
+    def test_path1c_sidecar_match_list_without_roundtrip_sidecar_with_content_change_patches(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
                                type_='list', children=['c1'])
@@ -201,20 +182,74 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
-        assert 'new_inner_xhtml' in patches[0]
+        assert patches[0]['action'] == 'replace_fragment'
 
-    # Path 2: sidecar 매칭 → children 있음 → child 해석 실패
-    #          → 텍스트 불일치 → list 분리 (item 수 불일치 → inner XHTML 재생성)
-    def test_path2_sidecar_match_child_fail_list_split(self):
+    # Path 1d: type-based sidecar 타입 불일치로 mapping=None → text fallback으로 복원
+    #          → real content change → replace_fragment
+    # 재현: CI 환경의 544382060 패턴 — type-based 매칭 실패 시에도 패치가 적용되어야 한다
+    def test_path1d_no_sidecar_match_text_fallback_applies_replace_fragment(self):
+        """type-based sidecar가 mapping을 찾지 못해도 text fallback으로 복원 후 replace_fragment."""
+        list_mapping = _make_mapping(
+            'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = '1. 검색이 가능합니다 조건으로 검색\n'
+        new_content = '1. 검색할 수 있습니다 조건으로 검색\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+
+        # mdx_to_sidecar에 해당 블록 없음 — type-based 매칭 실패
+        mdx_to_sidecar = {}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p>검색이 가능합니다 조건으로 검색</p></li>',
+                         'different_hash', (10, 10)),
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        # text fallback이 mapping 복원 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
+
+    # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None + content change
+    #          → text fallback으로 mapping 복원 → clean list → replace_fragment
+    def test_path1e_no_sidecar_match_no_roundtrip_sidecar_with_content_change_patches(self):
+        """roundtrip_sidecar 없어도 has_content_change이면 text fallback 후 replace_fragment."""
+        list_mapping = _make_mapping(
+            'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = '1. 검색이 가능합니다 조건으로 검색\n'
+        new_content = '1. 검색할 수 있습니다 조건으로 검색\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = {}
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping)
+
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
+
+    # Path 2: sidecar 매칭 → children 있음 → roundtrip_sidecar 없음 + content change
+    #          → clean list이면 replace_fragment (Phase 5: has_content_change → patch)
+    def test_path2_sidecar_match_list_no_roundtrip_sidecar_with_content_change_patches(self):
         parent = _make_mapping('p1', 'totally different parent', xpath='ul[1]',
                                type_='list', children=['c1'])
         child = _make_mapping('c1', 'no match here', xpath='li[1]')
         mappings = [parent, child]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-        # list type with different item count → new_inner_xhtml 재생성
         change = _make_change(
             0, '- item one\n- item two', '- item one\n- item two\n- item three',
             type_='list')
@@ -224,10 +259,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # item count mismatch → parent mapping으로 전체 리스트 inner XHTML 재생성
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
         assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
 
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
@@ -683,27 +718,6 @@ class TestBuildPatches:
         assert '<table>' in patches[0]['new_element_xhtml']
         assert 'new_val' in patches[0]['new_element_xhtml']
 
-    def test_markdown_table_without_roundtrip_sidecar_keeps_row_patch_path(self):
-        m1 = _make_mapping('m1', 'Header1 Header2 old_val other', xpath='table[1]',
-                           type_='table')
-        mappings = [m1]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
-
-        change = _make_change(
-            0,
-            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
-            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
-        )
-
-        patches = build_patches(
-            [change], [change.old_block], [change.new_block],
-            mappings, mdx_to_sidecar, xpath_to_mapping)
-
-        assert len(patches) == 1
-        assert patches[0].get('action', 'modify') == 'modify'
-        assert patches[0]['new_plain_text'] != patches[0]['old_plain_text']
-
     def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
         mappings = [m1]
@@ -729,395 +743,61 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['new_element_xhtml'] == '<h2>New Title</h2>'
 
+    def test_table_without_roundtrip_sidecar_returns_no_patch(self):
+        """roundtrip_sidecar가 없는 table 변경은 Phase 5 Axis 3 이후 skip한다.
 
-# ── build_table_row_patches ──
-
-
-class TestBuildTableRowPatches:
-    def test_patches_changed_row(self):
-        container = _make_mapping(
-            'm1', 'Header1 Header2 old_val other', xpath='table[1]',
-            type_='table')
-        mappings = [container]
+        현재: _can_replace_table_fragment(roundtrip_sidecar=None) → False →
+              build_table_row_patches가 text-transfer 패치를 생성한다.
+        Phase 5 Axis 3 이후: fallback 제거 → patches == [].
+        """
+        mapping = _make_mapping('m1', 'Header old_val', xpath='table[1]', type_='table')
+        change = _make_change(
+            0,
+            '| Header |\n| --- |\n| old_val |',
+            '| Header |\n| --- |\n| new_val |',
+        )
         mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
-        xpath_to_mapping = {'table[1]': container}
+        xpath_to_mapping = {'table[1]': mapping}
 
-        change = _make_change(
-            0,
-            '| Header1 | Header2 |\n| --- | --- |\n| old_val | other |',
-            '| Header1 | Header2 |\n| --- | --- |\n| new_val | other |',
+        patches = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
         )
 
-        patches = build_table_row_patches(
-            change, mappings, set(), mdx_to_sidecar, xpath_to_mapping)
+        assert patches == [], "fallback 제거 후 roundtrip_sidecar 없는 table은 skip이어야 한다"
 
-        assert len(patches) == 1
-        assert 'new_val' in patches[0]['new_plain_text']
+    def test_list_without_roundtrip_sidecar_but_content_change_patches(self):
+        """roundtrip_sidecar 없어도 content change가 있으면 clean list를 패치한다.
 
-    def test_row_count_mismatch_returns_empty(self):
-        container = _make_mapping('m1', 'text', xpath='table[1]')
+        has_content_change=True이고 preserved anchor markup이 없는 경우,
+        roundtrip_sidecar=None이어도 should_replace_clean_list=True가 되어
+        replace_fragment 패치를 생성한다.
+        """
+        mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')
         change = _make_change(
-            0,
-            '| a |\n| --- |\n| b |',
-            '| a |\n| --- |\n| b |\n| c |',
-        )
-        patches = build_table_row_patches(
-            change, [container], set(),
-            {0: _make_sidecar('table[1]', [0])}, {'table[1]': container})
-        assert patches == []
-
-    def test_no_sidecar_returns_empty(self):
-        change = _make_change(
-            0, '| a |\n| --- |\n| b |', '| a |\n| --- |\n| c |')
-        patches = build_table_row_patches(change, [], set(), {}, {})
-        assert patches == []
-
-
-# ── build_list_item_patches ──
-
-
-class TestBuildListItemPatches:
-    def test_patches_changed_item_with_child(self):
-        child = _make_mapping('c1', 'old item', xpath='li[1]')
-        parent = _make_mapping(
-            'p1', 'list parent', xpath='ul[1]', children=['c1'])
-        mappings = [parent, child]
-        id_map = {m.block_id: m for m in mappings}
+            0, '* old item text\n', '* new item text\n', type_='list')
         mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        xpath_to_mapping = {'ul[1]': mapping}
 
-        change = _make_change(
-            0, '- old item\n- keep item', '- new item\n- keep item',
-            type_='list')
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_map)
-
-        assert len(patches) == 1
-        assert 'new item' in patches[0]['new_inner_xhtml']
-
-    def test_item_count_mismatch_without_parent_returns_empty(self):
-        """parent mapping이 없으면 item count 불일치 시 빈 패치를 반환한다."""
-        change = _make_change(
-            0, '- item one\n- item two', '- item one',
-            type_='list')
-        patches = build_list_item_patches(change, [], set(), {}, {}, {})
-        assert patches == []
-
-    def test_item_count_mismatch_with_parent_generates_inner_xhtml(self):
-        """리스트 항목 수가 달라지면(삭제/추가) new_inner_xhtml 패치를 생성해야 한다.
-
-        실제 사례: 10.3.0-10.3.4.mdx — 중복된 리스트 항목 삭제
-          Original MDX: "* [DAC] DRM 연동\\n* [DAC] 기능 제공\\n* [DAC] DRM 연동\\n* [DAC] Default Privilege"
-          Improved MDX: "* [DAC] DRM 연동\\n* [DAC] 기능 제공\\n* [DAC] Default Privilege"
-          현상: 중복 항목 삭제 시 build_list_item_patches가 빈 패치를 반환하여
-                XHTML에서 중복이 제거되지 않음
-        """
-        parent = _make_mapping(
-            'list-56',
-            '[DAC] DRM 연동 [DAC] 기능 제공 [DAC] DRM 연동 [DAC] Default Privilege',
-            xpath='ul[5]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* [DAC] DRM 연동\n* [DAC] 기능 제공\n* [DAC] DRM 연동\n* [DAC] Default Privilege\n',
-            '* [DAC] DRM 연동\n* [DAC] 기능 제공\n* [DAC] Default Privilege\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[5]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) == 1, (
-            'item count 불일치 시 parent mapping이 있으면 '
-            'new_inner_xhtml 패치를 생성해야 함'
-        )
-        assert 'new_inner_xhtml' in patches[0]
-        # 중복 항목이 제거된 결과여야 함
-        inner = patches[0]['new_inner_xhtml']
-        assert inner.count('DRM 연동') == 1, (
-            f'중복 항목이 제거되어야 함: {inner!r}'
+        patches = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
         )
 
-    def test_list_item_inline_code_added_generates_inner_xhtml(self):
-        """리스트 항목에서 backtick 추가 시 new_inner_xhtml 패치를 생성한다."""
-        child = _make_mapping('c1', 'use kubectl command', xpath='ul[1]/li[1]/p[1]')
-        parent = _make_mapping('p1', 'use kubectl command', xpath='ul[1]',
-                               type_='list', children=['c1'])
-        mappings = [parent, child]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* use kubectl command\n',
-            '* use `kubectl` command\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0]
-        assert '<code>kubectl</code>' in patches[0]['new_inner_xhtml']
-
-    def test_flat_list_inline_code_added_generates_inner_xhtml(self):
-        """children이 없는 flat 리스트에서 backtick 추가 시에도
-        new_inner_xhtml 패치를 생성해야 한다.
-
-        현상: flat list(children=[])에서 _resolve_child_mapping이 None을 반환하여
-        containing block 전략으로 폴백되고, normalize_mdx_to_plain이 backtick을
-        제거하므로 old_plain == new_plain이 되어 패치가 생성되지 않는다.
-        결과적으로 backtick → <code> 변환이 누락된다.
-        """
-        # flat list mapping (children 없음) — 실제 Confluence 페이지에서 흔한 구조
-        parent = _make_mapping(
-            'list-16',
-            '[DAC] Not allowed object type undefined 오류 해결',
-            xpath='ul[3]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* [DAC] Not allowed object type undefined 오류 해결\n',
-            '* [DAC] `Not allowed object type undefined` 오류 해결\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[3]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) == 1
-        assert 'new_inner_xhtml' in patches[0], (
-            'backtick 추가 시 new_inner_xhtml 패치가 생성되어야 하지만, '
-            'containing block 전략으로 폴백되어 inline format이 누락됨'
-        )
-        assert '<code>Not allowed object type undefined</code>' in patches[0]['new_inner_xhtml']
-
-    def test_flat_list_inline_code_with_text_change_generates_inner_xhtml(self):
-        """children이 없는 flat 리스트에서 텍스트 변경과 함께 backtick이
-        추가되는 경우에도 new_inner_xhtml 패치를 생성해야 한다.
-
-        예: 'MySQL 에서 useServerPrepStmts = true 인 경우'
-          → 'MySQL에서 `useServerPrepStmts = true`인 경우'
-        """
-        parent = _make_mapping(
-            'list-38',
-            '[DAC] MySQL 에서 useServerPrepStmts = true 인 경우 DML 스냅샷 기능 충돌 이슈 해결',
-            xpath='ul[8]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* [DAC] MySQL 에서 useServerPrepStmts = true 인 경우 DML 스냅샷 기능 충돌 이슈 해결\n',
-            '* [DAC] MySQL에서 `useServerPrepStmts = true`인 경우 DML 스냅샷 기능 충돌 이슈 해결\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[8]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) >= 1
-        # 최소한 하나의 패치는 inline format 변경을 포함해야 함
-        inner_xhtml_patches = [p for p in patches if 'new_inner_xhtml' in p]
-        assert len(inner_xhtml_patches) >= 1, (
-            'backtick 추가가 포함된 변경에서 new_inner_xhtml 패치가 생성되어야 하지만, '
-            'containing block 전략으로 폴백되어 inline format이 누락됨'
-        )
-        inner = inner_xhtml_patches[0]['new_inner_xhtml']
-        assert '<code>useServerPrepStmts = true</code>' in inner
-
-    def test_flat_list_bold_boundary_change_generates_inner_xhtml(self):
-        """flat list에서 bold 마커 경계가 이동하는 경우 new_inner_xhtml 패치를 생성해야 한다.
-
-        예: '* **after :** `"APPROVER"`' → '*  **after**  : `"APPROVER"`'
-        bold 마커의 content가 "after :" → "after"로 변경되어,
-        text-only 패치로는 <strong> 경계를 변경할 수 없다.
-        """
-        parent = _make_mapping(
-            'list-37',
-            'before : "REPORTER" "APPROVER" after : "APPROVER" "EXECUTOR"',
-            xpath='ul[3]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* **before** : `"REPORTER"` `"APPROVER"`\n'
-            '* **after :** `"APPROVER"` `"EXECUTOR"`\n',
-            '* **before** : `"REPORTER"` `"APPROVER"`\n'
-            '*  **after**  : `"APPROVER"` `"EXECUTOR"`\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[3]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        # bold 경계 변경이 있으므로 new_inner_xhtml 패치가 생성되어야 함
-        inner_xhtml_patches = [p for p in patches if 'new_inner_xhtml' in p]
-        assert len(inner_xhtml_patches) >= 1, (
-            'bold 경계 변경에서 new_inner_xhtml 패치가 생성되어야 하지만, '
-            f'text-only 패치만 생성됨: {patches}'
-        )
-
-    def test_child_miss_regenerates_full_list(self):
-        """R2: child 매칭 실패 시 전체 리스트 inner XHTML을 재생성한다."""
-        parent = _make_mapping(
-            'p1', 'parent old text here in list', xpath='ul[1]',
-            children=['c1'])
-        child = _make_mapping('c1', 'no match whatsoever', xpath='li[1]')
-        mappings = [parent, child]
-        id_map = {m.block_id: m for m in mappings}
-        mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-
-        change = _make_change(
-            0, '- old text', '- new text',
-            type_='list')
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_map)
-
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
-        assert 'new_inner_xhtml' in patches[0]
-        assert 'new text' in patches[0]['new_inner_xhtml']
-
-    def test_flat_list_append_text_at_end_of_item(self):
-        """flat list에서 항목 끝에 텍스트를 추가할 때 다음 항목으로 넘치지 않아야 한다.
-
-        실제 사례: 9.10.0-9.10.4.mdx
-          Original: "* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈"
-          Improved: "* [MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결"
-          현상: "해결"이 다음 항목 앞에 붙어 "해결[Privilege Type]..."이 됨
-
-        실제 사례: 11.1.0-11.1.2.mdx
-          Original: "* [General] 워크플로우 승인완료되었거나 ... External API"
-          Improved: "* [General] 워크플로우 승인 완료 상태이거나 ... External API 추가"
-          현상: "추가"가 다음 항목 앞에 붙어 "추가[DAC]..."이 됨
-        """
-        parent = _make_mapping(
-            'list-55',
-            '[MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor) '
-            '[MongoDB] 데이터 조회 시 이모지 깨지는 이슈 '
-            '[Privilege Type] Default Privilege Type 이름 변경 (-role 제거)',
-            xpath='ul[5]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* [MongoDB] Aggregate 커멘드 정책 적용 지원 (Web Editor)\n'
-            '* [MongoDB] 데이터 조회 시 이모지 깨지는 이슈\n'
-            '* [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)\n',
-            '* [MongoDB] Aggregate 커맨드 정책 적용 지원(Web Editor)\n'
-            '* [MongoDB] 데이터 조회 시 이모지가 깨지는 이슈 해결\n'
-            '* [Privilege Type] Default Privilege Type 이름 변경 (-role 제거)\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[5]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) == 1
-        p = patches[0]
-        assert 'new_inner_xhtml' in p
-        # R2: 전체 리스트 재생성이므로 각 항목이 올바르게 포함됨
-        assert '이슈 해결' in p['new_inner_xhtml'], (
-            f"'이슈 해결'이 포함되어야 함: {p['new_inner_xhtml']!r}"
-        )
-        # 재생성된 리스트에서 항목 간 텍스트 혼합이 없어야 함
-        assert '해결[Privilege' not in p['new_inner_xhtml'], (
-            f"'해결'이 다음 항목과 혼합됨: {p['new_inner_xhtml']!r}"
-        )
-
-    def test_flat_list_bracket_insert_at_item_start(self):
-        """flat list에서 리스트 아이템 맨 앞에 '[' 삽입 시
-        XHTML의 해당 아이템 위치에 정확히 삽입되어야 한다.
-
-        실제 사례: 'Authentication Type ...' → '[Authentication] Type ...'
-        XHTML에는 여러 리스트 아이템 텍스트가 이어져 있으므로,
-        transfer_text_changes가 '[' 를 전체 텍스트 맨 앞이 아닌
-        해당 아이템 시작 위치에 삽입해야 한다.
-        """
-        parent = _make_mapping(
-            'list-105',
-            'Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가'
-            'DynamoDB 데이터 조회 관련 이슈 개선'
-            'Authentication Type 변경 시 오류 메시지 개선'
-            '하단 상태바 버전 태그 표시 개선',
-            xpath='ul[10]',
-            type_='list',
-            children=[],
-        )
-        mappings = [parent]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-        id_to_mapping = {m.block_id: m for m in mappings}
-
-        change = _make_change(
-            0,
-            '* Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가\n'
-            '* DynamoDB 데이터 조회 관련 이슈 개선\n'
-            '* Authentication Type 변경 시 오류 메시지 개선\n'
-            '* 하단 상태바 버전 태그 표시 개선\n',
-            '* Export 시도 시 Zip 파일로 압축 및 PW 걸기 기능 추가\n'
-            '* DynamoDB 데이터 조회 관련 이슈 개선\n'
-            '* [Authentication] Type 변경 시 오류 메시지 개선\n'
-            '* 하단 상태바 버전 태그 표시 개선\n',
-            type_='list',
-        )
-        mdx_to_sidecar = {0: _make_sidecar('ul[10]', [0])}
-
-        patches = build_list_item_patches(
-            change, mappings, set(),
-            mdx_to_sidecar, xpath_to_mapping, id_to_mapping)
-
-        assert len(patches) == 1
-        p = patches[0]
-        assert 'new_inner_xhtml' in p
-        # R2: 전체 리스트 재생성이므로 '[Authentication]'이 포함됨
-        assert '[Authentication]' in p['new_inner_xhtml'], (
-            f"'[Authentication]'이 패치 결과에 포함되어야 함: {p['new_inner_xhtml']!r}"
-        )
+        assert patches[0]['action'] == 'replace_fragment'
 
 
 # ── delete/insert 패치 생성 테스트 ──
@@ -1385,164 +1065,6 @@ class TestResolveMappingForChange:
             change, self._old_plain(change), **ctx)
         assert strategy == 'skip'
         assert mapping is None
-
-
-# ── Inline format 변경 감지 테스트 ──
-
-
-class TestExtractInlineMarkers:
-    """_extract_inline_markers()의 inline 포맷 마커 추출을 테스트한다."""
-
-    def test_no_markers(self):
-        assert _extract_inline_markers('plain text only') == []
-
-    def test_code_span(self):
-        markers = _extract_inline_markers('use `kubectl` command')
-        assert len(markers) == 1
-        assert markers[0][0] == 'code'
-        assert markers[0][2] == 'kubectl'
-
-    def test_bold(self):
-        markers = _extract_inline_markers('this is **important** text')
-        assert len(markers) == 1
-        assert markers[0][0] == 'bold'
-        assert markers[0][2] == 'important'
-
-    def test_italic(self):
-        markers = _extract_inline_markers('this is *emphasized* text')
-        assert len(markers) == 1
-        assert markers[0][0] == 'italic'
-        assert markers[0][2] == 'emphasized'
-
-    def test_link(self):
-        markers = _extract_inline_markers('see [docs](https://example.com)')
-        assert len(markers) == 1
-        assert markers[0][0] == 'link'
-        assert markers[0][2] == 'docs'
-        assert markers[0][3] == 'https://example.com'
-
-    def test_multiple_markers_sorted_by_position(self):
-        markers = _extract_inline_markers('**bold** and `code`')
-        assert len(markers) == 2
-        assert markers[0][0] == 'bold'
-        assert markers[1][0] == 'code'
-
-    def test_code_inside_bold_not_double_counted(self):
-        """bold 내부의 backtick은 code로만 감지된다."""
-        markers = _extract_inline_markers('use `code` here')
-        code_markers = [m for m in markers if m[0] == 'code']
-        assert len(code_markers) == 1
-
-
-class TestHasInlineFormatChange:
-    """has_inline_format_change()의 inline 변경 감지를 테스트한다."""
-
-    def test_no_change_plain_text(self):
-        assert has_inline_format_change('hello world', 'hello earth') is False
-
-    def test_code_added(self):
-        assert has_inline_format_change(
-            'use https://example.com/ URL',
-            'use `https://example.com/` URL',
-        ) is True
-
-    def test_code_removed(self):
-        assert has_inline_format_change(
-            'use `kubectl` command',
-            'use kubectl command',
-        ) is True
-
-    def test_code_content_changed(self):
-        assert has_inline_format_change(
-            'use `old_cmd` here',
-            'use `new_cmd` here',
-        ) is True
-
-    def test_bold_added(self):
-        assert has_inline_format_change(
-            'important note',
-            '**important** note',
-        ) is True
-
-    def test_link_changed(self):
-        assert has_inline_format_change(
-            'see [docs](https://old.com)',
-            'see [docs](https://new.com)',
-        ) is True
-
-    def test_same_markers_no_change(self):
-        assert has_inline_format_change(
-            '**bold** and `code`',
-            '**bold** and `code`',
-        ) is False
-
-    def test_text_only_change_with_existing_markers(self):
-        """마커 외부의 텍스트만 변경 → inline 변경 아님."""
-        assert has_inline_format_change(
-            '앞문장 `code` 뒷문장',
-            '변경된 앞문장 `code` 변경된 뒷문장',
-        ) is False
-
-    def test_comma_added_between_consecutive_code_spans(self):
-        """연속된 code 마커 사이에 쉼표 추가 → inline 변경."""
-        assert has_inline_format_change(
-            '해당 주소는 `http`  `https` 와 같은 Scheme 을 붙여서는 안 됩니다.',
-            '해당 주소는 `http`, `https`와 같은 Scheme을 붙여서는 안 됩니다.',
-        ) is True
-
-    def test_punctuation_added_between_markers(self):
-        """연속된 마커 사이에 구두점 추가 → inline 변경."""
-        assert has_inline_format_change(
-            '`a` `b` end',
-            '`a`, `b` end',
-        ) is True
-
-    def test_whitespace_only_change_between_markers(self):
-        """연속된 마커 사이 공백만 변경 → inline 변경 아님."""
-        assert has_inline_format_change(
-            '`http`  `https` text',
-            '`http` `https` text',
-        ) is False
-
-
-# ── has_inline_boundary_change 테스트 ──
-
-
-class TestHasInlineBoundaryChange:
-    """has_inline_boundary_change()의 boundary 감지 테스트."""
-
-    def test_code_span_boundary_expands_to_include_leading_text(self):
-        """code span이 확장되어 이전에 plain이었던 leading text를 흡수하는 경우 감지.
-
-        재현 시나리오:
-          Original MDX: * [Alert] Executed Result : `{{execResult}}` 에러 해결
-          Improved MDX: * [Alert] `Executed Result: {{execResult}}` 에러 해결
-          현상: old_types == new_types == ['code'], between=[] → False 반환
-          기대: True 반환 (code span의 leading boundary 변경)
-
-        페이지 544375485 reverse-sync verify 실패 원인.
-        """
-        old = '* [Alert] Executed Result : `{{execResult}}` 에러 해결'
-        new = '* [Alert] `Executed Result: {{execResult}}` 에러 해결'
-        assert has_inline_boundary_change(old, new) is True
-
-    def test_code_span_content_only_change_not_boundary(self):
-        """code span 내용만 변경 → boundary 변경 아님."""
-        old = '* [Alert] prefix `{{execResult}}` 에러'
-        new = '* [Alert] prefix `{{execResult_v2}}` 에러'
-        assert has_inline_boundary_change(old, new) is False
-
-    def test_type_change_detected(self):
-        """마커 타입 변경 감지."""
-        assert has_inline_boundary_change('use `cmd` here', 'use **cmd** here') is True
-
-    def test_between_marker_text_change_detected(self):
-        """연속 마커 사이 텍스트 변경 감지."""
-        assert has_inline_boundary_change('`a` `b`', '`a`, `b`') is True
-
-    def test_no_change_returns_false(self):
-        """변경 없음 → False."""
-        assert has_inline_boundary_change('`code` text', '`code` text') is False
 
 
 # ── build_patches 멱등성 (idempotency) 테스트 ──

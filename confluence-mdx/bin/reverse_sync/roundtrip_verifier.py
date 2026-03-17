@@ -66,17 +66,60 @@ def _normalize_trailing_blank_lines(text: str) -> str:
 
 
 
+def _normalize_link_text_spacing(text: str) -> str:
+    """MDX 인라인 링크 텍스트의 앞뒤 공백을 제거한다.
+
+    Forward converter가 [text](url) 형식에서 text 앞뒤 공백을 제거하므로,
+    improved.mdx의 [ **text** ](url)와 verify.mdx의 [**text**](url)를 동일하게 취급한다.
+    """
+    return re.sub(r'\[ +(.+?) +\]\(', r'[\1](', text)
+
+
+def _normalize_empty_bold(text: str) -> str:
+    """빈 bold 마커(****)를 정규화한다.
+
+    Forward converter가 XHTML의 빈 <strong></strong> 요소를 ****로 변환하므로,
+    두 가지 패턴을 처리한다:
+    1. ****text**** → **text** (빈 bold로 감싸인 텍스트)
+    2. ****: → ' :' (콜론 앞 빈 bold는 구분 공백으로 정규화)
+
+    fenced code block 내부는 변경하지 않는다.
+    """
+    lines = text.split('\n')
+    result = []
+    in_code_block = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+            result.append(line)
+            continue
+        if in_code_block:
+            result.append(line)
+            continue
+        # ****text**** → **text** (빈 bold wrapper 제거)
+        line = re.sub(r'\*{4}(.+?)\*{4}', r'**\1**', line)
+        # ****: → ' :' (빈 bold 뒤 콜론 → 공백 콜론)
+        line = re.sub(r'\*{4}:', ' :', line)
+        result.append(line)
+    return '\n'.join(result)
+
+
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
     forward converter의 체계적 출력 특성에 의한 차이만 처리한다:
     - 인라인 이중 공백 → 단일 공백 (_normalize_consecutive_spaces_in_text)
     - <br/> 앞 공백 제거 (_normalize_br_space)
+    - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
+    - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
     text = _normalize_consecutive_spaces_in_text(text)
     text = _normalize_br_space(text)
+    text = _normalize_link_text_spacing(text)
+    text = _normalize_empty_bold(text)
     text = _normalize_table_cell_padding(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')

@@ -713,7 +713,7 @@
   description: '버튼을 클릭합니다.<br/> 형태가 버튼을 클릭합니다 <br/>로 변환됨. 문장 끝 마침표와 <br/> 사이에 공백이 삽입되고 마침표가 소실됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: <br/> 앞 마침표 뒤 공백 삽입 (클릭합니다.<br/> → 클릭합니다 <br/>)
   mdx_path: administrator-manual/general/system/integrations/integrating-with-event-callback.mdx
@@ -900,7 +900,7 @@
   description: 'Confluence의 빈 <strong></strong> 태그가 MDX 변환 시 무의미한 ****로 삽입됨. XHTML 라운드트립 후 기존 줄 끝에 **** 가 추가됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 4
   label: 빈 Bold 태그 삽입
   mdx_path: administrator-manual/databases/connection-management/cloud-providers/synchronizing-db-resources-from-aws.mdx

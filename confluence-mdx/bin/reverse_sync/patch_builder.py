@@ -1,4 +1,5 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
+import re
 from typing import Dict, List, Optional
 
 from mdx_to_storage.emitter import emit_block
@@ -26,13 +27,7 @@ from reverse_sync.reconstructors import (
     reconstruct_fragment_with_sidecar,
     container_sidecar_requires_reconstruction,
 )
-from reverse_sync.list_patcher import (
-    build_list_item_patches,
-)
 from reverse_sync.table_patcher import (
-    build_table_row_patches,
-    split_table_rows,
-    normalize_table_row,
     is_markdown_table,
 )
 
@@ -225,23 +220,30 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
 def _flush_containing_changes(
     containing_changes: dict,
     used_ids: 'set | None' = None,
+    ol_starts: 'dict | None' = None,
 ) -> List[Dict[str, str]]:
     """그룹화된 containing_changes를 패치 목록으로 변환한다.
 
     containing_changes: block_id → (mapping, [(old_plain, new_plain)])
+    ol_starts: block_id → new_start (ol 시작 번호 변경 시)
     각 매핑의 xhtml_plain_text에 transfer_text_changes를 순차 적용하여 패치를 생성한다.
     """
     patches = []
     for bid, (mapping, item_changes) in containing_changes.items():
         xhtml_text = mapping.xhtml_plain_text
         for old_plain, new_plain in item_changes:
+            # Explicit fallback: containing block은 내부 구조 보존이 필요하므로
+            # text_transfer로 plain text만 변경한다 (callout, 중첩 list 등)
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, xhtml_text)
-        patches.append({
+        patch: Dict[str, str] = {
             'xhtml_xpath': mapping.xhtml_xpath,
             'old_plain_text': mapping.xhtml_plain_text,
             'new_plain_text': xhtml_text,
-        })
+        }
+        if ol_starts and bid in ol_starts:
+            patch['ol_start'] = ol_starts[bid]
+        patches.append(patch)
         if used_ids is not None:
             used_ids.add(bid)
     return patches
@@ -257,14 +259,18 @@ def _find_best_list_mapping_by_text(
     sidecar lookup이 잘못된 list mapping을 반환했을 때 plain text로 올바른
     mapping을 복원하기 위한 fallback이다.
     prefix 40자를 기준으로 xhtml_plain_text를 검색한다.
+
+    FC가 한국어 조사(을/를/이/가 등) 앞에 공백을 삽입하므로,
+    공백을 제거한 상태로 비교한다 (예: "App을" vs "App 을").
     """
     prefix = old_plain[:40].strip()
     if not prefix:
         return None
+    prefix_nospace = prefix.replace(' ', '')
     for m in mappings:
         if m.type != 'list' or m.block_id in used_ids:
             continue
-        if prefix in m.xhtml_plain_text:
+        if prefix_nospace in m.xhtml_plain_text.replace(' ', ''):
             return m
     return None
 
@@ -410,6 +416,8 @@ def build_patches(
             del_change.old_block.content, del_change.old_block.type)
         new_plain = normalize_mdx_to_plain(
             add_change.new_block.content, add_change.new_block.type)
+        # Explicit fallback: clean/table fragment 교체 불가이면 text_transfer로 전이
+        # (paired delete+add이지만 reconstruction 불가인 경우)
         xhtml_text = transfer_text_changes(
             old_plain, new_plain, mapping.xhtml_plain_text)
         patches.append({
@@ -422,6 +430,7 @@ def build_patches(
 
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
+    containing_ol_starts: dict = {}  # block_id → new_start (ol start 속성 변경)
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -468,6 +477,15 @@ def build_patches(
                         mapping = resolved
                         mapping_via_v3_fallback = True
 
+        # v3 identity fallback도 실패한 경우: old_plain prefix text matching으로 최종 복원
+        # type-based sidecar 타입 불일치로 mapping=None이 된 list 블록을 복원한다
+        if mapping is None and strategy == 'list':
+            text_fallback = _find_best_list_mapping_by_text(
+                old_plain, mappings, used_ids)
+            if text_fallback is not None:
+                mapping = text_fallback
+                mapping_via_v3_fallback = True
+
         # sidecar가 잘못된 list mapping을 반환한 경우 (ac: 포함 + plain text 불일치):
         # plain text prefix로 올바른 mapping 복원
         if (strategy == 'list' and mapping is not None
@@ -486,13 +504,26 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # roundtrip sidecar가 있지만 이 list에 매칭되는 block이 없을 때
-            # (cross-type 거부 또는 mapping drift) clean list는 whole-fragment 재생성으로 처리
+            # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
+            # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
+            # 실제 텍스트 변경 여부: normalize+collapse_ws로 비교하여 링크 공백 등 형식 차이 무시
+            _old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, 'list'))
+            _new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, 'list'))
+            has_content_change = _old_plain != _new_plain
+            # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
+            _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
+            _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
+            has_ol_start_change = bool(
+                _old_start and _new_start
+                and int(_old_start.group(1)) != int(_new_start.group(1))
+            )
+            has_any_change = has_content_change or has_ol_start_change
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
-                and roundtrip_sidecar is not None
-                and (list_sidecar is None or mapping_via_v3_fallback)
+                # sidecar 있으면 항상 허용; 없으면 실제 변경(텍스트 또는 번호 시작값)이 있을 때만 허용
+                and (roundtrip_sidecar is not None or has_any_change)
+                and (list_sidecar is None or mapping_via_v3_fallback or has_any_change)
             )
             if (mapping is not None
                     and (
@@ -511,11 +542,20 @@ def build_patches(
                     )
                 )
                 continue
-            patches.extend(
-                build_list_item_patches(
-                    change, mappings, used_ids,
-                    mdx_to_sidecar, xpath_to_mapping, id_to_mapping,
-                    mapping_lost_info=mapping_lost_info))
+            # preserved anchor + any change → text transfer via containing_changes
+            # (ac:/ri: markup 구조 보존하면서 plain text 및 ol start 속성을 변경)
+            if (mapping is not None
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and has_any_change):
+                bid = mapping.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (mapping, [])
+                if has_content_change:
+                    containing_changes[bid][1].append((_old_plain, _new_plain))
+                if has_ol_start_change:
+                    containing_ol_starts[bid] = int(_new_start.group(1))
+                continue
+            # skip — reconstruction path 없는 list는 패치하지 않는다 (Phase 5 Axis 3)
             continue
 
         if strategy == 'table':
@@ -528,11 +568,7 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
-            else:
-                patches.extend(
-                    build_table_row_patches(
-                        change, mappings, used_ids,
-                        mdx_to_sidecar, xpath_to_mapping))
+            # else: skip — preserved anchor table은 안전한 패치 경로 없음 (Phase 5 Axis 3)
             continue
 
         new_plain = normalize_mdx_to_plain(
@@ -606,6 +642,8 @@ def build_patches(
         # 재생성 시 소실되는 XHTML 요소 포함 시 텍스트 전이로 폴백
         if ('<ac:link' in mapping.xhtml_text
                 or '<ri:attachment' in mapping.xhtml_text):
+            # Explicit fallback: <ac:link> / <ri:attachment> 포함 블록은
+            # inner XHTML 재생성 시 소실 위험 → text_transfer로 plain text만 변경
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, mapping.xhtml_plain_text)
             patches.append({
@@ -629,7 +667,8 @@ def build_patches(
         })
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    patches.extend(_flush_containing_changes(containing_changes, used_ids))
+    patches.extend(_flush_containing_changes(
+        containing_changes, used_ids, containing_ol_starts))
     return patches
 
 
