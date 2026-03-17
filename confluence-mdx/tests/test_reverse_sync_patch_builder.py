@@ -112,8 +112,9 @@ class TestBuildPatches:
         mdx_to_sidecar = {mdx_idx: entry}
         return mdx_to_sidecar
 
-    # Path 1: sidecar 매칭 → list type + roundtrip_sidecar 있음 → replace_fragment
-    def test_path1_sidecar_match_list_with_roundtrip_sidecar_regenerates(self):
+    # Path 1: 직접 sidecar 매칭 + 실제 텍스트 변경 → replace_fragment (has_content_change=True)
+    # (Phase 5 Axis 3: build_list_item_patches 제거, 실제 변경 시 replace_fragment로 라우팅)
+    def test_path1_direct_sidecar_match_list_with_content_change_regenerates(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
                                type_='list', children=['c1'])
@@ -131,13 +132,42 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
 
+        # 실제 텍스트 변경(child text→updated child) → has_content_change=True → replace_fragment
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
-        assert 'updated child' in patches[0].get('new_element_xhtml', '') or 'updated child' in patches[0].get('new_inner_xhtml', '')
 
-    # Path 1b: sidecar 매칭 → list type + roundtrip_sidecar 없음 → skip (Phase 5 Axis 3)
-    def test_path1b_sidecar_match_list_without_roundtrip_sidecar_skips(self):
+    # Path 1b: 직접 sidecar 매칭 + 형식 전용 변경 (텍스트 동일) → skip
+    # 예: [ **General** ] → [**General**] (링크 내 공백, collapse_ws 후 텍스트 동일)
+    def test_path1b_direct_sidecar_format_only_change_skips(self):
+        child = _make_mapping('c1', 'General text', xpath='li[1]')
+        parent = _make_mapping('p1', 'General text more', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        # 링크 공백 변경만: [**General**](url) → [ **General** ](url), 텍스트 동일
+        change = _make_change(
+            0,
+            '* [**General**](company-management/general) text\n',
+            '* [ **General** ](company-management/general) text\n',
+            type_='list',
+        )
+        mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p><a href="">General</a> text</p></li>', 'hash1', (1, 1))
+        ])
+
+        patches = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        # 형식만 변경(링크 공백), normalize+collapse_ws 후 텍스트 동일 → skip
+        assert patches == []
+
+    # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 → skip (Phase 5 Axis 3)
+    def test_path1c_sidecar_match_list_without_roundtrip_sidecar_skips(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
                                type_='list', children=['c1'])

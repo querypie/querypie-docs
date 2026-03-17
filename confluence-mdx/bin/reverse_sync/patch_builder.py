@@ -484,12 +484,17 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # roundtrip sidecar가 있는 clean list는 항상 whole-fragment 재생성으로 처리
+            # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
             # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
+            # 실제 텍스트 변경 여부: normalize+collapse_ws로 비교하여 링크 공백 등 형식 차이 무시
+            _old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, 'list'))
+            _new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, 'list'))
+            has_content_change = _old_plain != _new_plain
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
                 and roundtrip_sidecar is not None
+                and (list_sidecar is None or mapping_via_v3_fallback or has_content_change)
             )
             if (mapping is not None
                     and (
