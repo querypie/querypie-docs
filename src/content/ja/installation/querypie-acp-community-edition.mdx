@@ -236,6 +236,21 @@ docker compose ps
 ```
 </Callout>
 
+<Callout type="important">
+**停止方法の選択的適用**
+```
+docker compose --profile=app down
+docker compose --profile=database down
+```
+
+上記のように`down`を使用すると、コンテナとネットワークが削除されてから再作成されます。
+（新しいID）<br/>したがって、削除および再作成が必要でない場合は、`down`の代わりに`stop`を使用してください。
+```
+docker compose --profile=app stop
+docker compose --profile=database stop
+```
+</Callout>
+
 ### 💬 サポートおよび問い合わせ
 
 QueryPie Communityインストールおよび使用中に疑問点があれば[QueryPie AIP](https://app.querypie.com/)を通じて直接問い合わせできます。

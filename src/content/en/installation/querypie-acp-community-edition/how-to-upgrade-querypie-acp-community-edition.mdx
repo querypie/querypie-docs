@@ -1,0 +1,89 @@
+---
+title: 'How to Upgrade QueryPie ACP Community Edition'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1990000673/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# How to Upgrade QueryPie ACP Community Edition
+
+### Overview
+
+The upgrade uses the `--upgrade` option of the installation script (`setup.v2.sh`).
+It transitions to a new version while preserving existing data and configuration, and automatically performs DB migration.
+
+<Callout type="info">
+**Upgrade Requirements**
+* The &lt;installation path&gt;/current symbolic link must exist.<br/>Example when installed under the home directory: ~/querypie/current
+* The querypie container must be running during the upgrade. <br/>The upgrade cannot proceed if containers are stopped.
+</Callout>
+______
+
+### Upgrade Procedure
+
+#### Step 1: Check the Current Version and Verify Upgrade Prerequisites
+
+```
+# Check which version the `current` symbolic link points to
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether all required containers are running (app, mysql, redis)
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+
+#### Step 2: Check Available Versions
+
+Check the available versions in the [Product Versions](../product-versions) document.
+
+#### Step 3: Run the Upgrade
+
+Log in directly to the server via SSH and run (TTY required):
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade <version>
+```
+
+Example:
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade 11.6.0
+```
+
+Upgrading to the same version or a lower version is not supported.
+
+#### Step 4: Verify Upgrade Completion
+
+```
+# Check whether the `current` symbolic link points to the new version
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether the new version containers are running
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+______
+
+<Callout type="info">
+### Internal Upgrade Process
+
+Tasks performed automatically by the script:
+
+1. Check container engine and current QueryPie status
+2. Verify that the running version matches the configured version (stops if mismatched)
+3. Confirm that the target version is higher than the current version (skipped if same or lower)
+4. Download and configure the new version configuration files
+5. Pull the new version Docker images
+6. Stop the existing version containers
+7. Run DB migration (`migrate.sh runall` twice)
+8. Start the new version containers and verify readiness
+9. Update the `~/querypie/current` symbolic link to the new version
+</Callout>
+______
+
+### Notes
+
+* **Direct Login Required**: As with installation, TTY is required, so connect directly to the server via SSH before running.
+* **Version Order**: Upgrading to the same version or a lower version is not supported.
+* **Previous Version Directory Preserved**: After the upgrade, the previous version directory (`~/querypie/<previous version>/`) is not automatically deleted. Verify and manually delete if no longer needed. (If there are files from the previous version that need to be copied, such as certificates, copy them before deleting.)
+  ```
+  rm -rf ~/querypie/<previous version>
+  ```
+* **Downtime**: A brief service interruption occurs during the container replacement process.
+* **License**: The Community Edition license is valid for one year from the date of issuance. Verify the license expiration status after the upgrade.

@@ -236,6 +236,21 @@ docker compose ps
 ```
 </Callout>
 
+<Callout type="important">
+**Selective Application of Stop Methods**
+```
+docker compose --profile=app down
+docker compose --profile=database down
+```
+
+Using `down` as above deletes and recreates containers and networks.
+(New IDs)<br/>Therefore, if there is no need to delete and recreate, use `stop` instead of `down`.
+```
+docker compose --profile=app stop
+docker compose --profile=database stop
+```
+</Callout>
+
 ### 💬 Support and Inquiries
 
 If you have questions about QueryPie Community installation and use, you can contact us directly through [QueryPie AIP](https://app.querypie.com/).

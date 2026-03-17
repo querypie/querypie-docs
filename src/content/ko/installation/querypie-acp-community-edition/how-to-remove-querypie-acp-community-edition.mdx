@@ -69,7 +69,7 @@ ls ~ | grep querypie || echo "querypie not found"
 ______
 
 <Callout type="important">
-주의사항
+**주의사항**
 * `-v`**플래그**: `docker compose down -v`는 MySQL 데이터 볼륨도 삭제합니다. 만약 데이터를 보존하려면 `-v` 없이 실행합니다.
 * `sudo` 없이 `rm -rf ~/querypie`를 실행하면 log/mysql 디렉토리에서 권한 오류가 발생합니다. 반드시 관리자 권한으로 삭제해야 합니다.
 * 위 과정은 docker 이미지를 삭제하지 않습니다. 이미지도 제거하려면 추가로 아래 명령을 실행합니다.

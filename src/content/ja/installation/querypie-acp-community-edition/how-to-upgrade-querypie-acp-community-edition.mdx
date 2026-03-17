@@ -1,0 +1,89 @@
+---
+title: 'QueryPie ACP Community Editionのアップグレード方法'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1990000673/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP Community Editionのアップグレード方法
+
+### Overview
+
+アップグレードにはインストールスクリプト（`setup.v2.sh`）の`--upgrade`オプションを使用します。
+既存のデータと設定を保持したまま新しいバージョンに移行し、DBマイグレーションまで自動的に実行します。
+
+<Callout type="info">
+**アップグレード環境**
+* &lt;インストールパス&gt;/current シンボリックリンクが存在している必要があります。<br/>ホームディレクトリにインストールした場合の例：~/querypie/current
+* querypieコンテナが実行中の状態でアップグレードを行う必要があります。<br/>停止している場合はアップグレードできません。
+</Callout>
+______
+
+### アップグレード手順
+
+#### Step 1: 現在のバージョン確認とアップグレード前提条件の確認
+
+```
+# Check which version the `current` symbolic link points to
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether all required containers are running (app, mysql, redis)
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+
+#### Step 2: インストール可能なバージョンの確認
+
+[製品バージョン](../product-versions)ドキュメントでインストール可能なバージョンを確認します。
+
+#### Step 3: アップグレードの実行
+
+サーバーにSSHで直接ログインした後に実行します（TTY必須）：
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade <version>
+```
+
+例：
+```
+bash <(curl -s https://dl.querypie.com/setup.v2.sh) --upgrade 11.6.0
+```
+
+同一バージョンや低いバージョンへのアップグレードは実行されません。
+
+#### Step 4: アップグレード完了の確認
+
+```
+# Check whether the `current` symbolic link points to the new version
+ls -al ~/querypie/current ## This is an example when installed under the home directory.
+
+# Check whether the new version containers are running
+docker ps --format "table {{.Names}}\t{{.Image}}" | grep querypie
+```
+______
+
+<Callout type="info">
+### アップグレードの内部動作順序
+
+スクリプトが自動的に実行する作業：
+
+1. コンテナエンジンおよび現在のQueryPieの状態確認
+2. 現在の実行バージョンと設定バージョンの一致確認（不一致の場合は停止）
+3. 対象バージョンが現在より高いかどうかの確認（同じまたは低い場合はスキップ）
+4. 新バージョンの設定ファイルのダウンロードと構成
+5. 新バージョンのDockerイメージのpull
+6. 既存バージョンのコンテナ停止
+7. DBマイグレーションの実行（`migrate.sh runall`を2回）
+8. 新バージョンのコンテナ起動と準備状態の確認
+9. `~/querypie/current`シンボリックリンクを新バージョンに更新
+</Callout>
+______
+
+### 注意事項
+
+* **直接ログインが必要**：インストール時と同様にTTYが必要なため、SSHでサーバーに直接接続してから実行します。
+* **バージョンの順序**：同一バージョンや低いバージョンへのアップグレードは実行されません。
+* **旧バージョンのディレクトリは保持**：アップグレード後、旧バージョンのディレクトリ（`~/querypie/<旧バージョン>/`）は自動削除されません。確認後、不要であれば手動で削除してください。（証明書など旧バージョンで使用していたファイルでコピーが必要なものがあれば、コピー後に削除します。）
+  ```
+  rm -rf ~/querypie/<previous version>
+  ```
+* **ダウンタイム**：コンテナの切り替え過程で短いサービス中断が発生します。
+* **ライセンス**：Community Editionライセンスの有効期間は発行日から1年間です。アップグレード後にライセンスの有効期限を確認してください。
