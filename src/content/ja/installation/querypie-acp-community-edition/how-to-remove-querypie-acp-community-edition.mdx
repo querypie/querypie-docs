@@ -69,7 +69,7 @@ ls ~ | grep querypie || echo "querypie not found"
 ______
 
 <Callout type="important">
-注意事項
+**注意事項**
 * **`-v`フラグ**：`docker compose down -v`はMySQLデータボリュームも削除します。データを保持したい場合は`-v`なしで実行します。
 * `sudo`なしで`rm -rf ~/querypie`を実行すると、log/mysqlディレクトリで権限エラーが発生します。必ず管理者権限で削除してください。
 * 上記の手順ではdockerイメージは削除されません。イメージも削除するには、追加で以下のコマンドを実行します。
