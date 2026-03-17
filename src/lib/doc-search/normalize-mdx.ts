@@ -11,15 +11,32 @@ function decodeHtmlEntities(input: string): string {
     .replace(/&#39;/g, "'");
 }
 
-function stripFencedCodeBlocks(content: string): string {
-  return content.replace(/^```[\s\S]*?^```\s*$/gm, '');
-}
+function processFenceAware(content: string): string {
+  const lines = content.split('\n');
+  const result: string[] = [];
+  let inFence = false;
 
-function stripImports(content: string): string {
-  return content
-    .split('\n')
-    .filter(line => !line.trim().startsWith('import '))
-    .join('\n');
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('```')) {
+      inFence = !inFence;
+      // 펜스 마커 라인 자체는 출력에서 제거
+      continue;
+    }
+
+    if (inFence) {
+      // 코드 블록 내부: 내용을 유지하되 줄 앞의 # 을 제거해 헤딩 오인 방지
+      result.push(line.replace(/^#+\s/, ''));
+    } else {
+      // 코드 블록 외부: MDX 컴포넌트 import 구문만 제거
+      if (!trimmed.startsWith('import ')) {
+        result.push(line);
+      }
+    }
+  }
+
+  return result.join('\n');
 }
 
 function replaceImageTags(content: string): string {
@@ -52,9 +69,8 @@ function normalizeWhitespace(content: string): string {
 
 export function normalizeMdxForLLM(source: string): string {
   const parsed = source.match(FRONTMATTER_SEPARATOR) ? matter(source) : { content: source };
-  const withoutCodeBlocks = stripFencedCodeBlocks(parsed.content);
-  const strippedImports = stripImports(withoutCodeBlocks);
-  const withImageAlt = replaceImageTags(strippedImports);
+  const processed = processFenceAware(parsed.content);
+  const withImageAlt = replaceImageTags(processed);
   const withoutTags = stripWrapperTags(withImageAlt);
   return normalizeWhitespace(decodeHtmlEntities(withoutTags));
 }

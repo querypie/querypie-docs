@@ -99,8 +99,11 @@ Use the API.
       lang: 'ko',
     });
 
-    expect(document.content).not.toContain('import pandas as pd');
+    // 코드 블록 내 import는 검색 색인에 포함됩니다
+    expect(document.content).toContain('import pandas as pd');
+    // 코드 블록 내 # 주석은 # 이 제거되어 헤딩 오인 없이 텍스트로 색인됩니다
     expect(document.content).not.toContain('# This is a shell comment');
+    expect(document.content).toContain('This is a shell comment, not a heading');
 
     const metadata = inferDocMetadata({
       filePath: document.filePath,

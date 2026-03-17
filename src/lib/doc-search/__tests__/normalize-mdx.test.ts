@@ -147,41 +147,31 @@ describe('normalizeMdxForLLM — MDX import와 코드 블록 내 import 분리',
    *
    *   1. MDX 최상위 import  — 컴포넌트 선언
    *      import { Callout } from 'nextra/components'
-   *      → stripImports()가 제거 대상
+   *      → processFenceAware()가 펜스 외부 라인에서 제거
    *
    *   2. 코드 블록 내부 import — 예시 코드의 일부
    *      ```python
    *      import pandas as pd   ← 이것은 코드 예시
    *      ```
-   *      → stripFencedCodeBlocks()가 코드 블록 전체를 먼저 제거
+   *      → 코드 블록 내용을 유지하므로 검색 색인에 포함됨
    *
-   * 두 메커니즘이 올바른 순서(fenced 제거 → import 제거)로 동작하는지 검증합니다.
-   *
-   * 수정 전 동작 (버그):
-   *   stripFencedCodeBlocks 없이 stripImports를 실행하면
-   *   코드 블록 안의 `import pandas as pd`가 삭제되어
-   *   코드 블록이 내용 없이 남거나 구조가 깨집니다.
-   *
-   * 수정 후 동작:
-   *   코드 블록 전체가 먼저 제거 → MDX import만 stripImports 대상으로 남음
-   *   → 두 종류의 import가 충돌 없이 분리 처리됩니다.
+   * processFenceAware가 펜스 내부/외부를 구분해 올바르게 처리하는지 검증합니다.
    */
-  it('MDX import는 제거하고 코드 블록 내 import는 코드 블록과 함께 제거합니다', () => {
+  it('MDX import는 제거하고 코드 블록 내 import는 검색 가능하게 유지합니다', () => {
     const result = normalizeMdxForLLM(MDX_WITH_CALLOUT_AND_CODE_IMPORTS);
 
-    // MDX 최상위 import는 stripImports가 제거합니다
+    // MDX 최상위 import는 processFenceAware가 펜스 외부에서 제거합니다
     expect(result).not.toContain("import { Callout }");
     expect(result).not.toContain("import { Steps }");
 
-    // 코드 블록 전체가 stripFencedCodeBlocks로 제거되므로
-    // 코드 블록 안의 import도 없어집니다
-    expect(result).not.toContain('import pandas as pd');
-    expect(result).not.toContain('import numpy as np');
-    expect(result).not.toContain('import csv');
+    // 코드 블록 내부의 import는 코드 예시의 일부로 검색 색인에 포함됩니다
+    expect(result).toContain('import pandas as pd');
+    expect(result).toContain('import numpy as np');
+    expect(result).toContain('import csv');
 
-    // 코드 블록 내용(코드 자체)도 남지 않습니다
-    expect(result).not.toContain('pd.DataFrame');
-    expect(result).not.toContain("csv.writer");
+    // 코드 블록 내용(코드 자체)도 검색 가능하도록 유지됩니다
+    expect(result).toContain('pd.DataFrame');
+    expect(result).toContain("csv.writer");
   });
 
   it('Callout 태그는 제거되지만 Callout 내부 텍스트는 검색 가능하도록 유지됩니다', () => {
