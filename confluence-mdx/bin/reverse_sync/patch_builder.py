@@ -1,4 +1,5 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
+import re
 from typing import Dict, List, Optional
 
 from mdx_to_storage.emitter import emit_block
@@ -219,10 +220,12 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
 def _flush_containing_changes(
     containing_changes: dict,
     used_ids: 'set | None' = None,
+    ol_starts: 'dict | None' = None,
 ) -> List[Dict[str, str]]:
     """그룹화된 containing_changes를 패치 목록으로 변환한다.
 
     containing_changes: block_id → (mapping, [(old_plain, new_plain)])
+    ol_starts: block_id → new_start (ol 시작 번호 변경 시)
     각 매핑의 xhtml_plain_text에 transfer_text_changes를 순차 적용하여 패치를 생성한다.
     """
     patches = []
@@ -233,11 +236,14 @@ def _flush_containing_changes(
             # text_transfer로 plain text만 변경한다 (callout, 중첩 list 등)
             xhtml_text = transfer_text_changes(
                 old_plain, new_plain, xhtml_text)
-        patches.append({
+        patch: Dict[str, str] = {
             'xhtml_xpath': mapping.xhtml_xpath,
             'old_plain_text': mapping.xhtml_plain_text,
             'new_plain_text': xhtml_text,
-        })
+        }
+        if ol_starts and bid in ol_starts:
+            patch['ol_start'] = ol_starts[bid]
+        patches.append(patch)
         if used_ids is not None:
             used_ids.add(bid)
     return patches
@@ -424,6 +430,7 @@ def build_patches(
 
     # 상위 블록에 대한 그룹화된 변경
     containing_changes: dict = {}  # block_id → (mapping, [(old_plain, new_plain)])
+    containing_ol_starts: dict = {}  # block_id → new_start (ol start 속성 변경)
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -503,11 +510,20 @@ def build_patches(
             _old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, 'list'))
             _new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, 'list'))
             has_content_change = _old_plain != _new_plain
+            # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
+            _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
+            _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
+            has_ol_start_change = bool(
+                _old_start and _new_start
+                and int(_old_start.group(1)) != int(_new_start.group(1))
+            )
+            has_any_change = has_content_change or has_ol_start_change
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
-                and roundtrip_sidecar is not None
-                and (list_sidecar is None or mapping_via_v3_fallback or has_content_change)
+                # sidecar 있으면 항상 허용; 없으면 실제 변경(텍스트 또는 번호 시작값)이 있을 때만 허용
+                and (roundtrip_sidecar is not None or has_any_change)
+                and (list_sidecar is None or mapping_via_v3_fallback or has_any_change)
             )
             if (mapping is not None
                     and (
@@ -525,6 +541,19 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
+                continue
+            # preserved anchor + any change → text transfer via containing_changes
+            # (ac:/ri: markup 구조 보존하면서 plain text 및 ol start 속성을 변경)
+            if (mapping is not None
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and has_any_change):
+                bid = mapping.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (mapping, [])
+                if has_content_change:
+                    containing_changes[bid][1].append((_old_plain, _new_plain))
+                if has_ol_start_change:
+                    containing_ol_starts[bid] = int(_new_start.group(1))
                 continue
             # skip — reconstruction path 없는 list는 패치하지 않는다 (Phase 5 Axis 3)
             continue
@@ -638,7 +667,8 @@ def build_patches(
         })
 
     # 상위 블록에 대한 그룹화된 변경 적용
-    patches.extend(_flush_containing_changes(containing_changes, used_ids))
+    patches.extend(_flush_containing_changes(
+        containing_changes, used_ids, containing_ol_starts))
     return patches
 
 

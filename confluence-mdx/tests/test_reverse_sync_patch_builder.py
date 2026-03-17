@@ -166,8 +166,9 @@ class TestBuildPatches:
         # 형식만 변경(링크 공백), normalize+collapse_ws 후 텍스트 동일 → skip
         assert patches == []
 
-    # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 → skip (Phase 5 Axis 3)
-    def test_path1c_sidecar_match_list_without_roundtrip_sidecar_skips(self):
+    # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 + content change
+    #          → clean list이면 replace_fragment (Phase 5: has_content_change → patch)
+    def test_path1c_sidecar_match_list_without_roundtrip_sidecar_with_content_change_patches(self):
         child = _make_mapping('c1', 'child text', xpath='li[1]')
         parent = _make_mapping('p1', 'parent text child text more', xpath='ul[1]',
                                type_='list', children=['c1'])
@@ -181,7 +182,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        assert patches == []
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
 
     # Path 1d: type-based sidecar 타입 불일치로 mapping=None → text fallback으로 복원
     #          → real content change → replace_fragment
@@ -214,9 +218,10 @@ class TestBuildPatches:
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
 
-    # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None → text fallback으로도 skip
-    def test_path1e_no_sidecar_match_no_roundtrip_sidecar_skips(self):
-        """roundtrip_sidecar가 없으면 text fallback으로 mapping 복원해도 replace_fragment 불가."""
+    # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None + content change
+    #          → text fallback으로 mapping 복원 → clean list → replace_fragment
+    def test_path1e_no_sidecar_match_no_roundtrip_sidecar_with_content_change_patches(self):
+        """roundtrip_sidecar 없어도 has_content_change이면 text fallback 후 replace_fragment."""
         list_mapping = _make_mapping(
             'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
         mappings = [list_mapping]
@@ -231,11 +236,14 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # roundtrip_sidecar 없음 → should_replace_clean_list=False → skip
-        assert patches == []
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
 
-    # Path 2: sidecar 매칭 → children 있음 → roundtrip_sidecar 없음 → skip (Phase 5 Axis 3)
-    def test_path2_sidecar_match_list_no_roundtrip_sidecar_skips(self):
+    # Path 2: sidecar 매칭 → children 있음 → roundtrip_sidecar 없음 + content change
+    #          → clean list이면 replace_fragment (Phase 5: has_content_change → patch)
+    def test_path2_sidecar_match_list_no_roundtrip_sidecar_with_content_change_patches(self):
         parent = _make_mapping('p1', 'totally different parent', xpath='ul[1]',
                                type_='list', children=['c1'])
         child = _make_mapping('c1', 'no match here', xpath='li[1]')
@@ -251,7 +259,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        assert patches == []
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
 
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
@@ -760,11 +771,12 @@ class TestBuildPatches:
 
         assert patches == [], "fallback 제거 후 roundtrip_sidecar 없는 table은 skip이어야 한다"
 
-    def test_list_without_sidecar_block_returns_no_patch(self):
-        """sidecar block이 없는 list 변경은 Phase 5 Axis 3 이후 skip한다.
+    def test_list_without_roundtrip_sidecar_but_content_change_patches(self):
+        """roundtrip_sidecar 없어도 content change가 있으면 clean list를 패치한다.
 
-        should_replace_clean_list=False이고 sidecar_block_requires_reconstruction=False인
-        경우 (roundtrip_sidecar=None) build_list_item_patches fallback 제거 후 skip이다.
+        has_content_change=True이고 preserved anchor markup이 없는 경우,
+        roundtrip_sidecar=None이어도 should_replace_clean_list=True가 되어
+        replace_fragment 패치를 생성한다.
         """
         mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')
         change = _make_change(
@@ -779,10 +791,13 @@ class TestBuildPatches:
             [mapping],
             mdx_to_sidecar=mdx_to_sidecar,
             xpath_to_mapping=xpath_to_mapping,
-            roundtrip_sidecar=None,  # sidecar block 없음 → 기존엔 build_list_item_patches 호출
+            roundtrip_sidecar=None,
         )
 
-        assert patches == [], "sidecar 없는 list fallback은 skip이어야 한다"
+        # has_content_change=True + anchor markup 없음 → replace_fragment 적용
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        assert patches[0]['action'] == 'replace_fragment'
 
 
 # ── delete/insert 패치 생성 테스트 ──
