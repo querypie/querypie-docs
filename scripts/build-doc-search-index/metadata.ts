@@ -8,7 +8,10 @@ export interface InferredDocMetadata extends DocSearchMetadata {
 const VERSION_PATTERN = /\b\d+\.\d+\.\d+\b/g;
 
 function stripContentPrefix(filePath: string): string {
-  return filePath.replace(/^src\/content\/[a-z]{2}\//, '').replace(/\.mdx$/, '');
+  return filePath
+    .replace(/^src\/content\/[a-z]{2}\//, '')
+    .replace(/\.mdx$/, '')
+    .replace(/\/index$/, '');
 }
 
 function inferManualTypeFromPath(pagePath: string): DocSearchMetadata['manualType'] {
