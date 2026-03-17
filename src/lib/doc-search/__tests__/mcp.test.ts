@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { DocSearchPagesArtifact } from '@/lib/doc-search/types';
-import { handleMcpJsonRpc, MCP_PROTOCOL_VERSION } from '@/lib/doc-search/mcp';
+import { handleMcpJsonRpc, MCP_PROTOCOL_VERSION, SUPPORTED_LANGS } from '@/lib/doc-search/mcp';
 import { buildMiniSearchInstance } from '@/lib/doc-search/minisearch-engine';
 
 const sampleChunks = [
@@ -128,5 +128,118 @@ describe('handleMcpJsonRpc', () => {
     );
 
     expect(response.error?.code).toBe(-32601);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// lang 입력 검증 (#932 버그 수정)
+// ---------------------------------------------------------------------------
+
+describe('handleMcpJsonRpc — lang 입력 검증', () => {
+  /**
+   * 수정 전 동작 (버그):
+   *   lang: 'fr' 로 search_docs 를 호출하면
+   *   load-index.ts 에서 fr-minisearch.json 파일을 찾지 못해
+   *   ENOENT 예외가 throw 되고, route.ts 에서 잡히지 않아 HTTP 500이 됩니다.
+   *   JSON-RPC 규약상 잘못된 파라미터는 -32602 Invalid params 로 처리해야 합니다.
+   *
+   * 수정 후 동작:
+   *   tools/call 진입 시 lang 을 SUPPORTED_LANGS(['ko','en','ja'])로 검증하여
+   *   지원하지 않는 값이면 -32602 에러를 즉시 반환합니다.
+   *   파일 I/O 에 도달하지 않으므로 ENOENT 예외가 발생하지 않습니다.
+   */
+  it('search_docs 에서 지원하지 않는 lang은 -32602 에러를 반환합니다', async () => {
+    const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 10,
+        method: 'tools/call',
+        params: { name: 'search_docs', arguments: { query: '설치', lang: 'fr' } },
+      },
+      { pages, miniSearchInstance },
+    );
+
+    // JSON-RPC 에러 응답 구조
+    expect(response.jsonrpc).toBe('2.0');
+    expect(response.id).toBe(10);
+    expect(response.error).toBeDefined();
+    expect(response.result).toBeUndefined();
+
+    // -32602 Invalid params (파일 I/O 예외가 아님)
+    expect(response.error?.code).toBe(-32602);
+    expect(response.error?.message).toContain('fr');
+    expect(response.error?.message).toContain('ko, en, ja');
+  });
+
+  it('get_doc_page 에서 지원하지 않는 lang은 -32602 에러를 반환합니다', async () => {
+    const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 11,
+        method: 'tools/call',
+        params: {
+          name: 'get_doc_page',
+          arguments: { pagePath: 'administrator-manual/databases/monitoring', lang: 'zh' },
+        },
+      },
+      { pages, miniSearchInstance },
+    );
+
+    expect(response.error?.code).toBe(-32602);
+    expect(response.error?.message).toContain('zh');
+  });
+
+  it('lang 을 생략하면 기본값 ko 로 정상 동작합니다', async () => {
+    const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 12,
+        method: 'tools/call',
+        params: { name: 'search_docs', arguments: { query: 'Running Queries' } },
+      },
+      { pages, miniSearchInstance },
+    );
+
+    // 에러 없이 정상 응답
+    expect(response.error).toBeUndefined();
+    expect(response.result).toBeDefined();
+  });
+
+  it.each(SUPPORTED_LANGS)('지원 lang "%s" 는 에러 없이 통과합니다', async (lang) => {
+    // context 에 인스턴스를 주입해 파일 로드 없이 lang 검증만 테스트합니다
+    const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 20,
+        method: 'tools/call',
+        params: { name: 'search_docs', arguments: { query: 'test', lang } },
+      },
+      { pages, miniSearchInstance },
+    );
+
+    // lang 검증은 통과하므로 에러 없이 result 가 반환됩니다
+    expect(response.error).toBeUndefined();
+    expect(response.result).toBeDefined();
+  });
+
+  it('빈 문자열 lang은 기본값 ko 로 처리됩니다', async () => {
+    // String('' || 'ko') === 'ko' 이므로 검증 통과
+    const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
+    const response = await handleMcpJsonRpc(
+      {
+        jsonrpc: '2.0',
+        id: 13,
+        method: 'tools/call',
+        params: { name: 'search_docs', arguments: { query: '검색', lang: '' } },
+      },
+      { pages, miniSearchInstance },
+    );
+
+    expect(response.error).toBeUndefined();
+    expect(response.result).toBeDefined();
   });
 });
