@@ -144,7 +144,7 @@ describe('handleMcpJsonRpc — lang 입력 검증', () => {
    *   JSON-RPC 규약상 잘못된 파라미터는 -32602 Invalid params 로 처리해야 합니다.
    *
    * 수정 후 동작:
-   *   tools/call 진입 시 lang 을 SUPPORTED_LANGS(['ko','en','ja'])로 검증하여
+   *   tools/call 진입 시 lang 을 SUPPORTED_LANGS(['ko', 'en', 'ja'])로 검증하여
    *   지원하지 않는 값이면 -32602 에러를 즉시 반환합니다.
    *   파일 I/O 에 도달하지 않으므로 ENOENT 예외가 발생하지 않습니다.
    */
@@ -191,7 +191,7 @@ describe('handleMcpJsonRpc — lang 입력 검증', () => {
     expect(response.error?.message).toContain('zh');
   });
 
-  it('lang 을 생략하면 기본값 ko 로 정상 동작합니다', async () => {
+  it('lang 을 생략하면 기본값 en 으로 정상 동작합니다', async () => {
     const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
     const response = await handleMcpJsonRpc(
       {
@@ -203,7 +203,7 @@ describe('handleMcpJsonRpc — lang 입력 검증', () => {
       { pages, miniSearchInstance },
     );
 
-    // 에러 없이 정상 응답
+    // 에러 없이 정상 응답 (context 주입으로 파일 로드 없이 동작)
     expect(response.error).toBeUndefined();
     expect(response.result).toBeDefined();
   });
@@ -226,8 +226,8 @@ describe('handleMcpJsonRpc — lang 입력 검증', () => {
     expect(response.result).toBeDefined();
   });
 
-  it('빈 문자열 lang은 기본값 ko 로 처리됩니다', async () => {
-    // String('' || 'ko') === 'ko' 이므로 검증 통과
+  it('빈 문자열 lang은 기본값 en 으로 처리됩니다', async () => {
+    // String('' || 'en') === 'en' 이므로 검증 통과
     const miniSearchInstance = buildMiniSearchInstance(sampleChunks);
     const response = await handleMcpJsonRpc(
       {
