@@ -27,6 +27,7 @@ function processFenceAware(content: string): string {
 
     if (inFence) {
       // 코드 블록 내부: 내용을 유지하되 줄 앞의 # 을 제거해 헤딩 오인 방지
+      // `# CSV로 저장` → `CSV로 저장` 으로 텍스트는 검색 대상으로 유지됨
       result.push(line.replace(/^#+\s/, ''));
     } else {
       // 코드 블록 외부: MDX 컴포넌트 import 구문만 제거
