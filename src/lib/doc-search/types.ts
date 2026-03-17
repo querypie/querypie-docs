@@ -54,21 +54,13 @@ export interface DocSearchPagesArtifact {
 }
 
 export interface SearchDocsParams {
-  artifact: DocSearchArtifact;
   query: string;
   topK?: number;
   manualType?: ManualType;
 }
 
-export type SearchEngine = 'custom' | 'minisearch' | 'both';
-
 export interface SearchEngineResult {
-  engine: 'custom' | 'minisearch';
+  engine: 'minisearch';
   results: DocSearchChunk[];
   durationMs: number;
-}
-
-export interface ComparisonResult {
-  custom: SearchEngineResult;
-  minisearch: SearchEngineResult;
 }

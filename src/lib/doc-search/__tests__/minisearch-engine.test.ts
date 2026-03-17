@@ -64,7 +64,7 @@ describe('buildMiniSearchInstance', () => {
 describe('searchWithMiniSearch', () => {
   it('returns SearchEngineResult with durationMs', () => {
     const ms = buildMiniSearchInstance(sampleChunks);
-    const result = searchWithMiniSearch(ms, { artifact: { version: 1, generatedAt: '', lang: 'ko', chunks: sampleChunks }, query: '쿼리', topK: 5 });
+    const result = searchWithMiniSearch(ms, { query: '쿼리', topK: 5 });
     expect(result.engine).toBe('minisearch');
     expect(result.durationMs).toBeGreaterThanOrEqual(0);
     expect(result.results.length).toBeGreaterThan(0);
@@ -72,14 +72,13 @@ describe('searchWithMiniSearch', () => {
 
   it('respects topK limit', () => {
     const ms = buildMiniSearchInstance(sampleChunks);
-    const result = searchWithMiniSearch(ms, { artifact: { version: 1, generatedAt: '', lang: 'ko', chunks: sampleChunks }, query: '관리', topK: 1 });
+    const result = searchWithMiniSearch(ms, { query: '관리', topK: 1 });
     expect(result.results.length).toBeLessThanOrEqual(1);
   });
 
   it('applies manualType filter', () => {
     const ms = buildMiniSearchInstance(sampleChunks);
     const result = searchWithMiniSearch(ms, {
-      artifact: { version: 1, generatedAt: '', lang: 'ko', chunks: sampleChunks },
       query: '연결',
       topK: 5,
       manualType: 'user-manual',
