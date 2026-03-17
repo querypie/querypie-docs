@@ -13,14 +13,14 @@ function readJsonFile<T>(filePath: string): T {
   return JSON.parse(fs.readFileSync(filePath, 'utf8')) as T;
 }
 
-export function loadDocSearchPagesArtifact(lang = 'ko'): DocSearchPagesArtifact {
+export function loadDocSearchPagesArtifact(lang = 'en'): DocSearchPagesArtifact {
   if (!pagesCache.has(lang)) {
     pagesCache.set(lang, readJsonFile<DocSearchPagesArtifact>(path.join(process.cwd(), 'public', '_doc-search', `${lang}-pages.json`)));
   }
   return pagesCache.get(lang)!;
 }
 
-export function loadMiniSearchIndex(lang = 'ko'): MiniSearch<DocSearchChunk> {
+export function loadMiniSearchIndex(lang = 'en'): MiniSearch<DocSearchChunk> {
   if (!miniSearchCache.has(lang)) {
     const json = fs.readFileSync(
       path.join(process.cwd(), 'public', '_doc-search', `${lang}-minisearch.json`),

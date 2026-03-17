@@ -11,6 +11,8 @@ import { searchWithMiniSearch } from '@/lib/doc-search/minisearch-engine';
 export const MCP_PROTOCOL_VERSION = '2025-11-25';
 export const SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'] as const;
 
+export const SUPPORTED_LANGS = ['ko', 'en', 'ja'] as const;
+
 interface JsonRpcRequest {
   jsonrpc: '2.0';
   id?: string | number | null;
@@ -18,7 +20,7 @@ interface JsonRpcRequest {
   params?: Record<string, unknown>;
 }
 
-interface JsonRpcResponse {
+export interface JsonRpcResponse {
   jsonrpc: '2.0';
   id: string | number | null;
   result?: unknown;
@@ -45,7 +47,7 @@ function getTools() {
         type: 'object',
         properties: {
           query: { type: 'string', description: 'Natural language or keyword query.' },
-          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'ko' },
+          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'en' },
           topK: { type: 'integer', minimum: 1, maximum: 10, default: 5 },
           manualType: {
             type: 'string',
@@ -63,7 +65,7 @@ function getTools() {
         type: 'object',
         properties: {
           pagePath: { type: 'string', description: 'Page path without locale prefix.' },
-          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'ko' },
+          lang: { type: 'string', enum: ['ko', 'en', 'ja'], default: 'en' },
         },
         required: ['pagePath'],
         additionalProperties: false,
@@ -118,7 +120,10 @@ export async function handleMcpJsonRpc(
     case 'tools/call': {
       const toolName = String(request.params?.name || '');
       const args = (request.params?.arguments as Record<string, unknown> | undefined) ?? {};
-      const lang = String(args.lang || 'ko');
+      const lang = String(args.lang || 'en');
+      if (!SUPPORTED_LANGS.includes(lang as (typeof SUPPORTED_LANGS)[number])) {
+        return buildError(request.id, -32602, `Unsupported lang: ${lang}. Must be one of: ${SUPPORTED_LANGS.join(', ')}`);
+      }
 
       if (toolName === 'search_docs') {
         const query = String(args.query || '').trim();
@@ -147,7 +152,7 @@ export async function handleMcpJsonRpc(
           return buildError(request.id, -32602, 'get_doc_page requires pagePath');
         }
 
-        const page = context?.pages?.pages[pagePath] ?? getDocPage(pagePath, String(args.lang || 'ko'));
+        const page = context?.pages?.pages[pagePath] ?? getDocPage(pagePath, lang);
         if (!page) {
           return buildError(request.id, -32602, `Unknown pagePath: ${pagePath}`);
         }
