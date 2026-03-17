@@ -87,7 +87,6 @@ export function writeDocSearchArtifacts(langs: SupportedLang[] = [...SUPPORTED_L
   ensureOutputDir();
   for (const lang of langs) {
     const { index, pages } = buildDocSearchArtifacts(lang);
-    fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-index.json`), JSON.stringify(index));
     fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-pages.json`), JSON.stringify(pages));
     fs.writeFileSync(path.join(OUTPUT_ROOT, `${lang}-minisearch.json`), serializeMiniSearchIndex(index.chunks));
     console.log(`Generated docs search artifacts for lang: ${lang}`);
