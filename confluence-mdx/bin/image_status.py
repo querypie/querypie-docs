@@ -20,6 +20,13 @@ from pathlib import Path
 
 import yaml
 
+# Ensure bin/ is on sys.path for local package imports (fetch.sync_profiles)
+_SCRIPT_DIR = Path(__file__).resolve().parent
+if str(_SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIR))
+
+from fetch.sync_profiles import SYNC_PROFILES
+
 
 def read_build_date(workdir: Path) -> str:
     """Read image build date from .build-date file."""
@@ -29,12 +36,15 @@ def read_build_date(workdir: Path) -> str:
     return "unknown"
 
 
-def read_fetch_state(var_dir: Path) -> dict:
-    """Find and read fetch_state.yaml."""
-    for state_file in var_dir.glob("*/fetch_state.yaml"):
+def read_fetch_states(var_dir: Path) -> list[tuple[str, dict]]:
+    """Find and read all fetch_state.yaml files, returning [(dir_name, state), ...]."""
+    states = []
+    for state_file in sorted(var_dir.glob("*/fetch_state.yaml")):
+        dir_name = state_file.parent.name
         with open(state_file) as f:
-            return yaml.safe_load(f) or {}
-    return {}
+            state = yaml.safe_load(f) or {}
+        states.append((dir_name, state))
+    return states
 
 
 def scan_pages(var_dir: Path) -> list[dict]:
@@ -85,13 +95,16 @@ def format_report(workdir: Path, var_dir: Path, top_n: int) -> str:
     build_date = read_build_date(workdir)
     lines.append(f"  Build Date       : {build_date}")
 
-    # Fetch state
-    state = read_fetch_state(var_dir)
-    if state:
-        lines.append(f"  Last Modified    : {state.get('last_modified_seen', '?')}")
-        lines.append(f"  Last Recent Fetch: {state.get('last_recent_fetch', '?')}")
-        lines.append(f"  Last Full Fetch  : {state.get('last_full_fetch', '?')}")
-        lines.append(f"  Pages Fetched    : {state.get('pages_fetched', '?')}")
+    # Fetch state (per space)
+    fetch_states = read_fetch_states(var_dir)
+    if fetch_states:
+        for root_id, state in fetch_states:
+            code = next((p.code for p in SYNC_PROFILES.values() if p.start_page_id == root_id), root_id)
+            lines.append(f"  Fetch State [{code} / {root_id}]:")
+            lines.append(f"    Last Modified    : {state.get('last_modified_seen', '?')}")
+            lines.append(f"    Last Recent Fetch: {state.get('last_recent_fetch', '?')}")
+            lines.append(f"    Last Full Fetch  : {state.get('last_full_fetch', '?')}")
+            lines.append(f"    Pages Fetched    : {state.get('pages_fetched', '?')}")
     else:
         lines.append("  Fetch State      : not found")
 
