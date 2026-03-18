@@ -53,14 +53,28 @@ class ApiClient:
         url = f"{self.config.base_url}/rest/api/content/{page_id}?expand=title,ancestors,body.storage,body.view"
         return self.make_request(url, "V1 API page data")
 
-    def get_page_data_v2(self, page_id: str) -> Optional[Dict]:
-        """Get page data using V2 API"""
-        url = f"{self.config.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format"
+    def get_page_data_v2(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
+        """Get page data using V2 API.
+
+        Uses /api/v2/folders/{id} for folder content type, /api/v2/pages/{id} otherwise.
+        """
+        if content_type == "folder":
+            url = f"{self.config.base_url}/api/v2/folders/{page_id}"
+        else:
+            url = f"{self.config.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format"
         return self.make_request(url, "V2 API page data")
 
-    def get_child_pages(self, page_id: str) -> Optional[Dict]:
-        """Get child pages using V2 API"""
-        url = f"{self.config.base_url}/api/v2/pages/{page_id}/children?type=page&limit=100"
+    def get_child_pages(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
+        """Get child pages using V2 API.
+
+        Uses /api/v2/folders/{id}/children for folder content type,
+        /api/v2/pages/{id}/children for page content type.
+        The type=page filter is omitted so that folder children are also included.
+        """
+        if content_type == "folder":
+            url = f"{self.config.base_url}/api/v2/folders/{page_id}/children?limit=100"
+        else:
+            url = f"{self.config.base_url}/api/v2/pages/{page_id}/children?limit=100"
         return self.make_request(url, "V2 API child pages")
 
     def get_attachments(self, page_id: str) -> Optional[Dict]:

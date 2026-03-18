@@ -44,6 +44,11 @@ class Stage1Processor(StageBase):
         directory = self.get_page_directory(page_id)
         self.file_manager.ensure_directory(directory)
 
+        # Determine content type from existing page.v2.yaml (for folder routing)
+        v2_path = os.path.join(self.get_page_directory(page_id), "page.v2.yaml")
+        existing_v2 = self.file_manager.load_yaml(v2_path) if os.path.exists(v2_path) else None
+        content_type = (existing_v2 or {}).get("type", "page")
+
         api_operations = [
             {
                 'operation': lambda: self.api_client.get_page_data_v1(page_id),
@@ -51,12 +56,12 @@ class Stage1Processor(StageBase):
                 'filename': "page.v1.yaml"
             },
             {
-                'operation': lambda: self.api_client.get_page_data_v2(page_id),
+                'operation': lambda: self.api_client.get_page_data_v2(page_id, content_type),
                 'description': "V2 API page data",
                 'filename': "page.v2.yaml"
             },
             {
-                'operation': lambda: self.api_client.get_child_pages(page_id),
+                'operation': lambda: self.api_client.get_child_pages(page_id, content_type),
                 'description': "V2 API child pages",
                 'filename': "children.v2.yaml"
             },
@@ -291,7 +296,7 @@ class Stage4Processor(StageBase):
                 filtered_ancestors: List[str] = []
                 found_start_page = False
                 for ancestor in ancestors:
-                    if ancestor.get("type") == "page":
+                    if ancestor.get("type") in ("page", "folder"):
                         if ancestor["id"] == start_page_id:
                             found_start_page = True
                             continue
@@ -304,7 +309,7 @@ class Stage4Processor(StageBase):
             else:
                 # Include all ancestors
                 ancestor_titles = [
-                    clean_text(ancestor["title"]) for ancestor in ancestors if ancestor.get("type") == "page" and "title" in ancestor
+                    clean_text(ancestor["title"]) for ancestor in ancestors if ancestor.get("type") in ("page", "folder") and "title" in ancestor
                 ]
                 path = ancestor_titles + [title]
 
