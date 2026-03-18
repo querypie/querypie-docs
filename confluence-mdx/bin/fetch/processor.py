@@ -231,9 +231,7 @@ class ConfluencePageProcessor:
                         )
 
                 # Download each page through all 4 stages and output to stdout
-                # Store downloaded pages for list.txt
                 self.logger.warning(f"Downloading {len(modified_pages)} recently modified pages")
-                downloaded_list_lines = []
                 skipped_count = 0
                 for entry in modified_pages:
                     page_id = entry["id"]
@@ -256,8 +254,6 @@ class ConfluencePageProcessor:
                             # Output to stdout during download
                             breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                             print(f"{page.page_id}\t{breadcrumbs_str}")
-                            # Store for list.txt (only downloaded pages)
-                            downloaded_list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                     except Exception as e:
                         self.logger.error(f"Error downloading page ID {page_id}: {str(e)}")
                         continue
@@ -266,38 +262,25 @@ class ConfluencePageProcessor:
                     self.logger.warning(f"Skipped {skipped_count} pages (already up-to-date)")
 
                 # After downloading, process like local mode (hierarchical traversal from start_page_id)
-                # Generate pages.yaml and list.txt with full hierarchical tree (like --local mode)
+                # Generate pages.yaml with full hierarchical tree (like --local mode)
                 # No stdout output in this phase (like --local mode)
                 self.logger.warning(f"Processing page tree from start page ID {start_page_id} (local mode)")
                 page_count = 0
                 yaml_entries = []
-                list_lines = []
 
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
                     if page:
-                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
-                        # No stdout output in local mode
-                        # Exclude start_page_id from list.txt (root page is not converted to MDX)
-                        if page.page_id != start_page_id:
-                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
             elif self.config.mode == "local":
                 # --local mode: Process existing local files hierarchically from start_page_id
-                # No stdout output in local mode
                 self.logger.warning(f"Local mode: Processing page tree from start page ID {start_page_id}")
                 page_count = 0
                 yaml_entries = []
-                list_lines = []
 
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
                     if page:
-                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
-                        # No stdout output in local mode
-                        # Exclude start_page_id from list.txt (root page is not converted to MDX)
-                        if page.page_id != start_page_id:
-                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
@@ -307,15 +290,13 @@ class ConfluencePageProcessor:
                 self.logger.warning(f"Remote mode: Processing page tree from start page ID {start_page_id} via API")
                 page_count = 0
                 yaml_entries = []
-                list_lines = []
 
                 for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=False):
                     if page:
-                        breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
-                        # Exclude start_page_id from stdout and list.txt (root page is not converted to MDX)
+                        # Exclude start_page_id from stdout (root page is not converted to MDX)
                         if page.page_id != start_page_id:
+                            breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
                             print(f"{page.page_id}\t{breadcrumbs_str}")
-                            list_lines.append(f"{page.page_id}\t{breadcrumbs_str}\n")
                         page_count += 1
                         yaml_entries.append(page.to_dict())
 
@@ -346,11 +327,6 @@ class ConfluencePageProcessor:
             if yaml_entries:
                 self.file_manager.save_yaml(output_yaml_path, yaml_entries)
                 self.logger.info(f"YAML data saved to {output_yaml_path}")
-
-            # Save list.txt file
-            if list_lines:
-                self.file_manager.save_file(output_list_path, "".join(list_lines))
-                self.logger.info(f"List file saved to {output_list_path}")
 
             self.logger.info(f"Completed processing {page_count} pages")
         except Exception as e:

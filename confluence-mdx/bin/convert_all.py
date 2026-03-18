@@ -6,9 +6,9 @@ translate_titles.py, generate_commands_for_xhtml2markdown.py, xhtml2markdown.ko.
 하나의 명령으로 대체합니다.
 
 Usage:
-  bin/convert_all.py                       # 전체 변환
+  bin/convert_all.py                       # 전체 변환 (기본: --sync-code qm)
+  bin/convert_all.py --sync-code qcp       # QCP Space 변환
   bin/convert_all.py --verify-translations  # 번역 검증만 수행
-  bin/convert_all.py --generate-list        # list.txt / list.en.txt 생성
 """
 
 import argparse
@@ -75,34 +75,6 @@ def verify_translations(pages: List[Dict], translations: Dict[str, str]) -> List
         if korean_re.search(title) and title not in translations:
             missing.append(page)
     return missing
-
-
-def generate_list_files(pages: List[Dict], output_dir: str) -> None:
-    """Generate list.txt (Korean) and list.en.txt (English) from pages.yaml."""
-    list_txt_lines = []
-    list_en_lines = []
-
-    # Skip the root page (first entry, single breadcrumb)
-    root_page_id = pages[0]['page_id'] if pages else None
-
-    for page in pages:
-        if page['page_id'] == root_page_id:
-            continue
-        breadcrumbs = page.get('breadcrumbs', [])
-        breadcrumbs_en = page.get('breadcrumbs_en', [])
-        list_txt_lines.append(f"{page['page_id']}\t{' />> '.join(breadcrumbs)}\n")
-        list_en_lines.append(f"{page['page_id']}\t{' />> '.join(breadcrumbs_en)}\n")
-
-    list_txt_path = os.path.join(output_dir, 'list.txt')
-    list_en_path = os.path.join(output_dir, 'list.en.txt')
-
-    with open(list_txt_path, 'w', encoding='utf-8') as f:
-        f.writelines(list_txt_lines)
-    print(f"Generated {list_txt_path} ({len(list_txt_lines)} entries)", file=sys.stderr)
-
-    with open(list_en_path, 'w', encoding='utf-8') as f:
-        f.writelines(list_en_lines)
-    print(f"Generated {list_en_path} ({len(list_en_lines)} entries)", file=sys.stderr)
 
 
 def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_dir: str,
@@ -176,8 +148,6 @@ def main():
                         help='Path to translations file')
     parser.add_argument('--verify-translations', action='store_true',
                         help='Verify translation coverage and exit')
-    parser.add_argument('--generate-list', action='store_true',
-                        help='Generate list.txt / list.en.txt for debugging')
     parser.add_argument('--log-level', default='warning',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         help='Log level for converter/cli.py (default: warning)')
@@ -213,10 +183,6 @@ def main():
     # --verify-translations: exit after check
     if args.verify_translations:
         sys.exit(0)
-
-    # --generate-list: generate list files
-    if args.generate_list:
-        generate_list_files(pages, args.var_dir)
 
     # Run conversions
     failures = convert_all(pages, args.var_dir, args.output_dir, args.public_dir, args.log_level)

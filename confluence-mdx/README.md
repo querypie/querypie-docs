@@ -80,10 +80,10 @@ pip3 install requests beautifulsoup4 pyyaml
 
 1. `confluence-mdx/var/`에 Confluence 문서 데이터를 저장합니다.
     - 개별 문서마다 `<page_id>/page.xhtml`, `<page_id>/page.v1.yaml` 등을 저장합니다.
-    - 전체 문서 목록을 `var/pages.yaml`에 저장합니다.
+    - 전체 문서 목록을 `var/pages.<code>.yaml`에 저장합니다 (예: `var/pages.qm.yaml`).
     - `fetch_cli.py`를 사용합니다.
 2. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
-    - `var/pages.yaml`을 기반으로 모든 페이지를 변환합니다.
+    - `var/pages.<code>.yaml`을 기반으로 모든 페이지를 변환합니다.
     - `convert_all.py`를 사용합니다.
 
 무작정 따라해 보기
@@ -130,8 +130,7 @@ bin/fetch_cli.py --attachments
 bin/fetch_cli.py --local
 
 # 로컬에서 fetch_cli.py 개선 과정에서, 반복실행할 때 사용하는 명령입니다.
-# 또는, var/list.txt 를 업데이트하고자 하는 경우에 실행합니다.
-bin/fetch_cli.py --local >var/list.txt
+bin/fetch_cli.py --local
 
 # 특정 페이지 ID와 하위 문서를 내려받습니다. 첨부파일을 포함하여 내려받습니다.
 # 일부 문서만 변경한 경우, 해당 문서와 하위 페이지를 API 로 내려받아 저장할 때 사용합니다.
@@ -156,7 +155,6 @@ bin/fetch_cli.py --log-level DEBUG
 실행 결과:
 - `var/` 디렉토리에 문서 데이터가 저장됩니다.
 - 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
-- `>list.txt`로 stdout 을 redirect 하면, `list.txt` 파일에 문서 목록이 저장됩니다.
 
 ### 2. 전체 변환 (convert_all.py)
 
@@ -165,14 +163,14 @@ bin/fetch_cli.py --log-level DEBUG
 
 실행 방법:
 ```bash
-# 전체 변환 (번역 검증 포함)
+# 전체 변환 (번역 검증 포함, 기본: --sync-code qm)
 bin/convert_all.py
+
+# QCP Space 변환
+bin/convert_all.py --sync-code qcp
 
 # 번역 검증만 수행 (변환하지 않음)
 bin/convert_all.py --verify-translations
-
-# 디버깅용 list.txt / list.en.txt 생성 (변환도 함께 수행)
-bin/convert_all.py --generate-list
 ```
 
 실행 결과:
