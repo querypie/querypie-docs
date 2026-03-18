@@ -1,5 +1,6 @@
 ---
 title: '결재 부가 기능 (대리 결재, 재상신 등)'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/568918170'
 ---
 
 import { Callout } from 'nextra/components'
@@ -22,10 +23,10 @@ Workflow &gt; Reviews &gt; All Reviews &gt; Review Details
 
 1. Reviews &gt; All Reviews 목록에서 참조 완료 처리하려는 요청을 클릭하여 상세 페이지로 진입합니다.
     1. 참조 문서는 결재 승인 상태와 관계없이(승인 전/후) 모두 열람할 수 있습니다.
-    2. Review Status 가  **Unread**  인 요청들에 대해서만 `Confirm`이 가능합니다.
+    2. Review Status 가 **Unread** 인 요청들에 대해서만 `Confirm`이 가능합니다.
 2. 요청 상세 페이지 우측 상단의 `Confirm` 버튼을 클릭하여 Comment 입력할 수 있는 팝업창을 띄웁니다.
 3. 검토 의견을 입력 후 `OK` 버튼을 눌러 확인을 완료합니다.
-4. All Reviews 목록으로 돌아가면 Review Status 값이  **Confirmed** 로 변경된 것을 확인할 수 있습니다.
+4. All Reviews 목록으로 돌아가면 Review Status 값이 **Confirmed**로 변경된 것을 확인할 수 있습니다.
 
 
 
@@ -43,11 +44,11 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 </figcaption>
 </figure>
 
-*  **Delegate Approval to**  : 대리 결재자 입력
-*  **Start Date**  : 대리 결재 시작일자
-*  **End Date**  : 대리 결재 종료일자
-*  **Delegation Reason**  : 대리 결재 설정 사유 입력
-*  **Save**  : `Save` 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 `Save` 즉시 적용됩니다.
+* **Delegate Approval to** : 대리 결재자 입력
+* **Start Date** : 대리 결재 시작일자
+* **End Date** : 대리 결재 종료일자
+* **Delegation Reason** : 대리 결재 설정 사유 입력
+* **Save** : `Save` 버튼을 입력하면 대리 결재 설정이 저장됩니다. 설정 시작이 당일인 경우 `Save` 즉시 적용됩니다.
 
 #### 2. 대리 결재 설정 상태 확인하기
 
@@ -72,8 +73,8 @@ User &gt; 상단 메뉴바에서 프로필 클릭 &gt; Preferences
 #### 3. 위임받은 대리 결재 요청 처리하기
 
 * 대리 결재 설정 기간 동안, 대리 결재자가 확인할 수 있는 요청은 다음과 같습니다.
-    *  **Received Requests &gt; To Do**  : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함
-    *  **Received Requests &gt; Done**  : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.
+    * **Received Requests &gt; To Do** : 원 결재자가 수신한 미처리 요청 목록 (설정 기간 이전에 수신한 요청 포함
+    * **Received Requests &gt; Done** : 대리 결재 설정 기간 내 대리 결재자가 처리한 요청을 볼 수 있습니다.
 * 상세 페이지에서 승인 또는 반려할 수 있으며, Comment 입력 시에는 대리 결재 중임을 알리는 문구가 표시됩니다.
 
 <figure data-layout="center" data-align="center">
@@ -121,10 +122,10 @@ Workflow &gt; Sent Requests &gt; Done &gt; List Details
 1. Sent Requests &gt; Done 목록에서 재상신을 원하는 요청 건을 클릭하여 상세 페이지로 진입합니다.
 
 <Callout type="info">
-이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는  *Deleted* 로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다.
+이때 이미 삭제된 데이터(결재 규칙, 승인자, 서버, 계정 등)는 *Deleted*로 표시되는 것을 확인할 수 있으며, 삭제된 값은 재상신 시 제외하고 수정된 값은 현재 기준으로 불러오게 됩니다.
 </Callout>
 
-1. 우측 상단에 있는 `Resubmit` 버튼을 클릭하여 재상신 페이지로 진입합니다.
-2. 재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다.
-3. `Save` 버튼을 통해 저장합니다.
-4. Workflow &gt; Sent Request &gt; In Progress 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.
+2. 우측 상단에 있는 `Resubmit` 버튼을 클릭하여 재상신 페이지로 진입합니다.
+3. 재상신 페이지 내에서 수정을 원하는 값이 있을 경우 수정을 합니다.
+4. `Save` 버튼을 통해 저장합니다.
+5. Workflow &gt; Sent Request &gt; In Progress 메뉴에서 본인의 요청 내역과 승인 현황을 확인할 수 있습니다.
