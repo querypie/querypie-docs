@@ -38,14 +38,36 @@ case "${1:-help}" in
     echo "+ bin/$command $@"
     exec bin/$command "$@"
     ;;
-  full) # Execute full workflow
+  full) # Execute full workflow for a single Space
     print_image_info
     shift
-    echo "# Starting full workflow..."
+    # Extract --sync-code value from args (default: qm)
+    sync_code="qm"
+    prev_arg=""
+    for arg in "$@"; do
+      if [[ "$prev_arg" == "--sync-code" ]]; then
+        sync_code="$arg"
+      elif [[ "$arg" == "--sync-code="* ]]; then
+        sync_code="${arg#--sync-code=}"
+      fi
+      prev_arg="$arg"
+    done
+    echo "# Starting full workflow (sync-code: $sync_code)..."
     echo "+ bin/fetch_cli.py $@"
     bin/fetch_cli.py "$@"
-    echo "+ bin/convert_all.py"
-    bin/convert_all.py
+    echo "+ bin/convert_all.py --sync-code $sync_code"
+    bin/convert_all.py --sync-code "$sync_code"
+    ;;
+  full-all) # Execute full workflow for all Spaces
+    print_image_info
+    shift
+    for CODE in qm qcp; do
+      echo "# Starting full workflow for Space: $CODE..."
+      echo "+ bin/fetch_cli.py --sync-code $CODE $@"
+      bin/fetch_cli.py --sync-code "$CODE" "$@"
+      echo "+ bin/convert_all.py --sync-code $CODE"
+      bin/convert_all.py --sync-code "$CODE"
+    done
     ;;
   status) # Show detailed var/ data status report
     exec bin/image_status.py "${@:2}"
@@ -66,7 +88,8 @@ Usage:
 Commands:
   fetch_cli.py [args...]            - Collect Confluence data
   convert_all.py [args...]          - Convert all pages to MDX
-  full [fetch args...]              - Execute full workflow (fetch + convert)
+  full [fetch args...]              - Execute full workflow for a single Space (default: --sync-code qm)
+  full-all [fetch args...]          - Execute full workflow for all Spaces (qm, qcp) sequentially
   converter/cli.py <in> <out>       - Convert a single XHTML to MDX
   status                            - Show var/ data freshness report
   bash                              - Run interactive shell
@@ -74,8 +97,9 @@ Commands:
 
 Examples:
   docker run docker.io/querypie/confluence-mdx:latest full
-  docker run docker.io/querypie/confluence-mdx:latest full --recent
-  docker run docker.io/querypie/confluence-mdx:latest convert_all.py
+  docker run docker.io/querypie/confluence-mdx:latest full --sync-code qm --recent
+  docker run docker.io/querypie/confluence-mdx:latest full-all
+  docker run docker.io/querypie/confluence-mdx:latest convert_all.py --sync-code qm
   docker run docker.io/querypie/confluence-mdx:latest fetch_cli.py --attachments
   docker run docker.io/querypie/confluence-mdx:latest status
   docker run -v \$(pwd)/target:/workdir/target docker.io/querypie/confluence-mdx:latest full --local
