@@ -20,6 +20,6 @@ SYNC_PROFILES: dict[str, SyncProfile] = {
     "qcp": SyncProfile(
         code="qcp",
         space_key="QCP",
-        start_page_id="",            # TBD: QCP Space 루트 페이지 ID
+        start_page_id="887849063",   # QCP Space 루트 (https://querypie.atlassian.net/wiki/spaces/QCP/folder/887849063)
     ),
 }
