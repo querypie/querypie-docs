@@ -15,6 +15,7 @@ class Config:
     """Centralized configuration management"""
     base_url: str = "https://querypie.atlassian.net/wiki"
     space_key: str = "QM"  # Confluence space key
+    sync_code: str = "qm"  # Sync profile code (see fetch/sync_profiles.py)
     days: Optional[int] = None  # Number of days to look back (None = auto-detect from .fetch_state.yaml)
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
@@ -25,6 +26,11 @@ class Config:
     api_token: Optional[str] = None
     download_attachments: bool = False
     mode: str = "recent"  # Mode: "local", "remote", or "recent"
+
+    @property
+    def pages_yaml_filename(self) -> str:
+        """Filename for pages YAML, derived from sync_code."""
+        return f"pages.{self.sync_code}.yaml"
 
     def __post_init__(self):
         if self.email is None:
