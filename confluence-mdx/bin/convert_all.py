@@ -162,8 +162,10 @@ def main():
     parser = argparse.ArgumentParser(
         description='Batch convert all Confluence pages to MDX using pages.yaml'
     )
-    parser.add_argument('--pages-yaml', default='var/pages.yaml',
-                        help='Path to pages.yaml (default: var/pages.yaml)')
+    parser.add_argument('--sync-code', default='qm',
+                        help='Sync profile code; used to auto-derive --pages-yaml (default: %(default)s)')
+    parser.add_argument('--pages-yaml', default=None,
+                        help='Path to pages YAML (default: var/pages.<sync-code>.yaml)')
     parser.add_argument('--var-dir', default='var',
                         help='Directory containing page data (default: var)')
     parser.add_argument('--output-dir', default='target/ko',
@@ -180,6 +182,10 @@ def main():
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         help='Log level for converter/cli.py (default: warning)')
     args = parser.parse_args()
+
+    # Auto-derive pages-yaml from sync-code if not explicitly provided
+    if args.pages_yaml is None:
+        args.pages_yaml = f'var/pages.{args.sync_code}.yaml'
 
     # Resolve relative paths against project root (confluence-mdx/)
     args.pages_yaml = _resolve(args.pages_yaml)

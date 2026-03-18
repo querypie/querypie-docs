@@ -175,8 +175,7 @@ class ConfluencePageProcessor:
                 self.logger.info(f"Created output directory: {self.config.default_output_dir}")
 
             # Prepare output file path
-            output_yaml_path = os.path.join(self.config.default_output_dir, "pages.yaml")
-            output_list_path = os.path.join(self.config.default_output_dir, "list.txt")
+            output_yaml_path = os.path.join(self.config.default_output_dir, self.config.pages_yaml_filename)
 
             start_page_id = self.config.default_start_page_id
 
