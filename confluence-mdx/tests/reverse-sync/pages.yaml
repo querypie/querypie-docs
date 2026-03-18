@@ -1574,14 +1574,12 @@
   breadcrumbs_en:
   - User Manual
   - Database Access Control
-  description: '리스트 번호 오류: improved.mdx 1,2,3번 항목이 verify.mdx에서 3,4,5번으로 renumber됨.
-
-    또한 Italic 앞뒤 이중 공백(  *DELETE*  )이 단일 공백(*DELETE*)으로 소실.
+  description: 'original.mdx 재생성 후 리스트 번호(3,4,5)가 올바르게 반영되어 reverse-sync가 정상 통과.
 
     '
-  expected_status: fail
-  failure_type: 17
-  label: 리스트 번호 오류 (1,2,3 → 3,4,5) + Italic 앞뒤 이중 공백 소실 (*DELETE*)
+  expected_status: pass
+  failure_type: 11
+  label: 교정 내용 원복 — 리스트 번호 순서 보존 (3,4,5번 항목)
   mdx_path: user-manual/database-access-control/setting-default-privilege.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544380354/Default+Privilege
   page_id: '544380354'
