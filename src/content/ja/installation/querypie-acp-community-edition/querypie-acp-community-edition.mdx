@@ -1,0 +1,100 @@
+---
+title: 'QueryPie ACP Community Edition 初期設定ガイド'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1805516819/QueryPie+ACP+Community+Edition'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP Community Edition 初期設定ガイド
+
+## Overview
+
+Community Editionのインストール完了後に必ず設定する必要がある内容について説明します。
+
+### Web Base URL設定
+
+管理者ページの`General > Company Management > General`設定ページのWeb Base URL設定項目に、外部アクセスに関連するアドレスを必ず入力してください。
+
+<Callout type="info">
+Web Base URLに入力した値を使用する機能
+
+* OAuth / SAML redirect URI、SCIMエンドポイント
+* メール / Slack内のリンクURL生成
+* Server Agentの設定およびダウンロードURL
+* User Agentのダウンロードリンク
+* 監査ログのエクスポート / レポートダウンロードリンク
+* [DAC] DB OAuth redirect URI
+* [KAC] セッションレコーディングのダウンロード
+
+その他の詳細な用途については、[QUERYPIE_WEB_URL](../container-environment-variables/querypieweburl)を参照してください。
+</Callout>
+
+このURLは`/`で終わってはいけません。`https://querypie.customer.com/`のように、URLの末尾に`/`を付けないよう注意してください。
+Community Editionの場合、デフォルトのポートが8000に設定されているため、ポートも合わせて入力します。
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/querypie-acp-community-edition/querypie-acp-community-edition/image-20260317-141403.png" alt="Web Base URL" width="842" />
+<figcaption>
+Web Base URL
+</figcaption>
+</figure>
+
+
+### サービス別Proxy設定
+
+サードパーティツールを使用して対象に接続するには、Proxy設定が必須です。
+
+QueryPieがインストールされているディレクトリに移動し、configure-proxy.shスクリプトを実行します。
+
+<Callout type="info">
+-hまたは--helpオプションを使用すると、スクリプトのヘルプを表示できます。
+```
+bash configure-proxy.sh -h
+Usage: configure-proxy.sh [OPTIONS] [PROXY_ADDRESS]
+
+Configure QueryPie ACP proxy settings for DAC/SAC and KAC in one step.
+
+ARGUMENTS:
+  PROXY_ADDRESS  FQDN or IPv4 address of this host.
+                 e.g. 192.168.1.100, querypie.example.com
+                 If omitted, the host IP is auto-detected.
+
+OPTIONS:
+  -y, --yes      Assume yes to all prompts; run non-interactively.
+  -h, --help     Show this help message
+```
+</Callout>
+```bash
+cd ~/querypie/current #### This is an example when installed under the home directory.
+bash configure-proxy.sh ## run proxy configuration script
+```
+
+スクリプトを実行すると、使用するProxy Addressを入力します。
+デフォルトではホストIPが自動検出されますが、必要に応じて（FQDNの入力など）修正して入力します。
+```
+Proxy address [10.11.20.87]:
+```
+
+DAC / SAC / KACのProxy設定が一度に適用されます。
+```
+Apply the above proxy settings?
+Do you agree? [y/N] : y
+```
+
+yを押して続行します。
+
+設定を適用するにはサービスの再起動が必要です。
+```
+Restart services to apply changes?
+Do you agree? [y/N] : y
+```
+
+yを押して続行します。
+サービスが正常に再起動されると、以下の図のように出力されます。
+
+<figure data-layout="center" data-align="center">
+<img src="/installation/querypie-acp-community-edition/querypie-acp-community-edition/image-20260318-060925.png" alt="Proxy設定スクリプトが正常終了。" width="509" />
+<figcaption>
+Proxy設定スクリプトが正常終了。
+</figcaption>
+</figure>
