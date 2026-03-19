@@ -427,24 +427,25 @@ patches = build_patches(
 )
 ```
 
+**데이터 소스 결정:**
+
+현재 `build_patches()`는 `BlockMapping`의 `block_id`, `xhtml_plain_text`, `children`, `xhtml_element_index` 필드에 광범위하게 의존한다(child_to_parent 맵, lost_info 분배, text prefix fallback, containing 분기 등). `SidecarBlock`에는 이 필드들이 없으므로 `roundtrip_sidecar`만으로는 `mappings`/`xpath_to_mapping`을 복원할 수 없다.
+
+따라서 Axis 2의 데이터 소스는 **`build_patches()` 내부에서 `record_mapping()`을 직접 호출**하는 것으로 확정한다. `build_sidecar()` 내부에서도 이미 같은 함수를 호출하고 있으므로(`sidecar.py:233`), 동일한 패턴이다. CLI가 하던 일을 `build_patches()` 내부로 옮기는 것이 Axis 2의 본질이며, SidecarBlock 스키마 확장은 별도 작업으로 분리한다.
+
 **전환 순서:**
 
-1. `reverse_sync_cli.py`에서 `record_mapping()` 직접 호출 제거
-2. `build_patches()` 내부에서 `roundtrip_sidecar` 기반으로 `mappings`와 `xpath_to_mapping`을 자동 구축하도록 전환 — CLI는 이 파라미터를 직접 생성하지 않고, `build_patches()`가 `roundtrip_sidecar`로부터 필요한 데이터를 내부에서 도출한다
+1. `build_patches()`에 `page_xhtml` 파라미터를 추가하고, 내부에서 `record_mapping(page_xhtml)`을 호출하여 `mappings`와 `xpath_to_mapping`을 자체 구축한다
+2. `reverse_sync_cli.py`에서 `record_mapping()` 직접 호출 및 `build_patches()`로의 `mappings`/`xpath_to_mapping` 전달을 제거한다
 3. `SidecarEntry` import를 `patch_builder.py`에서 제거 (`_build_mdx_to_sidecar_from_v3()` 출력을 `SidecarBlock` 직접 참조로 교체)
 
-> **주의:** `build_patches()`의 `mappings`와 `xpath_to_mapping` 파라미터는 child-parent 추적, lost_info 분배, delete/insert anchor 계산에 여전히 사용되므로 시그니처에서 즉시 제거하지 않는다. Axis 2의 범위는 **데이터 생성 책임을 CLI에서 `build_patches()` 내부로 이전**하는 것이다. 파라미터 자체의 완전 제거는 이 의존들을 sidecar v3 기반으로 대체할 수 있는 시점에 별도 단계로 진행한다.
+> **주의:** `build_patches()`의 `mappings`와 `xpath_to_mapping`은 내부 변수로 남되, 외부 시그니처에서는 제거한다. 단, SidecarBlock이 BlockMapping 필드를 흡수하여 `record_mapping()` 호출 자체를 제거하는 것은 Axis 2 범위 밖이며, 별도 단계로 진행한다.
 
 **`mapping.original.yaml` artifact 처분 방침:**
 
 현재 CLI는 `record_mapping()` 결과를 패치 입력뿐 아니라 `reverse-sync.mapping.original.yaml` 디버깅 artifact 저장에도 사용한다(`reverse_sync_cli.py:344-351`). `record_mapping()` 직접 호출을 제거하면 이 artifact 생성 경로도 함께 사라진다.
 
-처분 방침: **`build_patches()` 내부에서 자동 구축된 mappings를 반환값 또는 별도 accessor로 노출하여, CLI가 artifact를 계속 저장할 수 있도록 한다.** 이 artifact는 패치 결과 디버깅과 `mapping.patched.yaml`과의 비교 검증에 사용되므로 당분간 유지한다. 구체적으로:
-
-- `build_patches()`의 반환 타입을 확장하여 부산물로 생성된 `mappings`를 함께 반환하거나,
-- `build_patches()` 호출 후 `roundtrip_sidecar`에서 동일 데이터를 추출하는 유틸리티를 제공한다.
-
-artifact 완전 폐기는 reverse-sync 디버깅 워크플로우 재정비 시점에 별도로 결정한다.
+처분 방침: **`build_patches()`의 반환 타입을 확장하여 내부에서 생성한 `mappings`를 부산물로 함께 반환한다.** CLI는 이 반환값으로 artifact를 계속 저장한다. 이 artifact는 패치 결과 디버깅과 `mapping.patched.yaml`과의 비교 검증에 사용되므로 당분간 유지한다. artifact 완전 폐기는 reverse-sync 디버깅 워크플로우 재정비 시점에 별도로 결정한다.
 
 **Axis 2 완료 기준:**
 - [ ] `reverse_sync_cli.py`에 `record_mapping()` 직접 호출 없음
