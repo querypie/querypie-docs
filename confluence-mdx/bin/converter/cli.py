@@ -176,8 +176,12 @@ def main():
         # 원본 XHTML 보존 — sidecar mapping에서 사용
         xhtml_original = html_content
 
-        # Load pages.yaml to get the current page's path
-        pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')
+        # Load pages YAML to get the current page's path.
+        # Try pages.qm.yaml first (new naming), fall back to pages.yaml (legacy).
+        var_dir = os.path.join(input_dir, '..')
+        pages_yaml_path = os.path.join(var_dir, 'pages.qm.yaml')
+        if not os.path.exists(pages_yaml_path):
+            pages_yaml_path = os.path.join(var_dir, 'pages.yaml')
         load_pages_yaml(pages_yaml_path, PAGES_BY_TITLE, PAGES_BY_ID)
 
         # Load page.v1.yaml: --page-dir 우선, 없으면 input_dir에서 탐색
