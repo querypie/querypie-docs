@@ -101,26 +101,26 @@ def _get_changed_ko_mdx_files(branch: str) -> List[str]:
 
 
 def _resolve_page_id(ko_mdx_path: str) -> str:
-    """src/content/ko/...mdx 경로에서 pages.yaml을 이용해 page_id를 유도한다."""
+    """src/content/ko/...mdx 경로에서 pages.qm.yaml을 이용해 page_id를 유도한다."""
     rel = ko_mdx_path.removeprefix('src/content/ko/').removesuffix('.mdx')
     path_parts = rel.split('/')
-    pages_path = _PROJECT_DIR / 'var' / 'pages.yaml'
+    pages_path = _PROJECT_DIR / 'var' / 'pages.qm.yaml'
     if not pages_path.exists():
-        raise ValueError("var/pages.yaml not found")
+        raise ValueError("var/pages.qm.yaml not found")
     pages = yaml.safe_load(pages_path.read_text())
     for page in pages:
         if page.get('path') == path_parts:
             return page['page_id']
-    raise ValueError(f"MDX path '{ko_mdx_path}' not found in var/pages.yaml")
+    raise ValueError(f"MDX path '{ko_mdx_path}' not found in var/pages.qm.yaml")
 
 
 def _resolve_attachment_dir(page_id: str) -> str:
-    """page_id에서 pages.yaml의 path를 조회하여 attachment-dir를 반환."""
-    pages = yaml.safe_load((_PROJECT_DIR / 'var' / 'pages.yaml').read_text())
+    """page_id에서 pages.qm.yaml의 path를 조회하여 attachment-dir를 반환."""
+    pages = yaml.safe_load((_PROJECT_DIR / 'var' / 'pages.qm.yaml').read_text())
     for page in pages:
         if page['page_id'] == page_id:
             return '/' + '/'.join(page['path'])
-    raise ValueError(f"page_id '{page_id}' not found in var/pages.yaml")
+    raise ValueError(f"page_id '{page_id}' not found in var/pages.qm.yaml")
 
 
 def _detect_language(descriptor: str) -> str:
