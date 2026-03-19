@@ -43,7 +43,7 @@
 
 ```
 MDX diff
-  → record_mapping(xhtml)           # mapping 계층 (중복 호출 — Phase 5 Axis 2 제거 대상)
+  → record_mapping(xhtml)           # mapping 계층 (CLI 직접 호출 — Phase 5 Axis 2 캡슐화 대상)
   → build_sidecar(xhtml, mdx)       # v3 sidecar 생성
   → build_patches(..., mdx_to_sidecar=None, roundtrip_sidecar=sidecar)
       → _build_mdx_to_sidecar_from_v3()   # v3 sidecar에서 인덱스 자동 생성
@@ -76,7 +76,7 @@ MDX diff
 
 그 외 CLI 구조적 중복:
 
-- `reverse_sync_cli.py`의 `record_mapping()` 직접 호출 — `build_sidecar()` 내부에서도 동일 함수 호출 (중복)
+- `reverse_sync_cli.py`의 `record_mapping()` 직접 호출 — `build_patches()` 내부로 캡슐화 대상
 - `SidecarEntry` 기반 `_build_mdx_to_sidecar_from_v3()` 출력 — v3 sidecar 직접 참조로 교체 대상
 
 ### 2.2 이미 main에 머지된 기반 작업
@@ -220,11 +220,11 @@ PR #942에서 `_resolve_mapping_for_change()`에 `xpath_to_sidecar_block` 파라
 
 `text_transfer.py` 삭제는 3개 호출 지점이 모두 제거된 이후에만 가능하다. Axis 1만으로는 조건이 성립하지 않는다.
 
-### 4.2 CLI `record_mapping()` 중복 호출
+### 4.2 CLI `record_mapping()` 직접 호출
 
-`reverse_sync_cli.py`는 `record_mapping(xhtml)`을 직접 호출하고, `build_sidecar()` 내부에서도 동일 함수를 다시 호출한다. 이 이중 호출이 Axis 2의 제거 대상이다.
+`reverse_sync_cli.py`는 `record_mapping(xhtml)`을 직접 호출하고 그 결과를 `build_patches()`에 전달한다. 이 호출과 전달 책임을 `build_patches()` 내부로 캡슐화하는 것이 Axis 2의 목표다. 단, `build_sidecar()` 내부에서도 `record_mapping()`을 별도로 호출하고 있으므로(`sidecar.py:233`), Axis 2 이후에도 runtime에서 `record_mapping()`은 2회 호출된다. runtime 중복 제거는 SidecarBlock이 BlockMapping 필드를 흡수한 후 별도 단계에서 진행한다.
 
-단, `build_patches()`의 `mappings`와 `xpath_to_mapping` 파라미터는 `record_mapping()` 중복 호출 제거와 별개로 광범위하게 사용된다:
+`build_patches()`의 `mappings`와 `xpath_to_mapping` 파라미터는 이 캡슐화와 별개로 광범위하게 사용된다:
 
 - `child_to_parent` 역참조 맵 구축 (중복 매칭 방지)
 - `distribute_lost_info_to_mappings()` (block_id 기반 lost_info 분배)
@@ -232,7 +232,7 @@ PR #942에서 `_resolve_mapping_for_change()`에 `xpath_to_sidecar_block` 파라
 - delete 패치 생성(`_build_delete_patch`)
 - insert anchor 계산(`_find_insert_anchor`)
 
-이 파라미터들을 sidecar v3 기반으로 완전 대체하려면 위 기능들의 대체 경로를 먼저 정의해야 한다. Axis 2의 즉각적인 목표는 **CLI의 `record_mapping()` 직접 호출 제거와 `SidecarEntry` import 제거**에 한정한다. `build_patches()` 시그니처의 `mappings`/`xpath_to_mapping` 파라미터 제거는 그 대체 경로가 확정된 이후 별도 단계로 진행한다.
+이 파라미터들을 sidecar v3 기반으로 완전 대체하려면 위 기능들의 대체 경로를 먼저 정의해야 한다. Axis 2의 목표는 **CLI의 `record_mapping()` 직접 호출을 `build_patches()` 내부로 캡슐화하고, `SidecarEntry` import를 제거**하는 것에 한정한다. `build_patches()` 시그니처의 `mappings`/`xpath_to_mapping` 파라미터 제거는 그 대체 경로가 확정된 이후 별도 단계로 진행한다.
 
 ### 4.3 해결된 문제 (참고)
 
@@ -347,7 +347,7 @@ Phase 5는 3개 Axis로 구성된다. Axis 1 → Axis 2 → Axis 3 순서로 진
 | `tests/testcases` 16개 changed golden 통과 | ✅ |
 | `expected_status: pass` 케이스 유지 | ✅ 31개 통과 |
 | unsupported 구조는 silent corruption 없이 skip (patch 미생성) | ✅ — 단, 일부는 명시적 fail이 아닌 skip으로 처리됨 (§3.5 목표와 차이 있음) |
-| `mapping.yaml` 없이 sidecar v3만으로 runtime planning 가능 | ⬜ Phase 5 달성 목표 |
+| `mapping.yaml` 없이 sidecar v3만으로 runtime planning 가능 | ⬜ Phase 5 이후 별도 단계 (SidecarBlock 스키마 확장 필요) |
 
 ---
 
@@ -412,15 +412,15 @@ strategy == 'containing' (build_patches 내):
 
 ---
 
-#### Phase 5 Axis 2: CLI `record_mapping()` 중복 제거
+#### Phase 5 Axis 2: CLI `record_mapping()` 책임 캡슐화
 
-**목표:** `reverse_sync_cli.py`의 `record_mapping()` 직접 호출을 제거하고, CLI가 sidecar v3 하나만 생성하도록 단순화한다.
+**목표:** `reverse_sync_cli.py`가 `record_mapping()`을 직접 호출하고 `build_patches()`에 전달하는 책임을 `build_patches()` 내부로 캡슐화한다. 이후 CLI는 `page_xhtml`만 넘기면 된다. 단, `build_sidecar()` 내부의 별도 `record_mapping()` 호출은 이 단계에서 건드리지 않으므로 runtime 호출 횟수는 2회로 유지된다. runtime 중복 제거는 SidecarBlock 스키마 확장 이후 별도 단계에서 진행한다.
 
 **현재 흐름:**
 
 ```python
 # reverse_sync_cli.py
-original_mappings = record_mapping(xhtml)    # 직접 호출 (중복)
+original_mappings = record_mapping(xhtml)    # CLI 직접 호출 (캡슐화 대상)
 roundtrip_sidecar = build_sidecar(xhtml, ...)  # 내부에서도 record_mapping 호출
 patches = build_patches(
     ..., original_mappings, ..., xpath_to_mapping, ...
@@ -431,7 +431,7 @@ patches = build_patches(
 
 현재 `build_patches()`는 `BlockMapping`의 `block_id`, `xhtml_plain_text`, `children`, `xhtml_element_index` 필드에 광범위하게 의존한다(child_to_parent 맵, lost_info 분배, text prefix fallback, containing 분기 등). `SidecarBlock`에는 이 필드들이 없으므로 `roundtrip_sidecar`만으로는 `mappings`/`xpath_to_mapping`을 복원할 수 없다.
 
-따라서 Axis 2의 데이터 소스는 **`build_patches()` 내부에서 `record_mapping()`을 직접 호출**하는 것으로 확정한다. `build_sidecar()` 내부에서도 이미 같은 함수를 호출하고 있으므로(`sidecar.py:233`), 동일한 패턴이다. CLI가 하던 일을 `build_patches()` 내부로 옮기는 것이 Axis 2의 본질이며, SidecarBlock 스키마 확장은 별도 작업으로 분리한다.
+따라서 Axis 2의 데이터 소스는 **`build_patches()` 내부에서 `record_mapping()`을 직접 호출**하는 것으로 확정한다. 이로 인해 `build_sidecar()`와 `build_patches()` 양쪽에서 `record_mapping()`이 각각 호출되어 runtime 중복은 남지만, Axis 2의 목표는 runtime 중복 제거가 아니라 **CLI의 배선(wiring) 책임을 `build_patches()` 내부로 캡슐화**하는 것이다. runtime 중복 제거는 SidecarBlock이 BlockMapping 필드를 흡수한 후 별도 단계에서 진행한다.
 
 **전환 순서:**
 
@@ -521,7 +521,7 @@ Axis 1, 2 완료 후 실행한다. 상세 삭제 범위는 `docs/plans/2026-03-1
 1. ✅ changed golden 16개가 새 reconstruction 경로로 green
 2. ✅ `expected_status: pass` 31개 회귀 케이스 유지
 3. ✅ unsupported 구조는 silent corruption 없이 skip (patch 미생성) — 명시적 fail로의 전환은 Axis 1 내 별도 작업
-4. ⬜ `mapping.yaml` 없이도 sidecar v3 기반 runtime planning 가능 — Axis 2 달성 목표
+4. ⬜ `mapping.yaml` 없이도 sidecar v3 기반 runtime planning 가능 — Axis 2 이후 별도 단계
 
 ---
 
@@ -548,7 +548,7 @@ PR #937 머지로 `main`은 Phase 0–4를 모두 흡수했고, testcase `origin
 
 1. **Axis 1 — text_transfer 호출 지점 전수 제거**: routing 변경 완료(PR #942). 남은 작업: clean container fallback 제거, paired delete+add fallback 대체, ac:link/ri:attachment fallback 대체. `text_transfer.py` 삭제는 3개 지점 전부 해소 후.
 
-2. **Axis 2 — CLI `record_mapping()` 중복 호출 제거**: CLI의 직접 호출 제거 및 `SidecarEntry` import 제거. `build_patches()` 시그니처의 `mappings`/`xpath_to_mapping` 전체 제거는 대체 경로 확정 후 별도 진행.
+2. **Axis 2 — CLI `record_mapping()` 책임 캡슐화**: CLI의 직접 호출과 배선 책임을 `build_patches()` 내부로 이전, `SidecarEntry` import 제거. runtime 중복 제거(`build_sidecar()`와의 이중 호출 해소)는 SidecarBlock 스키마 확장 후 별도 진행.
 
 3. **Axis 3 — 잔여 legacy 삭제**: Axis 1, 2 완료 후 `table_patcher.py`, 관련 테스트 정리.
 
