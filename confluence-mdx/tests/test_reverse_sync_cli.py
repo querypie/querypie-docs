@@ -837,7 +837,7 @@ def testbuild_patches_table_block():
 
 
 def testbuild_patches_child_resolved():
-    """parent+children 매핑에서 containing 전략으로 parent xpath로 패치한다."""
+    """parent+children 매핑 + sidecar 없음 → containing 전략은 skip (Phase 5 Axis 1)."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -879,14 +879,12 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # _resolve_child_mapping 제거 → containing 전략 → parent xpath로 패치
-    assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    assert 'New child text.' in patches[0]['new_plain_text']
+    # containing 전략 + sidecar reconstruction 없음 → skip
+    assert len(patches) == 0
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
-    """child 해석 실패 시 parent를 containing block으로 사용하여 패치한다."""
+    """child 해석 실패 + sidecar 없음 → containing 전략은 skip (Phase 5 Axis 1)."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -903,7 +901,6 @@ def testbuild_patches_child_fallback_to_parent_containing():
                     old_block=original_blocks[0],
                     new_block=improved_blocks[0]),
     ]
-    # parent의 xhtml_plain_text에 "Unresolvable old text."가 포함됨
     parent = BlockMapping(
         block_id='callout-1', type='html_block',
         xhtml_xpath='macro-info[1]',
@@ -912,7 +909,6 @@ def testbuild_patches_child_fallback_to_parent_containing():
         xhtml_element_index=0,
         children=['paragraph-2'],
     )
-    # child의 텍스트가 MDX와 불일치 → _resolve_child_mapping 실패
     child = BlockMapping(
         block_id='paragraph-2', type='paragraph',
         xhtml_xpath='macro-info[1]/p[1]',
@@ -930,10 +926,8 @@ def testbuild_patches_child_fallback_to_parent_containing():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    assert len(patches) == 1
-    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    assert patches[0]['old_plain_text'] == 'Prefix. Unresolvable old text. Suffix.'
-    assert 'Unresolvable new text.' in patches[0]['new_plain_text']
+    # containing 전략 + sidecar reconstruction 없음 → skip
+    assert len(patches) == 0
 
 
 def testbuild_patches_unmapped_block_skipped():

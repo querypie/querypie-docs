@@ -205,6 +205,21 @@ def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
 
 # ── container 재구성 헬퍼 ──────────────────────────────────────────────────────
 
+def _root_tags_differ(fragment_a: str, fragment_b: str) -> bool:
+    """두 fragment의 최상위 태그가 다르면 True를 반환한다.
+
+    emit_block이 stored fragment와 다른 구조를 생성한 경우
+    (예: callout 내 `- item`이 <ul><li>로 변환) stored fragment를 template으로 사용하기 위함.
+    """
+    soup_a = BeautifulSoup(fragment_a, 'html.parser')
+    soup_b = BeautifulSoup(fragment_b, 'html.parser')
+    root_a = next((c for c in soup_a.contents if isinstance(c, Tag)), None)
+    root_b = next((c for c in soup_b.contents if isinstance(c, Tag)), None)
+    if root_a is None or root_b is None:
+        return False
+    return root_a.name != root_b.name
+
+
 def _has_inline_markup(fragment: str) -> bool:
     """fragment의 <p>에 ac:image 외 인라인 태그가 있으면 True를 반환한다.
 
@@ -300,6 +315,20 @@ def _rewrite_inline_segments_on_template(root: Tag, new_plain: str) -> Optional[
     rebuilt.append(''.join(remaining_text_parts))
 
     return f"<{root.name}>{''.join(rebuilt)}</{root.name}>"
+
+
+def rewrite_on_stored_template(
+    template_fragment: str,
+    new_plain: str,
+) -> str:
+    """원본 XHTML fragment의 inline 구조를 유지한 채 텍스트만 new_plain으로 갱신한다.
+
+    ac:link, ri:attachment 등 MDX round-trip 불가능한 인라인 요소를 보존하면서
+    텍스트만 변경할 때 사용한다. transfer_text_changes()의 sidecar 기반 대체.
+    """
+    # _rewrite_paragraph_on_template은 new_fragment에서 extract_plain_text로 new_plain을 추출.
+    # 여기서는 이미 정규화된 plain text를 받으므로 최소 fragment로 래핑한다.
+    return _rewrite_paragraph_on_template(template_fragment, f'<p>{new_plain}</p>')
 
 
 def _rewrite_paragraph_on_template(template_fragment: str, new_fragment: str) -> str:
@@ -446,8 +475,7 @@ def reconstruct_container_fragment(
     if recon.get('kind') != 'container':
         return new_fragment
     children_meta = recon.get('children', [])
-    if not any(c.get('anchors') or c.get('items') for c in children_meta):
-        return new_fragment  # clean container — emit_block result 그대로 사용
+    has_anchors = any(c.get('anchors') or c.get('items') for c in children_meta)
 
     # emitted new_fragment에서 body children 추출
     emitted_soup = BeautifulSoup(new_fragment, 'html.parser')
@@ -457,7 +485,12 @@ def reconstruct_container_fragment(
 
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
-    # 각 child 재구성
+    # children 수 불일치 시: clean container는 재구성 건너뜀
+    # (emit_block이 다른 수의 children을 생성하면 매칭이 안전하지 않음)
+    if not has_anchors and len(emitted_children) != len(children_meta):
+        return new_fragment
+
+    # 각 child 재구성 (clean container도 Step 1 inline markup 보존은 적용)
     rebuilt_fragments = []
     for i, child_tag in enumerate(emitted_children):
         if i >= len(children_meta):
@@ -467,17 +500,33 @@ def reconstruct_container_fragment(
         stored_fragment = child_meta.get('fragment', '')
         child_frag = str(child_tag)
 
-        # Step 1: inline markup 보존 (stored fragment를 template으로 재구성)
-        if stored_fragment and _has_inline_markup(stored_fragment):
-            child_frag = _rewrite_paragraph_on_template(stored_fragment, child_frag)
+        # Step 1: stored fragment 기반 구조 보존
+        if stored_fragment:
+            if _root_tags_differ(stored_fragment, child_frag):
+                # 구조 불일치 (emit_block이 다른 태그를 생성): stored fragment 그대로 사용
+                child_frag = stored_fragment
+            elif _has_inline_markup(stored_fragment):
+                child_frag = _rewrite_paragraph_on_template(stored_fragment, child_frag)
 
-        # Step 2: anchor 재삽입
-        if child_meta.get('anchors'):
+        # Step 2: anchor 재삽입 (clean container에서는 건너뜀)
+        if has_anchors and child_meta.get('anchors'):
             child_frag = _reconstruct_child_with_anchors(child_frag, child_meta)
 
         rebuilt_fragments.append(child_frag)
 
     # Step 3: outer wrapper template (macro 속성 보존)
+    return _apply_outer_wrapper_template(new_fragment, sidecar_block, rebuilt_fragments)
+
+
+def _apply_outer_wrapper_template(
+    new_fragment: str,
+    sidecar_block: 'SidecarBlock',
+    rebuilt_children: Optional[List[str]] = None,
+) -> str:
+    """sidecar xhtml_fragment를 template으로 사용하여 outer wrapper 속성을 보존한다.
+
+    rebuilt_children이 None이면 new_fragment의 body children을 그대로 사용한다.
+    """
     outer_template = sidecar_block.xhtml_fragment
     template_soup = BeautifulSoup(outer_template or new_fragment, 'html.parser')
     template_body = (
@@ -486,9 +535,19 @@ def reconstruct_container_fragment(
     if template_body is None:
         return new_fragment
 
+    # body children 추출
+    if rebuilt_children is None:
+        emitted_soup = BeautifulSoup(new_fragment, 'html.parser')
+        emitted_body = (
+            emitted_soup.find('ac:rich-text-body') or emitted_soup.find('ac:adf-content')
+        )
+        if emitted_body is None:
+            return new_fragment
+        rebuilt_children = [str(c) for c in emitted_body.children if isinstance(c, Tag)]
+
     for child in list(template_body.contents):
         child.extract()
-    for frag in rebuilt_fragments:
+    for frag in rebuilt_children:
         frag_soup = BeautifulSoup(frag, 'html.parser')
         for node in list(frag_soup.contents):
             template_body.append(node.extract())

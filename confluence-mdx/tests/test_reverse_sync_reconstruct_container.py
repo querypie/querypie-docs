@@ -478,8 +478,8 @@ class TestContainerPipelineEndToEnd:
         # img 태그는 Confluence 마크업으로 교체되어야 한다
         assert '<img src=' not in patched
 
-    def test_clean_callout_still_uses_text_transfer(self):
-        """ac:image 없는 clean callout은 기존 text-transfer 경로를 유지한다."""
+    def test_clean_callout_uses_replace_fragment(self):
+        """ac:image 없는 clean callout도 replace_fragment 경로를 사용한다 (Phase 5 Axis 1)."""
         xhtml = (
             '<ac:structured-macro ac:name="info">'
             '<ac:rich-text-body>'
@@ -493,9 +493,9 @@ class TestContainerPipelineEndToEnd:
         patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
 
         replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        # clean callout은 replace_fragment가 아닌 text-transfer 경로
-        assert not replace_patches or all(
-            p.get('xhtml_xpath') != 'macro-info[1]'
+        # clean callout은 이제 replace_fragment 경로를 사용
+        assert any(
+            p.get('xhtml_xpath') == 'macro-info[1]'
             for p in replace_patches
         )
         assert 'Updated text' in patched
