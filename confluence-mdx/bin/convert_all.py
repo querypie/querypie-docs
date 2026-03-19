@@ -78,7 +78,7 @@ def verify_translations(pages: List[Dict], translations: Dict[str, str]) -> List
 
 
 def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_dir: str,
-                log_level: str) -> int:
+                log_level: str, pages_yaml: str = '') -> int:
     """Run converter/cli.py for each page. Returns number of failures."""
     # Skip the root page
     root_page_id = pages[0]['page_id'] if pages else None
@@ -120,6 +120,8 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
             f'--attachment-dir={attachment_dir}',
             f'--log-level={log_level}',
         ]
+        if pages_yaml:
+            cmd.append(f'--pages-yaml={pages_yaml}')
 
         print(f"[{i}/{total}] {page_id} → {output_file}", file=sys.stderr)
         result = subprocess.run(cmd, capture_output=True, text=True)
@@ -185,7 +187,8 @@ def main():
         sys.exit(0)
 
     # Run conversions
-    failures = convert_all(pages, args.var_dir, args.output_dir, args.public_dir, args.log_level)
+    failures = convert_all(pages, args.var_dir, args.output_dir, args.public_dir, args.log_level,
+                           pages_yaml=args.pages_yaml)
 
     if failures:
         print(f"\nCompleted with {failures} failure(s) out of {len(pages)} pages", file=sys.stderr)

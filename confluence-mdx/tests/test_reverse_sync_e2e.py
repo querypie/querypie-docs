@@ -124,10 +124,13 @@ class TestE2ERoundTrip:
         monkeypatch.chdir(tmp_path)
         dest = tmp_path / "var" / "793608206"
         shutil.copytree(VAR_DIR, dest)
-        # pages.yaml도 복사 (converter가 {input_dir}/../pages.yaml 을 참조)
-        pages_yaml = VAR_DIR.parent / "pages.yaml"
-        if pages_yaml.exists():
-            shutil.copy2(pages_yaml, tmp_path / "var" / "pages.yaml")
+        # pages.<code>.yaml 복사 (converter가 {input_dir}/../pages.qm.yaml 을 참조)
+        # pages.qm.yaml 우선, 없으면 레거시 pages.yaml fallback
+        pages_yaml_src = VAR_DIR.parent / "pages.qm.yaml"
+        if not pages_yaml_src.exists():
+            pages_yaml_src = VAR_DIR.parent / "pages.yaml"
+        if pages_yaml_src.exists():
+            shutil.copy2(pages_yaml_src, tmp_path / "var" / "pages.qm.yaml")
         # _PROJECT_DIR을 tmp_path로 패치하여 run_verify가 tmp_path/var/ 를 사용하도록 함
         import reverse_sync_cli
         monkeypatch.setattr(reverse_sync_cli, '_PROJECT_DIR', tmp_path)
