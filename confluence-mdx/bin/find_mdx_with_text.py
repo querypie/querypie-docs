@@ -37,8 +37,7 @@ logging.basicConfig(
     format='%(levelname)s: %(message)s'
 )
 
-# Confluence base URL
-CONFLUENCE_BASE_URL = "https://querypie.atlassian.net/wiki/spaces/QM/pages"
+CONFLUENCE_BASE = "https://querypie.atlassian.net/wiki/spaces"
 
 
 def find_mdx_files_with_text(content_dir: Path, search_text: str) -> List[Path]:
@@ -172,17 +171,9 @@ def find_page_by_path(pages_by_path: Dict, mdx_path: List[str]) -> Optional[Dict
     return None
 
 
-def generate_confluence_link(page_id: str) -> str:
-    """
-    Generate Confluence document link
-    
-    Args:
-        page_id: Confluence page ID
-        
-    Returns:
-        Confluence URL
-    """
-    return f"{CONFLUENCE_BASE_URL}/{page_id}"
+def generate_confluence_link(page_id: str, space_key: str) -> str:
+    """Generate Confluence document link for the given space."""
+    return f"{CONFLUENCE_BASE}/{space_key}/pages/{page_id}"
 
 
 def main():
@@ -259,6 +250,9 @@ def main():
         logging.error("No pages loaded from pages.yaml. Cannot generate links.")
         return 1
     
+    # Derive space_key from sync profile
+    space_key = SYNC_PROFILES[args.sync_code].space_key
+
     # Find matching pages and generate links
     results = []
     for mdx_file in matching_files:
@@ -269,7 +263,7 @@ def main():
             page_id = page_info.get('page_id')
             title = page_info.get('title', 'Unknown')
             title_orig = page_info.get('title_orig', 'Unknown')
-            confluence_link = generate_confluence_link(page_id)
+            confluence_link = generate_confluence_link(page_id, space_key)
             
             results.append({
                 'mdx_file': mdx_file.relative_to(workspace_root),
