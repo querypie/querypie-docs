@@ -1,7 +1,7 @@
 # Reverse Sync 전면 재구성 설계
 
 > 최초 작성일: 2026-03-13
-> 갱신일: 2026-03-19 (4차 — Phase 5 진행 현황 반영 및 설계 기준선 교정)
+> 갱신일: 2026-03-19 (5차 — PR #938 리뷰 피드백 반영: Axis 1/2 전제 교정)
 > 기준 브랜치: `main`
 > 기준 커밋: `a1f4a0ac` (PR #937 머지)
 > 반영된 선행 PR:
@@ -29,6 +29,7 @@
 - **2차**: Phase 3–4 완료 반영 (2026-03-16)
 - **3차**: Phase 5 상세 구현 계획 반영, 코드 현황 재검증 (2026-03-18)
 - **4차**: Phase 5 Axis 1 routing 변경 반영, 기준선 수치 교정, 삭제 조건 재정의 (2026-03-19)
+- **5차**: PR #938 리뷰 피드백 반영 — Axis 1 clean container 전환 전제 교정, Axis 2 서술 명확화 및 artifact 처분 방침 추가 (2026-03-19)
 
 핵심 목적은 두 가지다.
 
@@ -363,7 +364,7 @@ PR #942에서 `_resolve_mapping_for_change()`에 `xpath_to_sidecar_block` 파라
 
 | 지점 | 위치 | 해소 방법 |
 |------|------|-----------|
-| ① containing fallback (clean container) | `_flush_containing_changes()` | clean container도 `emit_block()` 기반 replace_fragment로 전환 — macro 속성이 sidecar outer wrapper template에 있으므로 `reconstruct_container_fragment()`가 이미 이를 보존함 |
+| ① containing fallback (clean container) | `_flush_containing_changes()` | clean container도 `emit_block()` 기반 replace_fragment로 전환. **단, 현재 `reconstruct_container_fragment()`는 clean container(anchor/item 없음)에서 `new_fragment`를 그대로 반환하므로 outer wrapper template 보존(Step 3)이 적용되지 않는다.** `emit_block()`은 `ac:name`, `panelIcon` 등 MDX round-trip 가능한 속성만 재생성하며, `ac:macro-id`, `ac:schema-version` 등 Confluence 메타 속성은 유실된다. 따라서 전환 전에 `reconstruct_container_fragment()`를 확장하여 clean container에서도 sidecar의 `xhtml_fragment`를 outer wrapper template으로 적용하는 로직을 추가해야 한다. |
 | ② paired delete+add fallback | `patch_builder.py` ~line 430 | clean/table replacement 불가 케이스를 reconstruction 또는 명시적 skip으로 전환 |
 | ③ direct path ac:link/ri:attachment fallback | `patch_builder.py` ~line 657 | `sidecar_block_requires_reconstruction()` 경로로 커버 가능하면 전환, 불가하면 명시적 fail로 전환 |
 
@@ -379,6 +380,23 @@ strategy == 'containing' (build_patches 내):
 ```
 
 즉 anchor 있는 케이스는 기존 'containing' 분기 내에서도 이미 reconstruction 경로를 탔다. PR #942의 routing 변경은 코드 조직을 명확히 하기 위한 것이며, 실질적인 남은 작업은 위 3개 지점의 fallback 제거다.
+
+**① clean container 전환을 위한 `reconstruct_container_fragment()` 확장 방안:**
+
+현재 `reconstruct_container_fragment()`는 anchor/item이 없으면 early return한다(`reconstructors.py:449`). clean container를 replace_fragment로 전환하려면 Step 3(outer wrapper template 보존)만 별도로 적용해야 한다:
+
+```
+현재 (reconstructors.py:449):
+  if not any(c.get('anchors') or c.get('items') for c in children_meta):
+      return new_fragment  # ← outer wrapper 유실 위험
+
+변경 후:
+  if not any(c.get('anchors') or c.get('items') for c in children_meta):
+      # Step 1, 2는 건너뛰지만 Step 3(outer wrapper template)은 적용
+      return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+```
+
+`_apply_outer_wrapper_template()`은 기존 Step 3 로직(`sidecar_block.xhtml_fragment`를 template으로 사용, body children만 교체)을 별도 함수로 추출한 것이다. 이렇게 하면 `ac:macro-id`, `ac:schema-version` 등 Confluence 메타 속성이 보존된다.
 
 **Axis 1 완료 기준:**
 - [ ] `test_reverse_sync_reconstruction_goldens.py` 12개 통과 유지
@@ -413,10 +431,21 @@ patches = build_patches(
 **전환 순서:**
 
 1. `reverse_sync_cli.py`에서 `record_mapping()` 직접 호출 제거
-2. `build_patches()` 호출 시 `mappings=[]`, `xpath_to_mapping={}` 또는 `roundtrip_sidecar`에서 자동 구축하도록 전환
+2. `build_patches()` 내부에서 `roundtrip_sidecar` 기반으로 `mappings`와 `xpath_to_mapping`을 자동 구축하도록 전환 — CLI는 이 파라미터를 직접 생성하지 않고, `build_patches()`가 `roundtrip_sidecar`로부터 필요한 데이터를 내부에서 도출한다
 3. `SidecarEntry` import를 `patch_builder.py`에서 제거 (`_build_mdx_to_sidecar_from_v3()` 출력을 `SidecarBlock` 직접 참조로 교체)
 
-> **주의:** `build_patches()`의 `mappings`와 `xpath_to_mapping` 파라미터는 child-parent 추적, lost_info 분배, delete/insert anchor 계산에 여전히 사용되므로 시그니처에서 즉시 제거하지 않는다. CLI의 직접 호출만 제거하는 것이 Axis 2의 범위다. 파라미터 완전 제거는 이 의존들을 sidecar v3 기반으로 대체할 수 있는 시점에 별도로 진행한다.
+> **주의:** `build_patches()`의 `mappings`와 `xpath_to_mapping` 파라미터는 child-parent 추적, lost_info 분배, delete/insert anchor 계산에 여전히 사용되므로 시그니처에서 즉시 제거하지 않는다. Axis 2의 범위는 **데이터 생성 책임을 CLI에서 `build_patches()` 내부로 이전**하는 것이다. 파라미터 자체의 완전 제거는 이 의존들을 sidecar v3 기반으로 대체할 수 있는 시점에 별도 단계로 진행한다.
+
+**`mapping.original.yaml` artifact 처분 방침:**
+
+현재 CLI는 `record_mapping()` 결과를 패치 입력뿐 아니라 `reverse-sync.mapping.original.yaml` 디버깅 artifact 저장에도 사용한다(`reverse_sync_cli.py:344-351`). `record_mapping()` 직접 호출을 제거하면 이 artifact 생성 경로도 함께 사라진다.
+
+처분 방침: **`build_patches()` 내부에서 자동 구축된 mappings를 반환값 또는 별도 accessor로 노출하여, CLI가 artifact를 계속 저장할 수 있도록 한다.** 이 artifact는 패치 결과 디버깅과 `mapping.patched.yaml`과의 비교 검증에 사용되므로 당분간 유지한다. 구체적으로:
+
+- `build_patches()`의 반환 타입을 확장하여 부산물로 생성된 `mappings`를 함께 반환하거나,
+- `build_patches()` 호출 후 `roundtrip_sidecar`에서 동일 데이터를 추출하는 유틸리티를 제공한다.
+
+artifact 완전 폐기는 reverse-sync 디버깅 워크플로우 재정비 시점에 별도로 결정한다.
 
 **Axis 2 완료 기준:**
 - [ ] `reverse_sync_cli.py`에 `record_mapping()` 직접 호출 없음
