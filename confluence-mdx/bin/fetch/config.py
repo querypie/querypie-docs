@@ -18,6 +18,13 @@ class Config:
     sync_code: str = "qm"  # Sync profile code (see fetch/sync_profiles.py)
     days: Optional[int] = None  # Number of days to look back (None = auto-detect from .fetch_state.yaml)
     default_start_page_id: str = "608501837"  # Root Page ID of "QueryPie Docs" (for breadcrumbs)
+    root_content_type: str = "page"
+    """Confluence content type of the root page ('page' or 'folder').
+
+    Used by Stage 1 when page.v2.yaml does not yet exist (first run on a clean
+    environment), so the correct API endpoint is selected from the start.
+    Populated from SyncProfile.root_content_type in fetch_cli.py.
+    """
     quick_start_page_id: str = "544375784"  # QueryPie Overview having less children
     default_output_dir: str = "var"
     cache_dir: str = "cache"

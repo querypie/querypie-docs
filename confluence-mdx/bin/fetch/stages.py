@@ -44,10 +44,19 @@ class Stage1Processor(StageBase):
         directory = self.get_page_directory(page_id)
         self.file_manager.ensure_directory(directory)
 
-        # Determine content type from existing page.v2.yaml (for folder routing)
+        # Determine content type for API routing:
+        # 1. Prefer the type stored in page.v2.yaml (present on re-runs).
+        # 2. Fall back to config.root_content_type when processing the root
+        #    page on a clean environment (page.v2.yaml does not yet exist).
+        # 3. Default to "page" for all other pages without cached data.
         v2_path = os.path.join(self.get_page_directory(page_id), "page.v2.yaml")
         existing_v2 = self.file_manager.load_yaml(v2_path) if os.path.exists(v2_path) else None
-        content_type = (existing_v2 or {}).get("type", "page")
+        if existing_v2:
+            content_type = existing_v2.get("type", "page")
+        elif page_id == self.config.default_start_page_id:
+            content_type = self.config.root_content_type
+        else:
+            content_type = "page"
 
         api_operations = [
             {

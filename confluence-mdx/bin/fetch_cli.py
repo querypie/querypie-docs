@@ -92,10 +92,11 @@ def main():
     # Determine mode (default to "recent" if not specified)
     mode = args.mode if args.mode else "recent"
 
-    # Load sync profile and resolve space_key / start_page_id
+    # Load sync profile and resolve space_key / start_page_id / root_content_type
     profile = SYNC_PROFILES.get(args.sync_code)
     space_key = args.space_key or (profile.space_key if profile else Config().space_key)
     start_page_id = args.start_page_id or (profile.start_page_id if profile else Config().default_start_page_id)
+    root_content_type = profile.root_content_type if profile else "page"
 
     # Create configuration
     config = Config(
@@ -107,6 +108,7 @@ def main():
         api_token=args.api_token,
         default_output_dir=args.output_dir,
         default_start_page_id=start_page_id,
+        root_content_type=root_content_type,
         download_attachments=args.attachments,
         mode=mode
     )
