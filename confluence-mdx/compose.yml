@@ -49,8 +49,12 @@ services:
     volumes:
       # Use translation file from host
       - ./etc/korean-titles-translations.txt:/workdir/etc/korean-titles-translations.txt
-      # Mount pages YAML files in var to host (one per Space)
+      # Mount pages YAML files in var to host (one per Space).
+      # These files are created/updated by fetch_cli.py and must persist on the
+      # host so that subsequent runs and host-side tools (convert_all.py, etc.)
+      # can read the catalog.  Add a new line here for each new Space.
       - ./var/pages.qm.yaml:/workdir/var/pages.qm.yaml
+      - ./var/pages.qcp.yaml:/workdir/var/pages.qcp.yaml
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
       - ../src/content/ko:/workdir/target/ko
