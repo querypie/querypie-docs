@@ -24,6 +24,13 @@ from typing import Dict, List, Optional
 
 import yaml
 
+# Ensure bin/ is on sys.path for fetch package imports
+_BIN_DIR = Path(__file__).resolve().parent  # confluence-mdx/bin/
+if str(_BIN_DIR) not in sys.path:
+    sys.path.insert(0, str(_BIN_DIR))
+
+from fetch.sync_profiles import SYNC_PROFILES
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -195,10 +202,16 @@ def main():
         help='Content directory to search (default: src/content/ko)'
     )
     parser.add_argument(
+        '--sync-code',
+        default='qm',
+        choices=list(SYNC_PROFILES.keys()),
+        help='Sync profile code; pages.<code>.yaml을 로드합니다 (기본: %(default)s)'
+    )
+    parser.add_argument(
         '--pages-yaml',
         type=str,
-        default='var/pages.yaml',
-        help='Path to pages.yaml file (default: var/pages.yaml)'
+        default=None,
+        help='Path to pages YAML file (기본: var/pages.<sync-code>.yaml)'
     )
     parser.add_argument(
         '--workspace-root',
@@ -218,7 +231,13 @@ def main():
     
     # Resolve paths
     content_dir = workspace_root / args.content_dir
-    pages_yaml_path = workspace_root / 'confluence-mdx' / args.pages_yaml
+    confluence_mdx_dir = workspace_root / 'confluence-mdx'
+    if args.pages_yaml:
+        pages_yaml_path = confluence_mdx_dir / args.pages_yaml
+    else:
+        pages_yaml_path = confluence_mdx_dir / f'var/pages.{args.sync_code}.yaml'
+        if not pages_yaml_path.exists():
+            pages_yaml_path = confluence_mdx_dir / 'var/pages.yaml'
     
     logging.info(f"Searching for text: '{args.search_text}'")
     logging.info(f"Content directory: {content_dir}")

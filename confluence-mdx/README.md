@@ -158,7 +158,7 @@ bin/fetch_cli.py --log-level DEBUG
 
 ### 2. 전체 변환 (convert_all.py)
 
-`convert_all.py`는 `var/pages.yaml`을 기반으로 모든 페이지를 MDX로 변환하는 스크립트입니다.
+`convert_all.py`는 `var/pages.<code>.yaml`을 기반으로 모든 페이지를 MDX로 변환하는 스크립트입니다.
 변환 전에 번역 누락을 자동 검증합니다.
 
 실행 방법:
