@@ -397,6 +397,14 @@ strategy == 'containing' (build_patches 내):
 
 `_apply_outer_wrapper_template()`은 기존 Step 3 로직(`sidecar_block.xhtml_fragment`를 template으로 사용, body children만 교체)을 별도 함수로 추출한 것이다. 이렇게 하면 `ac:macro-id`, `ac:schema-version` 등 Confluence 메타 속성이 보존된다.
 
+**⚠ Axis 1 구현 시 금지 사항 (§11.3 참조):**
+
+① clean container 분기에 Step 1/2(stored child fragment 재사용, inline markup 재적용)를 추가하지 않는다. `not has_anchors` 분기는 `_apply_outer_wrapper_template(new_fragment, sidecar_block)` 한 줄로 끝나야 한다.
+
+② `rewrite_on_stored_template()` 등 plain text를 HTML fragment에 embed하는 함수에는 `html.escape()` 적용을 확인한다.
+
+③ fallback을 제거하기 전 해당 fallback이 처리하던 케이스 목록을 작성하고, 각 케이스의 대체 경로가 확보됐는지 확인한다. 대체 경로가 없는 케이스에서 `continue` 처리하지 않는다.
+
 **Axis 1 완료 기준:**
 - [ ] `test_reverse_sync_reconstruction_goldens.py` 12개 통과 유지
 - [ ] `expected_status: pass` 31개 유지
@@ -564,3 +572,134 @@ PR #937 머지로 `main`은 Phase 0–4를 모두 흡수했고, testcase `origin
 | ft=16 | 1 | 리스트 항목 내 코드 블록 인라인 병합 |
 
 이 중 ft=13의 일부는 Phase 5에서 legacy text-transfer를 제거하고 reconstruction 경로로 전환하면 자연히 개선되거나 명확한 fail-closed 처리로 정리될 것으로 예상된다.
+
+---
+
+## 11. 구현 규율 — Phase 5 반복 Regression 방지
+
+PR #942 리뷰에서 3개의 Regression이 발견됐다. 공통 원인을 분석하여 이후 PR에서 동일한 실수가 반복되지 않도록 원칙과 게이트를 정립한다.
+
+### 11.1 발견된 Regression 패턴
+
+#### R-1 — clean container에 Step 1/2 실행 (구조 변경의 silent 무시)
+
+**현상:** `reconstruct_container_fragment()`에 `_root_tags_differ()` 체크를 추가하여, emitted child의 root tag가 stored child와 다르면 stored fragment를 그대로 사용했다. 결과적으로 paragraph → list 같은 구조 변경이 조용히 버려졌다.
+
+**설계 위반:** 이 문서 §6 Axis 1에 clean container는 "Step 1, 2는 건너뛰고 Step 3(outer wrapper template)만 적용"이라고 명시되어 있다. 구현은 명세에 없는 Step 1을 추가했다.
+
+**원칙:** clean container(`has_anchors == False`)의 body children은 `new_fragment`에서 추출한 emitted children을 그대로 사용한다. stored child fragment를 재사용하는 로직(Step 1, 2)은 anchor/item이 있는 container 전용이며, clean container에 적용해서는 안 된다.
+
+**명세 재확인 (§6 Axis 1):**
+
+```
+clean container 처리 (변경 후):
+  if not has_anchors:
+      # Step 1, 2 건너뜀 — new_fragment의 emitted children 그대로 사용
+      # Step 3만 적용: outer wrapper 속성(ac:macro-id 등) 보존
+      return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+```
+
+---
+
+#### R-2 — plain text를 HTML fragment에 직접 embed (HTML injection)
+
+**현상:** `rewrite_on_stored_template(template_fragment, new_plain)`에서 `f'<p>{new_plain}</p>'`로 래핑 시 HTML 이스케이프를 적용하지 않았다. `new_plain`에 `<`, `>`, `&`가 포함되면 BeautifulSoup이 HTML 태그로 파싱하여 내용이 손실된다.
+
+**재현:** `rewrite_on_stored_template('<p><ac:link>...</ac:link></p>', 'a < b & c')` → `<b>` 이후가 태그로 해석되어 일부 소실.
+
+**원칙:** plain text를 HTML 문자열 안에 `f-string` 또는 `+` 연산으로 직접 삽입할 때는 반드시 `html.escape(text)`를 적용한다. `normalize_mdx_to_plain()`의 반환값도 HTML-safe가 아니다.
+
+```python
+# ✅ 올바른 사용
+import html
+return _rewrite_paragraph_on_template(template_fragment, f'<p>{html.escape(new_plain)}</p>')
+
+# ❌ 위험
+return _rewrite_paragraph_on_template(template_fragment, f'<p>{new_plain}</p>')
+```
+
+---
+
+#### R-3 — fallback 제거 전 coverage 미확보 (silent skip regression)
+
+**현상:** preserved anchor list와 containing + sidecar 없는 케이스를 `continue`(silent skip)로 처리했다. 이전에 `transfer_text_changes()`가 처리하던 케이스가 아무 패치도 생성하지 않게 됐다.
+
+**설계 위반:** §3.5 "지원 범위 밖 구조는 명시적으로 fail한다". 또한 기존 동작하던 케이스를 먼저 새 경로로 커버하지 않고 fallback만 제거했다.
+
+**원칙:** `transfer_text_changes()` 또는 다른 fallback을 제거할 때, 해당 경로가 처리하던 **모든 sub-case**에 대한 대체 경로가 먼저 확보되어야 한다. 대체 경로가 없는 sub-case가 하나라도 있으면 fallback을 유지한다.
+
+```
+fallback 제거 체크리스트:
+  1. 이 fallback이 처리하던 케이스를 열거한다
+  2. 각 케이스에 대한 새 경로가 구현되었는가?
+  3. 새 경로가 없는 케이스 → fallback 유지 또는 명시적 fail로 대체
+  4. 테스트 기대값이 "0 patches"로 바뀌는 케이스 전수 검토
+```
+
+---
+
+### 11.2 구현 게이트
+
+Phase 5 각 PR 구현 시 아래 게이트를 통과해야 한다.
+
+#### Gate 1: 설계 명세 선행
+
+구현하려는 로직이 이 문서에 명시되어 있는가?
+
+- 명시된 pseudocode가 있으면: 한 줄씩 대조하여 추가 로직이 없음을 확인한다.
+- 명시되지 않은 로직을 추가할 때: 코드를 먼저 작성하지 않고 이 문서를 먼저 업데이트한다.
+
+> **R-1의 교훈:** `_root_tags_differ()` 추가는 설계 명세에 없었다. 설계를 먼저 업데이트했다면 "clean container는 Step 1/2를 건너뜀" 제약이 확인됐을 것이다.
+
+#### Gate 2: silent skip 금지
+
+`continue` 또는 조용한 `return`으로 변경을 버리는 경우, 아래 중 하나가 충족되어야 한다:
+
+- (a) 해당 케이스가 "처리 안 함" 목록(`expected_status: fail`)에 기재되어 있다.
+- (b) 이전에 이 케이스를 처리하던 경로가 없었다(신규 edge case).
+
+이전 동작에서 패치가 생성되던 케이스가 0 patches로 바뀌면 반드시 그 이유를 PR description에 명시한다.
+
+#### Gate 3: HTML embed 이스케이프
+
+plain text를 HTML fragment에 embed할 때 `html.escape()` 적용 여부를 PR diff에서 확인한다. 적용하지 않은 라인이 있으면 merge 전 수정한다.
+
+#### Gate 4: 테스트 기대값 변화 검토
+
+golden test expected 파일 또는 단위 테스트 기대값이 변경되는 경우:
+
+- **기대값이 "없음" 또는 "0 patches"로 바뀐 경우**: 이전에 통과하던 케이스가 silent skip이 된 것이 아닌지 확인한다.
+- **기대값이 다른 내용으로 바뀐 경우**: 이전 기대값과 새 기대값 모두 올바른지 검토한다. "테스트를 통과시키기 위해" 기대값을 바꾸는 것은 regression을 숨기는 행위다.
+
+#### Gate 5: fallback 제거 범위 확인
+
+`transfer_text_changes()` 호출을 제거하기 전, 제거 대상 경로가 처리하는 케이스 목록을 작성하고 각 케이스의 대체 경로를 명시한다. 이 목록이 PR description에 포함되어야 한다.
+
+---
+
+### 11.3 clean container 구현 스펙 (Axis 1 구현자용)
+
+R-1의 재발을 막기 위해 `reconstruct_container_fragment()` clean container 분기의 올바른 구현을 명시한다.
+
+**허용되는 변경:**
+
+```python
+# reconstructors.py — reconstruct_container_fragment() 내부
+if not has_anchors:
+    # ✅ Step 3만: outer wrapper 속성 보존, body는 new_fragment의 emitted children 그대로
+    return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+```
+
+**허용되지 않는 변경:**
+
+```python
+# ❌ stored_fragment 재사용 — clean container에서 구조 변경을 버림
+if _root_tags_differ(stored_fragment, child_frag):
+    child_frag = stored_fragment
+
+# ❌ inline markup 재적용 — clean container는 emitted result를 신뢰함
+elif _has_inline_markup(stored_fragment):
+    child_frag = _rewrite_paragraph_on_template(stored_fragment, child_frag)
+```
+
+**근거:** clean container는 anchor나 Confluence 전용 인라인 요소가 없으므로 `emit_block()`의 결과를 신뢰한다. stored fragment를 참조하면 사용자가 MDX에서 의도적으로 수행한 구조 변경(단락 → 리스트 등)이 조용히 버려진다.
