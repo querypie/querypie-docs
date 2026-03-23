@@ -265,8 +265,8 @@ class TestBuildPatches:
 
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
-    def test_path3_sidecar_child_fail_containing_block_skips_without_sidecar(self):
-        """containing 전략 + sidecar 없음 → skip (Phase 5 Axis 1)."""
+    def test_path3_sidecar_child_fail_containing_block(self):
+        """child 해석 실패 → parent containing + sidecar 없음 → transfer_text_changes fallback."""
         parent = _make_mapping(
             'p1', 'parent contains child text here', xpath='div[1]',
             children=['c1'])
@@ -281,8 +281,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # sidecar reconstruction 없으면 containing은 skip
-        assert len(patches) == 0
+        # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 패치
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'div[1]'
+        assert 'updated text' in patches[0]['new_plain_text']
 
     # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):

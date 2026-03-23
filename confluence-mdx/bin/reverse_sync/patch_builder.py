@@ -10,6 +10,7 @@ from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
 )
+from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
@@ -526,7 +527,18 @@ def build_patches(
                     )
                 )
                 continue
-            # skip — preserved anchor list 및 reconstruction path 없는 list는 패치하지 않는다
+            # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
+            if mapping is not None and has_any_change:
+                xhtml_text = transfer_text_changes(_old_plain, _new_plain, mapping.xhtml_plain_text)
+                patch: Dict[str, str] = {
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_plain_text': xhtml_text,
+                }
+                if has_ol_start_change:
+                    patch['ol_start'] = int(_new_start.group(1))
+                patches.append(patch)
+                _mark_used(mapping.block_id, mapping)
             continue
 
         if strategy == 'table':
@@ -562,7 +574,15 @@ def build_patches(
                     )
                 )
                 continue
-            # sidecar 없음 → skip (안전한 패치 경로 없음)
+            # sidecar 없음 → transfer_text_changes fallback (ac:/ri: 구조 보존)
+            if mapping is not None:
+                xhtml_text = transfer_text_changes(old_plain, new_plain, mapping.xhtml_plain_text)
+                _mark_used(mapping.block_id, mapping)
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_plain_text': xhtml_text,
+                })
             continue
 
         # strategy == 'direct'

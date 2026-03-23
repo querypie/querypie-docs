@@ -837,7 +837,7 @@ def testbuild_patches_table_block():
 
 
 def testbuild_patches_child_resolved():
-    """parent+children 매핑 + sidecar 없음 → containing 전략은 skip (Phase 5 Axis 1)."""
+    """parent+children 매핑에서 containing 전략으로 parent xpath로 패치한다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -879,12 +879,14 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # containing 전략 + sidecar reconstruction 없음 → skip
-    assert len(patches) == 0
+    # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 패치
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
+    assert 'New child text.' in patches[0]['new_plain_text']
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
-    """child 해석 실패 + sidecar 없음 → containing 전략은 skip (Phase 5 Axis 1)."""
+    """child 해석 실패 시 parent를 containing block으로 사용하여 패치한다."""
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -926,8 +928,10 @@ def testbuild_patches_child_fallback_to_parent_containing():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # containing 전략 + sidecar reconstruction 없음 → skip
-    assert len(patches) == 0
+    assert len(patches) == 1
+    assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
+    assert patches[0]['old_plain_text'] == 'Prefix. Unresolvable old text. Suffix.'
+    assert 'Unresolvable new text.' in patches[0]['new_plain_text']
 
 
 def testbuild_patches_unmapped_block_skipped():
