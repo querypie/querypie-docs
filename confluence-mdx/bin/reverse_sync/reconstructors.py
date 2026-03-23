@@ -6,6 +6,7 @@ anchor offset 매핑 + DOM 삽입 + fragment 재구성 공용 helper.
 from __future__ import annotations
 
 import difflib
+import html
 from typing import TYPE_CHECKING, List, Optional, Tuple
 
 from bs4 import BeautifulSoup, NavigableString, Tag
@@ -205,20 +206,6 @@ def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
 
 # ── container 재구성 헬퍼 ──────────────────────────────────────────────────────
 
-def _root_tags_differ(fragment_a: str, fragment_b: str) -> bool:
-    """두 fragment의 최상위 태그가 다르면 True를 반환한다.
-
-    emit_block이 stored fragment와 다른 구조를 생성한 경우
-    (예: callout 내 `- item`이 <ul><li>로 변환) stored fragment를 template으로 사용하기 위함.
-    """
-    soup_a = BeautifulSoup(fragment_a, 'html.parser')
-    soup_b = BeautifulSoup(fragment_b, 'html.parser')
-    root_a = next((c for c in soup_a.contents if isinstance(c, Tag)), None)
-    root_b = next((c for c in soup_b.contents if isinstance(c, Tag)), None)
-    if root_a is None or root_b is None:
-        return False
-    return root_a.name != root_b.name
-
 
 def _has_inline_markup(fragment: str) -> bool:
     """fragment의 <p>에 ac:image 외 인라인 태그가 있으면 True를 반환한다.
@@ -328,7 +315,8 @@ def rewrite_on_stored_template(
     """
     # _rewrite_paragraph_on_template은 new_fragment에서 extract_plain_text로 new_plain을 추출.
     # 여기서는 이미 정규화된 plain text를 받으므로 최소 fragment로 래핑한다.
-    return _rewrite_paragraph_on_template(template_fragment, f'<p>{new_plain}</p>')
+    # new_plain은 HTML-safe가 아니므로 html.escape() 적용 필수 (R-2).
+    return _rewrite_paragraph_on_template(template_fragment, f'<p>{html.escape(new_plain)}</p>')
 
 
 def _rewrite_paragraph_on_template(template_fragment: str, new_fragment: str) -> str:
@@ -485,12 +473,12 @@ def reconstruct_container_fragment(
 
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
-    # children 수 불일치 시: clean container는 재구성 건너뜀
-    # (emit_block이 다른 수의 children을 생성하면 매칭이 안전하지 않음)
+    # clean container이고 children 수가 불일치하면 per-child 매칭이 안전하지 않으므로
+    # Step 1/2를 건너뛰고 Step 3(outer wrapper template)만 적용한다
     if not has_anchors and len(emitted_children) != len(children_meta):
-        return new_fragment
+        return _apply_outer_wrapper_template(new_fragment, sidecar_block)
 
-    # 각 child 재구성 (clean container도 Step 1 inline markup 보존은 적용)
+    # 각 child 재구성
     rebuilt_fragments = []
     for i, child_tag in enumerate(emitted_children):
         if i >= len(children_meta):
@@ -500,15 +488,14 @@ def reconstruct_container_fragment(
         stored_fragment = child_meta.get('fragment', '')
         child_frag = str(child_tag)
 
-        # Step 1: stored fragment 기반 구조 보존
-        if stored_fragment:
-            if _root_tags_differ(stored_fragment, child_frag):
-                # 구조 불일치 (emit_block이 다른 태그를 생성): stored fragment 그대로 사용
-                child_frag = stored_fragment
-            elif _has_inline_markup(stored_fragment):
-                child_frag = _rewrite_paragraph_on_template(stored_fragment, child_frag)
+        # Step 1: inline markup 보존 (stored fragment를 template으로 재구성)
+        # R-1 수정: _root_tags_differ 체크 제거
+        # — emit_block이 다른 구조를 생성한 경우 stored fragment를 재사용하면
+        #   사용자의 구조 변경(paragraph→list 등)이 조용히 버려진다 (§11.1 R-1)
+        if stored_fragment and _has_inline_markup(stored_fragment):
+            child_frag = _rewrite_paragraph_on_template(stored_fragment, child_frag)
 
-        # Step 2: anchor 재삽입 (clean container에서는 건너뜀)
+        # Step 2: anchor 재삽입
         if has_anchors and child_meta.get('anchors'):
             child_frag = _reconstruct_child_with_anchors(child_frag, child_meta)
 
