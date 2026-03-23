@@ -26,7 +26,14 @@ from typing import Optional
 import yaml
 
 # Resolve project root (confluence-mdx/) from bin/unused_attachments.py
-_PROJECT_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/
+_BIN_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
+_PROJECT_DIR = _BIN_DIR.parent                    # confluence-mdx/
+
+# Ensure bin/ is on sys.path for fetch package imports
+if str(_BIN_DIR) not in sys.path:
+    sys.path.insert(0, str(_BIN_DIR))
+
+from fetch.sync_profiles import SYNC_PROFILES
 
 
 def normalize_filename(name: str) -> str:
@@ -34,9 +41,14 @@ def normalize_filename(name: str) -> str:
     return unicodedata.normalize('NFC', name)
 
 
-def load_pages_yaml(var_dir: Path) -> list[dict]:
-    """var/pages.yaml에서 전체 페이지 목록을 로드합니다."""
-    pages_file = var_dir / "pages.yaml"
+def load_pages_yaml(var_dir: Path, sync_code: str = "qm") -> list[dict]:
+    """var/pages.<sync_code>.yaml에서 전체 페이지 목록을 로드합니다.
+
+    pages.<sync_code>.yaml이 없으면 레거시 pages.yaml을 fallback으로 사용합니다.
+    """
+    pages_file = var_dir / f"pages.{sync_code}.yaml"
+    if not pages_file.exists():
+        pages_file = var_dir / "pages.yaml"
     if not pages_file.exists():
         return []
     with open(pages_file, encoding='utf-8') as f:
@@ -122,7 +134,8 @@ def build_cross_reference_index(references: dict[str, set[str]],
 
 def find_unused_attachments(var_dir: Path,
                              page_ids: Optional[list[str]] = None,
-                             logger: Optional[logging.Logger] = None) -> list[dict]:
+                             logger: Optional[logging.Logger] = None,
+                             sync_code: str = "qm") -> list[dict]:
     """미사용 첨부파일을 검출합니다.
 
     Returns:
@@ -133,7 +146,7 @@ def find_unused_attachments(var_dir: Path,
 
     # 전체 페이지 목록 결정
     if page_ids is None:
-        pages = load_pages_yaml(var_dir)
+        pages = load_pages_yaml(var_dir, sync_code)
         all_page_ids = [p["page_id"] for p in pages]
     else:
         all_page_ids = page_ids
@@ -261,7 +274,12 @@ def delete_attachments(unused: list[dict], config, logger: logging.Logger) -> tu
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Confluence QM Space 첨부파일 사용 여부 검사 및 삭제"
+        description="Confluence Space 첨부파일 사용 여부 검사 및 삭제"
+    )
+    parser.add_argument(
+        "--sync-code", default="qm",
+        choices=list(SYNC_PROFILES.keys()),
+        help="Sync profile code; pages.<code>.yaml을 로드합니다 (기본: %(default)s)"
     )
     parser.add_argument(
         "--var-dir", default=None,
@@ -306,11 +324,11 @@ def main():
         page_ids = [pid.strip() for pid in args.page_id.split(",")]
 
     # 미사용 첨부파일 검출
-    unused = find_unused_attachments(var_dir, page_ids, logger)
+    unused = find_unused_attachments(var_dir, page_ids, logger, sync_code=args.sync_code)
 
     # 전체 첨부파일 수 계산 (보고용)
     if page_ids is None:
-        pages = load_pages_yaml(var_dir)
+        pages = load_pages_yaml(var_dir, args.sync_code)
         all_page_ids = [p["page_id"] for p in pages]
     else:
         all_page_ids = page_ids

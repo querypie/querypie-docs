@@ -5,11 +5,19 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import posixpath
 import re
+import sys
 from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import unquote
 
 import yaml
+
+# Ensure bin/ is on sys.path for fetch package imports
+_BIN_DIR = Path(__file__).resolve().parent.parent  # confluence-mdx/bin/
+if str(_BIN_DIR) not in sys.path:
+    sys.path.insert(0, str(_BIN_DIR))
+
+from fetch.sync_profiles import SYNC_PROFILES
 
 
 _EXTERNAL_SCHEME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
@@ -55,7 +63,11 @@ class LinkResolver:
 
     def __init__(self, pages: Optional[list[PageEntry] | Path] = None) -> None:
         if pages is None:
-            pages = Path(__file__).resolve().parents[2] / "var" / "pages.yaml"
+            var_dir = Path(__file__).resolve().parents[2] / "var"
+            default_code = next(iter(SYNC_PROFILES), "qm")
+            pages = var_dir / f"pages.{default_code}.yaml"
+            if not pages.exists():
+                pages = var_dir / "pages.yaml"
         if isinstance(pages, Path):
             pages = load_pages_yaml(pages)
 

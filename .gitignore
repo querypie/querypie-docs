@@ -52,3 +52,6 @@ next-env.d.ts
 
 # git worktrees
 .worktrees/
+
+# CodeGraph semantic index (auto-generated)
+/.codegraph/

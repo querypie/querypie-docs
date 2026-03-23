@@ -123,6 +123,8 @@ def main():
     parser.add_argument('--language',
                         choices=['ko', 'ja', 'en'],
                         help='언어 코드를 명시적으로 지정 (미지정 시 출력 경로에서 자동 감지)')
+    parser.add_argument('--pages-yaml',
+                        help='pages.<code>.yaml 경로 (미지정 시 input_dir/../pages.qm.yaml → pages.yaml 순으로 탐색)')
     parser.add_argument('--page-dir',
                         help='page.v1.yaml 등 페이지 데이터 디렉토리 (기본: input 파일의 디렉토리)')
     parser.add_argument('--log-level',
@@ -176,8 +178,15 @@ def main():
         # 원본 XHTML 보존 — sidecar mapping에서 사용
         xhtml_original = html_content
 
-        # Load pages.yaml to get the current page's path
-        pages_yaml_path = os.path.join(input_dir, '..', 'pages.yaml')
+        # Load pages YAML for internal link resolution and _meta.ts generation.
+        # Priority: --pages-yaml arg > pages.qm.yaml (new naming) > pages.yaml (legacy).
+        var_dir = os.path.join(input_dir, '..')
+        if args.pages_yaml:
+            pages_yaml_path = args.pages_yaml
+        else:
+            pages_yaml_path = os.path.join(var_dir, 'pages.qm.yaml')
+            if not os.path.exists(pages_yaml_path):
+                pages_yaml_path = os.path.join(var_dir, 'pages.yaml')
         load_pages_yaml(pages_yaml_path, PAGES_BY_TITLE, PAGES_BY_ID)
 
         # Load page.v1.yaml: --page-dir 우선, 없으면 input_dir에서 탐색

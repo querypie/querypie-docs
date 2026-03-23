@@ -24,14 +24,20 @@ from typing import Dict, List, Optional
 
 import yaml
 
+# Ensure bin/ is on sys.path for fetch package imports
+_BIN_DIR = Path(__file__).resolve().parent  # confluence-mdx/bin/
+if str(_BIN_DIR) not in sys.path:
+    sys.path.insert(0, str(_BIN_DIR))
+
+from fetch.sync_profiles import SYNC_PROFILES
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(levelname)s: %(message)s'
 )
 
-# Confluence base URL
-CONFLUENCE_BASE_URL = "https://querypie.atlassian.net/wiki/spaces/QM/pages"
+CONFLUENCE_BASE = "https://querypie.atlassian.net/wiki/spaces"
 
 
 def find_mdx_files_with_text(content_dir: Path, search_text: str) -> List[Path]:
@@ -165,17 +171,9 @@ def find_page_by_path(pages_by_path: Dict, mdx_path: List[str]) -> Optional[Dict
     return None
 
 
-def generate_confluence_link(page_id: str) -> str:
-    """
-    Generate Confluence document link
-    
-    Args:
-        page_id: Confluence page ID
-        
-    Returns:
-        Confluence URL
-    """
-    return f"{CONFLUENCE_BASE_URL}/{page_id}"
+def generate_confluence_link(page_id: str, space_key: str) -> str:
+    """Generate Confluence document link for the given space."""
+    return f"{CONFLUENCE_BASE}/{space_key}/pages/{page_id}"
 
 
 def main():
@@ -195,10 +193,16 @@ def main():
         help='Content directory to search (default: src/content/ko)'
     )
     parser.add_argument(
+        '--sync-code',
+        default='qm',
+        choices=list(SYNC_PROFILES.keys()),
+        help='Sync profile code; pages.<code>.yaml을 로드합니다 (기본: %(default)s)'
+    )
+    parser.add_argument(
         '--pages-yaml',
         type=str,
-        default='var/pages.yaml',
-        help='Path to pages.yaml file (default: var/pages.yaml)'
+        default=None,
+        help='Path to pages YAML file (기본: var/pages.<sync-code>.yaml)'
     )
     parser.add_argument(
         '--workspace-root',
@@ -218,7 +222,13 @@ def main():
     
     # Resolve paths
     content_dir = workspace_root / args.content_dir
-    pages_yaml_path = workspace_root / 'confluence-mdx' / args.pages_yaml
+    confluence_mdx_dir = workspace_root / 'confluence-mdx'
+    if args.pages_yaml:
+        pages_yaml_path = confluence_mdx_dir / args.pages_yaml
+    else:
+        pages_yaml_path = confluence_mdx_dir / f'var/pages.{args.sync_code}.yaml'
+        if not pages_yaml_path.exists():
+            pages_yaml_path = confluence_mdx_dir / 'var/pages.yaml'
     
     logging.info(f"Searching for text: '{args.search_text}'")
     logging.info(f"Content directory: {content_dir}")
@@ -240,6 +250,9 @@ def main():
         logging.error("No pages loaded from pages.yaml. Cannot generate links.")
         return 1
     
+    # Derive space_key from sync profile
+    space_key = SYNC_PROFILES[args.sync_code].space_key
+
     # Find matching pages and generate links
     results = []
     for mdx_file in matching_files:
@@ -250,7 +263,7 @@ def main():
             page_id = page_info.get('page_id')
             title = page_info.get('title', 'Unknown')
             title_orig = page_info.get('title_orig', 'Unknown')
-            confluence_link = generate_confluence_link(page_id)
+            confluence_link = generate_confluence_link(page_id, space_key)
             
             results.append({
                 'mdx_file': mdx_file.relative_to(workspace_root),

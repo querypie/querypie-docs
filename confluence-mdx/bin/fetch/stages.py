@@ -44,6 +44,20 @@ class Stage1Processor(StageBase):
         directory = self.get_page_directory(page_id)
         self.file_manager.ensure_directory(directory)
 
+        # Determine content type for API routing:
+        # 1. Prefer the type stored in page.v2.yaml (present on re-runs).
+        # 2. Fall back to config.root_content_type when processing the root
+        #    page on a clean environment (page.v2.yaml does not yet exist).
+        # 3. Default to "page" for all other pages without cached data.
+        v2_path = os.path.join(self.get_page_directory(page_id), "page.v2.yaml")
+        existing_v2 = self.file_manager.load_yaml(v2_path) if os.path.exists(v2_path) else None
+        if existing_v2:
+            content_type = existing_v2.get("type", "page")
+        elif page_id == self.config.default_start_page_id:
+            content_type = self.config.root_content_type
+        else:
+            content_type = "page"
+
         api_operations = [
             {
                 'operation': lambda: self.api_client.get_page_data_v1(page_id),
@@ -51,12 +65,12 @@ class Stage1Processor(StageBase):
                 'filename': "page.v1.yaml"
             },
             {
-                'operation': lambda: self.api_client.get_page_data_v2(page_id),
+                'operation': lambda: self.api_client.get_page_data_v2(page_id, content_type),
                 'description': "V2 API page data",
                 'filename': "page.v2.yaml"
             },
             {
-                'operation': lambda: self.api_client.get_child_pages(page_id),
+                'operation': lambda: self.api_client.get_child_pages(page_id, content_type),
                 'description': "V2 API child pages",
                 'filename': "children.v2.yaml"
             },
@@ -291,7 +305,7 @@ class Stage4Processor(StageBase):
                 filtered_ancestors: List[str] = []
                 found_start_page = False
                 for ancestor in ancestors:
-                    if ancestor.get("type") == "page":
+                    if ancestor.get("type") in ("page", "folder"):
                         if ancestor["id"] == start_page_id:
                             found_start_page = True
                             continue
@@ -304,7 +318,7 @@ class Stage4Processor(StageBase):
             else:
                 # Include all ancestors
                 ancestor_titles = [
-                    clean_text(ancestor["title"]) for ancestor in ancestors if ancestor.get("type") == "page" and "title" in ancestor
+                    clean_text(ancestor["title"]) for ancestor in ancestors if ancestor.get("type") in ("page", "folder") and "title" in ancestor
                 ]
                 path = ancestor_titles + [title]
 

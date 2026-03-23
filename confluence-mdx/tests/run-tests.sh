@@ -121,17 +121,25 @@ activate_venv() {
     source "${VENV_DIR}/bin/activate"
 }
 
-# Resolve page_id → slug path from pages.yaml
+# Resolve page_id → slug path from pages.qm.yaml (falls back to pages.yaml for compatibility)
 resolve_slug_path() {
     local page_id="$1"
     python3 -c "
 import sys, yaml
-pages = yaml.safe_load(open('${VENV_DIR}/../var/pages.yaml'))
+from pathlib import Path
+var_dir = Path('${VENV_DIR}/../var')
+pages_file = var_dir / 'pages.qm.yaml'
+if not pages_file.exists():
+    pages_file = var_dir / 'pages.yaml'
+if not pages_file.exists():
+    print(f'ERROR: pages.qm.yaml not found in {var_dir}', file=sys.stderr)
+    sys.exit(1)
+pages = yaml.safe_load(pages_file.open())
 for p in pages:
     if str(p.get('page_id', '')) == sys.argv[1]:
         print('/' + '/'.join(p['path']))
         sys.exit(0)
-print(f'ERROR: page_id {sys.argv[1]} not found in pages.yaml', file=sys.stderr)
+print(f'ERROR: page_id {sys.argv[1]} not found in {pages_file.name}', file=sys.stderr)
 sys.exit(1)
 " "${page_id}"
 }

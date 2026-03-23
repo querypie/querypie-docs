@@ -232,7 +232,7 @@ def test_extract_ko_mdx_path_invalid():
 
 
 def test_resolve_page_id(tmp_path, monkeypatch):
-    """pages.yaml에서 MDX 경로로 page_id를 유도한다."""
+    """pages.qm.yaml에서 MDX 경로로 page_id를 유도한다."""
     import yaml
     monkeypatch.chdir(tmp_path)
     var_dir = tmp_path / "var"
@@ -241,22 +241,22 @@ def test_resolve_page_id(tmp_path, monkeypatch):
         {'page_id': '544112828', 'path': ['user-manual', 'user-agent']},
         {'page_id': '123456789', 'path': ['overview']},
     ]
-    (var_dir / 'pages.yaml').write_text(yaml.dump(pages))
+    (var_dir / 'pages.qm.yaml').write_text(yaml.dump(pages))
 
     result = _resolve_page_id('src/content/ko/user-manual/user-agent.mdx')
     assert result == '544112828'
 
 
 def test_resolve_page_id_not_found(tmp_path, monkeypatch):
-    """pages.yaml에 없는 경로이면 ValueError를 발생시킨다."""
+    """pages.qm.yaml에 없는 경로이면 ValueError를 발생시킨다."""
     import yaml
     monkeypatch.chdir(tmp_path)
     var_dir = tmp_path / "var"
     var_dir.mkdir()
     pages = [{'page_id': '111', 'path': ['other']}]
-    (var_dir / 'pages.yaml').write_text(yaml.dump(pages))
+    (var_dir / 'pages.qm.yaml').write_text(yaml.dump(pages))
 
-    with pytest.raises(ValueError, match="not found in var/pages.yaml"):
+    with pytest.raises(ValueError, match="not found in var/pages.qm.yaml"):
         _resolve_page_id('src/content/ko/nonexistent/page.mdx')
 
 

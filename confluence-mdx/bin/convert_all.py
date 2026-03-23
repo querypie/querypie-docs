@@ -6,9 +6,9 @@ translate_titles.py, generate_commands_for_xhtml2markdown.py, xhtml2markdown.ko.
 하나의 명령으로 대체합니다.
 
 Usage:
-  bin/convert_all.py                       # 전체 변환
+  bin/convert_all.py                       # 전체 변환 (기본: --sync-code qm)
+  bin/convert_all.py --sync-code qcp       # QCP Space 변환
   bin/convert_all.py --verify-translations  # 번역 검증만 수행
-  bin/convert_all.py --generate-list        # list.txt / list.en.txt 생성
 """
 
 import argparse
@@ -77,36 +77,8 @@ def verify_translations(pages: List[Dict], translations: Dict[str, str]) -> List
     return missing
 
 
-def generate_list_files(pages: List[Dict], output_dir: str) -> None:
-    """Generate list.txt (Korean) and list.en.txt (English) from pages.yaml."""
-    list_txt_lines = []
-    list_en_lines = []
-
-    # Skip the root page (first entry, single breadcrumb)
-    root_page_id = pages[0]['page_id'] if pages else None
-
-    for page in pages:
-        if page['page_id'] == root_page_id:
-            continue
-        breadcrumbs = page.get('breadcrumbs', [])
-        breadcrumbs_en = page.get('breadcrumbs_en', [])
-        list_txt_lines.append(f"{page['page_id']}\t{' />> '.join(breadcrumbs)}\n")
-        list_en_lines.append(f"{page['page_id']}\t{' />> '.join(breadcrumbs_en)}\n")
-
-    list_txt_path = os.path.join(output_dir, 'list.txt')
-    list_en_path = os.path.join(output_dir, 'list.en.txt')
-
-    with open(list_txt_path, 'w', encoding='utf-8') as f:
-        f.writelines(list_txt_lines)
-    print(f"Generated {list_txt_path} ({len(list_txt_lines)} entries)", file=sys.stderr)
-
-    with open(list_en_path, 'w', encoding='utf-8') as f:
-        f.writelines(list_en_lines)
-    print(f"Generated {list_en_path} ({len(list_en_lines)} entries)", file=sys.stderr)
-
-
 def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_dir: str,
-                log_level: str) -> int:
+                log_level: str, pages_yaml: str = '') -> int:
     """Run converter/cli.py for each page. Returns number of failures."""
     # Skip the root page
     root_page_id = pages[0]['page_id'] if pages else None
@@ -148,6 +120,8 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
             f'--attachment-dir={attachment_dir}',
             f'--log-level={log_level}',
         ]
+        if pages_yaml:
+            cmd.append(f'--pages-yaml={pages_yaml}')
 
         print(f"[{i}/{total}] {page_id} → {output_file}", file=sys.stderr)
         result = subprocess.run(cmd, capture_output=True, text=True)
@@ -162,8 +136,10 @@ def main():
     parser = argparse.ArgumentParser(
         description='Batch convert all Confluence pages to MDX using pages.yaml'
     )
-    parser.add_argument('--pages-yaml', default='var/pages.yaml',
-                        help='Path to pages.yaml (default: var/pages.yaml)')
+    parser.add_argument('--sync-code', default='qm',
+                        help='Sync profile code; used to auto-derive --pages-yaml (default: %(default)s)')
+    parser.add_argument('--pages-yaml', default=None,
+                        help='Path to pages YAML (default: var/pages.<sync-code>.yaml)')
     parser.add_argument('--var-dir', default='var',
                         help='Directory containing page data (default: var)')
     parser.add_argument('--output-dir', default='target/ko',
@@ -174,12 +150,14 @@ def main():
                         help='Path to translations file')
     parser.add_argument('--verify-translations', action='store_true',
                         help='Verify translation coverage and exit')
-    parser.add_argument('--generate-list', action='store_true',
-                        help='Generate list.txt / list.en.txt for debugging')
     parser.add_argument('--log-level', default='warning',
                         choices=['debug', 'info', 'warning', 'error', 'critical'],
                         help='Log level for converter/cli.py (default: warning)')
     args = parser.parse_args()
+
+    # Auto-derive pages-yaml from sync-code if not explicitly provided
+    if args.pages_yaml is None:
+        args.pages_yaml = f'var/pages.{args.sync_code}.yaml'
 
     # Resolve relative paths against project root (confluence-mdx/)
     args.pages_yaml = _resolve(args.pages_yaml)
@@ -208,12 +186,9 @@ def main():
     if args.verify_translations:
         sys.exit(0)
 
-    # --generate-list: generate list files
-    if args.generate_list:
-        generate_list_files(pages, args.var_dir)
-
     # Run conversions
-    failures = convert_all(pages, args.var_dir, args.output_dir, args.public_dir, args.log_level)
+    failures = convert_all(pages, args.var_dir, args.output_dir, args.public_dir, args.log_level,
+                           pages_yaml=args.pages_yaml)
 
     if failures:
         print(f"\nCompleted with {failures} failure(s) out of {len(pages)} pages", file=sys.stderr)
