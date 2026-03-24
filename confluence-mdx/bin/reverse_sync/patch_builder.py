@@ -561,9 +561,9 @@ def build_patches(
             sidecar_block = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # container sidecar 있으면 (anchor/clean 무관) replace_fragment로 전환
-            if (sidecar_block_requires_reconstruction(sidecar_block)
-                    or _is_container_sidecar(sidecar_block)):
+            # anchor 재구성이 필요한 경우만 replace_fragment로 전환
+            # (container sidecar가 있어도 anchor 없으면 transfer_text_changes로 처리)
+            if sidecar_block_requires_reconstruction(sidecar_block):
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(
@@ -574,7 +574,7 @@ def build_patches(
                     )
                 )
                 continue
-            # sidecar 없음 → transfer_text_changes fallback (ac:/ri: 구조 보존)
+            # sidecar 없음 또는 anchor 불필요 → transfer_text_changes fallback (ac:/ri: 구조 보존)
             if mapping is not None:
                 xhtml_text = transfer_text_changes(old_plain, new_plain, mapping.xhtml_plain_text)
                 _mark_used(mapping.block_id, mapping)
