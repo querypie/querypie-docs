@@ -1,0 +1,109 @@
+---
+title: 'Custom JDBC Configs'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153049/Custom+JDBC+Configs'
+---
+
+import { Callout } from 'nextra/components'
+
+# Custom JDBC Configs
+
+### Overview
+
+カスタムJDBCドライバをアップロードしてCustom Vendorを登録・使用できる機能です。
+従来はQueryPieがデフォルトで提供するDB Vendor（MySQL、PostgreSQLなど）のみ使用可能でしたが、この機能を通じてサポートされていないDB（例：Cubrid、Tibero、Altibaseなど）もJDBCドライバを直接アップロードして接続できます。
+
+<Callout type="info">
+本機能は**ベータ（Beta）**として提供されます。
+使用するには、`Admin > Databases > General > Configurations` ページのExperimentalセクションで **Custom JDBC Configuration** オプションを `Enable` に設定する必要があります。
+有効化後、`Admin > Databases > Connection Management > Custom JDBC Configs` メニューが表示されます。
+</Callout>
+
+### Custom JDBC Vendorを登録する
+
+カスタムJDBCドライバをアップロードし、Custom Vendorを登録します。
+
+1. `Admin > Databases > Connection Management > Custom JDBC Configs` メニューに移動します。
+2. 右上の `Create Custom JDBC` ボタンをクリックします。
+3. Custom Vendor登録のための情報を入力します。
+    * **Basic Information**
+        * **Name** : Custom Vendorの名前を入力します（例：`Cubrid 11.2`）。最大128文字まで入力可能です。
+        * **Description** : Custom Vendorに関する説明を入力します。最大500文字まで入力可能です。
+    * **JDBC Configuration**
+        * **Driver Class** : JDBCドライバのクラス名を入力します（例：`com.cubrid.jdbc.driver.CUBRIDDriver`）。Javaのfully-qualified class name形式である必要があります。
+        * **JDBC URL Template** : コネクション作成時に使用するJDBC URLテンプレートを入力します（例：`jdbc:cubrid:{host}:{port}:{database}:::`）。必ず `{host}` 変数を含める必要があり、`{port}`、`{database}`、`{schema}` 変数も使用できます。
+        * **Options Prefix** : コネクションオプションの前に付く区切り文字を入力します。デフォルト値は `?` です。
+        * **Default Port** : デフォルトのポート番号を入力します（1〜65535）。
+        * **JVM Arguments** : JDBCドライバのロード時に渡すJVM引数を入力します（例：`-Djava.security.egd=file:/dev/./urandom`）。
+    * **Driver JAR File**
+        * **JAR File** : `.jar` ファイル形式のJDBCドライバファイルをアップロードします。複数のファイルをアップロードでき、ファイルあたり最大100MBまでサポートされます。
+    * **Dictionary Configuration** <br/> Dictionary ConfigurationのSQLで使用可能な変数：`{database}`、`{schema}`、`{table}`、`{view}`
+        * `Custom SQL Queries (Optional)` ボタンを展開して、DBメタデータ照会に使用するSQLを設定できます。
+        * **Schema Structure** : 該当DBのスキーマ構造タイプを選択します。
+            1. **Database.Schema** : DatabaseとSchemaの両方を使用する構造です（例：PostgreSQL、SQL Server）。
+            2. **Database Only** : Databaseのみを使用する構造です（例：MySQL、MariaDB）。
+            3. **Schema Only** : Schemaのみを使用する構造です（例：Oracle）。
+        * **Get Databases SQL** : データベース一覧を照会するSQLを入力します（例：`SELECT name FROM sys.databases`）。
+        * **Get Schemas SQL** : スキーマ一覧を照会するSQLを入力します（例：`SELECT schema_name FROM information_schema.schemata`）。
+        * **Get Tables SQL** : テーブル一覧を照会するSQLを入力します（例：`SELECT table_name FROM information_schema.tables`）。
+        * **Get Columns SQL** : カラム一覧を照会するSQLを入力します。結果はcolumnName、dataType、nullable、columnDefaultの順序で返される必要があります。
+        * **Get View Definition SQL** : Viewの定義を照会するSQLを入力します。`{database}`、`{schema}`、`{view}` 変数を使用できます。
+        * **Test Connection SQL** : 接続テストに使用するSQLを入力します（例：`SELECT 1`）。
+4. `Save` ボタンをクリックして保存します。
+
+<Callout type="important">
+JDBCドライバ（`.jar`）は使用するDB Vendorの公式サイトからダウンロードしてください。
+ドライバのバージョンはDBサーバーバージョンとの互換性をVendorのドキュメントで確認してください。
+QueryPie ACPはJava 17ランタイムで動作するため、Java 8以上をサポートするドライバを使用する必要があります。
+</Callout>
+
+### Custom VendorでDB Connectionを作成する
+
+登録したCustom Vendorを使用してDBコネクションを作成します。
+
+1. `Admin > Databases > Connection Management > DB Connections` メニューに移動します。
+2. 右上の `Create Connection` ボタンをクリックします。
+3. 画面を下にスクロールし、**Custom JDBC Vendors** 項目で登録したCustom Vendorを選択します。
+4. **Connection Name**、**Host**、**Port** などの接続情報を入力します。
+5. 必要に応じて **QSI Parser** を選択します。デフォルト値は `ANSI SQL` であり、詳しい選択基準は [QSI Parser Selection](custom-jdbc-configs/qsi-parser-selection) マニュアルを参照してください。
+6. `Next` ボタンをクリックして `コネクション作成完了` 画面に移動します。
+
+<Callout type="important">
+`Custom JDBC Vendors` 項目には `Active` 状態のCustom JDBC Vendorのみ表示されます。
+状態の変更方法は以下の `Custom JDBC Vendorを修正する` の **Status** 項目を参照してください。
+</Callout>
+
+### Custom JDBC Vendorを照会する
+
+登録されたCustom JDBC Vendor一覧を確認します。
+
+1. `Admin > Databases > Connection Management > Custom JDBC Configs` メニューに移動します。
+2. `Custom JDBC Configurations` 画面で登録されたCustom JDBC Vendor一覧が表示されます。
+    * **Name** : Custom Vendorの名前です。
+    * **Status** : Vendorの状態です（Active / Inactive / Deprecated）。
+    * **Description** : Custom Vendorに関する説明です。
+    * **Created At** : 登録日時です。
+    * **Updated At** : 最終修正日時です。
+
+### Custom JDBC Vendorを修正する
+
+登録されたCustom JDBC Vendorの設定を変更します。
+
+1. `Admin > Databases > Connection Management > Custom JDBC Configs` 一覧で修正する項目をクリックします。
+2. 詳細画面で変更する情報を修正します。
+    * **Name**、**Description**、**Status** とJDBC設定情報を修正できます。
+    * **Status** : Vendorの状態を変更できます（Active / Inactive / Deprecated）。
+    * ドライバファイルを追加でアップロードしたり、既存のファイルをダウンロードしたりできます。
+3. `Save Changes` ボタンをクリックして保存します。
+
+### Custom JDBC Vendorを削除する
+
+登録されたCustom JDBC Vendorを削除します。
+
+1. `Admin > Databases > Connection Management > Custom JDBC Configs` 一覧で削除する項目のチェックボックスを選択します。複数を同時に選択できます。
+2. チェックボックスを選択すると上部に表示される `Delete` ボタンをクリックします。
+3. `Are you sure you want to delete this vendor?` 確認ポップアップで `OK` をクリックします。
+
+<Callout type="important">
+該当Custom Vendorを使用中のDB Connectionがある場合、削除できません。
+削除前に接続されたコネクションがないことを確認してください。
+</Callout>

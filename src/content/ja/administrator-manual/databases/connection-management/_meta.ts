@@ -4,4 +4,5 @@ export default {
   'ssl-configurations': 'SSL Configurations',
   'ssh-configurations': 'SSH Configurations',
   'kerberos-configurations': 'Kerberos Configurations',
+  'custom-jdbc-configs': 'Custom JDBC Configs',
 };

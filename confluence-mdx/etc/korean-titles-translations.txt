@@ -81,19 +81,24 @@ OAuth 2.0을 사용하기 위한 Google Cloud API 연동 | Integrating Google Cl
 Slack DM 연동 | Integrating with Slack DM
 Slack DM - Workflow 알림 유형 | Slack DM - Workflow Notification Types
 
-# Database Connection Management
+# Databases > DAC General Configurations
+Masking Pattern (메뉴 위치 이동) | Masking Pattern (Menu Relocated)
+
+# Databases > Connection Management > Cloud Providers
 AWS에서 DB 리소스 동기화 | Synchronizing DB Resources from AWS
 MS Azure에서 DB 리소스 동기화 | Synchronizing DB Resources from MS Azure
 Google Cloud에서 DB 리소스 동기화 | Synchronizing DB Resources from Google Cloud
 Dry Run 기능으로 클라우드 동기화 설정 확인하기 | Verifying Cloud Synchronization Settings with Dry Run Feature
+
+# Databases > Connection Management > DB Connections
 MongoDB 전용 가이드 | MongoDB Specific Guide
 DocumentDB 전용 가이드 | DocumentDB Specific Guide
 Google BigQuery OAuth 인증 설정 | Google BigQuery OAuth Authentication Configuration
 AWS Athena 전용 가이드 | AWS Athena Specific Guide
 Custom Data Source 설정 및 로그 확인 | Custom Data Source Configuration and Log Verification
 
-# DAC General Configurations
-Masking Pattern (메뉴 위치 이동) | Masking Pattern (Menu Relocated)
+# Databases > Connection Management > Custom JDBC Configs
+Custom JDBC Configs - Databricks 예시 | Custom JDBC Configs - Databricks Example
 
 # Server Connection Management
 AWS에서 서버 리소스 동기화 | Synchronizing Server Resources from AWS
