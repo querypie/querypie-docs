@@ -225,6 +225,30 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
     return _xpath_block_family(mapping.xhtml_xpath)
 
 
+def _flush_containing_changes(
+    containing_changes: dict,
+    used_ids: 'set | None' = None,
+    ol_starts: 'dict | None' = None,
+) -> List[Dict[str, str]]:
+    """같은 containing/list parent에 대한 text transfer를 하나의 patch로 합친다."""
+    patches = []
+    for bid, (mapping, item_changes) in containing_changes.items():
+        xhtml_text = mapping.xhtml_plain_text
+        for old_plain, new_plain in item_changes:
+            xhtml_text = transfer_text_changes(old_plain, new_plain, xhtml_text)
+        patch: Dict[str, str] = {
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': xhtml_text,
+        }
+        if ol_starts and bid in ol_starts:
+            patch['ol_start'] = ol_starts[bid]
+        patches.append(patch)
+        if used_ids is not None:
+            used_ids.add(bid)
+    return patches
+
+
 def _find_best_list_mapping_by_text(
     old_plain: str,
     mappings: List[BlockMapping],
@@ -416,6 +440,8 @@ def build_patches(
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
+    containing_changes: dict = {}
+    containing_ol_starts: dict = {}
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -529,15 +555,13 @@ def build_patches(
                 continue
             # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
             if mapping is not None and has_any_change:
-                xhtml_text = transfer_text_changes(_old_plain, _new_plain, mapping.xhtml_plain_text)
-                patch: Dict[str, str] = {
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': xhtml_text,
-                }
+                bid = mapping.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (mapping, [])
+                if has_content_change:
+                    containing_changes[bid][1].append((_old_plain, _new_plain))
                 if has_ol_start_change:
-                    patch['ol_start'] = int(_new_start.group(1))
-                patches.append(patch)
+                    containing_ol_starts[bid] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -576,13 +600,11 @@ def build_patches(
                 continue
             # sidecar 없음 또는 anchor 불필요 → transfer_text_changes fallback (ac:/ri: 구조 보존)
             if mapping is not None:
-                xhtml_text = transfer_text_changes(old_plain, new_plain, mapping.xhtml_plain_text)
                 _mark_used(mapping.block_id, mapping)
-                patches.append({
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': xhtml_text,
-                })
+                bid = mapping.block_id
+                if bid not in containing_changes:
+                    containing_changes[bid] = (mapping, [])
+                containing_changes[bid][1].append((old_plain, new_plain))
             continue
 
         # strategy == 'direct'
@@ -657,6 +679,8 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
+    patches.extend(_flush_containing_changes(
+        containing_changes, used_ids, containing_ol_starts))
     return patches
 
 
