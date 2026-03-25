@@ -390,7 +390,7 @@ def build_patches(
             continue
         # paired delete+add이지만 clean/table fragment 교체 불가:
         # sidecar reconstruction 가능하면 replace_fragment,
-        # ac:/ri: markup 있으면 원본 template 기반 텍스트 갱신, 아니면 skip
+        # 아니면 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
         sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
         if sidecar_block is not None and sidecar_block.reconstruction is not None:
             patches.append(
@@ -401,7 +401,8 @@ def build_patches(
                     mapping_lost_info=mapping_lost_info,
                 )
             )
-        elif _contains_preserved_anchor_markup(mapping.xhtml_text):
+        else:
+            # sidecar 없음 → 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
             new_plain = normalize_mdx_to_plain(
                 add_change.new_block.content, add_change.new_block.type)
             preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
@@ -565,14 +566,26 @@ def build_patches(
             )
             if mapping is not None:
                 _mark_used(mapping.block_id, mapping)
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        sidecar_block=sidecar_block,
-                        mapping_lost_info=mapping_lost_info,
+                if sidecar_block is not None:
+                    patches.append(
+                        _build_replace_fragment_patch(
+                            mapping,
+                            change.new_block,
+                            sidecar_block=sidecar_block,
+                            mapping_lost_info=mapping_lost_info,
+                        )
                     )
-                )
+                else:
+                    # sidecar miss → 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
+                    preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
+                    block_lost = mapping_lost_info.get(mapping.block_id, {})
+                    if block_lost:
+                        preserved = apply_lost_info(preserved, block_lost)
+                    patches.append({
+                        'action': 'replace_fragment',
+                        'xhtml_xpath': mapping.xhtml_xpath,
+                        'new_element_xhtml': preserved,
+                    })
             continue
 
         # strategy == 'direct'

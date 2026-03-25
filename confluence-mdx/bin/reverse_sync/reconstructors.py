@@ -474,8 +474,8 @@ def reconstruct_container_fragment(
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
     # clean container: emit_block이 단락을 병합한 경우에만 stored body를 template으로 재배분
-    # 조건: body 직계 자식이 모두 <p>이고 emitted 수보다 stored 수가 많을 때
-    # (list/macro 포함 시 text 재배분 불안정; 단락 수 동일 시 재배분 불필요)
+    # 조건: stored·emitted 양쪽 직계 자식이 모두 <p>이고 emitted 수가 더 적을 때
+    # (구조 변경(paragraph→list)은 emitted 쪽이 <ul> 등이므로 조건 불일치 → fallback)
     if not has_anchors:
         stored_fragment = sidecar_block.xhtml_fragment
         if stored_fragment:
@@ -485,6 +485,7 @@ def reconstruct_container_fragment(
                 body_child_tags = [c for c in stored_body.children if isinstance(c, Tag)]
                 if (body_child_tags
                         and all(c.name == 'p' for c in body_child_tags)
+                        and all(c.name == 'p' for c in emitted_children)
                         and len(emitted_children) < len(body_child_tags)):
                     new_plain = extract_plain_text(new_fragment)
                     rewritten_body_str = _rewrite_paragraph_on_template(
