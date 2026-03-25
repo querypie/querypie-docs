@@ -1,9 +1,44 @@
 ---
-title: '11.5.0 ~ 11.5.3'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.3'
+title: '11.5.0 ~ 11.5.4'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.4'
 ---
 
-# 11.5.0 ~ 11.5.3
+# 11.5.0 ~ 11.5.4
+
+
+### QueryPie 11.5.4 Release
+
+March 20, 2026
+
+
+**New Feature**
+
+* [DAC] Workflow SQL Execution Request Draft save/view/edit/submit functionality and External API support
+* [DAC] SAP HANA Web Editor Auto Commit ON/OFF feature support
+* [DAC] SAP HANA procedure/function block syntax support
+* [DAC] Added Trino UNNEST syntax support
+* [DAC] Added Trino datasource Kerberos authentication support
+* [KAC] Added Vault Secret Store integration for GCP Cloud Provider and GKE Connection
+
+
+**Improvement**
+
+* [Common] Fixed issue where agent terminated during Google Workspace SAML login on Multi Agent (macOS)
+* [Common] Fixed issue where session disconnected when pressing arrow keys in SSH shell
+* [DAC] Fixed impersonation error due to unhandled X-Trino-Original-User header in Trino JDBC 426+ environment
+* [DAC] Fixed intermittent "The request is already executed" / Aborted error in Legacy policy-based SQL Request Workflow
+* [DAC] Fixed issue where unmasking permission was not properly applied when exporting JOIN/Expression columns
+* [DAC] Fixed startup failure due to unnecessary HTTPS certificate loading in Impala TCP binary mode
+* [DAC] Fixed issue where same session became unresponsive after Syntax error occurred in Vertica
+* [DAC] Improved metadata query executed during Trino proxy connection
+* [DAC] Fixed missing CREATE statement permission verification in Trino schema access control
+* [DAC] Improved minWritableBytes error when querying SAP HANA BLOB type
+* [DAC] Fixed IndexOutOfBoundsException occurring during Cloud Provider synchronization
+* [DAC] Fixed issue where session was interrupted or failed during large file processing when executing MySQL LOAD DATA LOCAL INFILE
+* [DAC/SAC] Fixed issue where Port Forwarding was not properly maintained when using NOVA Reverse Tunnel, causing remote DB connection failure
+* [SAC] Fixed code signing certificate compatibility issue during Windows Server Agent remote update
+* [SAC] Improved kubectl command exception handling
+
 
 ### QueryPie 11.5.3 Release
 

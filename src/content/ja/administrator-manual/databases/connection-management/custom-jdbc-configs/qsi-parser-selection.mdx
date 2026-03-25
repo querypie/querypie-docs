@@ -1,0 +1,65 @@
+---
+title: 'QSI Parser Selection'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010120237/QSI+Parser+Selection'
+---
+
+import { Callout } from 'nextra/components'
+
+# QSI Parser Selection
+
+### Overview
+
+**QSI Parser**は、Custom JDBC VendorでDB Connectionを作成または修正する際に選択できる項目です。
+QSI ParserはQueryPieがSQLを分析する際に使用するパーサーを意味し、DB Vendorの文法特性に合ったParserを選択するとクエリ分析およびポリシー適用の互換性を高めることができます。
+
+<Callout type="info">
+本機能は **Custom JDBC Vendor** 機能とともに提供されます。
+使用するには、まず `Admin > Databases > General > Configurations` ページのExperimentalセクションで **Custom JDBC Configuration** オプションを `Enable` に設定し、`Admin > Databases > Connection Management > Custom JDBC Configs` で使用するCustom JDBC Vendorを登録する必要があります。
+</Callout>
+
+### QSI Parserを設定する
+
+Custom JDBC Vendorを使用するDB ConnectionでQSI Parserを設定します。
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/connection-management/custom-jdbc-configs/qsi-parser-selection/database-settings_connection-management_db-connections_qsi-parser.png" alt="database-settings_connection-management_db-connections_qsi-parser.png" width="680" />
+</figure>
+
+1. `Admin > Databases > Connection Management > DB Connections` メニューに移動します。
+2. 右上の `Create Connection` ボタンをクリックするか、既存のコネクションを選択して修正画面に移動します。
+3. 画面を下にスクロールし、**Custom JDBC Vendors** 項目で使用するCustom JDBC Vendorを選択します。
+4. `Connection Information` セクションで接続情報を入力します。
+5. **QSI Parser** 項目が表示されたら、該当Vendorに適したParserを選択します。
+    * Custom JDBC Vendorでは互換可能なParser一覧がドロップダウンで提供されます。
+    * 例：`ANSI SQL`、`Oracle`、`PostgreSQL`、`MySQL`、`Trino`
+6. 残りの接続情報を入力した後、`Next` ボタンをクリックして `コネクション作成完了` 画面に移動します。
+
+<Callout type="important">
+11.6.0管理者UI基準で **QSI Parser** 項目はCustom JDBC Vendorを選択した場合にのみ表示されます。
+また、該当Vendorで選択可能なParserが2つ以上の場合にのみドロップダウンが表示されます。
+</Callout>
+
+### QSI Parser選択基準
+
+QSI Parserは接続先DBのSQL文法と最も類似した項目を選択することをお勧めします。
+
+* **ANSI SQL** : 標準SQL文法と類似したVendorに適しています。
+* **Oracle** : Oracle系列の文法を使用するVendorに適しています。
+* **PostgreSQL** : PostgreSQL系列の文法を使用するVendorに適しています。
+* **MySQL** : MySQL系列の文法を使用するVendorに適しています。
+* **Trino** : Trino系列の文法を使用するVendorに適しています。Trino Parserの説明に出てくる `3-level identifiers` は `catalog.schema.table` 形式の3段階オブジェクト識別子を意味します。
+
+<Callout type="important">
+誤ったParserを選択すると、一部のSQLが予想と異なる形で分析される場合があります。
+Custom JDBC Vendorを登録する際に検証したSQL文法と同じ系列のParserを選択してください。
+</Callout>
+
+### QSI Parserを変更する
+
+既存のDB ConnectionのQSI Parserを変更できます。
+
+1. `Admin > Databases > Connection Management > DB Connections` メニューで修正するコネクションを選択します。
+2. `Connection Information` セクションで **QSI Parser** の値を変更します。
+3. `Save Changes` ボタンをクリックして保存します。
+
+設定変更後は該当コネクションを使用するクエリ分析結果が変わる可能性があるため、必要に応じて代表的なSQLで動作を再確認してください。

@@ -1,9 +1,44 @@
 ---
-title: '11.5.0 ~ 11.5.3'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.3'
+title: '11.5.0 ~ 11.5.4'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.4'
 ---
 
-# 11.5.0 ~ 11.5.3
+# 11.5.0 ~ 11.5.4
+
+
+### QueryPie 11.5.4 Release
+
+2026年03月20日
+
+
+**New Feature**
+
+* [DAC] Workflow SQL Execution Request Draft一時保存/照会/修正/提出機能およびExternal APIサポート
+* [DAC] SAP HANA WebエディターAuto Commit ON/OFF機能サポート
+* [DAC] SAP HANAプロシージャ/関数ブロック構文サポート
+* [DAC] Trino UNNEST構文サポート追加
+* [DAC] TrinoデータソースKerberos認証サポート追加
+* [KAC] GCP Cloud ProviderおよびGKE ConnectionにVault Secret Store連携機能追加
+
+
+**Improvement**
+
+* [共通] Multi Agent（macOS）でGoogle Workspace SAMLログイン時にエージェントが終了する問題修正
+* [共通] SSHシェルで方向キー入力時セッションが切断される問題修正
+* [DAC] Trino JDBC 426+環境でX-Trino-Original-Userヘッダー未処理によるimpersonationエラーが発生する問題修正
+* [DAC] Legacyポリシー基盤SQL Request Workflowで間欠的に「The request is already executed」/ Abortedエラーが発生する問題修正
+* [DAC] JOIN/ExpressionカラムExport時マスキング解除権限が正常に適用されない問題修正
+* [DAC] Impala TCP binaryモードで不要なHTTPS証明書ロードによる起動失敗問題修正
+* [DAC] VerticaでSyntaxエラー発生後同一セッションが応答なし状態になる問題修正
+* [DAC] Trinoプロキシ接続時に実行されるメタデータ照会クエリ改善
+* [DAC] Trinoスキーマアクセス制御時CREATE構文権限検証が漏れる問題修正
+* [DAC] SAP HANA BLOBタイプ照会時minWritableBytesエラー改善
+* [DAC] Cloud Provider同期時IndexOutOfBoundsExceptionが発生する問題修正
+* [DAC] MySQL LOAD DATA LOCAL INFILE実行時大容量ファイル処理中セッションが中断または失敗する問題修正
+* [DAC/SAC] NOVA Reverse Tunnel使用時Port Forwardingが正常に維持されずリモートDB接続が失敗する問題修正
+* [SAC] Windows Server Agent遠隔アップデート時コード署名証明書互換性問題修正
+* [SAC] kubectlコマンド例外処理改善
+
 
 ### QueryPie 11.5.3 Release
 

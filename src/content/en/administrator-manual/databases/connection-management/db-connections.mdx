@@ -174,15 +174,27 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connecti
 `Test Connection` You can verify if the connection access information is valid by clicking the button.
 
 To save changes, click the `Save Changes` button in the top right of the detail page.
+______
 
 <Callout type="info">
-Secret Store item is displayed when Secret Store usage is enabled in the Security settings menu, and to actually use Secret Store, Vault registration is required on the Admin &gt; General &gt; Integration &gt; HashiCorp Vault page.
+Secret Store is only supported for DB Connections that use Username/Password authentication.
+Secret Store is not available for BigQuery, Spanner, Athena, and DynamoDB, which use cloud service-specific authentication.
+
+Secret Store item is displayed when Secret Store usage is enabled in the Admin &gt; General &gt; Company Management &gt; Security settings menu, and to actually use Secret Store, configuration is required on the Admin &gt; General &gt; Integration &gt; Secret Store settings page.
+(Since version 11.4.0, this has been improved to work with only the Integration settings, regardless of this setting.)
+
 For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
 </Callout>
 
-#### Reference. Secret Store Configuration Method
+#### Notes on Secret Store Configuration
+
+**Harshcorp Vault**
 
 DB Account items are displayed differently depending on the Secret Engine type stored in Secret Store settings.
+
+**AWS Secrets Manager**
+
+* **Secret ID** : Enter the name of the Secret stored in AWS Secrets Manager (e.g., `prod/db/credentials`).
 
 * When `Secret Engine` = K/V setting, Username / Password input fields are displayed on the connection information page.
     * Enter the Vault Path in the Username / Password fields.

@@ -1,0 +1,109 @@
+---
+title: 'Custom JDBC Configs'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153049/Custom+JDBC+Configs'
+---
+
+import { Callout } from 'nextra/components'
+
+# Custom JDBC Configs
+
+### Overview
+
+This feature allows you to upload custom JDBC drivers to register and use Custom Vendors.
+Previously, only the DB Vendors provided by QueryPie by default (MySQL, PostgreSQL, etc.) were available, but with this feature you can also connect to unsupported databases (e.g., Cubrid, Tibero, Altibase) by uploading their JDBC drivers directly.
+
+<Callout type="info">
+This feature is provided as **Beta**.
+To use it, you must set the **Custom JDBC Configuration** option to `Enable` in the Experimental section on the `Admin > Databases > General > Configurations` page.
+After activation, the `Admin > Databases > Connection Management > Custom JDBC Configs` menu will appear.
+</Callout>
+
+### Registering a Custom JDBC Vendor
+
+Upload a custom JDBC driver and register a Custom Vendor.
+
+1. Navigate to `Admin > Databases > Connection Management > Custom JDBC Configs`.
+2. Click the `Create Custom JDBC` button in the upper right corner.
+3. Enter the information for Custom Vendor registration.
+    * **Basic Information**
+        * **Name** : Enter the name of the Custom Vendor (e.g., `Cubrid 11.2`). Up to 128 characters can be entered.
+        * **Description** : Enter a description for the Custom Vendor. Up to 500 characters can be entered.
+    * **JDBC Configuration**
+        * **Driver Class** : Enter the class name of the JDBC driver (e.g., `com.cubrid.jdbc.driver.CUBRIDDriver`). It must be in Java fully-qualified class name format.
+        * **JDBC URL Template** : Enter the JDBC URL template to use when creating a connection (e.g., `jdbc:cubrid:{host}:{port}:{database}:::`). It must include the `{host}` variable, and the `{port}`, `{database}`, and `{schema}` variables can also be used.
+        * **Options Prefix** : Enter the delimiter that precedes connection options. The default value is `?`.
+        * **Default Port** : Enter the default port number (1–65535).
+        * **JVM Arguments** : Enter the JVM arguments to pass when loading the JDBC driver (e.g., `-Djava.security.egd=file:/dev/./urandom`).
+    * **Driver JAR File**
+        * **JAR File** : Upload the JDBC driver file in `.jar` format. Multiple files can be uploaded, with a maximum size of 100MB per file.
+    * **Dictionary Configuration** <br/> Variables available in Dictionary Configuration SQL: `{database}`, `{schema}`, `{table}`, `{view}`
+        * Expand the `Custom SQL Queries (Optional)` button to configure SQL used for DB metadata queries.
+        * **Schema Structure** : Select the schema structure type for the database.
+            1. **Database.Schema** : A structure that uses both Database and Schema (e.g., PostgreSQL, SQL Server).
+            2. **Database Only** : A structure that uses only Database (e.g., MySQL, MariaDB).
+            3. **Schema Only** : A structure that uses only Schema (e.g., Oracle).
+        * **Get Databases SQL** : Enter SQL to retrieve the list of databases (e.g., `SELECT name FROM sys.databases`).
+        * **Get Schemas SQL** : Enter SQL to retrieve the list of schemas (e.g., `SELECT schema_name FROM information_schema.schemata`).
+        * **Get Tables SQL** : Enter SQL to retrieve the list of tables (e.g., `SELECT table_name FROM information_schema.tables`).
+        * **Get Columns SQL** : Enter SQL to retrieve the list of columns. Results must be returned in the order: columnName, dataType, nullable, columnDefault.
+        * **Get View Definition SQL** : Enter SQL to retrieve View definitions. The `{database}`, `{schema}`, and `{view}` variables can be used.
+        * **Test Connection SQL** : Enter SQL to use for connection testing (e.g., `SELECT 1`).
+4. Click the `Save` button to save.
+
+<Callout type="important">
+Download the JDBC driver (`.jar`) from the official website of the DB vendor you intend to use.
+Please verify the compatibility between the driver version and the DB server version in the vendor documentation.
+QueryPie ACP runs on the Java 17 runtime, so you must use a driver that supports Java 8 or higher.
+</Callout>
+
+### Creating a DB Connection with a Custom Vendor
+
+Create a DB connection using the registered Custom Vendor.
+
+1. Navigate to `Admin > Databases > Connection Management > DB Connections`.
+2. Click the `Create Connection` button in the upper right corner.
+3. Scroll down and select the registered Custom Vendor from the **Custom JDBC Vendors** section.
+4. Enter the connection information such as **Connection Name**, **Host**, **Port**, etc.
+5. Select a **QSI Parser** if needed. The default is `ANSI SQL`. For detailed selection criteria, refer to the [QSI Parser Selection](custom-jdbc-configs/qsi-parser-selection) manual.
+6. Click the `Next` button to proceed to the connection creation complete screen.
+
+<Callout type="important">
+Only Custom JDBC Vendors with `Active` status are displayed in the `Custom JDBC Vendors` section.
+For how to change the status, refer to the **Status** field in the `Editing a Custom JDBC Vendor` section below.
+</Callout>
+
+### Viewing Custom JDBC Vendors
+
+View the list of registered Custom JDBC Vendors.
+
+1. Navigate to `Admin > Databases > Connection Management > Custom JDBC Configs`.
+2. The `Custom JDBC Configurations` screen displays the list of registered Custom JDBC Vendors.
+    * **Name** : The name of the Custom Vendor.
+    * **Status** : The status of the Vendor (Active / Inactive / Deprecated).
+    * **Description** : The description of the Custom Vendor.
+    * **Created At** : The date and time of registration.
+    * **Updated At** : The date and time of the last modification.
+
+### Editing a Custom JDBC Vendor
+
+Modify the settings of a registered Custom JDBC Vendor.
+
+1. Click the item you want to edit from the `Admin > Databases > Connection Management > Custom JDBC Configs` list.
+2. Modify the desired information on the detail screen.
+    * You can edit **Name**, **Description**, **Status**, and JDBC configuration settings.
+    * **Status** : You can change the status of the Vendor (Active / Inactive / Deprecated).
+    * You can upload additional driver files or download existing ones.
+3. Click the `Save Changes` button to save.
+
+### Deleting a Custom JDBC Vendor
+
+Delete a registered Custom JDBC Vendor.
+
+1. Select the checkbox of the item you want to delete from the `Admin > Databases > Connection Management > Custom JDBC Configs` list. You can select multiple items at once.
+2. Click the `Delete` button that appears at the top when a checkbox is selected.
+3. Click `OK` in the `Are you sure you want to delete this vendor?` confirmation popup.
+
+<Callout type="important">
+A Custom Vendor cannot be deleted if there are DB Connections currently using it.
+Make sure there are no connected connections before deleting.
+</Callout>
