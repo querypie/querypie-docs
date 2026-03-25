@@ -879,11 +879,10 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 replace_fragment 패치
+    # _resolve_child_mapping 실패 → containing 전략 → parent text에서 child 텍스트만 변경
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    assert patches[0].get('action') == 'replace_fragment'
-    assert 'New child text.' in patches[0]['new_element_xhtml']
+    assert 'New child text.' in patches[0]['new_plain_text']
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
@@ -931,8 +930,7 @@ def testbuild_patches_child_fallback_to_parent_containing():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    assert patches[0].get('action') == 'replace_fragment'
-    assert 'Unresolvable new text.' in patches[0]['new_element_xhtml']
+    assert 'Unresolvable new text.' in patches[0]['new_plain_text']
 
 
 def testbuild_patches_unmapped_block_skipped():

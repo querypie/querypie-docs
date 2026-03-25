@@ -1,6 +1,6 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 import re
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from mdx_to_storage.emitter import emit_block
 from mdx_to_storage.parser import parse_mdx
@@ -417,6 +417,10 @@ def build_patches(
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
+    # 같은 부모에 대한 text-level 변경을 순차 집계하는 dict (block_id → patch dict)
+    # preserved anchor list와 containing case 2에서 공용 사용
+    _text_change_patches: Dict[str, Dict] = {}
+
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -531,16 +535,21 @@ def build_patches(
             # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
             # rewrite_on_stored_template은 multi-item list의 caption 텍스트를
             # 잘못 재배치하므로 사용 불가 (Phase 5 Axis 1 미완 — 별도 PR 필요)
+            # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
-                xhtml_text = transfer_text_changes(_old_plain, _new_plain, mapping.xhtml_plain_text)
-                patch: Dict[str, str] = {
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': xhtml_text,
-                }
+                bid = mapping.block_id
+                if bid not in _text_change_patches:
+                    patch_entry: Dict[str, Any] = {
+                        'xhtml_xpath': mapping.xhtml_xpath,
+                        'old_plain_text': mapping.xhtml_plain_text,
+                        'new_plain_text': mapping.xhtml_plain_text,
+                    }
+                    patches.append(patch_entry)
+                    _text_change_patches[bid] = patch_entry
+                _text_change_patches[bid]['new_plain_text'] = transfer_text_changes(
+                    _old_plain, _new_plain, _text_change_patches[bid]['new_plain_text'])
                 if has_ol_start_change:
-                    patch['ol_start'] = int(_new_start.group(1))
-                patches.append(patch)
+                    _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -561,31 +570,52 @@ def build_patches(
             change.new_block.content, change.new_block.type)
 
         if strategy == 'containing':
-            sidecar_block = _find_roundtrip_sidecar_block(
-                change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-            )
             if mapping is not None:
                 _mark_used(mapping.block_id, mapping)
-                if sidecar_block is not None:
-                    patches.append(
-                        _build_replace_fragment_patch(
-                            mapping,
-                            change.new_block,
-                            sidecar_block=sidecar_block,
-                            mapping_lost_info=mapping_lost_info,
-                        )
+                # parse_mdx_blocks는 <Callout>을 'paragraph'로 파싱하므로
+                # content 기반으로 full container 여부를 판별한다
+                _s = change.new_block.content.lstrip()
+                is_full_container = _s.startswith('<Callout') or _s.startswith('<details')
+                if is_full_container:
+                    # Case 1: full container content → emit + sidecar reconstruct
+                    sidecar_block = _find_roundtrip_sidecar_block(
+                        change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
                     )
+                    if sidecar_block is not None:
+                        patches.append(
+                            _build_replace_fragment_patch(
+                                mapping,
+                                change.new_block,
+                                sidecar_block=sidecar_block,
+                                mapping_lost_info=mapping_lost_info,
+                            )
+                        )
+                    else:
+                        # sidecar miss → 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
+                        preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
+                        block_lost = mapping_lost_info.get(mapping.block_id, {})
+                        if block_lost:
+                            preserved = apply_lost_info(preserved, block_lost)
+                        patches.append({
+                            'action': 'replace_fragment',
+                            'xhtml_xpath': mapping.xhtml_xpath,
+                            'new_element_xhtml': preserved,
+                        })
                 else:
-                    # sidecar miss → 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
-                    preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
-                    block_lost = mapping_lost_info.get(mapping.block_id, {})
-                    if block_lost:
-                        preserved = apply_lost_info(preserved, block_lost)
-                    patches.append({
-                        'action': 'replace_fragment',
-                        'xhtml_xpath': mapping.xhtml_xpath,
-                        'new_element_xhtml': preserved,
-                    })
+                    # Case 2: child-of-parent → 부모 XHTML에서 자식 텍스트만 변경
+                    # (자식 fragment로 부모 전체를 교체하면 부모 구조가 파괴됨)
+                    # 같은 부모의 다중 변경은 순차 집계한다
+                    bid = mapping.block_id
+                    if bid not in _text_change_patches:
+                        patch_entry: Dict[str, Any] = {
+                            'xhtml_xpath': mapping.xhtml_xpath,
+                            'old_plain_text': mapping.xhtml_plain_text,
+                            'new_plain_text': mapping.xhtml_plain_text,
+                        }
+                        patches.append(patch_entry)
+                        _text_change_patches[bid] = patch_entry
+                    _text_change_patches[bid]['new_plain_text'] = transfer_text_changes(
+                        old_plain, new_plain, _text_change_patches[bid]['new_plain_text'])
             continue
 
         # strategy == 'direct'
