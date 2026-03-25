@@ -266,7 +266,7 @@ class TestBuildPatches:
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
     def test_path3_sidecar_child_fail_containing_block(self):
-        """child 해석 실패 → parent containing + sidecar 없음 → transfer_text_changes fallback."""
+        """child 해석 실패 → parent containing → replace_fragment 패치."""
         parent = _make_mapping(
             'p1', 'parent contains child text here', xpath='div[1]',
             children=['c1'])
@@ -281,42 +281,11 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 패치
+        # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 replace_fragment 패치
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'div[1]'
-        assert 'updated text' in patches[0]['new_plain_text']
-
-    def test_containing_changes_same_parent_are_aggregated_into_single_patch(self):
-        """같은 containing parent에 대한 다중 변경은 하나의 patch로 누적돼야 한다."""
-        parent = _make_mapping(
-            'p1', 'first and second', xpath='p[1]', children=['c1', 'c2'])
-        child1 = _make_mapping('c1', 'first', xpath='span[1]')
-        child2 = _make_mapping('c2', 'second', xpath='span[2]')
-        mappings = [parent, child1, child2]
-        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
-
-        changes = [
-            _make_change(0, 'first', 'FIRST'),
-            _make_change(1, 'second', 'SECOND'),
-        ]
-        mdx_to_sidecar = {
-            0: _make_sidecar('p[1]', [0]),
-            1: _make_sidecar('p[1]', [1]),
-        }
-
-        patches = build_patches(
-            changes,
-            [change.old_block for change in changes],
-            [change.new_block for change in changes],
-            mappings,
-            mdx_to_sidecar,
-            xpath_to_mapping,
-        )
-
-        assert len(patches) == 1
-        assert patches[0]['xhtml_xpath'] == 'p[1]'
-        assert patches[0]['new_plain_text'] == 'FIRST and SECOND'
-        assert patch_xhtml('<p>first and second</p>', patches) == '<p>FIRST and SECOND</p>'
+        assert patches[0].get('action') == 'replace_fragment'
+        assert 'updated text' in patches[0]['new_element_xhtml']
 
     # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):

@@ -478,11 +478,11 @@ class TestContainerPipelineEndToEnd:
         # img 태그는 Confluence 마크업으로 교체되어야 한다
         assert '<img src=' not in patched
 
-    def test_clean_callout_uses_transfer_text_changes(self):
-        """sidecar 없는 clean callout은 transfer_text_changes 경로를 사용한다.
+    def test_clean_callout_uses_replace_fragment(self):
+        """clean callout은 replace_fragment 경로를 사용한다.
 
-        container sidecar가 있더라도 anchor 재구성이 불필요하면 replace_fragment 대신
-        transfer_text_changes fallback을 사용해 XHTML 구조(local-id 등)를 보존한다.
+        anchor 재구성이 불필요한 container도 containing 전략에서 _build_replace_fragment_patch로
+        전환되어 outer wrapper 속성(local-id, ac:macro-id 등)을 보존한다 (Phase 5 Axis 1).
         """
         xhtml = (
             '<ac:structured-macro ac:name="info">'
@@ -497,8 +497,8 @@ class TestContainerPipelineEndToEnd:
         patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
 
         replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        # sidecar 없는 clean callout은 replace_fragment를 사용하지 않음
-        assert not any(
+        # clean callout도 replace_fragment를 사용함 (Phase 5 Axis 1)
+        assert any(
             p.get('xhtml_xpath') == 'macro-info[1]'
             for p in replace_patches
         )

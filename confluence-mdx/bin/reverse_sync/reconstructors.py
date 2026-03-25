@@ -451,7 +451,7 @@ def reconstruct_container_fragment(
 ) -> str:
     """Container (callout/ADF panel) fragment에 sidecar child 메타데이터로 재구성한다.
 
-    anchor 없는 clean container는 new_fragment를 그대로 반환한다.
+    anchor 없는 clean container는 stored XHTML를 template으로 텍스트만 업데이트한다.
     anchor가 있어 재구성이 트리거된 경우 아래 세 단계를 각 child에 적용한다:
     1. inline markup 보존: 원본 fragment를 template으로 bold·italic·link 유지
     2. anchor 재삽입: ac:image를 offset 매핑으로 복원
@@ -473,9 +473,28 @@ def reconstruct_container_fragment(
 
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
-    # clean container이고 children 수가 불일치하면 per-child 매칭이 안전하지 않으므로
-    # Step 1/2를 건너뛰고 Step 3(outer wrapper template)만 적용한다
-    if not has_anchors and len(emitted_children) != len(children_meta):
+    # clean container: emit_block이 단락을 병합한 경우에만 stored body를 template으로 재배분
+    # 조건: body 직계 자식이 모두 <p>이고 emitted 수보다 stored 수가 많을 때
+    # (list/macro 포함 시 text 재배분 불안정; 단락 수 동일 시 재배분 불필요)
+    if not has_anchors:
+        stored_fragment = sidecar_block.xhtml_fragment
+        if stored_fragment:
+            stored_soup = BeautifulSoup(stored_fragment, 'html.parser')
+            stored_body = stored_soup.find('ac:rich-text-body') or stored_soup.find('ac:adf-content')
+            if stored_body is not None:
+                body_child_tags = [c for c in stored_body.children if isinstance(c, Tag)]
+                if (body_child_tags
+                        and all(c.name == 'p' for c in body_child_tags)
+                        and len(emitted_children) < len(body_child_tags)):
+                    new_plain = extract_plain_text(new_fragment)
+                    rewritten_body_str = _rewrite_paragraph_on_template(
+                        str(stored_body), f'<p>{html.escape(new_plain)}</p>'
+                    )
+                    rw_soup = BeautifulSoup(rewritten_body_str, 'html.parser')
+                    rw_body = rw_soup.find('ac:rich-text-body') or rw_soup.find('ac:adf-content')
+                    if rw_body is not None:
+                        rw_children = [str(c) for c in rw_body.children if isinstance(c, Tag)]
+                        return _apply_outer_wrapper_template(new_fragment, sidecar_block, rw_children)
         return _apply_outer_wrapper_template(new_fragment, sidecar_block)
 
     # 각 child 재구성

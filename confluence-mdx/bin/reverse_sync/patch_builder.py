@@ -10,7 +10,7 @@ from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
 )
-from reverse_sync.text_transfer import transfer_text_changes
+from reverse_sync.text_transfer import transfer_text_changes  # preserved anchor list 전용 (Phase 5 Axis 1 미완)
 from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
@@ -225,30 +225,6 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
     return _xpath_block_family(mapping.xhtml_xpath)
 
 
-def _flush_containing_changes(
-    containing_changes: dict,
-    used_ids: 'set | None' = None,
-    ol_starts: 'dict | None' = None,
-) -> List[Dict[str, str]]:
-    """같은 containing/list parent에 대한 text transfer를 하나의 patch로 합친다."""
-    patches = []
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(old_plain, new_plain, xhtml_text)
-        patch: Dict[str, str] = {
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
-        }
-        if ol_starts and bid in ol_starts:
-            patch['ol_start'] = ol_starts[bid]
-        patches.append(patch)
-        if used_ids is not None:
-            used_ids.add(bid)
-    return patches
-
-
 def _find_best_list_mapping_by_text(
     old_plain: str,
     mappings: List[BlockMapping],
@@ -440,8 +416,6 @@ def build_patches(
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
-    containing_changes: dict = {}
-    containing_ol_starts: dict = {}
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -554,14 +528,18 @@ def build_patches(
                 )
                 continue
             # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
+            # rewrite_on_stored_template은 multi-item list의 caption 텍스트를
+            # 잘못 재배치하므로 사용 불가 (Phase 5 Axis 1 미완 — 별도 PR 필요)
             if mapping is not None and has_any_change:
-                bid = mapping.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (mapping, [])
-                if has_content_change:
-                    containing_changes[bid][1].append((_old_plain, _new_plain))
+                xhtml_text = transfer_text_changes(_old_plain, _new_plain, mapping.xhtml_plain_text)
+                patch: Dict[str, str] = {
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping.xhtml_plain_text,
+                    'new_plain_text': xhtml_text,
+                }
                 if has_ol_start_change:
-                    containing_ol_starts[bid] = int(_new_start.group(1))
+                    patch['ol_start'] = int(_new_start.group(1))
+                patches.append(patch)
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -585,9 +563,7 @@ def build_patches(
             sidecar_block = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # anchor 재구성이 필요한 경우만 replace_fragment로 전환
-            # (container sidecar가 있어도 anchor 없으면 transfer_text_changes로 처리)
-            if sidecar_block_requires_reconstruction(sidecar_block):
+            if mapping is not None:
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(
@@ -597,14 +573,6 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
-                continue
-            # sidecar 없음 또는 anchor 불필요 → transfer_text_changes fallback (ac:/ri: 구조 보존)
-            if mapping is not None:
-                _mark_used(mapping.block_id, mapping)
-                bid = mapping.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (mapping, [])
-                containing_changes[bid][1].append((old_plain, new_plain))
             continue
 
         # strategy == 'direct'
@@ -679,8 +647,6 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
-    patches.extend(_flush_containing_changes(
-        containing_changes, used_ids, containing_ol_starts))
     return patches
 
 
