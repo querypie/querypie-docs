@@ -503,3 +503,39 @@ class TestContainerPipelineEndToEnd:
             for p in replace_patches
         )
         assert 'Updated text' in patched
+
+    def test_clean_callout_structure_change_keeps_emitted_list(self):
+        """clean container의 구조 변경은 stored paragraph 템플릿으로 덮어쓰면 안 된다."""
+        sidecar_block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-info[1]',
+            xhtml_fragment=(
+                '<ac:structured-macro ac:name="info">'
+                '<ac:rich-text-body>'
+                '<p>Alpha</p>'
+                '<p>Beta</p>'
+                '</ac:rich-text-body>'
+                '</ac:structured-macro>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {'fragment': '<p>Alpha</p>', 'plain_text': 'Alpha', 'type': 'paragraph'},
+                    {'fragment': '<p>Beta</p>', 'plain_text': 'Beta', 'type': 'paragraph'},
+                ],
+            },
+        )
+        new_fragment = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            '<ul><li><p>Gamma</p></li></ul>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+
+        result = reconstruct_container_fragment(new_fragment, sidecar_block)
+
+        assert '<ul>' in result
+        assert '<li>' in result
+        assert '<p>Gamma</p>' in result
+        assert '<p>Ga</p>' not in result

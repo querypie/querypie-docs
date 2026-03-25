@@ -803,6 +803,79 @@ class TestBuildPatches:
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
 
+    def test_containing_without_roundtrip_sidecar_preserves_wrapper_attrs(self):
+        """no-sidecar containing fallback도 기존 macro wrapper 속성은 유지해야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Old text.',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1'],
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body><p>Old text.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        change = _make_change(
+            0,
+            "<Callout type='info'>\nOld text.\n</Callout>\n",
+            "<Callout type='info'>\nNew text.\n</Callout>\n",
+            type_='callout',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        patches = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert 'ac:macro-id="MID"' in patched
+        assert 'ac:schema-version="1"' in patched
+        assert 'New text.' in patched
+
+    def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
+        """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
+        mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')
+        mapping.xhtml_text = '<ul><li><p>old item text</p></li></ul>'
+        changes = [
+            BlockChange(
+                index=0,
+                change_type='deleted',
+                old_block=_make_block('* old item text\n', type_='list'),
+                new_block=None,
+            ),
+            BlockChange(
+                index=0,
+                change_type='added',
+                old_block=None,
+                new_block=_make_block('* new item text\n', type_='list'),
+            ),
+        ]
+        mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
+        xpath_to_mapping = {'ul[1]': mapping}
+
+        patches = build_patches(
+            changes,
+            [changes[0].old_block],
+            [changes[1].new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert patches[0]['xhtml_xpath'] == 'ul[1]'
+
 
 # ── delete/insert 패치 생성 테스트 ──
 
