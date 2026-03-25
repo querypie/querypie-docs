@@ -879,7 +879,7 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # _resolve_child_mapping 제거 → containing 전략 → parent xpath로 패치
+    # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 패치
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
     assert 'New child text.' in patches[0]['new_plain_text']
@@ -903,7 +903,6 @@ def testbuild_patches_child_fallback_to_parent_containing():
                     old_block=original_blocks[0],
                     new_block=improved_blocks[0]),
     ]
-    # parent의 xhtml_plain_text에 "Unresolvable old text."가 포함됨
     parent = BlockMapping(
         block_id='callout-1', type='html_block',
         xhtml_xpath='macro-info[1]',
@@ -912,7 +911,6 @@ def testbuild_patches_child_fallback_to_parent_containing():
         xhtml_element_index=0,
         children=['paragraph-2'],
     )
-    # child의 텍스트가 MDX와 불일치 → _resolve_child_mapping 실패
     child = BlockMapping(
         block_id='paragraph-2', type='paragraph',
         xhtml_xpath='macro-info[1]/p[1]',

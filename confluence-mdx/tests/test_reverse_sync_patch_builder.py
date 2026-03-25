@@ -16,7 +16,6 @@ from reverse_sync.sidecar import (
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _find_roundtrip_sidecar_block,
-    _flush_containing_changes,
     _resolve_mapping_for_change,
     build_patches,
 )
@@ -267,6 +266,7 @@ class TestBuildPatches:
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
     def test_path3_sidecar_child_fail_containing_block(self):
+        """child 해석 실패 → parent containing + sidecar 없음 → transfer_text_changes fallback."""
         parent = _make_mapping(
             'p1', 'parent contains child text here', xpath='div[1]',
             children=['c1'])
@@ -281,8 +281,10 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
+        # _resolve_child_mapping 실패 → containing 전략 → parent xpath로 패치
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'div[1]'
+        assert 'updated text' in patches[0]['new_plain_text']
 
     # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):
@@ -348,7 +350,8 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
-    def test_paragraph_with_preserved_anchor_uses_legacy_modify_patch(self):
+    def test_paragraph_with_preserved_anchor_uses_template_rewrite(self):
+        """ac:link 포함 블록은 원본 template 기반 텍스트 갱신 (Phase 5 Axis 1)."""
         m1 = _make_mapping(
             'm1',
             'hello world',
@@ -366,8 +369,9 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert patches[0].get('action', 'modify') == 'modify'
-        assert patches[0]['new_plain_text'] == 'hello earth'
+        assert patches[0]['action'] == 'replace_fragment'
+        # ac:link 구조가 보존되어야 함
+        assert '<ac:link>' in patches[0]['new_element_xhtml']
 
     def test_roundtrip_sidecar_paragraph_without_anchors_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
@@ -919,69 +923,6 @@ class TestBuildInsertPatch:
         assert len(patches) == 0
 
 
-# ── _flush_containing_changes ──
-
-
-class TestFlushContainingChanges:
-    """_flush_containing_changes 헬퍼 함수 테스트."""
-
-    def test_empty_dict_returns_empty(self):
-        assert _flush_containing_changes({}) == []
-
-    def test_single_change(self):
-        m = _make_mapping('b1', 'hello world', xpath='p[1]')
-        cc = {'b1': (m, [('hello', 'hi')])}
-        patches = _flush_containing_changes(cc)
-        assert len(patches) == 1
-        assert patches[0]['xhtml_xpath'] == 'p[1]'
-        assert patches[0]['old_plain_text'] == 'hello world'
-        assert 'hi' in patches[0]['new_plain_text']
-
-    def test_multiple_changes_same_block(self):
-        m = _make_mapping('b1', 'aaa bbb ccc', xpath='p[1]')
-        cc = {'b1': (m, [('aaa', 'AAA'), ('bbb', 'BBB')])}
-        patches = _flush_containing_changes(cc)
-        assert len(patches) == 1
-        assert 'AAA' in patches[0]['new_plain_text']
-        assert 'BBB' in patches[0]['new_plain_text']
-
-    def test_used_ids_updated(self):
-        m = _make_mapping('b1', 'text', xpath='p[1]')
-        cc = {'b1': (m, [('text', 'changed')])}
-        used = set()
-        _flush_containing_changes(cc, used_ids=used)
-        assert 'b1' in used
-
-    def test_used_ids_none_no_error(self):
-        m = _make_mapping('b1', 'text', xpath='p[1]')
-        cc = {'b1': (m, [('text', 'changed')])}
-        patches = _flush_containing_changes(cc, used_ids=None)
-        assert len(patches) == 1
-
-    def test_multiple_blocks(self):
-        m1 = _make_mapping('b1', 'alpha', xpath='p[1]')
-        m2 = _make_mapping('b2', 'beta', xpath='p[2]')
-        cc = {
-            'b1': (m1, [('alpha', 'ALPHA')]),
-            'b2': (m2, [('beta', 'BETA')]),
-        }
-        patches = _flush_containing_changes(cc)
-        assert len(patches) == 2
-
-    def test_inline_change_in_containing_still_uses_text_patch(self):
-        """containing block에서는 inline 변경이 있어도 text patch를 유지한다."""
-        m = _make_mapping('m1', 'use command and url', xpath='p[1]')
-        containing_changes = {
-            'm1': (m, [
-                ('use command and url', 'use command and url'),
-            ]),
-        }
-        patches = _flush_containing_changes(containing_changes)
-        assert len(patches) == 1
-        assert 'new_plain_text' in patches[0]
-        assert 'new_inner_xhtml' not in patches[0]
-
-
 # ── _resolve_mapping_for_change ──
 
 
@@ -1207,7 +1148,7 @@ class TestLinkBodyTrailingSpaceStrip:
         assert 'Okta 연동하기 \n' not in new_plain
 
     def test_build_patches_transfers_trailing_space_change(self):
-        """build_patches가 trailing space 변경을 text transfer로 전이한다."""
+        """build_patches가 trailing space 변경을 template rewriting으로 전이한다 (Phase 5 Axis 1)."""
         xhtml_text = (
             '<table><tbody><tr><td>'
             '<ul><li><p>'
@@ -1248,9 +1189,9 @@ class TestLinkBodyTrailingSpaceStrip:
             [mapping], mdx_to_sidecar, xpath_to_mapping)
 
         assert len(patches) == 1
-        assert 'link_body_strips' not in patches[0]
-        # trailing space가 제거된 new_plain_text가 생성됨
-        assert patches[0]['old_plain_text'] != patches[0]['new_plain_text']
+        # ac:link 구조가 보존된 replace_fragment 패치
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<ac:link>' in patches[0]['new_element_xhtml']
 
     def test_patch_xhtml_strips_link_body_trailing_space(self):
         """patch_xhtml가 <ac:link-body> trailing space를 자연스럽게 제거한다.
