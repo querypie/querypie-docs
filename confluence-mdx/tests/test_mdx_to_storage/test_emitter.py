@@ -242,7 +242,7 @@ def test_emit_figure_to_ac_image_with_width():
     xhtml = emit_document(parse_mdx(mdx))
     assert (
         xhtml
-        == '<ac:image ac:align="center" ac:width="700"><ri:attachment ri:filename="sample.png"></ri:attachment></ac:image>'
+        == '<ac:image ac:align="center" ac:custom-width="true" ac:width="700"><ri:attachment ri:filename="sample.png"></ri:attachment></ac:image>'
     )
 
 
@@ -299,7 +299,7 @@ More text after image.
     xhtml = emit_document(parse_mdx(mdx))
     assert "<h1>Overview</h1>" in xhtml
     assert "<p>Some text.</p>" in xhtml
-    assert '<ac:image ac:align="center" ac:width="600">' in xhtml
+    assert '<ac:image ac:align="center" ac:custom-width="true" ac:width="600">' in xhtml
     assert '<ri:attachment ri:filename="diagram.png">' in xhtml
     assert "<ac:caption><p>Architecture diagram</p></ac:caption>" in xhtml
     assert "<p>More text after image.</p>" in xhtml
@@ -552,7 +552,7 @@ def test_emit_list_item_with_figure_becomes_ac_image_sibling():
     # <p> should contain only the text (no figure, no trailing br)
     assert '<li><p>텍스트</p>' in xhtml
     # ac:image should be a sibling of <p>
-    assert '<ac:image ac:align="center" ac:width="712">' in xhtml
+    assert '<ac:image ac:align="center" ac:custom-width="true" ac:width="712">' in xhtml
     assert '<ri:attachment ri:filename="sample-image.png"></ri:attachment>' in xhtml
     # empty <p /> after the image
     assert '<p />' in xhtml
