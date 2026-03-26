@@ -873,8 +873,10 @@ class TestBuildPatches:
         )
 
         assert len(patches) == 1
-        assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
+        # ac:/ri: 마크업이 없으므로 text-level 패치로 inline styling 보존
+        assert 'new_plain_text' in patches[0]
+        assert 'new item text' in patches[0]['new_plain_text']
 
 
 # ── delete/insert 패치 생성 테스트 ──
