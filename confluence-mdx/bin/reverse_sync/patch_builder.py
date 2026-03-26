@@ -414,10 +414,11 @@ def build_patches(
             _mark_used(mapping.block_id, mapping)
             continue
         # paired delete+add이지만 clean/table fragment 교체 불가:
-        # sidecar reconstruction 가능하면 replace_fragment,
-        # 아니면 원본 XHTML을 template으로 텍스트만 갱신 (속성 보존)
+        # anchor 재구성이 필요한 경우만 replace_fragment로 전환
+        # (clean container sidecar는 emit_block이 Confluence inline markup을 재현할 수 없으므로
+        #  transfer_text_changes fallback으로 보존해야 한다)
         sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
-        if sidecar_block is not None and sidecar_block.reconstruction is not None:
+        if sidecar_block_requires_reconstruction(sidecar_block):
             patches.append(
                 _build_replace_fragment_patch(
                     mapping,

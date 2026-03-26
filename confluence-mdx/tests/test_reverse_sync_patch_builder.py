@@ -910,6 +910,84 @@ class TestBuildPatches:
         assert 'new_plain_text' in patches[0]
         assert 'new item text' in patches[0]['new_plain_text']
 
+    def test_paired_delete_add_clean_container_sidecar_preserves_inline_styling(self):
+        """paired delete/add + clean callout + roundtrip sidecar 조합에서
+        Confluence inline styling(<em><span style="color:...">)이 보존돼야 한다.
+
+        sidecar_block.reconstruction이 있어도 anchor가 없는 clean container는
+        _build_replace_fragment_patch가 아닌 transfer_text_changes를 사용해야 한다.
+        """
+        styled_xhtml = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body>'
+            '<p><em><span style="color: rgb(255,86,48);">Deleted</span></em> old.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        mapping = _make_mapping(
+            'callout-1',
+            'Deleted old.',
+            xpath='macro-info[1]',
+            type_='html_block',
+        )
+        mapping.xhtml_text = styled_xhtml
+
+        changes = [
+            BlockChange(
+                index=0,
+                change_type='deleted',
+                old_block=_make_block(
+                    "<Callout type='info'>\n*Deleted* old.\n</Callout>\n",
+                    type_='callout'),
+                new_block=None,
+            ),
+            BlockChange(
+                index=0,
+                change_type='added',
+                old_block=None,
+                new_block=_make_block(
+                    "<Callout type='info'>\n*Deleted* new.\n</Callout>\n",
+                    type_='callout'),
+            ),
+        ]
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        # clean container sidecar (anchor 없음)
+        sidecar_block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-info[1]',
+            xhtml_fragment=styled_xhtml,
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {'fragment': '<p><em><span style="color: rgb(255,86,48);">Deleted</span></em> old.</p>',
+                     'plain_text': 'Deleted old.', 'type': 'paragraph'},
+                ],
+            },
+        )
+        roundtrip_sidecar = RoundtripSidecar(
+            blocks=[sidecar_block],
+        )
+
+        patches = build_patches(
+            changes,
+            [changes[0].old_block],
+            [changes[1].new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+        patched = patch_xhtml(styled_xhtml, patches)
+
+        # inline styling이 보존되어야 한다
+        assert 'style="color: rgb(255,86,48);"' in patched
+        assert '<em>' in patched
+        assert '<span' in patched
+        # 텍스트 변경은 반영되어야 한다
+        assert 'new.' in patched
+
 
 # ── delete/insert 패치 생성 테스트 ──
 
