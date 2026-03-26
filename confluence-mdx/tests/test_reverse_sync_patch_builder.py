@@ -988,6 +988,87 @@ class TestBuildPatches:
         # 텍스트 변경은 반영되어야 한다
         assert 'new.' in patched
 
+    def test_paired_delete_add_parameter_bearing_macro_preserves_parameter(self):
+        """paired delete/add + parameter-bearing macro (expand 등)에서
+        <ac:parameter> 텍스트가 body 텍스트 수정으로 오염되면 안 된다.
+
+        rewrite_on_stored_template은 전체 fragment의 text node를 재분배하여
+        <ac:parameter>까지 오염시키므로, container sidecar가 있으면 사용 불가.
+        transfer_text_changes fallback으로 보내야 parameter가 보존된다.
+        """
+        expand_xhtml = (
+            '<ac:structured-macro ac:name="expand" ac:schema-version="1">'
+            '<ac:parameter ac:name="title">TITLE</ac:parameter>'
+            '<ac:rich-text-body><p>Old text.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        mapping = _make_mapping(
+            'expand-1',
+            'TITLE Old text.',
+            xpath='macro-expand[1]',
+            type_='html_block',
+        )
+        mapping.xhtml_text = expand_xhtml
+
+        changes = [
+            BlockChange(
+                index=0,
+                change_type='deleted',
+                old_block=_make_block(
+                    "<details>\n<summary>TITLE</summary>\nOld text.\n</details>\n",
+                    type_='html_block'),
+                new_block=None,
+            ),
+            BlockChange(
+                index=0,
+                change_type='added',
+                old_block=None,
+                new_block=_make_block(
+                    "<details>\n<summary>TITLE</summary>\nNew text.\n</details>\n",
+                    type_='html_block'),
+            ),
+        ]
+        mdx_to_sidecar = {0: _make_sidecar('macro-expand[1]', [0])}
+        xpath_to_mapping = {'macro-expand[1]': mapping}
+
+        # container sidecar (anchor 없음)
+        sidecar_block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-expand[1]',
+            xhtml_fragment=expand_xhtml,
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {'fragment': '<p>Old text.</p>',
+                     'plain_text': 'Old text.', 'type': 'paragraph'},
+                ],
+            },
+        )
+        roundtrip_sidecar = RoundtripSidecar(
+            blocks=[sidecar_block],
+        )
+
+        patches = build_patches(
+            changes,
+            [changes[0].old_block],
+            [changes[1].new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+        patched = patch_xhtml(expand_xhtml, patches)
+
+        # 핵심: <ac:parameter> 내용이 body 텍스트로 오염되면 안 된다
+        # (rewrite_on_stored_template 사용 시 "Ne" 등이 parameter에 누수됨)
+        assert '>TITLE<' in patched
+        assert 'ac:name="title"' in patched
+        # replace_fragment가 아닌 text-level 패치(또는 매칭 실패로 no-op)여야 한다
+        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert not any(
+            p.get('xhtml_xpath') == 'macro-expand[1]' for p in replace_patches
+        ), "container sidecar가 있으면 rewrite_on_stored_template(replace_fragment)를 사용하면 안 된다"
+
 
 # ── delete/insert 패치 생성 테스트 ──
 

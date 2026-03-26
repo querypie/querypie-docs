@@ -10,7 +10,7 @@ from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
 )
-from reverse_sync.text_transfer import transfer_text_changes  # preserved anchor list 전용 (Phase 5 Axis 1 미완)
+from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
@@ -427,8 +427,10 @@ def build_patches(
                     mapping_lost_info=mapping_lost_info,
                 )
             )
-        elif _contains_preserved_anchor_markup(mapping.xhtml_text):
-            # preserved anchor → rewrite_on_stored_template (구조 보존)
+        elif _contains_preserved_anchor_markup(mapping.xhtml_text) and not _is_container_sidecar(sidecar_block):
+            # sidecar 없는 preserved anchor → rewrite_on_stored_template (구조 보존)
+            # container sidecar가 있으면 rewrite_on_stored_template이 <ac:parameter>를
+            # 오염시키므로 아래 transfer_text_changes fallback으로 보낸다
             new_plain = normalize_mdx_to_plain(
                 add_change.new_block.content, add_change.new_block.type)
             preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
@@ -441,7 +443,8 @@ def build_patches(
                 'new_element_xhtml': preserved,
             })
         else:
-            # sidecar 없음 + anchor 없음 → text-level 패치로 inline styling 보존
+            # clean container sidecar / sidecar 없음 + anchor 없음
+            # → text-level 패치로 inline styling 및 <ac:parameter> 보존
             old_plain = normalize_mdx_to_plain(
                 del_change.old_block.content, del_change.old_block.type)
             new_plain = normalize_mdx_to_plain(
