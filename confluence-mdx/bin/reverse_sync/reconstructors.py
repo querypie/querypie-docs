@@ -484,6 +484,7 @@ def reconstruct_container_fragment(
             if stored_body is not None:
                 body_child_tags = [c for c in stored_body.children if isinstance(c, Tag)]
                 if (body_child_tags
+                        and emitted_children
                         and all(c.name == 'p' for c in body_child_tags)
                         and all(c.name == 'p' for c in emitted_children)
                         and len(emitted_children) < len(body_child_tags)):

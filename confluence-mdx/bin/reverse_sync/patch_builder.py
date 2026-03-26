@@ -225,6 +225,31 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
     return _xpath_block_family(mapping.xhtml_xpath)
 
 
+def _accumulate_text_change(
+    patches: List[Dict],
+    registry: Dict[str, Dict],
+    mapping: 'BlockMapping',
+    old_plain: str,
+    new_plain: str,
+) -> None:
+    """같은 block_id에 대한 text-level 변경을 하나의 patch dict에 순차 누적한다.
+
+    patches 리스트에 추가된 dict의 참조를 registry에 저장하여,
+    동일 block_id의 후속 변경이 같은 dict의 new_plain_text를 갱신하도록 한다.
+    """
+    bid = mapping.block_id
+    if bid not in registry:
+        patch_entry: Dict[str, Any] = {
+            'xhtml_xpath': mapping.xhtml_xpath,
+            'old_plain_text': mapping.xhtml_plain_text,
+            'new_plain_text': mapping.xhtml_plain_text,
+        }
+        patches.append(patch_entry)
+        registry[bid] = patch_entry
+    registry[bid]['new_plain_text'] = transfer_text_changes(
+        old_plain, new_plain, registry[bid]['new_plain_text'])
+
+
 def _find_best_list_mapping_by_text(
     old_plain: str,
     mappings: List[BlockMapping],
@@ -550,19 +575,10 @@ def build_patches(
             # 잘못 재배치하므로 사용 불가 (Phase 5 Axis 1 미완 — 별도 PR 필요)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
-                bid = mapping.block_id
-                if bid not in _text_change_patches:
-                    patch_entry: Dict[str, Any] = {
-                        'xhtml_xpath': mapping.xhtml_xpath,
-                        'old_plain_text': mapping.xhtml_plain_text,
-                        'new_plain_text': mapping.xhtml_plain_text,
-                    }
-                    patches.append(patch_entry)
-                    _text_change_patches[bid] = patch_entry
-                _text_change_patches[bid]['new_plain_text'] = transfer_text_changes(
-                    _old_plain, _new_plain, _text_change_patches[bid]['new_plain_text'])
+                _accumulate_text_change(
+                    patches, _text_change_patches, mapping, _old_plain, _new_plain)
                 if has_ol_start_change:
-                    _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
+                    _text_change_patches[mapping.block_id]['ol_start'] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -587,6 +603,7 @@ def build_patches(
                 _mark_used(mapping.block_id, mapping)
                 # parse_mdx_blocks는 <Callout>을 'paragraph'로 파싱하므로
                 # content 기반으로 full container 여부를 판별한다
+                # TODO(Phase 5): sidecar의 reconstruction.kind == 'container' 활용으로 전환
                 _s = change.new_block.content.lstrip()
                 is_full_container = _s.startswith('<Callout') or _s.startswith('<details')
                 if is_full_container:
@@ -607,17 +624,8 @@ def build_patches(
                 # Case 1 clean container / sidecar miss / Case 2 child-of-parent:
                 # emit_block은 Confluence 전용 inline markup(<span style="color:..."> 등)을
                 # 재현할 수 없으므로 transfer_text_changes로 원본 XHTML 구조를 보존한다
-                bid = mapping.block_id
-                if bid not in _text_change_patches:
-                    patch_entry: Dict[str, Any] = {
-                        'xhtml_xpath': mapping.xhtml_xpath,
-                        'old_plain_text': mapping.xhtml_plain_text,
-                        'new_plain_text': mapping.xhtml_plain_text,
-                    }
-                    patches.append(patch_entry)
-                    _text_change_patches[bid] = patch_entry
-                _text_change_patches[bid]['new_plain_text'] = transfer_text_changes(
-                    old_plain, new_plain, _text_change_patches[bid]['new_plain_text'])
+                _accumulate_text_change(
+                    patches, _text_change_patches, mapping, old_plain, new_plain)
             continue
 
         # strategy == 'direct'

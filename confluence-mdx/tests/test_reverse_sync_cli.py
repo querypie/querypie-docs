@@ -930,6 +930,8 @@ def testbuild_patches_child_fallback_to_parent_containing():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
+    # old_plain_text는 _accumulate_text_change에서 mapping.xhtml_plain_text로 설정되므로
+    # 부모 전체 텍스트가 됨 (child 텍스트가 아님) — 값 자체보다 new_plain_text 포함을 검증
     assert 'Unresolvable new text.' in patches[0]['new_plain_text']
 
 
