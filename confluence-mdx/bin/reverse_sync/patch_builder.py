@@ -1,6 +1,6 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 import re
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from mdx_to_storage.emitter import emit_block
 from mdx_to_storage.parser import parse_mdx
@@ -225,28 +225,29 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
     return _xpath_block_family(mapping.xhtml_xpath)
 
 
-def _flush_containing_changes(
-    containing_changes: dict,
-    used_ids: 'set | None' = None,
-    ol_starts: 'dict | None' = None,
-) -> List[Dict[str, str]]:
-    """같은 containing/list parent에 대한 text transfer를 하나의 patch로 합친다."""
-    patches = []
-    for bid, (mapping, item_changes) in containing_changes.items():
-        xhtml_text = mapping.xhtml_plain_text
-        for old_plain, new_plain in item_changes:
-            xhtml_text = transfer_text_changes(old_plain, new_plain, xhtml_text)
-        patch: Dict[str, str] = {
+def _accumulate_text_change(
+    patches: List[Dict],
+    registry: Dict[str, Dict],
+    mapping: 'BlockMapping',
+    old_plain: str,
+    new_plain: str,
+) -> None:
+    """같은 block_id에 대한 text-level 변경을 하나의 patch dict에 순차 누적한다.
+
+    patches 리스트에 추가된 dict의 참조를 registry에 저장하여,
+    동일 block_id의 후속 변경이 같은 dict의 new_plain_text를 갱신하도록 한다.
+    """
+    bid = mapping.block_id
+    if bid not in registry:
+        patch_entry: Dict[str, Any] = {
             'xhtml_xpath': mapping.xhtml_xpath,
             'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': xhtml_text,
+            'new_plain_text': mapping.xhtml_plain_text,
         }
-        if ol_starts and bid in ol_starts:
-            patch['ol_start'] = ol_starts[bid]
-        patches.append(patch)
-        if used_ids is not None:
-            used_ids.add(bid)
-    return patches
+        patches.append(patch_entry)
+        registry[bid] = patch_entry
+    registry[bid]['new_plain_text'] = transfer_text_changes(
+        old_plain, new_plain, registry[bid]['new_plain_text'])
 
 
 def _find_best_list_mapping_by_text(
@@ -413,10 +414,11 @@ def build_patches(
             _mark_used(mapping.block_id, mapping)
             continue
         # paired delete+add이지만 clean/table fragment 교체 불가:
-        # sidecar reconstruction 가능하면 replace_fragment,
-        # ac:/ri: markup 있으면 원본 template 기반 텍스트 갱신, 아니면 skip
+        # anchor 재구성이 필요한 경우만 replace_fragment로 전환
+        # (clean container sidecar는 emit_block이 Confluence inline markup을 재현할 수 없으므로
+        #  transfer_text_changes fallback으로 보존해야 한다)
         sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
-        if sidecar_block is not None and sidecar_block.reconstruction is not None:
+        if sidecar_block_requires_reconstruction(sidecar_block):
             patches.append(
                 _build_replace_fragment_patch(
                     mapping,
@@ -425,7 +427,10 @@ def build_patches(
                     mapping_lost_info=mapping_lost_info,
                 )
             )
-        elif _contains_preserved_anchor_markup(mapping.xhtml_text):
+        elif _contains_preserved_anchor_markup(mapping.xhtml_text) and not _is_container_sidecar(sidecar_block):
+            # sidecar 없는 preserved anchor → rewrite_on_stored_template (구조 보존)
+            # container sidecar가 있으면 rewrite_on_stored_template이 <ac:parameter>를
+            # 오염시키므로 아래 transfer_text_changes fallback으로 보낸다
             new_plain = normalize_mdx_to_plain(
                 add_change.new_block.content, add_change.new_block.type)
             preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
@@ -437,11 +442,39 @@ def build_patches(
                 'xhtml_xpath': mapping.xhtml_xpath,
                 'new_element_xhtml': preserved,
             })
+        elif _is_container_sidecar(sidecar_block) and '<ac:parameter' in mapping.xhtml_text:
+            # parameter-bearing container (expand 등): _apply_outer_wrapper_template이
+            # body children만 교체하므로 parameter 보존 + body 변경 적용 모두 가능.
+            # transfer_text_changes는 normalize 불일치(\n vs 공백)로 body 변경이 유실됨.
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    add_change.new_block,
+                    sidecar_block=sidecar_block,
+                    mapping_lost_info=mapping_lost_info,
+                )
+            )
+        else:
+            # clean container sidecar (parameter 없음) / sidecar 없음 + anchor 없음
+            # → text-level 패치로 inline styling 보존
+            old_plain = normalize_mdx_to_plain(
+                del_change.old_block.content, del_change.old_block.type)
+            new_plain = normalize_mdx_to_plain(
+                add_change.new_block.content, add_change.new_block.type)
+            new_xhtml_plain = transfer_text_changes(
+                old_plain, new_plain, mapping.xhtml_plain_text)
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': new_xhtml_plain,
+            })
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
-    containing_changes: dict = {}
-    containing_ol_starts: dict = {}
+    # 같은 부모에 대한 text-level 변경을 순차 집계하는 dict (block_id → patch dict)
+    # preserved anchor list와 containing case 2에서 공용 사용
+    _text_change_patches: Dict[str, Dict] = {}
+
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -554,14 +587,14 @@ def build_patches(
                 )
                 continue
             # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
+            # rewrite_on_stored_template은 multi-item list의 caption 텍스트를
+            # 잘못 재배치하므로 사용 불가 (Phase 5 Axis 1 미완 — 별도 PR 필요)
+            # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
-                bid = mapping.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (mapping, [])
-                if has_content_change:
-                    containing_changes[bid][1].append((_old_plain, _new_plain))
+                _accumulate_text_change(
+                    patches, _text_change_patches, mapping, _old_plain, _new_plain)
                 if has_ol_start_change:
-                    containing_ol_starts[bid] = int(_new_start.group(1))
+                    _text_change_patches[mapping.block_id]['ol_start'] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -582,29 +615,33 @@ def build_patches(
             change.new_block.content, change.new_block.type)
 
         if strategy == 'containing':
-            sidecar_block = _find_roundtrip_sidecar_block(
-                change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-            )
-            # anchor 재구성이 필요한 경우만 replace_fragment로 전환
-            # (container sidecar가 있어도 anchor 없으면 transfer_text_changes로 처리)
-            if sidecar_block_requires_reconstruction(sidecar_block):
-                _mark_used(mapping.block_id, mapping)
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        sidecar_block=sidecar_block,
-                        mapping_lost_info=mapping_lost_info,
-                    )
-                )
-                continue
-            # sidecar 없음 또는 anchor 불필요 → transfer_text_changes fallback (ac:/ri: 구조 보존)
             if mapping is not None:
                 _mark_used(mapping.block_id, mapping)
-                bid = mapping.block_id
-                if bid not in containing_changes:
-                    containing_changes[bid] = (mapping, [])
-                containing_changes[bid][1].append((old_plain, new_plain))
+                # parse_mdx_blocks는 <Callout>을 'paragraph'로 파싱하므로
+                # content 기반으로 full container 여부를 판별한다
+                # TODO(Phase 5): sidecar의 reconstruction.kind == 'container' 활용으로 전환
+                _s = change.new_block.content.lstrip()
+                is_full_container = _s.startswith('<Callout') or _s.startswith('<details')
+                if is_full_container:
+                    # Case 1: full container — anchor 재구성 필요 시만 replace_fragment
+                    sidecar_block = _find_roundtrip_sidecar_block(
+                        change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+                    )
+                    if sidecar_block_requires_reconstruction(sidecar_block):
+                        patches.append(
+                            _build_replace_fragment_patch(
+                                mapping,
+                                change.new_block,
+                                sidecar_block=sidecar_block,
+                                mapping_lost_info=mapping_lost_info,
+                            )
+                        )
+                        continue
+                # Case 1 clean container / sidecar miss / Case 2 child-of-parent:
+                # emit_block은 Confluence 전용 inline markup(<span style="color:..."> 등)을
+                # 재현할 수 없으므로 transfer_text_changes로 원본 XHTML 구조를 보존한다
+                _accumulate_text_change(
+                    patches, _text_change_patches, mapping, old_plain, new_plain)
             continue
 
         # strategy == 'direct'
@@ -679,8 +716,6 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
-    patches.extend(_flush_containing_changes(
-        containing_changes, used_ids, containing_ol_starts))
     return patches
 
 

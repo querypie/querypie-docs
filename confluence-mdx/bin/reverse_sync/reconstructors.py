@@ -451,7 +451,7 @@ def reconstruct_container_fragment(
 ) -> str:
     """Container (callout/ADF panel) fragment에 sidecar child 메타데이터로 재구성한다.
 
-    anchor 없는 clean container는 new_fragment를 그대로 반환한다.
+    anchor 없는 clean container는 stored XHTML를 template으로 텍스트만 업데이트한다.
     anchor가 있어 재구성이 트리거된 경우 아래 세 단계를 각 child에 적용한다:
     1. inline markup 보존: 원본 fragment를 template으로 bold·italic·link 유지
     2. anchor 재삽입: ac:image를 offset 매핑으로 복원
@@ -473,10 +473,36 @@ def reconstruct_container_fragment(
 
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
-    # clean container이고 children 수가 불일치하면 per-child 매칭이 안전하지 않으므로
-    # Step 1/2를 건너뛰고 Step 3(outer wrapper template)만 적용한다
-    if not has_anchors and len(emitted_children) != len(children_meta):
-        return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+    # clean container 처리:
+    # 1) 단락 병합 (emitted 수 < stored 수): stored body를 template으로 텍스트 재배분
+    # 2) children 수 불일치: per-child 매칭 불안전 → outer wrapper만
+    # 3) children 수 일치: per-child 재구성으로 fall-through (inline styling 보존)
+    if not has_anchors:
+        stored_fragment = sidecar_block.xhtml_fragment
+        if stored_fragment:
+            stored_soup = BeautifulSoup(stored_fragment, 'html.parser')
+            stored_body = stored_soup.find('ac:rich-text-body') or stored_soup.find('ac:adf-content')
+            if stored_body is not None:
+                body_child_tags = [c for c in stored_body.children if isinstance(c, Tag)]
+                if (body_child_tags
+                        and emitted_children
+                        and all(c.name == 'p' for c in body_child_tags)
+                        and all(c.name == 'p' for c in emitted_children)
+                        and len(emitted_children) < len(body_child_tags)):
+                    new_plain = extract_plain_text(new_fragment)
+                    rewritten_body_str = _rewrite_paragraph_on_template(
+                        str(stored_body), f'<p>{html.escape(new_plain)}</p>'
+                    )
+                    rw_soup = BeautifulSoup(rewritten_body_str, 'html.parser')
+                    rw_body = rw_soup.find('ac:rich-text-body') or rw_soup.find('ac:adf-content')
+                    if rw_body is not None:
+                        rw_children = [str(c) for c in rw_body.children if isinstance(c, Tag)]
+                        return _apply_outer_wrapper_template(new_fragment, sidecar_block, rw_children)
+        # children 수 불일치 → per-child 매칭 불안전 → outer wrapper만
+        if len(emitted_children) != len(children_meta):
+            return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+        # children 수 일치 → 아래 per-child 재구성 loop으로 fall-through
+        # (stored child fragment를 template으로 사용하여 inline styling 보존)
 
     # 각 child 재구성
     rebuilt_fragments = []

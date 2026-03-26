@@ -479,10 +479,10 @@ class TestContainerPipelineEndToEnd:
         assert '<img src=' not in patched
 
     def test_clean_callout_uses_transfer_text_changes(self):
-        """sidecar 없는 clean callout은 transfer_text_changes 경로를 사용한다.
+        """clean callout은 transfer_text_changes 경로를 사용한다.
 
-        container sidecar가 있더라도 anchor 재구성이 불필요하면 replace_fragment 대신
-        transfer_text_changes fallback을 사용해 XHTML 구조(local-id 등)를 보존한다.
+        anchor 재구성이 불필요한 clean container는 emit_block이 Confluence 전용
+        inline markup을 재현할 수 없으므로 transfer_text_changes로 원본 구조를 보존한다.
         """
         xhtml = (
             '<ac:structured-macro ac:name="info">'
@@ -496,10 +496,46 @@ class TestContainerPipelineEndToEnd:
 
         patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
 
-        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        # sidecar 없는 clean callout은 replace_fragment를 사용하지 않음
-        assert not any(
+        # clean callout은 replace_fragment가 아닌 text-level 패치 사용
+        text_patches = [p for p in patches if 'new_plain_text' in p]
+        assert any(
             p.get('xhtml_xpath') == 'macro-info[1]'
-            for p in replace_patches
+            for p in text_patches
         )
         assert 'Updated text' in patched
+
+    def test_clean_callout_structure_change_keeps_emitted_list(self):
+        """clean container의 구조 변경은 stored paragraph 템플릿으로 덮어쓰면 안 된다."""
+        sidecar_block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-info[1]',
+            xhtml_fragment=(
+                '<ac:structured-macro ac:name="info">'
+                '<ac:rich-text-body>'
+                '<p>Alpha</p>'
+                '<p>Beta</p>'
+                '</ac:rich-text-body>'
+                '</ac:structured-macro>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {'fragment': '<p>Alpha</p>', 'plain_text': 'Alpha', 'type': 'paragraph'},
+                    {'fragment': '<p>Beta</p>', 'plain_text': 'Beta', 'type': 'paragraph'},
+                ],
+            },
+        )
+        new_fragment = (
+            '<ac:structured-macro ac:name="info">'
+            '<ac:rich-text-body>'
+            '<ul><li><p>Gamma</p></li></ul>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+
+        result = reconstruct_container_fragment(new_fragment, sidecar_block)
+
+        assert '<ul>' in result
+        assert '<li>' in result
+        assert '<p>Gamma</p>' in result
+        assert '<p>Ga</p>' not in result
