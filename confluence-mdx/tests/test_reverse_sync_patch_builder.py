@@ -988,13 +988,12 @@ class TestBuildPatches:
         # 텍스트 변경은 반영되어야 한다
         assert 'new.' in patched
 
-    def test_paired_delete_add_parameter_bearing_macro_preserves_parameter(self):
+    def test_paired_delete_add_parameter_bearing_macro_preserves_and_updates(self):
         """paired delete/add + parameter-bearing macro (expand 등)에서
-        <ac:parameter> 텍스트가 body 텍스트 수정으로 오염되면 안 된다.
+        <ac:parameter> 보존과 body 텍스트 변경 적용 모두 되어야 한다.
 
-        rewrite_on_stored_template은 전체 fragment의 text node를 재분배하여
-        <ac:parameter>까지 오염시키므로, container sidecar가 있으면 사용 불가.
-        transfer_text_changes fallback으로 보내야 parameter가 보존된다.
+        _apply_outer_wrapper_template이 body children만 교체하므로
+        parameter는 보존되고 body는 정상 업데이트된다.
         """
         expand_xhtml = (
             '<ac:structured-macro ac:name="expand" ac:schema-version="1">'
@@ -1059,15 +1058,12 @@ class TestBuildPatches:
         )
         patched = patch_xhtml(expand_xhtml, patches)
 
-        # 핵심: <ac:parameter> 내용이 body 텍스트로 오염되면 안 된다
-        # (rewrite_on_stored_template 사용 시 "Ne" 등이 parameter에 누수됨)
+        # <ac:parameter> 보존
         assert '>TITLE<' in patched
         assert 'ac:name="title"' in patched
-        # replace_fragment가 아닌 text-level 패치(또는 매칭 실패로 no-op)여야 한다
-        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        assert not any(
-            p.get('xhtml_xpath') == 'macro-expand[1]' for p in replace_patches
-        ), "container sidecar가 있으면 rewrite_on_stored_template(replace_fragment)를 사용하면 안 된다"
+        # body 텍스트 변경이 실제로 적용되어야 한다 (silent no-op 금지)
+        assert 'New text.' in patched
+        assert 'Old text.' not in patched
 
 
 # ── delete/insert 패치 생성 테스트 ──

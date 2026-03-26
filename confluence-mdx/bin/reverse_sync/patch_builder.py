@@ -442,9 +442,21 @@ def build_patches(
                 'xhtml_xpath': mapping.xhtml_xpath,
                 'new_element_xhtml': preserved,
             })
+        elif _is_container_sidecar(sidecar_block) and '<ac:parameter' in mapping.xhtml_text:
+            # parameter-bearing container (expand 등): _apply_outer_wrapper_template이
+            # body children만 교체하므로 parameter 보존 + body 변경 적용 모두 가능.
+            # transfer_text_changes는 normalize 불일치(\n vs 공백)로 body 변경이 유실됨.
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    add_change.new_block,
+                    sidecar_block=sidecar_block,
+                    mapping_lost_info=mapping_lost_info,
+                )
+            )
         else:
-            # clean container sidecar / sidecar 없음 + anchor 없음
-            # → text-level 패치로 inline styling 및 <ac:parameter> 보존
+            # clean container sidecar (parameter 없음) / sidecar 없음 + anchor 없음
+            # → text-level 패치로 inline styling 보존
             old_plain = normalize_mdx_to_plain(
                 del_change.old_block.content, del_change.old_block.type)
             new_plain = normalize_mdx_to_plain(
