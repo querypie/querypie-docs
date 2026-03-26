@@ -257,6 +257,7 @@ def _figure_attrs_to_ac_image(img_attrs_str: str) -> str:
     filename = os.path.basename(src) if src else ""
     ac_attrs = ['ac:align="center"']
     if width:
+        ac_attrs.append('ac:custom-width="true"')
         ac_attrs.append(f'ac:width="{width}"')
 
     return (
@@ -339,6 +340,7 @@ def _emit_figure(block: Block, link_resolver: Optional[LinkResolver] = None) -> 
 
     attrs = ['ac:align="center"']
     if width:
+        attrs.append('ac:custom-width="true"')
         attrs.append(f'ac:width="{width}"')
 
     parts = [f"<ac:image {' '.join(attrs)}>"]
