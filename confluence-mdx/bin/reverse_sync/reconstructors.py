@@ -473,9 +473,10 @@ def reconstruct_container_fragment(
 
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
-    # clean container: emit_block이 단락을 병합한 경우에만 stored body를 template으로 재배분
-    # 조건: stored·emitted 양쪽 직계 자식이 모두 <p>이고 emitted 수가 더 적을 때
-    # (구조 변경(paragraph→list)은 emitted 쪽이 <ul> 등이므로 조건 불일치 → fallback)
+    # clean container 처리:
+    # 1) 단락 병합 (emitted 수 < stored 수): stored body를 template으로 텍스트 재배분
+    # 2) children 수 불일치: per-child 매칭 불안전 → outer wrapper만
+    # 3) children 수 일치: per-child 재구성으로 fall-through (inline styling 보존)
     if not has_anchors:
         stored_fragment = sidecar_block.xhtml_fragment
         if stored_fragment:
@@ -497,7 +498,11 @@ def reconstruct_container_fragment(
                     if rw_body is not None:
                         rw_children = [str(c) for c in rw_body.children if isinstance(c, Tag)]
                         return _apply_outer_wrapper_template(new_fragment, sidecar_block, rw_children)
-        return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+        # children 수 불일치 → per-child 매칭 불안전 → outer wrapper만
+        if len(emitted_children) != len(children_meta):
+            return _apply_outer_wrapper_template(new_fragment, sidecar_block)
+        # children 수 일치 → 아래 per-child 재구성 loop으로 fall-through
+        # (stored child fragment를 template으로 사용하여 inline styling 보존)
 
     # 각 child 재구성
     rebuilt_fragments = []

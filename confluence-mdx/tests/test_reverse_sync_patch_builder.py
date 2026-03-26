@@ -1065,6 +1065,84 @@ class TestBuildPatches:
         assert 'New text.' in patched
         assert 'Old text.' not in patched
 
+    def test_paired_delete_add_parameter_bearing_macro_preserves_body_inline_styling(self):
+        """parameter-bearing macro body의 Confluence inline styling도 보존되어야 한다.
+
+        _build_replace_fragment_patch → reconstruct_container_fragment에서
+        children 수 일치 시 per-child 재구성 loop으로 fall-through하여
+        stored child fragment를 template으로 사용해 inline styling을 보존한다.
+        """
+        styled_expand_xhtml = (
+            '<ac:structured-macro ac:name="expand" ac:schema-version="1">'
+            '<ac:parameter ac:name="title">TITLE</ac:parameter>'
+            '<ac:rich-text-body>'
+            '<p><em><span style="color: rgb(255,86,48);">Deleted</span></em> old.</p>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        mapping = _make_mapping(
+            'expand-1',
+            'TITLE Deleted old.',
+            xpath='macro-expand[1]',
+            type_='html_block',
+        )
+        mapping.xhtml_text = styled_expand_xhtml
+
+        changes = [
+            BlockChange(
+                index=0,
+                change_type='deleted',
+                old_block=_make_block(
+                    "<details>\n<summary>TITLE</summary>\n*Deleted* old.\n</details>\n",
+                    type_='html_block'),
+                new_block=None,
+            ),
+            BlockChange(
+                index=0,
+                change_type='added',
+                old_block=None,
+                new_block=_make_block(
+                    "<details>\n<summary>TITLE</summary>\n*Deleted* new.\n</details>\n",
+                    type_='html_block'),
+            ),
+        ]
+        mdx_to_sidecar = {0: _make_sidecar('macro-expand[1]', [0])}
+        xpath_to_mapping = {'macro-expand[1]': mapping}
+
+        sidecar_block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='macro-expand[1]',
+            xhtml_fragment=styled_expand_xhtml,
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {'fragment': '<p><em><span style="color: rgb(255,86,48);">Deleted</span></em> old.</p>',
+                     'plain_text': 'Deleted old.', 'type': 'paragraph'},
+                ],
+            },
+        )
+        roundtrip_sidecar = RoundtripSidecar(blocks=[sidecar_block])
+
+        patches = build_patches(
+            changes,
+            [changes[0].old_block],
+            [changes[1].new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+        patched = patch_xhtml(styled_expand_xhtml, patches)
+
+        # parameter 보존
+        assert '>TITLE<' in patched
+        # body inline styling 보존
+        assert 'style="color: rgb(255,86,48);"' in patched
+        assert '<em>' in patched
+        assert '<span' in patched
+        # body 텍스트 변경 적용
+        assert 'new.' in patched
+
 
 # ── delete/insert 패치 생성 테스트 ──
 
