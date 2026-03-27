@@ -488,6 +488,7 @@ def reconstruct_container_fragment(
     emitted_body = _find_container_body(emitted_root)
     if emitted_body is None:
         return new_fragment
+    emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
     template_fragment = sidecar_block.xhtml_fragment or new_fragment
     template_soup = BeautifulSoup(template_fragment, 'html.parser')
@@ -531,7 +532,6 @@ def reconstruct_container_fragment(
 
     # 각 child 재구성
     rebuilt_fragments = []
-    emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
     for i, child_tag in enumerate(emitted_children):
         if i >= len(children_meta):
             rebuilt_fragments.append(str(child_tag))
