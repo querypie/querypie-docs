@@ -627,7 +627,7 @@ class TestContainerPipelineEndToEnd:
         assert 'Updated text' in patched
 
     def test_adf_panel_with_anchor_preserves_adf_wrapper(self):
-        """ADF panel이 replace_fragment 경로를 타도 ac:adf-extension wrapper를 유지한다."""
+        """ADF panel 재구성 시 wrapper를 유지하고 stale fallback을 제거한다."""
         xhtml = (
             '<ac:adf-extension><ac:adf-node type="panel">'
             '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
@@ -663,6 +663,9 @@ class TestContainerPipelineEndToEnd:
         assert '<ac:adf-extension>' in patched
         assert '<ac:structured-macro ac:name="note">' not in patched
         assert '<ac:image' in patched
+        # ac: markup 포함 시 stale fallback은 제거되어야 한다
+        assert '<ac:adf-fallback>' not in patched
+        assert 'Original note.' not in patched
 
     def test_clean_callout_structure_change_keeps_emitted_list(self):
         """clean container의 구조 변경은 stored paragraph 템플릿으로 덮어쓰면 안 된다."""
