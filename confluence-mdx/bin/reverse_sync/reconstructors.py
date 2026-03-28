@@ -203,6 +203,7 @@ def _rebuild_list_fragment(new_fragment: str, recon: dict) -> str:
 
     return str(soup)
 
+
 # ── container 재구성 헬퍼 ──────────────────────────────────────────────────────
 
 
@@ -508,15 +509,6 @@ def reconstruct_container_fragment(
     if emitted_body is None:
         return new_fragment
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
-
-    template_fragment = sidecar_block.xhtml_fragment or new_fragment
-    template_soup = BeautifulSoup(template_fragment, 'html.parser')
-    template_root = next((child for child in template_soup.contents if isinstance(child, Tag)), None)
-    if template_root is None:
-        return new_fragment
-    template_body = _find_container_body(template_root)
-    if template_body is None:
-        return new_fragment
 
     # clean container 처리:
     # 1) 단락 병합 (emitted 수 < stored 수): stored body를 template으로 텍스트 재배분
