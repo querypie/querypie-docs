@@ -400,6 +400,92 @@ class TestReconstructContainerFragment:
         assert 'Updated note panel.' in result
         assert '<ac:structured-macro ac:name="note">' not in result
 
+    def test_clean_adf_container_updates_fallback_body(self):
+        """clean ADF panel은 fallback도 stale 상태로 남기면 안 된다."""
+        new_frag = (
+            '<ac:structured-macro ac:name="note">'
+            '<ac:rich-text-body><p>Updated note panel.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='ac:adf-extension[1]',
+            xhtml_fragment=(
+                '<ac:adf-extension><ac:adf-node type="panel">'
+                '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+                '<ac:adf-content><p>Original content.</p></ac:adf-content>'
+                '</ac:adf-node>'
+                '<ac:adf-fallback><div class="panel"><div class="panelContent">'
+                '<p>Original fallback.</p>'
+                '</div></div></ac:adf-fallback>'
+                '</ac:adf-extension>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'ac:adf-extension[1]/p[1]',
+                        'fragment': '<p>Original content.</p>',
+                        'plain_text': 'Original content.',
+                        'type': 'paragraph',
+                    }
+                ],
+                'child_xpaths': ['ac:adf-extension[1]/p[1]'],
+            },
+        )
+
+        result = reconstruct_container_fragment(new_frag, block)
+
+        assert 'Updated note panel.' in result
+        assert 'Original fallback.' not in result
+        assert '<ac:adf-fallback>' in result
+
+    def test_anchor_bearing_adf_container_drops_stale_fallback(self):
+        """Confluence 전용 anchor가 들어가면 fallback은 stale 상태로 남기지 않는다."""
+        new_frag = (
+            '<ac:structured-macro ac:name="note">'
+            '<ac:rich-text-body><p>Updated note.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        image_xhtml = (
+            '<ac:image ac:inline="true">'
+            '<ri:attachment ri:filename="sample.png"/>'
+            '</ac:image>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='ac:adf-extension[1]',
+            xhtml_fragment=(
+                '<ac:adf-extension><ac:adf-node type="panel">'
+                '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+                '<ac:adf-content><p>Original note.</p></ac:adf-content>'
+                '</ac:adf-node>'
+                '<ac:adf-fallback><div class="panel"><div class="panelContent">'
+                '<p>Original fallback.</p>'
+                '</div></div></ac:adf-fallback>'
+                '</ac:adf-extension>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'ac:adf-extension[1]/p[1]',
+                        'fragment': f'<p>Original {image_xhtml} note.</p>',
+                        'plain_text': 'Original note.',
+                        'type': 'paragraph',
+                        'anchors': [{'offset': 9, 'raw_xhtml': image_xhtml}],
+                    }
+                ],
+                'child_xpaths': ['ac:adf-extension[1]/p[1]'],
+            },
+        )
+
+        result = reconstruct_container_fragment(new_frag, block)
+
+        assert '<ac:image' in result
+        assert '<ac:adf-fallback>' not in result
+        assert 'Original fallback.' not in result
+
 
 @pytest.mark.parametrize("page_id", ['544112828', '1454342158', '544379140', 'panels'])
 def test_container_child_fragment_oracle(page_id):

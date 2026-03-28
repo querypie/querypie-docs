@@ -393,6 +393,25 @@ def _replace_container_body_children(body: Tag, children: list[str]) -> None:
             body.append(child.extract())
 
 
+def _find_adf_fallback_body(root: Tag) -> Optional[Tag]:
+    """ac:adf-extension 내부 fallback content slot을 찾는다."""
+    fallback = root.find('ac:adf-fallback')
+    if fallback is None:
+        return None
+    panel_content = fallback.find(
+        'div',
+        class_=lambda value: isinstance(value, str) and 'panelContent' in value.split(),
+    )
+    if panel_content is not None:
+        return panel_content
+    return fallback.find('div') or fallback
+
+
+def _fragments_contain_confluence_markup(fragments: list[str]) -> bool:
+    """fallback에 그대로 복사하기 unsafe한 Confluence 전용 markup이 있으면 True."""
+    return any('<ac:' in fragment or '<ri:' in fragment for fragment in fragments)
+
+
 def sidecar_block_requires_reconstruction(
     sidecar_block: Optional['SidecarBlock'],
 ) -> bool:
@@ -576,28 +595,35 @@ def _apply_outer_wrapper_template(
     """
     outer_template = sidecar_block.xhtml_fragment
     template_soup = BeautifulSoup(outer_template or new_fragment, 'html.parser')
-    template_body = (
-        template_soup.find('ac:rich-text-body') or template_soup.find('ac:adf-content')
-    )
+    template_root = next((child for child in template_soup.contents if isinstance(child, Tag)), None)
+    if template_root is None:
+        return new_fragment
+    template_body = _find_container_body(template_root)
     if template_body is None:
         return new_fragment
 
     # body children 추출
     if rebuilt_children is None:
         emitted_soup = BeautifulSoup(new_fragment, 'html.parser')
-        emitted_body = (
-            emitted_soup.find('ac:rich-text-body') or emitted_soup.find('ac:adf-content')
-        )
+        emitted_root = next((child for child in emitted_soup.contents if isinstance(child, Tag)), None)
+        if emitted_root is None:
+            return new_fragment
+        emitted_body = _find_container_body(emitted_root)
         if emitted_body is None:
             return new_fragment
         rebuilt_children = [str(c) for c in emitted_body.children if isinstance(c, Tag)]
 
-    for child in list(template_body.contents):
-        child.extract()
-    for frag in rebuilt_children:
-        frag_soup = BeautifulSoup(frag, 'html.parser')
-        for node in list(frag_soup.contents):
-            template_body.append(node.extract())
+    _replace_container_body_children(template_body, rebuilt_children)
+
+    if template_root.name == 'ac:adf-extension':
+        fallback_body = _find_adf_fallback_body(template_root)
+        if fallback_body is not None:
+            if _fragments_contain_confluence_markup(rebuilt_children):
+                fallback = template_root.find('ac:adf-fallback')
+                if fallback is not None:
+                    fallback.decompose()
+            else:
+                _replace_container_body_children(fallback_body, rebuilt_children)
 
     return str(template_soup)
 
