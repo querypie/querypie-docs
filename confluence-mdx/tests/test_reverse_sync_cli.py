@@ -879,14 +879,19 @@ def testbuild_patches_child_resolved():
     patches = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
-    # _resolve_child_mapping 실패 → containing 전략 → parent text에서 child 텍스트만 변경
+    # Phase 5 Axis 1: containing 전략 → replace_fragment
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    assert 'New child text.' in patches[0]['new_plain_text']
+    assert patches[0]['action'] == 'replace_fragment'
+    assert 'New child text.' in patches[0]['new_element_xhtml']
 
 
 def testbuild_patches_child_fallback_to_parent_containing():
-    """child 해석 실패 시 parent를 containing block으로 사용하여 패치한다."""
+    """child 해석 실패 시 parent를 containing block으로 사용하여 패치한다.
+
+    Phase 5 Axis 1: replace_fragment로 전환. sidecar 없는 경우
+    child 내용만 emit — parent 구조 유실은 수용.
+    """
     from reverse_sync.mdx_block_parser import MdxBlock
     from reverse_sync.block_diff import BlockChange
     from reverse_sync.mapping_recorder import BlockMapping
@@ -930,9 +935,8 @@ def testbuild_patches_child_fallback_to_parent_containing():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'macro-info[1]'
-    # old_plain_text는 _accumulate_text_change에서 mapping.xhtml_plain_text로 설정되므로
-    # 부모 전체 텍스트가 됨 (child 텍스트가 아님) — 값 자체보다 new_plain_text 포함을 검증
-    assert 'Unresolvable new text.' in patches[0]['new_plain_text']
+    assert patches[0]['action'] == 'replace_fragment'
+    assert 'Unresolvable new text.' in patches[0]['new_element_xhtml']
 
 
 def testbuild_patches_unmapped_block_skipped():

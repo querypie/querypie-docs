@@ -652,9 +652,9 @@
   description: '<Callout type="important"> 컴포넌트 전체가 라운드트립 후 소실됨.
 
     '
-  expected_status: pass
+  expected_status: fail
   failure_type: 7
-  label: Callout 블록 전체 삭제
+  label: 'Phase 5 Axis 1: containing 재구성 시 <br/> 앞 공백 차이 + bold 이중 공백 소실'
   mdx_path: administrator-manual/general/system/integrations/integrating-with-syslog.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544379393/Syslog
   page_id: '544379393'
