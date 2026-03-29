@@ -485,12 +485,10 @@ def reconstruct_container_fragment(
 ) -> str:
     """Container (callout/ADF panel) fragment에 sidecar child 메타데이터로 재구성한다.
 
-    anchor 없는 clean container는 stored XHTML를 template으로 텍스트만 업데이트한다.
     anchor가 있어 재구성이 트리거된 경우 아래 세 단계를 각 child에 적용한다:
     1. inline markup 보존: 원본 fragment를 template으로 bold·italic·link 유지
     2. anchor 재삽입: ac:image를 offset 매핑으로 복원
     3. outer wrapper 보존: sidecar xhtml_fragment를 template으로 macro 속성 유지
-    anchor가 없는 clean container도 emitted child를 template wrapper 안에 다시 배치한다.
     """
     if sidecar_block is None or sidecar_block.reconstruction is None:
         return new_fragment
@@ -502,12 +500,10 @@ def reconstruct_container_fragment(
 
     # emitted new_fragment에서 body children 추출
     emitted_soup = BeautifulSoup(new_fragment, 'html.parser')
-    emitted_root = next((child for child in emitted_soup.contents if isinstance(child, Tag)), None)
-    if emitted_root is None:
-        return new_fragment
-    emitted_body = _find_container_body(emitted_root)
+    emitted_body = emitted_soup.find('ac:rich-text-body') or emitted_soup.find('ac:adf-content')
     if emitted_body is None:
         return new_fragment
+
     emitted_children = [c for c in emitted_body.children if isinstance(c, Tag)]
 
     # clean container 처리:
@@ -561,14 +557,6 @@ def reconstruct_container_fragment(
         # Step 2: anchor 재삽입
         if has_anchors and child_meta.get('anchors'):
             child_frag = _reconstruct_child_with_anchors(child_frag, child_meta)
-        elif child_meta.get('items'):
-            child_frag = _rebuild_list_fragment(
-                child_frag,
-                {
-                    'old_plain_text': child_meta.get('plain_text', ''),
-                    'items': child_meta.get('items', []),
-                },
-            )
 
         rebuilt_fragments.append(child_frag)
 
