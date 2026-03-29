@@ -317,10 +317,11 @@ class TestBuildPatches:
             xpath_to_mapping,
         )
 
-        # Phase 5 Axis 1: 첫 번째 변경만 패치 생성 (두 번째는 parent 이미 used)
+        # Phase 5 Axis 1: 첫 번째 변경만 replace_fragment 패치 생성
+        # 두 번째는 parent가 이미 used이므로 skip
         replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        assert len(replace_patches) >= 1
-        assert all(p['xhtml_xpath'] == 'p[1]' for p in replace_patches)
+        assert len(replace_patches) == 1
+        assert replace_patches[0]['xhtml_xpath'] == 'p[1]'
 
     # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):

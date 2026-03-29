@@ -514,6 +514,10 @@ def build_patches(
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
+    # 같은 부모에 대한 text-level 변경을 순차 집계하는 dict (block_id → patch dict)
+    # preserved anchor list와 containing case에서 공용 사용
+    _text_change_patches: Dict[str, Dict] = {}
+
     for change in changes:
         if change.index in _paired_indices:
             continue
@@ -627,18 +631,21 @@ def build_patches(
                 continue
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml 전환)
-            # collapse_ws 입력 사용: XHTML plain text와 alignment 정확도 향상
+            # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
-                new_xhtml_plain = _apply_mdx_diff_to_xhtml(
-                    _old_plain, _new_plain, mapping.xhtml_plain_text)
-                patch_entry: Dict[str, Any] = {
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping.xhtml_plain_text,
-                    'new_plain_text': new_xhtml_plain,
-                }
+                bid = mapping.block_id
+                if bid not in _text_change_patches:
+                    patch_entry: Dict[str, Any] = {
+                        'xhtml_xpath': mapping.xhtml_xpath,
+                        'old_plain_text': mapping.xhtml_plain_text,
+                        'new_plain_text': mapping.xhtml_plain_text,
+                    }
+                    patches.append(patch_entry)
+                    _text_change_patches[bid] = patch_entry
+                _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                    _old_plain, _new_plain, _text_change_patches[bid]['new_plain_text'])
                 if has_ol_start_change:
-                    patch_entry['ol_start'] = int(_new_start.group(1))
-                patches.append(patch_entry)
+                    _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -660,19 +667,27 @@ def build_patches(
 
         if strategy == 'containing':
             if mapping is not None:
-                _mark_used(mapping.block_id, mapping)
-                # Phase 5 Axis 1: 모든 containing 케이스를 sidecar 기반 reconstruct로 통합
-                sidecar_block = _find_roundtrip_sidecar_block(
-                    change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-                )
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        sidecar_block=sidecar_block,
-                        mapping_lost_info=mapping_lost_info,
+                bid = mapping.block_id
+                already_patched = bid in used_ids
+                _mark_used(bid, mapping)
+                if already_patched:
+                    # 같은 parent에 대한 두 번째 이후 변경: skip
+                    # 첫 번째 변경에서 이미 replace_fragment가 생성되었으므로
+                    # 중복 패치를 방지한다
+                    pass
+                else:
+                    # Phase 5 Axis 1: sidecar 기반 reconstruct
+                    sidecar_block = _find_roundtrip_sidecar_block(
+                        change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
                     )
-                )
+                    patches.append(
+                        _build_replace_fragment_patch(
+                            mapping,
+                            change.new_block,
+                            sidecar_block=sidecar_block,
+                            mapping_lost_info=mapping_lost_info,
+                        )
+                    )
             continue
 
         # strategy == 'direct'
