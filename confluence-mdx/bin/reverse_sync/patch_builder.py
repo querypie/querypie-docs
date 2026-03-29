@@ -1,4 +1,5 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
+import difflib
 import re
 from typing import Any, Dict, List, Optional
 
@@ -10,7 +11,6 @@ from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
 )
-from reverse_sync.text_transfer import transfer_text_changes
 from reverse_sync.sidecar import (
     RoundtripSidecar,
     SidecarBlock,
@@ -225,29 +225,74 @@ def _mapping_block_family(mapping: BlockMapping) -> str:
     return _xpath_block_family(mapping.xhtml_xpath)
 
 
-def _accumulate_text_change(
-    patches: List[Dict],
-    registry: Dict[str, Dict],
-    mapping: 'BlockMapping',
-    old_plain: str,
-    new_plain: str,
-) -> None:
-    """같은 block_id에 대한 text-level 변경을 하나의 patch dict에 순차 누적한다.
 
-    patches 리스트에 추가된 dict의 참조를 registry에 저장하여,
-    동일 block_id의 후속 변경이 같은 dict의 new_plain_text를 갱신하도록 한다.
+
+def _apply_mdx_diff_to_xhtml(
+    old_mdx_plain: str,
+    new_mdx_plain: str,
+    xhtml_plain: str,
+) -> str:
+    """MDX old→new diff를 XHTML plain text에 적용한다.
+
+    MDX old와 XHTML text의 문자 정렬(alignment)을 구축하고,
+    MDX old→new 변경의 위치를 XHTML 상의 위치로 매핑하여 적용한다.
+    이를 통해 XHTML의 공백 구조를 보존하면서 콘텐츠만 업데이트한다.
+    (text_transfer.transfer_text_changes의 인라인 구현)
     """
-    bid = mapping.block_id
-    if bid not in registry:
-        patch_entry: Dict[str, Any] = {
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
-            'new_plain_text': mapping.xhtml_plain_text,
-        }
-        patches.append(patch_entry)
-        registry[bid] = patch_entry
-    registry[bid]['new_plain_text'] = transfer_text_changes(
-        old_plain, new_plain, registry[bid]['new_plain_text'])
+    # 1. MDX old ↔ XHTML text 문자 정렬 (비공백 우선 → 공백 gap 채우기)
+    src_ns = [(i, c) for i, c in enumerate(old_mdx_plain) if not c.isspace()]
+    tgt_ns = [(i, c) for i, c in enumerate(xhtml_plain) if not c.isspace()]
+    sm = difflib.SequenceMatcher(
+        None, ''.join(c for _, c in src_ns), ''.join(c for _, c in tgt_ns), autojunk=False)
+    char_map: Dict[int, int] = {}
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == 'equal':
+            for k in range(i2 - i1):
+                char_map[src_ns[i1 + k][0]] = tgt_ns[j1 + k][0]
+    # 인접 앵커 사이의 공백 매핑
+    anchors = sorted(char_map.items())
+    bounds = [(-1, -1)] + anchors + [(len(old_mdx_plain), len(xhtml_plain))]
+    for idx in range(len(bounds) - 1):
+        s_lo, t_lo = bounds[idx]
+        s_hi, t_hi = bounds[idx + 1]
+        s_sp = [j for j in range(s_lo + 1, s_hi) if old_mdx_plain[j].isspace()]
+        t_sp = [j for j in range(t_lo + 1, t_hi) if xhtml_plain[j].isspace()]
+        for s, t in zip(s_sp, t_sp):
+            char_map[s] = t
+
+    # 2. MDX old → new 변경 추출
+    matcher = difflib.SequenceMatcher(None, old_mdx_plain, new_mdx_plain, autojunk=False)
+
+    # 3. 변경을 XHTML 위치로 매핑
+    edits = []
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == 'equal':
+            continue
+        replacement = new_mdx_plain[j1:j2] if tag != 'delete' else ''
+        if tag in ('replace', 'delete'):
+            mapped = sorted(char_map[k] for k in range(i1, i2) if k in char_map)
+            if not mapped:
+                continue
+            edits.append((mapped[0], mapped[-1] + 1, replacement))
+        elif tag == 'insert':
+            # 삽입 위치: 앞쪽에서 마지막 매핑된 문자 + 1
+            xpos = 0
+            for k in range(i1 - 1, -1, -1):
+                if k in char_map:
+                    xpos = char_map[k] + 1
+                    break
+            else:
+                for k in range(i1, max(char_map) + 1) if char_map else []:
+                    if k in char_map:
+                        xpos = char_map[k]
+                        break
+            edits.append((xpos, xpos, replacement))
+
+    # 4. 역순 적용
+    chars = list(xhtml_plain)
+    for xstart, xend, repl in reversed(edits):
+        chars[xstart:xend] = list(repl)
+    return ''.join(chars)
 
 
 def _find_best_list_mapping_by_text(
@@ -414,9 +459,7 @@ def build_patches(
             _mark_used(mapping.block_id, mapping)
             continue
         # paired delete+add이지만 clean/table fragment 교체 불가:
-        # anchor 재구성이 필요한 경우만 replace_fragment로 전환
-        # (clean container sidecar는 emit_block이 Confluence inline markup을 재현할 수 없으므로
-        #  transfer_text_changes fallback으로 보존해야 한다)
+        # anchor 재구성, preserved anchor, parameter-bearing container, clean container 순으로 분기
         sidecar_block = xpath_to_sidecar_block.get(mapping.xhtml_xpath)
         if sidecar_block_requires_reconstruction(sidecar_block):
             patches.append(
@@ -430,7 +473,7 @@ def build_patches(
         elif _contains_preserved_anchor_markup(mapping.xhtml_text) and not _is_container_sidecar(sidecar_block):
             # sidecar 없는 preserved anchor → rewrite_on_stored_template (구조 보존)
             # container sidecar가 있으면 rewrite_on_stored_template이 <ac:parameter>를
-            # 오염시키므로 아래 transfer_text_changes fallback으로 보낸다
+            # 오염시키므로 아래 분기로 보낸다
             new_plain = normalize_mdx_to_plain(
                 add_change.new_block.content, add_change.new_block.type)
             preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
@@ -445,7 +488,8 @@ def build_patches(
         elif _is_container_sidecar(sidecar_block) and '<ac:parameter' in mapping.xhtml_text:
             # parameter-bearing container (expand 등): _apply_outer_wrapper_template이
             # body children만 교체하므로 parameter 보존 + body 변경 적용 모두 가능.
-            # transfer_text_changes는 normalize 불일치(\n vs 공백)로 body 변경이 유실됨.
+            # _apply_outer_wrapper_template이 body children만 교체하므로
+            # parameter 보존과 body 변경 적용 모두 가능.
             patches.append(
                 _build_replace_fragment_patch(
                     mapping,
@@ -456,23 +500,22 @@ def build_patches(
             )
         else:
             # clean container sidecar (parameter 없음) / sidecar 없음 + anchor 없음
-            # → text-level 패치로 inline styling 보존
-            old_plain = normalize_mdx_to_plain(
-                del_change.old_block.content, del_change.old_block.type)
-            new_plain = normalize_mdx_to_plain(
-                add_change.new_block.content, add_change.new_block.type)
-            new_xhtml_plain = transfer_text_changes(
-                old_plain, new_plain, mapping.xhtml_plain_text)
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping.xhtml_plain_text,
-                'new_plain_text': new_xhtml_plain,
-            })
+            # → sidecar 기반 reconstruct로 전환 (Phase 5 Axis 1)
+            # clean container: reconstruct_container_fragment이 per-child 재구성으로 inline styling 보존
+            # sidecar 없음: _emit_replacement_fragment만 사용 (Confluence 메타 속성 유실은 수용)
+            patches.append(
+                _build_replace_fragment_patch(
+                    mapping,
+                    add_change.new_block,
+                    sidecar_block=sidecar_block,
+                    mapping_lost_info=mapping_lost_info,
+                )
+            )
         _paired_indices.add(idx)
         _mark_used(mapping.block_id, mapping)
 
     # 같은 부모에 대한 text-level 변경을 순차 집계하는 dict (block_id → patch dict)
-    # preserved anchor list와 containing case 2에서 공용 사용
+    # preserved anchor list와 containing case에서 공용 사용
     _text_change_patches: Dict[str, Dict] = {}
 
     for change in changes:
@@ -586,15 +629,23 @@ def build_patches(
                     )
                 )
                 continue
-            # preserved anchor list: transfer_text_changes fallback (ac:/ri: 구조 보존)
-            # rewrite_on_stored_template은 multi-item list의 caption 텍스트를
-            # 잘못 재배치하므로 사용 불가 (Phase 5 Axis 1 미완 — 별도 PR 필요)
+            # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
+            # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml 전환)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
-                _accumulate_text_change(
-                    patches, _text_change_patches, mapping, _old_plain, _new_plain)
+                bid = mapping.block_id
+                if bid not in _text_change_patches:
+                    patch_entry: Dict[str, Any] = {
+                        'xhtml_xpath': mapping.xhtml_xpath,
+                        'old_plain_text': mapping.xhtml_plain_text,
+                        'new_plain_text': mapping.xhtml_plain_text,
+                    }
+                    patches.append(patch_entry)
+                    _text_change_patches[bid] = patch_entry
+                _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                    _old_plain, _new_plain, _text_change_patches[bid]['new_plain_text'])
                 if has_ol_start_change:
-                    _text_change_patches[mapping.block_id]['ol_start'] = int(_new_start.group(1))
+                    _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 _mark_used(mapping.block_id, mapping)
             continue
 
@@ -616,18 +667,15 @@ def build_patches(
 
         if strategy == 'containing':
             if mapping is not None:
-                _mark_used(mapping.block_id, mapping)
-                # parse_mdx_blocks는 <Callout>을 'paragraph'로 파싱하므로
-                # content 기반으로 full container 여부를 판별한다
-                # TODO(Phase 5): sidecar의 reconstruction.kind == 'container' 활용으로 전환
-                _s = change.new_block.content.lstrip()
-                is_full_container = _s.startswith('<Callout') or _s.startswith('<details')
-                if is_full_container:
-                    # Case 1: full container — anchor 재구성 필요 시만 replace_fragment
-                    sidecar_block = _find_roundtrip_sidecar_block(
-                        change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-                    )
-                    if sidecar_block_requires_reconstruction(sidecar_block):
+                bid = mapping.block_id
+                first_visit = bid not in used_ids
+                _mark_used(bid, mapping)
+                sidecar_block = _find_roundtrip_sidecar_block(
+                    change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+                )
+                if sidecar_block_requires_reconstruction(sidecar_block):
+                    # anchor 재구성이 필요한 경우: 첫 번째 변경만 replace_fragment
+                    if first_visit:
                         patches.append(
                             _build_replace_fragment_patch(
                                 mapping,
@@ -636,12 +684,20 @@ def build_patches(
                                 mapping_lost_info=mapping_lost_info,
                             )
                         )
-                        continue
-                # Case 1 clean container / sidecar miss / Case 2 child-of-parent:
-                # emit_block은 Confluence 전용 inline markup(<span style="color:..."> 등)을
-                # 재현할 수 없으므로 transfer_text_changes로 원본 XHTML 구조를 보존한다
-                _accumulate_text_change(
-                    patches, _text_change_patches, mapping, old_plain, new_plain)
+                else:
+                    # clean container / child-of-parent: text-level 누적
+                    # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml)
+                    if bid not in _text_change_patches:
+                        patch_entry: Dict[str, Any] = {
+                            'xhtml_xpath': mapping.xhtml_xpath,
+                            'old_plain_text': mapping.xhtml_plain_text,
+                            'new_plain_text': mapping.xhtml_plain_text,
+                        }
+                        patches.append(patch_entry)
+                        _text_change_patches[bid] = patch_entry
+                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                        old_plain, new_plain,
+                        _text_change_patches[bid]['new_plain_text'])
             continue
 
         # strategy == 'direct'
