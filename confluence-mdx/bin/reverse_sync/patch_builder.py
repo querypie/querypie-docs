@@ -668,26 +668,36 @@ def build_patches(
         if strategy == 'containing':
             if mapping is not None:
                 bid = mapping.block_id
-                already_patched = bid in used_ids
+                first_visit = bid not in used_ids
                 _mark_used(bid, mapping)
-                if already_patched:
-                    # 같은 parent에 대한 두 번째 이후 변경: skip
-                    # 첫 번째 변경에서 이미 replace_fragment가 생성되었으므로
-                    # 중복 패치를 방지한다
-                    pass
-                else:
-                    # Phase 5 Axis 1: sidecar 기반 reconstruct
-                    sidecar_block = _find_roundtrip_sidecar_block(
-                        change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-                    )
-                    patches.append(
-                        _build_replace_fragment_patch(
-                            mapping,
-                            change.new_block,
-                            sidecar_block=sidecar_block,
-                            mapping_lost_info=mapping_lost_info,
+                sidecar_block = _find_roundtrip_sidecar_block(
+                    change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
+                )
+                if sidecar_block_requires_reconstruction(sidecar_block):
+                    # anchor 재구성이 필요한 경우: 첫 번째 변경만 replace_fragment
+                    if first_visit:
+                        patches.append(
+                            _build_replace_fragment_patch(
+                                mapping,
+                                change.new_block,
+                                sidecar_block=sidecar_block,
+                                mapping_lost_info=mapping_lost_info,
+                            )
                         )
-                    )
+                else:
+                    # clean container / child-of-parent: text-level 누적
+                    # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml)
+                    if bid not in _text_change_patches:
+                        patch_entry: Dict[str, Any] = {
+                            'xhtml_xpath': mapping.xhtml_xpath,
+                            'old_plain_text': mapping.xhtml_plain_text,
+                            'new_plain_text': mapping.xhtml_plain_text,
+                        }
+                        patches.append(patch_entry)
+                        _text_change_patches[bid] = patch_entry
+                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                        old_plain, new_plain,
+                        _text_change_patches[bid]['new_plain_text'])
             continue
 
         # strategy == 'direct'

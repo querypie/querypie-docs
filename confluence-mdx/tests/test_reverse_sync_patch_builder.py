@@ -266,7 +266,7 @@ class TestBuildPatches:
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
     def test_path3_sidecar_child_fail_containing_block(self):
-        """child 해석 실패 → parent containing → replace_fragment 패치."""
+        """child 해석 실패 → parent containing → text-level 패치."""
         parent = _make_mapping(
             'p1', 'parent contains child text here', xpath='div[1]',
             children=['c1'])
@@ -283,15 +283,10 @@ class TestBuildPatches:
 
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'div[1]'
-        assert patches[0]['action'] == 'replace_fragment'
-        assert 'updated text' in patches[0]['new_element_xhtml']
+        assert 'updated text' in patches[0]['new_plain_text']
 
-    def test_containing_child_of_parent_multi_changes_independent(self):
-        """같은 containing parent에 대한 다중 child-of-parent 변경은 개별 패치를 생성한다.
-
-        Phase 5 Axis 1: 누적 메커니즘 제거 — 각 변경이 독립적인 replace_fragment 패치 생성.
-        같은 xpath에 대한 다중 replace_fragment는 마지막 패치만 유효.
-        """
+    def test_containing_child_of_parent_multi_changes_aggregated(self):
+        """같은 containing parent에 대한 다중 child-of-parent 변경은 하나의 patch로 누적돼야 한다."""
         parent = _make_mapping(
             'p1', 'first and second', xpath='p[1]', children=['c1', 'c2'])
         child1 = _make_mapping('c1', 'first', xpath='span[1]')
@@ -317,11 +312,10 @@ class TestBuildPatches:
             xpath_to_mapping,
         )
 
-        # Phase 5 Axis 1: 첫 번째 변경만 replace_fragment 패치 생성
-        # 두 번째는 parent가 이미 used이므로 skip
-        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
-        assert len(replace_patches) == 1
-        assert replace_patches[0]['xhtml_xpath'] == 'p[1]'
+        assert len(patches) == 1
+        assert patches[0]['xhtml_xpath'] == 'p[1]'
+        assert patches[0]['new_plain_text'] == 'FIRST and SECOND'
+        assert patch_xhtml('<p>first and second</p>', patches) == '<p>FIRST and SECOND</p>'
 
     # Path 4: sidecar 미스 → skip (텍스트 포함 검색 폴백 제거됨)
     def test_path4_sidecar_miss_text_search_containing(self):
@@ -840,8 +834,8 @@ class TestBuildPatches:
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
 
-    def test_containing_without_roundtrip_sidecar_emits_replacement(self):
-        """no-sidecar containing은 replace_fragment로 전환된다."""
+    def test_containing_without_roundtrip_sidecar_preserves_wrapper_attrs(self):
+        """no-sidecar containing은 text-level 패치로 wrapper 속성을 보존한다."""
         mapping = _make_mapping(
             'callout-1',
             'Old text.',
@@ -874,9 +868,9 @@ class TestBuildPatches:
         )
         patched = patch_xhtml(mapping.xhtml_text, patches)
 
-        # sidecar 없으므로 macro-id 등 유실 수용, 텍스트 변경은 반영
+        assert 'ac:macro-id="MID"' in patched
+        assert 'ac:schema-version="1"' in patched
         assert 'New text.' in patched
-        assert 'ac:structured-macro' in patched
 
     def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
         """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
