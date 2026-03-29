@@ -364,6 +364,52 @@ class TestReconstructContainerFragment:
         result = reconstruct_container_fragment(new_frag, None)
         assert result == new_frag
 
+    def test_anchor_bearing_adf_container_drops_stale_fallback(self):
+        """Confluence 전용 anchor가 들어가면 fallback은 stale 상태로 남기지 않는다."""
+        new_frag = (
+            '<ac:structured-macro ac:name="note">'
+            '<ac:rich-text-body><p>Updated note.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        image_xhtml = (
+            '<ac:image ac:inline="true">'
+            '<ri:attachment ri:filename="sample.png"/>'
+            '</ac:image>'
+        )
+        block = SidecarBlock(
+            block_index=0,
+            xhtml_xpath='ac:adf-extension[1]',
+            xhtml_fragment=(
+                '<ac:adf-extension><ac:adf-node type="panel">'
+                '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+                '<ac:adf-content><p>Original note.</p></ac:adf-content>'
+                '</ac:adf-node>'
+                '<ac:adf-fallback><div class="panel"><div class="panelContent">'
+                '<p>Original fallback.</p>'
+                '</div></div></ac:adf-fallback>'
+                '</ac:adf-extension>'
+            ),
+            reconstruction={
+                'kind': 'container',
+                'children': [
+                    {
+                        'xpath': 'ac:adf-extension[1]/p[1]',
+                        'fragment': f'<p>Original {image_xhtml} note.</p>',
+                        'plain_text': 'Original note.',
+                        'type': 'paragraph',
+                        'anchors': [{'offset': 9, 'raw_xhtml': image_xhtml}],
+                    }
+                ],
+                'child_xpaths': ['ac:adf-extension[1]/p[1]'],
+            },
+        )
+
+        result = reconstruct_container_fragment(new_frag, block)
+
+        assert '<ac:image' in result
+        assert '<ac:adf-fallback>' not in result
+        assert 'Original fallback.' not in result
+
 
 @pytest.mark.parametrize("page_id", ['544112828', '1454342158', '544379140', 'panels'])
 def test_container_child_fragment_oracle(page_id):
@@ -503,6 +549,47 @@ class TestContainerPipelineEndToEnd:
             for p in text_patches
         )
         assert 'Updated text' in patched
+
+    def test_adf_panel_with_anchor_preserves_adf_wrapper(self):
+        """ADF panel 재구성 시 wrapper를 유지하고 stale fallback을 제거한다."""
+        xhtml = (
+            '<ac:adf-extension><ac:adf-node type="panel">'
+            '<ac:adf-attribute key="panel-type">note</ac:adf-attribute>'
+            '<ac:adf-content>'
+            '<p>Original <ac:image ac:inline="true">'
+            '<ri:attachment ri:filename="sample.png"/>'
+            '</ac:image> note.</p>'
+            '</ac:adf-content>'
+            '</ac:adf-node>'
+            '<ac:adf-fallback><div class="panel"><div class="panelContent">'
+            '<p>Original note.</p>'
+            '</div></div></ac:adf-fallback>'
+            '</ac:adf-extension>'
+        )
+        original_mdx = (
+            'import { Callout } from "nextra/components"\n\n'
+            '<Callout type="important">\n'
+            'Original <img src="/sample.png" alt="sample.png"/> note.\n'
+            '</Callout>\n'
+        )
+        improved_mdx = (
+            'import { Callout } from "nextra/components"\n\n'
+            '<Callout type="important">\n'
+            'Updated <img src="/sample.png" alt="sample.png"/> note.\n'
+            '</Callout>\n'
+        )
+
+        patches, patched = _run_pipeline(xhtml, original_mdx, improved_mdx)
+
+        replace_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert len(replace_patches) == 1
+        assert replace_patches[0]['xhtml_xpath'] == 'ac:adf-extension[1]'
+        assert '<ac:adf-extension>' in patched
+        assert '<ac:structured-macro ac:name="note">' not in patched
+        assert '<ac:image' in patched
+        # ac: markup 포함 시 stale fallback은 제거되어야 한다
+        assert '<ac:adf-fallback>' not in patched
+        assert 'Original note.' not in patched
 
     def test_clean_callout_structure_change_keeps_emitted_list(self):
         """clean container의 구조 변경은 stored paragraph 템플릿으로 덮어쓰면 안 된다."""
