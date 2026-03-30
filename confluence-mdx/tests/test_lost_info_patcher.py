@@ -509,7 +509,7 @@ class TestInsertPatchWithLostInfo:
             }],
         }
 
-        patches = build_patches(
+        patches, _ = build_patches(
             [change], [anchor_block], [anchor_block, new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             alignment, page_lost_info=page_lost_info)

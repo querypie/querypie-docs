@@ -482,7 +482,7 @@ def _run_pipeline(xhtml, original_mdx, improved_mdx):
     ]
     mdx_to_sidecar = build_mdx_to_sidecar_index(entries)
     xpath_to_mapping = build_xpath_to_mapping(mappings)
-    patches = build_patches(
+    patches, _ = build_patches(
         changes, original_blocks, improved_blocks, mappings,
         mdx_to_sidecar, xpath_to_mapping, alignment,
         roundtrip_sidecar=roundtrip_sidecar,
