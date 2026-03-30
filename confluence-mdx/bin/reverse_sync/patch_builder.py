@@ -157,8 +157,23 @@ def _build_inline_fixups(
         return not any(s.startswith(p) for p in (
             '<figure', '<img', '</figure', '<figcaption', '</figcaption'))
 
-    old_items = [l for l in old_lines if _is_content_line(l)]
-    new_items = [l for l in new_lines if _is_content_line(l)]
+    def _is_list_item_start(l: str) -> bool:
+        return bool(re.match(r'^\s*(?:\d+\.|\*|-|\+)\s', l))
+
+    def _merge_continuation_lines(lines: List[str]) -> List[str]:
+        """continuation line(들여쓰기 연속행)을 앞 항목에 병합한다."""
+        merged: List[str] = []
+        for line in lines:
+            if merged and not _is_list_item_start(line):
+                merged[-1] = merged[-1] + ' ' + line.strip()
+            else:
+                merged.append(line)
+        return merged
+
+    content_lines_old = [l for l in old_lines if _is_content_line(l)]
+    content_lines_new = [l for l in new_lines if _is_content_line(l)]
+    old_items = _merge_continuation_lines(content_lines_old)
+    new_items = _merge_continuation_lines(content_lines_new)
 
     if len(old_items) != len(new_items):
         return fixups

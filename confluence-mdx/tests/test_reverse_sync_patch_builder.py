@@ -1849,14 +1849,27 @@ class TestBuildInlineFixups:
         assert len(fixups) == 1
         assert fixups[0]['match_index'] == 1
 
+    def test_continuation_line_merged_into_item(self):
+        """continuation line이 있는 항목에서 old_plain이 전체 <p> 텍스트와 일치해야 한다."""
+        old = '1. **Scopes : text**\n   continuation old'
+        new = '1. **Scopes**: text\n   continuation old'
+        fixups = _build_inline_fixups(old, new)
+        assert len(fixups) == 1
+        assert 'continuation old' in fixups[0]['old_plain']
+
 
 class TestApplyInlineFixups:
     """_apply_inline_fixups 함수 테스트."""
 
     def test_bold_boundary_shrink_applied(self):
-        """bold 범위 축소가 DOM에 올바르게 적용된다."""
+        """bold 범위 축소가 DOM에 올바르게 적용된다.
+
+        실제 흐름에서는 _apply_text_changes가 먼저 실행되어 <p> 텍스트를
+        new_plain("Scopes: text")으로 업데이트한 뒤 _apply_inline_fixups가 호출된다.
+        """
         from bs4 import BeautifulSoup
-        xhtml = '<ul><li><p><strong>Scopes : text</strong></p></li></ul>'
+        # _apply_text_changes 이후 상태: 텍스트가 new_plain으로 업데이트됨
+        xhtml = '<ul><li><p><strong>Scopes: text</strong></p></li></ul>'
         soup = BeautifulSoup(xhtml, 'html.parser')
         fixups = [{
             'old_plain': 'Scopes : text',

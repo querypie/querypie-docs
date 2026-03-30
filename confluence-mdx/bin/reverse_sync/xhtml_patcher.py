@@ -309,7 +309,10 @@ def _apply_inline_fixups(element: Tag, fixups: list):
             continue
         for p_tag in element.find_all('p'):
             p_text = p_tag.get_text().strip()
-            if p_text != new_plain and p_text != old_plain:
+            # _apply_text_changes 이후 <p> 텍스트는 new_plain으로 업데이트되므로
+            # new_plain 기준으로만 매칭한다. old_plain도 허용하면 미변경 앞 항목을
+            # 잘못 수정할 수 있다 (old_plain != new_plain인 경우).
+            if p_text != new_plain:
                 continue
             if current_match != match_index:
                 current_match += 1
