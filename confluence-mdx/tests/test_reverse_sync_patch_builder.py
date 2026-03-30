@@ -1721,3 +1721,12 @@ class TestApplyMdxDiffToXhtml:
         assert '재생 화면을 노출합니다' in result
         assert '첫째 항목 텍스트입니다.' in result
         assert '700MB를 초과하여 세션을' in result
+
+    def test_front_insert_mapped_to_middle_of_xhtml(self):
+        """MDX 선두 삽입(pos 0)이 XHTML 중간 위치에 올바르게 매핑된다."""
+        mdx_old = 'child text here'
+        mdx_new = 'NEW child text here'
+        xhtml = 'parent prefix child text here suffix'
+
+        result = _apply_mdx_diff_to_xhtml(mdx_old, mdx_new, xhtml)
+        assert result == 'parent prefix NEW child text here suffix'
