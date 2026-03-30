@@ -105,6 +105,17 @@ def _normalize_empty_bold(text: str) -> str:
     return '\n'.join(result)
 
 
+def _normalize_empty_list_items(text: str) -> str:
+    """내용 없는 번호 리스트 항목(예: ``    12.``)을 빈 줄로 치환한다.
+
+    Forward converter가 XHTML의 텍스트 없는 ``<li>`` (이미지만 포함)를
+    번호만 있는 항목(``12.``)으로 변환한다. 이 항목은 시각적으로 무의미하므로
+    improved.mdx에서 제거하더라도 XHTML 패치로 ``<li>`` 구조를 삭제할 수 없다.
+    양쪽을 빈 줄로 정규화하여 이 차이를 무시한다.
+    """
+    return re.sub(r'^([ \t]+)\d+\.\s*$', '', text, flags=re.MULTILINE)
+
+
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
@@ -113,6 +124,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     - <br/> 앞 공백 제거 (_normalize_br_space)
     - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
     - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
+    - 내용 없는 번호 리스트 항목 제거 (_normalize_empty_list_items)
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
@@ -120,6 +132,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_br_space(text)
     text = _normalize_link_text_spacing(text)
     text = _normalize_empty_bold(text)
+    text = _normalize_empty_list_items(text)
     text = _normalize_table_cell_padding(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')

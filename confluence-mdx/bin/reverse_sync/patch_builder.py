@@ -139,6 +139,13 @@ def _build_replace_fragment_patch(
 ) -> Dict[str, str]:
     """whole-fragment replacement patch를 생성한다."""
     new_element = _emit_replacement_fragment(new_block)
+    # XHTML 원본이 <p>인데 emitter가 <ol>/<ul>로 변환한 경우:
+    # MDX가 "4. text"로 시작하여 list로 파싱되지만 원본 XHTML은 <p>4. text</p> 구조.
+    # 원본 구조를 유지하기 위해 paragraph로 재변환한다.
+    if (mapping.type == 'paragraph'
+            and new_element.lstrip().startswith(('<ol', '<ul'))):
+        inner = mdx_block_to_inner_xhtml(new_block.content, 'paragraph')
+        new_element = f'<p>{inner}</p>'
     if (sidecar_block_requires_reconstruction(sidecar_block)
             or _is_container_sidecar(sidecar_block)):
         new_element = reconstruct_fragment_with_sidecar(new_element, sidecar_block)
