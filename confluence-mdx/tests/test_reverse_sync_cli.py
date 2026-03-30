@@ -12,9 +12,6 @@ from reverse_sync_cli import (
     _find_blockquotes_missing_blank_line,
 )
 from text_utils import normalize_mdx_to_plain
-from reverse_sync.text_transfer import (
-    align_chars, find_insert_pos, transfer_text_changes,
-)
 from reverse_sync.patch_builder import build_patches
 
 
@@ -649,78 +646,6 @@ def test_verify_ignores_frontmatter_diff(setup_var):
         )
     assert result['status'] == 'pass'
     assert result['verification']['exact_match'] is True
-
-
-
-# --- align_chars tests ---
-
-
-def testalign_chars_same_text():
-    """동일 텍스트는 모든 위치가 매핑된다."""
-    mapping = align_chars('hello', 'hello')
-    assert mapping == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
-
-
-def testalign_chars_extra_spaces_in_source():
-    """source에 여분 공백이 있으면 건너뛴다."""
-    mapping = align_chars('A B', 'AB')
-    assert mapping[0] == 0
-    assert mapping[2] == 1
-    assert 1 not in mapping
-
-
-def testalign_chars_extra_spaces_in_target():
-    """target에 여분 공백이 있으면 건너뛴다."""
-    mapping = align_chars('AB', 'A B')
-    assert mapping[0] == 0
-    assert mapping[1] == 2
-
-
-# --- transfer_text_changes tests ---
-
-
-def testtransfer_text_changes_replace():
-    """MDX 간 텍스트 변경이 XHTML plain text에 올바르게 전이된다."""
-    mdx_old = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
-    mdx_new = '설정 순서 설정 항목 1 Database Access Control 설정하기'
-    xhtml_text = '설정 순서설정 항목1Databased Access Control 설정하기'
-
-    result = transfer_text_changes(mdx_old, mdx_new, xhtml_text)
-    assert result == '설정 순서설정 항목1Database Access Control 설정하기'
-
-
-def testtransfer_text_changes_no_change():
-    """변경이 없으면 XHTML 원문이 그대로 반환된다."""
-    result = transfer_text_changes('Hello world', 'Hello world', 'Helloworld')
-    assert result == 'Helloworld'
-
-
-def testtransfer_text_changes_insert():
-    """insert opcode (공백/문자 삽입)가 올바르게 전이된다."""
-    result = transfer_text_changes(
-        '잠금해제 수행자 정보', '잠금 해제 수행자 정보', '잠금해제 수행자 정보')
-    assert result == '잠금 해제 수행자 정보'
-
-
-def testtransfer_text_changes_preserves_unrelated_text():
-    """변경되지 않은 텍스트의 공백이 보존된다."""
-    result = transfer_text_changes(
-        'Action At : 시점입니다. login ID 입니다.',
-        'Action At : 시점입니다. login ID입니다.',
-        'Action At : 시점입니다.login ID 입니다.')
-    assert 'Action At : ' in result
-    assert 'login ID입니다.' in result
-
-
-def testtransfer_text_changes_multiple_inserts():
-    """여러 insert 변경이 동시에 올바르게 전이된다."""
-    result = transfer_text_changes(
-        '영향 받은 행수. 볼수 있습니다.',
-        '영향을 받은 행 수. 볼 수 있습니다.',
-        '영향 받은 행수.볼수 있습니다.')
-    assert '영향을 받은' in result
-    assert '행 수.' in result
-    assert '볼 수 있습니다.' in result
 
 
 # --- build_patches with table/list blocks ---
