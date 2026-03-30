@@ -1032,7 +1032,7 @@
     '
   expected_status: fail
   failure_type: 11
-  label: Bold 분할 원복 (Client Name)
+  label: Bold 분할을 병합 (Client Name)
   mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/954172219/Running+Queries
   page_id: '954172219'
