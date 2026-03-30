@@ -75,20 +75,6 @@ def _normalize_link_text_spacing(text: str) -> str:
     return re.sub(r'\[ +(.+?) +\]\(', r'[\1](', text)
 
 
-def _normalize_querypie_confluence_internal_links(text: str) -> str:
-    """QueryPie Confluence 내부 링크의 URL 표기 차이를 canonical form으로 정규화한다.
-
-    reverse-sync는 <ac:link>의 page identity를 보존하지만, forward converter는
-    같은 페이지를 `/spaces/<space>/overview` 형식으로 다시 출력할 수 있다.
-    현재는 이 두 URL 형식만 동치로 취급한다.
-    """
-    return re.sub(
-        r'\[([^\]]+)\]\(https://querypie\.atlassian\.net/wiki/spaces/([A-Z0-9]+)/(?:(?:pages/\d+)|overview)[^)]*\)',
-        lambda m: f'[{m.group(1)}](querypie-confluence:{m.group(2)}:{m.group(1)})',
-        text,
-    )
-
-
 def _normalize_empty_bold(text: str) -> str:
     """빈 bold 마커(****)를 정규화한다.
 
@@ -137,7 +123,6 @@ def _apply_minimal_normalizations(text: str) -> str:
     - 인라인 이중 공백 → 단일 공백 (_normalize_consecutive_spaces_in_text)
     - <br/> 앞 공백 제거 (_normalize_br_space)
     - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
-    - QueryPie Confluence 내부 링크 URL canonicalization (_normalize_querypie_confluence_internal_links)
     - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
     - 내용 없는 번호 리스트 항목 제거 (_normalize_empty_list_items)
     - 같은 문단의 문장 경계 줄바꿈 결합 (_normalize_sentence_breaks)
@@ -147,7 +132,6 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_consecutive_spaces_in_text(text)
     text = _normalize_br_space(text)
     text = _normalize_link_text_spacing(text)
-    text = _normalize_querypie_confluence_internal_links(text)
     text = _normalize_empty_bold(text)
     text = _normalize_empty_list_items(text)
     text = _normalize_table_cell_padding(text)
