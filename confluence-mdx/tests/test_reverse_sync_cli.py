@@ -10,6 +10,7 @@ from reverse_sync_cli import (
     _parse_and_diff, _save_diff_yaml, _compile_result,
     _detect_language, _validate_improved_mdx,
     _find_blockquotes_missing_blank_line,
+    PushConflictError, _confirm,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import build_patches
@@ -104,10 +105,10 @@ def test_push_verify_fail_exits(monkeypatch):
 
 
 def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
-    """push 시 verify pass → _do_push 호출."""
+    """push --yes 시 verify pass → _do_push 호출."""
     page_id = 'test-page-001'
     mdx_arg = 'src/content/ko/test/page.mdx'
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--json', mdx_arg])
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--json', mdx_arg])
     monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     # var 디렉토리에 patched xhtml 준비
@@ -116,9 +117,9 @@ def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
     (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>Updated</p>')
 
     pass_result = {'status': 'pass', 'page_id': page_id, 'changes_count': 1}
-    push_result = {'page_id': page_id, 'title': 'Test', 'version': 6, 'url': '/test'}
 
     mock_get_version = MagicMock(return_value={'version': 5, 'title': 'Test'})
+    mock_get_body = MagicMock(return_value='<p>Original</p>')
     mock_update = MagicMock(return_value={
         'title': 'Test', 'version': {'number': 6},
         '_links': {'webui': '/test'},
@@ -128,6 +129,7 @@ def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
          patch('reverse_sync.confluence_client._load_credentials',
                return_value=('e@x.com', 'tok')), \
          patch('reverse_sync.confluence_client.get_page_version', mock_get_version), \
+         patch('reverse_sync.confluence_client.get_page_body', mock_get_body), \
          patch('reverse_sync.confluence_client.update_page_body', mock_update), \
          patch('builtins.print') as mock_print:
         main()
@@ -137,6 +139,11 @@ def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
     call_args = mock_update.call_args
     assert call_args[0][1] == page_id
     assert call_args[1]['xhtml_body'] == '<p>Updated</p>'
+
+    # 백업 파일 생성 확인
+    backup_path = var_dir / 'reverse-sync.backup.xhtml'
+    assert backup_path.exists()
+    assert backup_path.read_text() == '<p>Original</p>'
 
     # 출력 확인: verify 결과 + push 결과 2번 출력
     assert mock_print.call_count == 2
@@ -375,7 +382,7 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False)
     mock_push.assert_not_called()
 
 
@@ -395,7 +402,7 @@ def test_main_push_branch(tmp_path, monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=False, lenient=False)
 
 
 def test_main_push_branch_with_failure(monkeypatch):
@@ -413,7 +420,7 @@ def test_main_push_branch_with_failure(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=False, lenient=False)
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -456,7 +463,7 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False)
 
 
 def test_main_verify_branch_lenient(monkeypatch):
@@ -471,7 +478,7 @@ def test_main_verify_branch_lenient(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, lenient=True)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=True)
 
 
 # --- normalize_mdx_to_plain tests ---
@@ -1197,3 +1204,167 @@ class TestValidateImprovedMdxBlockquote:
     def test_error_message_includes_line_number(self):
         with pytest.raises(ValueError, match="line 1"):
             _validate_improved_mdx("> quote\nparagraph\n", "test.mdx")
+
+
+# ── Push 안전장치 테스트 ──────────────────────────────────────────
+
+class TestPushConflictError:
+    """409 버전 충돌 시 PushConflictError 발생."""
+
+    def test_conflict_raises(self, tmp_path, monkeypatch):
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'conflict-page'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        mock_response = MagicMock()
+        mock_response.status_code = 409
+        http_error = __import__('requests').HTTPError(response=mock_response)
+
+        with patch('reverse_sync.confluence_client._load_credentials',
+                   return_value=('e@x.com', 'tok')), \
+             patch('reverse_sync.confluence_client.get_page_version',
+                   return_value={'version': 5, 'title': 'Test'}), \
+             patch('reverse_sync.confluence_client.get_page_body',
+                   return_value='<p>Old</p>'), \
+             patch('reverse_sync.confluence_client.update_page_body',
+                   side_effect=http_error):
+            with pytest.raises(PushConflictError, match="Confluence에서 변경"):
+                _do_push(page_id)
+
+    def test_non_409_reraises(self, tmp_path, monkeypatch):
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'error-page'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        mock_response = MagicMock()
+        mock_response.status_code = 500
+        http_error = __import__('requests').HTTPError(response=mock_response)
+
+        with patch('reverse_sync.confluence_client._load_credentials',
+                   return_value=('e@x.com', 'tok')), \
+             patch('reverse_sync.confluence_client.get_page_version',
+                   return_value={'version': 5, 'title': 'Test'}), \
+             patch('reverse_sync.confluence_client.get_page_body',
+                   return_value='<p>Old</p>'), \
+             patch('reverse_sync.confluence_client.update_page_body',
+                   side_effect=http_error):
+            with pytest.raises(__import__('requests').HTTPError):
+                _do_push(page_id)
+
+
+class TestPushBackup:
+    """push 시 backup.xhtml 생성 확인."""
+
+    def test_backup_created(self, tmp_path, monkeypatch):
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'backup-page'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        with patch('reverse_sync.confluence_client._load_credentials',
+                   return_value=('e@x.com', 'tok')), \
+             patch('reverse_sync.confluence_client.get_page_version',
+                   return_value={'version': 5, 'title': 'Test'}), \
+             patch('reverse_sync.confluence_client.get_page_body',
+                   return_value='<p>Before Push</p>'), \
+             patch('reverse_sync.confluence_client.update_page_body',
+                   return_value={'title': 'Test', 'version': {'number': 6},
+                                 '_links': {'webui': '/t'}}):
+            result = _do_push(page_id)
+
+        backup = var_dir / 'reverse-sync.backup.xhtml'
+        assert backup.exists()
+        assert backup.read_text() == '<p>Before Push</p>'
+        assert result['version'] == 6
+
+
+class TestPushConfirmPrompt:
+    """확인 프롬프트 동작 테스트."""
+
+    def test_confirm_no_aborts_single(self, monkeypatch):
+        """단일 push 시 확인 거부 → push 안 함."""
+        mdx_arg = 'src/content/ko/test/page.mdx'
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
+        pass_result = {'status': 'pass', 'page_id': 'p1', 'title': 'Test', 'changes_count': 1}
+
+        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+             patch('reverse_sync_cli._confirm', return_value=False), \
+             patch('reverse_sync_cli._do_push') as mock_push, \
+             patch('builtins.print'):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+
+        assert exc_info.value.code == 0
+        mock_push.assert_not_called()
+
+    def test_yes_flag_skips_confirm_single(self, tmp_path, monkeypatch):
+        """--yes 시 확인 프롬프트 없이 push."""
+        page_id = 'yes-page'
+        mdx_arg = 'src/content/ko/test/page.mdx'
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--json', mdx_arg])
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        pass_result = {'status': 'pass', 'page_id': page_id, 'changes_count': 1}
+
+        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+             patch('reverse_sync.confluence_client._load_credentials',
+                   return_value=('e@x.com', 'tok')), \
+             patch('reverse_sync.confluence_client.get_page_version',
+                   return_value={'version': 5, 'title': 'Test'}), \
+             patch('reverse_sync.confluence_client.get_page_body',
+                   return_value='<p>Old</p>'), \
+             patch('reverse_sync.confluence_client.update_page_body',
+                   return_value={'title': 'Test', 'version': {'number': 6},
+                                 '_links': {'webui': '/t'}}), \
+             patch('reverse_sync_cli._confirm') as mock_confirm, \
+             patch('builtins.print'):
+            main()
+
+        mock_confirm.assert_not_called()
+
+    def test_batch_confirm_no_aborts(self, monkeypatch):
+        """배치 push 시 확인 거부 → push 안 함."""
+        files = ['src/content/ko/a.mdx']
+        verify_result = {'status': 'pass', 'page_id': 'p1', 'changes_count': 1}
+
+        with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=files), \
+             patch('reverse_sync_cli._do_verify', return_value=verify_result), \
+             patch('reverse_sync_cli._confirm', return_value=False), \
+             patch('reverse_sync_cli._do_push') as mock_push, \
+             patch('builtins.print'):
+            results = _do_verify_batch('test-branch', push=True, yes=False)
+
+        mock_push.assert_not_called()
+        assert 'push' not in results[0]
+
+    def test_batch_yes_skips_confirm(self, tmp_path, monkeypatch):
+        """배치 push --yes 시 확인 없이 push."""
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'batch-yes-page'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        files = ['src/content/ko/a.mdx']
+        verify_result = {'status': 'pass', 'page_id': page_id, 'changes_count': 1}
+        push_result = {'page_id': page_id, 'title': 'T', 'version': 2, 'url': '/t', 'backup': str(var_dir / 'reverse-sync.backup.xhtml')}
+
+        with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=files), \
+             patch('reverse_sync_cli._do_verify', return_value=verify_result), \
+             patch('reverse_sync_cli._do_push', return_value=push_result) as mock_push, \
+             patch('reverse_sync_cli._confirm') as mock_confirm, \
+             patch('builtins.print'):
+            results = _do_verify_batch('test-branch', push=True, yes=True)
+
+        mock_confirm.assert_not_called()
+        mock_push.assert_called_once()
+        assert results[0]['push']['version'] == 2

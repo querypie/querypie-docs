@@ -42,6 +42,15 @@ def get_page_version(config: ConfluenceConfig, page_id: str) -> Dict[str, Any]:
     }
 
 
+def get_page_body(config: ConfluenceConfig, page_id: str) -> str:
+    """페이지의 현재 storage XHTML body를 조회한다."""
+    url = f"{config.base_url}/rest/api/content/{page_id}?expand=body.storage"
+    resp = requests.get(url, auth=(config.email, config.api_token),
+                        headers={"Accept": "application/json"})
+    resp.raise_for_status()
+    return resp.json()['body']['storage']['value']
+
+
 def update_page_body(config: ConfluenceConfig, page_id: str,
                      title: str, version: int, xhtml_body: str) -> Dict[str, Any]:
     """페이지의 body를 업데이트한다."""
