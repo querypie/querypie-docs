@@ -22,6 +22,7 @@ from reverse_sync.sidecar import (
 )
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
+from mdx_to_storage.inline import convert_inline
 from reverse_sync.reconstructors import (
     sidecar_block_requires_reconstruction,
     reconstruct_fragment_with_sidecar,
@@ -104,6 +105,78 @@ def _is_clean_block(
     return block_type == "paragraph" and not _contains_preserved_anchor_markup(
         mapping.xhtml_text
     )
+
+
+def _extract_inline_markers(line: str) -> List[Tuple[str, str]]:
+    """MDX 라인에서 인라인 마커(bold/italic) 구조를 추출한다."""
+    s = re.sub(r'^\s*\d+\.\s+', '', line.strip())
+    s = re.sub(r'^\s*[-*+]\s+', '', s)
+    result: List[Tuple[str, str]] = []
+    pos = 0
+    for m in re.finditer(r'\*\*(.+?)\*\*', s):
+        if m.start() > pos:
+            result.append(('text', s[pos:m.start()]))
+        result.append(('bold', m.group(1)))
+        pos = m.end()
+    if pos < len(s):
+        result.append(('text', s[pos:]))
+    return result
+
+
+def _has_inline_boundary_change(old_line: str, new_line: str) -> bool:
+    """MDX 리스트 항목의 bold 경계가 변경되었는지 판별한다."""
+    old_markers = _extract_inline_markers(old_line)
+    new_markers = _extract_inline_markers(new_line)
+    old_bolds = [c for t, c in old_markers if t == 'bold']
+    new_bolds = [c for t, c in new_markers if t == 'bold']
+    return old_bolds != new_bolds
+
+
+def _strip_list_item_marker(line: str) -> str:
+    """리스트 항목의 마커를 제거하고 내용만 반환한다."""
+    s = line.strip()
+    s = re.sub(r'^\d+\.\s+', '', s)
+    s = re.sub(r'^[-*+]\s+', '', s)
+    return s
+
+
+def _build_inline_fixups(
+    old_content: str,
+    new_content: str,
+) -> List[Dict[str, str]]:
+    """old/new MDX 리스트 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
+    fixups: List[Dict[str, str]] = []
+    old_lines = old_content.strip().split('\n')
+    new_lines = new_content.strip().split('\n')
+
+    def _is_content_line(l: str) -> bool:
+        s = l.strip()
+        if not s:
+            return False
+        return not any(s.startswith(p) for p in (
+            '<figure', '<img', '</figure', '<figcaption', '</figcaption'))
+
+    old_items = [l for l in old_lines if _is_content_line(l)]
+    new_items = [l for l in new_lines if _is_content_line(l)]
+
+    if len(old_items) != len(new_items):
+        return fixups
+
+    for old_line, new_line in zip(old_items, new_items):
+        if not _has_inline_boundary_change(old_line, new_line):
+            continue
+        old_item_text = _strip_list_item_marker(old_line)
+        new_item_text = _strip_list_item_marker(new_line)
+        old_plain = normalize_mdx_to_plain(old_item_text, 'paragraph')
+        new_plain = normalize_mdx_to_plain(new_item_text, 'paragraph')
+        new_inner = convert_inline(new_item_text)
+        fixups.append({
+            'old_plain': old_plain,
+            'new_plain': new_plain,
+            'new_inner_xhtml': new_inner,
+        })
+
+    return fixups
 
 
 def _extract_html_table_cells(content: str) -> List[str]:
@@ -690,7 +763,11 @@ def build_patches(
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
-            if mapping is not None and has_any_change:
+            # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)
+            inline_fixups = _build_inline_fixups(
+                change.old_block.content, change.new_block.content)
+            has_inline_boundary = bool(inline_fixups)
+            if mapping is not None and (has_any_change or has_inline_boundary):
                 bid = mapping.block_id
                 if bid not in _text_change_patches:
                     patch_entry: Dict[str, Any] = {
@@ -700,10 +777,17 @@ def build_patches(
                     }
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
-                _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                    _old_plain, _new_plain, _text_change_patches[bid]['new_plain_text'])
+                if has_content_change:
+                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                        _old_plain, _new_plain,
+                        _text_change_patches[bid]['new_plain_text'])
                 if has_ol_start_change:
                     _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
+                if has_inline_boundary:
+                    existing = _text_change_patches[bid].get(
+                        'inline_fixups', [])
+                    existing.extend(inline_fixups)
+                    _text_change_patches[bid]['inline_fixups'] = existing
                 _mark_used(mapping.block_id, mapping)
             continue
 

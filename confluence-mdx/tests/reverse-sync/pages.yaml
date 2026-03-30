@@ -840,7 +840,7 @@
   description: 'improved MDX의 **Scopes** bold 범위를 reverse-sync가 보존하지 못하고 문장 전체 bold로 확장함.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
   label: Bold 범위 확장 (Scopes)
   mdx_path: administrator-manual/general/system/api-token.mdx
@@ -1030,7 +1030,7 @@
   description: 'improved MDX의 **Client Name** bold 병합을 reverse-sync가 보존하지 못하고 **Client** **Name** 으로 분리함.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: Bold 분할을 병합 (Client Name)
   mdx_path: administrator-manual/databases/monitoring/running-queries.mdx

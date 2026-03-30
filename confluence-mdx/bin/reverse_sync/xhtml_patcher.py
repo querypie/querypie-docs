@@ -107,6 +107,8 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
                         del element['start']
                 else:
                     element['start'] = str(new_start)
+            if 'inline_fixups' in patch:
+                _apply_inline_fixups(element, patch['inline_fixups'])
 
     result = str(soup)
     result = _restore_cdata(result)
@@ -287,6 +289,31 @@ def _find_child_in_element(parent: Tag, xpath_part: str):
             if count == index:
                 return child
     return None
+
+
+def _apply_inline_fixups(element: Tag, fixups: list):
+    """인라인 마커 경계 변경을 DOM에 적용한다.
+
+    text-level 패치는 인라인 태그(<strong>, <em>) 경계를 변경할 수 없으므로,
+    fixup 리스트의 각 항목에 대해 매칭하는 <p> 요소의 innerHTML을 교체한다.
+    """
+    if not fixups:
+        return
+    for fixup in fixups:
+        old_plain = fixup['old_plain'].strip()
+        new_plain = fixup.get('new_plain', old_plain).strip()
+        new_inner = fixup['new_inner_xhtml']
+        if not old_plain:
+            continue
+        for p_tag in element.find_all('p'):
+            p_text = p_tag.get_text().strip()
+            if p_text != new_plain and p_text != old_plain:
+                continue
+            p_html = str(p_tag)
+            if '<ac:' in p_html or '<ri:' in p_html:
+                continue
+            _replace_inner_html(p_tag, new_inner)
+            break
 
 
 def _apply_text_changes(element: Tag, old_text: str, new_text: str):
