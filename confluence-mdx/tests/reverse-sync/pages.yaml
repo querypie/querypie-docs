@@ -511,12 +511,12 @@
   - General
   - User Management
   - Provisioning
-  description: '**SCIM(System for Cross-domain Identity Management)** 은 형태에서 bold 닫힘 마커 직후 공백 처리가 변경됨.
+  description: 'improved MDX에서 bold 닫힘 마커 직후 공백을 FC 라운드트립에 맞춰 보정함.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
-  label: Bold 뒤 공백 소실 (SCIM(...)** 은)
+  label: Bold 뒤 공백 보정 (SCIM(...)** 은)
   mdx_path: administrator-manual/general/user-management/provisioning.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376236/Provisioning
   page_id: '544376236'
@@ -572,12 +572,12 @@
   - User Management
   - Provisioning
   - '[Okta] Provisioning Integration Guide'
-  description: '**Audience URI (SP Entity ID)**  :, **Attribute Statements (optional)**  : 등 여러 항목에서 이중 공백이 단일 공백으로 변환됨.
+  description: 'improved MDX에서 bold 뒤 이중 공백 및 italic 경계 공백을 FC 라운드트립에 맞춰 보정함.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 13
-  label: Bold 뒤 이중 공백 소실 (Audience URI  :, Attribute Statements  :)
+  label: Bold 뒤 이중 공백 보정 (Audience URI, Attribute Statements)
   mdx_path: administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544376394/Okta
   page_id: '544376394'
@@ -837,13 +837,12 @@
   - General
   - System
   - API Token
-  description: '**Scopes**: API 토큰으로... 형태에서 콜론 이후 텍스트가 Bold 스팬 안으로 흡수되어 **Scopes: API 토큰으로...**로 변환됨. 또한 ''*  Admin > ...''
-    형태의 목록 항목 앞 이중 공백이 단일 공백으로 변환됨.
+  description: 'improved MDX의 **Scopes** bold 범위를 reverse-sync가 보존하지 못하고 문장 전체 bold로 확장함.
 
     '
   expected_status: fail
   failure_type: 13
-  label: 'Bold 경계 침범 — **Scopes**: 텍스트가 Bold 안으로 흡수'
+  label: Bold 범위 확장 (Scopes)
   mdx_path: administrator-manual/general/system/api-token.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/544377652/API+Token
   page_id: '544377652'
@@ -1028,12 +1027,12 @@
   - Databases
   - Monitoring
   - Running Queries
-  description: '분리된 Bold 마크업을 하나로 합친 교정이 원복됨. 예: **Client**   **Name** → **Client Name** (교정) → **Client**   **Name** (원복)
+  description: 'improved MDX의 **Client Name** bold 병합을 reverse-sync가 보존하지 못하고 **Client** **Name** 으로 분리함.
 
     '
   expected_status: fail
   failure_type: 11
-  label: 교정 내용 원복 — Bold 병합 (Client Name)
+  label: Bold 분할을 병합 (Client Name)
   mdx_path: administrator-manual/databases/monitoring/running-queries.mdx
   page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/954172219/Running+Queries
   page_id: '954172219'
