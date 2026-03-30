@@ -244,3 +244,25 @@ def test_strict_mode_still_fails_on_trailing_ws():
         actual_mdx="Paragraph.\n",
     )
     assert result.passed is False
+
+
+def test_minimal_norm_sentence_breaks_passes_for_plain_paragraph():
+    """FC가 같은 문단의 문장을 두 줄로 나눠도 strict 비교에서 허용한다.
+
+    재현: reverse-sync 544382659
+    XHTML patch 결과는 의미상 맞지만 verify.mdx가 split_into_sentences()로
+    한 문단을 두 줄로 분리해 strict verify가 실패했다.
+    """
+    result = verify_roundtrip(
+        expected_mdx=(
+            "관리자는 apiGroups, resources, namespace, name을 통해 사용자가 접근할 수 있는 "
+            "리소스 범위를 지정하고 verb를 통해 어떤 API를 호출할 수 있는지 지정합니다. "
+            "리소스 범위를 잘 설정했더라도 verb 묶음을 제대로 설정하지 않으면 Tool 사용이 어렵습니다.\n"
+        ),
+        actual_mdx=(
+            "관리자는 apiGroups, resources, namespace, name을 통해 사용자가 접근할 수 있는 "
+            "리소스 범위를 지정하고 verb를 통해 어떤 API를 호출할 수 있는지 지정합니다.\n"
+            "리소스 범위를 잘 설정했더라도 verb 묶음을 제대로 설정하지 않으면 Tool 사용이 어렵습니다.\n"
+        ),
+    )
+    assert result.passed is True
