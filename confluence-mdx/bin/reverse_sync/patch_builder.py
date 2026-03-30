@@ -106,6 +106,30 @@ def _is_clean_block(
     )
 
 
+def _extract_html_table_cells(content: str) -> List[str]:
+    """raw HTML table에서 셀 텍스트를 순서대로 추출한다."""
+    cells = re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', content, re.DOTALL | re.IGNORECASE)
+    return [re.sub(r'<[^>]+>', '', c).strip() for c in cells]
+
+
+def _is_safe_cell_text_edit(old_cells: List[str], new_cells: List[str]) -> bool:
+    """셀 내 텍스트 교정만 포함하는 안전한 변경인지 판별한다.
+
+    다음 경우 False를 반환하여 패치를 skip한다:
+    - 셀 수가 다른 경우 (행/열 추가·삭제)
+    - 변경된 셀의 old 내용이 다른 위치에 존재하는 경우 (셀 재배치)
+    """
+    if len(old_cells) != len(new_cells):
+        return False
+    for i, (oc, nc) in enumerate(zip(old_cells, new_cells)):
+        if oc == nc:
+            continue
+        # old cell 내용이 다른 위치의 new cell에 존재하면 재배치로 판단
+        if oc and oc in new_cells[:i] + new_cells[i + 1:]:
+            return False
+    return True
+
+
 def _can_replace_table_fragment(
     change: BlockChange,
     mapping: Optional[BlockMapping],
@@ -117,10 +141,11 @@ def _can_replace_table_fragment(
     if _contains_preserved_anchor_markup(mapping.xhtml_text):
         return False
     block = change.new_block or change.old_block
-    return (
-        (block.type == "html_block" and block.content.lstrip().startswith("<table"))
-        or is_markdown_table(change.old_block.content)
-    )
+    # raw HTML table은 emit_block이 markdown table로 변환하여 구조가 파괴되므로 제외
+    # markdown pipe table만 fragment 교체 허용
+    if block.type == "html_block" and block.content.lstrip().startswith("<table"):
+        return False
+    return is_markdown_table(change.old_block.content)
 
 
 def _emit_replacement_fragment(block: MdxBlock) -> str:
@@ -782,6 +807,25 @@ def build_patches(
                 'action': 'replace_fragment',
                 'xhtml_xpath': mapping.xhtml_xpath,
                 'new_element_xhtml': preserved,
+            })
+            continue
+
+        # raw HTML table은 text-level 패치로 처리하여 XHTML 구조를 보존한다.
+        # mdx_block_to_inner_xhtml 경로는 forward converter가 markdown table로 변환하여
+        # 원본 HTML table 구조가 파괴된다.
+        # text-level 패치는 셀 경계를 인식하지 못하므로, 셀 내 텍스트 교정만 안전하다.
+        # 셀 수 변경이나 셀 간 내용 재배치는 skip하여 silent corruption을 방지한다.
+        if (change.old_block.type == "html_block"
+                and change.old_block.content.lstrip().startswith("<table")):
+            old_cells = _extract_html_table_cells(change.old_block.content)
+            new_cells = _extract_html_table_cells(change.new_block.content)
+            if not _is_safe_cell_text_edit(old_cells, new_cells):
+                continue
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': _apply_mdx_diff_to_xhtml(
+                    old_plain, new_plain, mapping.xhtml_plain_text),
             })
             continue
 

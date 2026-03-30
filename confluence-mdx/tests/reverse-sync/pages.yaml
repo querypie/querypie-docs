@@ -212,7 +212,7 @@
   description: '서비스별 알림 유형을 나열한 대형 테이블(14개 행)이 라운드트립 후 완전히 소실됨. improved.mdx 대비 159줄이 삭제되고 20줄로 축소됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 14
   label: 테이블 전체 소실 (알림 유형 표)
   mdx_path: administrator-manual/general/company-management/alerts.mdx
@@ -242,7 +242,7 @@
   description: '요청 타입별 알림 변수를 나열한 복수의 테이블이 라운드트립 후 완전히 소실됨. DB Access Request, Server Access Request 등 섹션별 대형 테이블 90줄 이상 손실.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 14
   label: 테이블 전체 소실 (알림 변수 표, 복수)
   mdx_path: administrator-manual/general/company-management/alerts/new-request-template-variables-by-request-type.mdx
@@ -1254,7 +1254,7 @@
     삽입됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 15
   label: 테이블 셀 내 빈 줄 추가 (Kubernetes policy YAML 스키마 표)
   mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-yaml-code-syntax-guide.mdx
