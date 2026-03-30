@@ -791,11 +791,13 @@ def build_patches(
         # 원본 HTML table 구조가 파괴된다.
         if (change.old_block.type == "html_block"
                 and change.old_block.content.lstrip().startswith("<table")):
-            # 구조 변경 감지: 행 수가 다르면 text-level 패치로 표현할 수 없으므로
+            # 구조 변경 감지: 행/셀 수가 다르면 text-level 패치로 표현할 수 없으므로
             # skip한다 (silent corruption 방지).
-            old_row_count = change.old_block.content.lower().count('<tr')
-            new_row_count = change.new_block.content.lower().count('<tr')
-            if old_row_count != new_row_count:
+            _old_lc = change.old_block.content.lower()
+            _new_lc = change.new_block.content.lower()
+            if (_old_lc.count('<tr') != _new_lc.count('<tr')
+                    or _old_lc.count('<td') != _new_lc.count('<td')
+                    or _old_lc.count('<th') != _new_lc.count('<th')):
                 continue
             patches.append({
                 'xhtml_xpath': mapping.xhtml_xpath,

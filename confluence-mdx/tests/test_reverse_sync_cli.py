@@ -806,6 +806,50 @@ def testbuild_patches_html_table_structural_change_skipped():
     assert len(patches) == 0
 
 
+def testbuild_patches_html_table_column_change_skipped():
+    """raw HTML table에서 셀 수가 변경되면 패치를 생성하지 않는다."""
+    from reverse_sync.mdx_block_parser import MdxBlock
+    from reverse_sync.block_diff import BlockChange
+    from reverse_sync.mapping_recorder import BlockMapping
+    from reverse_sync.sidecar import (
+        DocumentEnvelope, RoundtripSidecar, SidecarBlock, SidecarEntry,
+    )
+
+    old_table = '<table>\n<tr><td>A</td></tr>\n</table>\n'
+    new_table = '<table>\n<tr><td>A</td><td>B</td></tr>\n</table>\n'
+
+    original_blocks = [MdxBlock('html_block', old_table, 1, 3)]
+    improved_blocks = [MdxBlock('html_block', new_table, 1, 3)]
+    changes = [
+        BlockChange(index=0, change_type='modified',
+                    old_block=original_blocks[0],
+                    new_block=improved_blocks[0]),
+    ]
+    mappings = [
+        BlockMapping(block_id='table-1', type='table', xhtml_xpath='table[1]',
+                     xhtml_text='<table><tr><td>A</td></tr></table>',
+                     xhtml_plain_text='A',
+                     xhtml_element_index=0),
+    ]
+    mdx_to_sidecar = {
+        0: SidecarEntry(xhtml_xpath='table[1]', xhtml_type='table', mdx_blocks=[0]),
+    }
+    roundtrip_sidecar = RoundtripSidecar(
+        page_id='test',
+        blocks=[SidecarBlock(0, 'table[1]', '<table><tr><td>A</td></tr></table>', 'hash1', (1, 3))],
+        separators=[],
+        document_envelope=DocumentEnvelope(prefix='', suffix='\n'),
+    )
+    xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
+                            mdx_to_sidecar, xpath_to_mapping,
+                            roundtrip_sidecar=roundtrip_sidecar)
+
+    # 구조 변경(열 추가)이므로 패치가 생성되지 않아야 한다
+    assert len(patches) == 0
+
+
 # --- sidecar 전용 매칭 코드 경로 테스트 ---
 
 
