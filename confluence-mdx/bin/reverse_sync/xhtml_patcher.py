@@ -303,15 +303,20 @@ def _apply_inline_fixups(element: Tag, fixups: list):
         old_plain = fixup['old_plain'].strip()
         new_plain = fixup.get('new_plain', old_plain).strip()
         new_inner = fixup['new_inner_xhtml']
+        match_index = int(fixup.get('match_index', 0))
+        current_match = 0
         if not old_plain:
             continue
         for p_tag in element.find_all('p'):
             p_text = p_tag.get_text().strip()
             if p_text != new_plain and p_text != old_plain:
                 continue
+            if current_match != match_index:
+                current_match += 1
+                continue
             p_html = str(p_tag)
             if '<ac:' in p_html or '<ri:' in p_html:
-                continue
+                break
             _replace_inner_html(p_tag, new_inner)
             break
 

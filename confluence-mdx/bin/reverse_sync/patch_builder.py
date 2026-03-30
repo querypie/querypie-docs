@@ -108,7 +108,7 @@ def _is_clean_block(
 
 
 def _extract_inline_markers(line: str) -> List[Tuple[str, str]]:
-    """MDX 라인에서 인라인 마커(bold/italic) 구조를 추출한다."""
+    """MDX 라인에서 인라인 마커(bold) 구조를 추출한다."""
     s = re.sub(r'^\s*\d+\.\s+', '', line.strip())
     s = re.sub(r'^\s*[-*+]\s+', '', s)
     result: List[Tuple[str, str]] = []
@@ -143,11 +143,12 @@ def _strip_list_item_marker(line: str) -> str:
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
-) -> List[Dict[str, str]]:
+) -> List[Dict[str, Any]]:
     """old/new MDX 리스트 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
-    fixups: List[Dict[str, str]] = []
+    fixups: List[Dict[str, Any]] = []
     old_lines = old_content.strip().split('\n')
     new_lines = new_content.strip().split('\n')
+    new_plain_occurrences: Dict[str, int] = {}
 
     def _is_content_line(l: str) -> bool:
         s = l.strip()
@@ -163,17 +164,20 @@ def _build_inline_fixups(
         return fixups
 
     for old_line, new_line in zip(old_items, new_items):
-        if not _has_inline_boundary_change(old_line, new_line):
-            continue
         old_item_text = _strip_list_item_marker(old_line)
         new_item_text = _strip_list_item_marker(new_line)
         old_plain = normalize_mdx_to_plain(old_item_text, 'paragraph')
         new_plain = normalize_mdx_to_plain(new_item_text, 'paragraph')
+        match_index = new_plain_occurrences.get(new_plain, 0)
+        new_plain_occurrences[new_plain] = match_index + 1
+        if not _has_inline_boundary_change(old_line, new_line):
+            continue
         new_inner = convert_inline(new_item_text)
         fixups.append({
             'old_plain': old_plain,
             'new_plain': new_plain,
             'new_inner_xhtml': new_inner,
+            'match_index': match_index,
         })
 
     return fixups

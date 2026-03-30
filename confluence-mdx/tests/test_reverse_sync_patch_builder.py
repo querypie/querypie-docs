@@ -1842,6 +1842,13 @@ class TestBuildInlineFixups:
         fixups = _build_inline_fixups(old, new)
         assert fixups == []
 
+    def test_duplicate_plain_text_records_match_index(self):
+        old = '1. **A** B\n2. **A** B'
+        new = '1. **A** B\n2. **A B**'
+        fixups = _build_inline_fixups(old, new)
+        assert len(fixups) == 1
+        assert fixups[0]['match_index'] == 1
+
 
 class TestApplyInlineFixups:
     """_apply_inline_fixups 함수 테스트."""
@@ -1889,8 +1896,8 @@ class TestApplyInlineFixups:
         _apply_inline_fixups(soup, fixups)
         assert str(soup) == original  # 변경 없음
 
-    def test_duplicate_text_matches_first(self):
-        """동일 텍스트 <p>가 여러 개일 때 첫 번째만 적용한다."""
+    def test_duplicate_text_uses_match_index(self):
+        """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
         from bs4 import BeautifulSoup
         xhtml = '<ul><li><p><strong>A</strong> B</p></li><li><p><strong>A</strong> B</p></li></ul>'
         soup = BeautifulSoup(xhtml, 'html.parser')
@@ -1898,9 +1905,9 @@ class TestApplyInlineFixups:
             'old_plain': 'A B',
             'new_plain': 'A B',
             'new_inner_xhtml': '<strong>A B</strong>',
+            'match_index': 1,
         }]
         _apply_inline_fixups(soup, fixups)
         ps = soup.find_all('p')
-        # 첫 번째만 변경, 두 번째는 원본 유지
-        assert '<strong>A B</strong>' in str(ps[0])
-        assert '<strong>A</strong> B' in str(ps[1])
+        assert '<strong>A</strong> B' in str(ps[0])
+        assert '<strong>A B</strong>' in str(ps[1])
