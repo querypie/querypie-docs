@@ -98,7 +98,10 @@ def _is_clean_block(
         if recon is None:
             return False
         if recon.get("kind") == "paragraph":
-            return len(recon.get("anchors", [])) == 0
+            return (
+                len(recon.get("anchors", [])) == 0
+                and not _contains_preserved_anchor_markup(mapping.xhtml_text)
+            )
         return False
 
     return block_type == "paragraph" and not _contains_preserved_anchor_markup(
@@ -144,6 +147,10 @@ def _can_replace_table_fragment(
     # raw HTML table은 emit_block이 markdown table로 변환하여 구조가 파괴되므로 제외
     # markdown pipe table만 fragment 교체 허용
     if block.type == "html_block" and block.content.lstrip().startswith("<table"):
+        return False
+    old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, "table"))
+    new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, "table"))
+    if old_plain == new_plain:
         return False
     return is_markdown_table(change.old_block.content)
 
@@ -806,7 +813,10 @@ def build_patches(
         # 원본 XHTML 구조를 template으로 사용하여 텍스트만 갱신
         if ('<ac:link' in mapping.xhtml_text
                 or '<ri:attachment' in mapping.xhtml_text):
-            preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
+            template_fragment = mapping.xhtml_text
+            if mapping.type == 'paragraph' and not template_fragment.lstrip().startswith('<p'):
+                template_fragment = f'<p>{template_fragment}</p>'
+            preserved = rewrite_on_stored_template(template_fragment, new_plain)
             block_lost = mapping_lost_info.get(mapping.block_id, {})
             if block_lost:
                 preserved = apply_lost_info(preserved, block_lost)

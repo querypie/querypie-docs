@@ -1487,7 +1487,7 @@
   description: '조사 붙여쓰기 교정이 XHTML 원본 기준으로 되돌아감. 예: User 의 → User의 (교정) → User 의 (원복)
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 11
   label: 교정 내용 원복 — 조사 띄어쓰기 (User 의→User의)
   mdx_path: installation/system-architecture-and-network-access-control.mdx

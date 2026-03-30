@@ -477,6 +477,62 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert '<ac:link' in patches[0]['new_element_xhtml']
         assert '<a href=' not in patches[0]['new_element_xhtml']
+        assert patches[0]['new_element_xhtml'].startswith('<p>')
+
+    def test_roundtrip_sidecar_paragraph_raw_xhtml_text_wraps_before_template_rewrite(self):
+        """record_mapping paragraph의 raw xhtml_text도 wrapper를 복원해 rewrite한다.
+
+        재현: reverse-sync 862093313 실제 데이터는 paragraph mapping.xhtml_text가
+        '<p>...</p>'가 아니라 inner fragment 형태라, 그대로 template rewrite에 넣으면
+        문단 전체가 <code> 안으로 빨려 들어가는 malformed XHTML이 만들어진다.
+        """
+        m1 = _make_mapping(
+            'm1',
+            'QueryPie User Agent 는 ... Supported 3rd Party Tools (KO)',
+            xpath='p[1]',
+        )
+        m1.xhtml_text = (
+            'QueryPie User Agent 는 User PC 에서 작동하는 대부분의 Database Client Application, '
+            'SSH Client Application 을 지원합니다. (이후 <code>3rd Party Tool</code> 이라고 표기합니다.) '
+            '구체적인 사례는 이 문서를 참조하세요: '
+            '<ac:link ac:card-appearance="inline">'
+            '<ri:page ri:content-title="Supported 3rd Party Tools (KO)" '
+            'ri:space-key="QCP" ri:version-at-save="28"></ri:page>'
+            '<ac:link-body>Supported 3rd Party Tools (KO)</ac:link-body>'
+            '</ac:link>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        change = _make_change(
+            0,
+            'QueryPie User Agent 는 User PC 에서 작동하는 대부분의 Database Client Application, SSH Client Application 을 지원합니다.\n(이후 `3rd Party Tool` 이라고 표기합니다.) 구체적인 사례는 이 문서를 참조하세요: [Supported 3rd Party Tools (KO)](https://querypie.atlassian.net/wiki/spaces/QCP/overview)',
+            'QueryPie User Agent 는 User PC 에서 작동하는 대부분의 Database Client Application, SSH Client Application 을 지원합니다.\n(이후 `3rd Party Tool` 이라고 표기합니다.) 구체적인 사례는 이 문서를 참조하세요: [Supported 3rd Party Tools (KO)](https://querypie.atlassian.net/wiki/spaces/QCP/pages/919404587)',
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'p[1]',
+                m1.xhtml_text,
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+                reconstruction={
+                    'kind': 'paragraph',
+                    'old_plain_text': normalize_mdx_to_plain(change.old_block.content, 'paragraph'),
+                    'anchors': [],
+                },
+            )
+        ])
+
+        patches, _ = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['new_element_xhtml'].startswith('<p>')
+        assert '<code>3rd Party Tool</code>' in patches[0]['new_element_xhtml']
+        assert '<ac:link' in patches[0]['new_element_xhtml']
 
     def test_roundtrip_sidecar_paragraph_with_anchors_stays_modify(self):
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')

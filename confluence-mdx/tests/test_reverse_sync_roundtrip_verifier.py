@@ -266,3 +266,46 @@ def test_minimal_norm_sentence_breaks_passes_for_plain_paragraph():
         ),
     )
     assert result.passed is True
+
+
+def test_minimal_norm_internal_confluence_link_variants_pass():
+    """같은 QueryPie Confluence 페이지에 대한 URL 표기 차이를 strict 비교에서 허용한다.
+
+    재현: reverse-sync 862093313
+    reverse-sync는 <ac:link>의 Confluence page identity를 보존하지만,
+    forward convert 결과는 `/spaces/<space>/overview` 형식으로 canonicalize된다.
+    """
+    result = verify_roundtrip(
+        expected_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.) "
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/pages/919404587)\n"
+        ),
+        actual_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.) "
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/overview)\n"
+        ),
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_sentence_breaks_passes_after_closing_paren():
+    """문장이 `.)`로 끝나도 다음 일반 텍스트 줄과 결합한다."""
+    result = verify_roundtrip(
+        expected_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.) "
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/overview)\n"
+        ),
+        actual_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.)\n"
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/overview)\n"
+        ),
+    )
+    assert result.passed is True
