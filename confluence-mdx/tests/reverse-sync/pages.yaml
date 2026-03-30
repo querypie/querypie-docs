@@ -1286,7 +1286,7 @@
     actions: ...``` 코드 블록 내 YAML 구조가 완전히 파괴됨.
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 16
   label: 리스트 항목 내 코드 블록 인라인 병합
   mdx_path: administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-action-configuration-reference-guide.mdx

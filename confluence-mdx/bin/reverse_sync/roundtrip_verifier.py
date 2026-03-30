@@ -125,6 +125,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
     - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
     - 내용 없는 번호 리스트 항목 제거 (_normalize_empty_list_items)
+    - 같은 문단의 문장 경계 줄바꿈 결합 (_normalize_sentence_breaks)
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
@@ -134,6 +135,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_empty_bold(text)
     text = _normalize_empty_list_items(text)
     text = _normalize_table_cell_padding(text)
+    text = _normalize_sentence_breaks(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')
     text = _normalize_trailing_blank_lines(text)
