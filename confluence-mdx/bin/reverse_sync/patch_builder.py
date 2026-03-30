@@ -380,17 +380,32 @@ def build_patches(
     changes: List[BlockChange],
     original_blocks: List[MdxBlock],
     improved_blocks: List[MdxBlock],
-    mappings: List[BlockMapping],
+    mappings: Optional[List[BlockMapping]] = None,
     mdx_to_sidecar: Optional[Dict[int, SidecarEntry]] = None,
     xpath_to_mapping: Optional[Dict[str, 'BlockMapping']] = None,
     alignment: Optional[Dict[int, int]] = None,
     page_lost_info: Optional[dict] = None,
     roundtrip_sidecar: Optional[RoundtripSidecar] = None,
-) -> List[Dict[str, str]]:
+    page_xhtml: Optional[str] = None,
+) -> Tuple[List[Dict[str, str]], List[BlockMapping]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
+    page_xhtml이 제공되고 mappings가 None이면 내부에서 record_mapping()을 호출한다.
     mdx_to_sidecar=None (기본값)이면 roundtrip_sidecar v3에서 자동으로 구축한다.
+
+    Returns:
+        (patches, mappings) 튜플.
     """
+    # Guard: mappings와 page_xhtml 모두 없으면 매핑을 구성할 수 없다
+    if mappings is None and page_xhtml is None:
+        raise ValueError("mappings or page_xhtml is required")
+
+    # Axis 2: page_xhtml가 제공되면 내부에서 mappings를 생성한다
+    if mappings is None and page_xhtml is not None:
+        mappings = record_mapping(page_xhtml)
+    if mappings is None:
+        mappings = []
+    xpath_to_mapping = xpath_to_mapping or {m.xhtml_xpath: m for m in mappings}
     # v3 sidecar 기반 경로: mdx_to_sidecar가 없으면 roundtrip_sidecar에서 구축
     if mdx_to_sidecar is None:
         if roundtrip_sidecar is not None:
@@ -398,7 +413,12 @@ def build_patches(
                 roundtrip_sidecar, original_blocks)
         else:
             mdx_to_sidecar = {}
-    xpath_to_mapping = xpath_to_mapping or {}
+    # page_xhtml만으로는 변경을 매핑할 수 없다: sidecar가 필요하다
+    if page_xhtml is not None and not mdx_to_sidecar and roundtrip_sidecar is None:
+        raise ValueError(
+            "page_xhtml requires roundtrip_sidecar or mdx_to_sidecar "
+            "to map changes to XHTML elements")
+
     patches = []
     xpath_to_sidecar_block: Dict[str, SidecarBlock] = {}
     if roundtrip_sidecar is not None:
@@ -778,7 +798,7 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
-    return patches
+    return patches, mappings
 
 
 def _build_delete_patch(

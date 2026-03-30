@@ -341,31 +341,32 @@ def run_verify(
     _save_diff_yaml(var_dir, page_id, now,
                     original_src.descriptor, improved_src.descriptor, changes)
 
-    # Step 3: 원본 매핑 생성 → mapping.original.yaml 저장
-    original_mappings = record_mapping(xhtml)
-    original_mapping_data = {
-        'page_id': page_id, 'created_at': now, 'source_xhtml': 'page.xhtml',
-        'blocks': [m.__dict__ for m in original_mappings],
-    }
-    (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
-        yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
-
     # Step 3.5: Roundtrip sidecar v3 구축 — mapping.yaml 재생성 없이 v3 경로로 동작
     from reverse_sync.sidecar import (
-        build_xpath_to_mapping,
         build_sidecar,
         load_page_lost_info,
     )
     # forward converter가 생성한 mapping.yaml에서 lost_info만 로드
     page_lost_info = load_page_lost_info(str(var_dir / 'mapping.yaml'))
     roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id=page_id)
-    xpath_to_mapping = build_xpath_to_mapping(original_mappings)
 
-    # Step 4: XHTML 패치 → patched.xhtml 저장 (mdx_to_sidecar=None → v3 자동 구축)
-    patches = build_patches(changes, original_blocks, improved_blocks,
-                            original_mappings, None, xpath_to_mapping,
-                            alignment, page_lost_info=page_lost_info,
-                            roundtrip_sidecar=roundtrip_sidecar)
+    # Step 3+4: XHTML 패치 → patched.xhtml 저장
+    # build_patches()가 내부에서 record_mapping()을 호출하여 mappings를 생성한다
+    patches, original_mappings = build_patches(
+        changes, original_blocks, improved_blocks,
+        page_xhtml=xhtml,
+        alignment=alignment,
+        page_lost_info=page_lost_info,
+        roundtrip_sidecar=roundtrip_sidecar,
+    )
+
+    # mapping.original.yaml artifact 저장
+    original_mapping_data = {
+        'page_id': page_id, 'created_at': now, 'source_xhtml': 'page.xhtml',
+        'blocks': [m.__dict__ for m in original_mappings],
+    }
+    (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
+        yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
     patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 

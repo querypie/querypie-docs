@@ -559,7 +559,7 @@ def testbuild_patches_index_mapping():
     }
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
     assert len(patches) == 1
@@ -593,7 +593,7 @@ def testbuild_patches_skips_non_content():
                      xhtml_element_index=0),
     ]
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             {}, {})
     assert len(patches) == 0
 
@@ -747,7 +747,7 @@ def testbuild_patches_table_block():
     )
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping,
                             roundtrip_sidecar=roundtrip_sidecar)
 
@@ -801,7 +801,7 @@ def testbuild_patches_child_resolved():
     }
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
     # containing 전략 → text-level 패치 (sidecar 없으므로 원본 XHTML 구조 보존)
@@ -850,7 +850,7 @@ def testbuild_patches_child_fallback_to_parent_containing():
     }
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
     assert len(patches) == 1
@@ -889,7 +889,7 @@ def testbuild_patches_unmapped_block_skipped():
     }
     xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-    patches = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping)
 
     assert len(patches) == 0
