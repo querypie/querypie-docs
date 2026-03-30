@@ -134,6 +134,16 @@ class TestNormalizeMdxToPlain:
         result = normalize_mdx_to_plain('1. first\n2. second', 'list')
         assert result == 'first\nsecond'
 
+    def test_version_number_not_stripped_as_list_marker(self):
+        """1.2 같은 버전 번호가 리스트 마커로 오인되지 않아야 한다."""
+        result = normalize_mdx_to_plain('1.2 버전에서 수정되었습니다.', 'paragraph')
+        assert '1.2' in result
+
+    def test_empty_list_item_stripped(self):
+        """빈 리스트 항목(12.)의 마커가 제거되어야 한다."""
+        result = normalize_mdx_to_plain('12.', 'list')
+        assert result == ''
+
     def test_table_row_extracts_cells(self):
         content = '| col1 | col2 |\n| --- | --- |\n| a | b |'
         result = normalize_mdx_to_plain(content, 'paragraph')

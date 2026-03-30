@@ -11,7 +11,7 @@ from .link_resolver import LinkResolver
 from .parser import Block, HEADING_PATTERN
 
 
-_ORDERED_LIST_PATTERN = re.compile(r"^(\d+)\.\s*(.*)$")
+_ORDERED_LIST_PATTERN = re.compile(r"^(\d+)\.(?:\s+(.*)|\s*$)")
 _UNORDERED_LIST_PATTERN = re.compile(r"^[-*+]\s+(.*)$")
 _HEADING_LINE_PATTERN = HEADING_PATTERN
 _CALLOUT_TYPE_TO_MACRO = {
@@ -191,7 +191,7 @@ def _parse_list_items(content: str) -> list[_ListNode]:
         ordered_match = _ORDERED_LIST_PATTERN.match(stripped)
         if ordered_match:
             marker_num = int(ordered_match.group(1))
-            items.append(_ListNode(True, ordered_match.group(2), depth, start=marker_num))
+            items.append(_ListNode(True, ordered_match.group(2) or "", depth, start=marker_num))
             continue
 
         unordered_match = _UNORDERED_LIST_PATTERN.match(stripped)

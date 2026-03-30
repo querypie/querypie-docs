@@ -136,7 +136,7 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         if s.startswith('|') and s.endswith('|'):
             cells = [c.strip() for c in s.split('|')[1:-1]]
             s = ' '.join(c for c in cells if c)
-        s = re.sub(r'^\d+\.\s*', '', s)
+        s = re.sub(r'^\d+\.(?:\s+|$)', '', s)
         s = re.sub(r'^[-*+]\s+', '', s)
         s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
