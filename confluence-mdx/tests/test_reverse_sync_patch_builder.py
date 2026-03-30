@@ -19,11 +19,9 @@ from reverse_sync.patch_builder import (
     _find_roundtrip_sidecar_block,
     _resolve_mapping_for_change,
     build_patches,
-)
-from reverse_sync.xhtml_patcher import patch_xhtml
-from reverse_sync.table_patcher import (
     is_markdown_table,
 )
+from reverse_sync.xhtml_patcher import patch_xhtml
 
 # ── 헬퍼 팩토리 ──
 

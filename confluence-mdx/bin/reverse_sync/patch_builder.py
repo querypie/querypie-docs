@@ -27,9 +27,15 @@ from reverse_sync.reconstructors import (
     reconstruct_fragment_with_sidecar,
     rewrite_on_stored_template,
 )
-from reverse_sync.table_patcher import (
-    is_markdown_table,
-)
+
+
+def is_markdown_table(content: str) -> bool:
+    """Content가 Markdown table 형식인지 판별한다."""
+    lines = [l.strip() for l in content.strip().split('\n') if l.strip()]
+    if len(lines) < 2:
+        return False
+    pipe_lines = sum(1 for l in lines if l.startswith('|') and l.endswith('|'))
+    return pipe_lines >= 2
 
 
 _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
