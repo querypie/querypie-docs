@@ -16,12 +16,15 @@ from reverse_sync.sidecar import (
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _apply_mdx_diff_to_xhtml,
+    _build_inline_fixups,
+    _extract_inline_markers,
     _find_roundtrip_sidecar_block,
+    _has_inline_boundary_change,
     _resolve_mapping_for_change,
     build_patches,
     is_markdown_table,
 )
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patcher import _apply_inline_fixups, patch_xhtml
 
 # ── 헬퍼 팩토리 ──
 
@@ -1754,3 +1757,170 @@ def test_build_patches_page_xhtml_without_sidecar_raises():
             [change], [change.old_block], [change.new_block],
             page_xhtml='<p>old text</p>',
         )
+
+
+# ── inline fixup 유닛 테스트 ──
+
+
+class TestExtractInlineMarkers:
+    """_extract_inline_markers 함수 테스트."""
+
+    def test_bold_extraction(self):
+        markers = _extract_inline_markers('3. **Scopes**: API 토큰')
+        bolds = [c for t, c in markers if t == 'bold']
+        assert bolds == ['Scopes']
+
+    def test_multiple_bolds(self):
+        markers = _extract_inline_markers('1. **Client** **Name** : text')
+        bolds = [c for t, c in markers if t == 'bold']
+        assert bolds == ['Client', 'Name']
+
+    def test_no_bold(self):
+        markers = _extract_inline_markers('1. plain text only')
+        bolds = [c for t, c in markers if t == 'bold']
+        assert bolds == []
+
+    def test_bold_with_surrounding_text(self):
+        markers = _extract_inline_markers('- **Name** : value')
+        assert markers[0] == ('bold', 'Name')
+        assert markers[1][0] == 'text'
+
+
+class TestHasInlineBoundaryChange:
+    """_has_inline_boundary_change 함수 테스트."""
+
+    def test_bold_boundary_shrink(self):
+        """bold 범위가 축소되면 True."""
+        old = '3. **Scopes : API 토큰으로 선택합니다.**'
+        new = '3. **Scopes**: API 토큰으로 선택합니다.'
+        assert _has_inline_boundary_change(old, new) is True
+
+    def test_bold_merge(self):
+        """두 bold가 하나로 병합되면 True."""
+        old = '17. **Client** **Name** : text'
+        new = '17. **Client Name** : text'
+        assert _has_inline_boundary_change(old, new) is True
+
+    def test_text_only_change(self):
+        """bold 경계가 같고 텍스트만 바뀌면 False."""
+        old = '1. **Name** : old value'
+        new = '1. **Name** : new value'
+        assert _has_inline_boundary_change(old, new) is False
+
+    def test_no_bold_either(self):
+        """bold가 없는 항목은 False."""
+        old = '1. plain old'
+        new = '1. plain new'
+        assert _has_inline_boundary_change(old, new) is False
+
+
+class TestBuildInlineFixups:
+    """_build_inline_fixups 함수 테스트."""
+
+    def test_bold_boundary_generates_fixup(self):
+        old = '3. **Scopes : text**\n4. other'
+        new = '3. **Scopes**: text\n4. other'
+        fixups = _build_inline_fixups(old, new)
+        assert len(fixups) == 1
+        assert 'Scopes' in fixups[0]['new_inner_xhtml']
+
+    def test_no_change_no_fixup(self):
+        old = '1. **Name** : value'
+        new = '1. **Name** : value'
+        fixups = _build_inline_fixups(old, new)
+        assert fixups == []
+
+    def test_text_only_change_no_fixup(self):
+        old = '1. **Name** : old'
+        new = '1. **Name** : new'
+        fixups = _build_inline_fixups(old, new)
+        assert fixups == []
+
+    def test_line_count_mismatch_no_fixup(self):
+        old = '1. first\n2. second'
+        new = '1. first\n2. second\n3. third'
+        fixups = _build_inline_fixups(old, new)
+        assert fixups == []
+
+    def test_duplicate_plain_text_records_match_index(self):
+        old = '1. **A** B\n2. **A** B'
+        new = '1. **A** B\n2. **A B**'
+        fixups = _build_inline_fixups(old, new)
+        assert len(fixups) == 1
+        assert fixups[0]['match_index'] == 1
+
+    def test_continuation_line_merged_into_item(self):
+        """continuation line이 있는 항목에서 old_plain이 전체 <p> 텍스트와 일치해야 한다."""
+        old = '1. **Scopes : text**\n   continuation old'
+        new = '1. **Scopes**: text\n   continuation old'
+        fixups = _build_inline_fixups(old, new)
+        assert len(fixups) == 1
+        assert 'continuation old' in fixups[0]['old_plain']
+
+
+class TestApplyInlineFixups:
+    """_apply_inline_fixups 함수 테스트."""
+
+    def test_bold_boundary_shrink_applied(self):
+        """bold 범위 축소가 DOM에 올바르게 적용된다.
+
+        실제 흐름에서는 _apply_text_changes가 먼저 실행되어 <p> 텍스트를
+        new_plain("Scopes: text")으로 업데이트한 뒤 _apply_inline_fixups가 호출된다.
+        """
+        from bs4 import BeautifulSoup
+        # _apply_text_changes 이후 상태: 텍스트가 new_plain으로 업데이트됨
+        xhtml = '<ul><li><p><strong>Scopes: text</strong></p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'Scopes : text',
+            'new_plain': 'Scopes: text',
+            'new_inner_xhtml': '<strong>Scopes</strong>: text',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        result = str(soup)
+        assert '<strong>Scopes</strong>' in result
+        assert ': text' in result
+
+    def test_bold_merge_applied(self):
+        """두 bold 병합이 DOM에 올바르게 적용된다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><strong>Client</strong> <strong>Name</strong> : text</p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'Client Name : text',
+            'new_plain': 'Client Name : text',
+            'new_inner_xhtml': '<strong>Client Name</strong> : text',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        result = str(soup)
+        assert '<strong>Client Name</strong>' in result
+
+    def test_preserved_anchor_skipped(self):
+        """ac:/ri: 마크업이 있는 <p>는 fixup을 건너뛴다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><ac:link>link</ac:link> <strong>Name</strong></p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        original = str(soup)
+        fixups = [{
+            'old_plain': 'link Name',
+            'new_plain': 'link Name',
+            'new_inner_xhtml': '<strong>link Name</strong>',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        assert str(soup) == original  # 변경 없음
+
+    def test_duplicate_text_uses_match_index(self):
+        """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><strong>A</strong> B</p></li><li><p><strong>A</strong> B</p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'A B',
+            'new_plain': 'A B',
+            'new_inner_xhtml': '<strong>A B</strong>',
+            'match_index': 1,
+        }]
+        _apply_inline_fixups(soup, fixups)
+        ps = soup.find_all('p')
+        assert '<strong>A</strong> B' in str(ps[0])
+        assert '<strong>A B</strong>' in str(ps[1])
