@@ -265,7 +265,7 @@ def _normalize_sentence_breaks(text: str) -> str:
                 and not stripped.startswith(('#', '*', '-', '<', '|', '`', '>'))
                 and not re.match(r'^\d+\.', stripped)):
             prev = result[-1].rstrip()
-            if prev and re.search(r'[.!?]$', prev):
+            if prev and re.search(r'[.!?][)\]"\'»]*$', prev):
                 result[-1] = prev + ' ' + stripped
                 continue
         result.append(line)

@@ -266,3 +266,22 @@ def test_minimal_norm_sentence_breaks_passes_for_plain_paragraph():
         ),
     )
     assert result.passed is True
+
+
+def test_minimal_norm_sentence_breaks_passes_after_closing_paren():
+    """문장이 `.)`로 끝나도 다음 일반 텍스트 줄과 결합한다."""
+    result = verify_roundtrip(
+        expected_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.) "
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/overview)\n"
+        ),
+        actual_mdx=(
+            "(이후 `3rd Party Tool` 이라고 표기합니다.)\n"
+            "구체적인 사례는 이 문서를 참조하세요: "
+            "[Supported 3rd Party Tools (KO)]"
+            "(https://querypie.atlassian.net/wiki/spaces/QCP/overview)\n"
+        ),
+    )
+    assert result.passed is True
