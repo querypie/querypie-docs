@@ -15,6 +15,7 @@ from reverse_sync.sidecar import (
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
+    _apply_mdx_diff_to_xhtml,
     _find_roundtrip_sidecar_block,
     _resolve_mapping_for_change,
     build_patches,
@@ -1652,3 +1653,71 @@ class TestBlockquoteDirectPatch:
         assert '<p>' in result
         assert '> +srv' not in result
         assert '입력해 주어야' in result
+
+
+# ── _apply_mdx_diff_to_xhtml 직접 테스트 ──
+
+
+class TestApplyMdxDiffToXhtml:
+    """text_transfer 삭제 후 핵심 알고리즘 regression 테스트."""
+
+    def test_replace_preserves_xhtml_whitespace(self):
+        """MDX 단어 교체가 XHTML의 다른 공백 구조를 보존하면서 적용된다."""
+        mdx_old = '설정 순서 설정 항목 1 Databased Access Control 설정하기'
+        mdx_new = '설정 순서 설정 항목 1 Database Access Control 설정하기'
+        xhtml = '설정 순서설정 항목1Databased Access Control 설정하기'
+
+        result = _apply_mdx_diff_to_xhtml(mdx_old, mdx_new, xhtml)
+        assert result == '설정 순서설정 항목1Database Access Control 설정하기'
+
+    def test_insert(self):
+        """공백/문자 삽입이 올바르게 전이된다."""
+        result = _apply_mdx_diff_to_xhtml(
+            '잠금해제 수행자 정보', '잠금 해제 수행자 정보', '잠금해제 수행자 정보')
+        assert result == '잠금 해제 수행자 정보'
+
+    def test_delete(self):
+        """텍스트 삭제가 올바르게 전파된다."""
+        result = _apply_mdx_diff_to_xhtml(
+            'hello world', 'hello', 'hello world')
+        assert 'world' not in result
+        assert 'hello' in result
+
+    def test_no_change_returns_xhtml_unchanged(self):
+        """변경이 없으면 XHTML 원문이 그대로 반환된다."""
+        xhtml = 'Hello  world'
+        result = _apply_mdx_diff_to_xhtml('Hello world', 'Hello world', xhtml)
+        assert result == xhtml
+
+    def test_repeated_pattern_long_text(self):
+        """반복 패턴이 있는 긴 텍스트에서 로컬 변경만 적용된다."""
+        xhtml = (
+            '첫째 항목 텍스트입니다.'
+            '둘째 항목 700MB를 초과 여부에 따라 재생화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        mdx_old = (
+            '첫째 항목 텍스트입니다. '
+            '둘째 항목 700MB를 초과 여부에 따라 재생화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        mdx_new = (
+            '첫째 항목 텍스트입니다. '
+            '둘째 항목 700MB 초과 여부에 따라 재생 화면을 노출합니다. '
+            '700MB 미만 상단에 기본 정보가 노출됩니다. '
+            '재생 화면이 하단에 노출됩니다. '
+            '700MB 이상 재생 화면 안에 실행 불가 문구를 제공합니다. '
+            '파일 크기가 700MB를 초과하여 세션을 재생할 수 없습니다.'
+        )
+        result = _apply_mdx_diff_to_xhtml(mdx_old, mdx_new, xhtml)
+        assert '700MB 초과 여부' in result
+        assert '700MB를 초과 여부' not in result
+        assert '재생 화면을 노출합니다' in result
+        assert '첫째 항목 텍스트입니다.' in result
+        assert '700MB를 초과하여 세션을' in result
