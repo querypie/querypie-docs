@@ -1,12 +1,12 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 import difflib
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from mdx_to_storage.emitter import emit_block
 from mdx_to_storage.parser import parse_mdx
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
-from reverse_sync.mapping_recorder import BlockMapping
+from reverse_sync.mapping_recorder import BlockMapping, record_mapping
 from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
     normalize_mdx_to_plain, collapse_ws,
@@ -237,7 +237,7 @@ def _apply_mdx_diff_to_xhtml(
     MDX old와 XHTML text의 문자 정렬(alignment)을 구축하고,
     MDX old→new 변경의 위치를 XHTML 상의 위치로 매핑하여 적용한다.
     이를 통해 XHTML의 공백 구조를 보존하면서 콘텐츠만 업데이트한다.
-    (text_transfer.transfer_text_changes의 인라인 구현)
+    (align_chars + transfer_text_changes 알고리즘의 인라인 구현)
     """
     # 1. MDX old ↔ XHTML text 문자 정렬 (비공백 우선 → 공백 gap 채우기)
     src_ns = [(i, c) for i, c in enumerate(old_mdx_plain) if not c.isspace()]
@@ -630,7 +630,7 @@ def build_patches(
                 )
                 continue
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
-            # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml 전환)
+            # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             if mapping is not None and has_any_change:
                 bid = mapping.block_id
@@ -686,7 +686,7 @@ def build_patches(
                         )
                 else:
                     # clean container / child-of-parent: text-level 누적
-                    # (Phase 5 Axis 1: transfer_text_changes → _apply_mdx_diff_to_xhtml)
+                    # (_apply_mdx_diff_to_xhtml 경로)
                     if bid not in _text_change_patches:
                         patch_entry: Dict[str, Any] = {
                             'xhtml_xpath': mapping.xhtml_xpath,
