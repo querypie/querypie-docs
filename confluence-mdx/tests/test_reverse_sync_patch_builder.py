@@ -899,6 +899,78 @@ class TestBuildPatches:
 
         assert patches == []
 
+    def test_markdown_table_inline_formatting_change_still_generates_patch(self):
+        """padding-only skip이 셀 내부 formatting 변경까지 삼키면 안 된다."""
+        m1 = _make_mapping('m1', 'Access Type Source', xpath='table[1]', type_='table')
+        m1.xhtml_text = (
+            '<table ac:local-id="table-1" data-layout="align-start">'
+            '<tbody><tr><td><p>Access Type</p></td>'
+            '<td><p>Source</p></td></tr></tbody></table>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'table[1]', m1.xhtml_text, 'hash1', (1, 3))
+        ])
+        change = _make_change(
+            0,
+            '| Access Type | Source |\n'
+            '| ----------- | ------ |\n'
+            '| Outbound | QueryPie Server |\n',
+            '| **Access Type** | Source |\n'
+            '| --------------- | ------ |\n'
+            '| Outbound | QueryPie Server |\n',
+            type_='table',
+        )
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        patches, _ = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert '<strong>Access Type</strong>' in patches[0]['new_element_xhtml']
+
+    def test_delete_add_table_pair_uses_modified_pair_for_replace_check(self):
+        """delete/add table pair도 modified pair처럼 안전하게 평가한다."""
+        m1 = _make_mapping('m1', 'Access Type Source', xpath='table[1]', type_='table')
+        m1.xhtml_text = (
+            '<table ac:local-id="table-1" data-layout="align-start">'
+            '<tbody><tr><td><p>Access Type</p></td>'
+            '<td><p>Source</p></td></tr></tbody></table>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'table[1]', m1.xhtml_text, 'hash1', (1, 3))
+        ])
+        old_block = _make_block(
+            '| Access Type | Source |\n'
+            '| ----------- | ------ |\n'
+            '| Outbound | QueryPie Server |\n',
+            type_='table',
+        )
+        new_block = _make_block(
+            '| **Access Type** | Source |\n'
+            '| --------------- | ------ |\n'
+            '| Outbound | QueryPie Server |\n',
+            type_='table',
+        )
+        changes = [
+            BlockChange(index=0, change_type='deleted', old_block=old_block, new_block=None),
+            BlockChange(index=0, change_type='added', old_block=None, new_block=new_block),
+        ]
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        patches, _ = build_patches(
+            changes, [old_block], [new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert '<strong>Access Type</strong>' in patches[0]['new_element_xhtml']
+
     def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
         mappings = [m1]

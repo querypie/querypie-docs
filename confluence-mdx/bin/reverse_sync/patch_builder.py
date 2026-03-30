@@ -38,6 +38,33 @@ def is_markdown_table(content: str) -> bool:
     return pipe_lines >= 2
 
 
+def _split_markdown_table_row(content: str) -> List[str]:
+    row = content.strip()
+    if row.startswith('|'):
+        row = row[1:]
+    if row.endswith('|'):
+        row = row[:-1]
+    return [cell.strip() for cell in row.split('|')]
+
+
+def _normalize_markdown_table_for_layout_compare(content: str) -> str:
+    """Markdown table의 padding/alignment-only 차이만 제거한 canonical form."""
+    lines = [line.strip() for line in content.strip().split('\n') if line.strip()]
+    normalized: List[str] = []
+    for idx, line in enumerate(lines):
+        cells = _split_markdown_table_row(line)
+        if idx == 1 and all(re.fullmatch(r':?-{3,}:?', cell) for cell in cells):
+            sep_cells = []
+            for cell in cells:
+                left = ':' if cell.startswith(':') else ''
+                right = ':' if cell.endswith(':') else ''
+                sep_cells.append(f'{left}---{right}')
+            normalized.append('|' + '|'.join(sep_cells) + '|')
+            continue
+        normalized.append('|' + '|'.join(cells) + '|')
+    return '\n'.join(normalized)
+
+
 _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
 
 
@@ -148,9 +175,12 @@ def _can_replace_table_fragment(
     # markdown pipe table만 fragment 교체 허용
     if block.type == "html_block" and block.content.lstrip().startswith("<table"):
         return False
-    old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, "table"))
-    new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, "table"))
-    if old_plain == new_plain:
+    if change.old_block is None or change.new_block is None:
+        return False
+    if (
+        _normalize_markdown_table_for_layout_compare(change.old_block.content)
+        == _normalize_markdown_table_for_layout_compare(change.new_block.content)
+    ):
         return False
     return is_markdown_table(change.old_block.content)
 
@@ -512,7 +542,16 @@ def build_patches(
             add_change.new_block.type,
             mapping,
             sidecar_block,
-        ) or _can_replace_table_fragment(del_change, mapping, roundtrip_sidecar):
+        ) or _can_replace_table_fragment(
+            BlockChange(
+                index=idx,
+                change_type='modified',
+                old_block=del_change.old_block,
+                new_block=add_change.new_block,
+            ),
+            mapping,
+            roundtrip_sidecar,
+        ):
             patches.append(
                 _build_replace_fragment_patch(
                     mapping,
