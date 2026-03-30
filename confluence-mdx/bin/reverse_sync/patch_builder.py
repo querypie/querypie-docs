@@ -409,6 +409,12 @@ def build_patches(
                 roundtrip_sidecar, original_blocks)
         else:
             mdx_to_sidecar = {}
+    # page_xhtml만으로는 변경을 매핑할 수 없다: sidecar가 필요하다
+    if page_xhtml is not None and not mdx_to_sidecar and roundtrip_sidecar is None:
+        raise ValueError(
+            "page_xhtml requires roundtrip_sidecar or mdx_to_sidecar "
+            "to map changes to XHTML elements")
+
     patches = []
     xpath_to_sidecar_block: Dict[str, SidecarBlock] = {}
     if roundtrip_sidecar is not None:

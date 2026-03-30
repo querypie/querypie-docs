@@ -1728,3 +1728,18 @@ class TestApplyMdxDiffToXhtml:
 
         result = _apply_mdx_diff_to_xhtml(mdx_old, mdx_new, xhtml)
         assert result == 'parent prefix NEW child text here suffix'
+
+
+# ── page_xhtml guard ──
+
+
+def test_build_patches_page_xhtml_without_sidecar_raises():
+    """page_xhtml만 제공하고 sidecar 없이 호출하면 ValueError가 발생한다."""
+    import pytest
+
+    change = _make_change(0, 'old text', 'new text')
+    with pytest.raises(ValueError, match="page_xhtml requires"):
+        build_patches(
+            [change], [change.old_block], [change.new_block],
+            page_xhtml='<p>old text</p>',
+        )
