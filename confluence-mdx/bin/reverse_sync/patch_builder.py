@@ -396,6 +396,10 @@ def build_patches(
     Returns:
         (patches, mappings) 튜플.
     """
+    # Guard: mappings와 page_xhtml 모두 없으면 매핑을 구성할 수 없다
+    if mappings is None and page_xhtml is None:
+        raise ValueError("mappings or page_xhtml is required")
+
     # Axis 2: page_xhtml가 제공되면 내부에서 mappings를 생성한다
     if mappings is None and page_xhtml is not None:
         mappings = record_mapping(page_xhtml)

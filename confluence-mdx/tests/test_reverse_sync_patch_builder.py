@@ -1733,6 +1733,17 @@ class TestApplyMdxDiffToXhtml:
 # ── page_xhtml guard ──
 
 
+def test_build_patches_no_mappings_no_page_xhtml_raises():
+    """mappings와 page_xhtml 모두 없으면 ValueError가 발생한다."""
+    import pytest
+
+    change = _make_change(0, 'old text', 'new text')
+    with pytest.raises(ValueError, match="mappings or page_xhtml is required"):
+        build_patches(
+            [change], [change.old_block], [change.new_block],
+        )
+
+
 def test_build_patches_page_xhtml_without_sidecar_raises():
     """page_xhtml만 제공하고 sidecar 없이 호출하면 ValueError가 발생한다."""
     import pytest
