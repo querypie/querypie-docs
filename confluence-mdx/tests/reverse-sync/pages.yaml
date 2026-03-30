@@ -464,7 +464,7 @@
   description: '번호 매기기 목록 내 단락이 분리된 구조에서 [li] 태그가 MDX 본문에 그대로 노출됨. 예: 4. 2단계 페이지에서는... → [li]\n2단계 페이지에서는...
 
     '
-  expected_status: fail
+  expected_status: pass
   failure_type: 17
   label: 리스트 항목에 [li] 태그 노출
   mdx_path: administrator-manual/general/user-management/authentication/integrating-with-google-saml.mdx
@@ -682,7 +682,7 @@
   - Integrating with Email
   description: "<br/> 이후 연결된 리스트 항목 텍스트가 다음 번호 항목으로 밀리고, 중간 빈 항목이 삽입됨. 예: 11. **Test 버튼** : ...<br/>\\n(공백라인)\\n    <figure>\
     \ →\n    11. ...<br/>\\n    12.\\n      <figure>\n"
-  expected_status: fail
+  expected_status: pass
   failure_type: 17
   label: 리스트 번호 오류 및 <br/> 뒤 항목 누락
   mdx_path: administrator-manual/general/system/integrations/integrating-with-email.mdx
