@@ -753,9 +753,10 @@ def testbuild_patches_table_block():
 
     assert len(patches) == 1
     assert patches[0]['xhtml_xpath'] == 'table[1]'
-    assert patches[0]['action'] == 'replace_fragment'
-    assert '<strong>Database Access Control</strong>' in patches[0]['new_element_xhtml']
-    assert patches[0]['new_element_xhtml'].startswith('<table')
+    # raw HTML table은 text-level 패치로 처리 (XHTML 구조 보존)
+    assert 'old_plain_text' in patches[0]
+    assert 'new_plain_text' in patches[0]
+    assert 'Database Access Control' in patches[0]['new_plain_text']
 
 
 # --- sidecar 전용 매칭 코드 경로 테스트 ---

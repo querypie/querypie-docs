@@ -117,10 +117,11 @@ def _can_replace_table_fragment(
     if _contains_preserved_anchor_markup(mapping.xhtml_text):
         return False
     block = change.new_block or change.old_block
-    return (
-        (block.type == "html_block" and block.content.lstrip().startswith("<table"))
-        or is_markdown_table(change.old_block.content)
-    )
+    # raw HTML table은 emit_block이 markdown table로 변환하여 구조가 파괴되므로 제외
+    # markdown pipe table만 fragment 교체 허용
+    if block.type == "html_block" and block.content.lstrip().startswith("<table"):
+        return False
+    return is_markdown_table(change.old_block.content)
 
 
 def _emit_replacement_fragment(block: MdxBlock) -> str:
@@ -782,6 +783,19 @@ def build_patches(
                 'action': 'replace_fragment',
                 'xhtml_xpath': mapping.xhtml_xpath,
                 'new_element_xhtml': preserved,
+            })
+            continue
+
+        # raw HTML table은 text-level 패치로 처리하여 XHTML 구조를 보존한다.
+        # mdx_block_to_inner_xhtml 경로는 forward converter가 markdown table로 변환하여
+        # 원본 HTML table 구조가 파괴된다.
+        if (change.old_block.type == "html_block"
+                and change.old_block.content.lstrip().startswith("<table")):
+            patches.append({
+                'xhtml_xpath': mapping.xhtml_xpath,
+                'old_plain_text': mapping.xhtml_plain_text,
+                'new_plain_text': _apply_mdx_diff_to_xhtml(
+                    old_plain, new_plain, mapping.xhtml_plain_text),
             })
             continue
 
