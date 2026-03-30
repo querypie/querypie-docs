@@ -266,7 +266,7 @@ class TestBuildPatches:
     # Path 3: sidecar 매칭 → children 있음 → child 해석 실패
     #          → parent를 containing block으로 사용
     def test_path3_sidecar_child_fail_containing_block(self):
-        """child 해석 실패 → parent containing → child-of-parent text-level 패치."""
+        """child 해석 실패 → parent containing → text-level 패치."""
         parent = _make_mapping(
             'p1', 'parent contains child text here', xpath='div[1]',
             children=['c1'])
@@ -281,7 +281,6 @@ class TestBuildPatches:
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
-        # _resolve_child_mapping 실패 → containing 전략 → parent text에서 child 텍스트만 변경
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'div[1]'
         assert 'updated text' in patches[0]['new_plain_text']
@@ -836,7 +835,7 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
 
     def test_containing_without_roundtrip_sidecar_preserves_wrapper_attrs(self):
-        """no-sidecar containing fallback도 기존 macro wrapper 속성은 유지해야 한다."""
+        """no-sidecar containing은 text-level 패치로 wrapper 속성을 보존한다."""
         mapping = _make_mapping(
             'callout-1',
             'Old text.',
@@ -906,16 +905,16 @@ class TestBuildPatches:
 
         assert len(patches) == 1
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
-        # ac:/ri: 마크업이 없으므로 text-level 패치로 inline styling 보존
-        assert 'new_plain_text' in patches[0]
-        assert 'new item text' in patches[0]['new_plain_text']
+        # Phase 5 Axis 1: clean list는 replace_fragment로 전환
+        assert patches[0]['action'] == 'replace_fragment'
+        assert 'new item text' in patches[0]['new_element_xhtml']
 
     def test_paired_delete_add_clean_container_sidecar_preserves_inline_styling(self):
         """paired delete/add + clean callout + roundtrip sidecar 조합에서
         Confluence inline styling(<em><span style="color:...">)이 보존돼야 한다.
 
-        sidecar_block.reconstruction이 있어도 anchor가 없는 clean container는
-        _build_replace_fragment_patch가 아닌 transfer_text_changes를 사용해야 한다.
+        Phase 5 Axis 1: clean container sidecar는 _build_replace_fragment_patch로 전환.
+        reconstruct_container_fragment의 per-child 재구성이 inline styling을 보존한다.
         """
         styled_xhtml = (
             '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
