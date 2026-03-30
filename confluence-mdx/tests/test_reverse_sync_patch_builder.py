@@ -425,6 +425,59 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert patches[0]['new_element_xhtml'] == '<p>hello earth</p>'
 
+    def test_roundtrip_sidecar_paragraph_with_ac_link_without_image_anchors_preserves_confluence_link(self):
+        """sidecar paragraph라도 ac:link가 있으면 clean replacement로 내리면 안 된다.
+
+        재현: reverse-sync 862093313
+        이미지 anchor가 없다는 이유만으로 clean paragraph로 처리하면
+        emitter가 <ac:link>를 일반 <a>로 바꿔 Confluence 구조를 손상시킨다.
+        """
+        m1 = _make_mapping(
+            'm1',
+            '구체적인 사례는 이 문서를 참조하세요: Supported 3rd Party Tools (KO)',
+            xpath='p[1]',
+        )
+        m1.xhtml_text = (
+            '<p>구체적인 사례는 이 문서를 참조하세요: '
+            '<ac:link ac:card-appearance="inline">'
+            '<ri:page ri:content-title="Supported 3rd Party Tools (KO)" '
+            'ri:space-key="QCP" ri:version-at-save="28"></ri:page>'
+            '<ac:link-body>Supported 3rd Party Tools (KO)</ac:link-body>'
+            '</ac:link></p>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
+        change = _make_change(
+            0,
+            '구체적인 사례는 이 문서를 참조하세요: [Supported 3rd Party Tools (KO)](https://querypie.atlassian.net/wiki/spaces/QCP/overview)',
+            '구체적인 사례는 이 문서를 참조하세요: [Supported 3rd Party Tools (KO)](https://querypie.atlassian.net/wiki/spaces/QCP/pages/919404587)',
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'p[1]',
+                m1.xhtml_text,
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+                reconstruction={
+                    'kind': 'paragraph',
+                    'old_plain_text': normalize_mdx_to_plain(change.old_block.content, 'paragraph'),
+                    'anchors': [],
+                },
+            )
+        ])
+
+        patches, _ = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
+        assert '<ac:link' in patches[0]['new_element_xhtml']
+        assert '<a href=' not in patches[0]['new_element_xhtml']
+
     def test_roundtrip_sidecar_paragraph_with_anchors_stays_modify(self):
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
         mappings = [m1]
@@ -751,6 +804,44 @@ class TestBuildPatches:
         assert patches[0]['action'] == 'replace_fragment'
         assert '<table>' in patches[0]['new_element_xhtml']
         assert 'new_val' in patches[0]['new_element_xhtml']
+
+    def test_markdown_table_padding_only_change_skips_patch(self):
+        """셀 내용이 같고 padding만 다른 markdown table은 패치하지 않는다.
+
+        재현: reverse-sync 862093313
+        표 정렬 공백 차이만으로 replace_fragment를 만들면 Confluence table wrapper가
+        일반 HTML table로 강등된다.
+        """
+        m1 = _make_mapping('m1', 'Access Type Source', xpath='table[1]', type_='table')
+        m1.xhtml_text = (
+            '<table ac:local-id="table-1" data-layout="align-start">'
+            '<tbody><tr><td><p><strong>Access Type</strong></p></td>'
+            '<td><p><strong>Source</strong></p></td></tr></tbody></table>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'table[1]', m1.xhtml_text, 'hash1', (1, 3))
+        ])
+
+        change = _make_change(
+            0,
+            '| **Access Type** | **Source** |\n'
+            '| --------------- | ---------- |\n'
+            '| Outbound | QueryPie Server |\n',
+            '|  **Access Type**  |  **Source**  |\n'
+            '| ----------------- | ------------ |\n'
+            '| Outbound          | QueryPie Server |\n',
+            type_='table',
+        )
+        mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
+
+        patches, _ = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert patches == []
 
     def test_delete_add_pair_clean_heading_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'Old Title', xpath='h2[1]', type_='heading')
