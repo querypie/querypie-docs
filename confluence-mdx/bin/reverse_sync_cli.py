@@ -769,7 +769,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
         if results[-1].get('status') not in ('pass', 'no_changes'):
             failure_count += 1
-        if failures_only and limit > 0 and failure_count >= limit:
+        if not push and failures_only and limit > 0 and failure_count >= limit:
             break
 
     if not push:
