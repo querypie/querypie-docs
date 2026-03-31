@@ -1363,6 +1363,7 @@ class TestPushConfirmPrompt:
         with patch('reverse_sync_cli._get_changed_ko_mdx_files', return_value=files), \
              patch('reverse_sync_cli._do_verify', return_value=verify_result), \
              patch('reverse_sync_cli._do_push', return_value=push_result) as mock_push, \
+             patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
              patch('reverse_sync_cli._confirm') as mock_confirm, \
              patch('builtins.print'):
             results = _do_verify_batch('test-branch', push=True, yes=True)
