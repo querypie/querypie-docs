@@ -938,6 +938,10 @@ def main():
 
             auto_yes = getattr(args, 'yes', False)
 
+            if not dry_run and not auto_yes and not sys.stdin.isatty():
+                print('Error: 비대화형 환경에서는 --yes 옵션이 필요합니다.', file=sys.stderr)
+                sys.exit(1)
+
             if getattr(args, 'branch', None):
                 # 배치 모드
                 results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),

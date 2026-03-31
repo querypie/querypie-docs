@@ -388,7 +388,7 @@ def test_main_verify_branch(monkeypatch):
 
 def test_main_push_branch(tmp_path, monkeypatch):
     """main() 통합 테스트 — 배치 push (all pass, push=True)."""
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--branch', 'proofread/fix-typo'])
     monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     batch_results = [
@@ -402,12 +402,12 @@ def test_main_push_branch(tmp_path, monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False)
 
 
 def test_main_push_branch_with_failure(monkeypatch):
     """배치 push 시 일부 fail → exit 1 (pass한 문서는 이미 push됨)."""
-    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'proofread/fix-typo'])
+    monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--branch', 'proofread/fix-typo'])
     batch_results = [
         {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
          'push': {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}},
@@ -420,7 +420,7 @@ def test_main_push_branch_with_failure(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False)
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -1293,9 +1293,11 @@ class TestPushConfirmPrompt:
         pass_result = {'status': 'pass', 'page_id': 'p1', 'title': 'Test', 'changes_count': 1}
 
         with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+             patch('reverse_sync_cli.sys.stdin') as mock_stdin, \
              patch('reverse_sync_cli._confirm', return_value=False), \
              patch('reverse_sync_cli._do_push') as mock_push, \
              patch('builtins.print'):
+            mock_stdin.isatty.return_value = True
             with pytest.raises(SystemExit) as exc_info:
                 main()
 
@@ -1368,6 +1370,46 @@ class TestPushConfirmPrompt:
         mock_confirm.assert_not_called()
         mock_push.assert_called_once()
         assert results[0]['push']['version'] == 2
+
+
+class TestPushNonTtyRequiresYes:
+    """비대화형 환경에서 --yes 없이 push 시 에러."""
+
+    def test_non_tty_without_yes_exits(self, monkeypatch):
+        mdx_arg = 'src/content/ko/test/page.mdx'
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
+
+        with patch('reverse_sync_cli.sys.stdin') as mock_stdin, \
+             patch('builtins.print'):
+            mock_stdin.isatty.return_value = False
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+
+        assert exc_info.value.code == 1
+
+    def test_non_tty_with_yes_proceeds(self, tmp_path, monkeypatch):
+        mdx_arg = 'src/content/ko/test/page.mdx'
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--json', mdx_arg])
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'nontty-page'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
+
+        pass_result = {'status': 'pass', 'page_id': page_id, 'changes_count': 1}
+
+        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+             patch('reverse_sync.confluence_client._load_credentials',
+                   return_value=('e@x.com', 'tok')), \
+             patch('reverse_sync.confluence_client.get_page_version',
+                   return_value={'version': 5, 'title': 'Test'}), \
+             patch('reverse_sync.confluence_client.get_page_body',
+                   return_value='<p>Old</p>'), \
+             patch('reverse_sync.confluence_client.update_page_body',
+                   return_value={'title': 'Test', 'version': {'number': 6},
+                                 '_links': {'webui': '/t'}}), \
+             patch('builtins.print'):
+            main()  # Should not exit with error
 
 
 class TestPushExitCode:
