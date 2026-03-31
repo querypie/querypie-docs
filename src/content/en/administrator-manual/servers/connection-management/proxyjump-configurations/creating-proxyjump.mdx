@@ -11,7 +11,7 @@ import { Callout } from 'nextra/components'
 
 Through ProxyJump settings, you can connect to servers in other Network Zones or apply QueryPie's access control to servers with overlapping CIDR.
 QueryPie must be able to connect to Jump Hosts.
-Proxyjump for Windows Servers is also supported.
+ProxyJump for Windows Servers is also supported.
 
 
 ### Creating ProxyJump
@@ -26,7 +26,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurati
 
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurations menu.
 2. Click the `+ Create ProxyJump` button in the top right.
-3. Enter the following information for group creation.
+3. Enter the following information for ProxyJump creation.
     1.  **Name**: Name of the ProxyJump setting.
     2.  **Jump Hosts**: Set the Jump Host to be used as Hop.
         1.  **Server**: Select the Jump Host from servers registered in Servers.
@@ -39,11 +39,11 @@ Administrator &gt; Servers &gt; Connection Management &gt; ProxyJump Configurati
     3.  **Test Jump Hosts**: Check if connection to Jump Host is possible with the entered Account.
     4.  **Add Jump Host**: Add Jump Host. When connecting to servers, it attempts to connect to the final server by sequentially going through all added Jump Hosts. Up to 5 Jump Hosts can be used.
     5.  **Delete**: Delete added Jump Host. Jump Host 1 cannot be deleted.
-    6.  **Routing Target**: Select server groups to connect through Proxyjump. One server group can only be set to one Proxyjump.
+    6.  **Routing Target**: Select server groups to connect through ProxyJump. One server group can only be set to one ProxyJump.
 4. Save through the `Save` button.
 
 <Callout type="info">
-**Windows Server Proxyjump Settings**
+**Windows Server ProxyJump Settings**
 1. Connect to Windows Server and install server agent.
 2. Register Windows Server through [Manually Registering Individual Servers](../servers/manually-registering-individual-servers).
 3. Add the registered Windows Server to server group.

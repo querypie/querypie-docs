@@ -50,7 +50,7 @@ Manage basic security settings.
             * Policy updates
             * User role changes
         * However, sessions for related resources are terminated if the user's role or permissions are completely removed
-        * Session reconnection is required to apply changed policies
+        * You must reconnect the session to apply changed policies
     *  **Disable**  selection:
         * All connected sessions are automatically terminated when policies are changed
         * Changed policies are applied to newly connected sessions
@@ -61,7 +61,7 @@ Manage basic security settings.
 *  **Using insecure protocols**: Setting for using server access protocols that are not recommended
     * Set whether to use TELNET or FTP
 *  **Access Server with MFA**: MFA authentication when accessing servers (Default : Disabled)
-    * Currently supports Google OTP, and when this option is selected, servers to apply MFA authentication are specified by tag criteria
+    * Supports Google OTP, and when this option is selected, servers to apply MFA authentication are specified by tag criteria
         * Tag input method: key input → Enter key input → value input → Enter input
     * Input tags are displayed in `key = value` format, and servers with at least one tag matching the input tags can be accessed after MFA authentication
 *  **Resource IP Access Control Configuration :** Server access allowed IP access control settings
@@ -141,7 +141,7 @@ For more details, please refer to [Requesting Server Access Request](../../user-
 *  **Max Sessions**: Maximum concurrent connections per server
 *  **Session Timeout**: Server session timeout criteria time (minutes)
 *  **Show Server Groups in Workflow if Assigned as Member :**  When checked, only server groups assigned as Server Group Members are displayed when users apply for Server Access Request
-*  **Require Minute-Based Requests :** Allow minute-based requests for server-related permission requests in Workflow. If not set, permissions are requested in days. When checked, server access permission requests are made in minutes
+*  **Require Minute-Based Requests :** Allow minute-based requests for server-related permission requests in Workflow. If not set, permissions are requested in days. When checked, you can request server access permissions in minutes
 
 #### Server Privilege Request Policy Settings
 
@@ -166,4 +166,4 @@ For more details, please refer to [Requesting Server Privilege Request](../../us
 *  **Allow Pre-defined Command Templates Only**: Control command input methods when requesting server privileges
     *  **Enable**: Requesters can only select from command templates pre-defined and allowed by administrators, and cannot input commands directly
     *  **Disable**: Requesters can input allowed commands directly as before
-*  **Require Minute-Based Requests**: Allow minute-based requests for server-related permission requests in Workflow. If not set, permissions are requested in days. When checked, server privilege requests are made in minutes
+*  **Require Minute-Based Requests**: Allow minute-based requests for server-related permission requests in Workflow. If not set, permissions are requested in days. When checked, you can request server privileges in minutes
