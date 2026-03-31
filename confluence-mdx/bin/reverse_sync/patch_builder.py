@@ -737,13 +737,15 @@ def build_patches(
                 mapping = text_fallback
                 mapping_via_v3_fallback = True
 
-        if strategy == 'skip':
+        if mapping is None:
+            block = change.old_block or change.new_block
             block_id = f"idx-{change.index}"
+            block_kind = strategy if strategy in ('list', 'table') else block.type
             skipped_changes.append({
                 'block_id': block_id,
                 'reason': 'no_mapping',
                 'description': (
-                    f"블록 #{change.index} ({change.old_block.type})에 대한 "
+                    f"블록 #{change.index} ({block_kind})에 대한 "
                     f"XHTML 매핑을 찾을 수 없어 패치를 건너뜁니다."
                 ),
             })

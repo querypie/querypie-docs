@@ -341,13 +341,28 @@ class TestBuildPatches:
         table_content_new = '| h1 | h2 |\n| --- | --- |\n| x | y |'
         change = _make_change(0, table_content_old, table_content_new)
 
-        # sidecar로 매핑할 수 없고, containing도 없고, table이면 build_table_row_patches
-        # 하지만 table_row_patches도 sidecar 필요 → 결국 빈 결과
-        patches, *_ = build_patches(
+        patches, _, skipped_changes = build_patches(
             [change], [change.old_block], [change.new_block],
             [], {}, {})
 
         assert patches == []
+        assert len(skipped_changes) == 1
+        assert skipped_changes[0]['reason'] == 'no_mapping'
+        assert skipped_changes[0]['block_id'] == 'idx-0'
+        assert '(table)' in skipped_changes[0]['description']
+
+    def test_path5_sidecar_miss_list_reports_no_mapping(self):
+        change = _make_change(0, '- old item', '- new item', type_='list')
+
+        patches, _, skipped_changes = build_patches(
+            [change], [change.old_block], [change.new_block],
+            [], {}, {})
+
+        assert patches == []
+        assert len(skipped_changes) == 1
+        assert skipped_changes[0]['reason'] == 'no_mapping'
+        assert skipped_changes[0]['block_id'] == 'idx-0'
+        assert '(list)' in skipped_changes[0]['description']
 
     # Path 6: sidecar 매칭 → children 없음 → sidecar를 신뢰하여 직접 매핑
     def test_path6_sidecar_match_text_mismatch_remapping(self):
