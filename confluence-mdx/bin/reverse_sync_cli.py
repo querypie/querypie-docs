@@ -724,9 +724,12 @@ def _confirm(prompt: str) -> bool:
         return False
     try:
         answer = input(prompt).strip().lower()
-    except (EOFError, KeyboardInterrupt):
+    except EOFError:
         print(file=sys.stderr)
         return False
+    except KeyboardInterrupt:
+        print(file=sys.stderr)
+        raise
     return answer in ('y', 'yes')
 
 
