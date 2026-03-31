@@ -5,6 +5,7 @@ from reverse_sync.roundtrip_verifier import (
     _normalize_consecutive_spaces_in_text,
     _normalize_br_space,
     _normalize_link_text_spacing,
+    _normalize_sentence_breaks,
 )
 
 
@@ -188,6 +189,21 @@ class TestNormalizeLinkTextSpacing:
         assert result == "* [**A**](a) and [**B**](b)"
 
 
+# --- _normalize_sentence_breaks 단위 테스트 ---
+
+
+class TestNormalizeSentenceBreaks:
+    def test_sentence_lines_joined(self):
+        """문장 경계로 분리된 일반 텍스트 행은 다시 결합된다."""
+        text = "First sentence.\nSecond sentence\n"
+        assert _normalize_sentence_breaks(text) == "First sentence. Second sentence\n"
+
+    def test_fenced_code_block_preserved(self):
+        """펜스드 코드 블록 내부 줄바꿈은 보존된다."""
+        text = "```\ncode line 1.\ncode line 2\n```\n"
+        assert _normalize_sentence_breaks(text) == text
+
+
 # --- verify_roundtrip에서의 최소 정규화 동작 ---
 
 
@@ -242,5 +258,14 @@ def test_strict_mode_still_fails_on_trailing_ws():
     result = verify_roundtrip(
         expected_mdx="Paragraph. \n",
         actual_mdx="Paragraph.\n",
+    )
+    assert result.passed is False
+
+
+def test_strict_mode_preserves_fenced_code_line_breaks():
+    """strict 모드: fenced code block 내부 줄바꿈 차이는 실패해야 한다."""
+    result = verify_roundtrip(
+        expected_mdx="```\nallow:\n  actions:\n```\n",
+        actual_mdx="```\nallow: actions:\n```\n",
     )
     assert result.passed is False

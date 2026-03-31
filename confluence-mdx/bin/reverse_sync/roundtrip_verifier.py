@@ -261,8 +261,16 @@ def _normalize_sentence_breaks(text: str) -> str:
     """
     lines = text.split('\n')
     result: list = []
+    in_code_block = False
     for line in lines:
         stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+            result.append(line)
+            continue
+        if in_code_block:
+            result.append(line)
+            continue
         if (result
                 and stripped
                 and not stripped.startswith(('#', '*', '-', '<', '|', '`', '>'))
