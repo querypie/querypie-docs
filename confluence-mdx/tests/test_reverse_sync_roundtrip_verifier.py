@@ -219,6 +219,11 @@ class TestNormalizeSentenceBreaks:
         text = "```\ncode line 1.\ncode line 2\n```\n"
         assert _normalize_sentence_breaks(text) == text
 
+    def test_heading_context_preserved(self):
+        """직전 행이 heading이면 다음 행과 결합하지 않는다."""
+        text = "# Title.\nFirst paragraph.\n"
+        assert _normalize_sentence_breaks(text) == text
+
 
 # --- verify_roundtrip에서의 최소 정규화 동작 ---
 
