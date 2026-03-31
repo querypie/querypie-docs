@@ -235,6 +235,7 @@ def _compile_result(
     changes_count: int,
     mdx_diff_report: str, xhtml_diff_report: str,
     verify_result, roundtrip_diff_report: str, title: str = '',
+    skipped_changes: list = None,
 ) -> Dict[str, Any]:
     """검증 결과를 조립하여 저장하고 반환한다."""
     status = 'pass' if verify_result.passed else 'fail'
@@ -251,6 +252,8 @@ def _compile_result(
     }
     if title:
         result['title'] = title
+    if skipped_changes:
+        result['skipped_changes'] = skipped_changes
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
     return result
@@ -375,7 +378,7 @@ def run_verify(
 
     # Step 3+4: XHTML 패치 → patched.xhtml 저장
     # build_patches()가 내부에서 record_mapping()을 호출하여 mappings를 생성한다
-    patches, original_mappings = build_patches(
+    patches, original_mappings, skipped_changes = build_patches(
         changes, original_blocks, improved_blocks,
         page_xhtml=xhtml,
         alignment=alignment,
@@ -459,7 +462,8 @@ def run_verify(
     return _compile_result(
         var_dir, page_id, now, len(changes),
         mdx_diff_report, xhtml_diff_report,
-        verify_result, roundtrip_diff_report, title=title)
+        verify_result, roundtrip_diff_report, title=title,
+        skipped_changes=skipped_changes)
 
 
 def _strip_frontmatter(mdx: str) -> str:
@@ -581,6 +585,14 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
                 _print_diff_block(diff_report,
                                   'Verify diff (improved.mdx → verify.mdx):',
                                   c, BOLD, CYAN, RED, GREEN, DIM)
+
+        # skipped_changes 출력
+        skipped = r.get('skipped_changes', [])
+        if skipped:
+            print(c(DIM, '─' * 72))
+            print(c(YELLOW, f'  Skipped changes ({len(skipped)}):'))
+            for s in skipped:
+                print(f'    [{s["reason"]}] {s["description"]}')
 
     # 요약
     total = len(results)

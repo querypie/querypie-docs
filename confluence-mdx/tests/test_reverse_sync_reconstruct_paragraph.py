@@ -198,7 +198,7 @@ class TestPatchBuilderInlineAnchor:
         mdx_to_sidecar = build_mdx_to_sidecar_index(sidecar_entries)
         xpath_to_mapping = build_xpath_to_mapping(mappings)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes, orig_blocks, imp_blocks,
             mappings, mdx_to_sidecar, xpath_to_mapping,
             alignment, roundtrip_sidecar=roundtrip_sidecar,

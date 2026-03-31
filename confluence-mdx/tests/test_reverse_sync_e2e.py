@@ -88,7 +88,7 @@ def test_e2e_text_replacement(testcase_data):
     xpath_to_mapping = build_xpath_to_mapping(mappings)
 
     # Step 4: XHTML 패치
-    patches, _ = build_patches(changes, original_blocks, improved_blocks, mappings,
+    patches, *_ = build_patches(changes, original_blocks, improved_blocks, mappings,
                             mdx_to_sidecar, xpath_to_mapping, alignment)
 
     if patches:
