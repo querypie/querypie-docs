@@ -1963,6 +1963,21 @@ class TestApplyInlineFixups:
         assert '<ac:link>link</ac:link>' in str(p)
         assert '<strong>Name</strong>:' in str(p)
 
+    def test_preserved_anchor_inside_strong_boundary_fixup_preserves_markup(self):
+        """<strong> 내부 preserved anchor는 유지한 채 경계만 수정한다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><strong><ac:link>link</ac:link>:</strong></p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'link:',
+            'new_plain': 'link:',
+            'new_inner_xhtml': '<strong>link</strong>:',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        p = soup.find('p')
+        assert '<ac:link>link</ac:link>' in str(p)
+        assert '<strong><ac:link>link</ac:link></strong>:' in str(p)
+
     def test_duplicate_text_uses_match_index(self):
         """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
         from bs4 import BeautifulSoup

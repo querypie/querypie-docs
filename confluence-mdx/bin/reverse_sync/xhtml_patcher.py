@@ -296,6 +296,52 @@ def _collapse_ws(s: str) -> str:
     return re.sub(r'\s+', ' ', s).strip()
 
 
+def _has_preserved_markup_ancestor(node: NavigableString, stop: Tag) -> bool:
+    """text node가 보존 대상 Confluence 마크업 내부에 있는지 확인한다."""
+    parent = node.parent
+    while isinstance(parent, Tag) and parent is not stop:
+        if (parent.name or '').startswith(('ac:', 'ri:')):
+            return True
+        parent = parent.parent
+    return False
+
+
+def _strip_trailing_text(tag: Tag, suffix: str) -> bool:
+    """태그 내부 trailing text만 제거한다. preserved markup 내부 text는 건드리지 않는다."""
+    remaining = suffix
+    while remaining:
+        last_text = None
+        for desc in reversed(list(tag.descendants)):
+            if isinstance(desc, NavigableString):
+                last_text = desc
+                break
+        if last_text is None or _has_preserved_markup_ancestor(last_text, tag):
+            return False
+        node_text = str(last_text)
+        remove_len = min(len(node_text), len(remaining))
+        expected = remaining[-remove_len:]
+        if not node_text.endswith(expected):
+            return False
+        kept = node_text[:-remove_len]
+        if kept:
+            last_text.replace_with(NavigableString(kept))
+        else:
+            last_text.extract()
+        remaining = remaining[:-remove_len]
+    return True
+
+
+def _append_text_to_tag(tag: Tag, text: str):
+    """태그의 마지막 text node에 텍스트를 덧붙인다."""
+    if not text:
+        return
+    if tag.contents and isinstance(tag.contents[-1], NavigableString):
+        last = tag.contents[-1]
+        last.replace_with(NavigableString(str(last) + text))
+    else:
+        tag.append(NavigableString(text))
+
+
 
 def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
     """<ac:>/<ri:> 보존 시 <strong> 요소만 직접 수정하여 bold 경계를 교정한다.
@@ -317,12 +363,11 @@ def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
         if old_text == new_text:
             continue
 
-        old_s.clear()
-        old_s.string = new_text
-
         # bold 끝에서 빠져나온 문자를 다음 text node에 반영
         if old_text.startswith(new_text) and len(old_text) > len(new_text):
             removed_end = old_text[len(new_text):]
+            if not _strip_trailing_text(old_s, removed_end):
+                continue
             nxt = old_s.next_sibling
             if isinstance(nxt, NavigableString):
                 nxt.replace_with(NavigableString(removed_end + str(nxt)))
@@ -336,7 +381,12 @@ def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
             if isinstance(nxt, NavigableString):
                 ns = str(nxt)
                 if ns.startswith(added_end):
-                    nxt.replace_with(NavigableString(ns[len(added_end):]))
+                    rest = ns[len(added_end):]
+                    if rest:
+                        nxt.replace_with(NavigableString(rest))
+                    else:
+                        nxt.extract()
+                    _append_text_to_tag(old_s, added_end)
 
 
 def _apply_inline_fixups(element: Tag, fixups: list):
