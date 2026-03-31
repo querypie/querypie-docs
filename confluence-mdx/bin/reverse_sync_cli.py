@@ -169,6 +169,8 @@ def _clean_reverse_sync_artifacts(page_id: str) -> Path:
     """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
     var_dir = _PROJECT_DIR / 'var' / page_id
     for f in var_dir.glob('reverse-sync.*'):
+        if f.name == 'reverse-sync.backup.xhtml':
+            continue
         f.unlink()
     verify_mdx = var_dir / 'verify.mdx'
     if verify_mdx.exists():
@@ -212,11 +214,27 @@ def _save_diff_yaml(
         yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
 
 
+def _extract_frontmatter_title(mdx_blocks) -> str:
+    """MDX frontmatter에서 title 값을 추출한다."""
+    for block in mdx_blocks:
+        if block.type != 'frontmatter':
+            continue
+        for raw_line in block.content.splitlines():
+            line = raw_line.strip()
+            if not line.startswith('title:'):
+                continue
+            value = line.split(':', 1)[1].strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+                return value[1:-1]
+            return value
+    return ''
+
+
 def _compile_result(
     var_dir: Path, page_id: str, now: str,
     changes_count: int,
     mdx_diff_report: str, xhtml_diff_report: str,
-    verify_result, roundtrip_diff_report: str,
+    verify_result, roundtrip_diff_report: str, title: str = '',
 ) -> Dict[str, Any]:
     """검증 결과를 조립하여 저장하고 반환한다."""
     status = 'pass' if verify_result.passed else 'fail'
@@ -231,6 +249,8 @@ def _compile_result(
             'diff_report': roundtrip_diff_report,
         },
     }
+    if title:
+        result['title'] = title
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
     return result
@@ -329,11 +349,14 @@ def run_verify(
     # Step 1-2: MDX 파싱 + diff
     changes, alignment, original_blocks, improved_blocks = _parse_and_diff(
         original_mdx, improved_mdx)
+    title = _extract_frontmatter_title(improved_blocks)
 
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
                   'status': 'no_changes', 'changes_count': 0,
                   'mdx_diff_report': '', 'xhtml_diff_report': ''}
+        if title:
+            result['title'] = title
         (var_dir / 'reverse-sync.result.yaml').write_text(
             yaml.dump(result, allow_unicode=True, default_flow_style=False))
         return result
@@ -436,7 +459,7 @@ def run_verify(
     return _compile_result(
         var_dir, page_id, now, len(changes),
         mdx_diff_report, xhtml_diff_report,
-        verify_result, roundtrip_diff_report)
+        verify_result, roundtrip_diff_report, title=title)
 
 
 def _strip_frontmatter(mdx: str) -> str:
@@ -470,6 +493,23 @@ def _print_diff_block(lines: str, label: str, c, BOLD, CYAN, RED, GREEN, DIM) ->
             print(line)
 
 
+def _display_status(result: Dict[str, Any]) -> str:
+    """출력/요약용 상태를 계산한다. push 실패가 있으면 verify 결과보다 우선한다."""
+    push_status = (result.get('push') or {}).get('status')
+    if push_status == 'conflict':
+        return 'push_conflict'
+    if push_status == 'error':
+        return 'push_error'
+    return result.get('status', 'unknown')
+
+
+def _display_error(result: Dict[str, Any], status: str) -> str:
+    """출력용 에러 메시지를 반환한다."""
+    if status in ('push_conflict', 'push_error'):
+        return (result.get('push') or {}).get('error', '')
+    return result.get('error', '')
+
+
 def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = False,
                    failures_only: bool = False) -> None:
     """검증 결과를 컬러 diff 포맷으로 출력한다.
@@ -486,7 +526,7 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     RED, GREEN, CYAN, YELLOW, BOLD, DIM = '31', '32', '36', '33', '1', '2'
 
     for r in results:
-        status = r.get('status', 'unknown')
+        status = _display_status(r)
         if failures_only and status in ('pass', 'no_changes'):
             continue
         file_path = r.get('file', r.get('page_id', '?'))
@@ -497,6 +537,10 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             badge = c(GREEN, 'PASS')
         elif status == 'no_changes':
             badge = c(DIM, 'NO CHANGES')
+        elif status == 'push_conflict':
+            badge = c(YELLOW, 'PUSH CONFLICT')
+        elif status == 'push_error':
+            badge = c(YELLOW, 'PUSH ERROR')
         elif status == 'error':
             badge = c(YELLOW, 'ERROR')
         else:
@@ -505,8 +549,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         print(f'\n{c(BOLD, file_path)}  {badge}  ({changes} change(s))')
 
         # 에러 메시지
-        if status == 'error':
-            print(f'  {c(RED, r.get("error", ""))}')
+        if status in ('error', 'push_conflict', 'push_error'):
+            print(f'  {c(RED, _display_error(r, status))}')
             continue
 
         if show_all_diffs:
@@ -540,10 +584,13 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
 
     # 요약
     total = len(results)
-    passed = sum(1 for r in results if r.get('status') == 'pass')
-    failed = sum(1 for r in results if r.get('status') == 'fail')
-    errors = sum(1 for r in results if r.get('status') == 'error')
-    no_chg = sum(1 for r in results if r.get('status') == 'no_changes')
+    display_statuses = [_display_status(r) for r in results]
+    passed = sum(1 for status in display_statuses if status == 'pass')
+    failed = sum(1 for status in display_statuses if status == 'fail')
+    errors = sum(1 for status in display_statuses if status == 'error')
+    conflicts = sum(1 for status in display_statuses if status == 'push_conflict')
+    push_errors = sum(1 for status in display_statuses if status == 'push_error')
+    no_chg = sum(1 for status in display_statuses if status == 'no_changes')
 
     parts = []
     if passed:
@@ -552,6 +599,10 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         parts.append(c(RED, f'{failed} failed'))
     if errors:
         parts.append(c(YELLOW, f'{errors} errors'))
+    if conflicts:
+        parts.append(c(YELLOW, f'{conflicts} conflicts'))
+    if push_errors:
+        parts.append(c(YELLOW, f'{push_errors} push errors'))
     if no_chg:
         parts.append(c(DIM, f'{no_chg} no changes'))
 
@@ -566,8 +617,8 @@ Usage:
   reverse-sync verify --branch <branch> [--lenient]
   reverse-sync debug  <mdx> [--original-mdx <mdx>] [--lenient]
   reverse-sync debug  --branch <branch> [--lenient]
-  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--lenient]
-  reverse-sync push   --branch <branch> [--dry-run] [--lenient]
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient]
+  reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient]
   reverse-sync -h | --help
 
 Commands:
@@ -716,11 +767,28 @@ def _do_verify(args) -> dict:
     )
 
 
+def _confirm(prompt: str) -> bool:
+    """터미널에서 y/N 확인을 받는다. 비대화형이면 False."""
+    if not sys.stdin.isatty():
+        return False
+    try:
+        answer = input(prompt).strip().lower()
+    except EOFError:
+        print(file=sys.stderr)
+        return False
+    except KeyboardInterrupt:
+        print(file=sys.stderr)
+        raise
+    return answer in ('y', 'yes')
+
+
 def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
-                     push: bool = False, lenient: bool = False) -> List[dict]:
+                     push: bool = False, yes: bool = False,
+                     lenient: bool = False) -> List[dict]:
     """브랜치의 변경 ko MDX 파일을 배치 처리한다.
 
-    push=True이면 개별 문서마다 verify 성공 시 즉시 Confluence에 push한다.
+    push=True이면 verify 전체 완료 후 pass 건만 일괄 push한다.
+    yes=True이면 확인 프롬프트를 스킵한다.
     lenient=True이면 변경된 행만 검사하는 관대 모드로 검증한다.
     """
     files = _get_changed_ko_mdx_files(branch)
@@ -732,7 +800,6 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
     print(f"Processing {'up to ' + str(total) if failures_only and limit > 0 else str(len(files))}/{total} file(s) from branch {branch}...", file=sys.stderr)
     results = []
     failure_count = 0
-    push_count = 0
     for idx, ko_path in enumerate(files, 1):
         print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
         try:
@@ -744,50 +811,113 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             result = _do_verify(args)
             result['file'] = ko_path
             status = result.get('status', 'unknown')
-            if push and status == 'pass':
-                push_result = _do_push(result['page_id'])
-                result['push'] = push_result
-                push_count += 1
-                print(f"pass → pushed (v{push_result.get('version', '?')})", file=sys.stderr)
-            else:
-                print(status, file=sys.stderr)
+            print(status, file=sys.stderr)
             results.append(result)
         except Exception as e:
             print("error", file=sys.stderr)
             results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
         if results[-1].get('status') not in ('pass', 'no_changes'):
             failure_count += 1
-        if failures_only and limit > 0 and failure_count >= limit:
+        if not push and failures_only and limit > 0 and failure_count >= limit:
             break
-    if push:
-        print(f"\nPushed {push_count}/{len(results)} file(s)", file=sys.stderr)
+
+    if not push:
+        return results
+
+    # push 대상 집계
+    pushable = [r for r in results if r.get('status') == 'pass']
+    if not pushable:
+        print("\nPush 대상 없음 (pass 0건)", file=sys.stderr)
+        return results
+
+    # 확인 프롬프트
+    if not yes:
+        print(f"\n검증 완료: pass {len(pushable)}건 / 전체 {len(results)}건", file=sys.stderr)
+        if not _confirm(f"{len(pushable)}건을 Confluence에 push 할까요? [y/N] "):
+            print("Push 취소", file=sys.stderr)
+            return results
+
+    # 일괄 push
+    config = _ensure_confluence_config()
+    push_count = 0
+    for r in pushable:
+        page_id = r['page_id']
+        try:
+            push_result = _do_push(page_id, config=config)
+            r['push'] = push_result
+            push_count += 1
+            print(f"  pushed {page_id} (v{push_result.get('version', '?')})", file=sys.stderr)
+        except PushConflictError as e:
+            r['push'] = {'status': 'conflict', 'error': str(e)}
+            print(f"  conflict {page_id}: {e}", file=sys.stderr)
+        except Exception as e:
+            r['push'] = {'status': 'error', 'error': str(e)}
+            print(f"  error {page_id}: {e}", file=sys.stderr)
+
+    print(f"\nPushed {push_count}/{len(pushable)} file(s)", file=sys.stderr)
     return results
 
 
-def _do_push(page_id: str):
-    """verify 통과 후 Confluence에 push한다."""
-    var_dir = _PROJECT_DIR / 'var' / page_id
-    patched_path = var_dir / 'reverse-sync.patched.xhtml'
-    xhtml_body = patched_path.read_text()
+class PushConflictError(Exception):
+    """Confluence 페이지 버전 충돌 (409)."""
+    pass
 
-    from reverse_sync.confluence_client import ConfluenceConfig, get_page_version, update_page_body
+
+def _ensure_confluence_config():
+    """Confluence 인증 설정을 확인하고 (config, ) 튜플을 반환한다."""
+    from reverse_sync.confluence_client import ConfluenceConfig
     config = ConfluenceConfig()
     if not config.email or not config.api_token:
         print('Error: ~/.config/atlassian/confluence.conf 파일을 설정하세요. (형식: email:api_token)',
               file=sys.stderr)
         sys.exit(1)
+    return config
 
+
+def _do_push(page_id: str, config=None):
+    """verify 통과 후 Confluence에 push한다.
+
+    1. 현재 페이지 XHTML을 백업 (reverse-sync.backup.xhtml)
+    2. patched XHTML을 Confluence에 push
+    3. 409 충돌 시 PushConflictError 발생
+    """
+    from reverse_sync.confluence_client import get_page_version, get_page_body, update_page_body
+    import requests as _requests
+
+    if config is None:
+        config = _ensure_confluence_config()
+
+    var_dir = _PROJECT_DIR / 'var' / page_id
+    patched_path = var_dir / 'reverse-sync.patched.xhtml'
+    xhtml_body = patched_path.read_text()
+
+    # 1) 현재 페이지 정보 조회 + XHTML 백업
     page_info = get_page_version(config, page_id)
+    current_xhtml = get_page_body(config, page_id)
+    backup_path = var_dir / 'reverse-sync.backup.xhtml'
+    backup_path.write_text(current_xhtml)
+
+    # 2) push (optimistic locking — version mismatch → 409)
     new_version = page_info['version'] + 1
-    resp = update_page_body(config, page_id,
-                            title=page_info['title'],
-                            version=new_version,
-                            xhtml_body=xhtml_body)
+    try:
+        resp = update_page_body(config, page_id,
+                                title=page_info['title'],
+                                version=new_version,
+                                xhtml_body=xhtml_body)
+    except _requests.HTTPError as e:
+        if e.response is not None and e.response.status_code == 409:
+            raise PushConflictError(
+                f"페이지 {page_id} ({page_info['title']})가 Confluence에서 변경되었습니다. "
+                f"fetch로 최신 버전을 가져온 후 다시 시도하세요."
+            ) from e
+        raise
+
     return {
         'page_id': page_id,
         'title': resp.get('title', page_info['title']),
         'version': resp.get('version', {}).get('number', new_version),
         'url': resp.get('_links', {}).get('webui', ''),
+        'backup': str(backup_path),
     }
 
 
@@ -809,6 +939,8 @@ def main():
     _add_common_args(push_parser)
     push_parser.add_argument('--dry-run', action='store_true',
                              help='검증만 수행, Confluence 반영 안 함 (= verify)')
+    push_parser.add_argument('--yes', '-y', action='store_true',
+                             help='확인 프롬프트 없이 바로 push (CI/자동화용)')
     push_parser.add_argument('--json', action='store_true',
                              help='결과를 JSON 형식으로 출력')
 
@@ -853,21 +985,34 @@ def main():
             use_json = getattr(args, 'json', False)
             failures_only = getattr(args, 'failures_only', False)
 
+            auto_yes = getattr(args, 'yes', False)
+
+            if not dry_run and not auto_yes and not sys.stdin.isatty():
+                print('Error: 비대화형 환경에서는 --yes 옵션이 필요합니다.', file=sys.stderr)
+                sys.exit(1)
+
             if getattr(args, 'branch', None):
                 # 배치 모드
                 results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
                                            failures_only=failures_only, push=not dry_run,
+                                           yes=auto_yes,
                                            lenient=getattr(args, 'lenient', False))
                 if use_json:
                     output = results
                     if failures_only:
-                        output = [r for r in results if r.get('status') not in ('pass', 'no_changes')]
+                        output = [r for r in results
+                                  if r.get('status') not in ('pass', 'no_changes')
+                                  or r.get('push', {}).get('status') in ('conflict', 'error')]
                     print(json.dumps(output, ensure_ascii=False, indent=2))
                 else:
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
-                if has_failure:
+                has_push_failure = any(
+                    r.get('push', {}).get('status') in ('conflict', 'error')
+                    for r in results
+                )
+                if has_failure or has_push_failure:
                     sys.exit(1)
             else:
                 # 기존 단일 파일 모드
@@ -879,8 +1024,17 @@ def main():
 
                 if not dry_run and result.get('status') == 'pass':
                     page_id = result['page_id']
-                    push_result = _do_push(page_id)
-                    print(json.dumps(push_result, ensure_ascii=False, indent=2))
+                    title = result.get('title', page_id)
+                    if not auto_yes:
+                        if not _confirm(f"Push {title} ({page_id}) to Confluence? [y/N] "):
+                            print("Push 취소", file=sys.stderr)
+                            sys.exit(0)
+                    try:
+                        push_result = _do_push(page_id)
+                        print(json.dumps(push_result, ensure_ascii=False, indent=2))
+                    except PushConflictError as e:
+                        print(f"Error: {e}", file=sys.stderr)
+                        sys.exit(1)
                 elif not dry_run and result.get('status') != 'pass':
                     print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
                           file=sys.stderr)
