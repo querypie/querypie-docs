@@ -15,22 +15,22 @@ PolicyはIaCのような形態でYAML Codeをベースに動作します。
 
 ### 設定可能なポリシー項目
 
-*  **serverGroup**  : 接続を許可するサーバーグループ
-*  **account** : サーバーグループに登録されたAccount
-*  **protocols**  : 許可プロトコル（10.2基準、SSH、SFTP、TELNET、FTP、RDPサポート）
-*  **commandRef**  : 接続時適用するコマンドテンプレート
+*  **serverGroup**: 接続を許可するサーバーグループ
+*  **account**: サーバーグループに登録されたAccount
+*  **protocols**: 許可プロトコル（10.2基準、SSH、SFTP、TELNET、FTP、RDPサポート）
+*  **commandRef**: 接続時適用するコマンドテンプレート
     * 選択したCommand Templateの内容は`Command Policy Detail`アコーディオンを展開して確認可能
     * コマンドテンプレートの生成と管理方法は[Command Templates](../command-templates)参照
     * Allow / Denyコマンドテンプレートをすべて適用した場合、Deny優先適用
-*  **accessTime**  : 接続許可時間
-*  **accessWeekday**  : 接続可能曜日
-*  **ipAddress**  : 接続可能IP設定<br/>*Security &gt; Resource IP Access Control Configuration設定に該当する場合、許可した範囲内のIPのみアクセス許可
-*  **commandAudit**  : 接続時のコマンド監査適用の有無
-*  **commandDetection**  : ScriptとAliasが呼び出される時、内部の禁止コマンド検出の有無設定<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
-*  **proxyUsage**  : Agentを通じたプロキシ接続許可の有無
-*  **maxSessions**  : サーバー当たり最大同時接続数
-*  **sessionTimeout** : サーバーセッションタイムアウト基準時間（分）
-*  **requirePrivilege** : サーバー接続時の権限承認必要の有無<br/>*このオプションを有効化（Enable）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けなければサーバーに接続できません。
+*  **accessTime**: 接続許可時間
+*  **accessWeekday**: 接続可能曜日
+*  **ipAddress**: 接続可能IP設定<br/>*Security &gt; Resource IP Access Control Configuration設定に該当する場合、許可した範囲内のIPのみアクセス許可
+*  **commandAudit**: 接続時のコマンド監査適用の有無
+*  **commandDetection**: ScriptとAliasが呼び出される時、内部の禁止コマンド検出の有無設定<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
+*  **proxyUsage**: Agentを通じたプロキシ接続許可の有無
+*  **maxSessions**: サーバー当たり最大同時接続数
+*  **sessionTimeout**: サーバーセッションタイムアウト基準時間（分）
+*  **requirePrivilege**: サーバー接続時の権限承認必要の有無<br/>*このオプションを有効化（Enable）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けなければサーバーに接続できません。
 
 
 ### Policyコードの編集

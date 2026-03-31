@@ -32,9 +32,9 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Server Groups menu.
 2. Click the `+ Create Group` button in the top right.
 3. Enter the following information for group creation.
-    1.  **Name** : Name that can distinguish the server group on the screen.
-    2.  **Description** : You can enter additional descriptions of the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups.
-    3.  **Server Tags** : You can dynamically manage server group targets by specifying tags of servers to be grouped through Server Tags.
+    1.  **Name**: Name that can distinguish the server group on the screen.
+    2.  **Description**: You can enter additional descriptions of the server group. If there are multiple administrators, we recommend entering detailed names and descriptions according to purpose for easy identification between server groups.
+    3.  **Server Tags**: You can dynamically manage server group targets by specifying tags of servers to be grouped through Server Tags.
 4. Save through the `Save` button.
 
 <Callout type="info">
@@ -108,7 +108,7 @@ Test Connection can only be used after saving the Server Group.
   </figure>
 3. You can set accounts by category.
     1. Category : You must first select a Category that defines the authentication method and type of the account. The setting items displayed below change dynamically according to the selected Category.
-    2.  **Caution** : After creating an account, the Category cannot be modified, so you must choose carefully.
+    2.  **Caution**: After creating an account, the Category cannot be modified, so you must choose carefully.
 4. Setting items by Category
     1.  **QueryPie Internal Authentication**
         1. `QueryPie - Manual Login` : Users directly enter the password of the set account when accessing the server.
@@ -136,19 +136,19 @@ Test Connection can only be used after saving the Server Group.
             * Required condition: To use One Time Account, a Provisioning account must be designated first in the server group.
     3.  **Secret Store Integration (Hashicorp Vault)**
         1. Category items are visible only when Admin &gt; General &gt; Security &gt; Secret Stores is activated.
-        2. `Vault - K/V - Password` **** : Uses passwords stored in Vault K/V engine.
+        2. `Vault - K/V - Password` ****: Uses passwords stored in Vault K/V engine.
             * Required items : Alias, Secret Store, Account Path, Password Path
                 * Secret Store : Only items with K/V engine type are filtered and displayed.
             * When utilizing Secret Store integration information when registering Account information in server groups, you can access connections through pre-designated Secret Store authentication information integration. By pre-storing server authentication information in Secret Store and having users utilize server authentication information stored in Secret Store when accessing servers remotely, security for server authentication information can be enhanced. Servers designated for Server Groups are forced to use the same Secret Store as Server Groups.
             * Enter the server account name to be exposed to users in the Alias field.
-        3. `Vault - K/V - SSH Key` **** : Uses SSH Keys stored in Vault K/V engine.
+        3. `Vault - K/V - SSH Key` ****: Uses SSH Keys stored in Vault K/V engine.
             * Required items : Alias, Secret Store, Account Path, SSH Key Path
                 * Secret Store : Only items with K/V engine type are filtered and displayed.
-        4. `Vault - SSH - OTP` **** : Uses Vault's SSH OTP engine.
+        4. `Vault - SSH - OTP` ****: Uses Vault's SSH OTP engine.
             * Required items: Account, Secret Store, Vault Role Path
                 * Secret Store : Only items with OTP engine type are filtered and displayed.
             * You can manage server accounts in Passwordless form using Hashicorp Vault's SSH OTP engine. However, you must install vault-ssh-helper, which is Vault's server agent, on the server. For detailed guide, please refer to [Hashicorp Vault Official Guide](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp).
-        5. `Vault - SSH - CA` **** : Uses Vault's SSH CA engine.
+        5. `Vault - SSH - CA` ****: Uses Vault's SSH CA engine.
             * Required items: Account, Secret Store, Vault Role Path
                 * Secret Store : Only items with CA engine type are filtered and displayed.
             * You can manage server accounts in Passwordless form using Hashicorp Vault's SSH CA engine (Signed SSH certificates). However, you must add the Public Key issued by the vault ca engine to the TrustedUserCAKeys of the server to be accessed. For detailed guide, please refer to [Hashicorp Vault Official Guide](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates).
