@@ -1368,3 +1368,57 @@ class TestPushConfirmPrompt:
         mock_confirm.assert_not_called()
         mock_push.assert_called_once()
         assert results[0]['push']['version'] == 2
+
+
+class TestPushExitCode:
+    """배치 push conflict/error 시 exit code 테스트."""
+
+    def test_batch_push_conflict_exits_nonzero(self, monkeypatch):
+        """배치에서 push conflict 발생 시 exit 1."""
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'b', '--yes'])
+        batch_results = [
+            {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+             'push': {'status': 'conflict', 'error': 'conflict'}},
+        ]
+
+        with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+             patch('builtins.print'):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+
+        assert exc_info.value.code == 1
+
+    def test_batch_push_all_success_exits_zero(self, monkeypatch):
+        """배치에서 모든 push 성공 시 exit 0."""
+        monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'b', '--yes'])
+        batch_results = [
+            {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+             'push': {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}},
+        ]
+
+        with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
+             patch('builtins.print'):
+            main()  # exit 0 (no exception)
+
+
+class TestCleanArtifactsPreservesBackup:
+    """_clean_reverse_sync_artifacts가 backup을 보존하는지 확인."""
+
+    def test_backup_preserved(self, tmp_path, monkeypatch):
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'preserve-backup'
+        var_dir = tmp_path / 'var' / page_id
+        var_dir.mkdir(parents=True)
+
+        # 여러 reverse-sync 아티팩트 생성
+        (var_dir / 'reverse-sync.diff.yaml').write_text('diff')
+        (var_dir / 'reverse-sync.patched.xhtml').write_text('patched')
+        (var_dir / 'reverse-sync.backup.xhtml').write_text('backup')
+
+        from reverse_sync_cli import _clean_reverse_sync_artifacts
+        _clean_reverse_sync_artifacts(page_id)
+
+        # backup만 남아야 함
+        assert (var_dir / 'reverse-sync.backup.xhtml').exists()
+        assert not (var_dir / 'reverse-sync.diff.yaml').exists()
+        assert not (var_dir / 'reverse-sync.patched.xhtml').exists()

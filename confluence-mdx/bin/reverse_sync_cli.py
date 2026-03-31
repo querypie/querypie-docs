@@ -169,6 +169,8 @@ def _clean_reverse_sync_artifacts(page_id: str) -> Path:
     """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
     var_dir = _PROJECT_DIR / 'var' / page_id
     for f in var_dir.glob('reverse-sync.*'):
+        if f.name == 'reverse-sync.backup.xhtml':
+            continue
         f.unlink()
     verify_mdx = var_dir / 'verify.mdx'
     if verify_mdx.exists():
@@ -948,7 +950,11 @@ def main():
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
-                if has_failure:
+                has_push_failure = any(
+                    r.get('push', {}).get('status') in ('conflict', 'error')
+                    for r in results
+                )
+                if has_failure or has_push_failure:
                     sys.exit(1)
             else:
                 # 기존 단일 파일 모드
