@@ -107,7 +107,7 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
 
     if block_type == 'heading':
         s = text.lstrip('#').strip()
-        s = re.sub(r'\*{2,}(.+?)\*{2,}', r'\1', s)
+        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
         s = re.sub(
             r'<Badge\s+color="([^"]+)">(.*?)</Badge>',
@@ -138,7 +138,7 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
             s = ' '.join(c for c in cells if c)
         s = re.sub(r'^\d+\.(?:\s+|$)', '', s)
         s = re.sub(r'^[-*+]\s+', '', s)
-        s = re.sub(r'\*{2,}(.+?)\*{2,}', r'\1', s)
+        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
         # italic *...* 제거 (bold 제거 후이므로 단일 * 만 대상)
         s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)
