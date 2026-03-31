@@ -1,0 +1,221 @@
+---
+title: 'Query Rules'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153040/Query+Rules'
+---
+
+import { Callout } from 'nextra/components'
+
+# Query Rules
+
+### Overview
+
+Query Rules is a feature that allows you to set filtering rules such as allow, deny, and audit exclusion for SQL queries passing through QueryPie.
+
+For example, you can exclude (SKIP) heartbeat queries periodically executed by Connection Pools from Audit logs, deny (DENY) dangerous DDL queries such as `DROP TABLE`, or temporarily allow (ALLOW) queries that failed SQL parsing, among various other operational scenarios.
+
+When multiple rules are registered, they are evaluated in order of Priority, and the first matching rule is applied.
+
+<Callout type="info">
+This feature is provided as **Beta**.
+To use it, you must set the **Query Rules** option to `Enable` in the Experimental section on the `Admin > Databases > General > Configurations` page.
+After enabling, the `Admin > Databases > Policies > Query Rules` menu will appear.
+</Callout>
+
+<Callout type="important">
+Query Rules do not apply to MongoDB / DocumentDB.
+</Callout>
+
+### Creating a Query Rule
+
+Create a new Query Rule.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/policies/query-rules/database-settings_policies_query-rules.png" alt="database-settings_policies_query-rules.png" width="680" />
+</figure>
+
+1. Navigate to `Admin > Databases > Policies > Query Rules`.
+2. Click the `+ Add Query Rule` button in the top right.
+3. Enter the information for creating a Query Rule.
+    * **Basic Settings**
+        * **Enabled** : Sets whether the rule is active. You can enable or disable it using the toggle.
+        * **Priority** : Specifies the rule priority as a number. Lower numbers have higher priority. The default value is 100.
+    * **Target Settings**
+        * **Target Type** : Selects the scope of targets the rule applies to.
+            1. **All** : Applies to all connections.
+            2. **Connection** : Applies only to specific connections.
+            3. **Vendor** : Applies only to specific DB types (e.g., MySQL, PostgreSQL).
+        * **Input Mode** : When Target Type is Connection or Vendor, selects how to specify targets.
+            1. **Select** : Directly select targets from a list.
+            2. **RegExp Pattern** : Specify targets using a regular expression. For Connection, matching is performed against the Name or UUID.
+        * **Target Value** : Specifies the targets to apply the rule to. Multiple targets can be selected.
+    * **Pattern Settings**
+        * **Match Type** : Selects the query matching method.
+            1. **Exact** : Matches when the query string is an exact match (case-insensitive, leading/trailing whitespace trimmed).
+            2. **Regexp** : Matches using a regular expression pattern. Case-insensitive (`(?i)`) and DOTALL mode (`(?s)`, where `.` also matches newlines) are applied by default.
+            3. **Normalized** : Matches using placeholders after normalizing SQL (removing comments, normalizing whitespace, case-insensitive). `?` matches a single value (number, string, NULL, function call), and `?...` matches one or more values (e.g., IN clauses).
+        * **Pattern** : Enter the SQL pattern to match.
+        * **Test Pattern** : You can test whether a SQL statement matches the entered Pattern. Enter the SQL and click the `Test` button.
+        * **Origins** : Selects the query origins the rule applies to. The default value is All.
+            1. **All** : Applies to queries from all origins.
+            2. **Proxy** : Applies only to queries through the proxy.
+            3. **SQL Editor** : Applies only to queries executed from SQL Editor.
+    * **Action Settings** <br/> **Skip Action is for Proxy only.** When Skip is selected, the Origin is automatically set to Proxy and is not supported in SQL Editor. Since it is not recorded in Audit, do not use it for sensitive queries.
+        * **Action** : Selects the action to apply to queries matching the rule.
+            1. **Allow** : Executes the query bypassing policies (Privilege, Data Masking, etc.). It is still recorded in Audit logs.
+            2. **Deny** : Rejects query execution. It is recorded in Audit logs with a Prevented status.
+            3. **Skip** : Executes the query without Audit recording. All policies are skipped.
+        * **Error Message** : When Action is Deny, enter the error message to display to the user.
+        * **Allow Reason** : When Action is Allow, records the reason for allowing. It is stored in the action_comment of the Audit log.
+    * **Additional Information**
+        * **Max SQL Length** : Specifies the maximum length of SQL the rule applies to. The default value is 16,384 characters. If the SQL length exceeds this value, only this rule is skipped and evaluation proceeds to the next rule.
+        * **Comment** : Enter a description for the rule.
+4. Click the `Create` button to save.
+
+<Callout type="important">
+Rule changes are event-driven and are applied almost immediately in most cases.
+In multi-instance environments, it may take up to 10 minutes for other instances to reflect the changes.
+</Callout>
+
+### Testing a Query Rule
+
+You can test in advance whether registered rules correctly match a specific SQL statement.
+
+1. Navigate to `Admin > Databases > Policies > Query Rules`.
+2. Click the `Test` button in the top right.
+3. Enter the SQL to test, and optionally select an **Origin** and **Target Type**.
+4. If **Target Type** is `Connection`, select a Connection; if it is `Vendor`, select a Vendor.
+5. Click the `Test with Cache` or `Test without Cache` button to see the list of matched rules and the final rule that will be applied.
+
+<Callout type="important">
+Immediately after changing rules, you can use the `Test without Cache` button to query the latest rules directly from the DB.
+</Callout>
+
+### Viewing Query Rules
+
+View the list of registered Query Rules.
+
+1. Navigate to `Admin > Databases > Policies > Query Rules`.
+2. The list of registered Query Rules is displayed.
+    * **ID** : The unique identifier of the Query Rule.
+    * **Priority** : The rule priority.
+    * **Enabled** : Whether the rule is active.
+    * **Target Type** : The scope of targets the rule applies to.
+    * **Pattern** : The matching pattern.
+    * **Action** : The action applied when matched (Allow / Deny / Skip).
+    * **Comment** : A description of the rule.
+
+### Editing a Query Rule
+
+Modify the settings of an existing Query Rule.
+
+1. Navigate to `Admin > Databases > Policies > Query Rules`.
+2. Click the item to edit from the Query Rule list.
+3. Modify the desired information on the detail screen.
+4. Click the `Save` button to save.
+
+### Deleting a Query Rule
+
+Delete a registered Query Rule.
+
+1. Navigate to `Admin > Databases > Policies > Query Rules`.
+2. Select the checkbox of the item to delete from the Query Rule list. Multiple items can be selected at once.
+3. Click the `Delete` button that appears at the top.
+4. Click `OK` in the confirmation popup.
+______
+
+### Usage Examples
+
+#### Example 1: Excluding Heartbeat Queries from Audit (SKIP)
+
+You can exclude `SELECT 1` queries periodically executed by Connection Pools that are unnecessarily accumulating in Audit logs.
+
+| **Setting**   | **Value**      |
+| ----------- | ---------- |
+| Priority    | 10         |
+| Target Type | All        |
+| Match Type  | Exact      |
+| Pattern     | `SELECT 1` |
+| Origins     | Proxy      |
+| Action      | Skip       |
+
+<Callout type="important">
+Skip Action is for Proxy only.
+This rule does not apply to `SELECT 1` executed from SQL Editor.
+</Callout>
+
+#### Example 2: Blocking Dangerous DDL Queries (DENY)
+
+Block queries that can cause data loss, such as `DROP DATABASE` and `DROP TABLE`, across all connections.
+
+| **Setting**     | **Value**                               |
+| ------------ | ----------------------------------- |
+| Priority     | 20                                  |
+| Target Type  | All                                 |
+| Match Type   | RegExp                              |
+| Pattern      | `DROP\s+(DATABASE|TABLE)`           |
+| Origins      | All                                 |
+| Action       | Deny                                |
+| Error Message | `This query has been blocked by security policy. Please contact your administrator.` |
+
+<Callout type="important">
+Regexp matching is case-insensitive by default, so queries entered in lowercase such as `drop database` are also blocked.
+</Callout>
+
+#### Example 3: Temporarily Allowing SQL Parsing Failure Queries (ALLOW)
+
+Temporarily allow a specific query that is being blocked due to SQL parsing failure.
+Audit logs are recorded normally.
+
+| **Setting**    | **Value**                              |
+| ------------ | ---------------------------------- |
+| Priority     | 30                                 |
+| Target Type  | Connection                         |
+| Input Mode   | Select                             |
+| Target Value | (Select the specific Connection to allow)             |
+| Match Type   | Normalized                         |
+| Pattern      | `SELECT * FROM users WHERE id = ?` |
+| Origins      | All                                |
+| Action       | Allow                              |
+| Allow Reason | `Temporary allow for parsing failure - QPD-1234`           |
+
+#### Example 4: Excluding Configuration Queries for a Specific DB Vendor (SKIP)
+
+Exclude encoding configuration queries automatically executed by MySQL Connection Pools from Audit.
+
+| **Setting**    | **Value**               |
+| ------------ | ------------------- |
+| Priority     | 10                  |
+| Target Type  | Vendor              |
+| Input Mode   | Select              |
+| Target Value | MySQL               |
+| Match Type   | Exact               |
+| Pattern      | `SET NAMES utf8mb4` |
+| Origins      | Proxy               |
+| Action       | Skip                |
+
+#### Example 5: Using Priority - Allow Exception Then Block All
+
+When you want to allow a specific Connection while blocking all others, use Priority.
+
+**Rule 1 - Allow Exception** (Priority: 10)
+
+| **Setting**    | **Value**          |
+| ------------ | -------------- |
+| Priority     | 10             |
+| Target Type  | Connection     |
+| Target Value | dev-db-001     |
+| Match Type   | Regexp         |
+| Pattern      | `DROP\s+TABLE` |
+| Action       | Allow          |
+
+**Rule 2 - Block All** (Priority: 20)
+
+| **Setting**   | **Value**          |
+| ----------- | -------------- |
+| Priority    | 20             |
+| Target Type | All            |
+| Match Type  | Regexp         |
+| Pattern     | `DROP\s+TABLE` |
+| Action      | Deny           |
+
+Rule 1, which has the lower Priority number, is evaluated first, so `DROP TABLE` on `dev-db-001` is allowed, while it is blocked on all other Connections by Rule 2.

@@ -4,4 +4,5 @@ export default {
   'data-masking': 'Data Masking',
   'sensitive-data': 'Sensitive Data',
   'policy-exception': 'Policy Exception',
+  'query-rules': 'Query Rules',
 };

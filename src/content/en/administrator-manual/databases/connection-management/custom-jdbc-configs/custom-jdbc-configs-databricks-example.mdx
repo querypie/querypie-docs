@@ -1,0 +1,63 @@
+---
+title: 'Custom JDBC Configs - Databricks Example'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153057/Custom+JDBC+Configs+-+Databricks'
+---
+
+import { Callout } from 'nextra/components'
+
+# Custom JDBC Configs - Databricks Example
+
+### Overview
+
+Starting from QueryPie ACP 11.6.0, the Custom JDBC Configs feature allows administrators to register a JDBC Driver and create a Databricks connection with policies applied.<br/>The query parser (QSI) supported by QueryPie ACP for Databricks is ANSI query, so Databricks-specific syntax may not work correctly.
+
+<Callout type="info">
+This feature is provided as **Beta**.
+To use it, you must set the **Custom JDBC Configuration** option to `Enable` in the Experimental section on the `Admin > Databases > General > Configurations` page.
+After activation, the `Admin > Databases > Connection Management > Custom JDBC Configs` menu will appear.
+</Callout>
+
+### Registering Databricks as a Custom JDBC Vendor
+
+1. Navigate to `Admin > Databases > Connection Management > Custom JDBC Configs`.
+2. Click the `Create Custom JDBC` button in the upper right corner.
+3. Enter an identifiable name in the Name field. This name will be displayed in the Custom JDBC Vendors section when creating a DB connection.
+4. Enter any additional information in the Description field.
+5. Enter the Databricks driver class in the `Driver Class` field of the JDBC Configuration section. (For Databricks: `com.databricks.client.jdbc.Driver`)<br/>In general, the Driver Class can be verified with the following command:
+  ```
+  unzip -p <your-driver.jar> META-INF/services/java.sql.Driver
+  ```
+6. Enter `jdbc:databricks://{host}:{port}/default` in the JDBC URL Template.
+7. Enter `/` in the Options Prefix.
+8. Enter `443` in the Default Port.
+9. Enter `--add-opens=java.base/java.nio=ALL-UNNAMED` in the JVM Arguments.
+10. Click the `Select JAR file to upload` button in the Driver JAR File section and upload the JDBC Driver.<br/>Databricks: [JDBC Driver Download](https://www.databricks.com/spark/jdbc-drivers-download)
+11. Click the `Save` button to save the configuration.
+
+### Creating a Databricks Connection with a Custom Vendor
+
+1. Navigate to `Admin > Databases > Connection Management > DB Connections`.
+2. Click the `Create Connection` button in the upper right corner.
+3. Scroll down and select the Databricks entry you registered earlier (the item entered as `Name` when creating the Custom JDBC) from the **Custom JDBC Vendors** section.
+4. Enter the connection information such as **Connection Name**, **Host**, **Port**, etc.
+    1. Host: Copy and paste the server hostname value obtained from Databricks.
+    2. Port: Use the default value of 443 specified in the Custom Vendor.
+    3. Database Name: Leave it empty or enter the name corresponding to a Databricks Catalog (refer to the **Structure Mapping Comparison** table below). Leaving it empty is recommended since this specifies the default path.
+    4. Username: Since Databricks uses tokens, leave the Username empty.
+    5. Password: Enter the token value issued from Settings (User Settings) &gt; Developer &gt; Access tokens in the Databricks console. When generating the token, specify the token scope as sql, workspace, catalog.
+    6. Other Options: Copy and paste the portion after default; from the JDBC URL field found in the connection details of the Databricks console.
+5. Select a **QSI Parser** if needed. Select the default `ANSI SQL`.
+6. Click the `Next` button to proceed to the connection creation complete screen.
+
+#### Structure Mapping Comparison
+
+| **Databricks** | **QueryPie ACP** |
+| -------------- | ---------------- |
+| Catalog        | Database         |
+| Schema         | Schema           |
+| Table          | Table            |
+| Column         | Column           |
+
+<Callout type="important">
+Only Custom JDBC Vendors with `Active` status are displayed in the `Custom JDBC Vendors` section.
+</Callout>
