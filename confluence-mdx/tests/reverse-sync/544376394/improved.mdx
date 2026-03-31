@@ -53,12 +53,12 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Create App Integrati
 4. `Create App Integration` 버튼을 클릭합니다.
 5. 커스텀 SCIM 연동을 목적으로 Sign-in method로 **SAML 2.0** 옵션을 선택한 뒤 `Next` 버튼을 클릭합니다.
 6. General Settings 단계에서 General Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
-    1. **App name** : 식별 가능한 애플리케이션 이름을 기입합니다.
-    2. **App logo** : 사용자가 식별 가능한 로그를 업로드합니다.
+    1. **App name**: 식별 가능한 애플리케이션 이름을 기입합니다.
+    2. **App logo**: 사용자가 식별 가능한 로그를 업로드합니다.
 7. Configure SAML 단계에서 SAML Settings 내 값을 적절히 정의한 뒤 하단의 `Next` 버튼을 클릭합니다.
-    1. **Single sign-on URL** : https://`{{querypie.domain}}`/saml/sp/acs
-    2. **Audience URI (SP Entity ID)** : https://`{{querypie.domain}}`/saml/sp/metadata
-    3. **Attribute Statements (optional)** : QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
+    1. **Single sign-on URL**: https://`{{querypie.domain}}`/saml/sp/acs
+    2. **Audience URI (SP Entity ID)**: https://`{{querypie.domain}}`/saml/sp/metadata
+    3. **Attribute Statements (optional)**: QueryPie url 필수 attribute 들을 이하와 같이 기입합니다.
         1. Name: **firstName** <br/>Name format: Unspecified<br/>Value: **user.firstName**
         2. Name: **lastName** <br/>Name format: Unspecified<br/>Value: **user.lastName**
         3. Name: **email** <br/>Name format: Unspecified<br/>Value: **user.email**
@@ -118,9 +118,9 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 1. Okta에서 생성한 SCIM App의 Provisioning 탭의 To App 화면으로 이동합니다.
 2. Provisioning to App 우측의 Edit 버튼을 클릭합니다.
 3. 이하의 설정의 체크박스를 활성화한 뒤 Save 버튼을 클릭하여 저장합니다.
-    1. **Create Users** : 사용자가 앱에 할당될 때 앱에 추가합니다.
-    2. **Update User Attributes** : 사용자의 프로필 업데이트가 발생되면 앱에 반영합니다.
-    3. **Deactivate Users** : 사용자가 비활성화될 때 앱에서 함께 비활성화합니다.
+    1. **Create Users**: 사용자가 앱에 할당될 때 앱에 추가합니다.
+    2. **Update User Attributes**: 사용자의 프로필 업데이트가 발생되면 앱에 반영합니다.
+    3. **Deactivate Users**: 사용자가 비활성화될 때 앱에서 함께 비활성화합니다.
 4. QueryPie SCIM App Attribute Mappings 하단의 `Go to Profile Editor` 버튼을 클릭합니다.
 5. Attributes 하단의 `Mappings` 버튼을 클릭합니다.
 6. 팝업창 상단의 두 탭 중 “Okta User to `{사용자가 정의한 App명}`” 으로 기재된 탭으로 이동합니다.
@@ -193,8 +193,8 @@ ______
   Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt; Assignments
   </figcaption>
   </figure>
-    1. **Assign to People** : 사용자 개별 단위로 할당
-    2. **Assign to Groups** : 사용자 그룹 단위로 할당
+    1. **Assign to People**: 사용자 개별 단위로 할당
+    2. **Assign to Groups**: 사용자 그룹 단위로 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Users로 이동하여 사용자가 정상 푸시되었는지 확인합니다.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/general/user-management/provisioning/okta-provisioning-integration-guide/image-20240723-040531.png" alt="Administrator &gt; General &gt; User Management &gt; Users &gt; List Details" width="736" />
@@ -214,8 +214,8 @@ Okta Admin Console &gt; Applications &gt; Applications &gt; Custom SCIM App &gt;
 </figure>
 
 1. SCIM 앱으로 다시 돌아가서 Push Groups 탭에서 `Push Groups` 버튼의 옵션을 통해 사용자를 할당합니다.
-    1. **Find groups by name** : 푸시할 그룹명으로 검색하여 할당
-    2. **Find groups by rule** : 검색 룰을 정의하여 조건에 부합하는 그룹 할당
+    1. **Find groups by name**: 푸시할 그룹명으로 검색하여 할당
+    2. **Find groups by rule**: 검색 룰을 정의하여 조건에 부합하는 그룹 할당
 2. QueryPie 앱으로 돌아가서 Administrator &gt; General &gt; User Management &gt; Groups로 이동하여 그룹이 정상 푸시되었는지 확인합니다.
 
 <Callout type="important">

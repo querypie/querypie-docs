@@ -138,7 +138,11 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
             s = ' '.join(c for c in cells if c)
         s = re.sub(r'^\d+\.(?:\s+|$)', '', s)
         s = re.sub(r'^[-*+]\s+', '', s)
-        s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
+        # bold 제거 (****text**** 등 중첩 패턴 대응 — 반복 적용)
+        prev = None
+        while prev != s:
+            prev = s
+            s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
         s = re.sub(r'`([^`]+)`', r'\1', s)
         # italic *...* 제거 (bold 제거 후이므로 단일 * 만 대상)
         s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)

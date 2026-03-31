@@ -862,9 +862,12 @@ def build_patches(
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        _old_plain, _new_plain,
+                    # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
+                    # (strong trailing space 등으로 인한 이중 공백 문제 방지)
+                    _xhtml_plain_normalized = collapse_ws(
                         _text_change_patches[bid]['new_plain_text'])
+                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
+                        _old_plain, _new_plain, _xhtml_plain_normalized)
                 if has_ol_start_change:
                     _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 if has_inline_boundary:

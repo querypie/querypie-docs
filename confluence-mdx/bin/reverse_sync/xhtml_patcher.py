@@ -296,6 +296,7 @@ def _collapse_ws(s: str) -> str:
     return re.sub(r'\s+', ' ', s).strip()
 
 
+
 def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
     """<ac:>/<ri:> 보존 시 <strong> 요소만 직접 수정하여 bold 경계를 교정한다.
 

@@ -74,6 +74,6 @@ class Test544376004:
         replace_patches = [patch for patch in patches if patch.get("action") == "replace_fragment"]
         assert replace_patches, "Phase 3 list reconstruction should emit replace_fragment"
         assert any(patch["xhtml_xpath"] == "ul[3]" for patch in replace_patches)
-        assert "<strong>Enable Attribute Synchronization :</strong>  LDAP" in patched
+        assert "Enable Attribute Synchronization</strong>:  LDAP" in patched
         assert '<ac:image ac:alt="image-20241209-124345.png"' in patched
         assert '<img src="/administrator-manual/general/user-management/authentication/integrating-with-ldap/image-20241209-124345.png"' not in patched
