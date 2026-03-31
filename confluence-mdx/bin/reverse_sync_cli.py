@@ -947,7 +947,9 @@ def main():
                 if use_json:
                     output = results
                     if failures_only:
-                        output = [r for r in results if r.get('status') not in ('pass', 'no_changes')]
+                        output = [r for r in results
+                                  if r.get('status') not in ('pass', 'no_changes')
+                                  or r.get('push', {}).get('status') in ('conflict', 'error')]
                     print(json.dumps(output, ensure_ascii=False, indent=2))
                 else:
                     _print_results(results, show_all_diffs=show_all_diffs,
