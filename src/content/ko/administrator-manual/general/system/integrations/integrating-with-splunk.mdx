@@ -58,7 +58,7 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
         3. 만약 HTTPS 대신 HTTP를 사용하기 위해서는 먼저 Splunk의 HEC 옵션에서 SSL 옵션을 사용하지 않도록 설정해야 합니다. HTTP 선택 시, 추가적으로 다음의 필드 값을 입력해야 합니다:
             * **HEC Host** : Splunk server의 hostname 또는 ip 주소를 입력합니다.
             * **HEC Token** : Splunk HEC token 값을 입력합니다.
-    3. **Destination Address (Hostname)** : syslog를 수신하는 Splunk server 또는 forwarder의 IP address 또는 hostname을 입력합니다. HTTP, HTTPS 프로토콜은 이부분이 HEC Host 입력으로 바뀌어 표시됩니다.
+    3. **Destination Address (Hostname)**: syslog를 수신하는 Splunk server 또는 forwarder의 IP address 또는 hostname을 입력합니다. HTTP, HTTPS 프로토콜은 이부분이 HEC Host 입력으로 바뀌어 표시됩니다.
     4. **Port** : sylog server의 listening port를 입력합니다. (TCP/UDP 기본값 514)
         1. Splunk HEC port는 Splunk 의 설정을 먼저 확인 후 입력해야 합니다.
         2. Splunk 메뉴에서 HTTP/HTTPS 프로토콜을 선택한 경우:
