@@ -7,7 +7,7 @@ from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
-    _parse_and_diff, _save_diff_yaml, _compile_result,
+    _parse_and_diff, _save_diff_yaml, _compile_result, _print_results,
     _detect_language, _validate_improved_mdx,
     _find_blockquotes_missing_blank_line,
     PushConflictError, _confirm,
@@ -1441,6 +1441,48 @@ class TestPushExitCode:
         with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results), \
              patch('builtins.print'):
             main()  # exit 0 (no exception)
+
+
+class TestPrintResultsPushStatus:
+    """텍스트 출력이 push 실패 상태를 반영하는지 확인."""
+
+    def test_failures_only_shows_push_conflict(self, monkeypatch, capsys):
+        monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
+
+        _print_results([
+            {
+                'file': 'src/content/ko/a.mdx',
+                'status': 'pass',
+                'changes_count': 1,
+                'push': {'status': 'conflict', 'error': 'version conflict'},
+            }
+        ], failures_only=True)
+
+        out = capsys.readouterr().out
+        assert 'src/content/ko/a.mdx' in out
+        assert 'PUSH CONFLICT' in out
+        assert 'version conflict' in out
+        assert '1 conflicts' in out
+        assert '1 passed' not in out
+
+    def test_summary_counts_push_error_as_failure(self, monkeypatch, capsys):
+        monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
+
+        _print_results([
+            {
+                'file': 'src/content/ko/b.mdx',
+                'status': 'pass',
+                'changes_count': 1,
+                'push': {'status': 'error', 'error': 'network error'},
+            }
+        ])
+
+        out = capsys.readouterr().out
+        assert 'src/content/ko/b.mdx' in out
+        assert 'PUSH ERROR' in out
+        assert 'network error' in out
+        assert '1 push errors' in out
+        assert '1 passed' not in out
 
 
 class TestCleanArtifactsPreservesBackup:

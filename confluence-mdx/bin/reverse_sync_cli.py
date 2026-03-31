@@ -472,6 +472,23 @@ def _print_diff_block(lines: str, label: str, c, BOLD, CYAN, RED, GREEN, DIM) ->
             print(line)
 
 
+def _display_status(result: Dict[str, Any]) -> str:
+    """출력/요약용 상태를 계산한다. push 실패가 있으면 verify 결과보다 우선한다."""
+    push_status = (result.get('push') or {}).get('status')
+    if push_status == 'conflict':
+        return 'push_conflict'
+    if push_status == 'error':
+        return 'push_error'
+    return result.get('status', 'unknown')
+
+
+def _display_error(result: Dict[str, Any], status: str) -> str:
+    """출력용 에러 메시지를 반환한다."""
+    if status in ('push_conflict', 'push_error'):
+        return (result.get('push') or {}).get('error', '')
+    return result.get('error', '')
+
+
 def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = False,
                    failures_only: bool = False) -> None:
     """검증 결과를 컬러 diff 포맷으로 출력한다.
@@ -488,7 +505,7 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     RED, GREEN, CYAN, YELLOW, BOLD, DIM = '31', '32', '36', '33', '1', '2'
 
     for r in results:
-        status = r.get('status', 'unknown')
+        status = _display_status(r)
         if failures_only and status in ('pass', 'no_changes'):
             continue
         file_path = r.get('file', r.get('page_id', '?'))
@@ -499,6 +516,10 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             badge = c(GREEN, 'PASS')
         elif status == 'no_changes':
             badge = c(DIM, 'NO CHANGES')
+        elif status == 'push_conflict':
+            badge = c(YELLOW, 'PUSH CONFLICT')
+        elif status == 'push_error':
+            badge = c(YELLOW, 'PUSH ERROR')
         elif status == 'error':
             badge = c(YELLOW, 'ERROR')
         else:
@@ -507,8 +528,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         print(f'\n{c(BOLD, file_path)}  {badge}  ({changes} change(s))')
 
         # 에러 메시지
-        if status == 'error':
-            print(f'  {c(RED, r.get("error", ""))}')
+        if status in ('error', 'push_conflict', 'push_error'):
+            print(f'  {c(RED, _display_error(r, status))}')
             continue
 
         if show_all_diffs:
@@ -542,10 +563,13 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
 
     # 요약
     total = len(results)
-    passed = sum(1 for r in results if r.get('status') == 'pass')
-    failed = sum(1 for r in results if r.get('status') == 'fail')
-    errors = sum(1 for r in results if r.get('status') == 'error')
-    no_chg = sum(1 for r in results if r.get('status') == 'no_changes')
+    display_statuses = [_display_status(r) for r in results]
+    passed = sum(1 for status in display_statuses if status == 'pass')
+    failed = sum(1 for status in display_statuses if status == 'fail')
+    errors = sum(1 for status in display_statuses if status == 'error')
+    conflicts = sum(1 for status in display_statuses if status == 'push_conflict')
+    push_errors = sum(1 for status in display_statuses if status == 'push_error')
+    no_chg = sum(1 for status in display_statuses if status == 'no_changes')
 
     parts = []
     if passed:
@@ -554,6 +578,10 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         parts.append(c(RED, f'{failed} failed'))
     if errors:
         parts.append(c(YELLOW, f'{errors} errors'))
+    if conflicts:
+        parts.append(c(YELLOW, f'{conflicts} conflicts'))
+    if push_errors:
+        parts.append(c(YELLOW, f'{push_errors} push errors'))
     if no_chg:
         parts.append(c(DIM, f'{no_chg} no changes'))
 
