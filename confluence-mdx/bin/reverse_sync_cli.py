@@ -214,11 +214,27 @@ def _save_diff_yaml(
         yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
 
 
+def _extract_frontmatter_title(mdx_blocks) -> str:
+    """MDX frontmatter에서 title 값을 추출한다."""
+    for block in mdx_blocks:
+        if block.type != 'frontmatter':
+            continue
+        for raw_line in block.content.splitlines():
+            line = raw_line.strip()
+            if not line.startswith('title:'):
+                continue
+            value = line.split(':', 1)[1].strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+                return value[1:-1]
+            return value
+    return ''
+
+
 def _compile_result(
     var_dir: Path, page_id: str, now: str,
     changes_count: int,
     mdx_diff_report: str, xhtml_diff_report: str,
-    verify_result, roundtrip_diff_report: str,
+    verify_result, roundtrip_diff_report: str, title: str = '',
 ) -> Dict[str, Any]:
     """검증 결과를 조립하여 저장하고 반환한다."""
     status = 'pass' if verify_result.passed else 'fail'
@@ -233,6 +249,8 @@ def _compile_result(
             'diff_report': roundtrip_diff_report,
         },
     }
+    if title:
+        result['title'] = title
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
     return result
@@ -331,11 +349,14 @@ def run_verify(
     # Step 1-2: MDX 파싱 + diff
     changes, alignment, original_blocks, improved_blocks = _parse_and_diff(
         original_mdx, improved_mdx)
+    title = _extract_frontmatter_title(improved_blocks)
 
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
                   'status': 'no_changes', 'changes_count': 0,
                   'mdx_diff_report': '', 'xhtml_diff_report': ''}
+        if title:
+            result['title'] = title
         (var_dir / 'reverse-sync.result.yaml').write_text(
             yaml.dump(result, allow_unicode=True, default_flow_style=False))
         return result
@@ -438,7 +459,7 @@ def run_verify(
     return _compile_result(
         var_dir, page_id, now, len(changes),
         mdx_diff_report, xhtml_diff_report,
-        verify_result, roundtrip_diff_report)
+        verify_result, roundtrip_diff_report, title=title)
 
 
 def _strip_frontmatter(mdx: str) -> str:
