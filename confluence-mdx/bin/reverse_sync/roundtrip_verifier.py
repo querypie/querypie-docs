@@ -173,8 +173,16 @@ def _normalize_table_cell_padding(text: str) -> str:
     _SEP_CELL_RE = re.compile(r'^[\s\-:]+$')
     lines = text.split('\n')
     result = []
+    in_code_block = False
     for line in lines:
         stripped = line.strip()
+        if stripped.startswith('```'):
+            in_code_block = not in_code_block
+            result.append(line)
+            continue
+        if in_code_block:
+            result.append(line)
+            continue
         if stripped.startswith('|') and stripped.endswith('|'):
             # 앞뒤 '|' 를 제거한 뒤 '|' 로 split → 각 셀 strip
             inner = stripped[1:-1]

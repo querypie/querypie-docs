@@ -6,6 +6,7 @@ from reverse_sync.roundtrip_verifier import (
     _normalize_br_space,
     _normalize_link_text_spacing,
     _normalize_sentence_breaks,
+    _normalize_table_cell_padding,
 )
 
 
@@ -187,6 +188,16 @@ class TestNormalizeLinkTextSpacing:
         result = _normalize_link_text_spacing(
             "* [ **A** ](a) and [ **B** ](b)")
         assert result == "* [**A**](a) and [**B**](b)"
+
+
+# --- _normalize_table_cell_padding 단위 테스트 ---
+
+
+class TestNormalizeTableCellPadding:
+    def test_fenced_code_block_preserved(self):
+        """펜스드 코드 블록 내부 pipe 행은 테이블로 처리하지 않는다."""
+        text = "```\n|a|b|\n```\n"
+        assert _normalize_table_cell_padding(text) == text
 
 
 # --- _normalize_sentence_breaks 단위 테스트 ---
