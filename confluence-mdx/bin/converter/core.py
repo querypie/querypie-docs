@@ -226,6 +226,12 @@ class SingleLineParser:
                 # 다음 텍스트가 이미 공백으로 시작하면 close_sp로 인한 이중 공백 방지
                 if close_sp and isinstance(node.next_sibling, NavigableString) and str(node.next_sibling)[:1] in (' ', '\t', '\n'):
                     close_sp = ""
+                # 다음 텍스트가 구두점으로 시작하면 close_sp 불필요
+                # (CommonMark: **punct**punct 는 valid right-flanking delimiter)
+                if close_sp and isinstance(node.next_sibling, NavigableString):
+                    _ns = str(node.next_sibling).lstrip()
+                    if _ns and _is_unicode_punctuation(_ns[0]):
+                        close_sp = ""
                 self.markdown_lines.append(f"{open_sp}**")
                 self.markdown_lines.append(inner)
                 self.markdown_lines.append(f"**{close_sp}")
@@ -242,6 +248,11 @@ class SingleLineParser:
             # 다음 텍스트가 이미 공백으로 시작하면 close_sp로 인한 이중 공백 방지
             if close_sp and isinstance(node.next_sibling, NavigableString) and str(node.next_sibling)[:1] in (' ', '\t', '\n'):
                 close_sp = ""
+            # 다음 텍스트가 구두점으로 시작하면 close_sp 불필요
+            if close_sp and isinstance(node.next_sibling, NavigableString):
+                _ns = str(node.next_sibling).lstrip()
+                if _ns and _is_unicode_punctuation(_ns[0]):
+                    close_sp = ""
             self.markdown_lines.append(f"{open_sp}*")
             self.markdown_lines.append(inner)
             self.markdown_lines.append(f"*{close_sp}")

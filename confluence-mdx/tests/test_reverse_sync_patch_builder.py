@@ -1947,19 +1947,36 @@ class TestApplyInlineFixups:
         result = str(soup)
         assert '<strong>Client Name</strong>' in result
 
-    def test_preserved_anchor_skipped(self):
-        """ac:/ri: 마크업이 있는 <p>는 fixup을 건너뛴다."""
+    def test_preserved_anchor_strong_boundary_fixup(self):
+        """ac:/ri: 마크업이 있는 <p>는 <strong> 경계만 직접 수정한다."""
         from bs4 import BeautifulSoup
-        xhtml = '<ul><li><p><ac:link>link</ac:link> <strong>Name</strong></p></li></ul>'
+        xhtml = '<ul><li><p><ac:link>link</ac:link> <strong>Name:</strong></p></li></ul>'
         soup = BeautifulSoup(xhtml, 'html.parser')
-        original = str(soup)
         fixups = [{
-            'old_plain': 'link Name',
-            'new_plain': 'link Name',
-            'new_inner_xhtml': '<strong>link Name</strong>',
+            'old_plain': 'link Name:',
+            'new_plain': 'link Name:',
+            'new_inner_xhtml': '<strong>Name</strong>:',
         }]
         _apply_inline_fixups(soup, fixups)
-        assert str(soup) == original  # 변경 없음
+        p = soup.find('p')
+        # <ac:link>은 보존되고 <strong> 경계만 변경
+        assert '<ac:link>link</ac:link>' in str(p)
+        assert '<strong>Name</strong>:' in str(p)
+
+    def test_preserved_anchor_inside_strong_boundary_fixup_preserves_markup(self):
+        """<strong> 내부 preserved anchor는 유지한 채 경계만 수정한다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><strong><ac:link>link</ac:link>:</strong></p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'link:',
+            'new_plain': 'link:',
+            'new_inner_xhtml': '<strong>link</strong>:',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        p = soup.find('p')
+        assert '<ac:link>link</ac:link>' in str(p)
+        assert '<strong><ac:link>link</ac:link></strong>:' in str(p)
 
     def test_duplicate_text_uses_match_index(self):
         """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
