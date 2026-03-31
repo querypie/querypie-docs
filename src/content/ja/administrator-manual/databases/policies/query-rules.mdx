@@ -1,0 +1,221 @@
+---
+title: 'Query Rules'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153040/Query+Rules'
+---
+
+import { Callout } from 'nextra/components'
+
+# Query Rules
+
+### Overview
+
+Query Ruleは、QueryPieを経由するSQLクエリに対して許可、ブロック、監査除外などのフィルタリングルールを設定できる機能です。
+
+例えば、Connection Poolが定期的に実行するheartbeatクエリをAuditログから除外(SKIP)したり、`DROP TABLE`のような危険なDDLクエリをブロック(DENY)したり、SQLパースに失敗したクエリを一時的に許可(ALLOW)するなど、さまざまな運用シナリオに活用できます。
+
+複数のルールが登録されている場合、Priority（優先順位）の順序で評価され、最初にマッチしたルールが適用されます。
+
+<Callout type="info">
+本機能は**ベータ（Beta）**として提供されます。
+使用するには、`Admin > Databases > General > Configurations`ページのExperimentalセクションで**Query Rules**オプションを`Enable`に設定する必要があります。
+有効化すると`Admin > Databases > Policies > Query Rules`メニューが表示されます。
+</Callout>
+
+<Callout type="important">
+MongoDB / DocumentDBにはQuery Ruleは適用されません。
+</Callout>
+
+### Query Ruleの作成
+
+新しいQuery Ruleを作成します。
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/policies/query-rules/database-settings_policies_query-rules.png" alt="database-settings_policies_query-rules.png" width="680" />
+</figure>
+
+1. `Admin > Databases > Policies > Query Rules`メニューに移動します。
+2. 右上の`+ Add Query Rule`ボタンをクリックします。
+3. Query Rule作成のための情報を入力します。
+    * **Basic Settings**
+        * **Enabled** : ルールの有効/無効を設定します。トグルで有効化/無効化できます。
+        * **Priority** : ルールの優先順位を数値で指定します。数値が小さいほど優先順位が高くなります。デフォルト値は100です。
+    * **Target Settings**
+        * **Target Type** : ルールの適用対象範囲を選択します。
+            1. **All** : すべてのコネクションに適用します。
+            2. **Connection** : 特定のコネクションにのみ適用します。
+            3. **Vendor** : 特定のDB種類（例：MySQL、PostgreSQL）にのみ適用します。
+        * **Input Mode** : Target TypeがConnectionまたはVendorの場合、対象の指定方法を選択します。
+            1. **Select** : リストから対象を直接選択します。
+            2. **RegExp Pattern** : 正規表現で対象を指定します。Connectionの場合、NameまたはUUIDでマッチングされます。
+        * **Target Value** : 適用対象を指定します。複数の対象を選択できます。
+    * **Pattern Settings**
+        * **Match Type** : クエリのマッチング方式を選択します。
+            1. **Exact** : クエリ文字列が完全に一致する場合にマッチします（大文字小文字無視、前後の空白除去）。
+            2. **Regexp** : 正規表現パターンでマッチングします。大文字小文字無視（`(?i)`）とDOTALLモード（`(?s)`、`.`が改行にもマッチ）がデフォルトで適用されます。
+            3. **Normalized** : SQLを正規化（コメント除去、空白正規化、大文字小文字無視）した後、プレースホルダーでマッチングします。`?`は単一の値（数値、文字列、NULL、関数呼び出し）を、`?...`は1つ以上の値（IN句など）をマッチングします。
+        * **Pattern** : マッチングするSQLパターンを入力します。
+        * **Test Pattern** : 入力したPatternに対してSQLのマッチング可否をテストできます。SQLを入力して`Test`ボタンをクリックします。
+        * **Origins** : ルールが適用されるクエリの出所を選択します。デフォルト値はAllです。
+            1. **All** : すべての出所のクエリに適用します。
+            2. **Proxy** : プロキシ経由のクエリにのみ適用します。
+            3. **SQL Editor** : SQL Editorで実行されたクエリにのみ適用します。
+    * **Action Settings** <br/> **Skip ActionはProxy専用です。** Skip選択時にOriginが自動的にProxyに設定され、SQL Editorではサポートされません。Auditに記録されないため、機密性の高いクエリには使用しないでください。
+        * **Action** : ルールにマッチしたクエリに適用する動作を選択します。
+            1. **Allow** : ポリシー（Privilege、Data Maskingなど）を無視してクエリを実行します。Auditログには記録されます。
+            2. **Deny** : クエリの実行を拒否します。AuditログにPrevented状態で記録されます。
+            3. **Skip** : Audit記録なしでクエリを実行します。すべてのポリシーがスキップされます。
+        * **Error Message** : ActionがDenyの場合、ユーザーに表示するエラーメッセージを入力します。
+        * **Allow Reason** : ActionがAllowの場合、許可理由を記録します。Auditログのaction_commentに保存されます。
+    * **Additional Information**
+        * **Max SQL Length** : ルールが適用されるSQLの最大長を指定します。デフォルト値は16,384文字です。SQLの長さがこの値を超えると、該当ルールのみスキップして次のルールに進みます。
+        * **Comment** : ルールに関する説明を入力します。
+4. `Create`ボタンをクリックして保存します。
+
+<Callout type="important">
+ルールの変更はイベントベースでほとんどの場合即座に適用されます。
+マルチインスタンス環境では、他のインスタンスへの反映に最大10分かかる場合があります。
+</Callout>
+
+### Query Ruleのテスト
+
+登録済みのルールが特定のSQLに正しくマッチするか事前にテストできます。
+
+1. `Admin > Databases > Policies > Query Rules`メニューに移動します。
+2. 右上の`Test`ボタンをクリックします。
+3. テストするSQLを入力し、必要に応じて**Origin**と**Target Type**を選択します。
+4. **Target Type**が`Connection`の場合はConnectionを、`Vendor`の場合はVendorを選択します。
+5. `Test with Cache`または`Test without Cache`ボタンをクリックすると、マッチしたルール一覧と最終的に適用されるルールが表示されます。
+
+<Callout type="important">
+ルール変更直後は`Test without Cache`ボタンを使用すると、DBから最新のルールを直接取得して確認できます。
+</Callout>
+
+### Query Ruleの確認
+
+登録済みのQuery Rule一覧を確認します。
+
+1. `Admin > Databases > Policies > Query Rules`メニューに移動します。
+2. 登録済みのQuery Rule一覧が表示されます。
+    * **ID** : Query Ruleの固有識別子です。
+    * **Priority** : ルールの優先順位です。
+    * **Enabled** : ルールの有効/無効状態です。
+    * **Target Type** : 適用対象範囲です。
+    * **Pattern** : マッチングパターンです。
+    * **Action** : マッチ時に適用される動作です（Allow / Deny / Skip）。
+    * **Comment** : ルールに関する説明です。
+
+### Query Ruleの修正
+
+既存のQuery Ruleの設定を変更します。
+
+1. `Admin > Databases > Policies > Query Rules`メニューに移動します。
+2. Query Rule一覧から修正する項目をクリックします。
+3. 詳細画面で変更する情報を修正します。
+4. `Save`ボタンをクリックして保存します。
+
+### Query Ruleの削除
+
+登録済みのQuery Ruleを削除します。
+
+1. `Admin > Databases > Policies > Query Rules`メニューに移動します。
+2. Query Rule一覧から削除する項目のチェックボックスを選択します。複数を同時に選択できます。
+3. 上部に表示される`Delete`ボタンをクリックします。
+4. 確認ポップアップで`OK`をクリックします。
+______
+
+### 使用例
+
+#### 例1：HeartbeatクエリのAudit除外（SKIP）
+
+Connection Poolが定期的に実行する`SELECT 1`クエリがAuditログに不要に蓄積される場合、除外できます。
+
+| **設定項目**    | **値**      |
+| ----------- | ---------- |
+| Priority    | 10         |
+| Target Type | All        |
+| Match Type  | Exact      |
+| Pattern     | `SELECT 1` |
+| Origins     | Proxy      |
+| Action      | Skip       |
+
+<Callout type="important">
+Skip ActionはProxy専用です。
+SQL Editorで実行された`SELECT 1`にはこのルールは適用されません。
+</Callout>
+
+#### 例2：危険なDDLクエリのブロック（DENY）
+
+`DROP DATABASE`、`DROP TABLE`などデータ損失を引き起こす可能性のあるクエリを全面的にブロックします。
+
+| **設定項目**      | **値**                               |
+| ------------ | ----------------------------------- |
+| Priority     | 20                                  |
+| Target Type  | All                                 |
+| Match Type   | RegExp                              |
+| Pattern      | `DROP\s+(DATABASE|TABLE)`           |
+| Origins      | All                                 |
+| Action       | Deny                                |
+| Erro Message | `セキュリティポリシーによりブロックされたクエリです。管理者にお問い合わせください。` |
+
+<Callout type="important">
+Regexpマッチングはデフォルトで大文字小文字を無視するため、`drop database`など小文字で入力されたクエリもブロックされます。
+</Callout>
+
+#### 例3：SQLパース失敗クエリの一時許可（ALLOW）
+
+特定のクエリがSQLパース失敗によりブロックされた場合、一時的に許可処理します。
+Auditログは通常どおり記録されます。
+
+| **設定項目**     | **値**                              |
+| ------------ | ---------------------------------- |
+| Priority     | 30                                 |
+| Target Type  | Connection                         |
+| Input Mode   | Select                             |
+| Target Value | （許可する特定のConnectionを選択）             |
+| Match Type   | Normalized                         |
+| Pattern      | `SELECT * FROM users WHERE id = ?` |
+| Origins      | All                                |
+| Action       | Allow                              |
+| Allow Reason | `パース失敗一時許可 - QPD-1234`             |
+
+#### 例4：特定DB Vendorに対する設定クエリの除外（SKIP）
+
+MySQL Connection Poolが自動的に実行するエンコーディング設定クエリをAuditから除外します。
+
+| **設定項目**     | **値**               |
+| ------------ | ------------------- |
+| Priority     | 10                  |
+| Target Type  | Vendor              |
+| Input Mode   | Select              |
+| Target Value | MySQL               |
+| Match Type   | Exact               |
+| Pattern      | `SET NAMES utf8mb4` |
+| Origins      | Proxy               |
+| Action       | Skip                |
+
+#### 例5：Priorityの活用 - 例外許可後に全体ブロック
+
+特定のConnectionは許可し、それ以外は全面ブロックする場合、Priorityを活用します。
+
+**ルール1 - 例外許可**（Priority: 10）
+
+| **設定項目**     | **値**          |
+| ------------ | -------------- |
+| Priority     | 10             |
+| Target Type  | Connection     |
+| Target Value | dev-db-001     |
+| Match Type   | Regexp         |
+| Pattern      | `DROP\s+TABLE` |
+| Action       | Allow          |
+
+**ルール2 - 全体ブロック**（Priority: 20）
+
+| **設定項目**    | **値**          |
+| ----------- | -------------- |
+| Priority    | 20             |
+| Target Type | All            |
+| Match Type  | Regexp         |
+| Pattern     | `DROP\s+TABLE` |
+| Action      | Deny           |
+
+Priorityの値が小さいルール1が先に評価されるため、`dev-db-001`での`DROP TABLE`は許可され、その他のConnectionではルール2によりブロックされます。

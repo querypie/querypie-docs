@@ -1,0 +1,63 @@
+---
+title: 'Custom JDBC Configs - Databricks 예시'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2010153057/Custom+JDBC+Configs+-+Databricks'
+---
+
+import { Callout } from 'nextra/components'
+
+# Custom JDBC Configs - Databricks 예시
+
+### Overview
+
+QueryPie ACP 11.6.0 부터 제공되는 Custom JDBC Configs 기능을 통해 관리자가 JDBC Driver를 등록하고 Databricks 커넥션을 생성 후 정책을 적용할 수 있습니다.<br/>QueryPie ACP에서 Databricks에 대해 지원하는 query parser (QSI)는 ANSI query 이므로 Databricks 특화 구문에 대해서는 정상 작동하지 않을 수 있습니다.
+
+<Callout type="info">
+본 기능은 **베타(Beta)** 로 제공됩니다.
+사용하려면 `Admin > Databases > General > Configurations` 페이지의 Experimental 섹션에서 **Custom JDBC Configuration** 옵션을 `Enable`로 설정해야 합니다.
+활성화 후 `Admin > Databases > Connection Management > Custom JDBC Configs` 메뉴가 나타납니다.
+</Callout>
+
+### Custom JDBC Vendor 로 Databricks 등록하기
+
+1. `Admin > Databases > Connection Management > Custom JDBC Configs` 메뉴로 이동합니다.
+2. 우측 상단의 `Create Custom JDBC` 버튼을 클릭합니다.
+3. Name에 임의의 식별가능한 이름을 입력합니다. 이 이름이 DB 커넥션을 생성할 때 Custom JDBC Vendors 항목에 노출됩니다.
+4. Description에 필요한 추가 정보를 입력합니다.
+5. JDBC Configuration 섹션의 `Driver Class`에 Databricks의 driver class 를 입력합니다. (Databricks의 경우 : `com.databricks.client.jdbc.Driver`)<br/>일반적으로 Driver Class 는 다음 명령으로 확인 가능합니다.
+  ```
+  unzip -p <your-driver.jar> META-INF/services/java.sql.Driver
+  ```
+6. JDBC URL Template에 `jdbc:databricks://{host}:{port}/default` 를 입력합니다.
+7. Options Prefix에 `/` 를 입력합니다.
+8. Default Port에 `443` 을 입력합니다.
+9. JVM Arguments에 `--add-opens=java.base/java.nio=ALL-UNNAMED` 를 입력합니다.
+10. Driver JAR File 섹션에서 `Select JAR file to upload` 버튼을 클릭하고 JDBC Driver 를 업로드합니다.<br/>Databricks : [JDBC Driver 다운로드](https://www.databricks.com/spark/jdbc-drivers-download)
+11. `Save` 버튼을 누르고 설정을 저장합니다.
+
+### Custom Vendor로 Databricks Connection 생성하기
+
+1. `Admin > Databases > Connection Management > DB Connections` 메뉴로 이동합니다.
+2. 우측 상단의 `Create Connection` 버튼을 클릭합니다.
+3. 화면을 아래로 스크롤한 뒤 **Custom JDBC Vendors** 항목에서 앞에서 등록한 Databricks(Custom JDBC 생성시 `Name`으로 입력한 항목)를 선택합니다.
+4. **Connection Name**, **Host**, **Port** 등 연결 정보를 입력합니다.
+    1. Host : Databricks 에서 확인한 server hostname 값을 복사해서 붙여 넣습니다.
+    2. Port : Custom vendor에서 지정한 443 기본값을 사용합니다.
+    3. Database Name : 빈 값으로 그냥 두거나 Databricks의 Catalog에 해당되는 이름을 입력합니다.(아래의 **구조위상 비교표**를 참고하세요.) 기본 경로를 지정하는 것이므로 빈값을 권장합니다.
+    4. Username : Databricks는 토큰을 사용하므로 Username은 빈 값으로 둡니다.
+    5. Password : Databricks 콘솔의 Settings(사용자 설정) &gt; Developer &gt; Access tokens 에서 발급한 토큰 값을 입력합니다. 토큰을 생성할 때 token scope는 sql, workspace, catalog 를 지정합니다.
+    6. Other Options : Databricks 콘솔의 connection details에서 확인할 수 있는 JDBC URL 항목의 내용중 default; 뒷 부분을 복사해서 붙여 넣습니다.
+5. 필요한 경우 **QSI Parser**를 선택합니다. 기본값인 `ANSI SQL`을 선택합니다.
+6. `Next` 버튼을 클릭하여 `커넥션 생성 완료` 화면으로 이동합니다.
+
+#### 구조 위상 비교
+
+| **Databricks** | **QueryPie ACP** |
+| -------------- | ---------------- |
+| Catalog        | Database         |
+| Schema         | Schema           |
+| Table          | Table            |
+| Column         | Column           |
+
+<Callout type="important">
+`Custom JDBC Vendors` 항목에는 `Active` 상태인 Custom JDBC Vendor만 표시됩니다.
+</Callout>
