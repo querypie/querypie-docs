@@ -125,6 +125,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
     - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
     - 내용 없는 번호 리스트 항목 제거 (_normalize_empty_list_items)
+    - 문장 경계 줄바꿈 결합 (_normalize_sentence_breaks)
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
@@ -134,6 +135,7 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_empty_bold(text)
     text = _normalize_empty_list_items(text)
     text = _normalize_table_cell_padding(text)
+    text = _normalize_sentence_breaks(text)
     text = _strip_first_heading(text)
     text = text.lstrip('\n')
     text = _normalize_trailing_blank_lines(text)
@@ -165,19 +167,22 @@ def _normalize_table_cell_padding(text: str) -> str:
     """Markdown table 행의 셀 패딩 공백과 구분자 행 대시 수를 정규화한다.
 
     XHTML→MDX forward 변환 시 테이블 셀의 컬럼 폭 계산이 원본 MDX와
-    1~N자 차이날 수 있으므로:
-    - 셀 내 연속 공백을 단일 공백으로 축약한다.
-    - 구분자 행(| --- | --- |)의 대시 수를 3개로 정규화한다.
+    1~N자 차이날 수 있으므로, 각 셀을 strip하여 ``| cell | cell |`` 형태로
+    재조립한다.  구분자 행은 ``| --- | --- |`` 로 정규화한다.
     """
-    _SEP_RE = re.compile(r'^\|[\s\-:|]+\|$')
+    _SEP_CELL_RE = re.compile(r'^[\s\-:]+$')
     lines = text.split('\n')
     result = []
     for line in lines:
         stripped = line.strip()
         if stripped.startswith('|') and stripped.endswith('|'):
-            line = re.sub(r'  +', ' ', line)
-            if _SEP_RE.match(stripped):
-                line = re.sub(r'-{3,}', '---', line)
+            # 앞뒤 '|' 를 제거한 뒤 '|' 로 split → 각 셀 strip
+            inner = stripped[1:-1]
+            cells = [c.strip() for c in inner.split('|')]
+            # 구분자 행이면 대시 수 정규화
+            if all(_SEP_CELL_RE.match(c) for c in cells if c):
+                cells = [re.sub(r'-{1,}', '---', c) for c in cells]
+            line = '| ' + ' | '.join(cells) + ' |'
         result.append(line)
     return '\n'.join(result)
 
@@ -263,7 +268,7 @@ def _normalize_sentence_breaks(text: str) -> str:
                 and not stripped.startswith(('#', '*', '-', '<', '|', '`', '>'))
                 and not re.match(r'^\d+\.', stripped)):
             prev = result[-1].rstrip()
-            if prev and re.search(r'[.!?]$', prev):
+            if prev and re.search(r'[.!?]\)?$', prev):
                 result[-1] = prev + ' ' + stripped
                 continue
         result.append(line)
