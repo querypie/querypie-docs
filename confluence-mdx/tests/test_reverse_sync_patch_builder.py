@@ -811,7 +811,7 @@ class TestBuildPatches:
         mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
         xpath_to_mapping = {'table[1]': mapping}
 
-        patches, *_ = build_patches(
+        patches, _, skipped_changes = build_patches(
             [change],
             [change.old_block],
             [change.new_block],
@@ -822,6 +822,43 @@ class TestBuildPatches:
         )
 
         assert patches == [], "fallback 제거 후 roundtrip_sidecar 없는 table은 skip이어야 한다"
+        assert len(skipped_changes) == 1
+        assert skipped_changes[0]['reason'] == 'missing_roundtrip_sidecar'
+        assert skipped_changes[0]['block_id'] == 'm1'
+
+    def test_table_with_preserved_anchor_reports_specific_skip(self):
+        mapping = _make_mapping('m1', 'Header old_val', xpath='table[1]', type_='table')
+        mapping.xhtml_text = (
+            '<table><tr><td><ac:link><ri:page ri:content-title="Doc" />'
+            '</ac:link></td></tr></table>'
+        )
+        change = _make_change(
+            0,
+            '| Header |\n| --- |\n| old_val |',
+            '| Header |\n| --- |\n| new_val |',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
+        xpath_to_mapping = {'table[1]': mapping}
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'table[1]',
+                mapping.xhtml_text,
+                sha256_text(change.old_block.content),
+                (change.old_block.line_start, change.old_block.line_end),
+            ),
+        ])
+
+        patches, _, skipped_changes = build_patches(
+            [change], [change.old_block], [change.new_block],
+            [mapping], mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert patches == []
+        assert len(skipped_changes) == 1
+        assert skipped_changes[0]['reason'] == 'preserved_anchor_table'
+        assert skipped_changes[0]['block_id'] == 'm1'
 
     def test_list_without_roundtrip_sidecar_but_content_change_patches(self):
         """roundtrip_sidecar 없어도 content change가 있으면 clean list를 패치한다.

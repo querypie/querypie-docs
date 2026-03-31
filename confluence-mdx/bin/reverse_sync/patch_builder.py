@@ -228,16 +228,65 @@ def _can_replace_table_fragment(
     roundtrip_sidecar: Optional[RoundtripSidecar],
 ) -> bool:
     """table 계열을 whole-fragment replacement로 처리할 수 있는지 판별한다."""
-    if roundtrip_sidecar is None or mapping is None:
-        return False
+    return _classify_table_fragment_skip(
+        change, mapping, roundtrip_sidecar,
+    ) is None
+
+
+def _classify_table_fragment_skip(
+    change: BlockChange,
+    mapping: Optional[BlockMapping],
+    roundtrip_sidecar: Optional[RoundtripSidecar],
+) -> Optional[Dict[str, str]]:
+    """table fragment replacement를 건너뛰는 이유를 분류한다."""
+    if mapping is None:
+        block_id = f"idx-{change.index}"
+        return {
+            'block_id': block_id,
+            'reason': 'no_mapping',
+            'description': (
+                f"블록 #{change.index} (table)에 대한 "
+                f"XHTML 매핑을 찾을 수 없어 패치를 건너뜁니다."
+            ),
+        }
+    if roundtrip_sidecar is None:
+        return {
+            'block_id': mapping.block_id,
+            'reason': 'missing_roundtrip_sidecar',
+            'description': (
+                f"블록 {mapping.block_id}: roundtrip sidecar가 없어 "
+                f"테이블 fragment를 안전하게 재구성할 수 없어 건너뜁니다."
+            ),
+        }
     if _contains_preserved_anchor_markup(mapping.xhtml_text):
-        return False
+        return {
+            'block_id': mapping.block_id,
+            'reason': 'preserved_anchor_table',
+            'description': (
+                f"블록 {mapping.block_id}: preserved anchor(<ac:>/<ri:>)가 포함된 "
+                f"테이블은 안전한 패치 경로가 없어 건너뜁니다."
+            ),
+        }
     block = change.new_block or change.old_block
-    # raw HTML table은 emit_block이 markdown table로 변환하여 구조가 파괴되므로 제외
-    # markdown pipe table만 fragment 교체 허용
     if block.type == "html_block" and block.content.lstrip().startswith("<table"):
-        return False
-    return is_markdown_table(change.old_block.content)
+        return {
+            'block_id': mapping.block_id,
+            'reason': 'raw_html_table',
+            'description': (
+                f"블록 {mapping.block_id}: raw HTML 테이블은 fragment 교체 대신 "
+                f"text-level 패치 경로로 처리해야 하므로 건너뜁니다."
+            ),
+        }
+    if not is_markdown_table(change.old_block.content):
+        return {
+            'block_id': mapping.block_id,
+            'reason': 'not_markdown_table',
+            'description': (
+                f"블록 {mapping.block_id}: markdown pipe table이 아니어서 "
+                f"fragment 교체를 적용할 수 없어 건너뜁니다."
+            ),
+        }
+    return None
 
 
 def _emit_replacement_fragment(block: MdxBlock) -> str:
@@ -825,7 +874,9 @@ def build_patches(
             continue
 
         if strategy == 'table':
-            if _can_replace_table_fragment(change, mapping, roundtrip_sidecar):
+            table_skip = _classify_table_fragment_skip(
+                change, mapping, roundtrip_sidecar)
+            if table_skip is None:
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(
@@ -835,16 +886,7 @@ def build_patches(
                     )
                 )
             else:
-                # preserved anchor table은 안전한 패치 경로 없음 (Phase 5 Axis 3)
-                block_id = mapping.block_id if mapping else f"idx-{change.index}"
-                skipped_changes.append({
-                    'block_id': block_id,
-                    'reason': 'preserved_anchor_table',
-                    'description': (
-                        f"블록 {block_id}: preserved anchor(<ac:>/<ri:>)가 포함된 "
-                        f"테이블은 안전한 패치 경로가 없어 건너뜁니다."
-                    ),
-                })
+                skipped_changes.append(table_skip)
             continue
 
         new_plain = normalize_mdx_to_plain(
