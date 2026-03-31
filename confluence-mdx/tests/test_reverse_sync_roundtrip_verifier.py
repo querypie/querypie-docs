@@ -198,6 +198,11 @@ class TestNormalizeSentenceBreaks:
         text = "First sentence.\nSecond sentence\n"
         assert _normalize_sentence_breaks(text) == "First sentence. Second sentence\n"
 
+    def test_blockquote_context_preserved(self):
+        """직전 행이 blockquote면 다음 일반 텍스트 행과 결합하지 않는다."""
+        text = "> Quoted sentence.\nContinuation\n"
+        assert _normalize_sentence_breaks(text) == text
+
     def test_fenced_code_block_preserved(self):
         """펜스드 코드 블록 내부 줄바꿈은 보존된다."""
         text = "```\ncode line 1.\ncode line 2\n```\n"
