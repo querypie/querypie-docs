@@ -817,7 +817,12 @@ def build_patches(
                 _old_start and _new_start
                 and int(_old_start.group(1)) != int(_new_start.group(1))
             )
-            has_any_change = has_content_change or has_ol_start_change
+            # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)를
+            # replace_fragment 판단 전에 수행하여 clean list도 재생성하도록 함
+            inline_fixups = _build_inline_fixups(
+                change.old_block.content, change.new_block.content)
+            has_inline_boundary = bool(inline_fixups)
+            has_any_change = has_content_change or has_ol_start_change or has_inline_boundary
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
@@ -845,10 +850,7 @@ def build_patches(
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
-            # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)
-            inline_fixups = _build_inline_fixups(
-                change.old_block.content, change.new_block.content)
-            has_inline_boundary = bool(inline_fixups)
+            # inline_fixups, has_inline_boundary는 상단에서 이미 계산됨
             if mapping is not None and (has_any_change or has_inline_boundary):
                 bid = mapping.block_id
                 if bid not in _text_change_patches:

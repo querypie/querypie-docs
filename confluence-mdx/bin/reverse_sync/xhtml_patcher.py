@@ -291,6 +291,53 @@ def _find_child_in_element(parent: Tag, xpath_part: str):
     return None
 
 
+def _collapse_ws(s: str) -> str:
+    """연속 공백을 단일 공백으로 축소한다."""
+    return re.sub(r'\s+', ' ', s).strip()
+
+
+def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
+    """<ac:>/<ri:> 보존 시 <strong> 요소만 직접 수정하여 bold 경계를 교정한다.
+
+    innerHTML 전체 교체는 <ac:link> 등 preserved anchor를 파괴하므로,
+    new_inner_xhtml에서 목표 <strong> 구조를 추출하고 기존 <p>의 <strong>
+    텍스트만 갱신한 뒤, 경계 이동으로 빠져나온 문자를 인접 text node에 반영한다.
+    """
+    new_soup = BeautifulSoup(new_inner_xhtml, 'html.parser')
+    old_strongs = p_tag.find_all('strong')
+    new_strongs = new_soup.find_all('strong')
+
+    if len(old_strongs) != len(new_strongs):
+        return
+
+    for old_s, new_s in zip(old_strongs, new_strongs):
+        old_text = old_s.get_text()
+        new_text = new_s.get_text()
+        if old_text == new_text:
+            continue
+
+        old_s.clear()
+        old_s.string = new_text
+
+        # bold 끝에서 빠져나온 문자를 다음 text node에 반영
+        if old_text.startswith(new_text) and len(old_text) > len(new_text):
+            removed_end = old_text[len(new_text):]
+            nxt = old_s.next_sibling
+            if isinstance(nxt, NavigableString):
+                nxt.replace_with(NavigableString(removed_end + str(nxt)))
+            else:
+                old_s.insert_after(NavigableString(removed_end))
+
+        # bold 끝으로 흡수된 문자를 다음 text node에서 제거
+        elif new_text.startswith(old_text) and len(new_text) > len(old_text):
+            added_end = new_text[len(old_text):]
+            nxt = old_s.next_sibling
+            if isinstance(nxt, NavigableString):
+                ns = str(nxt)
+                if ns.startswith(added_end):
+                    nxt.replace_with(NavigableString(ns[len(added_end):]))
+
+
 def _apply_inline_fixups(element: Tag, fixups: list):
     """인라인 마커 경계 변경을 DOM에 적용한다.
 
@@ -307,18 +354,20 @@ def _apply_inline_fixups(element: Tag, fixups: list):
         current_match = 0
         if not old_plain:
             continue
+        new_plain_collapsed = _collapse_ws(new_plain)
         for p_tag in element.find_all('p'):
             p_text = p_tag.get_text().strip()
             # _apply_text_changes 이후 <p> 텍스트는 new_plain으로 업데이트되므로
             # new_plain 기준으로만 매칭한다. old_plain도 허용하면 미변경 앞 항목을
             # 잘못 수정할 수 있다 (old_plain != new_plain인 경우).
-            if p_text != new_plain:
+            if _collapse_ws(p_text) != new_plain_collapsed:
                 continue
             if current_match != match_index:
                 current_match += 1
                 continue
             p_html = str(p_tag)
             if '<ac:' in p_html or '<ri:' in p_html:
+                _apply_strong_boundary_fixup(p_tag, new_inner)
                 break
             _replace_inner_html(p_tag, new_inner)
             break
