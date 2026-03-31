@@ -128,7 +128,7 @@ class TestBuildPatches:
             SidecarBlock(0, 'ul[1]', '<li><p>child text</p></li>', 'hash1', (1, 1))
         ])
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -159,7 +159,7 @@ class TestBuildPatches:
             SidecarBlock(0, 'ul[1]', '<li><p><a href="">General</a> text</p></li>', 'hash1', (1, 1))
         ])
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -179,7 +179,7 @@ class TestBuildPatches:
         change = _make_change(0, '- child text', '- updated child', type_='list')
         mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -209,7 +209,7 @@ class TestBuildPatches:
                          'different_hash', (10, 10)),
         ])
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -233,7 +233,7 @@ class TestBuildPatches:
         change = _make_change(0, old_content, new_content, type_='list')
         mdx_to_sidecar = {}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -256,7 +256,7 @@ class TestBuildPatches:
             type_='list')
         mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -279,7 +279,7 @@ class TestBuildPatches:
         change = _make_change(0, 'child text', 'updated text')
         mdx_to_sidecar = self._setup_sidecar('div[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -305,7 +305,7 @@ class TestBuildPatches:
             1: _make_sidecar('p[1]', [1]),
         }
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes,
             [change.old_block for change in changes],
             [change.new_block for change in changes],
@@ -328,7 +328,7 @@ class TestBuildPatches:
         change = _make_change(0, 'search text', 'replaced text')
         mdx_to_sidecar = {}  # 빈 sidecar → sidecar 미스 → skip
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -343,7 +343,7 @@ class TestBuildPatches:
 
         # sidecar로 매핑할 수 없고, containing도 없고, table이면 build_table_row_patches
         # 하지만 table_row_patches도 sidecar 필요 → 결국 빈 결과
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             [], {}, {})
 
@@ -360,7 +360,7 @@ class TestBuildPatches:
         change = _make_change(0, 'target text', 'updated target')
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -375,7 +375,7 @@ class TestBuildPatches:
         change = _make_change(0, 'hello world', 'hello earth')
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -397,7 +397,7 @@ class TestBuildPatches:
         change = _make_change(0, 'hello world', 'hello earth')
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -419,7 +419,7 @@ class TestBuildPatches:
         ])
 
         change = _make_change(0, 'hello world', 'hello earth')
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -445,7 +445,7 @@ class TestBuildPatches:
         ])
 
         change = _make_change(0, 'hello world', 'hello earth')
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -464,7 +464,7 @@ class TestBuildPatches:
         ])
 
         change = _make_change(0, 'hello world', 'hello earth')
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -486,7 +486,7 @@ class TestBuildPatches:
         ])
 
         change = _make_change(0, 'hello world', 'hello earth')
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -534,7 +534,7 @@ class TestBuildPatches:
             )
         ])
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -621,7 +621,7 @@ class TestBuildPatches:
         change.new_block = _make_block('import Y', 'import_statement')
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -640,7 +640,7 @@ class TestBuildPatches:
         )
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -658,7 +658,7 @@ class TestBuildPatches:
         change = _make_change(0, 'hello world', 'hello earth')
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -677,7 +677,7 @@ class TestBuildPatches:
         change2 = _make_change(1, 'second part', 'second UPDATED')
         mdx_to_sidecar = {}  # sidecar 미스 → skip
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change1, change2],
             [change1.old_block, change2.old_block],
             [change1.new_block, change2.new_block],
@@ -700,7 +700,7 @@ class TestBuildPatches:
         )
         mdx_to_sidecar = self._setup_sidecar('h2[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -721,7 +721,7 @@ class TestBuildPatches:
         )
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -745,7 +745,7 @@ class TestBuildPatches:
         )
         mdx_to_sidecar = self._setup_sidecar('table[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -771,7 +771,7 @@ class TestBuildPatches:
             BlockChange(index=0, change_type='added', old_block=None, new_block=new_block),
         ]
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes, [old_block], [new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
@@ -796,7 +796,7 @@ class TestBuildPatches:
         mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
         xpath_to_mapping = {'table[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change],
             [change.old_block],
             [change.new_block],
@@ -821,7 +821,7 @@ class TestBuildPatches:
         mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
         xpath_to_mapping = {'ul[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change],
             [change.old_block],
             [change.new_block],
@@ -859,7 +859,7 @@ class TestBuildPatches:
         mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
         xpath_to_mapping = {'macro-info[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change],
             [change.old_block],
             [change.new_block],
@@ -895,7 +895,7 @@ class TestBuildPatches:
         mdx_to_sidecar = {0: _make_sidecar('ul[1]', [0])}
         xpath_to_mapping = {'ul[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes,
             [changes[0].old_block],
             [changes[1].new_block],
@@ -971,7 +971,7 @@ class TestBuildPatches:
             blocks=[sidecar_block],
         )
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes,
             [changes[0].old_block],
             [changes[1].new_block],
@@ -1048,7 +1048,7 @@ class TestBuildPatches:
             blocks=[sidecar_block],
         )
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes,
             [changes[0].old_block],
             [changes[1].new_block],
@@ -1124,7 +1124,7 @@ class TestBuildPatches:
         )
         roundtrip_sidecar = RoundtripSidecar(blocks=[sidecar_block])
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             changes,
             [changes[0].old_block],
             [changes[1].new_block],
@@ -1161,7 +1161,7 @@ class TestBuildDeletePatch:
             old_block=_make_block('Delete this text'),
             new_block=None,
         )
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [], [], [mapping],
             mdx_to_sidecar, xpath_to_mapping, {})
         assert len(patches) == 1
@@ -1175,7 +1175,7 @@ class TestBuildDeletePatch:
             old_block=_make_block('', type_='empty'),
             new_block=None,
         )
-        patches, _ = build_patches([change], [], [], [], {}, {}, {})
+        patches, *_ = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
 
     def test_delete_frontmatter_skipped(self):
@@ -1185,7 +1185,7 @@ class TestBuildDeletePatch:
             old_block=_make_block('---\ntitle: x\n---\n', type_='frontmatter'),
             new_block=None,
         )
-        patches, _ = build_patches([change], [], [], [], {}, {}, {})
+        patches, *_ = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
 
     def test_delete_no_sidecar_skipped(self):
@@ -1195,7 +1195,7 @@ class TestBuildDeletePatch:
             old_block=_make_block('Unmapped text'),
             new_block=None,
         )
-        patches, _ = build_patches([change], [], [], [], {}, {}, {})
+        patches, *_ = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
 
 
@@ -1217,7 +1217,7 @@ class TestBuildInsertPatch:
             _make_block('Anchor text'),
             _make_block('New paragraph text'),
         ]
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [_make_block('Anchor text')], improved_blocks,
             [mapping], mdx_to_sidecar, xpath_to_mapping, alignment)
 
@@ -1234,7 +1234,7 @@ class TestBuildInsertPatch:
             old_block=None,
             new_block=_make_block('Very first paragraph'),
         )
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [], [_make_block('Very first paragraph')],
             [], {}, {}, alignment)
 
@@ -1249,7 +1249,7 @@ class TestBuildInsertPatch:
             old_block=None,
             new_block=_make_block('\n', type_='empty'),
         )
-        patches, _ = build_patches([change], [], [], [], {}, {}, {})
+        patches, *_ = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 1
         assert patches[0]['action'] == 'insert'
 
@@ -1260,7 +1260,7 @@ class TestBuildInsertPatch:
             old_block=None,
             new_block=_make_block('---\ntitle: x\n---\n', type_='frontmatter'),
         )
-        patches, _ = build_patches([change], [], [], [], {}, {}, {})
+        patches, *_ = build_patches([change], [], [], [], {}, {}, {})
         assert len(patches) == 0
 
 
@@ -1396,7 +1396,7 @@ class TestBuildPatchesIdempotency:
         change = _make_change(0, old_content, new_content)
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -1447,7 +1447,7 @@ class TestBuildPatchesIdempotency:
         change = _make_change(0, old_content, new_content)
         mdx_to_sidecar = self._setup_sidecar('p[1]', 0)
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             mappings, mdx_to_sidecar, xpath_to_mapping)
 
@@ -1525,7 +1525,7 @@ class TestLinkBodyTrailingSpaceStrip:
         mdx_to_sidecar = {0: _make_sidecar('table[1]', [0])}
         xpath_to_mapping = {'table[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             [mapping], mdx_to_sidecar, xpath_to_mapping)
 
@@ -1631,7 +1631,7 @@ class TestBlockquoteDirectPatch:
         mdx_to_sidecar = {0: _make_sidecar('blockquote[1]', [0])}
         xpath_to_mapping = {'blockquote[1]': mapping}
 
-        patches, _ = build_patches(
+        patches, *_ = build_patches(
             [change], [change.old_block], [change.new_block],
             [mapping], mdx_to_sidecar, xpath_to_mapping)
 

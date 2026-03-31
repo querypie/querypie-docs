@@ -25,7 +25,7 @@ def _build_patched_xhtml(xhtml: str, original_mdx: str, improved_mdx: str):
     roundtrip_sidecar = build_sidecar(xhtml, original_mdx)
     xpath_to_mapping = build_xpath_to_mapping(mappings)
 
-    patches, _ = build_patches(
+    patches, *_ = build_patches(
         changes,
         original_blocks,
         improved_blocks,

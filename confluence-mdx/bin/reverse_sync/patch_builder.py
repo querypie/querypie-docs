@@ -511,14 +511,16 @@ def build_patches(
     page_lost_info: Optional[dict] = None,
     roundtrip_sidecar: Optional[RoundtripSidecar] = None,
     page_xhtml: Optional[str] = None,
-) -> Tuple[List[Dict[str, str]], List[BlockMapping]]:
+) -> Tuple[List[Dict[str, str]], List[BlockMapping], List[Dict[str, str]]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
     page_xhtml이 제공되고 mappings가 None이면 내부에서 record_mapping()을 호출한다.
     mdx_to_sidecar=None (기본값)이면 roundtrip_sidecar v3에서 자동으로 구축한다.
 
     Returns:
-        (patches, mappings) 튜플.
+        (patches, mappings, skipped_changes) 튜플.
+        skipped_changes: 적용되지 않은 변경 목록. 각 항목은
+        {'block_id', 'reason', 'description'} 키를 포함한다.
     """
     # Guard: mappings와 page_xhtml 모두 없으면 매핑을 구성할 수 없다
     if mappings is None and page_xhtml is None:
@@ -544,6 +546,7 @@ def build_patches(
             "to map changes to XHTML elements")
 
     patches = []
+    skipped_changes: List[Dict[str, str]] = []
     xpath_to_sidecar_block: Dict[str, SidecarBlock] = {}
     if roundtrip_sidecar is not None:
         xpath_to_sidecar_block = {
@@ -735,6 +738,15 @@ def build_patches(
                 mapping_via_v3_fallback = True
 
         if strategy == 'skip':
+            block_id = f"idx-{change.index}"
+            skipped_changes.append({
+                'block_id': block_id,
+                'reason': 'no_mapping',
+                'description': (
+                    f"블록 #{change.index} ({change.old_block.type})에 대한 "
+                    f"XHTML 매핑을 찾을 수 없어 패치를 건너뜁니다."
+                ),
+            })
             continue
 
         if strategy == 'list':
@@ -820,7 +832,17 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
-            # else: skip — preserved anchor table은 안전한 패치 경로 없음 (Phase 5 Axis 3)
+            else:
+                # preserved anchor table은 안전한 패치 경로 없음 (Phase 5 Axis 3)
+                block_id = mapping.block_id if mapping else f"idx-{change.index}"
+                skipped_changes.append({
+                    'block_id': block_id,
+                    'reason': 'preserved_anchor_table',
+                    'description': (
+                        f"블록 {block_id}: preserved anchor(<ac:>/<ri:>)가 포함된 "
+                        f"테이블은 안전한 패치 경로가 없어 건너뜁니다."
+                    ),
+                })
             continue
 
         new_plain = normalize_mdx_to_plain(
@@ -930,6 +952,14 @@ def build_patches(
             old_cells = _extract_html_table_cells(change.old_block.content)
             new_cells = _extract_html_table_cells(change.new_block.content)
             if not _is_safe_cell_text_edit(old_cells, new_cells):
+                skipped_changes.append({
+                    'block_id': mapping.block_id,
+                    'reason': 'unsafe_html_table_edit',
+                    'description': (
+                        f"블록 {mapping.block_id}: raw HTML 테이블의 셀 구조 변경"
+                        f"(셀 수 변경 또는 셀 내용 재배치)은 안전하지 않아 건너뜁니다."
+                    ),
+                })
                 continue
             patches.append({
                 'xhtml_xpath': mapping.xhtml_xpath,
@@ -952,7 +982,7 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
-    return patches, mappings
+    return patches, mappings, skipped_changes
 
 
 def _build_delete_patch(
