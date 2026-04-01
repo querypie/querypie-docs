@@ -9,7 +9,7 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-You can grant Server Privilege to servers with access permissions through Permission or Role to temporarily allow the use of specific commands.
+You can grant Server Privilege to servers with access permissions to temporarily allow the use of specific commands.
 When granting Server Privilege again to a target that already has Server Privilege, the existing Server Privilege is revoked and newly granted again.
 
 
@@ -27,14 +27,14 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; U
 3. Select the target server/account from the Servers tab list to enter the drawer detail page.
 4. Click the `Configure` button under Server Privilege at the bottom of the detail page.
 5. When the modal appears, configure the following and click the `Grant` button to complete the exception handling.
-    1.  **Commands**  : Enter the commands that need to be allowed.
-        1.  **Keyword**  : Enter as keywords (ls, cat, etc.)
-        2.  **RegEx**  : Enter as regular expressions (^sudo\b[^&|;\n]*$, etc.)
-    2.  **Privilege Start Trigger**  : You can select the start trigger for Privilege Duration when Server Privilege is applied.
-        1.  **Access to Server**  : After Server Privilege is applied, the time is counted from when the applied user starts accessing the server.
-        2.  **Grant**  : The Server Privilege usage time is counted from the moment Server Privilege is applied.
-    3.  **Privilege Duration**  : Set the Server Privilege application time. You can enter the time in minutes. The start time varies depending on the Privilege Start Trigger.
-    4.  **Privilege Expiration Date**  : Specify the expiration date for the special exception handling for the above commands.
+    1.  **Commands**: Enter the commands that need to be allowed.
+        1.  **Keyword**: Enter as keywords (ls, cat, etc.)
+        2.  **RegEx**: Enter as regular expressions (^sudo\b[^&|;\n]*$, etc.)
+    2.  **Privilege Start Trigger**: You can select the start trigger for Privilege Duration when Server Privilege is applied.
+        1.  **Access to Server**: After Server Privilege is applied, the time is counted from when the applied user starts accessing the server.
+        2.  **Grant**: The Server Privilege usage time is counted from the moment Server Privilege is applied.
+    3.  **Privilege Duration**: Set the Server Privilege application time. You can enter the time in minutes. The start time varies depending on the Privilege Start Trigger.
+    4.  **Privilege Expiration Date**: Specify the expiration date for the special exception handling for the above commands.
 6. The modal items vary depending on the server's OS and Require Privilege option status.
     1. When the server's OS is Linux and the Require Privilege option is enabled <br/>
       <figure data-layout="center" data-align="center">

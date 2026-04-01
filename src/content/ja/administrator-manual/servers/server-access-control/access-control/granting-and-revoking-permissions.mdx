@@ -58,32 +58,32 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; D
 
 1. <Badge color="blue">Step 1</Badge> で選択していた全体アカウントを最終確認して間違って付与されたアカウントがないかを確認します。 もし修正を望む場合 `Previous` ボタンをクリックして以前の段階に移動できます。
 2. ポリシーの各項目は以下の通りです。
-    1.  **`{n}` Server(s) selected**  : 項目は <Badge color="blue">Step 1</Badge> で選択していたServer数 x Accountの数が表示されます。 クリックすると各項目をリスト形態で確認できます。
-    2.  **Set Permissions by Minute**  : このオプションを選択するとサーバーアクセス権限を分単位で設定できます。チェックボックスを選択すると下記設定項目が有効化されます。
+    1.  **`{n}` Server(s) selected**: 項目は <Badge color="blue">Step 1</Badge> で選択していたServer数 x Accountの数が表示されます。 クリックすると各項目をリスト形態で確認できます。
+    2.  **Set Permissions by Minute**: このオプションを選択するとサーバーアクセス権限を分単位で設定できます。チェックボックスを選択すると下記設定項目が有効化されます。
         1. Start Trigger : 権限付与開始条件を選択します
-            1. Access to the Server : ユーザーがサーバーにアクセスする時、即座に権限が有効化されます。サーバーセッション維持可否と関係なく、有効化時点から指定された期間の間サーバー接続が可能です。
+            1. Access to the Server : ユーザーがサーバーにアクセスする時、即座に権限が有効化されます。サーバーセッション維持可否と関係なく、有効化時点から指定された期間の間サーバーに接続できます。
             2. Grant : 権限付与即座にタイマーが開始され、ユーザーの実際接続可否と関係なく指定された期間の間のみ権限が有効です。
-        2.  **Duration(Minutes)** : 権限が有効な分単位時間を入力します。
-    3.  **Expiration Date**  : 接続権限有効期限を設定します。最大1年まで設定できます。（Default = 1年後）
-    4.  **Protocols**  : サーバー接続に使用するプロトコルを使用します。
-    5.  **Command Template**  : サーバーに接続後使用不可能なコマンドセットを設定できます。下段のCommand Template Detailsをクリックして設定された詳細条件を確認できます。<br/>*制約事項: (10.2.1) Grant PermissionsではDenyに設定されたCommand Templateのみ使用が可能です。
-    6.  **Configure Whitelist**  : Command Templateを通じてコマンドを制御する過程で特定のコマンドに対する例外処理許可をサポートします。Configure Whitelistチェックボックスにチェックすると以下の設定が表示されます：
-        1.  **Commands**  : 許可が必要なコマンドを記入します。
-            1.  **Keyword**  : キーワードで入力（ls、catなど）
-            2.  **RegEx**  : 正規表現で入力（^sudo\b[^&|;\n]*$など）
-        2.  **Whitelist Expiration Date**  : 上記コマンドに対する別途例外処理有効期限日を指定します。
-    7.  **Require Privilege** : このオプションを有効化すると、ユーザーが該当アカウントでサーバーに接続するためにServer Privilege Requestワークフローを通じた承認手順を必須で経ることになります。これはWindowsサーバーの管理者（Admin）アカウントのように高い権限のアカウントに対するアクセスを一時的に許可し管理する時に有用です。
+        2.  **Duration(Minutes)**: 権限が有効な分単位時間を入力します。
+    3.  **Expiration Date**: 接続権限有効期限を設定します。最大1年まで設定できます。（Default = 1年後）
+    4.  **Protocols**: サーバー接続に使用するプロトコルを使用します。
+    5.  **Command Template**: サーバーに接続後使用不可能なコマンドセットを設定できます。下段のCommand Template Detailsをクリックして設定された詳細条件を確認できます。<br/>*制約事項: (10.2.1) Grant PermissionsではDenyに設定されたCommand Templateのみ使用が可能です。
+    6.  **Configure Whitelist**: Command Templateを通じてコマンドを制御する過程で特定のコマンドに対する例外処理許可をサポートします。Configure Whitelistチェックボックスにチェックすると以下の設定が表示されます：
+        1.  **Commands**: 許可が必要なコマンドを記入します。
+            1.  **Keyword**: キーワードで入力（ls、catなど）
+            2.  **RegEx**: 正規表現で入力（^sudo\b[^&|;\n]*$など）
+        2.  **Whitelist Expiration Date**: 上記コマンドに対する別途例外処理有効期限日を指定します。
+    7.  **Require Privilege**: このオプションを有効化すると、ユーザーが該当アカウントでサーバーに接続するためにServer Privilege Requestワークフローを通じた承認手順を必須で経ることになります。これはWindowsサーバーの管理者（Admin）アカウントのように高い権限のアカウントに対するアクセスを一時的に許可し管理する時に有用です。
         * このオプションが有効化されたアカウントで接続を試行するとユーザーダッシュボードでサーバー接続時、`Connect`ボタンが無効化され、アクセス権限要求を提出しなければならないという案内メッセージが表示されます。
         * Require PrivilegeオプションはサーバーのOS種類と関係なくすべてのアカウントに適用できます。
-    8.  **Access Start Time**  : 接続可能開始時間を設定します。
-    9.  **Access End Time**  : 接続可能終了時間を設定します。
-    10.  **Access Weekday**  : 接続を許可する曜日を設定します。
-    11.  **IP Addresses**  : 接続を許可するIPアドレスを設定します。
-    12.  **Command Audit**  : このPermissionを通じて接続されたセッションで使用されたcommandのログ可否を設定します。
-    13.  **Command Detection**  : ScriptおよびAliasが呼び出される時、内部の禁止コマンド検出可否を設定します。<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
-    14.  **Proxy Usage**  : QueryPie AgentでこのPermissionを通じてサーバー接続可能可否を設定します。
-    15.  **Max Sessions**  : 一ユーザーが一サーバーに同時接続可能なセッション数を制限します。
-    16.  **Session Timeout (minutes)**  : 入力された時間（分）だけ活動しないとセッションは終了されます。
+    8.  **Access Start Time**: 接続可能開始時間を設定します。
+    9.  **Access End Time**: 接続可能終了時間を設定します。
+    10.  **Access Weekday**: 接続を許可する曜日を設定します。
+    11.  **IP Addresses**: 接続を許可するIPアドレスを設定します。
+    12.  **Command Audit**: このPermissionを通じて接続されたセッションで使用されたcommandのログ可否を設定します。
+    13.  **Command Detection**: ScriptおよびAliasが呼び出される時、内部の禁止コマンド検出可否を設定します。<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
+    14.  **Proxy Usage**: QueryPie AgentでこのPermissionを通じてサーバー接続可能可否を設定します。
+    15.  **Max Sessions**: 一ユーザーが一サーバーに同時接続可能なセッション数を制限します。
+    16.  **Session Timeout (minutes)**: 入力された時間（分）だけ活動しないとセッションは終了されます。
 3.  右下の`Grant`ボタンをクリックすると権限付与が完了します。
 
 

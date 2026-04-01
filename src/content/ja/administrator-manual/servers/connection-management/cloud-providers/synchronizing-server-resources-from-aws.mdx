@@ -38,7 +38,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
     1. Manual : 同期したい時点にのみ手動で同期する方式です。
     2. Scheduling : 周期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
 9.  **Auto Configuration Upon Initial Synchronization** Cloud Providerで初回同期するサーバーの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。
-    * port **:**  同期されたサーバーの接続ポートを指定できます。現在はSSH/SFTPポートのみ指定が可能です。
+    * port :  同期されたサーバーの接続ポートを指定できます。現在はSSH/SFTPポートのみ指定が可能です。
     * Tag : 同期されたサーバーに自動でタグを追加できます。
         * タグ値に`{vpcid}`を入力すると、該当サーバーが属するCloudのVPC IDが自動で埋められます。
         * 例: タグKeyを"Network"に設定し、Valueを`{vpcid}`で入力すると、サーバーが"vpc-1a2b3c4d" VPCにある場合"Network: vpc-1a2b3c4d"タグが自動生成されます。
@@ -60,10 +60,10 @@ Credentialタイプ
 </figcaption>
 </figure>
 
-*  **Default Credentials**  : QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにAmazonEC2ReadOnlyAccessポリシーを割り当てて同じAWS内のリソースを同期できます。
-*  **Cross Account Role**  : IAMロールを作成して他のAWSアカウントのリソースを同期できます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
-*  **Profile Credential**  : IAMロールを作成して他のAWSアカウントのリソースを同期できます。
-*  **Access Key**  : `Synchronize`ボタンクリック時にAWSアカウントのaccess keyおよびsecret keyを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでaccess keyを使用する時もスケジュールを通じた同期が可能になるよう改善されました。  ****
+*  **Default Credentials**: QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにAmazonEC2ReadOnlyAccessポリシーを割り当てて同じAWS内のリソースを同期できます。
+*  **Cross Account Role**: IAMロールを作成して他のAWSアカウントのリソースを同期できます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
+*  **Profile Credential**: IAMロールを作成して他のAWSアカウントのリソースを同期できます。
+*  **Access Key**: `Synchronize`ボタンクリック時にAWSアカウントのaccess keyおよびsecret keyを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでaccess keyを使用する時もスケジュールを通じた同期が可能になるよう改善されました。
 
 <Callout type="important">
 **Save Credential for Synchronizationオプション**
@@ -96,14 +96,14 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 4. 右上の`Synchronize`ボタンをクリックするとAWSからリソースを同期できます。
 5. 表示されるSynchronization Logで同期進行状況を確認でき、General &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
 6. Cloud Providerを一度登録すると、Provider一部情報は変更できません。
-    1.  **Name** : 変更可能
-    2.  **Cloud Provider** : 変更不可
-    3.  **Region** : 変更不可
-    4.  **Credential** : 変更不可
+    1.  **Name**: 変更可能
+    2.  **Cloud Provider**: 変更不可
+    3.  **Region**: 変更不可
+    4.  **Credential**: 変更不可
         1. "Save Credential for Synchronization" : 非活性化状態は活性化に変更できますが、活性化状態を非活性化に切り替え不可
-    5.  **Role**   **ARN** : 変更不可
-    6.  **Search**   **Filter** : 変更可能
-    7.  **Replication**   **Frequency** : 変更可能 (ただし、CredentialがAccess Keyの場合変更不可)
+    5.  **Role ARN**: 変更不可
+    6.  **Search Filter**: 変更可能
+    7.  **Replication Frequency**: 変更可能 (ただし、CredentialがAccess Keyの場合変更不可)
 
 <Callout type="important">
 "Save Credential for Synchronization"オプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。

@@ -21,15 +21,15 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Roles
 </figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
-2. テーブル左上の検索欄を通じて役割名を条件に検索が可能です。
+2. テーブル左上の検索欄を通じて役割名を条件に検索できます。
 3. テーブル右上のリフレッシュボタンを通じてRoleリストを最新化できます。
 4. テーブルで以下のカラム情報を提供します：
-    1.  **Name**  : Role名
-    2.  **Description**  : Role詳細説明
-    3.  **Last Access At**  : 該当役割の最後呼び出し日時
-    4.  **Created At**  : 役割最初生成日時
-    5.  **Updated At** : 役割最後修正日時
-    6.  **Updated By**  : 最後更新を実行した管理者名
+    1.  **Name**: Role名
+    2.  **Description**: Role詳細説明
+    3.  **Last Access At**: 該当役割の最後呼び出し日時
+    4.  **Created At**: 役割最初生成日時
+    5.  **Updated At**: 役割最後修正日時
+    6.  **Updated By**: 最後更新を実行した管理者名
 
 
 ### Roleの照会
@@ -42,26 +42,26 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Detai
 </figure>
 
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
-2. 各行をクリックすると役割詳細情報照会が可能です。
+2. 各行をクリックすると役割詳細情報を照会できます。
     1.  **Policies**
         1. デフォルトで指定されるタブで割り当てられたポリシーリストを照会できます。
         2. テーブルリストには各ポリシー別以下の情報を表示します：
-            1.  **Name**  : Policy名
-            2.  **Description**  : Policy詳細説明
-            3.  **Version**  : Policyバージョン
-            4.  **Assigned At**  : 割り当て日時
-            5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+            1.  **Name**: Policy名
+            2.  **Description**: Policy詳細説明
+            3.  **Version**: Policyバージョン
+            4.  **Assigned At**: 割り当て日時
+            5.  **Assigned By**: 該当ポリシーを割り当てた管理者名
         3. 各ポリシー行をクリックすると該当ポリシーの詳細情報をドロワー形式で提供します。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/servers/server-access-control/roles/image-20240902-052235.png" alt="image-20240902-052235.png" width="688" />
           </figure>
             1. 上部には基本情報が以下のように表示されます：
-                1.  **Name**  : Policy名
+                1.  **Name**: Policy名
                     * ポリシー詳細ページリンクを新しいウィンドウで開けます。
-                2.  **Version**  : Policyバージョン
-                3.  **Description**  : Policy詳細説明
-                4.  **Assigned**   **At**  : 割り当て日時
-                5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+                2.  **Version**: Policyバージョン
+                3.  **Description**: Policy詳細説明
+                4.  **Assigned At**: 割り当て日時
+                5.  **Assigned By**: 該当ポリシーを割り当てた管理者名
             2. 下部にはポリシーがコードで表示されます。
     2.  **Users/Groups**
       <figure data-layout="center" data-align="center">
@@ -70,11 +70,11 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Detai
         1. 該当Roleが付与されているユーザー/グループリストを列挙します。
         2. ユーザー/グループ名で検索可能です。
         3. リストは各ユーザー/グループごとに以下の情報を表示します：
-            1.  **User Type**  : ユーザー/グループタイプ
-            2.  **Name**  : ユーザー/グループ名
-            3.  **Last Access At**  : ユーザー/グループの最後呼び出し日時
-            4.  **Expiration Date**  : 期限満了日
-            5.  **Granted At**  : ユーザー/グループに該当Roleが付与された日時
+            1.  **User Type**: ユーザー/グループタイプ
+            2.  **Name**: ユーザー/グループ名
+            3.  **Last Access At**: ユーザー/グループの最後呼び出し日時
+            4.  **Expiration Date**: 期限満了日
+            5.  **Granted At**: ユーザー/グループに該当Roleが付与された日時
     3.  **Servers**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/servers/server-access-control/roles/image-20240902-052432.png" alt="image-20240902-052432.png" width="712" />
@@ -82,10 +82,10 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Detai
         1. 該当Roleによってアクセス可能なサーバーリストを列挙します。
         2. Server名で検索可能です。
         3. リストは各サーバーごとに以下の情報を表示します： <br/>
-            1.  **Server Group**  : サーバーグループ名
-            2.  **Server**  : サーバー名
-            3.  **Host**  : サーバーHost情報
-            4.  **Account**  : サーバー接続アカウント名
+            1.  **Server Group**: サーバーグループ名
+            2.  **Server**: サーバー名
+            3.  **Host**: サーバーHost情報
+            4.  **Account**: サーバー接続アカウント名
 
 ### Roleの作成
 
@@ -96,8 +96,8 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Roles &gt; List Detai
 1. Administrator &gt; Servers &gt; Server Access Control &gt; Rolesメニューに移動します。
 2. 右上の`+ Create Role`ボタンをクリックします。
 3. ポリシー生成のための以下の情報を入力します。
-    1.  **Name** : Roleを画面で区別できる名前です。
-    2.  **Description** : 該当Roleに対する付加的な説明を入力できます。ユーザーたちのRole選択画面でも表示されます。
+    1.  **Name**: Roleを画面で区別できる名前です。
+    2.  **Description**: 該当Roleに対する付加的な説明を入力できます。ユーザーたちのRole選択画面でも表示されます。
 4. `Save`ボタンを通じて保存します。
 
 

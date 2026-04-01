@@ -25,21 +25,21 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 1. Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providersメニューに移動します。
 2. 右上の`+ Create Provider`ボタンをクリックします。
 3.  **Name**  項目に該当プロバイダーを区別できる名前を入力します。
-4.  **Cloud**   **Provider**  項目でMicrosoft Azureを選択します。
-5. 同期したいリソースの  **Tenant**   **ID** を入力します。
+4.  **Cloud Provider**  項目でMicrosoft Azureを選択します。
+5. 同期したいリソースの  **Tenant ID** を入力します。
 6. 特定  **Region** のリソースを同期したい場合、Use Region項目にチェック後Regionを選択してください。
-7.  **Subscription**   **ID** を入力します。
+7.  **Subscription ID** を入力します。
 8. リソースを同期するために必要な  **Credential**  情報を入力します。現在はClient Secret方式のみサポートされています。
     1. `Synchronize`ボタンクリック時にAzureのClient Secretを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeでClient Secretを使用する時もスケジュールを通じた同期が可能になるよう改善されました。
-9.  **Search**   **Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
+9.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
     1. Search FilterはAWSの検索方式と同じように動作します。名前、ホスト、OS、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
         1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
     2. より詳細な使用方法は[User Guide for Linux Instances (AWS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#advancedsearch)で確認できます。
-10.  **Replication**   **Frequency**  項目で同期方式を選択します。
+10.  **Replication Frequency**  項目で同期方式を選択します。
     1. Manual : 同期したい時点にのみ手動で同期する方式です。
     2. Scheduling : 周期的なスケジューリングを通じてリソースを同期する方式です。Cron Expressionsを提供します。
 11.  **Auto Configuration Upon Initial Synchronization** Cloud Providerで初回同期するサーバーの一部値をユーザーが指定できます。初期値設定はCloud Provider保存後修正できません。この設定の変更が必要な場合、Cloud Provider削除後再登録する必要があります。
-    * port **:**  同期されたサーバーの接続ポートを指定できます。現在はSSH/SFTPポートのみ指定が可能です。
+    * port :  同期されたサーバーの接続ポートを指定できます。現在はSSH/SFTPポートのみ指定が可能です。
     * Tag : 同期されたサーバーに自動でタグを追加できます。
         * タグ値に`{vpcid}`を入力すると、該当サーバーが属するCloudのVPC IDが自動で埋められます。
         * 例: タグKeyを"Network"に設定し、Valueを`{vpcid}`で入力すると、サーバーが"vpc-1a2b3c4d" VPCにある場合"Network: vpc-1a2b3c4d"タグが自動生成されます。
@@ -75,15 +75,15 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 4. 右上の`Synchronize`ボタンをクリックするとAzureからリソースを同期できます。
 5. 表示されるSynchronization Logで同期進行状況を確認でき、General &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
 6. Cloud Providerを一度登録すると、Provider基本情報および認証情報は変更できません。
-    1.  **Name** : 変更可能
-    2.  **Cloud**   **Provider** : 変更不可
-    3.  **Tenant**   **ID** : 変更不可
-    4.  **Region** : 変更不可
+    1.  **Name**: 変更可能
+    2.  **Cloud Provider**: 変更不可
+    3.  **Tenant ID**: 変更不可
+    4.  **Region**: 変更不可
     5.  **Subscription**  ID: 変更不可
-    6.  **Credential** : 変更不可
+    6.  **Credential**: 変更不可
         1. "Save Credential for Synchronization" : 非活性化状態は活性化に変更できますが、活性化状態を非活性化に切り替え不可
-    7.  **Search**   **Filter** : 変更可能
-    8.  **Replication**   **Frequency** : 変更不可
+    7.  **Search Filter**: 変更可能
+    8.  **Replication Frequency**: 変更不可
 
 <Callout type="important">
 "Save Credential for Synchronization"オプションが活性化されていない状態で保存された同期設定は詳細ページでチェックボックスをチェックすることでオプションを活性化できます。

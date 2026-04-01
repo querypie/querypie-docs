@@ -38,7 +38,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
     1. Manual : A method that synchronizes manually only when you want to synchronize.
     2. Scheduling : A method that synchronizes resources through periodic scheduling. Cron Expressions are provided.
 9.  **Auto Configuration Upon Initial Synchronization** You can specify some values for servers that are initially synchronized from Cloud Provider. Initial value settings cannot be modified after saving the Cloud Provider. If changes to this setting are needed, you must delete the Cloud Provider and register again.
-    * port **:**  You can specify the connection port of synchronized servers. Currently, only SSH/SFTP ports can be specified.
+    * port :  You can specify the connection port of synchronized servers. Currently, only SSH/SFTP ports can be specified.
     * Tag : You can automatically add tags to synchronized servers.
         * If you enter `{vpcid}` in the tag value, the VPC ID of the Cloud where the server belongs is automatically filled.
         * Example: If you set the tag Key to "Network" and enter the Value as `{vpcid}`, when the server is in "vpc-1a2b3c4d" VPC, the "Network: vpc-1a2b3c4d" tag is automatically created.
@@ -60,10 +60,10 @@ Credential Type
 </figcaption>
 </figure>
 
-*  **Default Credentials**  : If the QueryPie server is installed in the same AWS account, you can assign the AmazonEC2ReadOnlyAccess policy to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS.
-*  **Cross Account Role**  : You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen.
-*  **Profile Credential**  : You can create an IAM role to synchronize resources from other AWS accounts.
-*  **Access Key**  : Provides manual synchronization method by entering access key and secret key of AWS account when clicking `Synchronize` button by default. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable synchronization through schedules even when using access key as Credential type.  ****
+*  **Default Credentials**: If the QueryPie server is installed in the same AWS account, you can assign the AmazonEC2ReadOnlyAccess policy to the EC2 instance where QueryPie is installed to synchronize resources within the same AWS.
+*  **Cross Account Role**: You can create an IAM role to synchronize resources from other AWS accounts. Please create permissions for synchronization and assign policies according to the steps displayed on the screen.
+*  **Profile Credential**: You can create an IAM role to synchronize resources from other AWS accounts.
+*  **Access Key**: Provides manual synchronization method by entering access key and secret key of AWS account when clicking `Synchronize` button by default. <br/>Starting from QueryPie 10.2.2, the "Save Credential for Synchronization" option is provided to enable synchronization through schedules even when using access key as Credential type.
 
 <Callout type="important">
 **Save Credential for Synchronization Option**
@@ -96,14 +96,14 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers &gt; 
 4. Click the `Synchronize` button in the top right to synchronize resources from AWS.
 5. You can check the synchronization progress in the displayed Synchronization Log, and you can also check the synchronization history in General &gt; Systems &gt; Jobs menu.
 6. Once a Cloud Provider is registered, some information of the Provider cannot be changed.
-    1.  **Name** : Can be changed
-    2.  **Cloud Provider** : Cannot be changed
-    3.  **Region** : Cannot be changed
-    4.  **Credential** : Cannot be changed
+    1.  **Name**: Can be changed
+    2.  **Cloud Provider**: Cannot be changed
+    3.  **Region**: Cannot be changed
+    4.  **Credential**: Cannot be changed
         1. "Save Credential for Synchronization" : Can be changed from disabled to enabled, but cannot be changed from enabled to disabled
-    5.  **Role**   **ARN** : Cannot be changed
-    6.  **Search**   **Filter** : Can be changed
-    7.  **Replication**   **Frequency** : Can be changed (however, cannot be changed if Credential is Access Key)
+    5.  **Role ARN**: Cannot be changed
+    6.  **Search Filter**: Can be changed
+    7.  **Replication Frequency**: Can be changed (however, cannot be changed if Credential is Access Key)
 
 <Callout type="important">
 Synchronization settings saved with the "Save Credential for Synchronization" option disabled can enable the option by checking the checkbox on the detailed page.

@@ -32,9 +32,9 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 1. Administrator &gt; Servers &gt; Connection Management &gt; Server Groupsメニューに移動します。
 2. 右上の`+ Create Group`ボタンをクリックします。
 3. グループ作成のための以下の情報を入力します。
-    1.  **Name** : サーバーグループを画面で区別できる名前です。
-    2.  **Description** : 該当サーバーグループに対する付加的な説明を入力できます。
-    3.  **Server Tags** : 該当サーバーグループに含まれるサーバーをServer Tagsを通じてフィルタリングして追加します。
+    1.  **Name**: サーバーグループを画面で区別できる名前です。
+    2.  **Description**: 該当サーバーグループに対する付加的な説明を入力できます。
+    3.  **Server Tags**: 該当サーバーグループに含まれるサーバーをServer Tagsを通じてフィルタリングして追加します。
 4. `Save`ボタンを通じて保存します。
 
 <Callout type="info">
@@ -56,7 +56,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Server Groups &gt; Cr
 
 * Name : サーバーグループの名前を入力します。
 * Description : サーバーグループを説明できる内容を入力します。複数の管理者がいる場合、サーバーグループ間の簡単な識別のために目的に合わせて名前および説明を詳細に入力することをお勧めします。
-* Server Tags : サーバーグループでまとめたいサーバーのタグを指定して流動的にサーバーグループの対象を管理できます。タグを通じて追加されたサーバーはサーバーテーブルで手動削除ができず、Server Tagsのタグを修正しなければなりません。
+* Server Tags : サーバーグループでまとめたいサーバーのタグを指定して流動的にサーバーグループの対象を管理できます。タグを通じて追加されたサーバーはサーバーテーブルで手動削除できないため、Server Tagsのタグを修正する必要があります。
 
 #### 2. Serverを手動で追加
 
@@ -108,7 +108,7 @@ Test ConnectionはServer Groupを保存した後にのみ使用できます。
   </figure>
 3. カテゴリ別でアカウントを設定できます。
     1. Category : 最も先にアカウントの認証方式とタイプを定義するCategoryを選択する必要があります。選択するCategoryに応じて下段に表示される設定項目が動的に変更されます。
-    2.  **注意** : アカウントを作成した後はCategoryを修正できませんので慎重に選択する必要があります。
+    2.  **注意**: アカウントを作成した後はCategoryを修正できませんので慎重に選択する必要があります。
 4. Category別設定項目
     1.  **QueryPie内部認証**
         1. `QueryPie - Manual Login` : サーバーアクセス時にユーザーが設定されたアカウントのパスワードを直接入力します。
@@ -136,19 +136,19 @@ Test ConnectionはServer Groupを保存した後にのみ使用できます。
             * 必須条件: One Time Accountを使用するには必ずサーバーグループ内にProvisioningアカウントがまず指定されていなければなりません。
     3.  **Secret Store連携 (Hashicorp Vault)**
         1. Admin &gt; General &gt; Security &gt; Secret Storesが活性化されていなければカテゴリ項目が表示されます。
-        2. `Vault - K/V - Password` **** : Vault K/Vエンジンに保存されたパスワードを使用します。
+        2. `Vault - K/V - Password`: Vault K/Vエンジンに保存されたパスワードを使用します。
             * 入力および選択が必要な項目 : Alias, Secret Store, Account Path, Password Path
                 * Secret Store : エンジンタイプがK/Vタイプの項目のみフィルタされて表記されます。
             * サーバーグループにAccount情報登録時、Secret Store連携情報を活用すると事前指定されたSecret Store認証情報連携を通じてコネクションにアクセスできます。事前にサーバー認証情報をSecret Storeに保存し、サーバーリモートアクセス時にユーザーがSecret Storeに保存されたサーバー認証情報を活用してアクセスすることで、サーバー認証情報に対するセキュリティを強化できます。Server Groupsが指定されたServerはServer Groupsと同じSecret Storeを使用するように強制されます。
             * Alias項目に利用者たちに露出されるサーバーアカウント名を入力します。
-        3. `Vault - K/V - SSH Key` **** : Vault K/Vエンジンに保存されたSSH Keyを使用します。
+        3. `Vault - K/V - SSH Key`: Vault K/Vエンジンに保存されたSSH Keyを使用します。
             * 入力および選択が必要な項目 : Alias, Secret Store, Account Path, SSH Key Path
                 * Secret Store : エンジンタイプがK/Vタイプの項目のみフィルタされて表記されます。
-        4. `Vault - SSH - OTP` **** : VaultのSSH OTPエンジンを使用します。
+        4. `Vault - SSH - OTP`: VaultのSSH OTPエンジンを使用します。
             * 入力および選択が必要な項目: Account, Secret Store, Vault Role Path
                 * Secret Store : エンジンタイプがOTPタイプの項目のみフィルタされて表記されます。
             * Hashicorp VaultのSSH OTPエンジンを使用して、Passwordless形態でサーバーアカウントを管理できます。ただし、サーバーにvaultのserver agentであるvault-ssh-helperをインストールする必要があります。詳細ガイドは[Hashicorp Vault公式ガイド](https://developer.hashicorp.com/vault/tutorials/secrets-management/ssh-otp)を参考にしてください。
-        5. `Vault - SSH - CA` **** : VaultのSSH CAエンジンを使用します。
+        5. `Vault - SSH - CA`: VaultのSSH CAエンジンを使用します。
             * 入力および選択が必要な項目: Account, Secret Store, Vault Role Path
                 * Secret Store : エンジンタイプがCAタイプの項目のみフィルタされて表記されます。
             * Hashicorp VaultのSSH CAエンジン(Signed SSH certificates)を使用して、Passwordless形態でサーバーアカウントを管理できます。ただし、vault caエンジンで発行したPublic KeyをアクセスするサーバーのTrustedUserCAKeysに追加する必要があります。詳細ガイドは[Hashicorp Vault公式ガイド](https://developer.hashicorp.com/vault/docs/secrets/ssh/signed-ssh-certificates)を参考にしてください。
