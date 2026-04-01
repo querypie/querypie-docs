@@ -156,12 +156,14 @@ def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
     텍스트 내용까지 함께 변경된 경우에는 False를 반환한다.
     (replace_fragment + modify 패치 충돌 방지)
     """
+    old_lines = old_content.strip().split('\n')
+    new_lines = new_content.strip().split('\n')
+    # 줄 수가 다르면 항목 추가/삭제 — 공백만 변경이 아님
+    if len(old_lines) != len(new_lines):
+        return False
     marker_re = re.compile(r'^(\s*)(?:\d+\.|[-*+])(\s+)')
     has_space_change = False
-    for old_line, new_line in zip(
-        old_content.strip().split('\n'),
-        new_content.strip().split('\n'),
-    ):
+    for old_line, new_line in zip(old_lines, new_lines):
         old_m = marker_re.match(old_line)
         new_m = marker_re.match(new_line)
         if old_m and new_m:
