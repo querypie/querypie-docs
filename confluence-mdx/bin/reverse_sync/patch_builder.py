@@ -148,21 +148,32 @@ def _strip_list_item_marker(line: str) -> str:
 
 
 def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
-    """리스트 항목의 마커 뒤 공백 수 변경을 감지한다.
+    """리스트 항목의 마커 뒤 공백 수만 변경되었는지 감지한다.
 
     예: ``3.  매핑`` → ``3. 매핑`` (이중 공백 → 단일 공백)
     normalize_mdx_to_plain이 마커를 제거하므로 text transfer로는 감지 불가.
+
+    텍스트 내용까지 함께 변경된 경우에는 False를 반환한다.
+    (replace_fragment + modify 패치 충돌 방지)
     """
     marker_re = re.compile(r'^(\s*)(?:\d+\.|[-*+])(\s+)')
+    has_space_change = False
     for old_line, new_line in zip(
         old_content.strip().split('\n'),
         new_content.strip().split('\n'),
     ):
         old_m = marker_re.match(old_line)
         new_m = marker_re.match(new_line)
-        if old_m and new_m and old_m.group(2) != new_m.group(2):
-            return True
-    return False
+        if old_m and new_m:
+            if old_m.group(2) != new_m.group(2):
+                has_space_change = True
+            # 마커 제거 후 텍스트가 다르면 텍스트 변경도 포함 → False
+            if old_line[old_m.end():] != new_line[new_m.end():]:
+                return False
+        elif old_line != new_line:
+            # 비-리스트 줄이 다르면 텍스트 변경 포함
+            return False
+    return has_space_change
 
 
 def _build_inline_fixups(
