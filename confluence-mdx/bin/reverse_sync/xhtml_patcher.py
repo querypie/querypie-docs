@@ -412,10 +412,11 @@ def _apply_inline_fixups(element: Tag, fixups: list):
     """인라인 마커 경계 변경을 DOM에 적용한다.
 
     text-level 패치는 인라인 태그(<strong>, <em>) 경계를 변경할 수 없으므로,
-    fixup 리스트의 각 항목에 대해 매칭하는 <p> 요소의 innerHTML을 교체한다.
+    fixup 리스트의 각 항목에 대해 매칭하는 블록 요소의 innerHTML을 교체한다.
     """
     if not fixups:
         return
+    block_tags = ('p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6')
     for fixup in fixups:
         old_plain = fixup['old_plain'].strip()
         new_plain = fixup.get('new_plain', old_plain).strip()
@@ -425,21 +426,21 @@ def _apply_inline_fixups(element: Tag, fixups: list):
         if not old_plain:
             continue
         new_plain_collapsed = _collapse_ws(new_plain)
-        for p_tag in element.find_all('p'):
-            p_text = p_tag.get_text().strip()
+        for block_tag in element.find_all(block_tags):
+            block_text = block_tag.get_text().strip()
             # _apply_text_changes 이후 <p> 텍스트는 new_plain으로 업데이트되므로
             # new_plain 기준으로만 매칭한다. old_plain도 허용하면 미변경 앞 항목을
             # 잘못 수정할 수 있다 (old_plain != new_plain인 경우).
-            if _collapse_ws(p_text) != new_plain_collapsed:
+            if _collapse_ws(block_text) != new_plain_collapsed:
                 continue
             if current_match != match_index:
                 current_match += 1
                 continue
-            p_html = str(p_tag)
-            if '<ac:' in p_html or '<ri:' in p_html:
-                _apply_strong_boundary_fixup(p_tag, new_inner)
+            block_html = str(block_tag)
+            if '<ac:' in block_html or '<ri:' in block_html:
+                _apply_strong_boundary_fixup(block_tag, new_inner)
                 break
-            _replace_inner_html(p_tag, new_inner)
+            _replace_inner_html(block_tag, new_inner)
             break
 
 

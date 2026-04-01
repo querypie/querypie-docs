@@ -150,8 +150,10 @@ def _strip_list_item_marker(line: str) -> str:
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
+    *,
+    block_type: str = 'paragraph',
 ) -> List[Dict[str, Any]]:
-    """old/new MDX 리스트 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
+    """old/new MDX 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
     fixups: List[Dict[str, Any]] = []
     old_lines = old_content.strip().split('\n')
     new_lines = new_content.strip().split('\n')
@@ -179,6 +181,11 @@ def _build_inline_fixups(
                 merged.append(line)
         return merged
 
+    def _strip_block_marker(line: str) -> str:
+        if block_type == 'heading':
+            return re.sub(r'^\s*#+\s+', '', line)
+        return line
+
     content_lines_old = [l for l in old_lines if _is_content_line(l)]
     content_lines_new = [l for l in new_lines if _is_content_line(l)]
     old_items = _merge_continuation_lines(content_lines_old)
@@ -188,8 +195,8 @@ def _build_inline_fixups(
         return fixups
 
     for old_line, new_line in zip(old_items, new_items):
-        old_item_text = _strip_list_item_marker(old_line)
-        new_item_text = _strip_list_item_marker(new_line)
+        old_item_text = _strip_list_item_marker(_strip_block_marker(old_line))
+        new_item_text = _strip_list_item_marker(_strip_block_marker(new_line))
         old_plain = normalize_mdx_to_plain(old_item_text, 'paragraph')
         new_plain = normalize_mdx_to_plain(new_item_text, 'paragraph')
         match_index = new_plain_occurrences.get(new_plain, 0)
@@ -890,7 +897,10 @@ def build_patches(
             # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)를
             # replace_fragment 판단 전에 수행하여 clean list도 재생성하도록 함
             inline_fixups = _build_inline_fixups(
-                change.old_block.content, change.new_block.content)
+                change.old_block.content,
+                change.new_block.content,
+                block_type=change.old_block.type,
+            )
             has_inline_boundary = bool(inline_fixups)
             has_any_change = has_content_change or has_ol_start_change or has_inline_boundary
             should_replace_clean_list = (
@@ -1002,7 +1012,10 @@ def build_patches(
                         _text_change_patches[bid]['new_plain_text'])
                     # 인라인 마커 경계 변경 (bold/italic) 감지 및 누적
                     inline_fixups = _build_inline_fixups(
-                        change.old_block.content, change.new_block.content)
+                        change.old_block.content,
+                        change.new_block.content,
+                        block_type=change.old_block.type,
+                    )
                     if inline_fixups:
                         existing = _text_change_patches[bid].get(
                             'inline_fixups', [])
