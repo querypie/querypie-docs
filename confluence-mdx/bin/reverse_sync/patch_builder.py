@@ -1077,6 +1077,11 @@ def build_patches(
                             old_lists, new_lists, child_list_mappings):
                         if _detect_list_item_space_change(
                                 old_child.content, new_child.content):
+                            # preserved anchor 마크업이 있으면 건너뜀
+                            # (replace_fragment가 ac:link 등을 손실시킴)
+                            if _contains_preserved_anchor_markup(
+                                    child_map.xhtml_text):
+                                continue
                             child_block = MdxBlock(
                                 type='list',
                                 content=new_child.content,
