@@ -99,6 +99,7 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
                 current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
+            _materialize_replaced_emoticons(element, old_text, new_text)
             _apply_text_changes(element, old_text, new_text)
             if 'ol_start' in patch and isinstance(element, Tag) and element.name == 'ol':
                 new_start = patch['ol_start']
@@ -442,6 +443,30 @@ def _apply_inline_fixups(element: Tag, fixups: list):
                 break
             _replace_inner_html(block_tag, new_inner)
             break
+
+
+def _materialize_replaced_emoticons(element: Tag, old_text: str, new_text: str):
+    """교체 대상인 <ac:emoticon> 요소를 shortcode 텍스트 노드로 물질화한다.
+
+    old_text에는 존재하지만 new_text에는 없는 emoticon shortcode를 찾아
+    해당 <ac:emoticon> DOM 요소를 텍스트 노드로 대체한다.
+    이후 _apply_text_changes가 해당 텍스트를 정상적으로 변환할 수 있다.
+    """
+    emoticons = element.find_all('ac:emoticon')
+    if not emoticons:
+        return
+    for emoticon in list(emoticons):
+        shortname = emoticon.get('ac:emoji-shortname', '')
+        fallback = emoticon.get('ac:emoji-fallback', shortname)
+        # old_text에서 이 emoticon을 나타내는 마커를 결정
+        marker = shortname if shortname in old_text else (
+            fallback if fallback in old_text else '')
+        if not marker:
+            continue
+        # new_text에도 동일한 마커가 있으면 변경 대상이 아님 → 보존
+        if marker in new_text:
+            continue
+        emoticon.replace_with(NavigableString(marker))
 
 
 def _apply_text_changes(element: Tag, old_text: str, new_text: str):
