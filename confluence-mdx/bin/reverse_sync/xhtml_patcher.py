@@ -99,6 +99,7 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
                 current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
                     continue
+            _materialize_replaced_emoticons(element, old_text, new_text)
             _apply_text_changes(element, old_text, new_text)
             if 'ol_start' in patch and isinstance(element, Tag) and element.name == 'ol':
                 new_start = patch['ol_start']
@@ -442,6 +443,58 @@ def _apply_inline_fixups(element: Tag, fixups: list):
                 break
             _replace_inner_html(block_tag, new_inner)
             break
+
+
+def _materialize_replaced_emoticons(element: Tag, old_text: str, new_text: str):
+    """교체 대상인 <ac:emoticon> 요소를 shortcode 텍스트 노드로 물질화한다.
+
+    old/new diff에서 그대로 보존되지 않은 emoticon marker를 찾아
+    해당 <ac:emoticon> DOM 요소를 텍스트 노드로 대체한다.
+    이후 _apply_text_changes가 해당 텍스트를 정상적으로 변환할 수 있다.
+    """
+    emoticons = element.find_all('ac:emoticon')
+    if not emoticons:
+        return
+    old_stripped = old_text.strip()
+    matcher = difflib.SequenceMatcher(None, old_stripped, new_text.strip(), autojunk=False)
+    preserved_ranges = [
+        (i1, i2)
+        for tag, i1, i2, _j1, _j2 in matcher.get_opcodes()
+        if tag == 'equal'
+    ]
+    search_pos = 0
+    for emoticon in list(emoticons):
+        marker, marker_span = _find_emoticon_marker_span(emoticon, old_stripped, search_pos)
+        if not marker or marker_span is None:
+            continue
+        search_pos = marker_span[1]
+        if any(start <= marker_span[0] and marker_span[1] <= end
+               for start, end in preserved_ranges):
+            continue
+        emoticon.replace_with(NavigableString(marker))
+
+
+def _find_emoticon_marker_span(emoticon: Tag, old_text: str, search_pos: int):
+    """old_text 안에서 emoticon marker와 대응 span을 찾는다."""
+    shortname = emoticon.get('ac:emoji-shortname', '')
+    fallback = emoticon.get('ac:emoji-fallback', shortname)
+    candidates = []
+    for candidate in (shortname, fallback):
+        if candidate and candidate not in candidates:
+            candidates.append(candidate)
+
+    best_marker = ''
+    best_span = None
+    for candidate in candidates:
+        idx = old_text.find(candidate, search_pos)
+        if idx == -1:
+            continue
+        span = (idx, idx + len(candidate))
+        if best_span is None or span[0] < best_span[0]:
+            best_marker = candidate
+            best_span = span
+
+    return best_marker, best_span
 
 
 def _apply_text_changes(element: Tag, old_text: str, new_text: str):

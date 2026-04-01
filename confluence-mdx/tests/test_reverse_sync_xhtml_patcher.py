@@ -534,3 +534,65 @@ class TestOlStartPatch:
         ol = soup.find('ol')
         assert ol['start'] == '5'
         assert 'updated' in result
+
+
+class TestEmoticonReplacement:
+    """<ac:emoticon> 커스텀 이모지가 텍스트로 교체되는 경우 테스트."""
+
+    def test_emoticon_replaced_with_text(self):
+        """커스텀 이모지 shortcode가 plain text로 교체될 때 <ac:emoticon> DOM 요소가 제거된다."""
+        xhtml = (
+            '<p>전송 토글 버튼을 '
+            '<ac:emoticon ac:emoji-fallback=":토글off:" '
+            'ac:emoji-id="c6944598" ac:emoji-shortname=":토글off:" '
+            'ac:name="blue-star"></ac:emoticon>'
+            ' 로 변경한 후 삭제해 주시기 바랍니다.</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': '전송 토글 버튼을 :토글off: 로 변경한 후 삭제해 주시기 바랍니다.',
+            'new_plain_text': '전송 토글 버튼을 Off로 변경한 후 삭제해 주시기 바랍니다.',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert 'ac:emoticon' not in result
+        assert 'Off로 변경한 후' in result
+
+    def test_emoticon_unchanged_when_not_in_diff(self):
+        """이모지가 변경 대상이 아니면 <ac:emoticon> 요소가 보존된다."""
+        xhtml = (
+            '<p>상태: '
+            '<ac:emoticon ac:emoji-fallback=":check:" '
+            'ac:emoji-shortname=":check:" ac:name="tick"></ac:emoticon>'
+            ' 완료</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': '상태: :check: 완료',
+            'new_plain_text': '상태: :check: 완료됨',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert 'ac:emoticon' in result
+        assert '완료됨' in result
+
+    def test_only_one_of_duplicate_shortcodes_is_replaced(self):
+        """동일 shortcode가 여러 번 나와도 교체 대상 위치만 텍스트로 바뀐다."""
+        xhtml = (
+            '<p>'
+            '<ac:emoticon ac:emoji-fallback=":check:" '
+            'ac:emoji-shortname=":check:" ac:name="tick"></ac:emoticon>'
+            ' A '
+            '<ac:emoticon ac:emoji-fallback=":check:" '
+            'ac:emoji-shortname=":check:" ac:name="tick"></ac:emoticon>'
+            '</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': ':check: A :check:',
+            'new_plain_text': ':check: A 확인',
+        }]
+
+        result = patch_xhtml(xhtml, patches)
+        soup = BeautifulSoup(result, 'html.parser')
+
+        assert len(soup.find_all('ac:emoticon')) == 1
+        assert 'A 확인' in result

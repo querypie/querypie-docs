@@ -78,19 +78,19 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
 
         tag_name = child.name
         if tag_name in HEADING_TAGS:
-            plain = child.get_text()
+            plain = get_text_with_emoticons(child)
             inner = ''.join(str(c) for c in child.children)
             _add_mapping(mappings, counters, tag_name, inner, plain, block_type='heading')
         elif tag_name == 'p':
-            plain = child.get_text()
+            plain = get_text_with_emoticons(child)
             inner = ''.join(str(c) for c in child.children)
             _add_mapping(mappings, counters, 'p', inner, plain, block_type='paragraph')
         elif tag_name in ('ul', 'ol'):
-            plain = child.get_text()
+            plain = get_text_with_emoticons(child)
             inner = str(child)
             _add_mapping(mappings, counters, tag_name, inner, plain, block_type='list')
         elif tag_name == 'table':
-            plain = child.get_text()
+            plain = get_text_with_emoticons(child)
             inner = str(child)
             _add_mapping(mappings, counters, 'table', inner, plain, block_type='table')
         elif tag_name == 'ac:structured-macro':
