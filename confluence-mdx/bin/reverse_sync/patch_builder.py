@@ -207,6 +207,35 @@ def _build_inline_fixups(
     return fixups
 
 
+def _offset_inline_fixup_match_indexes(
+    existing_fixups: List[Dict[str, Any]],
+    new_fixups: List[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    """같은 부모에 누적될 inline fixup의 match_index를 기존 occurrence 뒤로 민다."""
+    if not new_fixups:
+        return []
+
+    next_match_index: Dict[str, int] = {}
+    for fixup in existing_fixups:
+        new_plain = collapse_ws(fixup.get('new_plain', fixup['old_plain']).strip())
+        next_match_index[new_plain] = max(
+            next_match_index.get(new_plain, 0),
+            int(fixup.get('match_index', 0)) + 1,
+        )
+
+    adjusted_fixups: List[Dict[str, Any]] = []
+    for fixup in new_fixups:
+        adjusted = dict(fixup)
+        new_plain = collapse_ws(adjusted.get('new_plain', adjusted['old_plain']).strip())
+        adjusted['match_index'] = int(adjusted.get('match_index', 0)) + next_match_index.get(
+            new_plain, 0,
+        )
+        next_match_index[new_plain] = adjusted['match_index'] + 1
+        adjusted_fixups.append(adjusted)
+
+    return adjusted_fixups
+
+
 def _extract_html_table_cells(content: str) -> List[str]:
     """raw HTML table에서 셀 텍스트를 순서대로 추출한다."""
     cells = re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', content, re.DOTALL | re.IGNORECASE)
@@ -945,7 +974,9 @@ def build_patches(
                     if inline_fixups:
                         existing = _text_change_patches[bid].get(
                             'inline_fixups', [])
-                        existing.extend(inline_fixups)
+                        existing.extend(_offset_inline_fixup_match_indexes(
+                            existing, inline_fixups,
+                        ))
                         _text_change_patches[bid]['inline_fixups'] = existing
             continue
 

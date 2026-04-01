@@ -967,6 +967,47 @@ class TestBuildPatches:
         assert '<strong>Vault 연동시 사전 준비 사항</strong>:' in patched
         assert 'ac:macro-id="MID"' in patched
 
+    def test_containing_duplicate_inline_fixups_advance_match_index(self):
+        """같은 callout 안의 동일 문단 텍스트 두 개도 각각 올바른 <p>에 적용돼야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Name:Name:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1', 'paragraph-2'],
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body>'
+            '<p><strong>Name:</strong></p>'
+            '<p><strong>Name:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        changes = [
+            _make_change(0, '**Name:**', '**Name**:', type_='paragraph'),
+            _make_change(1, '**Name:**', '**Name**:', type_='paragraph'),
+        ]
+        mdx_to_sidecar = {
+            0: _make_sidecar('macro-info[1]', [0]),
+            1: _make_sidecar('macro-info[1]', [1]),
+        }
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        patches, *_ = build_patches(
+            changes,
+            [change.old_block for change in changes],
+            [change.new_block for change in changes],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert patched.count('<strong>Name</strong>:') == 2
+        assert 'ac:macro-id="MID"' in patched
+
     def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
         """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
         mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')
