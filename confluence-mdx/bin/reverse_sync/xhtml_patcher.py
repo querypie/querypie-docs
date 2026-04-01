@@ -349,10 +349,29 @@ def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
     innerHTML 전체 교체는 <ac:link> 등 preserved anchor를 파괴하므로,
     new_inner_xhtml에서 목표 <strong> 구조를 추출하고 기존 <p>의 <strong>
     텍스트만 갱신한 뒤, 경계 이동으로 빠져나온 문자를 인접 text node에 반영한다.
+
+    old/new <strong> 개수가 다른 경우(bold 제거): 새 버전에 매칭되지 않는
+    old <strong>를 unwrap하여 텍스트만 남긴다 (<ac:link-body> 내부는 보존).
     """
     new_soup = BeautifulSoup(new_inner_xhtml, 'html.parser')
     old_strongs = p_tag.find_all('strong')
     new_strongs = new_soup.find_all('strong')
+
+    if len(old_strongs) > len(new_strongs):
+        # 새 버전의 bold 텍스트 집합 구축 (매칭용)
+        new_strong_texts = [s.get_text() for s in new_strongs]
+        remaining = list(new_strong_texts)
+        for old_s in list(old_strongs):
+            old_text = old_s.get_text()
+            if old_text in remaining:
+                remaining.remove(old_text)
+                continue
+            # <ac:link-body> 내부 <strong>은 보존 (링크 텍스트 서식)
+            if old_s.parent and old_s.parent.name == 'ac:link-body':
+                continue
+            # 매칭 안 되는 <strong>을 unwrap → 텍스트만 남김
+            old_s.unwrap()
+        return
 
     if len(old_strongs) != len(new_strongs):
         return
