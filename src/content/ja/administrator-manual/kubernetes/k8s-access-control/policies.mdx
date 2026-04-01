@@ -33,11 +33,11 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 2. テーブル左上の検索欄でポリシー名を条件に検索できます。
 3. テーブル右上の更新ボタンでPolicyリストを最新化できます。
 4. テーブルでは以下のカラム情報を提供します：
-    1.  **Name**  : Policy名
-    2.  **Description**  : Policyの詳細説明
-    3.  **Created At**  : ポリシーの初回作成日時
-    4.  **Updated At** : ポリシーの最終修正日時
-    5.  **Updated By**  : 最後にアップデートを実行した管理者名
+    1.  **Name**: Policy名
+    2.  **Description**: Policyの詳細説明
+    3.  **Created At**: ポリシーの初回作成日時
+    4.  **Updated At**: ポリシーの最終修正日時
+    5.  **Updated By**: 最後にアップデートを実行した管理者名
 5. 各行をクリックするとポリシーの詳細情報を照会できます。
     1.   **Detail**
       <figure data-layout="center" data-align="center">
@@ -51,22 +51,22 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
       </figure>
         1. 該当ポリシーが割り当てられているRoleの一覧を表示します。
         2. 一覧では各Roleごとに以下の情報を表示します：
-            1.  **Name**  : Role名
-            2.  **Description**  : Roleの詳細説明
-            3.  **Assigned At**  : Roleに該当ポリシーが割り当てられた日時
-            4.  **Assigned By** : 該当ポリシーをRoleに割り当てた管理者名
+            1.  **Name**: Role名
+            2.  **Description**: Roleの詳細説明
+            3.  **Assigned At**: Roleに該当ポリシーが割り当てられた日時
+            4.  **Assigned By**: 該当ポリシーをRoleに割り当てた管理者名
         3. 各行をクリックするとRoleの詳細情報をドロワー形式で提供します。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072435.png" alt="image-20240721-072435.png" width="688" />
           </figure>
-            1.  **Name**  : Role名
+            1.  **Name**: Role名
                 * 該当ロールの詳細ページへのリンクを提供します。
-            2.  **Description**  : Roleの詳細説明
-            3.  **Last Access At**  : 該当ロールの最終アクセス日時
-            4.  **Created At**  : Roleの作成日時
-            5.  **Created By**  : Roleの作成者名
-            6.  **Updated At**  : Roleのアップデート日時
-            7.  **Updated By**  : 最後のRole修正者名
+            2.  **Description**: Roleの詳細説明
+            3.  **Last Access At**: 該当ロールの最終アクセス日時
+            4.  **Created At**: Roleの作成日時
+            5.  **Created By**: Roleの作成者名
+            6.  **Updated At**: Roleのアップデート日時
+            7.  **Updated By**: 最後のRole修正者名
     3.  **Versions**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072503.png" alt="image-20240721-072503.png" width="712" />
@@ -74,19 +74,19 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
         1. 該当ポリシーの各バージョンに対する履歴を表示します。
             * ポリシーバージョンはCodeが修正されて保存されるとアップデートされます。
         2. 一覧では各バージョンごとに以下の情報を表示します：
-            1.  **Version**  : バージョン名
-            2.  **Justification**  : ポリシーアップデートの記入理由
-            3.  **Updated At**  : 該当バージョンの作成日時
-            4.  **Updated By**  : 該当バージョンの修正者名
+            1.  **Version**: バージョン名
+            2.  **Justification**: ポリシーアップデートの記入理由
+            3.  **Updated At**: 該当バージョンの作成日時
+            4.  **Updated By**: 該当バージョンの修正者名
         3. 各行をクリックするとバージョンの詳細情報をドロワー形式で提供します。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/kubernetes/k8s-access-control/policies/image-20240721-072547.png" alt="image-20240721-072547.png" width="688" />
           </figure>
-            1.  **(Title)**  : ポリシー名
-            2.  **Version**  : ポリシーバージョン
-            3.  **Justification**  : ポリシーアップデートの記入理由
-            4.  **Updated At**  : 該当バージョンの作成日時
-            5.  **Updated By**  : 該当バージョンの修正者名
+            1.  **(Title)**: ポリシー名
+            2.  **Version**: ポリシーバージョン
+            3.  **Justification**: ポリシーアップデートの記入理由
+            4.  **Updated At**: 該当バージョンの作成日時
+            5.  **Updated By**: 該当バージョンの修正者名
             6. 下部に当時の**ポリシーコードスナップショット**が表示されます。
 
 
@@ -99,8 +99,8 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
 2. 右上の`+ Create Policy`ボタンをクリックします。
 3. ポリシー作成のために以下の情報を入力します。（以下の情報はすべてユーザーに表示される情報です。）
-    1.  **Name :** 識別可能なポリシー名（必須）
-    2.  **Description** : 該当ポリシーに対する補足説明
+    1.  **Name**: 識別可能なポリシー名（必須）
+    2.  **Description**: 該当ポリシーに対する補足説明
 4. `OK`ボタンをクリックして作成します。
 5. ポリシーリストの最上部にある新規作成されたポリシーをクリックします。
 6. [Kubernetesポリシーの設定](policies/setting-kubernetes-policies)ガイドを参考にしてポリシーを設定します。
@@ -115,8 +115,8 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
 2. リストから修正するPolicyをクリックして詳細ページに移動します。
 3. 画面右上の`Edit`ボタンをクリックして以下の情報を修正できます。
-    1.  **Name :** 識別可能なポリシー名（必須）
-    2.  **Description** : 該当ポリシーに対する補足説明
+    1.  **Name**: 識別可能なポリシー名（必須）
+    2.  **Description**: 該当ポリシーに対する補足説明
 4. `OK`ボタンをクリックして修正を反映します。
 
 
@@ -129,8 +129,8 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 1. Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policiesメニューに移動します。
 2. リストから複製するPolicyをクリックして詳細ページに移動します。
 3. 画面右上の`Duplicate`ボタンをクリックして複製の情報を修正できます。
-    1.  **Name :** 識別可能なポリシー名（必須）
-    2.  **Description** : 該当ポリシーに対する補足説明
+    1.  **Name**: 識別可能なポリシー名（必須）
+    2.  **Description**: 該当ポリシーに対する補足説明
 4. `OK`ボタンをクリックして修正を反映します。
 5. ポリシーリストの最上部にある新規複製されたポリシーをクリックして照会/修正します。
 

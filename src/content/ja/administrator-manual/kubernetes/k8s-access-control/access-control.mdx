@@ -33,62 +33,62 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Access Control &gt; L
 2. テーブル左上の検索欄を使用して、ユーザー/グループ名で検索できます。
 3. テーブル右上のリフレッシュボタンを使用して、ユーザー/グループリストを更新できます。
 4. テーブルリストには、各ユーザー/グループごとに以下の情報が表示されます：
-    1.  **User Type**  : ユーザー/グループのタイプ
-    2.  **Provider**  : ユーザー/グループのIDソースを表示
-    3.  **Name**  : ユーザー/グループ名
-    4.  **Members**  : グループ内の所属メンバーリスト
-    5.  **Roles**  : 付与されたRoleの数
+    1.  **User Type**: ユーザー/グループのタイプ
+    2.  **Provider**: ユーザー/グループのIDソースを表示
+    3.  **Name**: ユーザー/グループ名
+    4.  **Members**: グループ内の所属メンバーリスト
+    5.  **Roles**: 付与されたRoleの数
 5. Access Controlリストで行をクリックすると、対象ユーザー/グループの詳細ページに移動します。
     1.   **Roles**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065530.png" alt="image-20240721-065530.png" width="712" />
       </figure>
         1. デフォルトで指定されるタブで、付与されたRoleリストを照会できます。
-        2. Role名で検索が可能です。
+        2. Role名で検索できます。
         3. リストには各Roleごとに以下の情報が表示されます：
-            1.  **Name**  : Role名
-            2.  **Description**  : Roleの詳細説明
-            3.  **Expiration Date**  : 有効期限日
-            4.  **Last Access At**  : 該当Roleの最終呼び出し日時
-            5.  **Granted At**  : Roleが該当ユーザー/グループに付与された日時
-            6.  **Granted By**  : 該当Roleをユーザー/グループに付与した管理者名
+            1.  **Name**: Role名
+            2.  **Description**: Roleの詳細説明
+            3.  **Expiration Date**: 有効期限日
+            4.  **Last Access At**: 該当Roleの最終呼び出し日時
+            5.  **Granted At**: Roleが該当ユーザー/グループに付与された日時
+            6.  **Granted By**: 該当Roleをユーザー/グループに付与した管理者名
         4. 各Role行をクリックすると、該当Roleの詳細情報がドロワー形式で表示されます。
           <figure data-layout="center" data-align="center">
           <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065559.png" alt="image-20240721-065559.png" width="688" />
           </figure>
             1. 上部には基本情報が以下のように表示されます：
-                1.  **Name**  : Role名
+                1.  **Name**: Role名
                     * （Role詳細ページのリンクを新しいウィンドウで開くことができます。）
-                2.  **Description**  : Roleの詳細説明
-                3.  **Granted At**  : Roleが該当ユーザー/グループに付与された日時
-                4.  **Granted By**  : 該当Roleをユーザー/グループに付与した管理者名
-                5.  **Last Access At**  : 該当Roleの最終呼び出し日時
-                6.  **Expiration Date**  : 有効期限日
+                2.  **Description**: Roleの詳細説明
+                3.  **Granted At**: Roleが該当ユーザー/グループに付与された日時
+                4.  **Granted By**: 該当Roleをユーザー/グループに付与した管理者名
+                5.  **Last Access At**: 該当Roleの最終呼び出し日時
+                6.  **Expiration Date**: 有効期限日
             2. 下部には該当Roleに割り当てられているポリシーがリストで表示されます。
-                1.  **Name**  : Policy名
+                1.  **Name**: Policy名
                     * （ポリシー情報を照会できるリンクを提供します。）
                       <figure data-layout="center" data-align="center">
                       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065637.png" alt="image-20240721-065637.png" width="310" />
                       </figure>
-                2.  **Description**  : Policyの詳細説明
-                3.  **Version**  : Policyバージョン
-                4.  **Assigned At**  : 割り当て日時
-                5.  **Assigned By**  : 該当ポリシーを割り当てた管理者名
+                2.  **Description**: Policyの詳細説明
+                3.  **Version**: Policyバージョン
+                4.  **Assigned At**: 割り当て日時
+                5.  **Assigned By**: 該当ポリシーを割り当てた管理者名
     2.  **Clusters**
       <figure data-layout="center" data-align="center">
       <img src="/administrator-manual/kubernetes/k8s-access-control/access-control/image-20240721-065710.png" alt="image-20240721-065710.png" width="712" />
       </figure>
         1. 付与されたRoleによってアクセス可能なKubernetesクラスターリストを一覧表示します。
-        2. Cluster名、Role名で検索が可能です。
+        2. Cluster名、Role名で検索できます。
         3. リストには各クラスターごとに以下の情報が表示されます：
-            1.  **Name**  : クラスター名
-            2.  **Version**  : Kubernetesバージョン
-            3.  **API URL**  : クラスターAPI URL
-            4.  **Cloud Provider**  : 接続プラットフォーム（手動クラスターの場合、ハイフンで表記）
-            5.  **Tags**  : クラスターに付けられたタグリスト
-            6.  **Role**  : 関連Roleリストの一覧
-            7.  **Created At**  : クラスターの初回作成日時
-            8.  **Updated At**  : クラスターの最終更新日時
+            1.  **Name**: クラスター名
+            2.  **Version**: Kubernetesバージョン
+            3.  **API URL**: クラスターAPI URL
+            4.  **Cloud Provider**: 接続プラットフォーム（手動クラスターの場合、ハイフンで表記）
+            5.  **Tags**: クラスターに付けられたタグリスト
+            6.  **Role**: 関連Roleリストの一覧
+            7.  **Created At**: クラスターの初回作成日時
+            8.  **Updated At**: クラスターの最終更新日時
 
 <Callout type="info">
 **Expiration Dateに到達したGranted Roleの処理方式**

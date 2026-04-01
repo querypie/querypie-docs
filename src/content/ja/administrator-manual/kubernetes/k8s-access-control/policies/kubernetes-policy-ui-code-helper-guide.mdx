@@ -8,7 +8,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382522/UI
 ### Overview
 
 組織で管理するKubernetesクラスターのアクセスポリシー(Policy)を管理できます。
-KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベースに動作します。
+KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形式を基盤に動作します。
 右側にはPolicy UI便利機能としてコードエディターに挿入する内容をユーザーがUIで作業できるように助けるモーダルを提供します。
 
 
@@ -29,15 +29,15 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
   <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073346.png" alt="image-20240721-073346.png" width="426" />
   </figure>
     1. Spec: Allow、Spec: Deny二箇所で同じように動作します。
-    2. Cluster名でリソース検索が可能です。
+    2. Cluster名でリソースを検索できます。
     3. チェックボックスにチェックしたリソースを`Add`ボタンをクリックしてコードに挿入します。
 2.  **Set Subjects**  モーダル
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/k8s-access-control/policies/kubernetes-policy-ui-code-helper-guide/image-20240721-073434.png" alt="image-20240721-073434.png" width="424" />
   </figure>
     1. Spec: Allowでのみ動作します。
-    2.  **Kubernetes Groups**  : (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを指定します。
-    3.  **Permitted Impersonation**  : (Optional) このフィールドでは、ユーザーがクライアント経由で実際に--as、--as-groupによるimpersonationを試行する際に適用可能なKubernetesユーザー/グループをリストアップします。
+    2.  **Kubernetes Groups**: (Required) 該当フィールドを通じてKubePie ProxyがAPI呼び出し実行のためにimpersonateするKubernetesグループを指定します。
+    3.  **Permitted Impersonation**: (Optional) このフィールドでは、ユーザーがクライアント経由で実際に--as、--as-groupによるimpersonationを試行する際に適用可能なKubernetesユーザー/グループをリストアップします。
         1.  **Allowed Kubernetes Users** : --asパラメータでQueryPieで許可するkubenetes usersを指定します。
         2.  **Allowed Kubernetes Groups** : --as-groupパラメータでQueryPieで許可するkubernetes groupsを指定します。
         3. ','を通じて多重で登録可能です。

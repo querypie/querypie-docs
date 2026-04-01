@@ -8,7 +8,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544382274'
 ### Overview
 
 組織で管理するKubernetesクラスターのアクセスポリシー(Policy)を管理できます。
-KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形態をベースに動作します。
+KubernetesポリシーはPolicy as a Code(PaC)で運営され、YAML形式を基盤に動作します。
 アクセスを許可するクラスターリソース、API範囲を設定できるだけでなく、リソースタグおよびユーザー属性(Attribute)ベースのポリシー適用範囲の細分化およびアクセス可能なIPアドレス設定を合わせて適用できます。
 
 
@@ -25,7 +25,7 @@ Administrator &gt; Kubernetes &gt; K8s Access Control &gt; Policies &gt; List De
 2. リストでポリシーコードを編集するPolicyをクリックします。
 3. Detailタブ右側の`Go to Editor Mode`ボタンをクリックしてCode Editor画面に移動します。
 4. 以下の方法を活用してコードエディターウィンドウで希望するポリシー内容を修正します。
-    1. 中央のコードを直接修正可能で、wildcard("*")および正規表現([RE2形式](https://github.com/girishji/re2/wiki/Syntax))パターンをサポートします。
+    1. 中央のコードを直接修正できます。wildcard("*")および正規表現([RE2形式](https://github.com/girishji/re2/wiki/Syntax))パターンをサポートします。
         * 参考: [KubernetesポリシーYAML Code文法案内](kubernetes-policy-yaml-code-syntax-guide)
         * 下段のErrorsタブを通じて直接修正したコードのエラーをデバッグします。コードにエラーがある場合、Errorsタブが赤色で表示され即座に確認できます。
     2. 下段のTipsタブを通じて各項目に対する定義方法を確認してコードに反映します。
