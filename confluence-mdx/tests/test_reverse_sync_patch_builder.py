@@ -926,6 +926,203 @@ class TestBuildPatches:
         assert 'ac:schema-version="1"' in patched
         assert 'New text.' in patched
 
+    def test_containing_bold_colon_inline_fixup(self):
+        """containing 전략에서 bold-colon 경계 변경이 XHTML에 반영돼야 한다.
+
+        **text:** → **text**: (콜론이 bold 밖으로 이동)
+        XHTML: <strong>text:</strong> → <strong>text</strong>:
+        """
+        mapping = _make_mapping(
+            'callout-1',
+            'Vault 연동시 사전 준비 사항:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1'],
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body><p><strong>Vault 연동시 사전 준비 사항:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        change = _make_change(
+            0,
+            "**Vault 연동시 사전 준비 사항:**",
+            "**Vault 연동시 사전 준비 사항**:",
+            type_='paragraph',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        patches, *_ = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert '<strong>Vault 연동시 사전 준비 사항</strong>:' in patched
+        assert 'ac:macro-id="MID"' in patched
+
+    def test_containing_duplicate_inline_fixups_advance_match_index(self):
+        """같은 callout 안의 동일 문단 텍스트 두 개도 각각 올바른 <p>에 적용돼야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Name:Name:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1', 'paragraph-2'],
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body>'
+            '<p><strong>Name:</strong></p>'
+            '<p><strong>Name:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        changes = [
+            _make_change(0, '**Name:**', '**Name**:', type_='paragraph'),
+            _make_change(1, '**Name:**', '**Name**:', type_='paragraph'),
+        ]
+        mdx_to_sidecar = {
+            0: _make_sidecar('macro-info[1]', [0]),
+            1: _make_sidecar('macro-info[1]', [1]),
+        }
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        patches, *_ = build_patches(
+            changes,
+            [change.old_block for change in changes],
+            [change.new_block for change in changes],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert patched.count('<strong>Name</strong>:') == 2
+        assert 'ac:macro-id="MID"' in patched
+
+    def test_containing_inline_fixup_counts_unchanged_prior_duplicate(self):
+        """앞의 동일 문단이 미변경이어도 뒤 문단 fixup은 두 번째 <p>에 적용돼야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Name:Name:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1', 'paragraph-2'],
+        )
+        child1 = _make_mapping(
+            'paragraph-1',
+            'Name:',
+            xpath='macro-info[1]/p[1]',
+        )
+        child2 = _make_mapping(
+            'paragraph-2',
+            'Name:',
+            xpath='macro-info[1]/p[2]',
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body>'
+            '<p><strong>Name:</strong></p>'
+            '<p><strong>Name:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        old_blocks = [
+            _make_block('**Name:**', line_start=1),
+            _make_block('**Name:**', line_start=2),
+        ]
+        new_blocks = [
+            _make_block('**Name:**', line_start=1),
+            _make_block('**Name**:', line_start=2),
+        ]
+        change = BlockChange(
+            index=1,
+            change_type='modified',
+            old_block=old_blocks[1],
+            new_block=new_blocks[1],
+        )
+        mdx_to_sidecar = {
+            0: _make_sidecar('macro-info[1]', [0]),
+            1: _make_sidecar('macro-info[1]', [1]),
+        }
+        xpath_to_mapping = {
+            'macro-info[1]': mapping,
+            'macro-info[1]/p[1]': child1,
+            'macro-info[1]/p[2]': child2,
+        }
+
+        patches, *_ = build_patches(
+            [change],
+            old_blocks,
+            new_blocks,
+            [mapping, child1, child2],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert '<p><strong>Name:</strong></p>' in patched
+        assert '<p><strong>Name</strong>:</p>' in patched
+        assert patched.index('<p><strong>Name:</strong></p>') < patched.index(
+            '<p><strong>Name</strong>:</p>')
+
+    def test_containing_heading_inline_fixup_applies_to_heading_child(self):
+        """callout 내부 heading의 bold 경계 변경도 실제 child heading에 반영돼야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Name:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['heading-1'],
+        )
+        child = _make_mapping(
+            'heading-1',
+            'Name:',
+            xpath='macro-info[1]/h3[1]',
+            type_='heading',
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body><h3><strong>Name:</strong></h3></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        change = _make_change(
+            0,
+            '### **Name:**\n',
+            '### **Name**:\n',
+            type_='heading',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+        xpath_to_mapping = {
+            'macro-info[1]': mapping,
+            'macro-info[1]/h3[1]': child,
+        }
+
+        patches, *_ = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping, child],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert '<h3><strong>Name</strong>:</h3>' in patched
+        assert '###' not in patched
+        assert 'ac:macro-id="MID"' in patched
+
     def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
         """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
         mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')

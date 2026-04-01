@@ -150,8 +150,10 @@ def _strip_list_item_marker(line: str) -> str:
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
+    *,
+    block_type: str = 'paragraph',
 ) -> List[Dict[str, Any]]:
-    """old/new MDX 리스트 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
+    """old/new MDX 콘텐츠에서 인라인 경계 변경이 있는 항목의 fixup 정보를 생성한다."""
     fixups: List[Dict[str, Any]] = []
     old_lines = old_content.strip().split('\n')
     new_lines = new_content.strip().split('\n')
@@ -162,7 +164,9 @@ def _build_inline_fixups(
         if not s:
             return False
         return not any(s.startswith(p) for p in (
-            '<figure', '<img', '</figure', '<figcaption', '</figcaption'))
+            '<figure', '<img', '</figure', '<figcaption', '</figcaption',
+            '<Callout', '</Callout', '<table', '</table', '<thead', '</thead',
+            '<tbody', '</tbody', '<tr', '</tr', '<td', '</td', '<th', '</th'))
 
     def _is_list_item_start(l: str) -> bool:
         return bool(re.match(r'^\s*(?:\d+\.|\*|-|\+)\s', l))
@@ -177,6 +181,11 @@ def _build_inline_fixups(
                 merged.append(line)
         return merged
 
+    def _strip_block_marker(line: str) -> str:
+        if block_type == 'heading':
+            return re.sub(r'^\s*#+\s+', '', line)
+        return line
+
     content_lines_old = [l for l in old_lines if _is_content_line(l)]
     content_lines_new = [l for l in new_lines if _is_content_line(l)]
     old_items = _merge_continuation_lines(content_lines_old)
@@ -186,8 +195,8 @@ def _build_inline_fixups(
         return fixups
 
     for old_line, new_line in zip(old_items, new_items):
-        old_item_text = _strip_list_item_marker(old_line)
-        new_item_text = _strip_list_item_marker(new_line)
+        old_item_text = _strip_list_item_marker(_strip_block_marker(old_line))
+        new_item_text = _strip_list_item_marker(_strip_block_marker(new_line))
         old_plain = normalize_mdx_to_plain(old_item_text, 'paragraph')
         new_plain = normalize_mdx_to_plain(new_item_text, 'paragraph')
         match_index = new_plain_occurrences.get(new_plain, 0)
@@ -203,6 +212,67 @@ def _build_inline_fixups(
         })
 
     return fixups
+
+
+def _offset_inline_fixup_match_indexes(
+    existing_fixups: List[Dict[str, Any]],
+    new_fixups: List[Dict[str, Any]],
+    *,
+    parent_xpath: Optional[str] = None,
+    change_index: Optional[int] = None,
+    improved_blocks: Optional[List[MdxBlock]] = None,
+    mdx_to_sidecar: Optional[Dict[int, SidecarEntry]] = None,
+) -> List[Dict[str, Any]]:
+    """같은 부모에 누적될 inline fixup의 match_index를 기존 occurrence 뒤로 민다."""
+    if not new_fixups:
+        return []
+
+    prior_occurrences: Dict[str, int] = {}
+    if (
+        parent_xpath is not None
+        and change_index is not None
+        and improved_blocks is not None
+        and mdx_to_sidecar is not None
+        and 0 <= change_index <= len(improved_blocks)
+    ):
+        target_plains = {
+            collapse_ws(fixup.get('new_plain', fixup['old_plain']).strip())
+            for fixup in new_fixups
+        }
+        for idx in range(change_index):
+            entry = mdx_to_sidecar.get(idx)
+            if entry is None or entry.xhtml_xpath != parent_xpath:
+                continue
+            block = improved_blocks[idx]
+            if block.type in NON_CONTENT_TYPES:
+                continue
+            block_plain = collapse_ws(normalize_mdx_to_plain(block.content, block.type).strip())
+            if block_plain in target_plains:
+                prior_occurrences[block_plain] = prior_occurrences.get(block_plain, 0) + 1
+
+    next_match_index: Dict[str, int] = {}
+    for fixup in existing_fixups:
+        new_plain = collapse_ws(fixup.get('new_plain', fixup['old_plain']).strip())
+        next_match_index[new_plain] = max(
+            next_match_index.get(new_plain, 0),
+            int(fixup.get('match_index', 0)) + 1,
+        )
+
+    adjusted_fixups: List[Dict[str, Any]] = []
+    for fixup in new_fixups:
+        adjusted = dict(fixup)
+        new_plain = collapse_ws(adjusted.get('new_plain', adjusted['old_plain']).strip())
+        if new_plain in prior_occurrences:
+            adjusted['match_index'] = int(adjusted.get('match_index', 0)) + prior_occurrences[
+                new_plain]
+        else:
+            adjusted['match_index'] = int(adjusted.get('match_index', 0)) + next_match_index.get(
+                new_plain, 0,
+            )
+            next_match_index[new_plain] = adjusted['match_index'] + 1
+        adjusted_fixups.append(adjusted)
+
+    return adjusted_fixups
 
 
 def _extract_html_table_cells(content: str) -> List[str]:
@@ -827,7 +897,10 @@ def build_patches(
             # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)를
             # replace_fragment 판단 전에 수행하여 clean list도 재생성하도록 함
             inline_fixups = _build_inline_fixups(
-                change.old_block.content, change.new_block.content)
+                change.old_block.content,
+                change.new_block.content,
+                block_type=change.old_block.type,
+            )
             has_inline_boundary = bool(inline_fixups)
             has_any_change = has_content_change or has_ol_start_change or has_inline_boundary
             should_replace_clean_list = (
@@ -937,6 +1010,23 @@ def build_patches(
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
                         old_plain, new_plain,
                         _text_change_patches[bid]['new_plain_text'])
+                    # 인라인 마커 경계 변경 (bold/italic) 감지 및 누적
+                    inline_fixups = _build_inline_fixups(
+                        change.old_block.content,
+                        change.new_block.content,
+                        block_type=change.old_block.type,
+                    )
+                    if inline_fixups:
+                        existing = _text_change_patches[bid].get(
+                            'inline_fixups', [])
+                        existing.extend(_offset_inline_fixup_match_indexes(
+                            existing, inline_fixups,
+                            parent_xpath=mapping.xhtml_xpath,
+                            change_index=change.index,
+                            improved_blocks=improved_blocks,
+                            mdx_to_sidecar=mdx_to_sidecar,
+                        ))
+                        _text_change_patches[bid]['inline_fixups'] = existing
             continue
 
         # strategy == 'direct'
