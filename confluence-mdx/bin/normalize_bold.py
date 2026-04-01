@@ -28,6 +28,7 @@ MDX 파일의 bold 서식을 정규화합니다.
 from __future__ import annotations
 
 import argparse
+import difflib
 import re
 import sys
 from pathlib import Path
@@ -44,13 +45,13 @@ _INLINE_CODE = re.compile(r"`[^`]+`")
 
 # 1) split bold 병합: **word** **word** → **word word**
 #    연속으로 반복 가능 (**a** **b** **c** → **a b c**)
-_SPLIT_BOLD = re.compile(r"\*\*([^*]+)\*\*(\s+\*\*[^*]+\*\*)+")
+_SPLIT_BOLD = re.compile(r"\*\*([^*]+)\*\*([ \t]+\*\*[^*]+\*\*)+")
 
 # 2) stray bold: 콜론·쉼표·마침표 등 단일 구두점만 감싼 bold
 _STRAY_BOLD = re.compile(r"\*\*([:\.\,;])\*\*")
 
 # 3) bold 뒤 콜론 공백: **label** : → **label**:
-_BOLD_COLON_SPACE = re.compile(r"\*\*\s+:")
+_BOLD_COLON_SPACE = re.compile(r"\*\*[ \t]+:")
 
 # 4) 콜론을 bold 밖으로: **label:** → **label**:
 #    spec:allow, spec:deny 등 기술 용어는 제외 (콜론 뒤에 알파벳이 이어지는 경우)
@@ -162,9 +163,41 @@ def normalize_file(
     old_lines = original.splitlines(keepends=True)
     new_lines = normalized.splitlines(keepends=True)
 
-    for i, (old, new) in enumerate(zip(old_lines, new_lines)):
-        if old != new:
-            changes.append((i + 1, old.rstrip("\n"), new.rstrip("\n")))
+    matcher = difflib.SequenceMatcher(None, old_lines, new_lines, autojunk=False)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            continue
+
+        old_chunk = old_lines[i1:i2]
+        new_chunk = new_lines[j1:j2]
+        shared = min(len(old_chunk), len(new_chunk))
+
+        for offset in range(shared):
+            changes.append(
+                (
+                    i1 + offset + 1,
+                    old_chunk[offset].rstrip("\n"),
+                    new_chunk[offset].rstrip("\n"),
+                )
+            )
+
+        insert_line_no = i1 + shared + 1
+        for offset in range(shared, len(old_chunk)):
+            changes.append(
+                (
+                    i1 + offset + 1,
+                    old_chunk[offset].rstrip("\n"),
+                    "",
+                )
+            )
+        for offset in range(shared, len(new_chunk)):
+            changes.append(
+                (
+                    insert_line_no,
+                    "",
+                    new_chunk[offset].rstrip("\n"),
+                )
+            )
 
     if apply:
         path.write_text(normalized, encoding="utf-8")
