@@ -147,6 +147,24 @@ def _strip_list_item_marker(line: str) -> str:
     return s
 
 
+def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
+    """리스트 항목의 마커 뒤 공백 수 변경을 감지한다.
+
+    예: ``3.  매핑`` → ``3. 매핑`` (이중 공백 → 단일 공백)
+    normalize_mdx_to_plain이 마커를 제거하므로 text transfer로는 감지 불가.
+    """
+    marker_re = re.compile(r'^(\s*)(?:\d+\.|[-*+])(\s+)')
+    for old_line, new_line in zip(
+        old_content.strip().split('\n'),
+        new_content.strip().split('\n'),
+    ):
+        old_m = marker_re.match(old_line)
+        new_m = marker_re.match(new_line)
+        if old_m and new_m and old_m.group(2) != new_m.group(2):
+            return True
+    return False
+
+
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
@@ -1027,6 +1045,36 @@ def build_patches(
                             mdx_to_sidecar=mdx_to_sidecar,
                         ))
                         _text_change_patches[bid]['inline_fixups'] = existing
+                # callout child list의 마커 공백 변경 → replace_fragment 패치
+                # (text transfer는 normalize_mdx_to_plain이 마커를 제거하여 감지 불가)
+                if (change.old_block.type == 'callout'
+                        and hasattr(change.old_block, 'children')
+                        and hasattr(change.new_block, 'children')):
+                    old_lists = [c for c in change.old_block.children
+                                 if c.type == 'list']
+                    new_lists = [c for c in change.new_block.children
+                                 if c.type == 'list']
+                    child_list_mappings = [
+                        id_to_mapping[cid]
+                        for cid in mapping.children
+                        if cid in id_to_mapping
+                        and id_to_mapping[cid].type == 'list'
+                    ]
+                    for old_child, new_child, child_map in zip(
+                            old_lists, new_lists, child_list_mappings):
+                        if _detect_list_item_space_change(
+                                old_child.content, new_child.content):
+                            child_block = MdxBlock(
+                                type='list',
+                                content=new_child.content,
+                                line_start=0, line_end=0,
+                            )
+                            patches.append(
+                                _build_replace_fragment_patch(
+                                    child_map, child_block,
+                                    mapping_lost_info=mapping_lost_info,
+                                )
+                            )
             continue
 
         # strategy == 'direct'
