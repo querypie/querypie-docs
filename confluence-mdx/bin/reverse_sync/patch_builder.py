@@ -129,7 +129,14 @@ def _has_inline_boundary_change(old_line: str, new_line: str) -> bool:
     new_markers = _extract_inline_markers(new_line)
     old_bolds = [c for t, c in old_markers if t == 'bold']
     new_bolds = [c for t, c in new_markers if t == 'bold']
-    return old_bolds != new_bolds
+    if old_bolds != new_bolds:
+        return True
+    # stray bold 마커(****) 추가·제거 감지: text 세그먼트에서 ** 유무 변화
+    old_text = ''.join(c for t, c in old_markers if t == 'text')
+    new_text = ''.join(c for t, c in new_markers if t == 'text')
+    old_has_stars = '**' in old_text
+    new_has_stars = '**' in new_text
+    return old_has_stars != new_has_stars
 
 
 def _strip_list_item_marker(line: str) -> str:
