@@ -120,16 +120,21 @@ def _protect_and_transform(
 
 def _apply_rules(text: str) -> str:
     """5가지 정규화 규칙을 순서대로 적용합니다."""
-    # 1) split bold 병합
+    # 규칙 1~4는 전체 텍스트에 적용
     text = _SPLIT_BOLD.sub(_merge_split_bold, text)
-    # 2) stray bold 제거
     text = _STRAY_BOLD.sub(r"\1", text)
-    # 3) bold 뒤 콜론 공백
     text = _BOLD_COLON_SPACE.sub("**:", text)
-    # 4) 콜론을 bold 밖으로
     text = _COLON_INSIDE_BOLD.sub(_colon_outside_bold, text)
-    # 5a) 이중 공백 — 인덴트(줄 앞 공백) 제외, 비공백 사이의 2칸 이상만 축소
-    text = _DOUBLE_SPACE.sub(" ", text)
+
+    # 5a) 이중 공백 — 테이블 행(|로 시작) 제외 (가로 정렬 공백 보존 정책)
+    lines = text.splitlines(keepends=True)
+    result = []
+    for line in lines:
+        if not line.lstrip().startswith("|"):
+            line = _DOUBLE_SPACE.sub(" ", line)
+        result.append(line)
+    text = "".join(result)
+
     # 5b) trailing whitespace
     text = _TRAILING_WS.sub("", text)
     return text
