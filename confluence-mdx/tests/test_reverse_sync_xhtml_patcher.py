@@ -573,3 +573,26 @@ class TestEmoticonReplacement:
         result = patch_xhtml(xhtml, patches)
         assert 'ac:emoticon' in result
         assert '완료됨' in result
+
+    def test_only_one_of_duplicate_shortcodes_is_replaced(self):
+        """동일 shortcode가 여러 번 나와도 교체 대상 위치만 텍스트로 바뀐다."""
+        xhtml = (
+            '<p>'
+            '<ac:emoticon ac:emoji-fallback=":check:" '
+            'ac:emoji-shortname=":check:" ac:name="tick"></ac:emoticon>'
+            ' A '
+            '<ac:emoticon ac:emoji-fallback=":check:" '
+            'ac:emoji-shortname=":check:" ac:name="tick"></ac:emoticon>'
+            '</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': ':check: A :check:',
+            'new_plain_text': ':check: A 확인',
+        }]
+
+        result = patch_xhtml(xhtml, patches)
+        soup = BeautifulSoup(result, 'html.parser')
+
+        assert len(soup.find_all('ac:emoticon')) == 1
+        assert 'A 확인' in result
