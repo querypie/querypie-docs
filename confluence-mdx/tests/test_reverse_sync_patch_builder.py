@@ -1008,6 +1008,73 @@ class TestBuildPatches:
         assert patched.count('<strong>Name</strong>:') == 2
         assert 'ac:macro-id="MID"' in patched
 
+    def test_containing_inline_fixup_counts_unchanged_prior_duplicate(self):
+        """앞의 동일 문단이 미변경이어도 뒤 문단 fixup은 두 번째 <p>에 적용돼야 한다."""
+        mapping = _make_mapping(
+            'callout-1',
+            'Name:Name:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1', 'paragraph-2'],
+        )
+        child1 = _make_mapping(
+            'paragraph-1',
+            'Name:',
+            xpath='macro-info[1]/p[1]',
+        )
+        child2 = _make_mapping(
+            'paragraph-2',
+            'Name:',
+            xpath='macro-info[1]/p[2]',
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body>'
+            '<p><strong>Name:</strong></p>'
+            '<p><strong>Name:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        old_blocks = [
+            _make_block('**Name:**', line_start=1),
+            _make_block('**Name:**', line_start=2),
+        ]
+        new_blocks = [
+            _make_block('**Name:**', line_start=1),
+            _make_block('**Name**:', line_start=2),
+        ]
+        change = BlockChange(
+            index=1,
+            change_type='modified',
+            old_block=old_blocks[1],
+            new_block=new_blocks[1],
+        )
+        mdx_to_sidecar = {
+            0: _make_sidecar('macro-info[1]', [0]),
+            1: _make_sidecar('macro-info[1]', [1]),
+        }
+        xpath_to_mapping = {
+            'macro-info[1]': mapping,
+            'macro-info[1]/p[1]': child1,
+            'macro-info[1]/p[2]': child2,
+        }
+
+        patches, *_ = build_patches(
+            [change],
+            old_blocks,
+            new_blocks,
+            [mapping, child1, child2],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert '<p><strong>Name:</strong></p>' in patched
+        assert '<p><strong>Name</strong>:</p>' in patched
+        assert patched.index('<p><strong>Name:</strong></p>') < patched.index(
+            '<p><strong>Name</strong>:</p>')
+
     def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
         """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
         mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')
