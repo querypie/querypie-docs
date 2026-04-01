@@ -118,31 +118,19 @@ def _protect_and_transform(
     return text
 
 
-def _apply_rules_to_line(line: str) -> str:
-    """한 줄에 bold 규칙 1~4를 적용합니다."""
-    line = _SPLIT_BOLD.sub(_merge_split_bold, line)
-    line = _STRAY_BOLD.sub(r"\1", line)
-    line = _BOLD_COLON_SPACE.sub("**:", line)
-    line = _COLON_INSIDE_BOLD.sub(_colon_outside_bold, line)
-    return line
-
-
 def _apply_rules(text: str) -> str:
     """5가지 정규화 규칙을 순서대로 적용합니다."""
-    lines = text.splitlines(keepends=True)
-    result = []
-    for line in lines:
-        # 테이블 행(|로 시작)은 이중 공백 규칙 제외, bold 규칙만 적용
-        stripped = line.lstrip()
-        if stripped.startswith("|"):
-            line = _apply_rules_to_line(line)
-        else:
-            line = _apply_rules_to_line(line)
-            # 5a) 이중 공백 (인덴트 뒤 첫 글자 이후만)
-            line = _DOUBLE_SPACE.sub(" ", line)
-        result.append(line)
+    # 1) split bold 병합
+    text = _SPLIT_BOLD.sub(_merge_split_bold, text)
+    # 2) stray bold 제거
+    text = _STRAY_BOLD.sub(r"\1", text)
+    # 3) bold 뒤 콜론 공백
+    text = _BOLD_COLON_SPACE.sub("**:", text)
+    # 4) 콜론을 bold 밖으로
+    text = _COLON_INSIDE_BOLD.sub(_colon_outside_bold, text)
+    # 5a) 이중 공백 — 인덴트(줄 앞 공백) 제외, 비공백 사이의 2칸 이상만 축소
+    text = _DOUBLE_SPACE.sub(" ", text)
     # 5b) trailing whitespace
-    text = "".join(result)
     text = _TRAILING_WS.sub("", text)
     return text
 
