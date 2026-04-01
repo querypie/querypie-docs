@@ -926,6 +926,47 @@ class TestBuildPatches:
         assert 'ac:schema-version="1"' in patched
         assert 'New text.' in patched
 
+    def test_containing_bold_colon_inline_fixup(self):
+        """containing 전략에서 bold-colon 경계 변경이 XHTML에 반영돼야 한다.
+
+        **text:** → **text**: (콜론이 bold 밖으로 이동)
+        XHTML: <strong>text:</strong> → <strong>text</strong>:
+        """
+        mapping = _make_mapping(
+            'callout-1',
+            'Vault 연동시 사전 준비 사항:',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['paragraph-1'],
+        )
+        mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1" ac:macro-id="MID">'
+            '<ac:rich-text-body><p><strong>Vault 연동시 사전 준비 사항:</strong></p>'
+            '</ac:rich-text-body></ac:structured-macro>'
+        )
+        change = _make_change(
+            0,
+            "**Vault 연동시 사전 준비 사항:**",
+            "**Vault 연동시 사전 준비 사항**:",
+            type_='paragraph',
+        )
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+        xpath_to_mapping = {'macro-info[1]': mapping}
+
+        patches, *_ = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            [mapping],
+            mdx_to_sidecar=mdx_to_sidecar,
+            xpath_to_mapping=xpath_to_mapping,
+            roundtrip_sidecar=None,
+        )
+        patched = patch_xhtml(mapping.xhtml_text, patches)
+
+        assert '<strong>Vault 연동시 사전 준비 사항</strong>:' in patched
+        assert 'ac:macro-id="MID"' in patched
+
     def test_paired_delete_add_list_without_roundtrip_sidecar_still_patches(self):
         """paired delete/add clean list는 no-sidecar여도 변경이 유실되면 안 된다."""
         mapping = _make_mapping('m1', 'old item text', xpath='ul[1]', type_='list')

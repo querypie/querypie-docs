@@ -162,7 +162,9 @@ def _build_inline_fixups(
         if not s:
             return False
         return not any(s.startswith(p) for p in (
-            '<figure', '<img', '</figure', '<figcaption', '</figcaption'))
+            '<figure', '<img', '</figure', '<figcaption', '</figcaption',
+            '<Callout', '</Callout', '<table', '</table', '<thead', '</thead',
+            '<tbody', '</tbody', '<tr', '</tr', '<td', '</td', '<th', '</th'))
 
     def _is_list_item_start(l: str) -> bool:
         return bool(re.match(r'^\s*(?:\d+\.|\*|-|\+)\s', l))
@@ -937,6 +939,14 @@ def build_patches(
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
                         old_plain, new_plain,
                         _text_change_patches[bid]['new_plain_text'])
+                    # 인라인 마커 경계 변경 (bold/italic) 감지 및 누적
+                    inline_fixups = _build_inline_fixups(
+                        change.old_block.content, change.new_block.content)
+                    if inline_fixups:
+                        existing = _text_change_patches[bid].get(
+                            'inline_fixups', [])
+                        existing.extend(inline_fixups)
+                        _text_change_patches[bid]['inline_fixups'] = existing
             continue
 
         # strategy == 'direct'
