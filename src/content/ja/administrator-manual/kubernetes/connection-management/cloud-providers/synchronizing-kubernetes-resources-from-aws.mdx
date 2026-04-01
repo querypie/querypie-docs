@@ -69,8 +69,8 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-kubernetes-resources-from-aws/image-20240721-054206.png" alt="image-20240721-054206.png" width="510" />
   </figure>
-    1.  **Default Credentials**  : QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにIAMロールを割り当てて同じAWS内のリソースを同期することができます。
-    2.  **Cross Account Role**  : IAMロールを作成して他のAWSアカウントのリソースを同期することができます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
+    1.  **Default Credentials**: QueryPieサーバーが同じAWSアカウントにインストールされている場合、QueryPieがインストールされたEC2インスタンスにIAMロールを割り当てて同じAWS内のリソースを同期することができます。
+    2.  **Cross Account Role**: IAMロールを作成して他のAWSアカウントのリソースを同期することができます。画面に表示されたステップに従って同期のための権限を作成し、ポリシーを割り当ててください。
 7.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得することができます。
     1. Search FilterはAWSの検索方式と同じように動作します。名前、タグなどの値をフィルターとして使用でき、以下の順序でEnterキーを活用して検索条件およびフィルターを便利に入力できます。
         1. Key値入力後Enter → 検索条件選択後Enter → Value値入力後Enter
@@ -103,13 +103,13 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers &g
     1. 表記文句に対する定義は以下の  **Dry Run/Synchronization Log表記文句** を参考にしてください。
     2. 表示されるSynchronization Logで同期進行状況を確認でき、Settings &gt; Systems &gt; Jobsメニューでも同期履歴を確認できます。
 4. Cloud Providerを一度登録すると、Provider一部情報は変更できません。
-    1.  **Name** : 変更可能
-    2.  **Cloud Provider** : 変更不可
-    3.  **Region** : 変更不可
-    4.  **Credential** : 変更不可
-    5.  **Role**   **ARN** : 変更不可
-    6.  **Search**   **Filter** : 変更可能
-    7.  **Replication**   **Frequency** : 変更可能
+    1.  **Name**: 変更可能
+    2.  **Cloud Provider**: 変更不可
+    3.  **Region**: 変更不可
+    4.  **Credential**: 変更不可
+    5.  **Role ARN**: 変更不可
+    6.  **Search Filter**: 変更可能
+    7.  **Replication Frequency**: 変更可能
 
 
 ### Dry Run/Synchronization Log表記文句
