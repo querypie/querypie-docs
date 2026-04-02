@@ -17,6 +17,7 @@ from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import (
     _apply_mdx_diff_to_xhtml,
     _build_inline_fixups,
+    _detect_list_item_space_change,
     _extract_inline_markers,
     _find_roundtrip_sidecar_block,
     _has_inline_boundary_change,
@@ -2190,3 +2191,276 @@ class TestApplyInlineFixups:
         ps = soup.find_all('p')
         assert '<strong>A</strong> B' in str(ps[0])
         assert '<strong>A B</strong>' in str(ps[1])
+
+
+# ── _detect_list_item_space_change 유닛 테스트 ──
+
+
+class TestDetectListItemSpaceChange:
+    """리스트 마커 뒤 공백 수 변경만 감지하는 함수 테스트."""
+
+    def test_double_to_single_space_ordered(self):
+        """``3.  매핑`` → ``3. 매핑`` (이중 공백 → 단일 공백)."""
+        assert _detect_list_item_space_change(
+            "3.  매핑 테이블\n4.  데이터 소스",
+            "3. 매핑 테이블\n4. 데이터 소스",
+        ) is True
+
+    def test_single_to_double_space_unordered(self):
+        """``- 항목`` → ``-  항목`` (단일 → 이중 공백)."""
+        assert _detect_list_item_space_change(
+            "- 항목 A\n- 항목 B",
+            "-  항목 A\n-  항목 B",
+        ) is True
+
+    def test_no_change_returns_false(self):
+        """공백도 텍스트도 동일하면 False."""
+        assert _detect_list_item_space_change(
+            "1. 항목\n2. 항목",
+            "1. 항목\n2. 항목",
+        ) is False
+
+    def test_text_also_changed_returns_false(self):
+        """마커 공백과 텍스트 모두 변경이면 False (충돌 방지)."""
+        assert _detect_list_item_space_change(
+            "1.  원래 텍스트",
+            "1. 새로운 텍스트",
+        ) is False
+
+    def test_line_count_mismatch_returns_false(self):
+        """줄 수가 다르면 항목 추가/삭제 — False."""
+        assert _detect_list_item_space_change(
+            "1. 항목",
+            "1. 항목\n2. 새 항목",
+        ) is False
+
+    def test_non_list_line_changed_returns_false(self):
+        """비-리스트 줄이 다르면 텍스트 변경 포함."""
+        assert _detect_list_item_space_change(
+            "1. 항목\n일반 텍스트",
+            "1. 항목\n다른 텍스트",
+        ) is False
+
+    def test_partial_space_change(self):
+        """일부 항목만 공백 변경되어도 True."""
+        assert _detect_list_item_space_change(
+            "1.  첫 항목\n2. 둘째 항목",
+            "1. 첫 항목\n2. 둘째 항목",
+        ) is True
+
+    def test_asterisk_marker(self):
+        """``*`` 마커도 감지한다."""
+        assert _detect_list_item_space_change(
+            "*  항목 A",
+            "* 항목 A",
+        ) is True
+
+    def test_plus_marker(self):
+        """``+`` 마커도 감지한다."""
+        assert _detect_list_item_space_change(
+            "+  항목",
+            "+ 항목",
+        ) is True
+
+
+# ── callout child list 마커 공백 변경 → replace_fragment E2E 테스트 ──
+
+
+class TestCalloutChildListSpaceChange:
+    """callout containing 전략에서 리스트 마커 공백 변경 시 replace_fragment 패치 생성."""
+
+    def _make_callout_block(self, inner_list_content, type_='callout'):
+        """callout Block (mdx_to_storage.parser.Block)을 생성한다."""
+        from mdx_to_storage.parser import Block
+        list_child = Block(
+            type='list',
+            content=inner_list_content,
+            line_start=0, line_end=0,
+        )
+        callout_content = (
+            f"<Callout type='info'>\n{inner_list_content}</Callout>\n"
+        )
+        return Block(
+            type='callout',
+            content=callout_content,
+            children=[list_child],
+            line_start=1, line_end=callout_content.count('\n') + 1,
+        )
+
+    def test_marker_space_change_generates_replace_fragment(self):
+        """리스트 마커 이중 공백→단일 공백이 replace_fragment 패치를 생성한다."""
+        old_list = "3.  매핑 테이블\n4.  데이터 소스\n"
+        new_list = "3. 매핑 테이블\n4. 데이터 소스\n"
+
+        old_block = self._make_callout_block(old_list)
+        new_block = self._make_callout_block(new_list)
+
+        change = BlockChange(
+            index=0, change_type='modified',
+            old_block=old_block, new_block=new_block,
+        )
+
+        # callout parent mapping
+        callout_mapping = _make_mapping(
+            'callout-1',
+            '매핑 테이블 데이터 소스',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['list-1'],
+        )
+        callout_mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:rich-text-body>'
+            '<ol><li><p>매핑 테이블</p></li><li><p>데이터 소스</p></li></ol>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+
+        # child list mapping (ac: 마크업 없음 — replace_fragment 가능)
+        list_mapping = _make_mapping(
+            'list-1',
+            '매핑 테이블 데이터 소스',
+            xpath='macro-info[1]/ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = (
+            '<ol><li><p>매핑 테이블</p></li><li><p>데이터 소스</p></li></ol>'
+        )
+
+        mappings = [callout_mapping, list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+
+        patches, _, skipped = build_patches(
+            [change],
+            [old_block],
+            [new_block],
+            mappings,
+            mdx_to_sidecar,
+            xpath_to_mapping,
+        )
+
+        # replace_fragment 패치가 child list에 대해 생성되어야 함
+        rf_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert len(rf_patches) >= 1, (
+            f"Expected replace_fragment patch for list space change, got: {patches}"
+        )
+        assert rf_patches[0]['xhtml_xpath'] == 'macro-info[1]/ol[1]'
+
+    def test_preserved_anchor_skips_replace_fragment(self):
+        """ac:link 마크업이 있는 리스트는 replace_fragment를 건너뛴다."""
+        old_list = "3.  매핑 테이블\n"
+        new_list = "3. 매핑 테이블\n"
+
+        old_block = self._make_callout_block(old_list)
+        new_block = self._make_callout_block(new_list)
+
+        change = BlockChange(
+            index=0, change_type='modified',
+            old_block=old_block, new_block=new_block,
+        )
+
+        callout_mapping = _make_mapping(
+            'callout-1',
+            '매핑 테이블',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['list-1'],
+        )
+        callout_mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:rich-text-body>'
+            '<ol><li><p><ac:link>매핑</ac:link> 테이블</p></li></ol>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+
+        # child list에 ac:link가 포함되어 있음
+        list_mapping = _make_mapping(
+            'list-1',
+            '매핑 테이블',
+            xpath='macro-info[1]/ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = (
+            '<ol><li><p><ac:link>매핑</ac:link> 테이블</p></li></ol>'
+        )
+
+        mappings = [callout_mapping, list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+
+        patches, _, skipped = build_patches(
+            [change],
+            [old_block],
+            [new_block],
+            mappings,
+            mdx_to_sidecar,
+            xpath_to_mapping,
+        )
+
+        # ac:link이 있으므로 replace_fragment는 생성되지 않아야 함
+        rf_patches = [p for p in patches if p.get('action') == 'replace_fragment']
+        assert len(rf_patches) == 0, (
+            f"Should skip replace_fragment for preserved anchor, got: {rf_patches}"
+        )
+
+    def test_text_also_changed_no_extra_replace_fragment(self):
+        """텍스트와 공백 모두 변경 시 replace_fragment가 추가 생성되지 않는다."""
+        old_list = "3.  원래 텍스트\n"
+        new_list = "3. 새로운 텍스트\n"
+
+        old_block = self._make_callout_block(old_list)
+        new_block = self._make_callout_block(new_list)
+
+        change = BlockChange(
+            index=0, change_type='modified',
+            old_block=old_block, new_block=new_block,
+        )
+
+        callout_mapping = _make_mapping(
+            'callout-1',
+            '원래 텍스트',
+            xpath='macro-info[1]',
+            type_='html_block',
+            children=['list-1'],
+        )
+        callout_mapping.xhtml_text = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:rich-text-body>'
+            '<ol><li><p>원래 텍스트</p></li></ol>'
+            '</ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-1',
+            '원래 텍스트',
+            xpath='macro-info[1]/ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = '<ol><li><p>원래 텍스트</p></li></ol>'
+
+        mappings = [callout_mapping, list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        mdx_to_sidecar = {0: _make_sidecar('macro-info[1]', [0])}
+
+        patches, _, skipped = build_patches(
+            [change],
+            [old_block],
+            [new_block],
+            mappings,
+            mdx_to_sidecar,
+            xpath_to_mapping,
+        )
+
+        # 텍스트 변경이 있으므로 마커 공백 전용 replace_fragment는 생성되지 않아야 함
+        # (text transfer 패치만 존재)
+        rf_patches = [
+            p for p in patches
+            if p.get('action') == 'replace_fragment'
+            and p['xhtml_xpath'] == 'macro-info[1]/ol[1]'
+        ]
+        assert len(rf_patches) == 0, (
+            f"Space+text change should not produce list replace_fragment: {rf_patches}"
+        )
