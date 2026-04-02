@@ -689,14 +689,18 @@ class MultiLineParser:
         Trailing empty <p> 앞의 separator를 건너뛰면 N → N으로 1:1 매핑되어
         모든 trailing blank 수를 XHTML로 정확히 표현할 수 있다.
 
-        Top-level [document] 컨텍스트에서만 적용하여, expand 매크로 등
-        중첩 컨테이너 내부에는 영향을 주지 않는다.
+        Top-level [document] 및 투명 래퍼(ac:layout 계열) 컨텍스트에서
+        적용하여, expand 매크로 등 중첩 컨테이너 내부에는 영향을 주지 않는다.
         """
+        _TRANSPARENT_PARENTS = frozenset((
+            '[document]',
+            'ac:layout', 'ac:layout-section', 'ac:layout-cell',
+        ))
         if node.name not in ('p', 'div'):
             return False
         if node.get_text(strip=True):
             return False
-        if node.parent.name != '[document]':
+        if node.parent.name not in _TRANSPARENT_PARENTS:
             return False
         for sibling in node.next_siblings:
             if isinstance(sibling, NavigableString):
