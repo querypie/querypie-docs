@@ -1,17 +1,17 @@
 {
   "schema_version": "3",
   "page_id": "544112828",
-  "mdx_sha256": "1944af0092b956a4eb535f915e514027ebe336c343a52dc02ee389828e799699",
+  "mdx_sha256": "4c679b7c42c97bda41102bc2c3712cb9e93e23bbb855bc9735eca9b60da80437",
   "source_xhtml_sha256": "b31f4552fd924f4299dfd7dc6edea8f00bfefbf403f5f96011e17a553b24ff67",
   "blocks": [
     {
       "block_index": 0,
       "xhtml_xpath": "h2[1]",
       "xhtml_fragment": "<h2>Overview</h2>",
-      "mdx_content_hash": "a5e5f18c3e84f97f5fd0ead2ddd93c76c858df321c9d607a00a41113211cc7e5",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
       "mdx_line_range": [
-        8,
-        8
+        10,
+        10
       ],
       "lost_info": {},
       "reconstruction": {
@@ -23,10 +23,10 @@
       "block_index": 1,
       "xhtml_xpath": "p[1]",
       "xhtml_fragment": "<p>QueryPie Agent를 설치하면, DataGrip, DBeaver와 같은 SQL Client, iTerm/SecureCRT와 같은 SSH Client, Lens, k9s와 같은 3rd Party 애플리케이션을 사용할 수 있습니다.</p>",
-      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_content_hash": "d0cf56ffad88ebc0fe39c272fe413c008bc7253562cfb33a78b4853bd241aa12",
       "mdx_line_range": [
-        10,
-        10
+        12,
+        12
       ],
       "lost_info": {},
       "reconstruction": {
@@ -39,10 +39,10 @@
       "block_index": 2,
       "xhtml_xpath": "macro-toc[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"toc\" ac:schema-version=\"1\" data-layout=\"default\" ac:local-id=\"93991f90-344b-497e-8886-42bac10548aa\" ac:macro-id=\"334477e7-dc7b-494d-9513-c21c2ccabe57\"><ac:parameter ac:name=\"maxLevel\">2</ac:parameter><ac:parameter ac:name=\"minLevel\">1</ac:parameter><ac:parameter ac:name=\"include\" /><ac:parameter ac:name=\"outline\">false</ac:parameter><ac:parameter ac:name=\"indent\" /><ac:parameter ac:name=\"exclude\">Overview</ac:parameter><ac:parameter ac:name=\"style\">default</ac:parameter><ac:parameter ac:name=\"type\">list</ac:parameter><ac:parameter ac:name=\"printable\">true</ac:parameter><ac:parameter ac:name=\"class\" /></ac:structured-macro>",
-      "mdx_content_hash": "d0cf56ffad88ebc0fe39c272fe413c008bc7253562cfb33a78b4853bd241aa12",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        12,
-        12
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -54,10 +54,10 @@
       "block_index": 3,
       "xhtml_xpath": "p[2]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "732df919b1859569d6a34abfea7993cd8dc6914ac020ae819402620edfdb2084",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        15,
-        15
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -70,10 +70,10 @@
       "block_index": 4,
       "xhtml_xpath": "h2[2]",
       "xhtml_fragment": "<h2>에이전트 앱 다운로드 및 실행하기</h2>",
-      "mdx_content_hash": "c403170507708789aba8ec992cb5fc2a53e70dabe7852aab115453b95b00f242",
+      "mdx_content_hash": "732df919b1859569d6a34abfea7993cd8dc6914ac020ae819402620edfdb2084",
       "mdx_line_range": [
-        17,
-        17
+        15,
+        15
       ],
       "lost_info": {},
       "reconstruction": {
@@ -85,10 +85,10 @@
       "block_index": 5,
       "xhtml_xpath": "p[3]",
       "xhtml_fragment": "<p>1. QueryPie 로그인 후 우측 상단 프로필을 클릭하여 <code>Agent Download</code> 버튼을 클릭합니다. </p>",
-      "mdx_content_hash": "af9e3ec3cae70c0d3353ec2270222cb3c2c631f23f88d40e60be49e516772b2f",
+      "mdx_content_hash": "c403170507708789aba8ec992cb5fc2a53e70dabe7852aab115453b95b00f242",
       "mdx_line_range": [
-        19,
-        24
+        17,
+        17
       ],
       "lost_info": {},
       "reconstruction": {
@@ -101,10 +101,10 @@
       "block_index": 6,
       "xhtml_xpath": "ac:image[1]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"555\" ac:original-width=\"785\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-08-04 오후 5.30.02.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-08-04 오후 5.30.02.png\" ri:version-at-save=\"1\" /><ac:caption><p>QueryPie Web &gt; 프로필 메뉴</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "f85bec6fedbc6b1c9e8be80a3901fc53aef029307b0877a62691b64f007a907a",
+      "mdx_content_hash": "af9e3ec3cae70c0d3353ec2270222cb3c2c631f23f88d40e60be49e516772b2f",
       "mdx_line_range": [
-        26,
-        26
+        19,
+        24
       ],
       "lost_info": {},
       "reconstruction": {
@@ -116,10 +116,10 @@
       "block_index": 7,
       "xhtml_xpath": "p[4]",
       "xhtml_fragment": "<p>2. QueryPie Agent Downloads 팝업창이 실행되면 Step 1에서 사용 중인 PC 운영체제에 맞는 설치 파일을 다운로드한 후 Step 3에 있는 QueryPie URL을 복사해 둡니다. </p>",
-      "mdx_content_hash": "fe34d68dab0f9f7947dfd2167c7968b0828fabbf4bf5ebe62df0a07c4ea28b78",
+      "mdx_content_hash": "f85bec6fedbc6b1c9e8be80a3901fc53aef029307b0877a62691b64f007a907a",
       "mdx_line_range": [
-        28,
-        33
+        26,
+        26
       ],
       "lost_info": {},
       "reconstruction": {
@@ -132,10 +132,10 @@
       "block_index": 8,
       "xhtml_xpath": "ac:image[2]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"712\" ac:original-width=\"1280\" ac:custom-width=\"true\" ac:alt=\"image-20240723-154847.png\" ac:width=\"760\"><ri:attachment ri:filename=\"image-20240723-154847.png\" ri:version-at-save=\"1\" /><ac:caption><p>QueryPie Web &gt; Agent Downloads 팝업창</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "a5fa008c4cfdcaffd0c66add55ec3c089d0ca61bf2942d836529c92184995776",
+      "mdx_content_hash": "fe34d68dab0f9f7947dfd2167c7968b0828fabbf4bf5ebe62df0a07c4ea28b78",
       "mdx_line_range": [
-        35,
-        36
+        28,
+        33
       ],
       "lost_info": {},
       "reconstruction": {
@@ -147,9 +147,9 @@
       "block_index": 9,
       "xhtml_xpath": "macro-info[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"f99b0d05-b4a8-4196-bae8-511d886ab316\"><ac:rich-text-body><p>QueryPie Agent는 Mac, Windows, Linux OS를 지원합니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_content_hash": "32617c3275d28acdca9d90c3349709fcd2e3d4db66ebbcf37263c25da58f8b7e",
       "mdx_line_range": [
-        37,
+        35,
         37
       ],
       "lost_info": {},
@@ -204,10 +204,10 @@
       "block_index": 12,
       "xhtml_xpath": "p[6]",
       "xhtml_fragment": "<p>4. 설치 완료된 QueryPie Agent를 실행합니다. QueryPie Host 입력란에 미리 복사해뒀던 QueryPie URL을 입력하고 <code>Next</code> 버튼을 클릭하면 로그인 화면으로 진입하게 됩니다. </p>",
-      "mdx_content_hash": "f5eebe03e4ba50a95a648456368a0978e54a5f273bda70ac238008d16d0da6b3",
+      "mdx_content_hash": "383ec5de61632efd5725c13f870dbfabafe104e61d16798a9d2169781181bc17",
       "mdx_line_range": [
         48,
-        48
+        49
       ],
       "lost_info": {},
       "reconstruction": {
@@ -220,10 +220,10 @@
       "block_index": 13,
       "xhtml_xpath": "ac:image[4]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"461\" ac:original-width=\"827\" ac:custom-width=\"true\" ac:width=\"760\"><ri:attachment ri:filename=\"agent-03.png\" ri:version-at-save=\"2\" /><ac:caption><p>Agent &gt; QueryPie Host 입력</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "94d13c7b4ae6690f1f6f8489a1600775f27c7db4f22dbff677f11dc680f561dc",
+      "mdx_content_hash": "264cc8334bde7b742e331ed7bff2267209cd4eaf8e63b0ab607ff53d3b42724b",
       "mdx_line_range": [
-        49,
-        49
+        51,
+        56
       ],
       "lost_info": {},
       "reconstruction": {
@@ -235,10 +235,10 @@
       "block_index": 14,
       "xhtml_xpath": "p[7]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "264cc8334bde7b742e331ed7bff2267209cd4eaf8e63b0ab607ff53d3b42724b",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        51,
-        56
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -467,10 +467,10 @@
       "block_index": 29,
       "xhtml_xpath": "p[14]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "746d850c2e76f65f805760a6af9d76ca3e04be11e50c15befeee8ad093291f7d",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        115,
-        115
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -483,10 +483,10 @@
       "block_index": 30,
       "xhtml_xpath": "h2[5]",
       "xhtml_fragment": "<h2>에이전트를 통한 서버 접속</h2>",
-      "mdx_content_hash": "ed00bdfb7a2453c822594ec306cc87fc66ad203de56605c397d4ee036aa14e27",
+      "mdx_content_hash": "746d850c2e76f65f805760a6af9d76ca3e04be11e50c15befeee8ad093291f7d",
       "mdx_line_range": [
-        117,
-        117
+        115,
+        115
       ],
       "lost_info": {},
       "reconstruction": {
@@ -498,10 +498,10 @@
       "block_index": 31,
       "xhtml_xpath": "p[15]",
       "xhtml_fragment": "<p>로그인이 정상적으로 완료되면 Agent 앱 내 Server 탭에서 권한 있는 서버를 확인할 수 있습니다.</p>",
-      "mdx_content_hash": "263ef0255d11960db0c9c5ebb57a50a5a5c638805f5fad7ee06b6875bc35b3a2",
+      "mdx_content_hash": "ed00bdfb7a2453c822594ec306cc87fc66ad203de56605c397d4ee036aa14e27",
       "mdx_line_range": [
-        119,
-        119
+        117,
+        117
       ],
       "lost_info": {},
       "reconstruction": {
@@ -514,10 +514,10 @@
       "block_index": 32,
       "xhtml_xpath": "h3[1]",
       "xhtml_fragment": "<h3>1. 서버 역할 선택하기</h3>",
-      "mdx_content_hash": "f82769bc04abbd98ba696602372709c72db855de011d4dd5fe99e6d4b9734e1d",
+      "mdx_content_hash": "263ef0255d11960db0c9c5ebb57a50a5a5c638805f5fad7ee06b6875bc35b3a2",
       "mdx_line_range": [
-        121,
-        122
+        119,
+        119
       ],
       "lost_info": {},
       "reconstruction": {
@@ -529,10 +529,10 @@
       "block_index": 33,
       "xhtml_xpath": "ul[1]",
       "xhtml_fragment": "<ul><li><p>사용자 프로필 영역 하단의 <code>Role</code> 버튼을 클릭하여 원하는 역할을 고르고 <code>OK</code> 버튼을 클릭하세요.</p></li><li><p>Default 역할 선택시, Workflow &gt; Server Access Request 요청에 의해 할당받은 서버 권한을 사용합니다. </p></li></ul>",
-      "mdx_content_hash": "96008ac7d8b0b5e7116e8b764269b1ae903084b7780526f6f4b1f77aae74bb47",
+      "mdx_content_hash": "f82769bc04abbd98ba696602372709c72db855de011d4dd5fe99e6d4b9734e1d",
       "mdx_line_range": [
-        124,
-        129
+        121,
+        122
       ],
       "lost_info": {},
       "reconstruction": {
@@ -546,10 +546,10 @@
       "block_index": 34,
       "xhtml_xpath": "ac:image[11]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"542\" ac:original-width=\"939\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.26.53.png\" ac:width=\"764\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.26.53.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Server &gt; Select a Role</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "c6df452eb7e2d03e907edb9138830d092df15e813e946da1059f3d7fa615eaf4",
+      "mdx_content_hash": "96008ac7d8b0b5e7116e8b764269b1ae903084b7780526f6f4b1f77aae74bb47",
       "mdx_line_range": [
-        131,
-        132
+        124,
+        129
       ],
       "lost_info": {},
       "reconstruction": {
@@ -561,9 +561,9 @@
       "block_index": 35,
       "xhtml_xpath": "macro-info[2]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"d1ce310c-4526-4911-b6fd-15e1c369a767\"><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent 로그인 후 Server 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_content_hash": "58abd6ae334529523203fbe65751718515bd6e8eba7f5ee3d320e923bc139719",
       "mdx_line_range": [
-        133,
+        131,
         133
       ],
       "lost_info": {},
@@ -790,10 +790,10 @@
       "block_index": 49,
       "xhtml_xpath": "macro-info[3]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"56253dda-2fdc-40de-ba7d-2165a1c14c7e\"><ac:rich-text-body><p>config 파일 작성 시 Seamless SSH 설정하고자 하는 서버마다 서버 이름, URL, 포트를 입력함으로써 서버를 특정합니다. 서버 간에 URL, 포트가 겹치지 않는 경우 아래와 같이 입력하여도 접속이 가능합니다.</p><ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"f8478be5-90b8-4d3c-9c06-7b8dba0b96ad\"><ac:plain-text-body><![CDATA[Host *\n  ProxyCommand qpa ssh %r %h %p]]></ac:plain-text-body></ac:structured-macro></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "0233e37d0ee8ec99850ae36c5ed3524463a1f76bb043feb7dcc83081a0b34684",
+      "mdx_content_hash": "ba94aa6dd743698f02e59b764c6ea5f96aa7f3be1a5a44b6e4877ec768a5577f",
       "mdx_line_range": [
         179,
-        181
+        186
       ],
       "lost_info": {},
       "reconstruction": {
@@ -816,10 +816,10 @@
       "block_index": 50,
       "xhtml_xpath": "p[20]",
       "xhtml_fragment": "<p>4) 이상으로 설정이 완료됩니다. Agent &gt; Server 탭에서 역할을 선택하면 기존 ssh 명령어로 서버에 접속할 수 있습니다.</p>",
-      "mdx_content_hash": "353d3f2d2acd55769ae22c64d3e4817e859fbf259d698912db6040763cb4f46c",
+      "mdx_content_hash": "513a4a3d5b1b3ded882765c88baab473bb8962ba5c54042877bf00de4f44c292",
       "mdx_line_range": [
-        182,
-        185
+        188,
+        189
       ],
       "lost_info": {},
       "reconstruction": {
@@ -832,10 +832,10 @@
       "block_index": 51,
       "xhtml_xpath": "macro-code[4]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"code\" ac:schema-version=\"1\" ac:macro-id=\"1c851681-79bb-4775-b25d-ff504b3b7e81\"><ac:parameter ac:name=\"breakoutMode\">wide</ac:parameter><ac:parameter ac:name=\"breakoutWidth\">760</ac:parameter><ac:plain-text-body><![CDATA[$ ssh deploy@{{Server Name}}]]></ac:plain-text-body></ac:structured-macro>",
-      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_content_hash": "b9a2d688821f8fd4767b12b1854b18c5f4944977610c3950406d73e0cd35f6f5",
       "mdx_line_range": [
-        186,
-        186
+        190,
+        192
       ],
       "lost_info": {},
       "reconstruction": {
@@ -847,10 +847,10 @@
       "block_index": 52,
       "xhtml_xpath": "p[21]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "513a4a3d5b1b3ded882765c88baab473bb8962ba5c54042877bf00de4f44c292",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        188,
-        189
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -863,10 +863,10 @@
       "block_index": 53,
       "xhtml_xpath": "h2[6]",
       "xhtml_fragment": "<h2>에이전트를 통한 쿠버네티스 접속 </h2>",
-      "mdx_content_hash": "b9a2d688821f8fd4767b12b1854b18c5f4944977610c3950406d73e0cd35f6f5",
+      "mdx_content_hash": "46c766761609c30c58fd28f85c9dcb9d88ea365b33af080f938f61b516064a56",
       "mdx_line_range": [
-        190,
-        192
+        195,
+        195
       ],
       "lost_info": {},
       "reconstruction": {
@@ -878,10 +878,10 @@
       "block_index": 54,
       "xhtml_xpath": "ac:image[14]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"900\" ac:original-width=\"1800\" ac:custom-width=\"true\" ac:width=\"764\"><ri:attachment ri:filename=\"kubernetes-agent-access-flow.png\" ri:version-at-save=\"1\" /><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "46c766761609c30c58fd28f85c9dcb9d88ea365b33af080f938f61b516064a56",
+      "mdx_content_hash": "1c73eb3e1aa4da5177e29e25ee0d9339e826a7c12df9c9f62b1375a917bb5df6",
       "mdx_line_range": [
-        195,
-        195
+        197,
+        199
       ],
       "lost_info": {},
       "reconstruction": {
@@ -893,10 +893,10 @@
       "block_index": 55,
       "xhtml_xpath": "ul[4]",
       "xhtml_fragment": "<ul><li><p>권한을 부여 받은 사용자는 에이전트 실행 시 현재 정책에 따른 <code>kubeconfig</code> 파일이 자동으로 수신됩니다.</p></li><li><p>이를 통해 Kubernetes Client(kubectl, lens, k9s 등) 툴로 Kubernetes API 리소스에 접근할 수 있습니다.</p></li><li><p>에이전트에서는 접근 가능한 클러스트 리스트를 표시하며, 각 클러스터에 적용된 정책을 확인할 수 있습니다.</p></li><li><p>또한 설정 메뉴를 통해 kubeconfig파일의 위치를 확인 및 수정할 수 있습니다.</p></li></ul>",
-      "mdx_content_hash": "1c73eb3e1aa4da5177e29e25ee0d9339e826a7c12df9c9f62b1375a917bb5df6",
+      "mdx_content_hash": "08e497bdb5fef9e02b8bbb5fa536334e30ccec29a78e1dde6f865e0d831a98eb",
       "mdx_line_range": [
-        197,
-        199
+        201,
+        204
       ],
       "lost_info": {},
       "reconstruction": {
@@ -910,10 +910,10 @@
       "block_index": 56,
       "xhtml_xpath": "h3[4]",
       "xhtml_fragment": "<h3>1. Kubernetes 역할 선택하기</h3>",
-      "mdx_content_hash": "08e497bdb5fef9e02b8bbb5fa536334e30ccec29a78e1dde6f865e0d831a98eb",
+      "mdx_content_hash": "0061d76bdb0fc13d74844d19af9dde66137bf9f168af6b51ad30ba18c70e232f",
       "mdx_line_range": [
-        201,
-        204
+        206,
+        206
       ],
       "lost_info": {},
       "reconstruction": {
@@ -925,10 +925,10 @@
       "block_index": 57,
       "xhtml_xpath": "p[22]",
       "xhtml_fragment": "<p>사용자 프로필 영역 하단의 <code>Role</code> 버튼을 클릭하면 역할 선택 모달이 열립니다. 원하는 역할을 고르고 <code>OK</code> 버튼을 클릭하세요.</p>",
-      "mdx_content_hash": "0061d76bdb0fc13d74844d19af9dde66137bf9f168af6b51ad30ba18c70e232f",
+      "mdx_content_hash": "15155b3b5ab4743f377acffa80fa62a67ba48cf40093e9462bedafa8bbe4f7ec",
       "mdx_line_range": [
-        206,
-        206
+        208,
+        209
       ],
       "lost_info": {},
       "reconstruction": {
@@ -941,10 +941,10 @@
       "block_index": 58,
       "xhtml_xpath": "ac:image[15]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"572\" ac:original-width=\"958\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.27.05.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.27.05.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Kubernetes &gt; Select a Role</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "15155b3b5ab4743f377acffa80fa62a67ba48cf40093e9462bedafa8bbe4f7ec",
+      "mdx_content_hash": "4838ebec6140fbdc298948ce994950a7d64b7b51e002895043723755985ce960",
       "mdx_line_range": [
-        208,
-        209
+        211,
+        216
       ],
       "lost_info": {},
       "reconstruction": {
@@ -956,10 +956,10 @@
       "block_index": 59,
       "xhtml_xpath": "macro-info[4]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"a7a2eaa6-16ef-4ce8-8fbc-ca87a927d4a2\"><ac:rich-text-body><p>역할이 두 개 이상이라면, Agent 로그인 후 Kubernetes 기능 사용을 위해 역할 선택을 먼저 완료해야 합니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "4838ebec6140fbdc298948ce994950a7d64b7b51e002895043723755985ce960",
+      "mdx_content_hash": "17b4fbf4c3a3c602c2373715a292d39bbae33d5331e91598ee0a53470054a776",
       "mdx_line_range": [
-        211,
-        216
+        218,
+        220
       ],
       "lost_info": {},
       "reconstruction": {
@@ -982,10 +982,10 @@
       "block_index": 60,
       "xhtml_xpath": "p[23]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "f22fc83006d540e064450d70141ee5e8c027eb14cef30c775df3c70f6aade89d",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        218,
-        219
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -998,10 +998,10 @@
       "block_index": 61,
       "xhtml_xpath": "h3[5]",
       "xhtml_fragment": "<h3>2. Policy 조회하기</h3>",
-      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_content_hash": "b4d7bfaf10699c3c5c5b3b1f56601ce53fb3e5167a460e546dab6fb49860ef61",
       "mdx_line_range": [
-        220,
-        220
+        223,
+        223
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1013,10 +1013,10 @@
       "block_index": 62,
       "xhtml_xpath": "p[24]",
       "xhtml_fragment": "<p>선택된 역할에 따라 접근 가능한 리소스가 표시됩니다. 각 클러스터 우측의 <code>🔍</code> 버튼을 누르면 Policy Information 팝업창이 나타나며 이곳에서 해당 클러스터에 적용된 정책 목록을 자세히 확인할 수 있습니다.</p>",
-      "mdx_content_hash": "b4d7bfaf10699c3c5c5b3b1f56601ce53fb3e5167a460e546dab6fb49860ef61",
+      "mdx_content_hash": "24f3b8dc4c1a3981379a4d7c3fa021b13fdd7a8f90dc90baee991d34fd32afe9",
       "mdx_line_range": [
-        223,
-        223
+        225,
+        226
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1029,10 +1029,10 @@
       "block_index": 63,
       "xhtml_xpath": "ac:image[16]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"959\" ac:original-width=\"1024\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 4.11.41.png\" ac:width=\"760\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 4.11.41.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Policy Information</p></ac:caption><ac:adf-mark key=\"border\" size=\"1\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "24f3b8dc4c1a3981379a4d7c3fa021b13fdd7a8f90dc90baee991d34fd32afe9",
+      "mdx_content_hash": "00aecde6bde9fb7eecb6fa162d0a2b3255c16a72bb44e554c537649534d61430",
       "mdx_line_range": [
-        225,
-        226
+        228,
+        233
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1044,10 +1044,10 @@
       "block_index": 64,
       "xhtml_xpath": "h3[6]",
       "xhtml_fragment": "<h3>3. Kubeconfig 경로 설정하기</h3>",
-      "mdx_content_hash": "00aecde6bde9fb7eecb6fa162d0a2b3255c16a72bb44e554c537649534d61430",
+      "mdx_content_hash": "aeb0093166cfae4e3a51df144058b0d4b73a3d5dc93c26876bb7134f6a3d5eb0",
       "mdx_line_range": [
-        228,
-        233
+        235,
+        235
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1059,10 +1059,10 @@
       "block_index": 65,
       "xhtml_xpath": "p[25]",
       "xhtml_fragment": "<p>Agent 설정 메뉴에서 <code>KubeConfig Path</code> 버튼을 클릭하여 Kubeconfig 경로 설정 모달을 엽니다.</p>",
-      "mdx_content_hash": "aeb0093166cfae4e3a51df144058b0d4b73a3d5dc93c26876bb7134f6a3d5eb0",
+      "mdx_content_hash": "ee12869bcdc70fd841bcdb788786e96a93bf30304c95b22e3398124716b28f21",
       "mdx_line_range": [
-        235,
-        235
+        237,
+        237
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1075,10 +1075,10 @@
       "block_index": 66,
       "xhtml_xpath": "ac:image[17]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"wide\" ac:original-height=\"520\" ac:original-width=\"585\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.46.23.png\" ac:width=\"764\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.46.23.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Settings &gt; Configure Kubeconfig Path</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "ee12869bcdc70fd841bcdb788786e96a93bf30304c95b22e3398124716b28f21",
+      "mdx_content_hash": "8b9e1188bd56fe8d6c66423e6e5d1a0ba9c29d84fb0b7d7abbed10ecbb9828db",
       "mdx_line_range": [
-        237,
-        237
+        239,
+        244
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1090,10 +1090,10 @@
       "block_index": 67,
       "xhtml_xpath": "ul[5]",
       "xhtml_fragment": "<ul><li><p><strong>Path Configuration</strong> : Kubeconfig 파일 저장 경로를 사용자가 지정할 수 있습니다.</p><ul><li><p>기본값은 <code>$HOME/.kube/querypie-kubeconfig</code> 입니다.</p></li><li><p>경로 필드 우측 <code>Upload</code> 버튼을 누르면 로컬 파일 경로를 지정할 수 있는 팝업이 나타납니다. </p></li></ul></li></ul>",
-      "mdx_content_hash": "8b9e1188bd56fe8d6c66423e6e5d1a0ba9c29d84fb0b7d7abbed10ecbb9828db",
+      "mdx_content_hash": "980941e4b19f22255fcde655e9a2d4a8b5ca1a6364650c98661e017d38ec1c98",
       "mdx_line_range": [
-        239,
-        244
+        246,
+        248
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1107,10 +1107,10 @@
       "block_index": 68,
       "xhtml_xpath": "p[26]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "980941e4b19f22255fcde655e9a2d4a8b5ca1a6364650c98661e017d38ec1c98",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        246,
-        248
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1281,10 +1281,10 @@
       "block_index": 79,
       "xhtml_xpath": "p[31]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "f7583a09395c9b9924805188ed894d54f05cdedc33d9f327e79ce7c5351a0427",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        283,
-        283
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1297,10 +1297,10 @@
       "block_index": 80,
       "xhtml_xpath": "h2[7]",
       "xhtml_fragment": "<h2>QueryPie Agent 세팅 초기화하기</h2>",
-      "mdx_content_hash": "8b39e365023a3e6b700d06f451e6c422ece9aa0aabb74e519a2661f72b1ebe6a",
+      "mdx_content_hash": "f7583a09395c9b9924805188ed894d54f05cdedc33d9f327e79ce7c5351a0427",
       "mdx_line_range": [
-        285,
-        285
+        283,
+        283
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1312,10 +1312,10 @@
       "block_index": 81,
       "xhtml_xpath": "p[32]",
       "xhtml_fragment": "<p>세팅을 초기화하면 입력하였던 QueryPie Host 정보가 초기화되어 다시 입력할 수 있게 됩니다. </p>",
-      "mdx_content_hash": "f982fd01869da21e6403be3f38dd2aa26ee515ce2a073b19b6d729e96549cc4b",
+      "mdx_content_hash": "8b39e365023a3e6b700d06f451e6c422ece9aa0aabb74e519a2661f72b1ebe6a",
       "mdx_line_range": [
-        286,
-        286
+        285,
+        285
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1328,10 +1328,10 @@
       "block_index": 82,
       "xhtml_xpath": "h3[7]",
       "xhtml_fragment": "<h3>Agent 내 설정 메뉴에서 초기화</h3>",
-      "mdx_content_hash": "72d8f2e0fab25da37aa1c9d9f21d52a941cbb4349bc0e0ec588e247631ba5df2",
+      "mdx_content_hash": "f982fd01869da21e6403be3f38dd2aa26ee515ce2a073b19b6d729e96549cc4b",
       "mdx_line_range": [
-        288,
-        288
+        286,
+        286
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1343,10 +1343,10 @@
       "block_index": 83,
       "xhtml_xpath": "p[33]",
       "xhtml_fragment": "<p>프로필 영역 우측  <code>⚙️</code> 버튼을 클릭하여 설정 메뉴를 엽니다. <code>Reset All Settings</code> 버튼을 클릭합니다.</p>",
-      "mdx_content_hash": "cc6a6974e567e7718e1ed78f49c94ff8b85a9c9f7616456b1c882e728ed03730",
+      "mdx_content_hash": "72d8f2e0fab25da37aa1c9d9f21d52a941cbb4349bc0e0ec588e247631ba5df2",
       "mdx_line_range": [
-        290,
-        295
+        288,
+        288
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1359,10 +1359,10 @@
       "block_index": 84,
       "xhtml_xpath": "ac:image[19]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"557\" ac:original-width=\"476\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.35.18.png\" ac:width=\"361\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.35.18.png\" ri:version-at-save=\"1\" /><ac:caption><p>Agent &gt; Settings</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "ee39522d9965e5dd3fc52db1c60d04b7896dafa935b9adb57345a48a92a667d3",
+      "mdx_content_hash": "cc6a6974e567e7718e1ed78f49c94ff8b85a9c9f7616456b1c882e728ed03730",
       "mdx_line_range": [
-        298,
-        298
+        290,
+        295
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1374,10 +1374,10 @@
       "block_index": 85,
       "xhtml_xpath": "p[34]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "21ba015469e509998c7859f3a4cb9e0b4cb45d0bb4a49eba6098e5a183509232",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        300,
-        300
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1390,10 +1390,10 @@
       "block_index": 86,
       "xhtml_xpath": "h3[8]",
       "xhtml_fragment": "<h3>(Mac) 메뉴 막대 내 앱 메뉴에서 초기화</h3>",
-      "mdx_content_hash": "b51971a4c3f1924a00c8387ccb9a770dc82d99be651ed25be05954c04ea3c662",
+      "mdx_content_hash": "ee39522d9965e5dd3fc52db1c60d04b7896dafa935b9adb57345a48a92a667d3",
       "mdx_line_range": [
-        302,
-        307
+        297,
+        297
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1405,10 +1405,10 @@
       "block_index": 87,
       "xhtml_xpath": "p[35]",
       "xhtml_fragment": "<p>메뉴 막대에서 QueryPie Agent 아이콘을 클릭하여 앱 메뉴를 엽니다. <code>Reset All Settings</code> 버튼을 클릭합니다.</p>",
-      "mdx_content_hash": "",
+      "mdx_content_hash": "21ba015469e509998c7859f3a4cb9e0b4cb45d0bb4a49eba6098e5a183509232",
       "mdx_line_range": [
-        0,
-        0
+        299,
+        299
       ],
       "lost_info": {},
       "reconstruction": {
@@ -1421,10 +1421,10 @@
       "block_index": 88,
       "xhtml_xpath": "ac:image[20]",
       "xhtml_fragment": "<ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"285\" ac:original-width=\"247\" ac:custom-width=\"true\" ac:alt=\"스크린샷 2024-07-30 오후 3.35.24.png\" ac:width=\"363\"><ri:attachment ri:filename=\"스크린샷 2024-07-30 오후 3.35.24.png\" ri:version-at-save=\"2\" /><ac:caption><p>Agent &gt; App menu</p></ac:caption><ac:adf-mark key=\"border\" size=\"2\" color=\"#091e4224\" /></ac:image>",
-      "mdx_content_hash": "",
+      "mdx_content_hash": "b51971a4c3f1924a00c8387ccb9a770dc82d99be651ed25be05954c04ea3c662",
       "mdx_line_range": [
-        0,
-        0
+        301,
+        306
       ],
       "lost_info": {},
       "reconstruction": {
