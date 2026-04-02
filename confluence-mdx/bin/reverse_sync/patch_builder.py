@@ -147,6 +147,37 @@ def _strip_list_item_marker(line: str) -> str:
     return s
 
 
+def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
+    """리스트 항목의 마커 뒤 공백 수만 변경되었는지 감지한다.
+
+    예: ``3.  매핑`` → ``3. 매핑`` (이중 공백 → 단일 공백)
+    normalize_mdx_to_plain이 마커를 제거하므로 text transfer로는 감지 불가.
+
+    텍스트 내용까지 함께 변경된 경우에는 False를 반환한다.
+    (replace_fragment + modify 패치 충돌 방지)
+    """
+    old_lines = old_content.strip().split('\n')
+    new_lines = new_content.strip().split('\n')
+    # 줄 수가 다르면 항목 추가/삭제 — 공백만 변경이 아님
+    if len(old_lines) != len(new_lines):
+        return False
+    marker_re = re.compile(r'^(\s*)(?:\d+\.|[-*+])(\s+)')
+    has_space_change = False
+    for old_line, new_line in zip(old_lines, new_lines):
+        old_m = marker_re.match(old_line)
+        new_m = marker_re.match(new_line)
+        if old_m and new_m:
+            if old_m.group(2) != new_m.group(2):
+                has_space_change = True
+            # 마커 제거 후 텍스트가 다르면 텍스트 변경도 포함 → False
+            if old_line[old_m.end():] != new_line[new_m.end():]:
+                return False
+        elif old_line != new_line:
+            # 비-리스트 줄이 다르면 텍스트 변경 포함
+            return False
+    return has_space_change
+
+
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
@@ -1027,6 +1058,41 @@ def build_patches(
                             mdx_to_sidecar=mdx_to_sidecar,
                         ))
                         _text_change_patches[bid]['inline_fixups'] = existing
+                # callout child list의 마커 공백 변경 → replace_fragment 패치
+                # (text transfer는 normalize_mdx_to_plain이 마커를 제거하여 감지 불가)
+                if (change.old_block.type == 'callout'
+                        and hasattr(change.old_block, 'children')
+                        and hasattr(change.new_block, 'children')):
+                    old_lists = [c for c in change.old_block.children
+                                 if c.type == 'list']
+                    new_lists = [c for c in change.new_block.children
+                                 if c.type == 'list']
+                    child_list_mappings = [
+                        id_to_mapping[cid]
+                        for cid in mapping.children
+                        if cid in id_to_mapping
+                        and id_to_mapping[cid].type == 'list'
+                    ]
+                    for old_child, new_child, child_map in zip(
+                            old_lists, new_lists, child_list_mappings):
+                        if _detect_list_item_space_change(
+                                old_child.content, new_child.content):
+                            # preserved anchor 마크업이 있으면 건너뜀
+                            # (replace_fragment가 ac:link 등을 손실시킴)
+                            if _contains_preserved_anchor_markup(
+                                    child_map.xhtml_text):
+                                continue
+                            child_block = MdxBlock(
+                                type='list',
+                                content=new_child.content,
+                                line_start=0, line_end=0,
+                            )
+                            patches.append(
+                                _build_replace_fragment_patch(
+                                    child_map, child_block,
+                                    mapping_lost_info=mapping_lost_info,
+                                )
+                            )
             continue
 
         # strategy == 'direct'
