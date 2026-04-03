@@ -1,6 +1,6 @@
 """forward converter 동작 검증 테스트."""
 from bs4 import BeautifulSoup
-from converter.core import MultiLineParser, ConfluenceToMarkdown, _display_width
+from converter.core import MultiLineParser, _display_width
 from converter.lost_info import LostInfoCollector
 
 
