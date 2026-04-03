@@ -116,6 +116,26 @@ class Attachment:
             return f'[{caption}]({self.output_dir}/{self.filename})'
 
 
+def _display_width(s: str) -> int:
+    """CJK 전각 문자를 2칸으로 계산한 문자열 표시 폭을 반환한다."""
+    width = 0
+    for ch in s:
+        eaw = unicodedata.east_asian_width(ch)
+        if eaw in ('F', 'W'):
+            width += 2
+        else:
+            width += 1
+    return width
+
+
+def _ljust_display(s: str, width: int) -> str:
+    """CJK 표시 폭 기준으로 문자열을 좌측 정렬한다."""
+    current = _display_width(s)
+    if current >= width:
+        return s
+    return s + ' ' * (width - current)
+
+
 def _is_unicode_punctuation(ch: str) -> bool:
     """CommonMark spec의 Unicode punctuation 판정.
 
@@ -1204,10 +1224,10 @@ class TableToNativeMarkdown:
         col_widths = [0] * num_cols
         for row in normalized_data:
             for i, cell in enumerate(row):
-                col_widths[i] = max(col_widths[i], len(str(cell)))
+                col_widths[i] = max(col_widths[i], _display_width(str(cell)))
 
         # Header row
-        header_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |\n"
+        header_row = "| " + " | ".join(_ljust_display(str(cell), col_widths[i]) for i, cell in enumerate(normalized_data[0])) + " |\n"
         self.markdown_lines.append(header_row)
 
         # Separator row
@@ -1216,7 +1236,7 @@ class TableToNativeMarkdown:
 
         # Data rows
         for row in normalized_data[1:]:
-            data_row = "| " + " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row)) + " |\n"
+            data_row = "| " + " | ".join(_ljust_display(str(cell), col_widths[i]) for i, cell in enumerate(row)) + " |\n"
             self.markdown_lines.append(data_row)
 
         return
