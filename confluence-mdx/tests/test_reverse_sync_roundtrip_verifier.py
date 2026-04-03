@@ -238,7 +238,7 @@ def test_minimal_norm_double_space_passes():
 
 
 def test_minimal_norm_br_space_passes():
-    """<br/> 앞 공백 차이는 strict 모드에서도 정규화된다."""
+    """<br/> 앞 공백 차이는 최소 정규화로 통과한다."""
     result = verify_roundtrip(
         expected_mdx="item <br/>next\n",
         actual_mdx="item<br/>next\n",
