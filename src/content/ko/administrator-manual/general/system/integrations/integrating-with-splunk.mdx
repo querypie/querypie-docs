@@ -93,25 +93,25 @@ QueryPie는 고객 편의를 위해 TCP, UDP, HTTP, HTTPS 프로토콜을 사용
 
 * 라이선스에 따라 syslog를 통해 전송되는 QueryPie의 이벤트 항목
 
-| **Event Item**                | **DAC** | **SAC** | **KAC** |
-| ----------------------------- | ------- | ------- | ------- |
-| User Access History           | O       | O       | O       |
-| Activity Logs                 | O       | O       | O       |
-| Admin Role History            | O       | O       | O       |
-| Audit Log Export              | O       | O       | O       |
-| DB Access History             | O       | 해당사항 없음 | 해당사항 없음 |
-| Query Audit                   | O       | 해당사항 없음 | 해당사항 없음 |
-| DML Snapshot                  | O       | 해당사항 없음 | 해당사항 없음 |
-| DB Access Control Logs        | O       | 해당사항 없음 | 해당사항 없음 |
-| Account Lock History          | O       | 해당사항 없음 | 해당사항 없음 |
-| Server Access History         | 해당사항 없음 | O       | 해당사항 없음 |
-| Server Command Audit          | 해당사항 없음 | O       | 해당사항 없음 |
-| Server Session Logs           | 해당사항 없음 | O       | 해당사항 없음 |
-| Server Access Control Logs    | 해당사항 없음 | O       | 해당사항 없음 |
-| Workflow Logs                 | O       | O       | O       |
-| Approval Urgent Waiting Logs  | O       | O       | O       |
-| Request Audit                 | 해당사항 없음 | 해당사항 없음 | O       |
-| Kubernetes Role History       | 해당사항 없음 | 해당사항 없음 | O       |
+| **Event Item**                | **DAC**       | **SAC**       | **KAC**       |
+| ----------------------------- | ------------- | ------------- | ------------- |
+| User Access History           | O             | O             | O             |
+| Activity Logs                 | O             | O             | O             |
+| Admin Role History            | O             | O             | O             |
+| Audit Log Export              | O             | O             | O             |
+| DB Access History             | O             | 해당사항 없음 | 해당사항 없음 |
+| Query Audit                   | O             | 해당사항 없음 | 해당사항 없음 |
+| DML Snapshot                  | O             | 해당사항 없음 | 해당사항 없음 |
+| DB Access Control Logs        | O             | 해당사항 없음 | 해당사항 없음 |
+| Account Lock History          | O             | 해당사항 없음 | 해당사항 없음 |
+| Server Access History         | 해당사항 없음 | O             | 해당사항 없음 |
+| Server Command Audit          | 해당사항 없음 | O             | 해당사항 없음 |
+| Server Session Logs           | 해당사항 없음 | O             | 해당사항 없음 |
+| Server Access Control Logs    | 해당사항 없음 | O             | 해당사항 없음 |
+| Workflow Logs                 | O             | O             | O             |
+| Approval Urgent Waiting Logs  | O             | O             | O             |
+| Request Audit                 | 해당사항 없음 | 해당사항 없음 | O             |
+| Kubernetes Role History       | 해당사항 없음 | 해당사항 없음 | O             |
 
 <Callout type="info">
 **Pod Session Recordings**는 Request Audit 내 pods/exec 리소스 호출 내역과 리스트가 중복되므로, syslog 전송을 지원하지 않습니다.
