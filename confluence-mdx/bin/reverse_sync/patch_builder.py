@@ -397,6 +397,102 @@ def _classify_table_fragment_skip(
     return None
 
 
+def _count_mdx_list_items(content: str) -> Dict[int, int]:
+    """MDX 리스트 콘텐츠의 각 들여쓰기 레벨별 아이템 수를 반환한다.
+
+    반환값: {indent_chars: count} dict.
+    ``2.`` 처럼 마커 뒤에 내용이 없는 빈 항목도 카운트한다.
+    """
+    _is_item_re = re.compile(r'^(\s*)(?:\d+\.|\*|-|\+)(?:\s|$)')
+    counts: Dict[int, int] = {}
+    for line in content.split('\n'):
+        m = _is_item_re.match(line)
+        if m:
+            indent = len(m.group(1))
+            counts[indent] = counts.get(indent, 0) + 1
+    return counts
+
+
+def _build_list_item_merge_patch(
+    mapping: BlockMapping,
+    old_content: str,
+    new_content: str,
+    old_plain: str,
+    new_plain: str,
+) -> Optional[Dict[str, Any]]:
+    """preserved anchor 리스트에서 아이템이 제거된 경우 XHTML DOM을 조작하여
+    replace_fragment 패치를 생성한다.
+
+    제거된 아이템의 자식 요소(<ac:image> 등)를 이전 아이템으로 이동하고
+    빈 <li>를 제거한다. 텍스트 변경은 _apply_text_changes로 처리한다.
+    """
+    from bs4 import BeautifulSoup
+    from reverse_sync.xhtml_patcher import _apply_text_changes
+
+    old_counts = _count_mdx_list_items(old_content)
+    new_counts = _count_mdx_list_items(new_content)
+
+    # 아이템 수가 감소한 indent 레벨 찾기
+    removals = []  # (indent, removed_count)
+    for indent, old_count in sorted(old_counts.items()):
+        new_count = new_counts.get(indent, 0)
+        if new_count < old_count:
+            removals.append((indent, old_count - new_count))
+
+    if not removals:
+        return None
+
+    soup = BeautifulSoup(mapping.xhtml_text, 'html.parser')
+
+    for indent, removed_count in removals:
+        # indent 레벨에 해당하는 <ol>/<ul> 찾기
+        # indent 0 → root list, indent 4 → nested list (depth 1), etc.
+        depth = indent // 4  # 일반적으로 MDX indent는 4칸 단위
+        target_lists = soup.find_all(['ol', 'ul'])
+
+        # depth에 해당하는 리스트 찾기: 중첩 깊이로 필터링
+        def _get_nesting_depth(el):
+            d = 0
+            parent = el.parent
+            while parent:
+                if parent.name in ('ol', 'ul'):
+                    d += 1
+                parent = parent.parent
+            return d
+
+        candidates = [el for el in target_lists if _get_nesting_depth(el) == depth]
+
+        for target_ol in candidates:
+            items = target_ol.find_all('li', recursive=False)
+            # 끝에서부터 removed_count 개의 아이템을 이전 아이템에 병합
+            for _ in range(removed_count):
+                if len(items) < 2:
+                    break
+                last_li = items[-1]
+                prev_li = items[-2]
+                # last_li의 모든 자식을 prev_li로 이동
+                # 빈 <p> (공백만 포함)는 이동하지 않음
+                for child in list(last_li.children):
+                    if (child.name == 'p'
+                            and child.get_text(strip=True) == ''):
+                        child.decompose()
+                        continue
+                    prev_li.append(child.extract())
+                last_li.decompose()
+                items = target_ol.find_all('li', recursive=False)
+
+    # 텍스트 변경 적용
+    root = soup.find(['ol', 'ul'])
+    if root and old_plain != new_plain:
+        _apply_text_changes(root, old_plain, new_plain)
+
+    return {
+        'action': 'replace_fragment',
+        'xhtml_xpath': mapping.xhtml_xpath,
+        'new_element_xhtml': str(soup),
+    }
+
+
 def _emit_replacement_fragment(block: MdxBlock) -> str:
     """Block content를 현재 forward emitter 기준 fragment로 변환한다."""
     parsed_blocks = [parsed for parsed in parse_mdx(block.content) if parsed.type != "empty"]
@@ -958,6 +1054,21 @@ def build_patches(
                     )
                 )
                 continue
+            # preserved anchor list + 아이템 수 변경: DOM 직접 조작으로 <li> 병합/제거
+            if (mapping is not None
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and has_content_change):
+                merge_patch = _build_list_item_merge_patch(
+                    mapping,
+                    change.old_block.content,
+                    change.new_block.content,
+                    _old_plain,
+                    _new_plain,
+                )
+                if merge_patch is not None:
+                    _mark_used(mapping.block_id, mapping)
+                    patches.append(merge_patch)
+                    continue
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
