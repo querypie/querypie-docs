@@ -617,16 +617,22 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
             exclude_insert_at_start=exclude_at_start,
         )
 
-        # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 삭제된 경우,
+        # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 삭제/축소된 경우,
         # leading whitespace를 제거한다.
-        # 예: <strong>IDENTIFIER</strong> 조사 → IDENTIFIER조사 (공백 교정)
+        # 예1: <strong>IDENTIFIER</strong> 조사 → IDENTIFIER조사 (공백 삭제)
+        # 예2: <p> Admin → <p>Admin (공백 축소: gap 2→1이면 leading 제거)
         if leading and i > 0:
             prev_end = node_ranges[i - 1][1]
             if prev_end < node_start:
+                gap_old = old_stripped[prev_end:node_start]
                 gap_new = _map_text_range(
                     old_stripped, new_stripped, opcodes, prev_end, node_start
                 )
                 if not gap_new:
+                    leading = ''
+                elif (gap_new.isspace() and gap_old.isspace()
+                      and len(gap_new) < len(gap_old)
+                      and len(gap_new) <= len(leading)):
                     leading = ''
 
         if trailing_in_range:
