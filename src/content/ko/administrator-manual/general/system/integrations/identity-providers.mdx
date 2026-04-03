@@ -74,13 +74,13 @@ LDAP 상세설정
 
 QueryPie 사용자 계정과 LDAP의 사용자 계정을 동기화하여 매핑할 내용을 입력합니다.
 
-| **Attribute**      | **필수 여부** | **Description**                                                                                                                   |
-| ------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| User Base DN       | 필수        | LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만 로그인 대상으로 간주됩니다.예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com |
-| User Search Filter | 필수        | 사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다. 예시: (objectClass=inetOrgPerson)                                   |
-| User Name          | 필수        | LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화할 때 QueryPie 사용자의 Login ID에 매핑됩니다.예시: uid                     |
-| Email              | 필수        | LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화할 때 QueryPie 사용자의 Email에 매핑됩니다.예시: email                 |
-| Display Name       | -         | QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을 입력합니다.예시: cn 또는 displayName 등.                                                 |
+| **Attribute**      | **필수 여부** | **Description**                                                                                                                                                                      |
+| ------------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| User Base DN       | 필수          | LDAP 트리 내에서 사용자 계정들을 검색할 시작 위치입니다. 이 경로 하위에 있는 사용자들만 로그인 대상으로 간주됩니다.예시: ou=People,dc=example,dc=com 또는 cn=Users,dc=example,dc=com |
+| User Search Filter | 필수          | 사용자가 로그인 시 입력한 아이디를 기반으로 LDAP에서 해당 사용자를 찾는 데 사용할 쿼리(필터)를 입력합니다. 예시: (objectClass=inetOrgPerson)                                         |
+| User Name          | 필수          | LDAP 서버에서 사용자의 로그인 아이디로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화할 때 QueryPie 사용자의 Login ID에 매핑됩니다.예시: uid                        |
+| Email              | 필수          | LDAP 서버에서 사용자의 Email 주소 항목으로 사용되는 속성(attribute)의 이름을 입력합니다. QueryPie와 동기화할 때 QueryPie 사용자의 Email에 매핑됩니다.예시: email                     |
+| Display Name       | -             | QueryPie 사용자의 Display Name과 매핑할 LDAP 서버에서 사용하는 속성을 입력합니다.예시: cn 또는 displayName 등.                                                                       |
 
 LDAP에서 사용자 그룹 정보 및 소속 정보를 동기화하려면 **Use Group 옵션**을 활성화(체크)하고 필수로 지정된 정보들을 입력합니다.
 
