@@ -2464,3 +2464,118 @@ class TestCalloutChildListSpaceChange:
         assert len(rf_patches) == 0, (
             f"Space+text change should not produce list replace_fragment: {rf_patches}"
         )
+
+
+# ── numbered list item 제거 시 XHTML 반영 실패 ──
+
+
+class TestListItemRemovalWithPreservedAnchor:
+    """numbered list에서 빈 항목(12.)을 제거하고 콘텐츠를 이전 항목에 병합할 때
+    preserved anchor(<ac:image>)가 있는 리스트의 XHTML 패치가 누락되는 버그.
+
+    재현 시나리오 (page 798064641, integrating-with-email.mdx):
+      Original MDX:
+        11. **Test 버튼** : SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
+        12.
+          <figure ...>
+      Improved MDX:
+        11. **Test 버튼**: SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
+          <figure ...>
+
+      현상: item 12의 <li>에 <ac:image>가 있어 preserved anchor로 분류 →
+            whole-fragment 교체가 차단되고, text-level 패치는 항목 구조 변경을
+            처리하지 못해 빈 <li>가 XHTML에 남음 → FC가 "12." 재생성.
+    """
+
+    def _setup_sidecar(self, xpath: str, mdx_idx: int):
+        entry = _make_sidecar(xpath, [mdx_idx])
+        return {mdx_idx: entry}
+
+    def test_list_item_removal_merged_into_previous_item(self):
+        """빈 리스트 항목(2.)을 제거하고 figure를 이전 항목(1.)에 병합하면
+        XHTML 패치 적용 후 빈 <li>가 사라져야 한다.
+
+        최소 재현: 2개 항목의 <ol> — item 1에 텍스트, item 2에 <ac:image>.
+        improved MDX에서 item 2를 제거하고 figure를 item 1에 병합.
+
+        현상: preserved anchor(<ac:image>) 때문에 replace_fragment 차단,
+              text-level 패치만 적용 → 빈 <li> 제거 불가 → FC가 "2." 재생성
+        """
+        # XHTML: <ol> with 2 items, item 2 has <ac:image> (preserved anchor)
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p><strong>Test 버튼</strong> : 확인합니다.<br/></p></li>'
+            '<li><ac:image ac:align="center" ac:alt="img.png">'
+            '<ri:attachment ri:filename="img.png"></ri:attachment>'
+            '<ac:caption><p>캡션</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-1',
+            'Test 버튼 : 확인합니다.캡션',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        # Original MDX: 2 items (item 2 is empty "2." followed by figure)
+        old_content = (
+            '1. **Test 버튼** : 확인합니다.<br/>\n'
+            '2.\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+        )
+
+        # Improved MDX: item 2 removed, figure merged into item 1
+        new_content = (
+            '1. **Test 버튼**: 확인합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+
+        sidecar_block = SidecarBlock(
+            0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 8),
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([sidecar_block])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        # 패치가 생성되어야 한다
+        assert len(patches) >= 1, (
+            f"리스트 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        # 핵심 검증: 패치를 XHTML에 적용한 후 빈 <li>가 제거되어야 한다
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        ol = soup.find('ol')
+        assert ol is not None, "패치 후 <ol>이 존재해야 합니다."
+        items = ol.find_all('li', recursive=False)
+        # item 2(빈 항목)가 제거되어 1개만 남아야 함
+        assert len(items) == 1, (
+            f"빈 <li> 항목이 제거되어 1개만 남아야 합니다. "
+            f"실제 항목 수: {len(items)}, patched XHTML: {patched[:300]}"
+        )
