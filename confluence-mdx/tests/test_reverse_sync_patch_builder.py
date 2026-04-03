@@ -2176,6 +2176,21 @@ class TestApplyInlineFixups:
         assert '<ac:link>link</ac:link>' in str(p)
         assert '<strong><ac:link>link</ac:link></strong>:' in str(p)
 
+    def test_preserved_anchor_strong_added(self):
+        """preserved anchor가 있는 문단에서도 새 bold가 추가되어야 한다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><ac:link>link</ac:link> Name</p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'link Name',
+            'new_plain': 'link Name',
+            'new_inner_xhtml': 'link <strong>Name</strong>',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        p = soup.find('p')
+        assert '<ac:link>link</ac:link>' in str(p)
+        assert '<strong>Name</strong>' in str(p)
+
     def test_duplicate_text_uses_match_index(self):
         """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
         from bs4 import BeautifulSoup
@@ -2463,4 +2478,291 @@ class TestCalloutChildListSpaceChange:
         ]
         assert len(rf_patches) == 0, (
             f"Space+text change should not produce list replace_fragment: {rf_patches}"
+        )
+
+
+# ── numbered list item 제거 시 XHTML 반영 실패 ──
+
+
+class TestListItemRemovalWithPreservedAnchor:
+    """numbered list에서 빈 항목(12.)을 제거하고 콘텐츠를 이전 항목에 병합할 때
+    preserved anchor(<ac:image>)가 있는 리스트의 XHTML 패치가 누락되는 버그.
+
+    재현 시나리오 (page 798064641, integrating-with-email.mdx):
+      Original MDX:
+        11. **Test 버튼** : SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
+        12.
+          <figure ...>
+      Improved MDX:
+        11. **Test 버튼**: SMTP 설정이 접속에 문제 없는지 확인합니다.<br/>
+          <figure ...>
+
+      현상: item 12의 <li>에 <ac:image>가 있어 preserved anchor로 분류 →
+            whole-fragment 교체가 차단되고, text-level 패치는 항목 구조 변경을
+            처리하지 못해 빈 <li>가 XHTML에 남음 → FC가 "12." 재생성.
+    """
+
+    def _setup_sidecar(self, xpath: str, mdx_idx: int):
+        entry = _make_sidecar(xpath, [mdx_idx])
+        return {mdx_idx: entry}
+
+    def test_list_item_removal_merged_into_previous_item(self):
+        """빈 리스트 항목(2.)을 제거하고 figure를 이전 항목(1.)에 병합하면
+        XHTML 패치 적용 후 빈 <li>가 사라져야 한다.
+
+        최소 재현: 2개 항목의 <ol> — item 1에 텍스트, item 2에 <ac:image>.
+        improved MDX에서 item 2를 제거하고 figure를 item 1에 병합.
+
+        현상: preserved anchor(<ac:image>) 때문에 replace_fragment 차단,
+              text-level 패치만 적용 → 빈 <li> 제거 불가 → FC가 "2." 재생성
+        """
+        # XHTML: <ol> with 2 items, item 2 has <ac:image> (preserved anchor)
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p><strong>Test 버튼</strong> : 확인합니다.<br/></p></li>'
+            '<li><ac:image ac:align="center" ac:alt="img.png">'
+            '<ri:attachment ri:filename="img.png"></ri:attachment>'
+            '<ac:caption><p>캡션</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-1',
+            'Test 버튼 : 확인합니다.캡션',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        # Original MDX: 2 items (item 2 is empty "2." followed by figure)
+        old_content = (
+            '1. **Test 버튼** : 확인합니다.<br/>\n'
+            '2.\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+        )
+
+        # Improved MDX: item 2 removed, figure merged into item 1
+        new_content = (
+            '1. **Test 버튼**: 확인합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+
+        sidecar_block = SidecarBlock(
+            0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 8),
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([sidecar_block])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        # 패치가 생성되어야 한다
+        assert len(patches) >= 1, (
+            f"리스트 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        # 핵심 검증: 패치를 XHTML에 적용한 후 빈 <li>가 제거되어야 한다
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        ol = soup.find('ol')
+        assert ol is not None, "패치 후 <ol>이 존재해야 합니다."
+        items = ol.find_all('li', recursive=False)
+        # item 2(빈 항목)가 제거되어 1개만 남아야 함
+        assert len(items) == 1, (
+            f"빈 <li> 항목이 제거되어 1개만 남아야 합니다. "
+            f"실제 항목 수: {len(items)}, patched XHTML: {patched[:300]}"
+        )
+
+    def test_middle_blank_item_removal_merges_that_item_only(self):
+        """중간 빈 항목이 제거되면 마지막 항목이 아니라 해당 항목만 이전 형제로 병합해야 한다."""
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p>One</p></li>'
+            '<li><ac:image ac:align="center" ac:alt="img.png">'
+            '<ri:attachment ri:filename="img.png"></ri:attachment>'
+            '<ac:caption><p>캡션</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '<li><p>Three</p></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-middle',
+            'One캡션Three',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = (
+            '1. One :\n'
+            '2.\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+            '3. Three\n'
+        )
+        new_content = (
+            '1. One:\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+            '2. Three\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 9)),
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) >= 1, (
+            f"중간 빈 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        ol = soup.find('ol')
+        assert ol is not None
+        items = ol.find_all('li', recursive=False)
+        assert len(items) == 2, (
+            f"중간 빈 항목만 제거되어 2개 항목이 남아야 합니다. "
+            f"실제 항목 수: {len(items)}, patched XHTML: {patched[:300]}"
+        )
+        assert 'Three' in items[1].get_text(), (
+            f"마지막 항목 텍스트가 보존되어야 합니다. patched XHTML: {patched[:300]}"
+        )
+        assert items[0].find('ac:image') is not None, (
+            f"제거된 빈 항목의 preserved anchor가 이전 항목으로 이동해야 합니다. "
+            f"patched XHTML: {patched[:300]}"
+        )
+
+    def test_nested_blank_item_removal_does_not_touch_other_nested_lists(self):
+        """같은 depth의 다른 하위 리스트는 건드리지 않고 제거된 경로만 병합해야 한다."""
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p>Parent A</p><ol start="1">'
+            '<li><p>Step A1</p></li>'
+            '<li><ac:image ac:align="center" ac:alt="a.png">'
+            '<ri:attachment ri:filename="a.png"></ri:attachment>'
+            '<ac:caption><p>캡션A</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '</ol></li>'
+            '<li><p>Parent B</p><ol start="1">'
+            '<li><p>Step B1</p></li>'
+            '<li><p>Step B2</p></li>'
+            '</ol></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-nested',
+            'Parent AStep A1캡션AParent BStep B1Step B2',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = (
+            '1. Parent A\n'
+            '    1. Step A1 :\n'
+            '    2.\n'
+            '      <figure data-layout="center" data-align="center">\n'
+            '      <img src="/a.png" alt="캡션A" width="402" />\n'
+            '      <figcaption>\n'
+            '      캡션A\n'
+            '      </figcaption>\n'
+            '      </figure>\n'
+            '2. Parent B\n'
+            '    1. Step B1\n'
+            '    2. Step B2\n'
+        )
+        new_content = (
+            '1. Parent A\n'
+            '    1. Step A1:\n'
+            '      <figure data-layout="center" data-align="center">\n'
+            '      <img src="/a.png" alt="캡션A" width="402" />\n'
+            '      <figcaption>\n'
+            '      캡션A\n'
+            '      </figcaption>\n'
+            '      </figure>\n'
+            '2. Parent B\n'
+            '    1. Step B1\n'
+            '    2. Step B2\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 12)),
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) >= 1, (
+            f"중첩 리스트 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        root_items = soup.find('ol').find_all('li', recursive=False)
+        first_nested = root_items[0].find('ol')
+        second_nested = root_items[1].find('ol')
+        assert first_nested is not None and second_nested is not None
+        assert len(first_nested.find_all('li', recursive=False)) == 1, (
+            f"첫 번째 하위 리스트만 1개 항목으로 줄어야 합니다. patched XHTML: {patched[:400]}"
+        )
+        assert len(second_nested.find_all('li', recursive=False)) == 2, (
+            f"변경되지 않은 두 번째 하위 리스트는 2개 항목을 유지해야 합니다. "
+            f"patched XHTML: {patched[:400]}"
         )

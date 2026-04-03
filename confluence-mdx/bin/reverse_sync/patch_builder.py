@@ -397,6 +397,148 @@ def _classify_table_fragment_skip(
     return None
 
 
+def _extract_mdx_list_entries(content: str) -> List[Dict[str, Any]]:
+    """MDX 리스트 블록을 path 기반 항목 목록으로 파싱한다."""
+    item_re = re.compile(r'^(\s*)(?:\d+\.|\*|-|\+)(?:\s(.*)|$)')
+    entries: List[Dict[str, Any]] = []
+    stack: List[Tuple[int, Tuple[int, ...]]] = []
+    current: Optional[Dict[str, Any]] = None
+
+    for raw_line in content.split('\n'):
+        m = item_re.match(raw_line)
+        if not m:
+            if current is not None:
+                current['continuation_lines'].append(raw_line)
+            continue
+
+        indent = len(m.group(1))
+        marker_text = (m.group(2) or '').strip()
+
+        while stack and indent < stack[-1][0]:
+            stack.pop()
+
+        if stack and indent == stack[-1][0]:
+            parent_path = stack[-2][1] if len(stack) >= 2 else ()
+            index = stack[-1][1][-1] + 1
+            stack.pop()
+        elif stack and indent > stack[-1][0]:
+            parent_path = stack[-1][1]
+            index = 0
+        else:
+            parent_path = ()
+            index = 0
+
+        path = parent_path + (index,)
+        current = {
+            'path': path,
+            'indent': indent,
+            'marker_text': marker_text,
+            'continuation_lines': [],
+        }
+        entries.append(current)
+        stack.append((indent, path))
+
+    return entries
+
+
+def _normalize_list_continuation(lines: List[str]) -> str:
+    """continuation line 비교용 정규화 문자열."""
+    return '\n'.join(line.strip() for line in lines if line.strip())
+
+
+def _find_removed_blank_item_paths(
+    old_content: str,
+    new_content: str,
+) -> List[Tuple[int, ...]]:
+    """이전 형제로 병합된 것으로 보이는 빈 리스트 항목 path를 찾는다."""
+    old_entries = _extract_mdx_list_entries(old_content)
+    new_entries = _extract_mdx_list_entries(new_content)
+    new_by_path = {entry['path']: entry for entry in new_entries}
+    removed_paths: List[Tuple[int, ...]] = []
+
+    for old_entry in old_entries:
+        path = old_entry['path']
+        if old_entry['marker_text'] or path[-1] == 0:
+            continue
+
+        old_payload = _normalize_list_continuation(old_entry['continuation_lines'])
+        if not old_payload:
+            continue
+
+        new_same_path = new_by_path.get(path)
+        if new_same_path is not None and not new_same_path['marker_text']:
+            continue
+
+        prev_path = path[:-1] + (path[-1] - 1,)
+        new_prev = new_by_path.get(prev_path)
+        if new_prev is None:
+            continue
+
+        new_prev_payload = _normalize_list_continuation(new_prev['continuation_lines'])
+        if old_payload not in new_prev_payload:
+            continue
+
+        removed_paths.append(path)
+
+    return removed_paths
+
+
+def _build_list_item_merge_patch(
+    mapping: BlockMapping,
+    old_content: str,
+    new_content: str,
+    old_plain: str,
+    new_plain: str,
+) -> Optional[Dict[str, Any]]:
+    """preserved anchor 리스트에서 아이템이 제거된 경우 XHTML DOM을 조작하여
+    replace_fragment 패치를 생성한다.
+
+    제거된 아이템의 자식 요소(<ac:image> 등)를 이전 아이템으로 이동하고
+    빈 <li>를 제거한다. 텍스트 변경은 _apply_text_changes로 처리한다.
+    """
+    from bs4 import BeautifulSoup
+    from reverse_sync.reconstructors import _find_list_item_by_path
+    from reverse_sync.xhtml_patcher import _apply_text_changes
+
+    removed_paths = _find_removed_blank_item_paths(old_content, new_content)
+    if not removed_paths:
+        return None
+
+    soup = BeautifulSoup(mapping.xhtml_text, 'html.parser')
+    root = soup.find(['ol', 'ul'])
+    if root is None:
+        return None
+
+    applied = False
+    for path in sorted(removed_paths, reverse=True):
+        removed_li = _find_list_item_by_path(root, list(path))
+        prev_li = _find_list_item_by_path(
+            root, list(path[:-1] + (path[-1] - 1,)))
+        if removed_li is None or prev_li is None:
+            continue
+
+        for child in list(removed_li.children):
+            if child.name == 'p' and child.get_text(strip=True) == '':
+                child.decompose()
+                continue
+            prev_li.append(child.extract())
+        removed_li.decompose()
+        applied = True
+
+    if not applied:
+        return None
+
+    # 텍스트 변경 적용
+    if root and old_plain != new_plain:
+        _apply_text_changes(root, old_plain, new_plain)
+
+    return {
+        'action': 'replace_fragment',
+        'xhtml_xpath': mapping.xhtml_xpath,
+        'new_element_xhtml': str(soup),
+    }
+
+
 def _emit_replacement_fragment(block: MdxBlock) -> str:
     """Block content를 현재 forward emitter 기준 fragment로 변환한다."""
     parsed_blocks = [parsed for parsed in parse_mdx(block.content) if parsed.type != "empty"]
@@ -958,6 +1100,21 @@ def build_patches(
                     )
                 )
                 continue
+            # preserved anchor list + 아이템 수 변경: DOM 직접 조작으로 <li> 병합/제거
+            if (mapping is not None
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and has_content_change):
+                merge_patch = _build_list_item_merge_patch(
+                    mapping,
+                    change.old_block.content,
+                    change.new_block.content,
+                    _old_plain,
+                    _new_plain,
+                )
+                if merge_patch is not None:
+                    _mark_used(mapping.block_id, mapping)
+                    patches.append(merge_patch)
+                    continue
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
