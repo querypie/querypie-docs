@@ -596,3 +596,66 @@ class TestEmoticonReplacement:
 
         assert len(soup.find_all('ac:emoticon')) == 1
         assert 'A 확인' in result
+
+
+class TestGapWhitespaceReduction:
+    """텍스트 노드 사이 gap 공백이 축소될 때 leading whitespace 처리 테스트."""
+
+    def test_li_p_leading_space_removed_when_gap_reduced(self):
+        """<p> trailing space + 내부 <p> leading space → 2공백 gap 축소 시 leading 제거.
+
+        XHTML 구조: <p>...정의합니다. </p><ul><li><p> Admin ...</p></li></ul>
+        old_plain_text에서 gap이 2공백("  "), new에서 1공백(" ")으로 축소될 때
+        내부 <p>의 leading space가 제거되어야 한다.
+        (FC가 leading space를 보존하면 "* ·Admin" → "*··Admin" 이중 공백이 됨)
+        """
+        xhtml = (
+            '<ol>'
+            '<li><p><strong>Allowed Zones</strong> : 정의합니다. </p>'
+            '<ul><li><p> Admin 매핑합니다.</p></li></ul>'
+            '</li>'
+            '</ol>'
+        )
+        patches = [{
+            'xhtml_xpath': 'ol[1]',
+            # trailing " " + leading " " = gap 2
+            'old_plain_text': 'Allowed Zones : 정의합니다.  Admin 매핑합니다.',
+            # gap 2 → 1
+            'new_plain_text': 'Allowed Zones : 정의합니다. Admin 매핑합니다.',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert '<p>Admin' in result, (
+            f"leading space not removed when gap reduced: {result}"
+        )
+
+    def test_gap_fully_deleted(self):
+        """gap이 완전히 삭제되면 기존 동작대로 leading을 제거한다."""
+        xhtml = '<p><strong>IDENTIFIER</strong> 조사</p>'
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': 'IDENTIFIER 조사',
+            'new_plain_text': 'IDENTIFIER조사',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert 'IDENTIFIER</strong>조사' in result
+
+    def test_gap_not_reduced_preserves_leading(self):
+        """gap이 축소되지 않으면 leading whitespace를 보존한다."""
+        xhtml = (
+            '<ol>'
+            '<li><p>텍스트. </p>'
+            '<ul><li><p> 내용입니다.</p></li></ul>'
+            '</li>'
+            '</ol>'
+        )
+        patches = [{
+            'xhtml_xpath': 'ol[1]',
+            'old_plain_text': '텍스트.  내용입니다.',
+            # gap 크기 동일 (2→2), 텍스트만 변경
+            'new_plain_text': '텍스트.  내용변경.',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        # gap이 축소되지 않았으므로 leading space 보존
+        assert '<p> 내용변경.' in result, (
+            f"leading space should be preserved when gap not reduced: {result}"
+        )
