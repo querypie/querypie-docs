@@ -397,20 +397,90 @@ def _classify_table_fragment_skip(
     return None
 
 
-def _count_mdx_list_items(content: str) -> Dict[int, int]:
-    """MDX 리스트 콘텐츠의 각 들여쓰기 레벨별 아이템 수를 반환한다.
+def _extract_mdx_list_entries(content: str) -> List[Dict[str, Any]]:
+    """MDX 리스트 블록을 path 기반 항목 목록으로 파싱한다."""
+    item_re = re.compile(r'^(\s*)(?:\d+\.|\*|-|\+)(?:\s(.*)|$)')
+    entries: List[Dict[str, Any]] = []
+    stack: List[Tuple[int, Tuple[int, ...]]] = []
+    current: Optional[Dict[str, Any]] = None
 
-    반환값: {indent_chars: count} dict.
-    ``2.`` 처럼 마커 뒤에 내용이 없는 빈 항목도 카운트한다.
-    """
-    _is_item_re = re.compile(r'^(\s*)(?:\d+\.|\*|-|\+)(?:\s|$)')
-    counts: Dict[int, int] = {}
-    for line in content.split('\n'):
-        m = _is_item_re.match(line)
-        if m:
-            indent = len(m.group(1))
-            counts[indent] = counts.get(indent, 0) + 1
-    return counts
+    for raw_line in content.split('\n'):
+        m = item_re.match(raw_line)
+        if not m:
+            if current is not None:
+                current['continuation_lines'].append(raw_line)
+            continue
+
+        indent = len(m.group(1))
+        marker_text = (m.group(2) or '').strip()
+
+        while stack and indent < stack[-1][0]:
+            stack.pop()
+
+        if stack and indent == stack[-1][0]:
+            parent_path = stack[-2][1] if len(stack) >= 2 else ()
+            index = stack[-1][1][-1] + 1
+            stack.pop()
+        elif stack and indent > stack[-1][0]:
+            parent_path = stack[-1][1]
+            index = 0
+        else:
+            parent_path = ()
+            index = 0
+
+        path = parent_path + (index,)
+        current = {
+            'path': path,
+            'indent': indent,
+            'marker_text': marker_text,
+            'continuation_lines': [],
+        }
+        entries.append(current)
+        stack.append((indent, path))
+
+    return entries
+
+
+def _normalize_list_continuation(lines: List[str]) -> str:
+    """continuation line 비교용 정규화 문자열."""
+    return '\n'.join(line.strip() for line in lines if line.strip())
+
+
+def _find_removed_blank_item_paths(
+    old_content: str,
+    new_content: str,
+) -> List[Tuple[int, ...]]:
+    """이전 형제로 병합된 것으로 보이는 빈 리스트 항목 path를 찾는다."""
+    old_entries = _extract_mdx_list_entries(old_content)
+    new_entries = _extract_mdx_list_entries(new_content)
+    new_by_path = {entry['path']: entry for entry in new_entries}
+    removed_paths: List[Tuple[int, ...]] = []
+
+    for old_entry in old_entries:
+        path = old_entry['path']
+        if old_entry['marker_text'] or path[-1] == 0:
+            continue
+
+        old_payload = _normalize_list_continuation(old_entry['continuation_lines'])
+        if not old_payload:
+            continue
+
+        new_same_path = new_by_path.get(path)
+        if new_same_path is not None and not new_same_path['marker_text']:
+            continue
+
+        prev_path = path[:-1] + (path[-1] - 1,)
+        new_prev = new_by_path.get(prev_path)
+        if new_prev is None:
+            continue
+
+        new_prev_payload = _normalize_list_continuation(new_prev['continuation_lines'])
+        if old_payload not in new_prev_payload:
+            continue
+
+        removed_paths.append(path)
+
+    return removed_paths
 
 
 def _build_list_item_merge_patch(
@@ -427,62 +497,38 @@ def _build_list_item_merge_patch(
     빈 <li>를 제거한다. 텍스트 변경은 _apply_text_changes로 처리한다.
     """
     from bs4 import BeautifulSoup
+    from reverse_sync.reconstructors import _find_list_item_by_path
     from reverse_sync.xhtml_patcher import _apply_text_changes
 
-    old_counts = _count_mdx_list_items(old_content)
-    new_counts = _count_mdx_list_items(new_content)
-
-    # 아이템 수가 감소한 indent 레벨 찾기
-    removals = []  # (indent, removed_count)
-    for indent, old_count in sorted(old_counts.items()):
-        new_count = new_counts.get(indent, 0)
-        if new_count < old_count:
-            removals.append((indent, old_count - new_count))
-
-    if not removals:
+    removed_paths = _find_removed_blank_item_paths(old_content, new_content)
+    if not removed_paths:
         return None
 
     soup = BeautifulSoup(mapping.xhtml_text, 'html.parser')
+    root = soup.find(['ol', 'ul'])
+    if root is None:
+        return None
 
-    for indent, removed_count in removals:
-        # indent 레벨에 해당하는 <ol>/<ul> 찾기
-        # indent 0 → root list, indent 4 → nested list (depth 1), etc.
-        depth = indent // 4  # 일반적으로 MDX indent는 4칸 단위
-        target_lists = soup.find_all(['ol', 'ul'])
+    applied = False
+    for path in sorted(removed_paths, reverse=True):
+        removed_li = _find_list_item_by_path(root, list(path))
+        prev_li = _find_list_item_by_path(
+            root, list(path[:-1] + (path[-1] - 1,)))
+        if removed_li is None or prev_li is None:
+            continue
 
-        # depth에 해당하는 리스트 찾기: 중첩 깊이로 필터링
-        def _get_nesting_depth(el):
-            d = 0
-            parent = el.parent
-            while parent:
-                if parent.name in ('ol', 'ul'):
-                    d += 1
-                parent = parent.parent
-            return d
+        for child in list(removed_li.children):
+            if child.name == 'p' and child.get_text(strip=True) == '':
+                child.decompose()
+                continue
+            prev_li.append(child.extract())
+        removed_li.decompose()
+        applied = True
 
-        candidates = [el for el in target_lists if _get_nesting_depth(el) == depth]
-
-        for target_ol in candidates:
-            items = target_ol.find_all('li', recursive=False)
-            # 끝에서부터 removed_count 개의 아이템을 이전 아이템에 병합
-            for _ in range(removed_count):
-                if len(items) < 2:
-                    break
-                last_li = items[-1]
-                prev_li = items[-2]
-                # last_li의 모든 자식을 prev_li로 이동
-                # 빈 <p> (공백만 포함)는 이동하지 않음
-                for child in list(last_li.children):
-                    if (child.name == 'p'
-                            and child.get_text(strip=True) == ''):
-                        child.decompose()
-                        continue
-                    prev_li.append(child.extract())
-                last_li.decompose()
-                items = target_ol.find_all('li', recursive=False)
+    if not applied:
+        return None
 
     # 텍스트 변경 적용
-    root = soup.find(['ol', 'ul'])
     if root and old_plain != new_plain:
         _apply_text_changes(root, old_plain, new_plain)
 

@@ -2579,3 +2579,175 @@ class TestListItemRemovalWithPreservedAnchor:
             f"빈 <li> 항목이 제거되어 1개만 남아야 합니다. "
             f"실제 항목 수: {len(items)}, patched XHTML: {patched[:300]}"
         )
+
+    def test_middle_blank_item_removal_merges_that_item_only(self):
+        """중간 빈 항목이 제거되면 마지막 항목이 아니라 해당 항목만 이전 형제로 병합해야 한다."""
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p>One</p></li>'
+            '<li><ac:image ac:align="center" ac:alt="img.png">'
+            '<ri:attachment ri:filename="img.png"></ri:attachment>'
+            '<ac:caption><p>캡션</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '<li><p>Three</p></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-middle',
+            'One캡션Three',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = (
+            '1. One :\n'
+            '2.\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+            '3. Three\n'
+        )
+        new_content = (
+            '1. One:\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/img.png" alt="캡션" width="402" />\n'
+            '  <figcaption>\n'
+            '  캡션\n'
+            '  </figcaption>\n'
+            '  </figure>\n'
+            '2. Three\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 9)),
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) >= 1, (
+            f"중간 빈 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        ol = soup.find('ol')
+        assert ol is not None
+        items = ol.find_all('li', recursive=False)
+        assert len(items) == 2, (
+            f"중간 빈 항목만 제거되어 2개 항목이 남아야 합니다. "
+            f"실제 항목 수: {len(items)}, patched XHTML: {patched[:300]}"
+        )
+        assert 'Three' in items[1].get_text(), (
+            f"마지막 항목 텍스트가 보존되어야 합니다. patched XHTML: {patched[:300]}"
+        )
+        assert items[0].find('ac:image') is not None, (
+            f"제거된 빈 항목의 preserved anchor가 이전 항목으로 이동해야 합니다. "
+            f"patched XHTML: {patched[:300]}"
+        )
+
+    def test_nested_blank_item_removal_does_not_touch_other_nested_lists(self):
+        """같은 depth의 다른 하위 리스트는 건드리지 않고 제거된 경로만 병합해야 한다."""
+        xhtml_text = (
+            '<ol start="1">'
+            '<li><p>Parent A</p><ol start="1">'
+            '<li><p>Step A1</p></li>'
+            '<li><ac:image ac:align="center" ac:alt="a.png">'
+            '<ri:attachment ri:filename="a.png"></ri:attachment>'
+            '<ac:caption><p>캡션A</p></ac:caption>'
+            '</ac:image><p> </p></li>'
+            '</ol></li>'
+            '<li><p>Parent B</p><ol start="1">'
+            '<li><p>Step B1</p></li>'
+            '<li><p>Step B2</p></li>'
+            '</ol></li>'
+            '</ol>'
+        )
+
+        list_mapping = _make_mapping(
+            'list-nested',
+            'Parent AStep A1캡션AParent BStep B1Step B2',
+            xpath='ol[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = xhtml_text
+
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        old_content = (
+            '1. Parent A\n'
+            '    1. Step A1 :\n'
+            '    2.\n'
+            '      <figure data-layout="center" data-align="center">\n'
+            '      <img src="/a.png" alt="캡션A" width="402" />\n'
+            '      <figcaption>\n'
+            '      캡션A\n'
+            '      </figcaption>\n'
+            '      </figure>\n'
+            '2. Parent B\n'
+            '    1. Step B1\n'
+            '    2. Step B2\n'
+        )
+        new_content = (
+            '1. Parent A\n'
+            '    1. Step A1:\n'
+            '      <figure data-layout="center" data-align="center">\n'
+            '      <img src="/a.png" alt="캡션A" width="402" />\n'
+            '      <figcaption>\n'
+            '      캡션A\n'
+            '      </figcaption>\n'
+            '      </figure>\n'
+            '2. Parent B\n'
+            '    1. Step B1\n'
+            '    2. Step B2\n'
+        )
+
+        change = _make_change(0, old_content, new_content, type_='list')
+        mdx_to_sidecar = self._setup_sidecar('ol[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml_text, sha256_text(xhtml_text), (1, 12)),
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) >= 1, (
+            f"중첩 리스트 항목 제거 변경에 대한 패치가 생성되어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+        patched = patch_xhtml(xhtml_text, patches)
+
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(patched, 'html.parser')
+        root_items = soup.find('ol').find_all('li', recursive=False)
+        first_nested = root_items[0].find('ol')
+        second_nested = root_items[1].find('ol')
+        assert first_nested is not None and second_nested is not None
+        assert len(first_nested.find_all('li', recursive=False)) == 1, (
+            f"첫 번째 하위 리스트만 1개 항목으로 줄어야 합니다. patched XHTML: {patched[:400]}"
+        )
+        assert len(second_nested.find_all('li', recursive=False)) == 2, (
+            f"변경되지 않은 두 번째 하위 리스트는 2개 항목을 유지해야 합니다. "
+            f"patched XHTML: {patched[:400]}"
+        )
