@@ -1598,3 +1598,29 @@
   - databases
   title: (New) Policy Management
   title_orig: (New) Policy Management
+- breadcrumbs:
+  - 관리자 매뉴얼
+  - General
+  - System
+  - Integrations
+  - Slack DM 연동
+  breadcrumbs_en:
+  - Administrator Manual
+  - General
+  - System
+  - Integrations
+  - Integrating with Slack DM
+  expected_status: pass
+  failure_type: 12
+  label: code span 뒤 공백 소실 — gap whitespace 축소 시 leading 전체 제거
+  mdx_path: administrator-manual/general/system/integrations/integrating-with-slack-dm.mdx
+  page_confluenceUrl: https://querypie.atlassian.net/wiki/spaces/QM/pages/883654669/Slack+DM
+  page_id: '883654669'
+  path:
+  - administrator-manual
+  - general
+  - system
+  - integrations
+  - integrating-with-slack-dm
+  title: Slack DM 연동
+  title_orig: Slack DM 연동

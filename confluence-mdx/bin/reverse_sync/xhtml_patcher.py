@@ -681,7 +681,14 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
                 elif (gap_new.isspace() and gap_old.isspace()
                       and len(gap_new) < len(gap_old)
                       and len(gap_new) <= len(leading)):
-                    leading = ''
+                    if len(gap_old) <= len(leading):
+                        # gap 전체가 노드의 leading whitespace인 경우:
+                        # 축소된 gap만큼만 leading을 조정한다.
+                        # 예: <code>X</code><span>  안의</span> 에서
+                        # gap "  "→" " 시 leading도 "  "→" "로 조정
+                        leading = gap_new
+                    else:
+                        leading = ''
 
         if trailing_in_range:
             # diff가 trailing whitespace를 처리했으므로 별도 보존 불필요
