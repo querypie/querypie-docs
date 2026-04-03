@@ -2176,6 +2176,21 @@ class TestApplyInlineFixups:
         assert '<ac:link>link</ac:link>' in str(p)
         assert '<strong><ac:link>link</ac:link></strong>:' in str(p)
 
+    def test_preserved_anchor_strong_added(self):
+        """preserved anchor가 있는 문단에서도 새 bold가 추가되어야 한다."""
+        from bs4 import BeautifulSoup
+        xhtml = '<ul><li><p><ac:link>link</ac:link> Name</p></li></ul>'
+        soup = BeautifulSoup(xhtml, 'html.parser')
+        fixups = [{
+            'old_plain': 'link Name',
+            'new_plain': 'link Name',
+            'new_inner_xhtml': 'link <strong>Name</strong>',
+        }]
+        _apply_inline_fixups(soup, fixups)
+        p = soup.find('p')
+        assert '<ac:link>link</ac:link>' in str(p)
+        assert '<strong>Name</strong>' in str(p)
+
     def test_duplicate_text_uses_match_index(self):
         """동일 텍스트 <p>가 여러 개여도 지정한 occurrence에만 적용한다."""
         from bs4 import BeautifulSoup

@@ -343,6 +343,44 @@ def _append_text_to_tag(tag: Tag, text: str):
         tag.append(NavigableString(text))
 
 
+def _wrap_text_in_strong(p_tag: Tag, text: str) -> bool:
+    """preserved markup 바깥의 text node 일부를 <strong>으로 감싼다."""
+    if not text:
+        return False
+    for node in list(p_tag.descendants):
+        if not isinstance(node, NavigableString):
+            continue
+        if _has_preserved_markup_ancestor(node, p_tag):
+            continue
+        node_text = str(node)
+        idx = node_text.find(text)
+        if idx == -1:
+            continue
+
+        before = node_text[:idx]
+        matched = node_text[idx:idx + len(text)]
+        after = node_text[idx + len(text):]
+
+        fragment = BeautifulSoup('', 'html.parser')
+        replacements: list = []
+        if before:
+            replacements.append(NavigableString(before))
+        strong = fragment.new_tag('strong')
+        strong.append(NavigableString(matched))
+        replacements.append(strong)
+        if after:
+            replacements.append(NavigableString(after))
+
+        first = replacements[0]
+        node.replace_with(first)
+        prev = first
+        for repl in replacements[1:]:
+            prev.insert_after(repl)
+            prev = repl
+        return True
+    return False
+
+
 
 def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
     """<ac:>/<ri:> 보존 시 <strong> 요소만 직접 수정하여 bold 경계를 교정한다.
@@ -357,6 +395,16 @@ def _apply_strong_boundary_fixup(p_tag: Tag, new_inner_xhtml: str):
     new_soup = BeautifulSoup(new_inner_xhtml, 'html.parser')
     old_strongs = p_tag.find_all('strong')
     new_strongs = new_soup.find_all('strong')
+
+    if len(old_strongs) < len(new_strongs):
+        remaining_old = [s.get_text() for s in old_strongs]
+        for new_s in new_strongs:
+            new_text = new_s.get_text()
+            if new_text in remaining_old:
+                remaining_old.remove(new_text)
+                continue
+            _wrap_text_in_strong(p_tag, new_text)
+        return
 
     if len(old_strongs) > len(new_strongs):
         # 새 버전의 bold 텍스트 집합 구축 (매칭용)
