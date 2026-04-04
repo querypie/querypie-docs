@@ -695,3 +695,89 @@ class TestGapWhitespaceReduction:
         assert '<p> 내용변경.' in result, (
             f"leading space should be preserved when gap not reduced: {result}"
         )
+
+    def test_mixed_gap_shrink_distributed(self):
+        """mixed gap(prev trailing + curr leading) 축소 시 leading 우선 흡수,
+        부족하면 prev trailing에서 추가 흡수.
+
+        XHTML 구조: <p>앞 </p><p>  뒤</p>
+        gap = prev trailing(1) + curr leading(2) = 3
+        gap 3→2 축소: leading 1칸 줄임 → 단일 노드 해결
+        """
+        xhtml = '<root><p>앞 </p><p>  뒤</p></root>'
+        patches = [{
+            'xhtml_xpath': 'root[1]',
+            'old_plain_text': '앞   뒤',
+            'new_plain_text': '앞  뒤',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        # leading 2→1, prev trailing 유지
+        assert '<p> 뒤</p>' in result, (
+            f"leading should reduce by 1, not be stripped entirely: {result}"
+        )
+        assert '<p>앞 </p>' in result, (
+            f"prev trailing should be preserved: {result}"
+        )
+
+    def test_mixed_gap_shrink_overflows_to_prev_trailing(self):
+        """mixed gap 축소 시 leading으로 부족하면 prev trailing에서 흡수.
+
+        XHTML: <p><strong>앞  </strong> 뒤</p>
+        same block parent → block boundary 없음
+        gap = prev trailing(2) + curr leading(1) = 3
+        trailing_in_range로 이미 처리된 부분을 제외한 잔여 gap만 조정.
+        """
+        xhtml = '<p><strong>앞  </strong> 뒤</p>'
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': '앞   뒤',
+            'new_plain_text': '앞 뒤',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        # target gap = 1: prev + curr leading 합계가 1이면 OK
+        # trailing_in_range가 diff로 처리한 부분에 따라 분배 결정
+        total_gap = 0
+        import re
+        m = re.search(r'</strong>(\s*)', result)
+        if m:
+            total_gap += len(m.group(1))
+        m2 = re.search(r'>(\s*)뒤', result)
+        if m2:
+            # strong 태그 바깥의 leading
+            pass
+        # 핵심: gap이 정확히 1이어야 함
+        plain = ''.join(re.findall(r'[^\s<>]+|\s+', result.replace('<strong>', '').replace('</strong>', '').replace('<p>', '').replace('</p>', '')))
+        assert '앞 뒤' in plain, (
+            f"gap should be exactly 1 space in plain text: {result}"
+        )
+
+    def test_mixed_gap_fully_deleted(self):
+        """mixed gap 완전 삭제 시 leading 제거."""
+        xhtml = '<p><strong>앞 </strong>  뒤</p>'
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': '앞   뒤',
+            'new_plain_text': '앞뒤',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        assert '앞뒤' in result.replace('<strong>', '').replace('</strong>', ''), (
+            f"all gap whitespace should be removed: {result}"
+        )
+
+    def test_gap_grows_expands_prev_trailing(self):
+        """gap이 늘어나면 prev trailing이 확장된다.
+
+        same block parent 구조 사용 (block boundary 없이).
+        """
+        xhtml = '<p><strong>앞 </strong>뒤</p>'
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': '앞 뒤',
+            'new_plain_text': '앞  뒤',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        # gap 1→2: prev trailing 또는 curr leading에 1칸 추가
+        plain = result.replace('<strong>', '').replace('</strong>', '').replace('<p>', '').replace('</p>', '')
+        assert '앞  뒤' in plain, (
+            f"gap should expand to 2 spaces: {result}"
+        )

@@ -628,6 +628,9 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
             claim_end_set.add(left_idx)
             exclude_start_set.add(right_idx)
 
+    prev_replaced = None  # 직전 non-empty 노드의 교체 NavigableString
+    prev_eff_end = 0  # 직전 non-empty 노드의 effective_end (trailing_in_range 포함)
+
     for i, (node_start, node_end, node) in enumerate(node_ranges):
         if node_start == node_end:
             continue
@@ -665,34 +668,63 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
             exclude_insert_at_start=exclude_at_start,
         )
 
-        # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 삭제/축소된 경우,
-        # leading whitespace를 제거한다.
-        # 예1: <strong>IDENTIFIER</strong> 조사 → IDENTIFIER조사 (공백 삭제)
-        # 예2: <p> Admin → <p>Admin (공백 축소: gap 2→1이면 leading 제거)
-        if leading and i > 0:
+        # 직전 노드 범위와 현재 노드 범위 사이의 gap이 diff로 변경된 경우,
+        # gap 변화량을 leading/trailing whitespace에 분배한다.
+        # - 축소: leading 줄이기 우선 → 부족하면 이전 노드 trailing 추가 흡수
+        # - 확장: 이전 노드 trailing 늘리기
+        # - 삭제: leading 제거 후 잔여분은 이전 노드 trailing 흡수
+        #
+        # trailing_in_range가 이전 노드에서 True였으면 trailing 부분은 이미
+        # diff로 처리된 상태이므로, 이미 처리된 영역을 제외한 나머지 gap만 조정한다.
+        if i > 0:
             prev_end = node_ranges[i - 1][1]
-            if prev_end < node_start:
-                gap_old = old_stripped[prev_end:node_start]
+            # trailing_in_range로 이미 diff 처리된 영역을 제외
+            gap_start = max(prev_end, prev_eff_end)
+            if gap_start < node_start:
+                gap_old = old_stripped[gap_start:node_start]
                 gap_new = _map_text_range(
-                    old_stripped, new_stripped, opcodes, prev_end, node_start
+                    old_stripped, new_stripped, opcodes, gap_start, node_start
                 )
                 if not gap_new:
-                    leading = ''
-                elif (gap_new.isspace() and gap_old.isspace()
-                      and len(gap_new) < len(gap_old)
-                      and len(gap_new) <= len(leading)):
-                    if len(gap_old) <= len(leading):
-                        # gap 전체가 노드의 leading whitespace인 경우:
-                        # 축소된 gap만큼만 leading을 조정한다.
-                        # 예: <code>X</code><span>  안의</span> 에서
-                        # gap "  "→" " 시 leading도 "  "→" "로 조정
-                        leading = gap_new
-                    else:
+                    if gap_old.isspace():
+                        gap_delta = len(gap_old)
+                        reduce = min(gap_delta, len(leading))
+                        leading = leading[reduce:]
+                        remaining = gap_delta - reduce
+                        if remaining > 0 and prev_replaced is not None:
+                            ps = str(prev_replaced)
+                            ptw = ps[len(ps.rstrip()):]
+                            trim = min(remaining, len(ptw))
+                            if trim > 0:
+                                np_ = NavigableString(ps[:len(ps) - trim])
+                                prev_replaced.replace_with(np_)
+                                prev_replaced = np_
+                    elif leading:
                         leading = ''
+                elif gap_new.isspace() and gap_old.isspace():
+                    gap_delta = len(gap_old) - len(gap_new)
+                    if gap_delta > 0:
+                        reduce = min(gap_delta, len(leading))
+                        leading = leading[reduce:]
+                        remaining = gap_delta - reduce
+                        if remaining > 0 and prev_replaced is not None:
+                            ps = str(prev_replaced)
+                            ptw = ps[len(ps.rstrip()):]
+                            trim = min(remaining, len(ptw))
+                            if trim > 0:
+                                np_ = NavigableString(ps[:len(ps) - trim])
+                                prev_replaced.replace_with(np_)
+                                prev_replaced = np_
+                    elif gap_delta < 0:
+                        if prev_replaced is not None:
+                            ps = str(prev_replaced)
+                            np_ = NavigableString(ps + ' ' * abs(gap_delta))
+                            prev_replaced.replace_with(np_)
+                            prev_replaced = np_
 
         if trailing_in_range:
             # diff가 trailing whitespace를 처리했으므로 별도 보존 불필요
-            node.replace_with(NavigableString(leading + new_node_text))
+            replacement = NavigableString(leading + new_node_text)
         else:
             # 마지막 노드의 edge trailing whitespace가 변경된 경우 반영
             if trailing and i == last_nonempty_idx:
@@ -700,7 +732,10 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
                 new_edge_trailing = new_text[len(new_text.rstrip()):]
                 if old_edge_trailing != new_edge_trailing:
                     trailing = new_edge_trailing
-            node.replace_with(NavigableString(leading + new_node_text + trailing))
+            replacement = NavigableString(leading + new_node_text + trailing)
+        node.replace_with(replacement)
+        prev_replaced = replacement
+        prev_eff_end = effective_end
 
 
 def _find_block_ancestor(node):
