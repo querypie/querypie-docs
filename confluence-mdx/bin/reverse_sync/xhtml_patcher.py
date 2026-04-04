@@ -1,5 +1,5 @@
 """XHTML Patcher — fragment 단위 DOM patch를 적용한다."""
-from typing import List, Dict
+from typing import List, Dict, Optional, Tuple
 from bs4 import BeautifulSoup, NavigableString, Tag
 import difflib
 import re
@@ -685,42 +685,21 @@ def _apply_text_changes(element: Tag, old_text: str, new_text: str):
                 gap_new = _map_text_range(
                     old_stripped, new_stripped, opcodes, gap_start, node_start
                 )
-                if not gap_new:
-                    if gap_old.isspace():
-                        gap_delta = len(gap_old)
-                        reduce = min(gap_delta, len(leading))
-                        leading = leading[reduce:]
-                        remaining = gap_delta - reduce
-                        if remaining > 0 and prev_replaced is not None:
-                            ps = str(prev_replaced)
-                            ptw = ps[len(ps.rstrip()):]
-                            trim = min(remaining, len(ptw))
-                            if trim > 0:
-                                np_ = NavigableString(ps[:len(ps) - trim])
-                                prev_replaced.replace_with(np_)
-                                prev_replaced = np_
-                    elif leading:
-                        leading = ''
-                elif gap_new.isspace() and gap_old.isspace():
-                    gap_delta = len(gap_old) - len(gap_new)
-                    if gap_delta > 0:
-                        reduce = min(gap_delta, len(leading))
-                        leading = leading[reduce:]
-                        remaining = gap_delta - reduce
-                        if remaining > 0 and prev_replaced is not None:
-                            ps = str(prev_replaced)
-                            ptw = ps[len(ps.rstrip()):]
-                            trim = min(remaining, len(ptw))
-                            if trim > 0:
-                                np_ = NavigableString(ps[:len(ps) - trim])
-                                prev_replaced.replace_with(np_)
-                                prev_replaced = np_
-                    elif gap_delta < 0:
-                        if prev_replaced is not None:
-                            ps = str(prev_replaced)
-                            np_ = NavigableString(ps + ' ' * abs(gap_delta))
-                            prev_replaced.replace_with(np_)
-                            prev_replaced = np_
+                gap_delta = _compute_gap_whitespace_delta(gap_old, gap_new)
+                if gap_delta is not None:
+                    leading, prev_replaced = _redistribute_gap_whitespace(
+                        leading, prev_replaced, gap_delta
+                    )
+                elif not gap_new and leading:
+                    leading = ''
+            elif leading and prev_eff_end > prev_end and prev_end < node_start:
+                shared_old = old_stripped[prev_end:prev_eff_end]
+                shared_new = _map_text_range(
+                    old_stripped, new_stripped, opcodes, prev_end, prev_eff_end
+                )
+                shared_delta = _compute_gap_whitespace_delta(shared_old, shared_new)
+                if shared_delta and shared_delta > 0:
+                    leading = leading[min(shared_delta, len(leading)):]
 
         if trailing_in_range:
             # diff가 trailing whitespace를 처리했으므로 별도 보존 불필요
@@ -750,6 +729,62 @@ def _find_block_ancestor(node):
             return parent
         parent = parent.parent
     return None
+
+
+def _compute_gap_whitespace_delta(gap_old: str, gap_new: str) -> Optional[int]:
+    """gap 변경에서 공통 토큰을 제외한 공백 길이 변화량만 분리한다."""
+    if gap_old == gap_new:
+        return 0
+
+    if (not gap_old or gap_old.isspace()) and (not gap_new or gap_new.isspace()):
+        return len(gap_old) - len(gap_new)
+
+    prefix_len = 0
+    max_prefix = min(len(gap_old), len(gap_new))
+    while prefix_len < max_prefix and gap_old[prefix_len] == gap_new[prefix_len]:
+        prefix_len += 1
+
+    suffix_len = 0
+    max_suffix = min(len(gap_old) - prefix_len, len(gap_new) - prefix_len)
+    while suffix_len < max_suffix and gap_old[-(suffix_len + 1)] == gap_new[-(suffix_len + 1)]:
+        suffix_len += 1
+
+    old_end = len(gap_old) - suffix_len if suffix_len else len(gap_old)
+    new_end = len(gap_new) - suffix_len if suffix_len else len(gap_new)
+    old_mid = gap_old[prefix_len:old_end]
+    new_mid = gap_new[prefix_len:new_end]
+
+    if (old_mid and not old_mid.isspace()) or (new_mid and not new_mid.isspace()):
+        return None
+
+    return len(old_mid) - len(new_mid)
+
+
+def _redistribute_gap_whitespace(
+    leading: str,
+    prev_replaced: Optional[NavigableString],
+    gap_delta: int,
+) -> Tuple[str, Optional[NavigableString]]:
+    """gap 공백 증감을 current leading / previous trailing로 재분배한다."""
+    if gap_delta > 0:
+        reduce = min(gap_delta, len(leading))
+        leading = leading[reduce:]
+        remaining = gap_delta - reduce
+        if remaining > 0 and prev_replaced is not None:
+            prev_text = str(prev_replaced)
+            prev_trailing = prev_text[len(prev_text.rstrip()):]
+            trim = min(remaining, len(prev_trailing))
+            if trim > 0:
+                replacement = NavigableString(prev_text[:len(prev_text) - trim])
+                prev_replaced.replace_with(replacement)
+                prev_replaced = replacement
+    elif gap_delta < 0 and prev_replaced is not None:
+        prev_text = str(prev_replaced)
+        replacement = NavigableString(prev_text + ' ' * abs(gap_delta))
+        prev_replaced.replace_with(replacement)
+        prev_replaced = replacement
+
+    return leading, prev_replaced
 
 
 def _map_text_range(old_text: str, new_text: str, opcodes, start: int, end: int,

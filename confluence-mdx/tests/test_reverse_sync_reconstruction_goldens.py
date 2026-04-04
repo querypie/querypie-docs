@@ -20,6 +20,7 @@ from reverse_sync.xhtml_patcher import patch_xhtml
 
 
 TESTCASES = Path(__file__).parent / "testcases"
+REVERSE_SYNC_CASES = Path(__file__).parent / "reverse-sync"
 
 
 def _run_pipeline_with_sidecar(xhtml: str, original_mdx: str, improved_mdx: str):
@@ -169,3 +170,18 @@ class TestSimpleModifiedGoldens:
             case['xhtml'], case['original_mdx'], case['improved_mdx']
         )
         assert normalize_fragment(result) == normalize_fragment(case['expected'])
+
+    def test_798064641_bold_label_colon_spacing(self):
+        """798064641: bold 라벨 뒤 공백 축소가 마크업 경계에서도 반영되어야 한다."""
+        case_dir = REVERSE_SYNC_CASES / '798064641'
+        if not case_dir.is_dir():
+            pytest.skip("reverse-sync/798064641 fixture not found")
+
+        result = _run_pipeline_with_sidecar(
+            (case_dir / 'page.xhtml').read_text(encoding='utf-8'),
+            (case_dir / 'original.mdx').read_text(encoding='utf-8'),
+            (case_dir / 'improved.mdx').read_text(encoding='utf-8'),
+        )
+
+        assert '<strong>Secure</strong>:' in result
+        assert '<strong>Secure</strong> :' not in result
