@@ -438,8 +438,8 @@ def navigable_string_as_markdown(node):
         # This is a leaf node with text
         text = clean_text(node.text)
         text = text.replace('\n', ' ')  # Replace newlines with space
-        # Normalize multiple spaces to a single space
-        text = re.sub(r'\s+', ' ', text)
+        # Do NOT normalize multiple spaces to a single space.
+        # XHTML source whitespace must be preserved for the reverse-sync pipeline.
         if node.parent.name == 'code':
             # Do not encode < and > or backtick_curly_braces if the parent node is `<code>`,
             # as it is backticked already and characters will be displayed correctly.

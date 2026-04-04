@@ -1,7 +1,7 @@
 {
   "schema_version": "3",
   "page_id": "793608206",
-  "mdx_sha256": "cd07700caf7c708ee9a818303a5b5c637625b736b20779002b34c745c82d27e5",
+  "mdx_sha256": "40f28044cf900315f51f379b9cd58452f5b386ee4ba172d5bca90ff25b963e5f",
   "source_xhtml_sha256": "1fe717056eda284c8e41946fa98b25a00dae0e421798cccd34abcd2c0ae80c3c",
   "blocks": [
     {
@@ -371,7 +371,7 @@
       "block_index": 24,
       "xhtml_xpath": "table[11]",
       "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"f2f9b44d-eaa3-4c0d-9471-fed198990f83\"><colgroup><col style=\"width: 172.0px;\" /><col style=\"width: 172.0px;\" /><col style=\"width: 339.0px;\" /><col style=\"width: 130.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>Web App Name</p></td><td><p>{{webAppName}}</p></td><td><p>요청 대상 웹앱</p></td><td><p>11.0.0</p></td></tr><tr><td><p>Access Duration</p></td><td><p>{{accessDuration}}             </p></td><td><p>분(Minutes) 단위 웹앱 접근 권한이 유효한 시간</p></td><td><p>11.0.0</p></td></tr></tbody></table>",
-      "mdx_content_hash": "82770ee93c03c40f2ea06f18d413aa229f9f8a72288a4acef9b474b7c5cb7335",
+      "mdx_content_hash": "f2455122f5bb348daec7126f28f9dc7cafb88120e36046284b08c76b1c29491b",
       "mdx_line_range": [
         1530,
         1534
@@ -401,7 +401,7 @@
       "block_index": 26,
       "xhtml_xpath": "table[12]",
       "xhtml_fragment": "<table data-table-width=\"816\" data-layout=\"center\" ac:local-id=\"c1a404fa-905f-4b0c-9613-f8439a2e702e\"><colgroup><col style=\"width: 172.0px;\" /><col style=\"width: 172.0px;\" /><col style=\"width: 339.0px;\" /><col style=\"width: 130.0px;\" /></colgroup><tbody><tr><th><p><strong>변수명</strong></p></th><th><p><strong>변수</strong></p></th><th><p><strong>설명</strong></p></th><th><p><strong>추가 시점</strong></p></th></tr><tr><td><p>Approval Expiration Date</p></td><td><p>{{approvalExpirationDate}}</p></td><td><p>승인 만료 일자</p></td><td><p>11.2.0</p></td></tr><tr><td><p>IP Addresses                </p></td><td><p>{{ipAddresses}}             </p></td><td><p>IP 주소 </p></td><td><p>11.0.0</p></td></tr></tbody></table>",
-      "mdx_content_hash": "1d7a5e188dc5f8ba093a57e246d81fd3a4661b629977417ed6ec6b9fe7ab16a7",
+      "mdx_content_hash": "66ab13278c0b81d5adec7d563049cf98c2343c53229fca9517cd962c931f6e9c",
       "mdx_line_range": [
         1538,
         1541
