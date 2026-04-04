@@ -639,6 +639,42 @@ class TestGapWhitespaceReduction:
         result = patch_xhtml(xhtml, patches)
         assert 'IDENTIFIER</strong>조사' in result
 
+    def test_gap_is_node_leading_reduces_not_strips(self):
+        """gap 전체가 노드의 leading whitespace일 때, gap 축소 시 leading을 조정한다.
+
+        재현 시나리오 (PR #979, page 883654669):
+          XHTML: <code>{{..}}</code><span>  안의 값은...</span>
+          old_plain_text: "...진행합니다. {{..}}  안의 값은..."
+          new_plain_text: "...이동합니다. {{..}} 안의 값은..."
+          현상: gap "  "→" " 축소 시 <span>의 leading "  "가 전부 제거되어
+                <span>안의 값은</span>이 됨 (올바른 결과: <span> 안의 값은</span>)
+          원인: gap_old(2) == leading(2)인 경우에도 leading=''로 전부 제거
+        """
+        xhtml = (
+            '<p>'
+            '미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 진행합니다.'
+            '<br/>'
+            '<span style="background-color: rgb(254,222,200);"> </span>'
+            '<code>{{..}}</code>'
+            '<span style="background-color: rgb(254,222,200);">  안의 값은 원하는 값으로 변경해 주세요.</span>'
+            '</p>'
+        )
+        patches = [{
+            'xhtml_xpath': 'p[1]',
+            # collapse_ws로 "  안의" → " 안의"가 된 후 _apply_mdx_diff_to_xhtml 결과
+            'old_plain_text': '미리 채워져 있는 내용들을 삭제하고 아래의 App Manifest를 진행합니다. {{..}}  안의 값은 원하는 값으로 변경해 주세요.',
+            'new_plain_text': '미리 채워져 있는 내용을 삭제하고 아래 App Manifest를 이동합니다. {{..}} 안의 값은 원하는 값으로 변경해 주세요.',
+        }]
+        result = patch_xhtml(xhtml, patches)
+        # gap "  "→" " 축소 시, gap 전체가 노드 leading이므로 leading=" "으로 조정
+        assert '> 안의 값은' in result, (
+            f"leading should be reduced to 1 space, not stripped entirely: {result}"
+        )
+        # 버그 동작: leading이 전부 제거되어 ">안의"가 되면 안 됨
+        assert '>안의 값은' not in result, (
+            f"leading whitespace must not be stripped entirely: {result}"
+        )
+
     def test_gap_not_reduced_preserves_leading(self):
         """gap이 축소되지 않으면 leading whitespace를 보존한다."""
         xhtml = (
