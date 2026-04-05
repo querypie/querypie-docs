@@ -364,7 +364,11 @@ from mdx_to_storage.parser import parse_mdx
 
 
 def _emit_heading_xhtml(mdx_content: str) -> str:
-    """MDX heading → XHTML. 실제 reverse-sync 코드 경로(emit_block)를 사용한다."""
+    """MDX heading → XHTML (_emit_replacement_fragment 의 emit_block 단계만 재현).
+
+    실제 reverse-sync 에서는 이후 sidecar reconstruction, lost_info 적용이
+    추가로 수행되지만, Badge-only heading 에서는 해당 단계가 개입하지 않는다.
+    """
     blocks = [b for b in parse_mdx(mdx_content) if b.type != 'empty']
     assert len(blocks) == 1 and blocks[0].type == 'heading'
     return emit_block(blocks[0])
