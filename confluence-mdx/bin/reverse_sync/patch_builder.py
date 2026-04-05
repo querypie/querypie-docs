@@ -178,6 +178,40 @@ def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
     return has_space_change
 
 
+def _normalize_list_for_content_compare(content: str) -> str:
+    """리스트 변경 비교용 plain text를 생성한다.
+
+    리스트 항목 내부의 continuation line 줄바꿈은 emitter에서 공백 하나로 합쳐지므로
+    내용 변경 판정에서는 무시한다. 대신 항목 경계와 항목 내부의 실제 공백 수 차이는
+    그대로 보존해 no-op reflow와 가시 공백 변경을 구분한다.
+    """
+    lines = content.strip().split('\n')
+    item_chunks: List[str] = []
+    current_chunk: List[str] = []
+
+    def _flush_current() -> None:
+        if not current_chunk:
+            return
+        plain = normalize_mdx_to_plain('\n'.join(current_chunk), 'list')
+        if plain:
+            item_chunks.append(plain.replace('\n', ' '))
+
+    for line in lines:
+        if not line.strip():
+            continue
+        if re.match(r'^\s*(?:\d+\.(?:\s+|$)|[-*+]\s+)', line):
+            _flush_current()
+            current_chunk = [line]
+            continue
+        if current_chunk:
+            current_chunk.append(line)
+        else:
+            current_chunk = [line]
+
+    _flush_current()
+    return '\n'.join(item_chunks)
+
+
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
@@ -1056,11 +1090,10 @@ def build_patches(
             )
             # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
             # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
-            # 실제 텍스트 변경 여부: normalize_mdx_to_plain으로 비교.
-            # collapse_ws를 적용하면 텍스트 공백 수 변경(이중→단일 등)이 무시되어
-            # 패치가 생성되지 않으므로, 공백을 보존한 채 비교한다.
-            _old_plain_raw = normalize_mdx_to_plain(change.old_block.content, 'list')
-            _new_plain_raw = normalize_mdx_to_plain(change.new_block.content, 'list')
+            # 내용 비교는 가시 공백 수 변화는 보존하되, continuation line reflow처럼
+            # emitter 결과가 동일한 줄바꿈 정리는 무시한다.
+            _old_plain_raw = _normalize_list_for_content_compare(change.old_block.content)
+            _new_plain_raw = _normalize_list_for_content_compare(change.new_block.content)
             has_content_change = _old_plain_raw != _new_plain_raw
             # _apply_mdx_diff_to_xhtml에 전달할 때는 collapse_ws 적용:
             # XHTML plain text에는 줄바꿈이 없으므로 MDX 측도 공백을 축약해야 정렬된다.

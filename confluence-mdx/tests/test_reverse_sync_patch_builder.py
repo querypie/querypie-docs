@@ -2837,3 +2837,16 @@ class TestWhitespaceOnlyChangeGeneratesPatch:
         assert '텍스트  뒤에' in patched, (
             f"패치 후 이중 공백이어야 합니다: {patched}"
         )
+
+    def test_continuation_line_reflow_only_skips_patch(self):
+        """continuation line 재배치는 동일 XHTML이면 패치를 만들지 않아야 한다."""
+        xhtml = '<ul><li><p>hello world</p></li></ul>'
+        patches, skipped = self._build_list_patches(
+            xhtml,
+            '* hello world\n',
+            '* hello\n  world\n',
+        )
+        assert patches == [], (
+            f"continuation line reflow만 바뀐 경우 no-op 패치를 만들면 안 됩니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
