@@ -420,7 +420,12 @@ class TestBadgeRoundtrip:
         assert mdx == '#### Data Access <Badge color="grey">11.0.0</Badge>'
 
     def test_remove_badge(self):
-        """Badge 삭제 → XHTML에 status macro 없음 → MDX에 Badge 없음."""
+        """Badge 삭제 → XHTML에 status macro 없음 → MDX에 Badge 없음.
+
+        heading은 _CLEAN_BLOCK_TYPES로 replace_fragment 전략을 사용하므로,
+        improved MDX 기준으로 XHTML이 전체 재생성된다. 원본 XHTML에
+        status macro가 있었더라도 패치 결과에 영향을 주지 않는다.
+        """
         xhtml = _emit_heading_xhtml('#### K8s API Request\n')
 
         assert 'ac:structured-macro' not in xhtml
