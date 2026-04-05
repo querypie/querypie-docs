@@ -79,6 +79,17 @@ class TestBlockConversion:
         result = mdx_block_to_inner_xhtml("## `Config` 설정\n", "heading")
         assert result == "<code>Config</code> 설정"
 
+    def test_heading_with_badge(self):
+        """heading 내부 <Badge>는 ac:structured-macro로 변환."""
+        result = mdx_block_to_inner_xhtml(
+            '#### K8s API Request <Badge color="grey">10.2.2</Badge>\n',
+            "heading",
+        )
+        assert 'K8s API Request ' in result
+        assert '<ac:structured-macro ac:name="status">' in result
+        assert '<ac:parameter ac:name="title">10.2.2</ac:parameter>' in result
+        assert '<ac:parameter ac:name="colour">Grey</ac:parameter>' in result
+
     def test_paragraph_simple(self):
         result = mdx_block_to_inner_xhtml("Simple paragraph.\n", "paragraph")
         assert result == "Simple paragraph."
@@ -341,3 +352,84 @@ class TestMdxBlockToXhtmlElement:
                          line_start=1, line_end=1)
         result = mdx_block_to_xhtml_element(block)
         assert '<div>custom html</div>' in result
+
+
+# --- Badge roundtrip 테스트 (MDX → XHTML → MDX) ---
+
+
+from bs4 import BeautifulSoup
+from converter.core import SingleLineParser
+from mdx_to_storage.emitter import emit_block
+from mdx_to_storage.parser import parse_mdx
+
+
+def _emit_heading_xhtml(mdx_content: str) -> str:
+    """MDX heading → XHTML (_emit_replacement_fragment 의 emit_block 단계만 재현).
+
+    실제 reverse-sync 에서는 이후 sidecar reconstruction, lost_info 적용이
+    추가로 수행되지만, Badge-only heading 에서는 해당 단계가 개입하지 않는다.
+    """
+    blocks = [b for b in parse_mdx(mdx_content) if b.type != 'empty']
+    assert len(blocks) == 1 and blocks[0].type == 'heading'
+    return emit_block(blocks[0])
+
+
+def _fc_heading_to_mdx(xhtml_heading: str) -> str:
+    """FC의 heading 변환을 재현: XHTML <hN>...</hN> → MDX heading line."""
+    soup = BeautifulSoup(xhtml_heading, 'html.parser')
+    heading = soup.find(True)
+    parser = SingleLineParser(heading)
+    parser.convert_recursively(heading)
+    return ''.join(parser.markdown_lines)
+
+
+class TestBadgeRoundtrip:
+    """Badge 추가/변경/삭제가 XHTML에 반영되고 roundtrip 검증을 통과하는지 확인한다."""
+
+    def test_add_badge(self):
+        """Badge가 없던 heading에 Badge 추가 → XHTML에 status macro 생성 → MDX 복원."""
+        xhtml = _emit_heading_xhtml(
+            '#### K8s API Request <Badge color="grey">10.2.2</Badge>\n')
+
+        # XHTML에 status macro가 생성되었는지 확인
+        assert '<ac:structured-macro ac:name="status">' in xhtml
+        assert '<ac:parameter ac:name="title">10.2.2</ac:parameter>' in xhtml
+
+        # roundtrip: XHTML → FC → MDX
+        mdx = _fc_heading_to_mdx(xhtml)
+        assert mdx == '#### K8s API Request <Badge color="grey">10.2.2</Badge>'
+
+    def test_change_badge_color(self):
+        """Badge 컬러 변경 (grey → green) → XHTML 반영 → MDX 복원."""
+        xhtml = _emit_heading_xhtml(
+            '#### Status <Badge color="green">Active</Badge>\n')
+
+        assert '<ac:parameter ac:name="colour">Green</ac:parameter>' in xhtml
+
+        mdx = _fc_heading_to_mdx(xhtml)
+        assert mdx == '#### Status <Badge color="green">Active</Badge>'
+
+    def test_change_badge_text(self):
+        """Badge 텍스트 변경 (10.2.2 → 11.0.0) → XHTML 반영 → MDX 복원."""
+        xhtml = _emit_heading_xhtml(
+            '#### Data Access <Badge color="grey">11.0.0</Badge>\n')
+
+        assert '<ac:parameter ac:name="title">11.0.0</ac:parameter>' in xhtml
+
+        mdx = _fc_heading_to_mdx(xhtml)
+        assert mdx == '#### Data Access <Badge color="grey">11.0.0</Badge>'
+
+    def test_remove_badge(self):
+        """Badge 삭제 → XHTML에 status macro 없음 → MDX에 Badge 없음.
+
+        heading은 _CLEAN_BLOCK_TYPES로 replace_fragment 전략을 사용하므로,
+        improved MDX 기준으로 XHTML이 전체 재생성된다. 원본 XHTML에
+        status macro가 있었더라도 패치 결과에 영향을 주지 않는다.
+        """
+        xhtml = _emit_heading_xhtml('#### K8s API Request\n')
+
+        assert 'ac:structured-macro' not in xhtml
+        assert '<h3>K8s API Request</h3>' == xhtml
+
+        mdx = _fc_heading_to_mdx(xhtml)
+        assert mdx == '#### K8s API Request'
