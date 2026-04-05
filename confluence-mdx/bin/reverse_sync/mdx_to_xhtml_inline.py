@@ -8,7 +8,7 @@ import re
 from typing import List
 
 from bs4 import BeautifulSoup, Tag
-from mdx_to_storage.inline import convert_inline
+from mdx_to_storage.inline import convert_inline, _BADGE_INLINE_RE, _replace_badge
 
 
 def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
@@ -45,9 +45,10 @@ def _convert_heading(text: str) -> str:
     # heading 내부의 **bold**는 <strong> 변환 없이 마커만 제거
     # (forward converter가 heading 내부 strong을 strip하므로)
     stripped = re.sub(r'\*\*(.+?)\*\*', r'\1', stripped)
-    # code span과 link는 변환
+    # code span, link, Badge는 변환
     stripped = _convert_code_spans(stripped)
     stripped = _convert_links(stripped)
+    stripped = _BADGE_INLINE_RE.sub(_replace_badge, stripped)
     return stripped
 
 

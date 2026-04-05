@@ -79,6 +79,17 @@ class TestBlockConversion:
         result = mdx_block_to_inner_xhtml("## `Config` 설정\n", "heading")
         assert result == "<code>Config</code> 설정"
 
+    def test_heading_with_badge(self):
+        """heading 내부 <Badge>는 ac:structured-macro로 변환."""
+        result = mdx_block_to_inner_xhtml(
+            '#### K8s API Request <Badge color="grey">10.2.2</Badge>\n',
+            "heading",
+        )
+        assert 'K8s API Request ' in result
+        assert '<ac:structured-macro ac:name="status">' in result
+        assert '<ac:parameter ac:name="title">10.2.2</ac:parameter>' in result
+        assert '<ac:parameter ac:name="colour">Grey</ac:parameter>' in result
+
     def test_paragraph_simple(self):
         result = mdx_block_to_inner_xhtml("Simple paragraph.\n", "paragraph")
         assert result == "Simple paragraph."

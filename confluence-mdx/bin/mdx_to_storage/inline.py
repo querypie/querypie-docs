@@ -95,6 +95,7 @@ def convert_heading_inline(
         return f"<code>{html.escape(placeholders[idx])}</code>"
 
     converted = re.sub(r"\x00CODE(\d+)\x00", _restore_code, converted)
+    converted = _BADGE_INLINE_RE.sub(_replace_badge, converted)
     return converted
 
 
