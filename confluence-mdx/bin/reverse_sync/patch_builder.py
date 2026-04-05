@@ -1056,10 +1056,16 @@ def build_patches(
             )
             # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
             # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
-            # 실제 텍스트 변경 여부: normalize+collapse_ws로 비교하여 링크 공백 등 형식 차이 무시
-            _old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, 'list'))
-            _new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, 'list'))
-            has_content_change = _old_plain != _new_plain
+            # 실제 텍스트 변경 여부: normalize_mdx_to_plain으로 비교.
+            # collapse_ws를 적용하면 텍스트 공백 수 변경(이중→단일 등)이 무시되어
+            # 패치가 생성되지 않으므로, 공백을 보존한 채 비교한다.
+            _old_plain_raw = normalize_mdx_to_plain(change.old_block.content, 'list')
+            _new_plain_raw = normalize_mdx_to_plain(change.new_block.content, 'list')
+            has_content_change = _old_plain_raw != _new_plain_raw
+            # _apply_mdx_diff_to_xhtml에 전달할 때는 collapse_ws 적용:
+            # XHTML plain text에는 줄바꿈이 없으므로 MDX 측도 공백을 축약해야 정렬된다.
+            _old_plain = collapse_ws(_old_plain_raw)
+            _new_plain = collapse_ws(_new_plain_raw)
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
             _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
             _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)

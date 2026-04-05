@@ -144,9 +144,11 @@ def normalize_mdx_to_plain(content: str, block_type: str) -> str:
         s = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', s)
         # Confluence 링크 패턴: "[Title | Anchor](url)" → Title만 추출
         # (XHTML ac:link-body에는 Title만 포함됨)
+        # 링크 텍스트 양쪽 공백을 strip하여 [ **T** ] ↔ [**T**] 형식 차이를 흡수한다.
+        # (bold 제거 후 잔여 공백이 artifact로 남는 것을 방지)
         s = re.sub(
             r'\[([^\]]+)\]\([^)]+\)',
-            lambda m: m.group(1).split(' | ')[0] if ' | ' in m.group(1) else m.group(1),
+            lambda m: m.group(1).split(' | ')[0].strip() if ' | ' in m.group(1) else m.group(1).strip(),
             s,
         )
         # Badge 컴포넌트 → XHTML status macro 형식으로 변환
