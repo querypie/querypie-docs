@@ -82,6 +82,11 @@ def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
     return "<ac:" in xhtml_text or "<ri:" in xhtml_text
 
 
+def _contains_preserved_link_markup(xhtml_text: str) -> bool:
+    """링크 계열 preserved anchor가 포함된 경우만 가시 공백 raw transfer 대상이다."""
+    return "<ac:link" in xhtml_text
+
+
 def _is_clean_block(
     block_type: str,
     mapping: Optional[BlockMapping],
@@ -176,6 +181,40 @@ def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
             # 비-리스트 줄이 다르면 텍스트 변경 포함
             return False
     return has_space_change
+
+
+def _normalize_list_for_content_compare(content: str) -> str:
+    """리스트 변경 비교용 plain text를 생성한다.
+
+    리스트 항목 내부의 continuation line 줄바꿈은 emitter에서 공백 하나로 합쳐지므로
+    내용 변경 판정에서는 무시한다. 대신 항목 경계와 항목 내부의 실제 공백 수 차이는
+    그대로 보존해 no-op reflow와 가시 공백 변경을 구분한다.
+    """
+    lines = content.strip().split('\n')
+    item_chunks: List[str] = []
+    current_chunk: List[str] = []
+
+    def _flush_current() -> None:
+        if not current_chunk:
+            return
+        plain = normalize_mdx_to_plain('\n'.join(current_chunk), 'list')
+        if plain:
+            item_chunks.append(plain.replace('\n', ' '))
+
+    for line in lines:
+        if not line.strip():
+            continue
+        if re.match(r'^\s*(?:\d+\.(?:\s+|$)|[-*+]\s+)', line):
+            _flush_current()
+            current_chunk = [line]
+            continue
+        if current_chunk:
+            current_chunk.append(line)
+        else:
+            current_chunk = [line]
+
+    _flush_current()
+    return '\n'.join(item_chunks)
 
 
 def _build_inline_fixups(
@@ -1056,10 +1095,15 @@ def build_patches(
             )
             # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
             # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
-            # 실제 텍스트 변경 여부: normalize+collapse_ws로 비교하여 링크 공백 등 형식 차이 무시
-            _old_plain = collapse_ws(normalize_mdx_to_plain(change.old_block.content, 'list'))
-            _new_plain = collapse_ws(normalize_mdx_to_plain(change.new_block.content, 'list'))
-            has_content_change = _old_plain != _new_plain
+            # 내용 비교는 가시 공백 수 변화는 보존하되, continuation line reflow처럼
+            # emitter 결과가 동일한 줄바꿈 정리는 무시한다.
+            _old_plain_raw = _normalize_list_for_content_compare(change.old_block.content)
+            _new_plain_raw = _normalize_list_for_content_compare(change.new_block.content)
+            has_content_change = _old_plain_raw != _new_plain_raw
+            # _apply_mdx_diff_to_xhtml에 전달할 기본값은 collapse_ws 적용:
+            # XHTML plain text에는 줄바꿈이 없으므로 clean list 정렬에는 공백 축약본이 맞다.
+            _old_plain = collapse_ws(_old_plain_raw)
+            _new_plain = collapse_ws(_new_plain_raw)
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
             _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
             _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
@@ -1130,12 +1174,21 @@ def build_patches(
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
-                    # (strong trailing space 등으로 인한 이중 공백 문제 방지)
-                    _xhtml_plain_normalized = collapse_ws(
-                        _text_change_patches[bid]['new_plain_text'])
+                    preserve_visible_ws = _contains_preserved_link_markup(
+                        mapping.xhtml_text
+                    )
+                    transfer_old_plain = _old_plain_raw if preserve_visible_ws else _old_plain
+                    transfer_new_plain = _new_plain_raw if preserve_visible_ws else _new_plain
+                    transfer_xhtml_plain = _text_change_patches[bid]['new_plain_text']
+                    if not preserve_visible_ws:
+                        # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
+                        # (strong trailing space 등으로 인한 이중 공백 문제 방지)
+                        transfer_xhtml_plain = collapse_ws(transfer_xhtml_plain)
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        _old_plain, _new_plain, _xhtml_plain_normalized)
+                        transfer_old_plain,
+                        transfer_new_plain,
+                        transfer_xhtml_plain,
+                    )
                 if has_ol_start_change:
                     _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 if has_inline_boundary:
