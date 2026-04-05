@@ -148,11 +148,11 @@ class TestBuildPatches:
         mappings = [parent, child]
         xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
 
-        # 링크 공백 변경만: [**General**](url) → [ **General** ](url), 텍스트 동일
+        # URL만 변경, 링크 텍스트 동일: normalize 후 텍스트 동일 → skip
         change = _make_change(
             0,
             '* [**General**](company-management/general) text\n',
-            '* [ **General** ](company-management/general) text\n',
+            '* [**General**](company-management/general-v2) text\n',
             type_='list',
         )
         mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
@@ -165,7 +165,7 @@ class TestBuildPatches:
             mappings, mdx_to_sidecar, xpath_to_mapping,
             roundtrip_sidecar=roundtrip_sidecar)
 
-        # 형식만 변경(링크 공백), normalize+collapse_ws 후 텍스트 동일 → skip
+        # URL만 변경, normalize 후 텍스트 동일 → skip
         assert patches == []
 
     # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 + content change
@@ -1727,15 +1727,16 @@ class TestLinkBodyTrailingSpaceStrip:
             transfer_text_changes로 자연스럽게 전이된다.
     """
 
-    def test_normalize_strips_link_trailing_space(self):
-        """normalize_mdx_to_plain이 link text의 양쪽 공백을 strip하여 형식 차이를 흡수한다."""
+    def test_normalize_preserves_link_trailing_space(self):
+        """normalize_mdx_to_plain이 link text의 trailing space를 보존한다."""
         with_space = '* [Okta 연동하기 ](url1)\n* [LDAP 연동하기](url2)'
         without_space = '* [Okta 연동하기](url1)\n* [LDAP 연동하기](url2)'
         old_plain = normalize_mdx_to_plain(with_space, 'html_block')
         new_plain = normalize_mdx_to_plain(without_space, 'html_block')
-        # 링크 텍스트 양쪽 공백을 strip하므로 결과 동일
-        assert old_plain == new_plain
-        assert 'Okta 연동하기\n' in old_plain
+        assert old_plain != new_plain
+        # trailing space 보존: 'Okta 연동하기 \n' vs 'Okta 연동하기\n'
+        assert 'Okta 연동하기 \n' in old_plain
+        assert 'Okta 연동하기 \n' not in new_plain
 
     def test_build_patches_transfers_trailing_space_change(self):
         """build_patches가 trailing space 변경을 template rewriting으로 전이한다 (Phase 5 Axis 1)."""
