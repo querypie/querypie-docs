@@ -290,3 +290,13 @@ def test_strict_mode_preserves_fenced_code_line_breaks():
         actual_mdx="```\nallow: actions:\n```\n",
     )
     assert result.passed is False
+
+
+def test_no_normalize_mode_keeps_minimal_normalization_diffs():
+    """원시 모드에서는 strict 모드의 최소 정규화도 적용하지 않는다."""
+    result = verify_roundtrip(
+        expected_mdx="**bold**  : value\n",
+        actual_mdx="**bold** : value\n",
+        no_normalize=True,
+    )
+    assert result.passed is False

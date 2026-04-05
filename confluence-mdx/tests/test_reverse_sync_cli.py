@@ -482,6 +482,21 @@ def test_main_verify_branch_lenient(monkeypatch):
     mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=True, no_normalize=False)
 
 
+def test_main_verify_branch_no_normalize(monkeypatch):
+    """--no-normalize 플래그가 _do_verify_batch에 전달된다."""
+    monkeypatch.setattr('sys.argv', [
+        'reverse_sync_cli.py', 'verify', '--branch', 'proofread/fix-typo', '--no-normalize'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
+         patch('builtins.print'):
+        main()
+
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False, no_normalize=True)
+
+
 def test_usage_summary_includes_push_no_normalize():
     """push usage도 --no-normalize 지원과 일치해야 한다."""
     assert 'reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
