@@ -82,6 +82,11 @@ def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
     return "<ac:" in xhtml_text or "<ri:" in xhtml_text
 
 
+def _contains_preserved_link_markup(xhtml_text: str) -> bool:
+    """링크 계열 preserved anchor가 포함된 경우만 가시 공백 raw transfer 대상이다."""
+    return "<ac:link" in xhtml_text
+
+
 def _is_clean_block(
     block_type: str,
     mapping: Optional[BlockMapping],
@@ -1169,7 +1174,7 @@ def build_patches(
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    preserve_visible_ws = _contains_preserved_anchor_markup(
+                    preserve_visible_ws = _contains_preserved_link_markup(
                         mapping.xhtml_text
                     )
                     transfer_old_plain = _old_plain_raw if preserve_visible_ws else _old_plain
