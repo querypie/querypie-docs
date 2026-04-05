@@ -139,9 +139,8 @@ class TestBuildPatches:
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
 
-    # Path 1b: 직접 sidecar 매칭 + 형식 전용 변경 (텍스트 동일) → skip
-    # 예: [ **General** ] → [**General**] (링크 내 공백, collapse_ws 후 텍스트 동일)
-    def test_path1b_direct_sidecar_format_only_change_skips(self):
+    # Path 1b: 직접 sidecar 매칭 + URL만 변경 (링크 텍스트 동일) → skip
+    def test_path1b_direct_sidecar_url_only_change_skips(self):
         child = _make_mapping('c1', 'General text', xpath='li[1]')
         parent = _make_mapping('p1', 'General text more', xpath='ul[1]',
                                type_='list', children=['c1'])
@@ -167,6 +166,33 @@ class TestBuildPatches:
 
         # URL만 변경, normalize 후 텍스트 동일 → skip
         assert patches == []
+
+    def test_path1b_link_boundary_whitespace_generates_patch(self):
+        """링크 경계 공백 변경은 패치를 생성해야 한다."""
+        child = _make_mapping('c1', 'General text', xpath='li[1]')
+        parent = _make_mapping('p1', 'General text more', xpath='ul[1]',
+                               type_='list', children=['c1'])
+        mappings = [parent, child]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+
+        change = _make_change(
+            0,
+            '* [**General**](company-management/general) text\n',
+            '* [ **General** ](company-management/general) text\n',
+            type_='list',
+        )
+        mdx_to_sidecar = self._setup_sidecar('ul[1]', 0)
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', '<li><p><a href="">General</a> text</p></li>', 'hash1', (1, 1))
+        ])
+
+        patches, *_ = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings, mdx_to_sidecar, xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar)
+
+        assert len(patches) == 1
+        assert patches[0]['action'] == 'replace_fragment'
 
     # Path 1c: sidecar 매칭 → list type + roundtrip_sidecar 없음 + content change
     #          → clean list이면 replace_fragment (Phase 5: has_content_change → patch)
@@ -2849,4 +2875,48 @@ class TestWhitespaceOnlyChangeGeneratesPatch:
         assert patches == [], (
             f"continuation line reflow만 바뀐 경우 no-op 패치를 만들면 안 됩니다. "
             f"patches={patches}, skipped={skipped}"
+        )
+
+
+class TestPreservedAnchorListWhitespaceTransfer:
+    """preserved anchor 리스트에서도 가시 공백 변경은 text transfer로 반영되어야 한다."""
+
+    def test_double_space_around_link_is_transferred(self):
+        xhtml = (
+            '<ul><li><p>'
+            '텍스트 <ac:link><ri:page ri:content-title="링크"/>'
+            '<ac:link-body>링크</ac:link-body></ac:link> 뒤에'
+            '</p></li></ul>'
+        )
+        old_content = '* 텍스트 [링크](url) 뒤에\n'
+        new_content = '* 텍스트  [링크](url) 뒤에\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+        mapping = BlockMapping(
+            block_id='list-anchor-1',
+            type='list',
+            xhtml_xpath='ul[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='텍스트 링크 뒤에',
+            xhtml_element_index=0,
+            children=[],
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', xhtml, sha256_text(old_content), (1, 1))
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) == 1, (
+            f"preserved anchor 리스트 공백 확대도 패치를 생성해야 합니다. skipped={skipped}"
+        )
+        assert patches[0]['new_plain_text'] == '텍스트  링크 뒤에'
+
+        patched = patch_xhtml(xhtml, patches)
+        assert '<ac:link-body>링크</ac:link-body>' in patched
+        assert '텍스트  <ac:link' in patched, (
+            f"링크 앞의 이중 공백이 XHTML에 반영되어야 합니다: {patched}"
         )

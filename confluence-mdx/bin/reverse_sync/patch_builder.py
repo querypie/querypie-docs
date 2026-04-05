@@ -1095,8 +1095,8 @@ def build_patches(
             _old_plain_raw = _normalize_list_for_content_compare(change.old_block.content)
             _new_plain_raw = _normalize_list_for_content_compare(change.new_block.content)
             has_content_change = _old_plain_raw != _new_plain_raw
-            # _apply_mdx_diff_to_xhtml에 전달할 때는 collapse_ws 적용:
-            # XHTML plain text에는 줄바꿈이 없으므로 MDX 측도 공백을 축약해야 정렬된다.
+            # _apply_mdx_diff_to_xhtml에 전달할 기본값은 collapse_ws 적용:
+            # XHTML plain text에는 줄바꿈이 없으므로 clean list 정렬에는 공백 축약본이 맞다.
             _old_plain = collapse_ws(_old_plain_raw)
             _new_plain = collapse_ws(_new_plain_raw)
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
@@ -1169,12 +1169,21 @@ def build_patches(
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
-                    # (strong trailing space 등으로 인한 이중 공백 문제 방지)
-                    _xhtml_plain_normalized = collapse_ws(
-                        _text_change_patches[bid]['new_plain_text'])
+                    preserve_visible_ws = _contains_preserved_anchor_markup(
+                        mapping.xhtml_text
+                    )
+                    transfer_old_plain = _old_plain_raw if preserve_visible_ws else _old_plain
+                    transfer_new_plain = _new_plain_raw if preserve_visible_ws else _new_plain
+                    transfer_xhtml_plain = _text_change_patches[bid]['new_plain_text']
+                    if not preserve_visible_ws:
+                        # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
+                        # (strong trailing space 등으로 인한 이중 공백 문제 방지)
+                        transfer_xhtml_plain = collapse_ws(transfer_xhtml_plain)
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        _old_plain, _new_plain, _xhtml_plain_normalized)
+                        transfer_old_plain,
+                        transfer_new_plain,
+                        transfer_xhtml_plain,
+                    )
                 if has_ol_start_change:
                     _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
                 if has_inline_boundary:
