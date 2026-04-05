@@ -631,8 +631,8 @@ Usage:
   reverse-sync verify --branch <branch> [--lenient] [--no-normalize]
   reverse-sync debug  <mdx> [--original-mdx <mdx>] [--lenient] [--no-normalize]
   reverse-sync debug  --branch <branch> [--lenient] [--no-normalize]
-  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient]
-  reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient]
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]
+  reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]
   reverse-sync -h | --help
 
 Commands:
