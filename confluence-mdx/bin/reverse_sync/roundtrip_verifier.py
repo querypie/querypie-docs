@@ -341,6 +341,7 @@ def verify_roundtrip(
     expected_mdx: str,
     actual_mdx: str,
     lenient: bool = False,
+    no_normalize: bool = False,
 ) -> VerifyResult:
     """두 MDX 문자열의 일치를 검증한다.
 
@@ -350,21 +351,34 @@ def verify_roundtrip(
     lenient=True(관대 모드): trailing whitespace, 날짜 형식, 테이블 패딩 등
     XHTML↔MDX 변환기 한계에 의한 추가 차이를 정규화한 후 exact match를 검증한다.
 
+    no_normalize=True(원시 모드): 정규화 없이 비교한다. 첫 번째 h1 제거와
+    trailing 빈 줄 정규화만 적용하여 구조적 비교를 가능하게 한다.
+
     Args:
         expected_mdx: 개선 MDX (의도한 결과)
         actual_mdx: 패치된 XHTML을 forward 변환한 결과
         lenient: True면 정규화 후 비교하는 관대 모드 활성화
+        no_normalize: True면 정규화 없이 비교하는 원시 모드 활성화
 
     Returns:
         VerifyResult: passed=True면 통과, 아니면 diff_report 포함
     """
-    # 항상 최소 정규화 적용 (forward converter 특성에 의한 체계적 차이 처리)
-    expected_mdx = _apply_minimal_normalizations(expected_mdx)
-    actual_mdx = _apply_minimal_normalizations(actual_mdx)
+    if no_normalize:
+        # 원시 모드: 비교 가능한 최소 전처리만 적용
+        expected_mdx = _strip_first_heading(expected_mdx)
+        actual_mdx = _strip_first_heading(actual_mdx)
+        expected_mdx = expected_mdx.lstrip('\n')
+        actual_mdx = actual_mdx.lstrip('\n')
+        expected_mdx = _normalize_trailing_blank_lines(expected_mdx)
+        actual_mdx = _normalize_trailing_blank_lines(actual_mdx)
+    else:
+        # 항상 최소 정규화 적용 (forward converter 특성에 의한 체계적 차이 처리)
+        expected_mdx = _apply_minimal_normalizations(expected_mdx)
+        actual_mdx = _apply_minimal_normalizations(actual_mdx)
 
-    if lenient:
-        expected_mdx = _apply_normalizations(expected_mdx)
-        actual_mdx = _apply_normalizations(actual_mdx)
+        if lenient:
+            expected_mdx = _apply_normalizations(expected_mdx)
+            actual_mdx = _apply_normalizations(actual_mdx)
 
     if expected_mdx == actual_mdx:
         return VerifyResult(passed=True, diff_report="")

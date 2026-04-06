@@ -8,6 +8,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result, _print_results,
+    _USAGE_SUMMARY,
     _detect_language, _validate_improved_mdx,
     _find_blockquotes_missing_blank_line,
     PushConflictError, _confirm,
@@ -382,7 +383,7 @@ def test_main_verify_branch(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False, no_normalize=False)
     mock_push.assert_not_called()
 
 
@@ -402,7 +403,7 @@ def test_main_push_branch(tmp_path, monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False, no_normalize=False)
 
 
 def test_main_push_branch_with_failure(monkeypatch):
@@ -420,7 +421,7 @@ def test_main_push_branch_with_failure(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False, no_normalize=False)
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -463,7 +464,7 @@ def test_main_verify_branch_with_failure_exits(monkeypatch):
             main()
 
     assert exc_info.value.code == 1
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False, no_normalize=False)
 
 
 def test_main_verify_branch_lenient(monkeypatch):
@@ -478,7 +479,28 @@ def test_main_verify_branch_lenient(monkeypatch):
          patch('builtins.print'):
         main()
 
-    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=True)
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=True, no_normalize=False)
+
+
+def test_main_verify_branch_no_normalize(monkeypatch):
+    """--no-normalize 플래그가 _do_verify_batch에 전달된다."""
+    monkeypatch.setattr('sys.argv', [
+        'reverse_sync_cli.py', 'verify', '--branch', 'proofread/fix-typo', '--no-normalize'])
+    batch_results = [
+        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1},
+    ]
+
+    with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
+         patch('builtins.print'):
+        main()
+
+    mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=False, yes=False, lenient=False, no_normalize=True)
+
+
+def test_usage_summary_includes_push_no_normalize():
+    """push usage도 --no-normalize 지원과 일치해야 한다."""
+    assert 'reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
+    assert 'reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
 
 
 # --- normalize_mdx_to_plain tests ---

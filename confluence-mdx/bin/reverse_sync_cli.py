@@ -328,6 +328,7 @@ def run_verify(
     improved_src: MdxSource,
     xhtml_path: str = None,
     lenient: bool = False,
+    no_normalize: bool = False,
     language: str = None,
     page_dir: str = None,
 ) -> Dict[str, Any]:
@@ -448,6 +449,7 @@ def run_verify(
         expected_mdx=impr_stripped,
         actual_mdx=verify_stripped,
         lenient=lenient,
+        no_normalize=no_normalize,
     )
     # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
     roundtrip_diff_lines = difflib.unified_diff(
@@ -625,12 +627,12 @@ _USAGE_SUMMARY = """\
 reverse-sync — MDX 변경사항을 Confluence XHTML에 역반영
 
 Usage:
-  reverse-sync verify <mdx> [--original-mdx <mdx>] [--lenient]
-  reverse-sync verify --branch <branch> [--lenient]
-  reverse-sync debug  <mdx> [--original-mdx <mdx>] [--lenient]
-  reverse-sync debug  --branch <branch> [--lenient]
-  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient]
-  reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient]
+  reverse-sync verify <mdx> [--original-mdx <mdx>] [--lenient] [--no-normalize]
+  reverse-sync verify --branch <branch> [--lenient] [--no-normalize]
+  reverse-sync debug  <mdx> [--original-mdx <mdx>] [--lenient] [--no-normalize]
+  reverse-sync debug  --branch <branch> [--lenient] [--no-normalize]
+  reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]
+  reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]
   reverse-sync -h | --help
 
 Commands:
@@ -750,6 +752,8 @@ def _add_common_args(parser: argparse.ArgumentParser):
                         help='실패한 결과만 출력 (--limit와 함께 사용 시 실패 건수 기준으로 제한)')
     parser.add_argument('--lenient', action='store_true',
                         help='관대 모드: 정규화 후 비교 (기본은 문자 그대로 비교하는 엄격 모드)')
+    parser.add_argument('--no-normalize', action='store_true',
+                        help='원시 모드: 정규화 없이 비교 (FC/패치 차이의 실제 규모를 확인)')
 
 
 def _do_verify(args) -> dict:
@@ -775,6 +779,7 @@ def _do_verify(args) -> dict:
         improved_src=improved_src,
         xhtml_path=xhtml_path,
         lenient=getattr(args, 'lenient', False),
+        no_normalize=getattr(args, 'no_normalize', False),
         page_dir=page_dir,
     )
 
@@ -796,7 +801,8 @@ def _confirm(prompt: str) -> bool:
 
 def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                      push: bool = False, yes: bool = False,
-                     lenient: bool = False) -> List[dict]:
+                     lenient: bool = False,
+                     no_normalize: bool = False) -> List[dict]:
     """브랜치의 변경 ko MDX 파일을 배치 처리한다.
 
     push=True이면 verify 전체 완료 후 pass 건만 일괄 push한다.
@@ -819,6 +825,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                 improved_mdx=f"{branch}:{ko_path}",
                 original_mdx=None,
                 lenient=lenient,
+                no_normalize=no_normalize,
             )
             result = _do_verify(args)
             result['file'] = ko_path
@@ -1008,7 +1015,8 @@ def main():
                 results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
                                            failures_only=failures_only, push=not dry_run,
                                            yes=auto_yes,
-                                           lenient=getattr(args, 'lenient', False))
+                                           lenient=getattr(args, 'lenient', False),
+                                           no_normalize=getattr(args, 'no_normalize', False))
                 if use_json:
                     output = results
                     if failures_only:
