@@ -21,6 +21,7 @@ from reverse_sync.patch_builder import (
     _extract_inline_markers,
     _find_roundtrip_sidecar_block,
     _has_inline_boundary_change,
+    _normalize_list_for_content_compare,
     _resolve_mapping_for_change,
     build_patches,
     is_markdown_table,
@@ -2965,3 +2966,46 @@ class TestPreservedAnchorListWhitespaceTransfer:
             f"이미지 preserved anchor 리스트도 패치를 생성해야 합니다. skipped={skipped}"
         )
         assert patches[0]['new_plain_text'] == '목록 좌측 상단에서 Delete 버튼을 클릭합니다.'
+
+
+# ── _normalize_list_for_content_compare 마커 공백 보존 테스트 ──
+
+
+class TestNormalizeListMarkerWhitespace:
+    """_normalize_list_for_content_compare: 마커 뒤 공백 차이를 보존하여 변경 감지."""
+
+    def test_marker_ws_difference_detected(self):
+        """마커 뒤 공백 수가 다르면 정규화 결과가 다르다."""
+        old = _normalize_list_for_content_compare("*  항목")
+        new = _normalize_list_for_content_compare("* 항목")
+        assert old != new
+
+    def test_same_content_same_result(self):
+        """마커 공백이 같으면 정규화 결과도 같다."""
+        old = _normalize_list_for_content_compare("* 항목")
+        new = _normalize_list_for_content_compare("* 항목")
+        assert old == new
+
+    def test_text_only_change_detected(self):
+        """텍스트만 변경되어도 감지한다."""
+        old = _normalize_list_for_content_compare("* 원래")
+        new = _normalize_list_for_content_compare("* 새것")
+        assert old != new
+
+    def test_numbered_list_marker_ws(self):
+        """번호 리스트 마커 뒤 공백 차이."""
+        old = _normalize_list_for_content_compare("7.  생성이")
+        new = _normalize_list_for_content_compare("7. 생성이")
+        assert old != new
+
+    def test_nested_list_marker_ws(self):
+        """중첩 리스트에서 하위 항목 마커 공백 차이."""
+        old = _normalize_list_for_content_compare("1. 상위\n    *  하위")
+        new = _normalize_list_for_content_compare("1. 상위\n    * 하위")
+        assert old != new
+
+    def test_text_and_marker_ws_change(self):
+        """텍스트와 마커 공백이 동시에 변경."""
+        old = _normalize_list_for_content_compare("*  원래 텍스트")
+        new = _normalize_list_for_content_compare("* 새 텍스트")
+        assert old != new
