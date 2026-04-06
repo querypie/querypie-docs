@@ -371,7 +371,41 @@ def _walk_list(list_el, path: list, entries: list) -> None:
                 _walk_list(child, current_path, entries)
 
 
-def _build_list_anchor_entries(fragment: str) -> list:
+def _walk_list_all_anchors(list_el, path: list, entries: list) -> None:
+    """list 요소를 재귀 순회하며 li 직접 자식 ac:image도 포함하여 anchor entry를 수집한다.
+
+    _walk_list는 p 내부 ac:image만 수집하지만, 이 함수는 li의 직접 자식
+    ac:image도 수집하여 synthetic reconstruction에 사용한다.
+    """
+    from bs4 import NavigableString, Tag
+    items = [c for c in list_el.children if isinstance(c, Tag) and c.name == 'li']
+    for idx, li in enumerate(items):
+        current_path = path + [idx]
+        li_text_offset = 0
+        for child in li.children:
+            if isinstance(child, NavigableString):
+                li_text_offset += len(str(child).strip())
+                continue
+            if not isinstance(child, Tag):
+                continue
+            if child.name == 'p':
+                for a in _extract_anchors_from_p(child):
+                    entries.append({**a, 'path': current_path})
+                li_text_offset += len(extract_plain_text(str(child)))
+            elif child.name == 'ac:image':
+                entries.append({
+                    'kind': 'image',
+                    'offset': li_text_offset,
+                    'raw_xhtml': str(child),
+                    'path': current_path,
+                })
+            elif child.name in ('ul', 'ol'):
+                _walk_list_all_anchors(child, current_path, entries)
+            else:
+                li_text_offset += len(extract_plain_text(str(child)))
+
+
+def build_list_anchor_entries(fragment: str) -> list:
     """list fragment 내 li > p > ac:image를 path 기반 anchor entry로 추출한다.
 
     각 entry:
@@ -387,6 +421,22 @@ def _build_list_anchor_entries(fragment: str) -> list:
         return []
     entries = []
     _walk_list(root, [], entries)
+    return entries
+
+
+def build_list_all_anchor_entries(fragment: str) -> list:
+    """list fragment 내 모든 ac:image를 anchor entry로 추출한다.
+
+    build_list_anchor_entries와 달리 li 직접 자식 ac:image도 포함한다.
+    synthetic reconstruction 생성 시 사용한다.
+    """
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(fragment, 'html.parser')
+    root = soup.find(['ul', 'ol'])
+    if root is None:
+        return []
+    entries = []
+    _walk_list_all_anchors(root, [], entries)
     return entries
 
 
@@ -406,7 +456,7 @@ def _build_reconstruction_metadata(
         metadata["anchors"] = _build_anchor_entries(fragment)
     elif mapping.type == "list":
         metadata["ordered"] = mapping.xhtml_xpath.startswith("ol[")
-        metadata["items"] = _build_list_anchor_entries(fragment)
+        metadata["items"] = build_list_anchor_entries(fragment)
     elif mapping.children:
         children_meta = []
         for child_id in mapping.children:
@@ -430,7 +480,7 @@ def _build_reconstruction_metadata(
                 if anchors:
                     child_data["anchors"] = anchors
             elif child_m.type == "list":
-                items = _build_list_anchor_entries(child_m.xhtml_text)
+                items = build_list_anchor_entries(child_m.xhtml_text)
                 if items:
                     child_data["items"] = items
             children_meta.append(child_data)
