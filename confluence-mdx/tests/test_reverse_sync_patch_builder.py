@@ -2967,6 +2967,105 @@ class TestPreservedAnchorListWhitespaceTransfer:
         )
         assert patches[0]['new_plain_text'] == '목록 좌측 상단에서 Delete 버튼을 클릭합니다.'
 
+    def test_image_anchor_list_marker_ws_only_produces_replace_fragment(self):
+        """마커 뒤 공백만 변경된 이미지 preserved anchor 리스트도 replace_fragment 패치를 생성한다."""
+        xhtml = (
+            '<ol><li><p>목록 좌측 상단에서 Delete 버튼을 클릭합니다.</p>'
+            '<ac:image ac:align="center">'
+            '<ri:attachment ri:filename="delete.png"></ri:attachment>'
+            '</ac:image><p> </p></li></ol>'
+        )
+        old_content = (
+            '4.  목록 좌측 상단에서 Delete 버튼을 클릭합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/delete.png" alt="img" width="736" />\n'
+            '  </figure>\n'
+        )
+        new_content = (
+            '4. 목록 좌측 상단에서 Delete 버튼을 클릭합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/delete.png" alt="img" width="736" />\n'
+            '  </figure>\n'
+        )
+        change = _make_change(0, old_content, new_content, type_='list')
+        mapping = BlockMapping(
+            block_id='list-image-ws-1',
+            type='list',
+            xhtml_xpath='ol[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='목록 좌측 상단에서 Delete 버튼을 클릭합니다.',
+            xhtml_element_index=0,
+            children=[],
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml, sha256_text(old_content), (1, 4))
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) == 1, (
+            f"마커 공백만 변경된 이미지 preserved anchor 리스트도 패치를 생성해야 합니다. "
+            f"skipped={skipped}"
+        )
+        assert patches[0].get('action') == 'replace_fragment', (
+            f"preserved anchor 리스트는 replace_fragment 패치여야 합니다: {patches[0]}"
+        )
+        new_xhtml = patches[0]['new_element_xhtml']
+        assert '<ac:image' in new_xhtml, (
+            f"replace_fragment에 ac:image가 보존되어야 합니다: {new_xhtml}"
+        )
+        assert 'Delete 버튼을 클릭합니다.' in new_xhtml
+
+    def test_image_anchor_list_marker_ws_patch_xhtml_e2e(self):
+        """마커 공백 변경 → build_patches → patch_xhtml 전 과정 E2E 검증."""
+        xhtml = (
+            '<ol><li><p>좌측 상단에서 Delete 버튼을 클릭합니다.</p>'
+            '<ac:image ac:align="center">'
+            '<ri:attachment ri:filename="del.png"></ri:attachment>'
+            '</ac:image><p> </p></li></ol>'
+        )
+        old_content = (
+            '4.  좌측 상단에서 Delete 버튼을 클릭합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/del.png" alt="img" width="736" />\n'
+            '  </figure>\n'
+        )
+        new_content = (
+            '4. 좌측 상단에서 Delete 버튼을 클릭합니다.<br/>\n'
+            '  <figure data-layout="center" data-align="center">\n'
+            '  <img src="/del.png" alt="img" width="736" />\n'
+            '  </figure>\n'
+        )
+        change = _make_change(0, old_content, new_content, type_='list')
+        mapping = BlockMapping(
+            block_id='list-img-e2e',
+            type='list',
+            xhtml_xpath='ol[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='좌측 상단에서 Delete 버튼을 클릭합니다.',
+            xhtml_element_index=0,
+            children=[],
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ol[1]', xhtml, sha256_text(old_content), (1, 4))
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) == 1, f"패치가 생성되어야 합니다. skipped={skipped}"
+        # patch_xhtml 적용하여 XHTML이 실제로 갱신되는지 확인
+        patched = patch_xhtml(xhtml, patches)
+        assert '<ac:image' in patched, f"ac:image가 보존되어야 합니다: {patched}"
+        assert 'Delete 버튼을 클릭합니다.' in patched, f"텍스트가 유지되어야 합니다: {patched}"
+
 
 # ── _normalize_list_for_content_compare 마커 공백 보존 테스트 ──
 
