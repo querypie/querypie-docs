@@ -1,7 +1,7 @@
 {
   "schema_version": "3",
   "page_id": "692355151",
-  "mdx_sha256": "9e6424fb665248f13c73d22821ece9b8dd9eb828fa8fbe4b9a5475a45335bfd1",
+  "mdx_sha256": "4f45cccae7beb1a850b44ea8b28f6d97ea50d6e757aaf6afdb4f4dbc26255f56",
   "source_xhtml_sha256": "b9e0646039c7414bbc75057fcec55a2d80783ca2b6767f0fb6147dde5920d6dd",
   "blocks": [
     {
@@ -245,7 +245,7 @@
       "block_index": 12,
       "xhtml_xpath": "ol[3]",
       "xhtml_fragment": "<ol start=\"3\"><li><p>실행계획(Explain) 결과 확인</p><ol start=\"1\"><li><p>Table 형태의 결과 확인<br />아래 그림과 같은 결과가 표시됩니다. 각 필드의 의미는 MySQL reference 문서를 참고 바랍니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"271\" ac:original-width=\"1080\" ac:custom-width=\"true\" ac:alt=\"image-20241030-002325.png\" ac:width=\"712\"><ri:attachment ri:filename=\"image-20241030-002325.png\" ri:version-at-save=\"1\" /></ac:image><p> </p></li><li><p>JSON 형태의 결과 확인<br />JSON 을 선택하고 Explain 버튼을 누르면 아래 그림과 같은 결과가 표시됩니다. {JSON} 을 클릭하면 전체 JSON 내용을 확인 할 수 있습니다.<br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"270\" ac:original-width=\"1078\" ac:custom-width=\"true\" ac:alt=\"image-20241030-003040.png\" ac:width=\"712\"><ri:attachment ri:filename=\"image-20241030-003040.png\" ri:version-at-save=\"1\" /><ac:caption><p>{JSON}을 클릭하면 전체 내용을 볼수 있습니다.</p></ac:caption></ac:image><p> <br /></p><ac:image ac:align=\"center\" ac:layout=\"center\" ac:original-height=\"680\" ac:original-width=\"760\" ac:custom-width=\"true\" ac:alt=\"image-20241030-003129.png\" ac:width=\"560\"><ri:attachment ri:filename=\"image-20241030-003129.png\" ri:version-at-save=\"1\" /><ac:caption><p>JSON 결과의 복사와 내보내기가 가능합니다.</p></ac:caption></ac:image><p> <br />내보내기(Export)를 할 때 관리자 설정에 따라 암호 입력을 요구하는 팝업이 출력될 수 있습니다.</p></li></ol></li></ol>",
-      "mdx_content_hash": "a04439fedcf9a1422170deb309e28d9f90fe6e67f6a6df1478646db686be36cb",
+      "mdx_content_hash": "4767e3cef1f4229dbc0a788f5668c85a3498fd177c39fb42f4171d9e77e07907",
       "mdx_line_range": [
         61,
         78

@@ -930,7 +930,7 @@ class MultiLineParser:
         logging.debug(f'li_itself={li_itself}')
         logging.debug(f'child_markdown={child_markdown}')
 
-        itself = ' '.join(li_itself)
+        itself = ''.join(li_itself)
         self.markdown_lines.append(f'{prefix}{itself}\n')
         for line in child_markdown:
             self.markdown_lines.append(prefix_for_children + line)
