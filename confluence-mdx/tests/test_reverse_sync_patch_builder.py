@@ -21,6 +21,7 @@ from reverse_sync.patch_builder import (
     _extract_inline_markers,
     _find_roundtrip_sidecar_block,
     _has_inline_boundary_change,
+    _has_marker_ws_change,
     _normalize_list_for_content_compare,
     _resolve_mapping_for_change,
     build_patches,
@@ -2972,13 +2973,13 @@ class TestPreservedAnchorListWhitespaceTransfer:
 
 
 class TestNormalizeListMarkerWhitespace:
-    """_normalize_list_for_content_compare: 마커 뒤 공백 차이를 보존하여 변경 감지."""
+    """_normalize_list_for_content_compare: 텍스트 내용 변경만 감지하고 마커 공백은 무시."""
 
-    def test_marker_ws_difference_detected(self):
-        """마커 뒤 공백 수가 다르면 정규화 결과가 다르다."""
+    def test_marker_ws_difference_ignored(self):
+        """마커 뒤 공백 수가 달라도 정규화 결과는 같다."""
         old = _normalize_list_for_content_compare("*  항목")
         new = _normalize_list_for_content_compare("* 항목")
-        assert old != new
+        assert old == new
 
     def test_same_content_same_result(self):
         """마커 공백이 같으면 정규화 결과도 같다."""
@@ -2992,20 +2993,41 @@ class TestNormalizeListMarkerWhitespace:
         new = _normalize_list_for_content_compare("* 새것")
         assert old != new
 
-    def test_numbered_list_marker_ws(self):
-        """번호 리스트 마커 뒤 공백 차이."""
+    def test_numbered_list_marker_ws_ignored(self):
+        """번호 리스트 마커 뒤 공백 차이는 무시한다."""
         old = _normalize_list_for_content_compare("7.  생성이")
         new = _normalize_list_for_content_compare("7. 생성이")
-        assert old != new
+        assert old == new
 
-    def test_nested_list_marker_ws(self):
-        """중첩 리스트에서 하위 항목 마커 공백 차이."""
+    def test_nested_list_marker_ws_ignored(self):
+        """중첩 리스트에서 하위 항목 마커 공백 차이는 무시한다."""
         old = _normalize_list_for_content_compare("1. 상위\n    *  하위")
         new = _normalize_list_for_content_compare("1. 상위\n    * 하위")
-        assert old != new
+        assert old == new
 
     def test_text_and_marker_ws_change(self):
-        """텍스트와 마커 공백이 동시에 변경."""
+        """텍스트와 마커 공백이 동시에 변경되면 텍스트 차이를 감지한다."""
         old = _normalize_list_for_content_compare("*  원래 텍스트")
         new = _normalize_list_for_content_compare("* 새 텍스트")
         assert old != new
+
+
+class TestHasMarkerWsChange:
+    """_has_marker_ws_change: 마커 뒤 공백 변경을 별도로 감지한다."""
+
+    def test_ws_difference_detected(self):
+        assert _has_marker_ws_change("*  항목", "* 항목") is True
+
+    def test_same_ws_no_change(self):
+        assert _has_marker_ws_change("* 항목", "* 항목") is False
+
+    def test_numbered_list_ws(self):
+        assert _has_marker_ws_change("7.  생성이", "7. 생성이") is True
+
+    def test_nested_list_ws(self):
+        assert _has_marker_ws_change(
+            "1. 상위\n    *  하위", "1. 상위\n    * 하위") is True
+
+    def test_text_change_same_ws(self):
+        """텍스트만 변경되고 마커 공백은 같으면 False."""
+        assert _has_marker_ws_change("* 원래", "* 새것") is False

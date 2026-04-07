@@ -190,21 +190,19 @@ def _normalize_list_for_content_compare(content: str) -> str:
     내용 변경 판정에서는 무시한다. 대신 항목 경계와 항목 내부의 실제 공백 수 차이는
     그대로 보존해 no-op reflow와 가시 공백 변경을 구분한다.
 
-    마커 뒤 공백 수도 보존한다. normalize_mdx_to_plain이 마커를 제거하므로
-    마커 뒤 공백 수를 별도로 접두어에 기록하여 ``*  text``와 ``* text``를 구분한다.
+    마커 뒤 공백 변경은 이 함수가 아닌 ``_has_marker_ws_change``로 별도 감지한다.
     """
     marker_re = re.compile(r'^(\s*(?:\d+\.|[-*+]))(\s+)')
     lines = content.strip().split('\n')
     item_chunks: List[str] = []
     current_chunk: List[str] = []
-    current_marker_ws: str = ''
 
     def _flush_current() -> None:
         if not current_chunk:
             return
         plain = normalize_mdx_to_plain('\n'.join(current_chunk), 'list')
         if plain:
-            item_chunks.append(current_marker_ws + plain.replace('\n', ' '))
+            item_chunks.append(plain.replace('\n', ' ').strip())
 
     for line in lines:
         if not line.strip():
@@ -213,21 +211,37 @@ def _normalize_list_for_content_compare(content: str) -> str:
         if m:
             _flush_current()
             current_chunk = [line]
-            current_marker_ws = m.group(2)
             continue
         if re.match(r'^\s*(?:\d+\.(?:\s+|$)|[-*+]\s+)', line):
             _flush_current()
             current_chunk = [line]
-            current_marker_ws = ''
             continue
         if current_chunk:
             current_chunk.append(line)
         else:
             current_chunk = [line]
-            current_marker_ws = ''
 
     _flush_current()
     return '\n'.join(item_chunks)
+
+
+def _has_marker_ws_change(old_content: str, new_content: str) -> bool:
+    """리스트 마커 뒤 공백 수가 변경되었는지 감지한다.
+
+    ``_normalize_list_for_content_compare``는 텍스트 내용만 비교하므로
+    마커 뒤 공백 변경(``*  text`` → ``* text``)은 여기서 별도로 감지한다.
+    """
+    marker_re = re.compile(r'^(\s*(?:\d+\.|[-*+]))(\s+)')
+
+    def _extract_marker_ws(content: str) -> List[str]:
+        result: List[str] = []
+        for line in content.strip().split('\n'):
+            m = marker_re.match(line)
+            if m:
+                result.append(m.group(2))
+        return result
+
+    return _extract_marker_ws(old_content) != _extract_marker_ws(new_content)
 
 
 def _build_inline_fixups(
@@ -1113,10 +1127,12 @@ def build_patches(
             _old_plain_raw = _normalize_list_for_content_compare(change.old_block.content)
             _new_plain_raw = _normalize_list_for_content_compare(change.new_block.content)
             has_content_change = _old_plain_raw != _new_plain_raw
-            # _apply_mdx_diff_to_xhtml에 전달할 기본값은 collapse_ws 적용:
-            # XHTML plain text에는 줄바꿈이 없으므로 clean list 정렬에는 공백 축약본이 맞다.
-            _old_plain = collapse_ws(_old_plain_raw)
-            _new_plain = collapse_ws(_new_plain_raw)
+            has_marker_ws_change = _has_marker_ws_change(
+                change.old_block.content, change.new_block.content)
+            # _apply_mdx_diff_to_xhtml 전달용: 항목간 \n을 공백으로 변환하고
+            # 양쪽 공백을 제거하여 XHTML plain text와 정렬한다.
+            _old_plain = _old_plain_raw.replace('\n', ' ').strip()
+            _new_plain = _new_plain_raw.replace('\n', ' ').strip()
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
             _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
             _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
@@ -1132,7 +1148,8 @@ def build_patches(
                 block_type=change.old_block.type,
             )
             has_inline_boundary = bool(inline_fixups)
-            has_any_change = has_content_change or has_ol_start_change or has_inline_boundary
+            has_any_change = (has_content_change or has_ol_start_change
+                             or has_inline_boundary or has_marker_ws_change)
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
