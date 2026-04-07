@@ -1,17 +1,17 @@
 {
   "schema_version": "3",
   "page_id": "544377869",
-  "mdx_sha256": "62f5ca1faca232e7cbcd2d265fe47252843fb16a9655be8a1a54d9571eda1d2c",
+  "mdx_sha256": "079f0a79d909811006f21826dd212a6f8455be9cc318e436d9491111f0dc003e",
   "source_xhtml_sha256": "a74628f8a53d804ffd124b133efc5d9fbf3b623262f07cf2e824b9d7e0f69946",
   "blocks": [
     {
       "block_index": 0,
       "xhtml_xpath": "h2[1]",
       "xhtml_fragment": "<h2>Overview</h2>",
-      "mdx_content_hash": "819484f4643cfb87be34a01b9f3e4c1be106494bd94f607ad922908c4e593b1c",
+      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
       "mdx_line_range": [
-        8,
-        8
+        10,
+        10
       ],
       "lost_info": {},
       "reconstruction": {
@@ -23,10 +23,10 @@
       "block_index": 1,
       "xhtml_xpath": "p[1]",
       "xhtml_fragment": "<p>데이터베이스 커넥션 접속시 Proxy 연결을 지원합니다. 기본적으로 QueryPie 에서 제공하는 웹 SQL 에디터를 통해 커넥션에 접속할 수 있고, QueryPie 에서 생성한 Proxy Credential 정보 또는 Agent 를 통한 기존의 DB username/password로 쓰시던 툴에서 커넥션에 접속할 수 있습니다. 웹 SQL 에디터와 함께 Proxy 연결을 지원하여 다양한 사용자 환경에서도 문제없이 커넥션 접근을 제어하고, 정책을 적용할 수 있으며, 로그를 남길 수 있습니다. 현재 Proxy 연결은 MySQL, MariaDB, Oracle, PostgreSQL, Redshift, Trino, SQLServer, MongoDB 를 지원합니다.</p>",
-      "mdx_content_hash": "570f2c848432064a0ee7873e13333c111c0aeb41d4a26775907e952b18104d92",
+      "mdx_content_hash": "596d5d59e2f68610e1aa2e1864c7fbca797517a56d65e76a563af8052be4d218",
       "mdx_line_range": [
-        10,
-        10
+        12,
+        15
       ],
       "lost_info": {},
       "reconstruction": {
@@ -39,10 +39,10 @@
       "block_index": 2,
       "xhtml_xpath": "p[2]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "596d5d59e2f68610e1aa2e1864c7fbca797517a56d65e76a563af8052be4d218",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        12,
-        15
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -94,14 +94,14 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Administrator > Databases > Connection Management > DB Connections > Connection Details > Proxy Usage"
+        "old_plain_text": ""
       }
     },
     {
       "block_index": 6,
       "xhtml_xpath": "ol[1]",
       "xhtml_fragment": "<ol start=\"1\"><li><p>Database 설정 메뉴에서 DB Connections 메뉴로 이동합니다.</p></li><li><p>등록한 커넥션을 하나 클릭합니다.</p></li><li><p>하단의 Additional Information 항목으로 이동합니다.</p></li><li><p><code>Proxy Usage</code> 옵션을 체크하여 활성화합니다.</p></li><li><p>두 가지 Proxy 인증 방식 중 하나를 선택합니다.</p><ol start=\"1\"><li><p><strong>Use QueryPie registered account </strong>: 관리자가 커넥션 정보 페이지 내에 저장한 DB username / password 기준으로 Proxy 접속 정보를 생성하는 방식입니다. 사용자는 Agent 또는 별도로 생성된 Proxy Credential 정보를 이용해 Proxy 로 접속할 수 있습니다.</p></li><li><p><strong>Use existing database account with Agent</strong> : 사용자가 기존에 사용하던 DB username / password 를 사용할 수 있는 방식으로 Proxy 접속 정보가 생성됩니다. 사용자는 Agent 에서 실행 후 localhost 와 port 정보를 이용해 Proxy 로 접속할 수 있습니다.</p><p>※ 사용자의 DB username / password 인증을 사용할 경우, Agent 를 통해서만 접속 가능합니다.</p></li></ol></li><li><p><strong>Network ID</strong> : Reverse SSH 기능을 사용하는 경우에 필요한 설정 값입니다.</p></li></ol>",
-      "mdx_content_hash": "d964a868cb8ae43acf2a2eb310e07375026bb48f5b7a392261c345b94833ab39",
+      "mdx_content_hash": "1e272d3e4f86435faabf859d83efcae29a1d2da5bda7a949d8b95975d768e529",
       "mdx_line_range": [
         30,
         37
@@ -134,10 +134,10 @@
       "block_index": 8,
       "xhtml_xpath": "p[5]",
       "xhtml_fragment": "<p />",
-      "mdx_content_hash": "1308b8e338c7c5e53725ea900f477bd3ad76411a075a7c411531948e0caf417f",
+      "mdx_content_hash": "",
       "mdx_line_range": [
-        43,
-        43
+        0,
+        0
       ],
       "lost_info": {},
       "reconstruction": {
@@ -150,10 +150,10 @@
       "block_index": 9,
       "xhtml_xpath": "h2[3]",
       "xhtml_fragment": "<h2>Proxy 사용 활성화된 커넥션 확인하기</h2>",
-      "mdx_content_hash": "a5ee98a09881b3653e9fe8a6ecf7abef456920aa576130dd018bd4c888519dc9",
+      "mdx_content_hash": "1308b8e338c7c5e53725ea900f477bd3ad76411a075a7c411531948e0caf417f",
       "mdx_line_range": [
-        45,
-        47
+        43,
+        43
       ],
       "lost_info": {},
       "reconstruction": {
@@ -165,15 +165,23 @@
       "block_index": 10,
       "xhtml_xpath": "macro-info[1]",
       "xhtml_fragment": "<ac:structured-macro ac:name=\"info\" ac:schema-version=\"1\" ac:macro-id=\"e4a06898-7369-49ac-9d89-0ecfc1dacab8\"><ac:rich-text-body><p>10.3.0 부터 Databases &gt; Connection Management &gt; Proxy Management 는 Databases &gt; Monitoring &gt; Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 <ac:link ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Proxy Management​\" ri:version-at-save=\"4\" /><ac:link-body>Proxy Management​</ac:link-body></ac:link> 를 참고하시기 바랍니다.</p></ac:rich-text-body></ac:structured-macro>",
-      "mdx_content_hash": "b2da7f53a98160f9a467e89f4f04afbd6efa6caff1e00b4a072e5fd65d238800",
+      "mdx_content_hash": "2637cf30220edf648a896317a1497684b1affb78c74d4bc5ce2e748f3b21f317",
       "mdx_line_range": [
-        48,
+        45,
         48
       ],
       "lost_info": {},
       "reconstruction": {
-        "kind": "html_block",
-        "old_plain_text": "10.3.0 부터 Databases > Connection Management > Proxy Management 는 Databases > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 를 참고하시기 바랍니다.",
+        "kind": "container",
+        "old_plain_text": "10.3.0 부터 Databases > Connection Management > Proxy Management 는 Databases > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 Proxy Management​ 를 참고하시기 바랍니다.",
+        "children": [
+          {
+            "xpath": "macro-info[1]/p[1]",
+            "fragment": "<p>10.3.0 부터 Databases > Connection Management > Proxy Management 는 Databases > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 <ac:link ac:card-appearance=\"inline\"><ri:page ri:content-title=\"Proxy Management​\" ri:version-at-save=\"4\"></ri:page><ac:link-body>Proxy Management​</ac:link-body></ac:link> 를 참고하시기 바랍니다.</p>",
+            "plain_text": "10.3.0 부터 Databases > Connection Management > Proxy Management 는 Databases > Monitoring > Proxy Management 로 이동되었습니다. 10.3.0 이후 버전 사용자는 Proxy Management​ 를 참고하시기 바랍니다.",
+            "type": "paragraph"
+          }
+        ],
         "child_xpaths": [
           "macro-info[1]/p[1]"
         ]
@@ -191,7 +199,7 @@
       "lost_info": {},
       "reconstruction": {
         "kind": "html_block",
-        "old_plain_text": "Administrator > Databases > Connection Management > DB Connections > Proxy Management"
+        "old_plain_text": ""
       }
     },
     {
