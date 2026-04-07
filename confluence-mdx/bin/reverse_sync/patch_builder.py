@@ -19,7 +19,9 @@ from reverse_sync.sidecar import (
     sha256_text,
     SidecarEntry,
     build_mdx_line_range_index,
+    build_list_all_anchor_entries,
 )
+from reverse_sync.xhtml_normalizer import extract_plain_text
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
 from mdx_to_storage.inline import convert_inline
@@ -1140,19 +1142,46 @@ def build_patches(
                 and (roundtrip_sidecar is not None or has_any_change)
                 and (list_sidecar is None or mapping_via_v3_fallback or has_any_change)
             )
+            # preserved anchor list (ac:image 포함, ac:link 미포함) without sidecar reconstruction:
+            # collapse_ws 후 old/new가 동일한 경우(마커 공백만 변경) text-level 패치가 no-op이 되므로
+            # mapping의 XHTML에서 anchor entries를 추출하여 synthetic reconstruction으로 재생성
+            should_replace_preserved_anchor_list = False
+            synthetic_list_sidecar: Optional[SidecarBlock] = None
+            _marker_ws_only = has_content_change and _old_plain == _new_plain
+            if (mapping is not None
+                    and _marker_ws_only
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
+                    and not _contains_preserved_link_markup(mapping.xhtml_text)
+                    and not sidecar_block_requires_reconstruction(list_sidecar)):
+                anchor_items = build_list_all_anchor_entries(mapping.xhtml_text)
+                if anchor_items:
+                    synthetic_list_sidecar = SidecarBlock(
+                        block_index=0,
+                        xhtml_xpath=mapping.xhtml_xpath,
+                        xhtml_fragment=mapping.xhtml_text,
+                        reconstruction={
+                            'kind': 'list',
+                            'old_plain_text': extract_plain_text(mapping.xhtml_text),
+                            'ordered': mapping.xhtml_xpath.startswith('ol['),
+                            'items': anchor_items,
+                        },
+                    )
+                    should_replace_preserved_anchor_list = True
             if (mapping is not None
                     and (
                         # anchor case: sidecar anchor metadata가 있으면 ac: 포함 여부 무관
                         sidecar_block_requires_reconstruction(list_sidecar)
                         # clean case: preserved anchor 없는 clean list
                         or should_replace_clean_list
+                        # preserved anchor list (ac:image only): synthetic sidecar로 재생성
+                        or should_replace_preserved_anchor_list
                     )):
                 _mark_used(mapping.block_id, mapping)
                 patches.append(
                     _build_replace_fragment_patch(
                         mapping,
                         change.new_block,
-                        sidecar_block=list_sidecar,
+                        sidecar_block=synthetic_list_sidecar if should_replace_preserved_anchor_list else list_sidecar,
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
