@@ -97,7 +97,8 @@ def extract_list_model_from_mdx(content: str) -> VisibleContentModel:
                 structural=True,
                 meta={"path": entry.path},
             ))
-            fingerprint_items.append((entry.path, entry.marker, entry.marker_ws))
+            marker_kind = "ol" if entry.marker.endswith('.') else "ul"
+            fingerprint_items.append((entry.path, marker_kind))
 
     return VisibleContentModel(
         segments=segments,

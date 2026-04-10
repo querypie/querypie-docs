@@ -32,7 +32,6 @@ from reverse_sync.patch_builder import (
     _extract_inline_markers,
     _find_roundtrip_sidecar_block,
     _has_inline_boundary_change,
-    _normalize_list_for_content_compare,
     _resolve_mapping_for_change,
     build_patches,
     is_markdown_table,
@@ -3049,6 +3048,31 @@ class TestPreservedAnchorListWhitespaceTransfer:
             f"patches={patches}, skipped={skipped}"
         )
 
+
+class TestCleanListWhitespaceNoop:
+    def test_marker_space_only_change_on_clean_list_is_noop(self):
+        xhtml = '<ul><li><p>항목</p></li></ul>'
+        change = _make_change(0, '*  항목\n', '* 항목\n', type_='list')
+        mapping = BlockMapping(
+            block_id='list-clean-marker-noop-1',
+            type='list',
+            xhtml_xpath='ul[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='항목',
+            xhtml_element_index=0,
+            children=[],
+        )
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+        )
+
+        assert patches == [], (
+            f"marker 뒤 공백만 바뀐 clean list는 no-op 이어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
     def test_fixture_preserved_anchor_list_applies_text_changes_across_image_boundary(
         self, tmp_path,
     ):
@@ -3112,46 +3136,3 @@ class TestPreservedAnchorListWhitespaceTransfer:
         target = next(p for p in patches if p.get("xhtml_xpath") == "ol[1]")
         assert target.get("action") == "replace_fragment"
         assert "<li><ac:image" not in target["new_element_xhtml"]
-
-
-# ── _normalize_list_for_content_compare 마커 공백 보존 테스트 ──
-
-
-class TestNormalizeListMarkerWhitespace:
-    """_normalize_list_for_content_compare: 마커 뒤 공백 차이를 보존하여 변경 감지."""
-
-    def test_marker_ws_difference_detected(self):
-        """마커 뒤 공백 수가 다르면 정규화 결과가 다르다."""
-        old = _normalize_list_for_content_compare("*  항목")
-        new = _normalize_list_for_content_compare("* 항목")
-        assert old != new
-
-    def test_same_content_same_result(self):
-        """마커 공백이 같으면 정규화 결과도 같다."""
-        old = _normalize_list_for_content_compare("* 항목")
-        new = _normalize_list_for_content_compare("* 항목")
-        assert old == new
-
-    def test_text_only_change_detected(self):
-        """텍스트만 변경되어도 감지한다."""
-        old = _normalize_list_for_content_compare("* 원래")
-        new = _normalize_list_for_content_compare("* 새것")
-        assert old != new
-
-    def test_numbered_list_marker_ws(self):
-        """번호 리스트 마커 뒤 공백 차이."""
-        old = _normalize_list_for_content_compare("7.  생성이")
-        new = _normalize_list_for_content_compare("7. 생성이")
-        assert old != new
-
-    def test_nested_list_marker_ws(self):
-        """중첩 리스트에서 하위 항목 마커 공백 차이."""
-        old = _normalize_list_for_content_compare("1. 상위\n    *  하위")
-        new = _normalize_list_for_content_compare("1. 상위\n    * 하위")
-        assert old != new
-
-    def test_text_and_marker_ws_change(self):
-        """텍스트와 마커 공백이 동시에 변경."""
-        old = _normalize_list_for_content_compare("*  원래 텍스트")
-        new = _normalize_list_for_content_compare("* 새 텍스트")
-        assert old != new

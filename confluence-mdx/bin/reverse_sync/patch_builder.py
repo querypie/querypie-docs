@@ -187,53 +187,6 @@ def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
     return has_space_change
 
 
-def _normalize_list_for_content_compare(content: str) -> str:
-    """리스트 변경 비교용 plain text를 생성한다.
-
-    리스트 항목 내부의 continuation line 줄바꿈은 emitter에서 공백 하나로 합쳐지므로
-    내용 변경 판정에서는 무시한다. 대신 항목 경계와 항목 내부의 실제 공백 수 차이는
-    그대로 보존해 no-op reflow와 가시 공백 변경을 구분한다.
-
-    마커 뒤 공백 수도 보존한다. normalize_mdx_to_plain이 마커를 제거하므로
-    마커 뒤 공백 수를 별도로 접두어에 기록하여 ``*  text``와 ``* text``를 구분한다.
-    """
-    marker_re = re.compile(r'^(\s*(?:\d+\.|[-*+]))(\s+)')
-    lines = content.strip().split('\n')
-    item_chunks: List[str] = []
-    current_chunk: List[str] = []
-    current_marker_ws: str = ''
-
-    def _flush_current() -> None:
-        if not current_chunk:
-            return
-        plain = normalize_mdx_to_plain('\n'.join(current_chunk), 'list')
-        if plain:
-            item_chunks.append(current_marker_ws + plain.replace('\n', ' '))
-
-    for line in lines:
-        if not line.strip():
-            continue
-        m = marker_re.match(line)
-        if m:
-            _flush_current()
-            current_chunk = [line]
-            current_marker_ws = m.group(2)
-            continue
-        if re.match(r'^\s*(?:\d+\.(?:\s+|$)|[-*+]\s+)', line):
-            _flush_current()
-            current_chunk = [line]
-            current_marker_ws = ''
-            continue
-        if current_chunk:
-            current_chunk.append(line)
-        else:
-            current_chunk = [line]
-            current_marker_ws = ''
-
-    _flush_current()
-    return '\n'.join(item_chunks)
-
-
 def _build_inline_fixups(
     old_content: str,
     new_content: str,
