@@ -28,6 +28,10 @@ from reverse_sync.reconstructors import (
     reconstruct_fragment_with_sidecar,
     rewrite_on_stored_template,
 )
+from reverse_sync.visible_segments import (
+    extract_list_model_from_mdx,
+    extract_list_model_from_xhtml,
+)
 
 
 def is_markdown_table(content: str) -> bool:
@@ -181,53 +185,6 @@ def _detect_list_item_space_change(old_content: str, new_content: str) -> bool:
             # 비-리스트 줄이 다르면 텍스트 변경 포함
             return False
     return has_space_change
-
-
-def _normalize_list_for_content_compare(content: str) -> str:
-    """리스트 변경 비교용 plain text를 생성한다.
-
-    리스트 항목 내부의 continuation line 줄바꿈은 emitter에서 공백 하나로 합쳐지므로
-    내용 변경 판정에서는 무시한다. 대신 항목 경계와 항목 내부의 실제 공백 수 차이는
-    그대로 보존해 no-op reflow와 가시 공백 변경을 구분한다.
-
-    마커 뒤 공백 수도 보존한다. normalize_mdx_to_plain이 마커를 제거하므로
-    마커 뒤 공백 수를 별도로 접두어에 기록하여 ``*  text``와 ``* text``를 구분한다.
-    """
-    marker_re = re.compile(r'^(\s*(?:\d+\.|[-*+]))(\s+)')
-    lines = content.strip().split('\n')
-    item_chunks: List[str] = []
-    current_chunk: List[str] = []
-    current_marker_ws: str = ''
-
-    def _flush_current() -> None:
-        if not current_chunk:
-            return
-        plain = normalize_mdx_to_plain('\n'.join(current_chunk), 'list')
-        if plain:
-            item_chunks.append(current_marker_ws + plain.replace('\n', ' '))
-
-    for line in lines:
-        if not line.strip():
-            continue
-        m = marker_re.match(line)
-        if m:
-            _flush_current()
-            current_chunk = [line]
-            current_marker_ws = m.group(2)
-            continue
-        if re.match(r'^\s*(?:\d+\.(?:\s+|$)|[-*+]\s+)', line):
-            _flush_current()
-            current_chunk = [line]
-            current_marker_ws = ''
-            continue
-        if current_chunk:
-            current_chunk.append(line)
-        else:
-            current_chunk = [line]
-            current_marker_ws = ''
-
-    _flush_current()
-    return '\n'.join(item_chunks)
 
 
 def _build_inline_fixups(
@@ -1106,17 +1063,18 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            # v3 fallback, sidecar 없음, 또는 실제 텍스트 변경이 있는 경우 whole-fragment 재생성
-            # (Phase 5 Axis 3: build_list_item_patches fallback 제거)
-            # 내용 비교는 가시 공백 수 변화는 보존하되, continuation line reflow처럼
-            # emitter 결과가 동일한 줄바꿈 정리는 무시한다.
-            _old_plain_raw = _normalize_list_for_content_compare(change.old_block.content)
-            _new_plain_raw = _normalize_list_for_content_compare(change.new_block.content)
-            has_content_change = _old_plain_raw != _new_plain_raw
-            # _apply_mdx_diff_to_xhtml에 전달할 기본값은 collapse_ws 적용:
-            # XHTML plain text에는 줄바꿈이 없으므로 clean list 정렬에는 공백 축약본이 맞다.
-            _old_plain = collapse_ws(_old_plain_raw)
-            _new_plain = collapse_ws(_new_plain_raw)
+            old_list_model = extract_list_model_from_mdx(change.old_block.content)
+            new_list_model = extract_list_model_from_mdx(change.new_block.content)
+            xhtml_list_model = extract_list_model_from_xhtml(mapping.xhtml_text)
+            has_content_change = old_list_model.visible_text != new_list_model.visible_text
+            has_structure_change = (
+                old_list_model.structural_fingerprint
+                != new_list_model.structural_fingerprint
+            )
+            _old_plain_raw = old_list_model.visible_text
+            _new_plain_raw = new_list_model.visible_text
+            _old_plain = old_list_model.visible_text
+            _new_plain = new_list_model.visible_text
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
             _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
             _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
@@ -1132,18 +1090,39 @@ def build_patches(
                 block_type=change.old_block.type,
             )
             has_inline_boundary = bool(inline_fixups)
-            has_any_change = has_content_change or has_ol_start_change or has_inline_boundary
+            has_patchable_text_change = (
+                has_content_change or has_ol_start_change or has_inline_boundary
+            )
+            has_rebuild_change = has_patchable_text_change or has_structure_change
+            requires_anchor_rebuild = sidecar_block_requires_reconstruction(
+                list_sidecar,
+            )
             should_replace_clean_list = (
                 mapping is not None
                 and not _contains_preserved_anchor_markup(mapping.xhtml_text)
                 # sidecar 있으면 항상 허용; 없으면 실제 변경(텍스트 또는 번호 시작값)이 있을 때만 허용
-                and (roundtrip_sidecar is not None or has_any_change)
-                and (list_sidecar is None or mapping_via_v3_fallback or has_any_change)
+                and (roundtrip_sidecar is not None or has_rebuild_change)
+                and (list_sidecar is None or mapping_via_v3_fallback or has_rebuild_change)
             )
+            # preserved anchor list의 구조 변경은 item merge를 우선 시도하고,
+            # 실패한 경우에만 fragment 재구성으로 내려간다.
+            if (mapping is not None
+                    and _contains_preserved_anchor_markup(mapping.xhtml_text)):
+                merge_patch = _build_list_item_merge_patch(
+                    mapping,
+                    change.old_block.content,
+                    change.new_block.content,
+                    _old_plain,
+                    _new_plain,
+                )
+                if merge_patch is not None:
+                    _mark_used(mapping.block_id, mapping)
+                    patches.append(merge_patch)
+                    continue
             if (mapping is not None
                     and (
-                        # anchor case: sidecar anchor metadata가 있으면 ac: 포함 여부 무관
-                        sidecar_block_requires_reconstruction(list_sidecar)
+                        # anchor case: text-only preserved anchor list는 modify로 처리한다.
+                        requires_anchor_rebuild
                         # clean case: preserved anchor 없는 clean list
                         or should_replace_clean_list
                     )):
@@ -1157,46 +1136,24 @@ def build_patches(
                     )
                 )
                 continue
-            # preserved anchor list + 아이템 수 변경: DOM 직접 조작으로 <li> 병합/제거
-            if (mapping is not None
-                    and _contains_preserved_anchor_markup(mapping.xhtml_text)
-                    and has_content_change):
-                merge_patch = _build_list_item_merge_patch(
-                    mapping,
-                    change.old_block.content,
-                    change.new_block.content,
-                    _old_plain,
-                    _new_plain,
-                )
-                if merge_patch is not None:
-                    _mark_used(mapping.block_id, mapping)
-                    patches.append(merge_patch)
-                    continue
             # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
             # (_apply_mdx_diff_to_xhtml 경로)
             # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
             # inline_fixups, has_inline_boundary는 상단에서 이미 계산됨
-            if mapping is not None and (has_any_change or has_inline_boundary):
+            if mapping is not None and has_patchable_text_change:
                 bid = mapping.block_id
                 if bid not in _text_change_patches:
                     patch_entry: Dict[str, Any] = {
                         'xhtml_xpath': mapping.xhtml_xpath,
-                        'old_plain_text': mapping.xhtml_plain_text,
-                        'new_plain_text': mapping.xhtml_plain_text,
+                        'old_plain_text': xhtml_list_model.visible_text,
+                        'new_plain_text': xhtml_list_model.visible_text,
                     }
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    preserve_visible_ws = _contains_preserved_link_markup(
-                        mapping.xhtml_text
-                    )
-                    transfer_old_plain = _old_plain_raw if preserve_visible_ws else _old_plain
-                    transfer_new_plain = _new_plain_raw if preserve_visible_ws else _new_plain
+                    transfer_old_plain = _old_plain_raw
+                    transfer_new_plain = _new_plain_raw
                     transfer_xhtml_plain = _text_change_patches[bid]['new_plain_text']
-                    if not preserve_visible_ws:
-                        # XHTML text를 정규화하여 MDX와 공백 1:1 매핑 보장
-                        # (strong trailing space 등으로 인한 이중 공백 문제 방지)
-                        transfer_xhtml_plain = collapse_ws(transfer_xhtml_plain)
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
                         transfer_old_plain,
                         transfer_new_plain,
