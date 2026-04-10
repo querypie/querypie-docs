@@ -3,14 +3,25 @@
 build_patches 분기 경로
 + helper 함수 (is_markdown_table) 테스트.
 """
+from pathlib import Path
+from bs4 import BeautifulSoup
+
 from reverse_sync.block_diff import BlockChange
+from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import BlockMapping
+from reverse_sync.mapping_recorder import record_mapping
+from mdx_to_storage.parser import parse_mdx_blocks
 from reverse_sync.mdx_block_parser import MdxBlock
 from reverse_sync.sidecar import (
     DocumentEnvelope,
     RoundtripSidecar,
     SidecarBlock,
     SidecarEntry,
+    build_sidecar,
+    build_mdx_to_sidecar_index,
+    build_xpath_to_mapping,
+    generate_sidecar_mapping,
+    load_sidecar_mapping,
     sha256_text,
 )
 from text_utils import normalize_mdx_to_plain
@@ -27,6 +38,8 @@ from reverse_sync.patch_builder import (
     is_markdown_table,
 )
 from reverse_sync.xhtml_patcher import _apply_inline_fixups, patch_xhtml
+
+_REVERSE_SYNC_FIXTURE_ROOT = Path(__file__).parent / "reverse-sync"
 
 # ── 헬퍼 팩토리 ──
 
@@ -2966,6 +2979,139 @@ class TestPreservedAnchorListWhitespaceTransfer:
             f"이미지 preserved anchor 리스트도 패치를 생성해야 합니다. skipped={skipped}"
         )
         assert patches[0]['new_plain_text'] == '목록 좌측 상단에서 Delete 버튼을 클릭합니다.'
+
+    def test_single_item_link_trailing_space_change_generates_patch(self):
+        xhtml = (
+            '<ul><li><p>'
+            '<ac:link><ri:page ri:content-title="Okta 연동하기"/>'
+            '<ac:link-body>Okta 연동하기 </ac:link-body></ac:link>'
+            '</p></li></ul>'
+        )
+        old_content = '* [Okta 연동하기 ](general/okta)\n'
+        new_content = '* [Okta 연동하기](general/okta)\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+        mapping = BlockMapping(
+            block_id='list-anchor-trailing-1',
+            type='list',
+            xhtml_xpath='ul[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='Okta 연동하기',
+            xhtml_element_index=0,
+            children=[],
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', xhtml, sha256_text(old_content), (1, 1))
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert len(patches) == 1, (
+            f"단일 preserved anchor 리스트의 trailing space 제거도 패치를 생성해야 합니다. "
+            f"skipped={skipped}"
+        )
+        assert patches[0]['new_plain_text'] == 'Okta 연동하기'
+
+    def test_marker_space_only_change_on_preserved_anchor_is_noop(self):
+        xhtml = (
+            '<ul><li><p>'
+            '<ac:link><ri:page ri:content-title="링크"/>'
+            '<ac:link-body>링크</ac:link-body></ac:link>'
+            '</p></li></ul>'
+        )
+        old_content = '*  [링크](url)\n'
+        new_content = '* [링크](url)\n'
+        change = _make_change(0, old_content, new_content, type_='list')
+        mapping = BlockMapping(
+            block_id='list-anchor-marker-noop-1',
+            type='list',
+            xhtml_xpath='ul[1]',
+            xhtml_text=xhtml,
+            xhtml_plain_text='링크',
+            xhtml_element_index=0,
+            children=[],
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(0, 'ul[1]', xhtml, sha256_text(old_content), (1, 1))
+        ])
+
+        patches, _, skipped = build_patches(
+            [change], [change.old_block], [change.new_block],
+            mappings=[mapping],
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        assert patches == [], (
+            f"marker 뒤 공백만 바뀐 preserved anchor 리스트는 no-op 이어야 합니다. "
+            f"patches={patches}, skipped={skipped}"
+        )
+
+    def test_fixture_preserved_anchor_list_applies_text_changes_across_image_boundary(
+        self, tmp_path,
+    ):
+        case_dir = _REVERSE_SYNC_FIXTURE_ROOT / "544243925"
+        xhtml = (case_dir / "page.xhtml").read_text(encoding="utf-8")
+        original_mdx = (case_dir / "original.mdx").read_text(encoding="utf-8")
+        improved_mdx = (case_dir / "improved.mdx").read_text(encoding="utf-8")
+        original_blocks = list(parse_mdx_blocks(original_mdx))
+        improved_blocks = list(parse_mdx_blocks(improved_mdx))
+        changes, alignment = diff_blocks(original_blocks, improved_blocks)
+        mappings = record_mapping(xhtml)
+        sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx, "544243925")
+        mapping_path = tmp_path / "544243925.mapping.yaml"
+        mapping_path.write_text(sidecar_yaml, encoding="utf-8")
+        sidecar_entries = load_sidecar_mapping(str(mapping_path))
+
+        patches, _, _ = build_patches(
+            changes,
+            original_blocks,
+            improved_blocks,
+            mappings=mappings,
+            mdx_to_sidecar=build_mdx_to_sidecar_index(sidecar_entries),
+            xpath_to_mapping=build_xpath_to_mapping(mappings),
+            alignment=alignment,
+        )
+
+        patched = patch_xhtml(xhtml, patches)
+        patched_plain = BeautifulSoup(patched, "html.parser").get_text()
+        assert "알림 바에서" in patched_plain
+        assert "users:read.email을 추가한 뒤 저장합니다" in patched_plain
+        assert "Bot User OAuth Token을 복사하고" in patched_plain
+
+    def test_fixture_preserved_anchor_list_merges_figure_only_pseudo_item(
+        self, tmp_path,
+    ):
+        case_dir = _REVERSE_SYNC_FIXTURE_ROOT / "798064641"
+        xhtml = (case_dir / "page.xhtml").read_text(encoding="utf-8")
+        original_mdx = (case_dir / "original.mdx").read_text(encoding="utf-8")
+        improved_mdx = (case_dir / "improved.mdx").read_text(encoding="utf-8")
+        original_blocks = list(parse_mdx_blocks(original_mdx))
+        improved_blocks = list(parse_mdx_blocks(improved_mdx))
+        changes, alignment = diff_blocks(original_blocks, improved_blocks)
+        mappings = record_mapping(xhtml)
+        sidecar_yaml = generate_sidecar_mapping(xhtml, original_mdx, "798064641")
+        mapping_path = tmp_path / "798064641.mapping.yaml"
+        mapping_path.write_text(sidecar_yaml, encoding="utf-8")
+        sidecar_entries = load_sidecar_mapping(str(mapping_path))
+        roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id="798064641")
+
+        patches, _, _ = build_patches(
+            changes,
+            original_blocks,
+            improved_blocks,
+            mappings=mappings,
+            mdx_to_sidecar=build_mdx_to_sidecar_index(sidecar_entries),
+            xpath_to_mapping=build_xpath_to_mapping(mappings),
+            alignment=alignment,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+
+        target = next(p for p in patches if p.get("xhtml_xpath") == "ol[1]")
+        assert target.get("action") == "replace_fragment"
+        assert "<li><ac:image" not in target["new_element_xhtml"]
 
 
 # ── _normalize_list_for_content_compare 마커 공백 보존 테스트 ──
