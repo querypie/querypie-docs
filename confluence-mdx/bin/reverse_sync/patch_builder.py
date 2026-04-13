@@ -1071,10 +1071,8 @@ def build_patches(
                 old_list_model.structural_fingerprint
                 != new_list_model.structural_fingerprint
             )
-            _old_plain_raw = old_list_model.visible_text
-            _new_plain_raw = new_list_model.visible_text
-            _old_plain = old_list_model.visible_text
-            _new_plain = new_list_model.visible_text
+            old_visible = old_list_model.visible_text
+            new_visible = new_list_model.visible_text
             # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
             _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
             _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
@@ -1112,8 +1110,8 @@ def build_patches(
                     mapping,
                     change.old_block.content,
                     change.new_block.content,
-                    _old_plain,
-                    _new_plain,
+                    old_visible,
+                    new_visible,
                 )
                 if merge_patch is not None:
                     _mark_used(mapping.block_id, mapping)
@@ -1151,12 +1149,10 @@ def build_patches(
                     patches.append(patch_entry)
                     _text_change_patches[bid] = patch_entry
                 if has_content_change:
-                    transfer_old_plain = _old_plain_raw
-                    transfer_new_plain = _new_plain_raw
                     transfer_xhtml_plain = _text_change_patches[bid]['new_plain_text']
                     _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        transfer_old_plain,
-                        transfer_new_plain,
+                        old_visible,
+                        new_visible,
                         transfer_xhtml_plain,
                     )
                 if has_ol_start_change:

@@ -111,3 +111,42 @@ class TestExtractListModelFromXhtml:
         )
 
         assert model.visible_text == "before oldCap next"
+
+
+class TestEdgeCases:
+    def test_empty_string_returns_empty_model(self):
+        model = extract_list_model_from_mdx("")
+        assert model.visible_text == ""
+        assert model.segments == []
+        assert model.structural_fingerprint == ("ul", None, ())
+
+    def test_single_empty_item(self):
+        model = extract_list_model_from_mdx("* \n")
+        assert model.visible_text == ""
+        assert model.structural_fingerprint[0] == "ul"
+
+    def test_deeply_nested_list_preserves_structure(self):
+        model = extract_list_model_from_mdx(
+            "* L1\n"
+            "  * L2\n"
+            "    * L3\n"
+        )
+        assert model.visible_text == "L1L2L3"
+        fp_items = model.structural_fingerprint[2]
+        assert len(fp_items) == 3
+        assert fp_items[0][0] == (0,)
+        assert fp_items[1][0] == (0, 0)
+        assert fp_items[2][0] == (0, 0, 0)
+
+    def test_ordered_list_start_reflected_in_fingerprint(self):
+        model_1 = extract_list_model_from_mdx("1. A\n2. B\n")
+        model_3 = extract_list_model_from_mdx("3. A\n4. B\n")
+        assert model_1.visible_text == model_3.visible_text
+        assert model_1.structural_fingerprint[1] == 1
+        assert model_3.structural_fingerprint[1] == 3
+        assert model_1.structural_fingerprint != model_3.structural_fingerprint
+
+    def test_empty_xhtml_returns_empty_model(self):
+        model = extract_list_model_from_xhtml("")
+        assert model.visible_text == ""
+        assert model.segments == []

@@ -11,7 +11,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import html as html_module
 import re
-from typing import Any, Iterable, List, Tuple
+from typing import Any, Iterable, List, Literal, Tuple
+
+SegmentKind = Literal["list_marker", "ws", "text", "item_boundary", "anchor"]
 
 from bs4 import BeautifulSoup, Tag
 from reverse_sync.mapping_recorder import get_text_with_emoticons
@@ -19,7 +21,7 @@ from reverse_sync.mapping_recorder import get_text_with_emoticons
 
 @dataclass(frozen=True)
 class VisibleSegment:
-    kind: str
+    kind: SegmentKind
     text: str
     visible: bool
     structural: bool
