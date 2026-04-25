@@ -1,352 +1,246 @@
-# Reverse Sync 리팩토링 분석
+# Reverse Sync 현재 구현 상태 분석
 
-> 작성일: 2026-02-26
-> 대상: `confluence-mdx/bin/reverse_sync/` + `reverse_sync_cli.py`
+이 문서는 2026-04-13 기준 reverse-sync의 실제 구현 상태를 코드베이스, 테스트케이스, 최근 커밋 로그를 바탕으로 다시 정리한 문서입니다.
 
-## 1. 분석 목적
+기존 버전은 2026-02~03 시점의 리팩토링 제안과 phase 계획을 중심으로 작성되어 있었고, `text_transfer.py`, `list_patcher.py`, `table_patcher.py` 같은 과거 설계를 전제로 설명하는 부분이 남아 있었습니다. 현재 구현은 그 이후 다수의 refactor/fix를 거치며 구조가 크게 바뀌었으므로, 이 문서는 "무엇을 해야 하는가"보다 "지금 무엇이 구현되어 있고 어디가 여전히 취약한가"를 설명합니다.
 
-최근 reverse-sync 관련 커밋 12건 중 **10건이 버그 수정**이다. 이 빈도는 단순한 구현 실수가 아니라 **설계 수준의 구조적 문제**에서 비롯되었을 가능성이 높다. 이 문서는 반복 버그의 근본 원인을 디자인 결함 관점에서 분석하고, 리팩토링 대상을 도출한다.
+## 1. 한 문장 요약
 
----
+현재 reverse-sync는 "MDX diff를 XHTML에 보수적으로 반영하고, sidecar 기반 identity preservation과 fragment reconstruction을 활용해 원본 fragment를 최대한 유지하며, 마지막에 forward roundtrip으로 검증하는 시스템"입니다.
 
-## 2. 최근 버그 패턴 분류
+즉, 단순 역변환기나 text patcher가 아닙니다.
 
-최근 커밋에서 수정된 버그를 원인별로 분류한다.
+## 2. 최근 변경 흐름 요약
 
-### 2.1 텍스트 위치 매핑 오류 (4건)
+2026-03-17 이후 reverse-sync 관련 커밋은 대체로 다음 흐름을 보입니다.
 
-| 커밋 | 증상 | 근본 원인 |
-|------|------|-----------|
-| `2e9de1a` | `find_insert_pos(char_map, 0)`이 `char_map[0]` 존재 시에도 0 반환 | `text_transfer.py`의 문자 단위 정렬에서 경계 조건 누락 |
-| `fb7efeec` | 인접 text node 경계에서 insert opcode 양쪽 적용 | `xhtml_patcher.py`의 `_map_text_range`에서 half-open range 미적용 |
-| `60c5390` | `<strong>` 뒤 조사 앞 공백 미제거 | `_apply_text_changes`에서 인라인 태그 경계 gap 처리 누락 |
-| `1e4dd43` | 재실행 시 "네이티브로 네이티브로" 중복 | `transfer_text_changes`가 이미 적용된 텍스트를 재매핑 |
+1. Phase 5 초기 구현
+   - sidecar 타입 기반 매핑
+   - heading lookahead 제거
+   - reconstruction 경로 도입
 
-### 2.2 인라인 포맷 변경 감지 실패 (3건)
+2. 구조 재편
+   - `text_transfer.py` 제거
+   - legacy `list_patcher.py`, `table_patcher.py` 제거
+   - `build_patches()` 내부로 매핑/라우팅 책임 집중
 
-| 커밋 | 증상 | 근본 원인 |
-|------|------|-----------|
-| `6438a16` | 연속 인라인 마커 사이 텍스트 변경(쉼표 등) 미감지 | `has_inline_format_change`가 마커 간 텍스트를 검사하지 않음 |
-| `ea28d65` | flat list에서 backtick 변경 누락 | `_resolve_child_mapping` 실패 시 inline 변경 추적 경로 없음 |
-| `7ebaf87` | inline format 변경이 text-only 패치로 처리됨 | inline 변경 감지 로직 자체가 부재 (이 커밋에서 신규 구현) |
+3. 회귀 수정 집중
+   - preserved anchor list 처리
+   - callout 내부 list marker 공백
+   - code span 뒤 공백
+   - heading 내 badge roundtrip
+   - inline boundary whitespace
+   - `--no-normalize` 옵션 추가
+   - visible segment 모델 도입
 
-### 2.3 리스트 처리 실패 (2건)
+이 흐름은 현재 시스템이 아직도 활발히 안정화 중이며, 특히 리스트·인라인 경계·정규화·preserved anchor가 핵심 리스크 영역임을 보여줍니다.
 
-| 커밋 | 증상 | 근본 원인 |
-|------|------|-----------|
-| `f5f307f` | 리스트 항목 수 변경 시 빈 패치 반환 | `build_list_item_patches`에 항목 수 불일치 분기 없음 |
-| `acf4e3c` | 중첩 리스트 텍스트 붕괴 | `SequenceMatcher`의 `autojunk` 기본값이 CJK에 부적합 |
+## 3. 현재 아키텍처의 중심축
 
-### 2.4 정규화/검증 불일치 (2건)
+### 3.1 공개 진입점은 `reverse_sync_cli.py`
 
-| 커밋 | 증상 | 근본 원인 |
-|------|------|-----------|
-| `29cdc9f` | 날짜 locale 불일치로 verify 실패 | forward converter의 locale이 reverse-sync 파이프라인과 불일치 |
-| `18679d0` | callout 매핑 불완전으로 verify 실패 | `roundtrip_verifier`의 정규화 함수 부족 |
+CLI 계층은 다음 책임을 맡습니다.
 
----
+- 단일 파일 verify
+- branch 기준 batch verify
+- 선택적 push
+- 결과 YAML 기록
+- failures-only 출력 제어
+- `--lenient`, `--no-normalize` 같은 검증 옵션 전달
+- push 전 안전장치 및 충돌 처리
 
-## 3. 디자인 결함 분석
+하지만 이 파일이 reverse-sync의 "정책 엔진"은 아닙니다.
 
-### 3.1 근본 원인: "텍스트 패칭" 전략의 본질적 취약성
+### 3.2 실제 정책 엔진은 `patch_builder.py`
 
-현재 reverse-sync의 핵심 전략은 다음과 같다:
+현재 reverse-sync의 핵심 지능은 `patch_builder.py`에 집중되어 있습니다.
 
-```
-MDX diff → 텍스트 변경 추출 → XHTML 내 텍스트 위치 매핑 → 문자 단위 치환
-```
+이 모듈이 결정하는 것:
 
-이 전략은 **XHTML의 DOM 구조를 보존하면서 텍스트만 교체**하는 것이 목표이지만, 근본적인 한계가 있다:
+- 어떤 변경을 direct/containing/list/table/paired/skip으로 볼지
+- mapping.yaml만으로 처리할지 roundtrip sidecar fallback이 필요한지
+- delete/add 쌍을 fragment replacement로 승격할지
+- preserved anchor를 rewrite_on_stored_template로 다룰지
+- container를 outer wrapper template 기반으로 재구성할지
+- table 변경을 허용할지 skip할지
+- list 변경을 visible segment 기반으로 흡수할지
 
-**문제 1: 두 개의 독립된 좌표계 사이의 매핑**
+현재 설계의 장점은 정책이 한곳에 모여 있다는 점이고, 단점은 정책/예외/skip 분기가 과도하게 집중되어 있다는 점입니다.
 
-MDX의 텍스트 위치와 XHTML의 텍스트 위치는 서로 다른 좌표계이다. 이 둘을 문자 단위로 정렬(`align_chars`)하는 것은 본질적으로 불안정하다.
+### 3.3 sidecar는 lookup 보조가 아니라 identity 계층
 
-- MDX에서 `**bold**`는 8글자, XHTML에서 `<strong>bold</strong>`는 23글자
-- Markdown의 인라인 마커, HTML 엔티티, Confluence 전용 태그 등이 좌표를 왜곡
-- `text_transfer.py`의 `align_chars()`는 비공백 문자만 정렬하므로, 공백 위치의 미묘한 차이에서 오류 발생
+현재 구현은 두 종류의 sidecar를 사용합니다.
 
-**이것이 2.1의 4건의 버그가 모두 "위치 매핑"에서 발생한 이유이다.**
+1. `mapping.yaml`
+   - top-level block alignment
+   - child alignment
+   - `lost_info`
+   - 기본 lookup 역인덱스
 
-**문제 2: "텍스트 변경"과 "구조 변경"의 구분 불가능**
+2. `expected.roundtrip.json` schema v3
+   - `xhtml_fragment`
+   - `mdx_content_hash`
+   - `mdx_line_range`
+   - `reconstruction`
+   - document envelope / separator
 
-현재 파이프라인은 모든 변경을 "텍스트 변경"으로 시작하되, 특정 조건에서 "구조 변경"(inner XHTML 재생성)으로 전환한다. 이 전환 조건이 `has_inline_format_change()` 등의 휴리스틱에 의존하므로:
+실전에서는 두 번째가 더 중요합니다. 현재 reverse-sync의 안정성은 "이 블록이 어떤 XHTML 요소인가"보다 "이 블록이 원래 어떤 fragment였고 어떤 템플릿으로 재사용할 수 있는가"에 더 크게 의존합니다.
 
-- 감지하지 못하는 edge case가 계속 발견된다 (2.2의 3건)
-- 감지 로직 추가 → 새로운 edge case 발견 → 또 추가, 의 무한 루프
+## 4. 현재 구현된 실행 파이프라인
 
-**문제 3: 리스트의 이중 구조**
+표준 경로는 `run_verify()`로 이해하는 것이 가장 정확합니다.
 
-MDX 리스트는 단일 블록(`type: 'list'`)이지만, XHTML에서는 `<ul>` 안에 여러 `<li>` 요소로 분해된다. 이 1:N 매핑은 다음과 같은 복잡성을 초래한다:
+1. 원본/교정 MDX 로드
+2. `parse_mdx_blocks()` + `diff_blocks()`
+3. `record_mapping(page.xhtml)`
+4. `generate_sidecar_mapping()` 또는 기존 `mapping.yaml` 활용
+5. `build_sidecar()`로 roundtrip sidecar v3 생성/활용
+6. `build_patches()`로 patch 목록 생성
+7. `patch_xhtml()` 적용
+8. patched XHTML에서 mapping 재기록
+9. patched XHTML을 forward converter로 다시 MDX 변환
+10. `verify_roundtrip()`로 improved MDX와 비교
+11. pass일 때만 push 후보로 간주
 
-- `build_list_item_patches`: 항목별 매칭 시도 → 실패 시 containing block 폴백
-- `_resolve_child_mapping`: 4단계 폴백 (collapse_ws → 공백 제거 → 마커 제거 → 역방향)
-- 항목 수 변경 시 별도 분기 필요 (`f5f307f`)
-- flat list vs nested list 구분 필요 (`ea28d65`)
+중요한 점은, reverse-sync의 성공 정의가 "patch를 만들었다"가 아니라 "forward roundtrip 증명이 끝났다"는 것입니다.
 
-**이 복잡성은 "하나의 MDX 블록 = 하나의 XHTML 요소" 가정이 리스트에서 무너지기 때문이다.**
+## 5. 현재 강한 영역
 
-### 3.2 코드 냄새: patch_builder.py의 God Function
+최근 커밋과 테스트 구조를 볼 때 현재 구현이 상대적으로 강한 영역은 다음과 같습니다.
 
-`build_patches()` (719줄 파일)는 다음을 모두 담당한다:
+### 5.1 paragraph / heading 중심 교정
 
-1. 변경 유형 판별 (modified / added / deleted)
-2. 매핑 전략 결정 (direct / containing / list / table / skip)
-3. 인라인 포맷 변경 감지
-4. 텍스트 정규화 및 비교
-5. 패치 dict 생성
-6. 멱등성 보장 (이미 적용된 변경 스킵)
+- 일반 문단 수정
+- heading 텍스트 수정
+- badge가 섞인 heading의 roundtrip
+- code span / link 주변 공백 보정
 
-**최근 버그 수정 10건 중 7건이 이 파일을 수정했다.** 이는 단일 모듈에 과도한 책임이 집중되어 있음을 보여준다.
+### 5.2 sidecar reconstruction이 잘 작동하는 container
 
-분기 구조를 보면:
-
-```
-build_patches()
-  ├── deleted → _build_delete_patch()
-  ├── added → _build_insert_patch()
-  └── modified
-      ├── NON_CONTENT → skip
-      └── _resolve_mapping_for_change()
-          ├── skip → continue
-          ├── list → build_list_item_patches()
-          │     ├── 항목 수 동일
-          │     │   ├── child 매칭 성공
-          │     │   │   ├── inline 변경 → new_inner_xhtml
-          │     │   │   └── text 변경
-          │     │   │       ├── prefix 있음 → transfer + prefix 복원
-          │     │   │       └── prefix 없음 → transfer
-          │     │   └── child 매칭 실패
-          │     │       ├── inline marker 추가 → 전체 재생성
-          │     │       └── containing block 폴백
-          │     └── 항목 수 다름 → 전체 inner XHTML 재생성
-          ├── table → build_table_row_patches()
-          ├── containing → 그룹화 후 일괄 transfer
-          └── direct
-              ├── inline 변경 → new_inner_xhtml
-              └── text 변경
-                  ├── 이미 적용됨 → skip (멱등성)
-                  ├── old ≠ xhtml → transfer_text_changes
-                  └── old == xhtml → 직접 교체
-```
+- clean container
+- 일부 callout / ADF panel
+- parameter-bearing container 중 outer wrapper template으로 body만 바꾸는 경로
 
-이 분기 트리는 14단계 깊이에 6가지 전략을 포함한다. 새로운 edge case가 발견될 때마다 분기가 추가되는 구조이다.
+### 5.3 list의 일부 고질 회귀
 
-### 3.3 코드 냄새: 다단계 폴백 체인
+최근 수정으로 다음 류의 문제는 이전보다 많이 완화되었습니다.
 
-`_resolve_mapping_for_change()`는 매핑을 찾기 위해 다음 순서로 시도한다:
+- marker 뒤 공백 감지
+- 선행 공백 축소
+- continuation line merge
+- preserved anchor list의 item 제거
+- callout 내부 list marker 공백
 
-1. sidecar 직접 조회 (`find_mapping_by_sidecar`)
-2. parent mapping → child 해석 (`_resolve_child_mapping`)
-3. 텍스트 포함 검색 (`_find_containing_mapping`)
-4. 리스트/테이블 전략으로 전환
+이는 2026-04-13의 visible segment 모델 도입까지 이어진 흐름입니다.
 
-`_resolve_child_mapping()`도 내부적으로 4단계 폴백:
+## 6. 현재 취약한 영역
 
-1. `collapse_ws` 완전 일치
-2. 공백 제거 완전 일치
-3. XHTML 리스트 마커 제거 후 비교
-4. MDX 리스트 마커 제거 후 비교
+### 6.1 table
 
-이 폴백 체인은 매핑의 정확성에 대한 **자신감 부족**을 코드로 표현한 것이다. sidecar mapping이 정확하다면 폴백이 불필요하다.
+테이블은 여전히 가장 조심스럽게 다뤄지는 영역입니다.
 
-### 3.4 코드 냄새: 정규화 함수의 폭발적 증가
+현재 구현은 table을 공격적으로 patch하지 않습니다. 위험할 경우 명시적으로 skip합니다.
 
-텍스트 비교를 위한 정규화 함수가 여러 모듈에 분산되어 있다:
+대표 skip reason:
 
-| 모듈 | 함수 | 용도 |
-|------|------|------|
-| `text_utils.py` | `normalize_mdx_to_plain()` | MDX → plain text |
-| `text_utils.py` | `collapse_ws()` | 공백 축약 |
-| `text_utils.py` | `strip_for_compare()` | 불가시 문자 제거 |
-| `text_utils.py` | `strip_list_marker()` | 리스트 마커 제거 |
-| `patch_builder.py` | `normalize_table_row()` | 테이블 행 정규화 |
-| `patch_builder.py` | `_strip_block_markers()` | heading/list 마커 제거 |
-| `roundtrip_verifier.py` | 9개 `_normalize_*` 함수 | 검증 시 정규화 |
+- `no_mapping`
+- `missing_roundtrip_sidecar`
+- `preserved_anchor_table`
+- `raw_html_table`
+- `not_markdown_table`
+- `unsafe_html_table_edit`
 
-**총 15개 이상의 정규화 함수**가 존재하며, 각각 미묘하게 다른 규칙을 적용한다. 이는 "어느 수준의 동일성이면 같다고 볼 것인가"에 대한 일관된 정의가 없음을 의미한다.
+즉, "table도 어느 정도 된다"가 아니라 "안전한 table만 제한적으로 처리한다"가 현재 상태에 더 가깝습니다.
 
-### 3.5 코드 냄새: xhtml_patcher.py의 취약한 텍스트 위치 추적
+### 6.2 preserved anchor가 섞인 복합 구조
 
-`_apply_text_changes()`는 다음 알고리즘을 사용한다:
+preserved anchor는 현재 reverse-sync가 원본 XHTML fragment의 정체성을 끝까지 보존하려는 이유를 가장 잘 보여주는 케이스입니다.
 
-1. `old_text.strip()`에서 각 DOM text node의 위치를 `str.find()`로 추적
-2. `SequenceMatcher`로 old→new 변경(opcode)을 계산
-3. 각 text node의 [start, end) 범위에 해당하는 opcode를 적용
+- 일반 emitter 재생성으로는 anchor 관련 메타가 쉽게 깨집니다.
+- 그래서 rewrite_on_stored_template 또는 sidecar reconstruction으로 우회합니다.
+- 하지만 list/table/container가 중첩되면 여전히 리스크가 큽니다.
 
-이 알고리즘의 문제점:
+### 6.3 normalization에 민감한 roundtrip
 
-- **`str.find()`는 "첫 번째 일치"만 반환**: 동일한 텍스트가 반복되면 위치가 틀려진다
-- **text node의 경계가 opcode의 경계와 일치하지 않을 때**: `replace` opcode를 비율(`ratio`)로 분배하는데, 이는 근사치이며 CJK 문자에서 부정확
-- **인라인 태그 사이의 gap 처리**: `<strong>A</strong> B`에서 gap(" ")이 삭제될 때의 처리를 별도 로직으로 해결 (`60c5390`)
+최근 커밋을 보면 verifier와 converter 정규화가 계속 조정되고 있습니다.
 
----
+이 말은 곧,
 
-## 4. 구조적 개선 제안
+- 실제 patch는 맞지만 verifier에서 mismatch가 날 수 있고
+- 반대로 verifier를 느슨하게 하면 실제 회귀를 놓칠 수 있으며
+- converter 동작 변화가 reverse-sync pass/fail에 직접 영향을 준다는 뜻입니다.
 
-### 4.1 전략 전환: "텍스트 패칭" → "선택적 재생성" 중심으로
+따라서 reverse-sync는 독립 서브시스템이 아니라 forward converter의 특성에 강하게 결합되어 있습니다.
 
-현재는 **텍스트 패칭이 기본**, 실패 시 재생성으로 폴백하지만, 이를 역전시킨다:
+### 6.4 `patch_builder.py` 단일 집중
 
-| 현재 | 개선 후 |
-|------|---------|
-| text transfer가 기본 | inner XHTML 재생성이 기본 |
-| `has_inline_format_change` → 재생성 | 단순 텍스트만 text transfer |
-| edge case마다 분기 추가 | 재생성이 기본이므로 분기 축소 |
+현재 구조에서 가장 큰 유지보수 리스크는 `patch_builder.py`에 전략 분기, 예외 처리, sidecar fallback, skip 분류가 과도하게 모여 있다는 점입니다.
 
-**기대 효과:**
-- `text_transfer.py`, `_apply_text_changes()`의 복잡한 위치 매핑 로직의 사용 빈도 감소
-- `has_inline_format_change()` 같은 감지 휴리스틱 불필요
-- patch_builder.py의 분기 트리 대폭 단순화
+이 파일은 현재 기능적으로 중요하지만, 새로운 회귀가 생길 때마다 이곳에 if/elif가 더 쌓이기 쉬운 구조입니다.
 
-**trade-off:**
-- 재생성 시 Confluence 전용 태그(`<ac:emoticon>`, `<ac:link>` 등)가 손실될 수 있음
-- `lost_info_patcher.py`의 복원 범위를 확대해야 함
-- 일부 케이스에서 XHTML 포맷(공백, 속성 순서 등)이 변경될 수 있음
+## 7. 테스트/픽스처가 보여주는 현재 상태
 
-### 4.2 patch_builder.py 분해
+저장소 기준 확인 가능한 수치는 다음과 같습니다.
 
-현재 719줄 단일 파일을 책임 단위로 분리한다:
+- `confluence-mdx/tests/testcases/` 디렉터리: 21개
+- 각 testcase에 `page.xhtml`, `expected.mdx`, `expected.roundtrip.json` 존재: 21개
+- `original.mdx`, `improved.mdx`, `expected.reverse-sync.patched.xhtml`를 갖춘 reverse-sync fixture: 16개
+- `confluence-mdx/tests/reverse-sync/pages.yaml` 항목 수: 67개
+- 그중 `failure_type` 메타데이터가 있는 항목: 41개
+- `expected_status: pass` 항목: 43개
 
-| 새 모듈 | 책임 | 현재 위치 |
-|---------|------|-----------|
-| `strategy_resolver.py` | 변경 유형별 전략 결정 | `_resolve_mapping_for_change` |
-| `list_patcher.py` | 리스트 블록 전용 패치 로직 | `build_list_item_patches`, `split_list_items` |
-| `table_patcher.py` | 테이블 전용 패치 로직 | `build_table_row_patches`, `split_table_rows` |
-| `inline_detector.py` | 인라인 포맷 변경 감지 | `has_inline_format_change`, `_extract_inline_markers` |
-| `patch_builder.py` | 오케스트레이션만 담당 | `build_patches` (축소) |
+이 숫자가 의미하는 바는 다음과 같습니다.
 
-### 4.3 매핑 정확성 개선
+1. reverse-sync는 순수 unit test만으로 관리되지 않고, 문서 페이지 fixture 중심의 회귀 방지 체계를 함께 사용합니다.
+2. 실패를 "아예 모르는 문제"로 두기보다 `failure_type`, severity, label로 분류하려는 운영 방식이 이미 존재합니다.
+3. pages.yaml은 단순 catalog가 아니라 테스트 메타데이터 저장소 역할도 동시에 합니다.
 
-현재 `generate_sidecar_mapping()`의 텍스트 기반 매칭을 개선하여 폴백 체인의 필요성을 줄인다:
+## 8. 기존 문서가 왜 stale해졌는가
 
-- forward converter가 mapping.yaml을 생성할 때 **확정적인 MDX 블록 인덱스**를 기록
-- `_resolve_child_mapping()`의 4단계 폴백 → sidecar가 child 매핑도 포함하도록 확장
-- `_find_containing_mapping()`의 텍스트 포함 검색 → sidecar에서 parent-child 관계를 명시
+기존 문서의 핵심 문제는 "틀린 문제의식"이 아니라 "문제의식은 맞았지만 구현 상태가 바뀌었다"는 데 있습니다.
 
-### 4.4 정규화 전략 통합
+예를 들어 다음은 여전히 유효한 진단입니다.
 
-15개 이상의 정규화 함수를 **비교 수준(level)** 기반으로 체계화한다:
+- patch_builder가 너무 크다
+- 리스트/테이블/인라인 경계가 위험하다
+- normalization이 구조적 부담이다
+- reverse-sync는 단순 text patching으로 안정화되기 어렵다
 
-| Level | 적용 | 용도 |
-|-------|------|------|
-| L0: exact | 변환 없음 | 엄격 검증 |
-| L1: whitespace | `collapse_ws` + trailing ws 제거 | 매핑 조회 |
-| L2: markup | L1 + 인라인 마커 제거 + HTML unescape | 블록 매칭 |
-| L3: structural | L2 + 리스트 마커 + heading 마커 제거 | 폴백 매칭 |
+반면 다음은 더 이상 현재 상태를 반영하지 않습니다.
 
-현재는 각 호출부에서 임의로 정규화 수준을 선택하고 있어, 동일한 비교에서도 정규화 수준이 불일치하는 경우가 있다.
+- `text_transfer.py` 중심 설명
+- `list_patcher.py`, `table_patcher.py`가 여전히 핵심이라는 전제
+- roundtrip sidecar를 backward verify 보조 정도로만 보는 설명
+- phase 문서의 예정 작업이 아직 미구현이라고 가정하는 표현
 
-### 4.5 xhtml_patcher.py의 알고리즘 개선
+즉, 기존 문서를 그대로 읽으면 "아직 해야 할 설계"와 "이미 구현된 설계"가 섞여 보입니다.
 
-`_apply_text_changes()`의 `str.find()` 기반 위치 추적을 개선한다:
+## 9. 현재 상태를 문서화할 때의 원칙
 
-- text node 순회 시 DOM 순서를 기반으로 위치를 누적 계산 (str.find 제거)
-- `replace` opcode의 비율 분배 대신, opcode 경계를 text node 경계에 맞춰 분할
-- 대안: `_apply_text_changes` 전체를 `_replace_inner_html`로 대체하는 것을 기본으로 고려
+현재 문서를 유지보수할 때는 다음 원칙이 필요합니다.
 
----
+1. 계획과 현황을 분리합니다.
+   - 구현 상태 문서는 현재 코드가 실제로 하는 일을 적어야 합니다.
+   - 계획 문서는 앞으로 바꿀 설계를 적어야 합니다.
 
-## 5. 리팩토링 대상 요약
+2. `mapping.yaml`과 roundtrip sidecar를 구분해서 설명합니다.
+   - 둘은 역할이 다릅니다.
 
-### 5.1 높은 우선순위 (버그 재발 방지)
+3. 성공 사례보다 보수적 경계를 명시합니다.
+   - 어떤 변경은 일부러 skip한다는 점을 숨기면 안 됩니다.
 
-| # | 대상 | 유형 | 기대 효과 |
-|---|------|------|-----------|
-| R1 | `build_patches` direct 경로: text transfer → inner XHTML 재생성 기본 전환 | 전략 변경 | 2.1 위치 매핑 + 2.2 인라인 감지 버그 근본 해결 |
-| R2 | `build_list_item_patches` 단순화: child 매칭 실패 시 즉시 재생성 | 전략 변경 | 리스트 관련 버그 근본 해결, `_resolve_child_mapping` 4단계 폴백 제거 |
-| R3 | `_apply_text_changes`의 str.find() → DOM 순서 기반 위치 추적 | 알고리즘 | 위치 매핑 정확성 향상 |
+4. reverse-sync를 forward converter와 분리해서 서술하지 않습니다.
+   - 최종 성공 판정은 roundtrip에 의존합니다.
 
-### 5.2 중간 우선순위 (유지보수성 개선)
+5. patch_builder를 "세부 구현"이 아니라 "정책 엔진"으로 설명합니다.
 
-| # | 대상 | 유형 | 기대 효과 |
-|---|------|------|-----------|
-| R4 | `patch_builder.py` 분해 (719줄 → 5개 모듈) | 구조 | 변경 영향 범위 축소, 테스트 용이성 |
-| R5 | 정규화 함수 체계화 (Level 기반) | 설계 | 비교 일관성, 새 정규화 추가 시 혼란 방지 |
-| R6 | `generate_sidecar_mapping()`에 child 매핑 포함 | 데이터 | 폴백 체인 축소, 매핑 정확성 향상 |
+## 10. 결론
 
-### 5.3 낮은 우선순위 (코드 품질)
+현재 reverse-sync는 실패한 실험 단계가 아니라, 이미 상당한 수준의 sidecar/reconstruction 기반 시스템으로 진화한 상태입니다. 다만 그 대가로 다음 특성이 분명해졌습니다.
 
-| # | 대상 | 유형 | 기대 효과 |
-|---|------|------|-----------|
-| R7 | `_iter_block_children()` 중복 제거 (mapping_recorder ↔ xhtml_patcher) | 중복 제거 | 기존 분석(4.1)과 동일 |
-| R8 | `NON_CONTENT_TYPES` 상수 중복 (block_diff, patch_builder, sidecar, rehydrator) | 중복 제거 | 4곳에서 독립 정의 → 단일 정의 |
-| R9 | `reverse_sync_cli.py`의 sidecar 조립 인라인 코드 → 함수 추출 | 추출 | run_verify() 285~302행의 인라인 조립 → 전용 함수 |
+- 안정성은 올라갔지만 구조는 복잡해졌습니다.
+- fragment identity 보존이 핵심이 되었고, 단순 emitter 재생성 전략은 중심에서 밀려났습니다.
+- list/table/preserved anchor 같은 영역은 여전히 기능 경계가 뚜렷합니다.
+- 향후 개선은 "기능 추가"보다 "정책 분리, 경계 명시, 테스트 피라미드 정리"에 더 가깝게 접근해야 합니다.
 
----
-
-## 6. 주요 수치
-
-| 지표 | 값 |
-|------|-----|
-| reverse_sync/ 총 줄 수 | ~3,263 |
-| patch_builder.py 줄 수 | 719 (전체의 22%) |
-| 최근 12 커밋 중 버그 수정 | 10건 (83%) |
-| patch_builder.py 수정 커밋 | 7/10건 (70%) |
-| 정규화 함수 수 | 15+ |
-| `_resolve_child_mapping` 폴백 단계 | 4 |
-| `_resolve_mapping_for_change` 전략 수 | 5 (direct, containing, list, table, skip) |
-
----
-
-## 8. 구현 진행 상황
-
-### 8.1 R1: direct 경로 inner XHTML 재생성 — 완료
-
-- **PR**: #858 (merged)
-- `build_patches`의 direct 경로에서 text transfer 대신 `mdx_block_to_inner_xhtml` 재생성을 기본으로 전환
-- `lost_info_patcher.py`의 `apply_lost_info`로 `<ac:*>` 요소 보존
-
-### 8.2 R2: list_patcher 재생성 — 완료 (후속 과제 있음)
-
-- **PR**: #859
-- `build_list_item_patches`에서 child 매칭 실패 시 전체 리스트 inner XHTML 재생성
-- containing block 제거 폴백 완전 제거
-- `<ac:image>` 포함 리스트는 `transfer_text_changes`로 폴백하는 가드 추가
-
-#### R2 구현 후 발견된 후속 과제
-
-R2 구현 중 3개 테스트 케이스(544112828, 544379140, 544384417)에서 round-trip 검증이 `pass → fail`로 변경됨. 원인 분석 결과 2가지 후속 과제가 도출됨.
-
-**F1. `<span style>` 가드 추가 (우선순위: 높음)**
-
-| 항목 | 내용 |
-|------|------|
-| 위치 | `list_patcher.py` — `_regenerate_list_from_parent` 및 per-child 경로 |
-| 증상 | 리스트 항목 내 `<span style="color: ...">` 인라인 스타일이 재생성 시 소실 |
-| 예시 | 544379140: `<span style="color: rgb(76,154,255);">See Log Template...</span>` → 일반 텍스트 |
-| 해결 방향 | `<ac:image>` 가드와 동일한 패턴으로 `<span style=` 포함 시 `transfer_text_changes`로 폴백 |
-| 영향 | Confluence에서 색상이 적용된 텍스트가 일반 텍스트로 변경되는 **실제 시각적 변화** |
-
-**F2. `<ol start="1">` 보존 (우선순위: 낮음)**
-
-| 항목 | 내용 |
-|------|------|
-| 위치 | `mdx_to_xhtml_inline.py` — `_render_nested_list` |
-| 증상 | 재생성 시 `<ol start="1">` → `<ol>`로 변경 (HTML 기본값이므로 기능 동일) |
-| 예시 | 544379140: 4건, 544384417: 8건의 `start` 속성 제거 |
-| 해결 방향 | `_render_nested_list`에서 ordered list 생성 시 `start="1"` 속성 출력 |
-| 영향 | 기능적 영향 없음 (Confluence 렌더링 동일), 불필요한 XHTML 변경 최소화 |
-
-### 8.3 F1+F2: `<span style>` 가드 + `<ol start="1">` 보존 — 완료
-
-- **PR**: #862 (merged)
-- `list_patcher.py`에서 `<span style=` 포함 시 `transfer_text_changes`로 폴백하는 가드 추가
-- `mdx_to_xhtml_inline.py`에서 ordered list 생성 시 `start="1"` 속성 출력
-
-### 8.4 F3: direct 경로 `<ac:link>` 가드 — 완료
-
-- **PR**: #864 (예정)
-- `build_patches`의 direct 경로에서 매핑 XHTML에 `<ac:link>` 포함 시 inner XHTML 재생성 대신 `transfer_text_changes`로 폴백
-- HTML table 블록 내 `<ac:link>` 요소가 `<a href>`로 소실되는 문제 해결
-- 544178405 테스트케이스 `status: fail → pass` 전환 (16/16 전체 pass 달성)
-
----
-
-## 7. 결론
-
-reverse-sync의 반복적인 버그는 **"텍스트 패칭이 기본, 재생성이 폴백"이라는 설계 전략**에서 비롯된다. 텍스트 패칭은 두 좌표계(MDX ↔ XHTML) 사이의 문자 단위 정렬을 요구하며, 이는 인라인 마커, 공백 차이, DOM 구조 경계에서 본질적으로 불안정하다.
-
-이 전략을 **"재생성이 기본, 텍스트 패칭이 최적화"**로 역전시키면, 대부분의 edge case 분기가 불필요해지고, patch_builder.py의 복잡도를 대폭 줄일 수 있다.
-
-단, 재생성 전략으로의 전환에는 Confluence 전용 요소(`<ac:*>`) 보존이라는 별도의 과제가 있으므로, `lost_info_patcher.py`의 확장이 선행되어야 한다.
+이 문서는 현재 구현을 설명하는 기준선입니다. 후속 계획은 별도의 계획 문서에서 다시 정의해야 합니다.

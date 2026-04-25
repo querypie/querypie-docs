@@ -252,227 +252,246 @@ MDX 상대 경로                     Confluence XHTML
 
 ## Reverse Sync: MDX 편집 → Confluence 반영 (`reverse_sync/`)
 
-MDX 파일의 교정 내용을 Confluence XHTML에 반영한다. 블록 단위 diff를 XHTML 패치로 변환하는 정밀한 파이프라인이다.
+현재 reverse-sync는 "텍스트만 덮어쓰는 간단한 패처"가 아니라, MDX diff를 XHTML DOM에 보수적으로 되돌려 넣고 다시 forward converter로 검증한 뒤에만 통과시키는 파이프라인입니다. 2026-03 이후 구현은 sidecar 기반 identity preservation과 fragment replacement를 중심으로 재편되었고, 기존 문서에 남아 있던 `text_transfer.py`, `list_patcher.py`, `table_patcher.py` 중심 설명은 더 이상 현재 상태를 반영하지 않습니다.
 
 ### 전체 흐름
 
 ```
-원본 MDX (main 브랜치)    교정된 MDX (작업 브랜치)
-        │                        │
-        ▼                        ▼
-  parse_mdx_blocks()       parse_mdx_blocks()
-        │                        │
-        ▼                        ▼
-   MdxBlock[]               MdxBlock[]
-        │                        │
-        └────────┬───────────────┘
-                 ▼
-          diff_blocks()          ← 블록 단위 diff
-                 │
-                 ▼
-          BlockChange[]          ← modified / added / deleted
-                 │
-        ┌────────┴────────┐
-        ▼                 ▼
-  record_mapping()   Sidecar 인덱스
-  (원본 XHTML)       (mapping.yaml)
-        │                 │
-        └────────┬────────┘
-                 ▼
-          build_patches()        ← MDX 변경 → XHTML 패치 변환
-                 │
-                 ▼
-          patch_xhtml()          ← BeautifulSoup으로 XHTML 수정
-                 │
-                 ▼
-          verify_roundtrip()     ← 라운드트립 검증 (XHTML→정순변환→MDX→비교)
-                 │
-                 ▼
-       Confluence API push       ← (선택) 실제 반영
+원본 MDX (main / testcase original.mdx)     교정 MDX (작업 브랜치 / improved.mdx)
+                  │                                          │
+                  ├──────────── parse_mdx_blocks() ───────────┤
+                  ▼                                          ▼
+             original_blocks                           improved_blocks
+                         └──────── diff_blocks() ────────┘
+                                      │
+                                      ▼
+                             BlockChange[] + alignment
+                                      │
+             ┌────────────────────────┼────────────────────────┐
+             ▼                        ▼                        ▼
+   record_mapping(page.xhtml)   generate_sidecar_mapping()   build_sidecar()
+   (현재 XHTML 블록 구조)       (`mapping.yaml`)              (`expected.roundtrip.json` v3)
+             │                        │                        │
+             └────────────────────────┴──────────────┬─────────┘
+                                                     ▼
+                                             build_patches()
+                                                     │
+                                  delete / insert / modify / replace_fragment
+                                                     │
+                                                     ▼
+                                              patch_xhtml()
+                                                     │
+                                                     ▼
+                               record_mapping(patched_xhtml) + converter/cli.py
+                                                     │
+                                                     ▼
+                                            verify_roundtrip()
+                                                     │
+                                                     ▼
+                                   pass → (선택) push / fail → result.yaml 기록
 ```
 
-### 모듈 구성
+핵심 포인트는 다음과 같습니다.
 
-| 모듈 | 줄 수 | 역할 |
-|------|-------|------|
-| `mdx_block_parser.py` | 129 | MDX → MdxBlock 시퀀스 파싱 (splice rehydrator 호환용 유지) |
-| `block_diff.py` | 90 | 두 MdxBlock 시퀀스 diff |
-| `mapping_recorder.py` | 210 | XHTML → BlockMapping 추출 |
-| `sidecar.py` | 524 | Roundtrip sidecar + 매핑 인덱스 |
-| `fragment_extractor.py` | 204 | XHTML byte-exact 프래그먼트 추출 |
-| `patch_builder.py` | 547 | BlockChange → XHTML 패치 변환 |
-| `text_transfer.py` | 79 | 텍스트 변경을 XHTML에 전사 |
-| `xhtml_patcher.py` | 333 | 패치를 XHTML에 적용 |
-| `roundtrip_verifier.py` | 174 | 패치 결과 라운드트립 검증 |
-| `mdx_to_xhtml_inline.py` | 240 | 삽입 패치용 MDX → XHTML 블록 변환 (`mdx_to_storage.inline` 활용) |
-| `rehydrator.py` | 149 | Sidecar 기반 무손실 XHTML 복원 (fast path + splice + fallback) |
-| `byte_verify.py` | 126 | Byte-equal 검증 (document-level + forced-splice) |
-| `confluence_client.py` | 65 | Confluence REST API 클라이언트 |
+- `run_verify()`가 사실상 reverse-sync의 표준 실행 경로입니다.
+- `mapping.yaml`만으로는 현재 구현을 설명할 수 없고, `expected.roundtrip.json` 기반 sidecar v3가 실제 identity fallback과 reconstruction에 깊게 관여합니다.
+- 모호한 변경은 억지로 반영하지 않고 `skipped_changes`로 보고합니다.
+- 성공 조건은 "패치 생성"이 아니라 "patched XHTML을 다시 forward 변환했을 때 improved MDX와 일치"입니다.
+
+### 현재 모듈 구성
+
+| 모듈 | 현재 역할 |
+|------|-----------|
+| `reverse_sync_cli.py` | verify / push 오케스트레이션, 결과 파일 생성, 배치 처리, Confluence push 안전장치 |
+| `mdx_block_parser.py` | MDX 블록 파싱 래퍼 |
+| `block_diff.py` | 블록 단위 diff + alignment 계산 |
+| `mapping_recorder.py` | XHTML에서 top-level / child block mapping 추출 |
+| `sidecar.py` | `mapping.yaml` v3 생성, roundtrip sidecar v3 생성/검증, identity 인덱스, lost_info 로딩 |
+| `fragment_extractor.py` | XHTML fragment를 byte-exact 수준으로 추출 |
+| `patch_builder.py` | reverse-sync의 정책 엔진. direct / containing / paired / list / table / skip 분기 결정 |
+| `visible_segments.py` | list 경로에서 visible segment 모델을 사용해 marker/공백/내용 변경을 더 정밀하게 판별 |
+| `reconstructors.py` | preserved anchor, container, list item 등에서 원본 fragment 템플릿을 유지한 채 부분 재구성 |
+| `mdx_to_xhtml_inline.py` | insert/replace용 MDX 블록을 XHTML fragment로 생성 |
+| `xhtml_patcher.py` | patch를 실제 XHTML DOM/fragment에 적용 |
+| `roundtrip_verifier.py` | normalize / lenient / no-normalize 옵션을 포함한 roundtrip 검증 |
+| `rehydrator.py` | sidecar fragment 재조립/검증 보조 유틸 |
+| `confluence_client.py` | Confluence REST API push |
 
 ### 단계별 상세
 
-#### Step 1: MDX 블록 파싱 (`mdx_to_storage/parser.py`)
+#### Step 1: MDX 블록 파싱과 diff
 
-MDX 텍스트를 줄 단위 상태머신으로 파싱하여 블록 시퀀스를 생성한다. (`mdx_block_parser.py`는 backward-compat re-export 래퍼)
+원본/교정 MDX를 `parse_mdx_blocks()`로 파싱한 뒤 `diff_blocks()`로 `BlockChange[]`와 alignment를 계산합니다.
 
-**⚠️ 알려진 파싱 버그:** list item 뒤 빈 줄 없이 이어지는 연속행(문장 단위 줄바꿈)을 별도 `paragraph` 블록으로 잘못 분리한다. Markdown 규칙상 paragraph 분리는 빈 줄이 필요하며, 빈 줄 없는 연속행은 동일 list item의 일부다. 이 버그가 sidecar alignment 오류의 근본 원인이다.
+- non-content 블록(frontmatter, import, empty 등)은 후속 단계에서 제외됩니다.
+- reverse-sync는 line range와 block hash를 이후 sidecar identity lookup에 재사용합니다.
+- 과거 문서에 있던 일부 파싱 버그 설명은 현재 구현과 완전히 일치하지 않습니다. 현재 기준에서 중요한 것은 "블록 경계가 sidecar line range / content hash와 함께 identity로 사용된다"는 점입니다.
 
-```python
-Block(type, content, level, language, children, attrs, line_start, line_end)
-# type: "frontmatter" | "import_statement" | "heading" | "paragraph" |
-#       "code_block" | "list" | "html_block" | "callout" | "figure" |
-#       "details" | "badge" | "table" | "blockquote" | "empty"
-```
+#### Step 2: XHTML 구조 기록
 
-#### Step 2: 블록 Diff (`block_diff.py`)
+`record_mapping(page.xhtml)`는 XHTML에서 블록 구조를 추출해 `BlockMapping` 목록을 만듭니다.
 
-SequenceMatcher 기반으로 원본/교정 블록 시퀀스를 정렬하고 변경 사항을 추출한다.
+- heading / paragraph / list / table / code / html_block / macro container 등을 추출합니다.
+- callout, ADF panel, expand 같은 compound block은 children 매핑을 함께 기록합니다.
+- reverse-sync는 patched XHTML에도 동일 recorder를 다시 적용해 `reverse-sync.mapping.patched.yaml`을 생성합니다.
 
-```python
-BlockChange(index, change_type, old_block, new_block)
-# change_type: "modified" | "added" | "deleted"
-```
+#### Step 3: 두 종류의 sidecar 구축
 
-#### Step 3: XHTML 매핑 추출 (`mapping_recorder.py`)
+현재 구현은 두 종류의 메타데이터를 함께 사용합니다.
 
-원본 XHTML을 BeautifulSoup으로 파싱하여 블록 레벨 요소를 추출하고 XPath를 부여한다.
+1. `mapping.yaml`
+   - `generate_sidecar_mapping()`이 생성합니다.
+   - 타입 호환성 기반 two-pointer 정렬로 XHTML top-level block과 MDX content block을 연결합니다.
+   - reverse-sync에서는 주로 `mdx_to_sidecar` 역인덱스와 page/block-level `lost_info` 로딩에 사용합니다.
 
-```python
-BlockMapping(block_id, type, xhtml_xpath, xhtml_text, xhtml_plain_text,
-             xhtml_element_index, children)
-# type: "heading" | "paragraph" | "list" | "code" | "table" | "html_block"
-# xhtml_xpath: "p[3]", "macro-info[1]" 등
-```
+2. `expected.roundtrip.json` (schema v3)
+   - `build_sidecar()`가 생성합니다.
+   - XHTML fragment, `mdx_content_hash`, `mdx_line_range`, `reconstruction` 메타데이터를 함께 저장합니다.
+   - 현재 reverse-sync에서 사실상 더 중요한 메타데이터입니다. list fallback, preserved anchor, container reconstruction, roundtrip integrity 검증에 사용됩니다.
 
-Callout 매크로, ADF 패널 내부의 자식 요소는 `children` 필드로 재귀 추출한다.
+#### Step 4: 패치 생성 (`patch_builder.py`)
 
-#### Step 4: Sidecar 인덱스 구축 (`sidecar.py`)
+`patch_builder.py`가 현재 reverse-sync의 실제 정책 엔진입니다. 이 모듈은 각 변경을 다음 중 하나로 분기합니다.
 
-`mapping.yaml`을 로드하여 O(1) 조회 인덱스를 구축한다.
+- `delete`: 기존 XHTML 요소 제거
+- `insert`: 새 MDX 블록을 XHTML로 생성해 삽입
+- `modify`: 안전한 텍스트 수준 변경
+- `replace_fragment`: fragment 전체를 교체하되 sidecar/reconstruction metadata를 활용해 원본 구조를 최대한 보존
+- `skip`: 위험하거나 identity가 불충분한 변경을 명시적으로 보고
 
-```python
-mdx_to_sidecar   = build_mdx_to_sidecar_index(mappings)    # MDX 블록 인덱스 → SidecarEntry
-xpath_to_mapping = build_xpath_to_mapping(block_mappings)   # XPath → BlockMapping
-```
+현재 구현의 특징:
 
-**조회 체인:** `MDX 블록 인덱스 → SidecarEntry → BlockMapping → XHTML XPath`
+- delete+add가 같은 인덱스에서 만나면 `paired` 케이스로 보고 전체 fragment replacement를 우선 검토합니다.
+- clean block, container sidecar, preserved anchor, parameter-bearing container, markdown table 여부에 따라 다른 reconstruction 경로를 탑니다.
+- list 경로는 `visible_segments.py`를 사용해 marker 뒤 공백, 선행 공백 축소, continuation line merge 같은 회귀를 줄이도록 강화되었습니다.
+- table 경로는 whole-fragment replacement를 시도하되, 위험한 경우 `no_mapping`, `missing_roundtrip_sidecar`, `preserved_anchor_table`, `raw_html_table`, `not_markdown_table`, `unsafe_html_table_edit` 등 이유로 skip합니다.
+- legacy `mapping.yaml`이 list를 충분히 설명하지 못하는 경우, roundtrip sidecar v3의 `mdx_content_hash + mdx_line_range` identity fallback으로 매핑을 복원합니다.
 
-#### Step 5: 패치 생성 (`patch_builder.py`)
+즉, 현재 reverse-sync는 "가능하면 직접 수정"보다 "안전하면 fragment replacement, 아니면 skip"에 더 가깝습니다.
 
-각 `BlockChange`에 대해 sidecar 인덱스로 대응하는 XHTML 요소를 찾고, 텍스트 변경을 패치로 변환한다.
+#### Step 5: XHTML 패치 적용
 
-- **Modified**: `text_utils`로 MDX를 일반 텍스트로 정규화 → `text_transfer`로 XHTML 텍스트에 변경 전사
-- **Added**: `mdx_to_xhtml_inline`로 새 MDX 블록을 XHTML 요소로 변환 → insert 패치
-- **Deleted**: 대응 XPath 요소 삭제 패치
-- **리스트/테이블**: 항목별 세분화된 패치 (항목 매칭, 셀 매칭)
+`xhtml_patcher.py`는 patch 목록을 XHTML에 적용합니다.
 
-자식 매핑 해석 (`_resolve_child_mapping`): Callout 내부 단락 등은 정규화된 텍스트로 4단계 비교하여 매칭한다.
+- action은 대체로 `delete`, `insert_before`, `insert_after`, `modify`, `replace_fragment` 계열로 정리됩니다.
+- 단순 문자열 치환이 아니라 DOM 요소 탐색 + fragment 재파싱을 조합합니다.
+- replace_fragment는 reconstruction을 거쳐 생성된 XHTML 조각을 그대로 주입하는 경우가 많습니다.
 
-#### Step 6: XHTML 패치 적용 (`xhtml_patcher.py`)
+#### Step 6: roundtrip proof
 
-BeautifulSoup으로 패치를 적용한다. 실행 순서: **delete → insert → modify** (인덱스 시프트 방지를 위해 XPath를 사전 해석).
+패치가 끝나면 reverse-sync는 여기서 끝나지 않습니다.
 
-#### Step 7: 라운드트립 검증 (`roundtrip_verifier.py`)
+1. `reverse-sync.patched.xhtml` 저장
+2. `record_mapping()` 재실행 → `reverse-sync.mapping.patched.yaml` 저장
+3. patched XHTML을 `converter/cli.py`로 다시 MDX로 변환 → `verify.mdx` 생성
+4. `verify_roundtrip(improved_mdx, verify_mdx, ...)`로 최종 비교
 
-패치된 XHTML을 정순변환(Forward Conversion)하여 MDX로 되돌린 뒤, 교정된 MDX와 비교한다. 두 MDX가 동일하면 패치가 정확하게 적용된 것이다. 정규화 항목:
-- Trailing whitespace, 날짜 포맷 (한국어 ↔ 영어), 테이블 패딩, h1 헤딩 (페이지 제목), `<td>` 내 줄 합치기, 코드 블록 HTML 엔티티
+`roundtrip_verifier.py`는 다음과 같은 성격을 가집니다.
 
-### Reverse Sync 생성 파일
+- 기본값은 비교적 엄격한 exact/normalized match입니다.
+- `--lenient`, `--no-normalize` 옵션이 존재합니다.
+- 최근 커밋에서 sentence break, table padding, inline whitespace, badge/heading roundtrip 같은 케이스에 맞춰 정규화가 계속 조정되었습니다.
+
+### 현재 생성/사용 파일
 
 | 파일 | 위치 | 설명 |
 |------|------|------|
-| `reverse-sync.diff.yaml` | `var/<page_id>/` | 블록 변경 사항 |
-| `reverse-sync.mapping.original.yaml` | `var/<page_id>/` | 원본 XHTML 매핑 |
-| `reverse-sync.mapping.patched.yaml` | `var/<page_id>/` | 패치 후 XHTML 매핑 |
-| `reverse-sync.patched.xhtml` | `var/<page_id>/` | 패치된 XHTML |
-| `reverse-sync.result.yaml` | `var/<page_id>/` | 검증 결과 (pass/fail, diff) |
-| `verify.mdx` | `var/<page_id>/` | 라운드트립 검증용: 패치된 XHTML을 정순변환한 MDX |
+| `mapping.yaml` | `var/<page_id>/` | XHTML↔MDX top-level mapping + lost_info |
+| `expected.roundtrip.json` | `tests/testcases/<case_id>/` 또는 fixture | roundtrip sidecar v3 |
+| `reverse-sync.diff.yaml` | `var/<page_id>/` | block diff 결과 |
+| `reverse-sync.mapping.original.yaml` | `var/<page_id>/` | 원본 XHTML mapping dump |
+| `reverse-sync.mapping.patched.yaml` | `var/<page_id>/` | patched XHTML mapping dump |
+| `reverse-sync.patched.xhtml` | `var/<page_id>/` | 패치 결과 XHTML |
+| `reverse-sync.result.yaml` | `var/<page_id>/` | verify 결과, skipped_changes, diff 요약 |
+| `verify.mdx` | `var/<page_id>/` | patched XHTML을 다시 forward 변환한 MDX |
 
 ---
 
 ## Sidecar 시스템
 
-Forward Converter와 Reverse Sync를 연결하는 메타데이터 시스템이다. 두 종류의 sidecar 파일이 있다.
+현재 구현에서 sidecar는 단순한 부가 메타데이터가 아니라 reverse-sync의 identity preservation 계층입니다.
 
-### 1. Mapping Sidecar (`mapping.yaml`)
+### 1. Mapping sidecar (`mapping.yaml`)
 
-`reverse_sync/sidecar.py`의 `generate_sidecar_mapping()`이 생성한다. XHTML 블록과 MDX 블록의 대응 관계를 기록한다. Forward Converter(`converter/cli.py`)와 Reverse Sync CLI(`reverse_sync_cli.py`) 모두 이 함수를 사용한다.
-
-**위치:** `var/<page_id>/mapping.yaml`
+`generate_sidecar_mapping()`이 생성하며, 현재 포맷은 사실상 v3 semantics를 가집니다.
 
 ```yaml
-version: 1
-source_page_id: "608501837"
-mdx_file: "page.mdx"
+page_id: "..."
 mappings:
   - xhtml_xpath: "p[1]"
     xhtml_type: "paragraph"
     mdx_blocks: [3]
-  - xhtml_xpath: "macro-info[1]"
-    xhtml_type: "callout"
-    mdx_blocks: [4, 5, 6]
+    mdx_line_start: 12
+    mdx_line_end: 12
+lost_info:
+  ...
 ```
 
-**생성 과정:**
-1. `record_mapping(xhtml)` → XHTML 블록 목록 (`BlockMapping`)
-2. `parse_mdx_blocks(mdx)` → MDX 블록 목록
-3. 텍스트 기반 lookahead 매칭 → 정규화 텍스트로 XHTML↔MDX 블록 대응
+현재 역할은 다음에 가깝습니다.
 
-**사용처:** Reverse Sync에서 `build_mdx_to_sidecar_index()`로 O(1) 조회 인덱스를 구축한다.
+- top-level XHTML block ↔ MDX block의 기본 연결 제공
+- child alignment 정보 제공 (callout/details 등)
+- `lost_info`를 통해 forward converter에서 사라진 원본 정보 보존
+- reverse-sync의 기본 lookup용 역인덱스 제공
 
-### 2. Roundtrip Sidecar (`expected.roundtrip.json`)
+다만 현재 구현을 이해할 때 `mapping.yaml`만 보면 부족합니다. list/complex container/preserved anchor는 roundtrip sidecar 없이는 설명되지 않는 경우가 많습니다.
 
-Backward Converter의 검증 인프라에서 사용한다. XHTML 원본을 블록 단위 프래그먼트로 분해하여 저장하며, **프래그먼트 재조립이 원본과 byte-equal**함을 보장한다.
+### 2. Roundtrip sidecar (`expected.roundtrip.json`, schema v3)
 
-**위치:** `tests/testcases/<case_id>/expected.roundtrip.json`
-
-**스키마 (v2):**
+현재 핵심 스키마는 다음 필드를 가집니다.
 
 ```json
 {
-  "schema_version": "2",
+  "schema_version": "3",
   "page_id": "544381877",
-  "mdx_sha256": "<MDX 전체 SHA256>",
-  "source_xhtml_sha256": "<XHTML 전체 SHA256>",
+  "mdx_sha256": "...",
+  "source_xhtml_sha256": "...",
   "blocks": [
     {
       "block_index": 0,
       "xhtml_xpath": "h2[1]",
       "xhtml_fragment": "<h2>Title</h2>",
-      "mdx_content_hash": "<블록 MDX SHA256>",
+      "mdx_content_hash": "...",
       "mdx_line_range": [3, 3],
-      "lost_info": null
+      "lost_info": {},
+      "reconstruction": {}
     }
   ],
   "separators": ["\n"],
-  "document_envelope": {
-    "prefix": "",
-    "suffix": "\n"
-  }
+  "document_envelope": {"prefix": "", "suffix": "\n"}
 }
 ```
 
-**핵심 불변조건:**
+이 sidecar의 핵심 역할은 다음과 같습니다.
 
-```
-envelope.prefix
-  + blocks[0].xhtml_fragment
-  + separators[0]
-  + blocks[1].xhtml_fragment
-  + separators[1]
-  + ...
-  + blocks[N].xhtml_fragment
-  + envelope.suffix
-== page.xhtml (byte-equal)
-```
+- fragment + separator + envelope 재조립이 원본 XHTML과 byte-equal이어야 합니다.
+- `mdx_content_hash`와 `mdx_line_range`를 통해 block identity fallback을 제공합니다.
+- `reconstruction` 메타데이터를 통해 preserved anchor / container / list item처럼 emitter 단독 재생성이 위험한 블록을 원본 템플릿 기반으로 재구성합니다.
+- reverse-sync는 이 sidecar를 이용해 "원래 XHTML fragment의 정체성"을 최대한 유지합니다.
 
-**프래그먼트 추출 (`fragment_extractor.py`):** BeautifulSoup으로 태그 시퀀스를 식별한 뒤, 원문을 직접 스캔하여 정확한 태그 경계를 추출한다. BS4의 속성 재정렬, 공백 정규화, self-closing 변환 문제를 회피한다.
+### 현재 이해해야 할 원칙
 
-**무손실 복원 (`rehydrator.py`):** 세 가지 경로로 XHTML을 복원한다:
+- `mapping.yaml`은 구조적 lookup과 lost_info 전달 계층입니다.
+- `expected.roundtrip.json`은 fragment identity / reconstruction 계층입니다.
+- reverse-sync의 안정성은 결국 "patch를 잘 만들었는가"보다 "sidecar가 원본 fragment를 얼마나 안전하게 다시 사용할 수 있는가"에 더 크게 좌우됩니다.
 
-1. **Fast path** — MDX 전체 SHA256이 sidecar와 일치하면 `reassemble_xhtml()`으로 원본을 document-level byte-equal 복원
-2. **Splice path** — 블록 단위 해시 매칭. sidecar 블록을 순회하면서 MDX 대응 없는 블록(이미지 등)은 원본 fragment 보존, 해시 일치 블록은 원본 fragment 사용, 불일치 블록은 emitter 폴백
-3. **Fallback path** — 전체 emitter 재생성 (byte-equal 미보장)
+### 알려진 한계
+
+현재 구현이 강한 영역:
+
+- paragraph / heading 중심 텍스트 교정
+- badge, code span, inline whitespace 등 최근 커밋으로 회귀가 줄어든 인라인 변경
+- preserved anchor가 없거나 sidecar reconstruction metadata가 충분한 container/list 변경
+
+여전히 취약한 영역:
+
+- markdown table과 raw HTML table의 경계 케이스
+- preserved anchor가 섞인 list/table
+- parameter-bearing container의 구조 변화
+- forward converter 정규화 특성에 민감한 roundtrip mismatch
+- `patch_builder.py`에 전략/예외/skip 분기가 과도하게 집중된 구조
+
+이 한계는 "아직 구현되지 않은 기능"이라기보다, 현재 구현이 안전성 우선으로 선택한 보수적 경계에 가깝습니다.
 
 ---
 
