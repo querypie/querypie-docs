@@ -1,5 +1,9 @@
 # Reverse Sync 전면 재구성 설계
 
+> 상태: Superseded
+> 대체 문서: `2026-04-25-reverse-sync-replacement-plan.md`
+> 비고: 이 문서는 2026-03 시점의 phase 계획과 당시의 코드 상태를 보존하기 위한 기록입니다. 현재 작업 계획은 새 replacement plan을 기준으로 합니다.
+
 > 최초 작성일: 2026-03-13
 > 갱신일: 2026-03-19 (4차 — Phase 5 진행 현황 반영 및 설계 기준선 교정)
 > 기준 브랜치: `main`

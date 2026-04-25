@@ -1,5 +1,9 @@
 # Reverse Sync 전면 재구성 설계 — 검토 평가 결과 (v5)
 
+> 상태: Superseded review
+> 대체 문서: `2026-04-25-reverse-sync-replacement-plan.md`
+> 비고: 이 문서는 2026-03 시점 설계안에 대한 검토 기록입니다. 현재 계획 논의는 새 replacement plan을 기준으로 진행합니다.
+
 > 검토 대상: `2026-03-13-reverse-sync-reconstruction-design.md`
 > 검토일: 2026-03-13
 > 검토 기준 버전: PR #913 head `33fa095e56cb26766995b3930d3616a58559685e`
