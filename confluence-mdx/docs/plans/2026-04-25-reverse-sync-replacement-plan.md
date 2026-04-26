@@ -343,6 +343,88 @@ pass/fail이 실제 patch 품질 문제인지, forward converter의 canonicaliza
 - 새 회귀 수정 시 `build_patches()` 본체에 직접 if/elif를 추가하지 않고, planner rule 또는 strategy handler 수정으로 끝낼 수 있습니다.
 - planner 출력만 보면 "어떤 visible 변화가 어떤 node operation 후보로 내려갔는지"를 설명할 수 있습니다.
 
+초기 모듈 분해 초안:
+
+- `confluence-mdx/bin/reverse_sync/planner_types.py`
+  - `VisibleEdit`
+  - `VisibleEditSequence`
+  - `PlanningContext`
+  - `PlanningDecision`
+- `confluence-mdx/bin/reverse_sync/visible_planner.py`
+  - `plan_visible_edit_sequence(...) -> VisibleEditSequence`
+  - `plan_change(...) -> PlanningDecision`
+- `confluence-mdx/bin/reverse_sync/node_operations.py`
+  - `NodeOperation`
+  - `NodeOperationSequence`
+- `confluence-mdx/bin/reverse_sync/operation_lowering.py`
+  - `lower_visible_edits_to_node_operations(...) -> NodeOperationSequence`
+  - `lower_node_operations_to_patches(...) -> list[dict[str, str]]`
+- `confluence-mdx/bin/reverse_sync/strategy_dispatcher.py`
+  - `choose_strategy(...) -> str`
+  - `execute_strategy(...) -> list[dict[str, str]]`
+- 전략 하위 모듈
+  - `confluence-mdx/bin/reverse_sync/strategies/list_strategy.py`
+  - `confluence-mdx/bin/reverse_sync/strategies/text_block_strategy.py`
+  - `confluence-mdx/bin/reverse_sync/strategies/preserved_anchor_strategy.py`
+  - `confluence-mdx/bin/reverse_sync/strategies/container_strategy.py`
+  - `confluence-mdx/bin/reverse_sync/strategies/table_strategy.py`
+
+초기 함수 시그니처 초안:
+
+```python
+@dataclass(frozen=True)
+class VisibleEdit:
+    kind: Literal[
+        "keep",
+        "insert_text",
+        "delete_text",
+        "replace_text",
+        "split_segment",
+        "merge_segment",
+        "formatting_only",
+    ]
+    old_segment_ids: tuple[str, ...] = ()
+    new_segment_ids: tuple[str, ...] = ()
+    old_text: str = ""
+    new_text: str = ""
+    meta: dict[str, Any] = field(default_factory=dict)
+
+
+def plan_visible_edit_sequence(
+    *,
+    old_mdx: str,
+    new_mdx: str,
+    xhtml_fragment: str,
+    capability: str,
+) -> VisibleEditSequence:
+    ...
+
+
+def plan_change(change: BlockChange, context: PlanningContext) -> PlanningDecision:
+    ...
+
+
+def lower_visible_edits_to_node_operations(
+    sequence: VisibleEditSequence,
+    context: PlanningContext,
+) -> NodeOperationSequence:
+    ...
+
+
+def lower_node_operations_to_patches(
+    operations: NodeOperationSequence,
+    context: PlanningContext,
+) -> list[dict[str, str]]:
+    ...
+```
+
+이 초안의 의도는 다음과 같습니다.
+
+- planner 출력은 patch dict가 아니라 `VisibleEditSequence`입니다.
+- lowering 계층은 visible edit와 DOM/node edit를 연결합니다.
+- strategy 계층은 capability boundary와 fallback 선택을 담당합니다.
+- 최종 apply는 기존 `xhtml_patcher.py`를 계속 사용합니다.
+
 ### Stage 3. list / preserved anchor / container 전략 분리
 
 목표:
@@ -461,6 +543,39 @@ pass/fail이 실제 patch 품질 문제인지, forward converter의 canonicaliza
 4. paragraph/heading visible edit sequence snapshot test
 5. verifier reason-code split test
 6. result.yaml schema test
+
+### 8.4 초기 테스트 파일 배치안
+
+- `confluence-mdx/tests/test_visible_planner.py`
+  - planner classification snapshot
+  - paragraph/heading visible edit sequence snapshot
+- `confluence-mdx/tests/test_operation_lowering.py`
+  - visible edit sequence -> node operation lowering
+  - node operation -> patch emission
+- `confluence-mdx/tests/test_strategy_dispatcher.py`
+  - capability별 strategy 선택
+  - fallback / skip reason 결정
+- `confluence-mdx/tests/test_list_strategy.py`
+  - 기존 list visible segment fixture 재사용
+- `confluence-mdx/tests/test_text_block_strategy.py`
+  - paragraph / heading text-bearing block fixture
+- `confluence-mdx/tests/test_preserved_anchor_strategy.py`
+  - preserved anchor fallback / reconstruction 경계
+- `confluence-mdx/tests/test_container_strategy.py`
+  - parameter-bearing container reconstruction 경계
+- `confluence-mdx/tests/test_table_strategy.py`
+  - table capability boundary / skip reason / formatting-only verifier 연계
+
+fixture 배치 초안:
+
+- `confluence-mdx/tests/testcases/visible-planner/paragraph-*`
+- `confluence-mdx/tests/testcases/visible-planner/heading-*`
+- `confluence-mdx/tests/testcases/visible-planner/list-*`
+- `confluence-mdx/tests/testcases/strategies/preserved-anchor-*`
+- `confluence-mdx/tests/testcases/strategies/container-*`
+- `confluence-mdx/tests/testcases/strategies/table-*`
+
+이 배치는 planner, lowering, strategy, proof를 테스트 파일 수준에서도 분리하기 위한 최소 단위 제안입니다.
 
 ---
 
