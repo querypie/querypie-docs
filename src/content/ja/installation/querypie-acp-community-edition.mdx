@@ -193,7 +193,7 @@ qp-adminアカウントでログイン後、基本パスワードを別のパス
 * インストール場所に移動します。
 * `current`はインストールバージョンパスへのシンボリックリンクです。
 ```
-cd ~/querypie/current ## This is an example when installed under the home directory.
+ cd ~/querypie/current ## This is an example when installed under the home directory.
 ```
 
 * 手動起動：database起動 → app起動の順序で起動します。
@@ -221,7 +221,7 @@ docker compose --profile=app exec app readyz
 * インストール場所に移動します。
 * `current`はインストールバージョンパスへのシンボリックリンクです。
 ```
-cd ~/querypie/current ## This is an example when installed under the home directory.
+ cd ~/querypie/current ## This is an example when installed under the home directory.
 ```
 
 * 手動停止：app停止 → database停止の順序で停止します。
@@ -243,7 +243,7 @@ docker compose --profile=app down
 docker compose --profile=database down
 ```
 
-上記のように`down`を使用すると、コンテナとネットワークが削除されてから再作成されます。
+上記のようにdownを使用すると、コンテナとネットワークが削除されてから再作成されます。
 （新しいID）<br/>したがって、削除および再作成が必要でない場合は、`down`の代わりに`stop`を使用してください。
 ```
 docker compose --profile=app stop
@@ -253,20 +253,6 @@ docker compose --profile=database stop
 
 ### 💬 サポートおよび問い合わせ
 
-QueryPie Communityインストールおよび使用中に疑問点があれば[QueryPie AIP](https://app.querypie.com/)を通じて直接問い合わせできます。
-以下の手順に従ってMCPで**QueryPie顧客センター**プリセットを設定すると、チャット画面で直接サポートを受けられます。
-
-<figure data-layout="center" data-align="center">
-<img src="/installation/querypie-acp-community-edition/image-20250718-070933.png" alt="image-20250718-070933.png" width="847" />
-</figure>
-
-1. Integrationタブ → Install QueryPie Customer Centerクリック。
-2. Presetタブ → New Preset選択後、以下のように入力して`Save Changes`クリック：
-
-* Name：`QueryPie`を入力（推奨）。
-* MCP Servers & Tools：`Select All`を選択。
-
-3. Chatタブ → `@QueryPie`選択後、質問入力。
-
-インストールおよび使用中の質問を[GitHub Discussion](https://github.com/querypie/querypie-community/discussions)で問い合わせたり、他のユーザーと経験を共有することもできます。
+QueryPie Communityのインストールおよび使用中に疑問点があれば、[GitHub Discussion](https://github.com/querypie/querypie-community/discussions)で直接お問い合わせいただけます。
+多くのご利用とご関心をお願いいたします。
 
