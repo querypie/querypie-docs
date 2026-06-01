@@ -42,3 +42,28 @@ QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; De
 * Default Privilege로 커넥션에 이미 접속되어 있는 상태에서 Default Privilege를 변경한 경우 또는 해당 권한을 회수한 경우, 기존 세션은 Disconnect 처리하고 새로운 Default 권한으로 새로 Connect 처리합니다.
 *  부여받은 권한이 2개 이상인 경우 Default privilege 설정이 되어 있지 않고 privilege deactivation period 초과로 inactive 상태가 된 경우 agent를 통해 접속할 수 없습니다. Default privilege가 설정되어 있어도 상태가 privilege deactivation period 초과로 inactive 인 경우 접속할 수 없습니다.
 </Callout>
+
+<Callout type="info">
+**Multi-Agent에서 Privilege 설정하기**
+
+3rd party tool로 접속하는 경우도 대상 DB에 대해 하나 이상의 privilege가 할당된 경우 선택해서 접속할 수 있습니다.
+다음의 설정방법을 참고하세요.
+
+1. 에이전트의 대상 커넥션에서 마우스 오른쪽 버튼을 눌러 출력되는 메뉴에서 `Connection Information`을 선택합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084814.png" alt="image-20260601-084814.png" width="577" />
+</figure>
+
+2. Connection Information 화면에서 아래로 스크롤하여 Original Information 하위의 Privilege 항목에서 연필 아이콘을 클릭합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084500.png" alt="image-20260601-084500.png" width="579" />
+</figure>
+
+3. Privilege를 선택한 뒤 `Save` 버튼을 눌러 설정을 저장합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-085110.png" alt="image-20260601-085110.png" width="524" />
+</figure>
+</Callout>

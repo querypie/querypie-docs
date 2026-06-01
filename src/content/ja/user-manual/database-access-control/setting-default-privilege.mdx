@@ -42,3 +42,28 @@ QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; De
 * Default Privilegeでコネクションに既に接続されている状態でDefault Privilegeを変更した場合または該当権限を回収した場合、既存セッションはDisconnect処理し、新しいDefault権限で新規Connect処理します。
 *  付与された権限が2個以上の場合Default privilege設定がされていない状態でprivilege deactivation period超過でinactive状態になった場合、agentを通じて接続できません。Default privilegeが設定されていても状態がprivilege deactivation period超過でinactiveの場合接続できません。
 </Callout>
+
+<Callout type="info">
+**Multi-AgentでPrivilegeを設定する**
+
+3rd party toolで接続する場合も、対象DBに1つ以上のprivilegeが割り当てられていれば選択して接続できます。
+次の設定方法を参照してください。
+
+1. エージェントの対象コネクションで右クリックし、表示されるメニューから`Connection Information`を選択します。
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084814.png" alt="image-20260601-084814.png" width="577" />
+</figure>
+
+2. Connection Information画面で下にスクロールし、Original Information配下のPrivilege項目で鉛筆アイコンをクリックします。
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084500.png" alt="image-20260601-084500.png" width="579" />
+</figure>
+
+3. Privilegeを選択した後、`Save`ボタンをクリックして設定を保存します。
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-085110.png" alt="image-20260601-085110.png" width="524" />
+</figure>
+</Callout>

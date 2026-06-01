@@ -42,3 +42,28 @@ QueryPie Web &gt; Database Access Control &gt; Databases &gt; Privileges &gt; De
 * When Default Privilege is changed while already connected to a connection with Default Privilege, or when that permission is revoked, the existing session is disconnected and reconnected with the new Default permission.
 * When you have been granted 2 or more permissions and Default privilege is not set and becomes inactive due to exceeding the privilege deactivation period, you cannot connect through the agent. Even if Default privilege is set, you cannot connect if the status is inactive due to exceeding the privilege deactivation period.
 </Callout>
+
+<Callout type="info">
+**Setting Privilege in Multi-Agent**
+
+When connecting with a 3rd party tool, you can also select a privilege if one or more privileges have been assigned for the target DB.
+Refer to the following setup steps.
+
+1. In the agent, right-click the target connection and select `Connection Information` from the menu.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084814.png" alt="image-20260601-084814.png" width="577" />
+</figure>
+
+2. On the Connection Information screen, scroll down and click the pencil icon in the Privilege field under Original Information.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-084500.png" alt="image-20260601-084500.png" width="579" />
+</figure>
+
+3. Select a Privilege, then click the `Save` button to save the setting.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/database-access-control/setting-default-privilege/image-20260601-085110.png" alt="image-20260601-085110.png" width="524" />
+</figure>
+</Callout>

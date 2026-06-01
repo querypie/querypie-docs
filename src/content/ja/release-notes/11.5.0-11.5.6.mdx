@@ -1,9 +1,56 @@
 ---
-title: '11.5.0 ~ 11.5.5'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.5'
+title: '11.5.0 ~ 11.5.6'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.6'
 ---
 
-# 11.5.0 ~ 11.5.5
+# 11.5.0 ~ 11.5.6
+
+### QueryPie 11.5.6 Release
+
+2026年05月29日
+
+
+**New Feature**
+
+* [共通] SCIM 2.0標準プロトコルのサポートを拡張（PATCHおよびexternalId対応、非アクティブユーザーの再有効化を含む）
+* [共通] External API V3 User API追加（ユーザーの作成/照会/修正/削除、有効化/無効化、パスワード初期化、プロファイル/グループ/Allowed Zone管理、認証設定照会およびIdP同期サポート）
+* [DAC] GCP CloudProviderにVaultベースのSecret Store連携サポート
+* [DAC] BigQuery、Google Spanner ConnectionのSecret Store連携サポート
+* [DAC] DB Jumphost（SSH Tunnel）構成時にSecret Store Auth Typeサポート
+* [DAC] AWS DocumentDB ClusterのRTA接続サポート
+* [SAC] CLIで認証およびRole変更機能追加
+* [SAC] Jumphostサーバー認証にSecret Store（Vault SSH CA）Auth Type追加
+* [KAC] K8s Cloud Provider照会/作成/修正/削除External API追加
+
+**Improvement**
+
+* [共通] 環境変数を通じてUser Agentダウンロード項目を非表示にできるよう改善
+* [共通] Audit Log Export作成エラー修正
+* [共通] Workflow申請時にConnection Owner別の個別承認を分離できるよう改善
+* [共通] AttributeベースのWorkflow承認ルールおよび指定方式改善
+* [共通] Multi Agent GPUアクセラレーション無効化オプション追加
+* [共通] 新規作成ユーザーのパスワード再利用に関する問題修正
+* [共通] 権限期限切れ通知メールに環境情報および期限切れ対象の詳細を表示するよう改善
+* [DAC] Cloud Provider同期リージョンにAWS ap-southeast-7（タイ）リージョン追加
+* [DAC] リバーストンネルRedis Usernameベース認証サポート
+* [DAC] Headless Agent tunnel refresh後のtunnel list sync速度改善
+* [DAC] DB Access Control AdminページのUserNameフィルター/照会の使いやすさ改善
+* [DAC] Auto Commit Off状態の警告文言および視認性改善
+* [DAC] MySQL JSON_TABLE使用時のSchemaベースアクセス制御権限チェックエラー修正
+* [DAC] AWS NLBでProxy Protocol v2が有効な場合にClickHouse/Trino/Athena HTTPプロキシ接続が失敗する問題修正
+* [DAC] Cloud Provider SA Keyで同期したBigQuery Connection設定でService Accountを修正および維持できるよう改善
+* [DAC] ElastiCache/ValkeyのRedis ClusterモードでProxy設定が自動無効化される問題修正（警告メッセージ表示）
+* [DAC] Athena自動補完データ作成問題修正
+* [DAC] 大容量クエリ実行時にLost Connectionが発生する問題修正
+* [DAC] 11.4.3アップグレード後のSQL Server間欠接続問題修正
+* [SAC] Headless AgentでSeamless SSHサポート
+* [SAC] Headless AgentでInternal DBに対するMFA（OTP）認証サポート
+* [SAC] Cloud Provider Auto ConfigurationでSSH PortおよびTagを修正できるよう改善
+* [SAC] server_policy_versions照会クエリチューニングにより詳細照会性能改善
+* [SAC] コマンドブロックメッセージのセキュリティ改善
+* [SAC] 手動入力アカウントのパスワード変更が必要な場合にRDPセッションがブロックされる問題修正
+* [KAC] K8s Cloud Provider初期同期時のAuto Configuration Upon Synchronization（Tag）サポート
+
 
 ### QueryPie 11.5.5 Release
 
