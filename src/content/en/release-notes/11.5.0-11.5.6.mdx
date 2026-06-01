@@ -1,9 +1,56 @@
 ---
-title: '11.5.0 ~ 11.5.5'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.5'
+title: '11.5.0 ~ 11.5.6'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.6'
 ---
 
-# 11.5.0 ~ 11.5.5
+# 11.5.0 ~ 11.5.6
+
+### QueryPie 11.5.6 Release
+
+May 29, 2026
+
+
+**New Feature**
+
+* [Common] Expanded support for the SCIM 2.0 standard protocol, including PATCH and externalId support and reactivation of inactive users
+* [Common] Added External API V3 User APIs for creating, retrieving, updating, and deleting users; activating and deactivating users; resetting passwords; managing profiles, groups, and Allowed Zones; retrieving authentication settings; and synchronizing IdPs
+* [DAC] Added Vault-based Secret Store integration support for GCP Cloud Providers
+* [DAC] Added Secret Store integration support for BigQuery and Google Spanner Connections
+* [DAC] Added Secret Store Auth Type support when configuring a DB Jumphost (SSH Tunnel)
+* [DAC] Added RTA connection support for AWS DocumentDB Clusters
+* [SAC] Added authentication and Role change features in CLI
+* [SAC] Added Secret Store (Vault SSH CA) Auth Type for Jumphost server authentication
+* [KAC] Added External APIs for retrieving, creating, updating, and deleting K8s Cloud Providers
+
+**Improvement**
+
+* [Common] Improved configuration so User Agent download items can be hidden through environment variables
+* [Common] Fixed Audit Log Export creation errors
+* [Common] Improved Workflow submission so approvals can be separated by Connection Owner
+* [Common] Improved attribute-based Workflow approval rules and assignment methods
+* [Common] Added an option to disable Multi Agent GPU acceleration
+* [Common] Fixed issues related to password reuse for newly created users
+* [Common] Improved permission expiration notification emails to include environment information and details about expiring permissions
+* [DAC] Added the AWS ap-southeast-7 (Thailand) region to Cloud Provider synchronization regions
+* [DAC] Added Redis Username-based authentication support for reverse tunnels
+* [DAC] Improved tunnel list sync speed after Headless Agent tunnel refresh
+* [DAC] Improved usability for UserName filtering and lookup on the DB Access Control Admin page
+* [DAC] Improved warning text and visibility for Auto Commit Off status
+* [DAC] Fixed schema-based access control permission check errors when using MySQL JSON_TABLE
+* [DAC] Fixed ClickHouse/Trino/Athena HTTP proxy connection failures when Proxy Protocol v2 is enabled on AWS NLB
+* [DAC] Improved BigQuery Connection settings synchronized with a Cloud Provider SA Key so the Service Account can be modified and retained
+* [DAC] Fixed issue where Proxy settings were automatically disabled in Redis Cluster mode for ElastiCache/Valkey, with a warning message displayed
+* [DAC] Fixed Athena autocomplete data creation issue
+* [DAC] Fixed Lost Connection issues when running large queries
+* [DAC] Fixed intermittent SQL Server connection issues after upgrading to 11.4.3
+* [SAC] Added Seamless SSH support in Headless Agent
+* [SAC] Added MFA (OTP) authentication support for Internal DB in Headless Agent
+* [SAC] Improved Cloud Provider Auto Configuration so SSH Port and Tag can be edited
+* [SAC] Improved detailed lookup performance by tuning the server_policy_versions lookup query
+* [SAC] Improved security of command blocking messages
+* [SAC] Fixed issue where RDP sessions were blocked when manually entered account passwords needed to be changed
+* [KAC] Added Auto Configuration Upon Synchronization (Tag) support during initial K8s Cloud Provider synchronization
+
 
 ### QueryPie 11.5.5 Release
 
