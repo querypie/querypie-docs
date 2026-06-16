@@ -3,6 +3,8 @@ title: 'Provisioning'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544376236/Provisioning'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Provisioning
 
 ### Overview
@@ -40,6 +42,45 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
         * 여전히 로컬 쿼리파이 계정과 동일하게 쿼리파이에서 해당 사용자에 대한 프로필 및 현황 편집, 삭제가 가능합니다.
         * 실제 일관성 유지를 위해 사용자의 라이프사이클 관리는 IdP에서 진행하시는 것을 권장드립니다.
     * 동기화된 사용자는 QueryPie 내에서 변경 및 삭제가 불가능합니다.
+
+<Callout type="info">
+**External ID 지원**
+
+External ID는 IdP와 QueryPie 사이에서 사용자를 안정적으로 식별하기 위한 외부 식별자입니다.
+(IdP의 A 유저가 QueryPie의 B 유저와 동일 인물이라는 것을 안정적으로 식별하기 위한 매핑 요소입니다.)
+SCIM RFC 7643 표준 상 External ID는 선택 사항이므로 IdP에 없을 수도 있습니다.
+그러나 관리자가 보조적으로 명확한 식별이 필요한 경우 External ID를 추가하여 관리할 수 있고 있는 경우 QueryPie에서 사용할 수 있습니다.
+
+* 11.5.6 부터 User resource의 External ID를 저장하고 응답에 포함합니다.
+* 동일한 Auth Provider 내에서 External ID는 중복될 수 없습니다.
+* External ID를 기준으로 기존 사용자를 재식별할 수 있습니다
+* External ID가 존재하는 경우 삭제된 사용자를 같은 External ID로 되살릴 수 있습니다.  즉, 사용자가 QueryPie에서 삭제된 상태(soft-delete)여도, IdP가 동일한 externalId로 다시 Provisioning하면 기존 사용자가 재활성화될 수 있습니다.
+
+**Patch 지원**
+
+* 일부 IdP는 사용자 속성 변경시 Patch를 사용합니다. 11.5.6부터 Patch 기반 업데이트를 사용하는 IdP도 QueryPie에서 지원합니다.
+
+**SCIM 표준 오류 전달**
+
+11.5.6부터 SCIM 오류 발생 시 application/scim+json 형식의 표준 오류 응답을 반환합니다.
+
+대표 오류 예:
+
+* uniqueness`(409)`: 동일 externalId 또는 중복 식별자 충돌
+    * 보통 “이미 같은 사용자가 있는데 IdP가 새 사용자로 다시 만들려고 할 때” 발생합니다.
+    * 사용자 재활성화가 목적이라면 externalId가 기존 사용자와 일관되게 전달되고 있는지 먼저 확인해야 합니다.
+    * 동일 사용자를 새 계정으로 만들지, 기존 계정을 다시 연결할지 IdP 매핑 규칙을 점검해야 합니다.
+* mutability`(400)`: 변경 불가능한 userName 수정 시도
+    * IdP에서 사용자의 로그인 ID나 계정 식별자를 변경하는 정책을 사용하면 이 오류가 발생할 수 있습니다.
+    * QueryPie 연동에서는 userName을 생성 후 고정값으로 유지하고, 사용자의 재식별이나 재연결은 externalId를 기준으로 운영하는 것이 안전합니다.
+* invalidFilter`(400)`: 지원하지 않는 필터 사용
+    * IdP 테스트 중 특정 사용자 조회나 매핑 검증 단계에서 자주 볼 수 있습니다.
+    * 보낸 filter 문자열이 QueryPie가 지원하는 속성/형식인지 확인해야 합니다.
+    * 특히 커스텀 속성이나 복잡한 조합 필터를 사용하는 경우 호환 여부를 점검해야 합니다.
+* invalidValue`(400)`: 지원하지 않는 PATCH op 사용
+    * 주로 IdP가 보내는 PATCH 요청 형식이 QueryPie 구현 범위와 다를 때 발생합니다.
+    * PATCH body의 op 값과 active 값 형식을 먼저 확인하면 원인 파악이 빠릅니다.
+</Callout>
 
 ### SCIM 계정 시스템 연동 가이드 바로가기
 

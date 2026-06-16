@@ -3,6 +3,8 @@ title: 'Manually Registering Individual Servers'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544380774'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Manually Registering Individual Servers
 
 ### Overview
@@ -23,7 +25,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 </figcaption>
 </figure>
 
-#### 1. Entering Information
+#### Entering the Information Section
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154305.png" alt="image-20240828-154305.png" width="651" />
@@ -32,7 +34,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 1. Navigate to Administrator &gt; Servers &gt; Connection Management &gt; Servers menu.
 2. Click the `Create Server` button in the top right.
 3. Enter the following information for server registration.
-    1.  **Name**: Enter a name that can distinguish the server.
+    1.  **Server Name**: Enter a name that can distinguish the server.
     2.  **Host**: Enter the server's host. Both domain and IP formats can be entered.
     3.  **Server OS**: Select the server's OS.
     4.  **OS Version**: Enter detailed information of the server OS.
@@ -42,7 +44,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
         3. FTP : Enter the port to use for FTP access. Only displayed when FTP is activated through the "Using insecure protocols" item in [SAC General Configurations](../../sac-general-configurations) menu.
         4. RDP : Only displayed when Server OS is Windows Server.
 
-#### 2. Entering Tags (Optional)
+#### Entering Tags (Optional)
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240723-163036.png" alt="image-20240723-163036.png" width="760" />
@@ -58,3 +60,38 @@ Tags synchronized through Cloud Provider are also displayed together.
 
 After going through the above process, click the final `Save` button to successfully register the server.
 
+#### Configuring Prompt Separators (Optional)
+
+Prompt Separators is a feature that lets you register additional prompt separator strings so SAC can recognize a server's shell prompt more accurately when connecting to an SSH server.
+(Added from 11.2.0.)
+
+<Callout type="info">
+**Relationship Between Shell Prompts and Command Recognition**
+
+QueryPie SAC basically uses prompt-ending strings such as `$` , `#` , `%` , and `>` to determine whether a command entered by the user has ended and whether command execution output has ended and returned to the prompt.
+
+If the server uses a **custom prompt** instead of these default patterns (for example, a prompt ending with `]` , `:~>` , `PROMPT>` , or another non-default pattern), command boundary recognition may be inaccurate.
+In that case, you must add the prompt-ending string to Prompt Separators.
+</Callout>
+
+Enter the characters that can identify the end of the prompt in the Prompt separators field.
+Enter only the **ending characters**, not the full prompt.
+You can enter multiple ending characters.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20260608-045024.png" alt="image-20260608-045024.png" width="658" />
+</figure>
+
+Example 1) If the prompt is `user@host:~]`, enter `]`.
+
+Example 2) If the prompt is `user@host:~>`, enter `>`.
+
+Example 3) If the prompt is `my-shell>>>`, enter `>>>`.
+
+<Callout type="important">
+**Notes**
+*  Strings such as `:` and `-` that commonly appear in normal output can cause incorrect boundary recognition.
+* It is recommended to use an identifiable ending pattern that does not overlap with normal output text.
+* `$` , `#` , `%` , and `>` are treated as separators by default, so you do not need to register them.
+* Duplicate values are cleaned up when saved.
+</Callout>
