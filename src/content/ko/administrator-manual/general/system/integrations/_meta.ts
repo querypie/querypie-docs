@@ -8,5 +8,5 @@ export default {
   'integrating-with-slack-dm': 'Slack DM 연동',
   'oauth-client-application': 'OAuth Client Application',
   'identity-providers': 'Identity Providers',
-  'llm-provider': 'LLM Provider 설정',
+  'llm-provider-configuration': 'LLM Provider 설정',
 };

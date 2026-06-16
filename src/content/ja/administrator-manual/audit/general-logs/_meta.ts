@@ -4,4 +4,5 @@ export default {
   'admin-role-history': 'Admin Role History',
   'workflow-logs': 'Workflow Logs',
   'reverse-tunnels': 'Reverse Tunnels',
+  'ai-chat-audit': 'AI Chat Audit',
 };

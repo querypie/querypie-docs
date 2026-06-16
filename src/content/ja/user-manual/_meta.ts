@@ -8,4 +8,5 @@ export default {
   'preferences': 'Preferences',
   'user-agent': 'User Agent',
   'multi-agent': 'Multi Agent',
+  'ai-chat': 'AI Chat',
 };

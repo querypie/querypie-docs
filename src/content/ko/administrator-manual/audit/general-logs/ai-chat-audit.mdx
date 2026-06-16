@@ -1,0 +1,56 @@
+---
+title: 'AI Chat Audit'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167111691/AI+Chat+Audit'
+---
+
+import { Callout } from 'nextra/components'
+
+# AI Chat Audit
+
+### Overview
+
+AI Chat 기능에 대한 감사로그를 조회할 수 있습니다.
+사용자가 채팅 창에 입력한 내용과 결과를 모두 상세 화면을 통해 조회할 수 있습니다.
+
+### AI Chat Audit 로그 조회하기
+
+Admin &gt; Audits &gt; General &gt; AI Chat Audit 메뉴에서 AI Chat 사용 기록을 조회합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/audit/general-logs/ai-chat-audit/image-20260602-042352.png" alt="Admin &gt; Audit &gt; General &gt; AI Chat Audit" width="760" />
+<figcaption>
+Admin &gt; Audit &gt; General &gt; AI Chat Audit
+</figcaption>
+</figure>
+
+1. Admin &gt; Audits &gt; AI Chat Audit 메뉴로 이동합니다.
+2. AI Chat Audit Log 목록이 표시됩니다. 목록에서 다음 정보를 확인할 수 있습니다.
+    * **Event UUID** : Audit 이벤트 고유 식별자입니다.
+    * **User** : AI Chat을 사용한 사용자 정보입니다.
+    * **Request Type** : 요청 유형입니다 (예: CHAT, TOOL_CALL).
+    * **Status** : 요청 처리 상태입니다 (예: SUCCESS, ERROR).
+    * **Scope** : 요청 범위입니다.
+    * **Tool Names** : 호출된 MCP Tool 이름 목록입니다.
+    * **Date** : 이벤트 발생 일시입니다.
+3. 검색 조건을 입력하여 목록을 필터링할 수 있습니다.
+    * **Date Range** : 조회 기간을 설정합니다.
+    * **User** : 사용자 ID, 이름, 로그인 ID, 이메일로 검색합니다.
+    * **Request Type** : 요청 유형으로 필터링합니다.
+    * **Status** : 처리 상태로 필터링합니다.
+    * **Scope** : 범위로 필터링합니다.
+    * **Tool Names** : 사용된 MCP Tool으로 필터링합니다.
+4. 목록의 항목을 클릭하면 상세 Drawer가 열립니다.
+    * **Summary** : 이벤트 요약 정보를 확인합니다.
+    * **Prompt** : 사용된 시스템 프롬프트와 사용자 입력을 확인합니다.
+    * **Conversation History** : 해당 이벤트의 대화 내역을 확인합니다.
+
+<Callout type="important">
+AI Chat [Audit Log Export ](../reports/audit-log-export)기능은 Audit Log Export 메뉴에서 사용할 수 있으며, 현재 Beta 상태로 제공됩니다.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/audit/general-logs/ai-chat-audit/image-20260602-041046.png" alt="Admin &gt; Audit &gt; Reports" width="760" />
+<figcaption>
+Admin &gt; Audit &gt; Reports
+</figcaption>
+</figure>

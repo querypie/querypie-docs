@@ -33,7 +33,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 6. リソースを同期するために必要な  **Credential** 情報を入力します。
     * `Synchronize`ボタンクリック時にGCPのService Accountを入力する手動同期方式を基本提供します。<br/>QueryPie 10.2.2から「Save Credential for Synchronization」オプションを提供してCredential typeで`Service Account`を使用する時もスケジュールを通じた同期が可能になるように改善されました。
     * 11.5.6からHashiCorp VaultのGoogle Cloud secret engineをサポートし、静的Credentialを保存せずに同期を実行できます。Credential type項目で`Vault(GCP)`を指定できます。
-        * この機能を使用するには、事前にGeneral &gt; System &gt; Integration &gt; HashiCorp Vaultで「Vault Secret Store」設定が必要であり、`Roleset Path`を指定するためにVaultで`Role set`設定を行う必要があります。<br/>&lt; 参考 &gt; [HashiCorp Vault連携情報の入力 | HashiCorp-Vault連携情報の入力](../../../general/system/integrations/integrating-with-secret-store#hashicorp-vault%e9%80%a3%e6%90%ba%e6%83%85%e5%a0%b1%e3%81%ae%e5%85%a5%e5%8a%9b) <br/>&lt; 参考 &gt; [Role set : Hashicorp Vault Google Cloud secret engine](https://developer.hashicorp.com/vault/docs/secrets/gcp#rolesets)
+        * この機能を使用するには、事前にGeneral &gt; System &gt; Integration &gt; HashiCorp Vaultで「Vault Secret Store」設定が必要であり、`Roleset Path`を指定するためにVaultで`Role set`設定を行う必要があります。<br/>&lt; 参考 &gt; [HashiCorp Vault連携情報の入力 | HashiCorp-Vault連携情報の入力](../../../general/system/integrations/integrating-with-secret-store#hashicorp-vault-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%9e%85%eb%a0%a5%ed%95%98%ea%b8%b0) <br/>&lt; 参考 &gt; [Role set : Hashicorp Vault Google Cloud secret engine](https://developer.hashicorp.com/vault/docs/secrets/gcp#rolesets)
         * Roleset PathはVault設定に応じてaccess tokenベースのパスとservice account keyベースのパスを使用できます。
 7.  **Database Type Filter** 項目で同期したいリソースを選択します。
 8.  **Search Filter** を使用して同期したい一部のタイプのリソースリストを取得できます。
