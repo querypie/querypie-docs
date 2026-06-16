@@ -40,7 +40,7 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
     * SCIM APIによって生成されたユーザーまたはグループのAuth Providerは該当Identity Provider（IdP）で表記され、ユーザーのAttributeプロファイル管理はAdministrator &gt; General &gt; User Management &gt; Profile Editorの基準で更新管理されます。
     * 既存ローカルQueryPieアカウントにUsername（loginId）が同じユーザーの情報がSCIM APIで更新呼び出しを受けると、該当ユーザーのプロファイルがIdPに合わせて修正されますが、QueryPie内付与権限の維持を目的として優先的にAuth Providerが該当IdPに変更されません。（9.19.0基準）
         * 依然としてローカルQueryPieアカウントと同様にQueryPieで該当ユーザーに対するプロファイルおよび現況編集、削除が可能です。
-    * 実際の一貫性維持のためにユーザーのライフサイクル管理はIdPで進行することをお勧めします。
+        * 実際の一貫性維持のためにユーザーのライフサイクル管理はIdPで進行することをお勧めします。
     * 同期されたユーザーはQueryPie内で変更および削除が不可能です。
 
 <Callout type="info">
