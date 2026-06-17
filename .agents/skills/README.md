@@ -2,35 +2,41 @@
 
 이 디렉토리는 QueryPie 문서 저장소에서 다양한 작업을 수행하는 데 도움이 되는 Agent skills를 포함합니다.
 
+표준 layout:
+
+```text
+.agents/skills/<skill-name>/SKILL.md
+```
+
 ## 사용 가능한 Skills
 
 ### 번역/교정 Skills
-- **translation.md** - 다국어 번역 가이드라인 (ko → en, ja)
-- **proofread.md** - 문서 교정/교열 가이드
-- **sync-ko-to-en-ja.md** - 한국어 MDX 변경사항을 영어/일본어에 동기화
-- **mdx-skeleton-comparison.md** - 스켈레톤 비교를 통한 번역 일관성 검증
+- **translation** - 다국어 번역 가이드라인 (ko → en, ja)
+- **proofread** - 문서 교정/교열 가이드
+- **sync-ko-to-en-ja** - 한국어 MDX 변경사항을 영어/일본어에 동기화
+- **mdx-skeleton-comparison** - 스켈레톤 비교를 통한 번역 일관성 검증
 
 ### Confluence 워크플로우 Skills
-- **confluence-mdx.md** - Confluence에서 MDX로 변환 워크플로우
-- **confluence-pr-update.md** - Confluence MDX PR 수정 워크플로우
-- **confluence-mdx-testcase.md** - XHTML 변환 테스트케이스 추가 가이드
+- **confluence-mdx** - Confluence에서 MDX로 변환 워크플로우
+- **confluence-pr-update** - Confluence MDX PR 수정 워크플로우
+- **confluence-mdx-testcase** - XHTML 변환 테스트케이스 추가 가이드
 
 ### Reverse Sync / XHTML Skills
-- **reverse-sync.md** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
-- **reverse-sync-debugging.md** - Reverse Sync 디버깅 워크플로우 (verify 실패 원인 분석 및 수정)
-- **xhtml-beautify-diff.md** - XHTML Beautify-Diff Viewer 사용 가이드
+- **reverse-sync** - Reverse Sync (MDX → Confluence XHTML 역반영) 사용 가이드
+- **reverse-sync-debugging** - Reverse Sync 디버깅 워크플로우 (verify 실패 원인 분석 및 수정)
+- **xhtml-beautify-diff** - XHTML Beautify-Diff Viewer 사용 가이드
 
 ### 유틸리티 Skills
-- **sync-confluence-url.md** - ko→en/ja confluenceUrl frontmatter 동기화
+- **sync-confluence-url** - ko→en/ja confluenceUrl frontmatter 동기화
 
 ### 프로세스 Skills
-- **commit.md** - Commit 및 PR 작성 가이드
-- **code-review.md** - 코드 변경 사항 검토 가이드라인
+- **commit** - Commit 및 PR 작성 가이드
+- **code-review** - 코드 변경 사항 검토 가이드라인
 
 ### OpenSpec Skills
-- **openspec-authoring.md** - OpenSpec spec, proposal, design, task 문서 작성
-- **openspec-doc-maintenance.md** - OpenSpec drift, 모순, stale scenario, contract 유지보수
-- **openspec-task-execution.md** - OpenSpec `tasks.md`의 남은 구현, 검증, PR-sized 후속 작업 수행
+- **openspec-authoring** - OpenSpec spec, proposal, design, task 문서 작성
+- **openspec-doc-maintenance** - OpenSpec drift, 모순, stale scenario, contract 유지보수
+- **openspec-task-execution** - OpenSpec `tasks.md`의 남은 구현, 검증, PR-sized 후속 작업 수행
 
 ## Skills과 참조 문서 관계
 
@@ -38,25 +44,25 @@
 
 | Skill | 참조 문서 |
 |-------|----------|
-| translation.md | [docs/translation.md](/docs/translation.md), [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
-| confluence-mdx.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
-| confluence-pr-update.md | confluence-mdx.md, translation.md, mdx-skeleton-comparison.md |
-| confluence-mdx-testcase.md | [confluence-mdx/README.md](/confluence-mdx/README.md) |
-| sync-ko-to-en-ja.md | [docs/translation.md](/docs/translation.md) |
-| mdx-skeleton-comparison.md | [docs/translation.md](/docs/translation.md) |
-| reverse-sync.md | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
-| reverse-sync-debugging.md | reverse-sync.md, [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
-| sync-confluence-url.md | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
-| xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
-| commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
-| proofread.md | [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
-| openspec-authoring.md | [AGENTS.md](/AGENTS.md), `openspec/README.md` (OpenSpec 도입 후) |
-| openspec-doc-maintenance.md | [AGENTS.md](/AGENTS.md), `openspec/project.md` (OpenSpec 도입 후) |
-| openspec-task-execution.md | [AGENTS.md](/AGENTS.md), `openspec/changes/**/tasks.md` |
+| translation | [docs/translation.md](/docs/translation.md), [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
+| confluence-mdx | [confluence-mdx/README.md](/confluence-mdx/README.md) |
+| confluence-pr-update | confluence-mdx, translation, mdx-skeleton-comparison |
+| confluence-mdx-testcase | [confluence-mdx/README.md](/confluence-mdx/README.md) |
+| sync-ko-to-en-ja | [docs/translation.md](/docs/translation.md) |
+| mdx-skeleton-comparison | [docs/translation.md](/docs/translation.md) |
+| reverse-sync | [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
+| reverse-sync-debugging | reverse-sync, [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py) |
+| sync-confluence-url | [confluence-mdx/bin/sync_confluence_url.py](/confluence-mdx/bin/sync_confluence_url.py) |
+| xhtml-beautify-diff | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
+| commit | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
+| proofread | [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
+| openspec-authoring | [AGENTS.md](/AGENTS.md), `openspec/README.md` (OpenSpec 도입 후) |
+| openspec-doc-maintenance | [AGENTS.md](/AGENTS.md), `openspec/project.md` (OpenSpec 도입 후) |
+| openspec-task-execution | [AGENTS.md](/AGENTS.md), `openspec/changes/**/tasks.md` |
 
 ## 사용법
 
-이 skills는 이 저장소에서 작업할 때 Claude에서 자동으로 사용할 수 있습니다. 다음 작업에 대한 상황별 가이드를 제공합니다:
+이 skills는 이 저장소에서 작업할 때 agent가 사용할 수 있습니다. 다음 작업에 대한 상황별 가이드를 제공합니다:
 
 - MDX 문서 작성 및 유지 관리
 - 다국어 콘텐츠 번역

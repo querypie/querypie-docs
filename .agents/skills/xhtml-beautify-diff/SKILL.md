@@ -160,5 +160,5 @@ diff_lines = xhtml_diff(text_a, text_b, label_a="original", label_b="patched")
 
 ## 관련 Skill
 
-- [reverse-sync.md](reverse-sync.md) — 이 도구의 주요 사용 워크플로우 (MDX → Confluence XHTML 역반영)
-- [confluence-mdx.md](confluence-mdx.md) — Confluence에서 MDX로의 forward 변환 워크플로우
+- [reverse-sync.md](../reverse-sync/SKILL.md) — 이 도구의 주요 사용 워크플로우 (MDX → Confluence XHTML 역반영)
+- [confluence-mdx.md](../confluence-mdx/SKILL.md) — Confluence에서 MDX로의 forward 변환 워크플로우

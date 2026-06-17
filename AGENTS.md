@@ -22,7 +22,7 @@
 
 ## Skill 발견
 
-이 repository의 checked-in agent skill은 `.agents/skills/` 아래에 둡니다.
+이 repository의 checked-in agent skill은 `.agents/skills/<skill-name>/SKILL.md` 형식으로 둡니다.
 호환성을 위해 `.claude`는 `.agents`를 가리키는 symbolic link로 유지합니다.
 
 작업을 시작할 때:
@@ -35,9 +35,9 @@
 
 ## OpenSpec 작업 규칙
 
-- OpenSpec spec 또는 change 문서를 새로 작성하거나 크게 갱신하는 작업이면 `.agents/skills/openspec-authoring.md`를 먼저 읽습니다.
-- 구현, 리뷰, 계획, 디버깅 중 OpenSpec drift, 모순, 누락된 Requirement, stale Scenario, 또는 `openspec/`에 기록해야 할 durable contract를 발견하면 `.agents/skills/openspec-doc-maintenance.md`를 먼저 읽습니다.
-- OpenSpec `tasks.md`에 남은 task, 후속 구현, verification 보강, PR-sized execution을 수행하라는 요청이면 `.agents/skills/openspec-task-execution.md`를 먼저 읽습니다.
+- OpenSpec spec 또는 change 문서를 새로 작성하거나 크게 갱신하는 작업이면 `.agents/skills/openspec-authoring/SKILL.md`를 먼저 읽습니다.
+- 구현, 리뷰, 계획, 디버깅 중 OpenSpec drift, 모순, 누락된 Requirement, stale Scenario, 또는 `openspec/`에 기록해야 할 durable contract를 발견하면 `.agents/skills/openspec-doc-maintenance/SKILL.md`를 먼저 읽습니다.
+- OpenSpec `tasks.md`에 남은 task, 후속 구현, verification 보강, PR-sized execution을 수행하라는 요청이면 `.agents/skills/openspec-task-execution/SKILL.md`를 먼저 읽습니다.
 - OpenSpec은 durable implementation contract layer로 취급합니다. 기존 contract 구현이 아니라 requirement 또는 spec을 바꾸는 작업이면 production code를 변경하기 전에 OpenSpec을 먼저 갱신하고 follow-up implementation task를 기록합니다.
 - OpenSpec 문서 본문은 한국어로 작성합니다. spec id, file name, `Requirement`와 `Scenario` 같은 heading, code identifier, route path, API name, frontmatter key, modality token은 canonical language를 유지합니다.
 

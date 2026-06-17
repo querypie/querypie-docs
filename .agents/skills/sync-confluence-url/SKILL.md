@@ -100,6 +100,6 @@ confluence-mdx/bin/sync_confluence_url.py -r
 
 ## 관련 Skill
 
-- **mdx-skeleton-comparison.md** — Skeleton 비교를 통한 번역 일관성 검증
-- **confluence-mdx.md** — Confluence에서 MDX로의 변환 워크플로우
-- **sync-ko-to-en-ja.md** — 한국어 MDX 변경사항을 영어/일본어에 동기화
+- **mdx-skeleton-comparison** — Skeleton 비교를 통한 번역 일관성 검증
+- **confluence-mdx** — Confluence에서 MDX로의 변환 워크플로우
+- **sync-ko-to-en-ja** — 한국어 MDX 변경사항을 영어/일본어에 동기화

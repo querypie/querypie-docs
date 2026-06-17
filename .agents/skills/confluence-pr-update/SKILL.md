@@ -66,11 +66,11 @@ git status public/
 - 일본어: `src/content/ja/path/to/file.mdx`
 
 **번역 지침**:
-- [docs/translation.md](/docs/translation.md) 및 [translation.md](translation.md)의 번역 규칙 준수
+- [docs/translation.md](/docs/translation.md) 및 [translation.md](../translation/SKILL.md)의 번역 규칙 준수
 
 ### Step 5: Skeleton MDX 비교로 검증
 
-번역 후 구조 일치를 확인합니다. 사용법은 [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)를 참조하세요.
+번역 후 구조 일치를 확인합니다. 사용법은 [mdx-skeleton-comparison.md](../mdx-skeleton-comparison/SKILL.md)를 참조하세요.
 
 ```bash
 cd confluence-mdx
@@ -177,7 +177,7 @@ git status public/
 
 ### Skeleton 불일치가 발생한 경우
 
-[mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)의 "불일치 발견 시 처리 방법"을 참조하세요.
+[mdx-skeleton-comparison.md](../mdx-skeleton-comparison/SKILL.md)의 "불일치 발견 시 처리 방법"을 참조하세요.
 
 ### 코드 블록 내 주석이 번역된 경우
 
@@ -185,7 +185,7 @@ git status public/
 
 ## 관련 문서
 
-- **Confluence MDX 변환**: [confluence-mdx.md](confluence-mdx.md)
-- **Skeleton MDX 비교**: [mdx-skeleton-comparison.md](mdx-skeleton-comparison.md)
-- **번역 가이드라인**: [translation.md](translation.md)
-- **한국어→영어/일본어 동기화**: [sync-ko-to-en-ja.md](sync-ko-to-en-ja.md)
+- **Confluence MDX 변환**: [confluence-mdx.md](../confluence-mdx/SKILL.md)
+- **Skeleton MDX 비교**: [mdx-skeleton-comparison.md](../mdx-skeleton-comparison/SKILL.md)
+- **번역 가이드라인**: [translation.md](../translation/SKILL.md)
+- **한국어→영어/일본어 동기화**: [sync-ko-to-en-ja.md](../sync-ko-to-en-ja/SKILL.md)

@@ -14,7 +14,7 @@ OpenSpec 문제를 대화나 임시 메모에만 남기지 않고, repository의
 
 사용하지 않습니다:
 
-- 처음부터 새 OpenSpec spec이나 change 문서를 작성하는 것이 주 작업이면 `openspec-authoring.md`를 우선 사용합니다.
+- 처음부터 새 OpenSpec spec이나 change 문서를 작성하는 것이 주 작업이면 `openspec-authoring`을 우선 사용합니다.
 - 단순 코드 구현이고 OpenSpec drift 또는 contract 변경이 없으면 사용하지 않습니다.
 
 ## 기본 원칙

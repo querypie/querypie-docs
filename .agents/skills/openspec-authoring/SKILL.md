@@ -13,8 +13,8 @@ QueryPie 문서 저장소에서 OpenSpec spec, proposal, design, tasks를 새로
 
 사용하지 않습니다:
 
-- 구현 중 우연히 drift, 모순, stale Scenario를 발견한 경우에는 `openspec-doc-maintenance.md`를 우선 사용합니다.
-- 단순 MDX 번역/교정 작업은 `translation.md`, `proofread.md`, `sync-ko-to-en-ja.md`를 우선 사용합니다.
+- 구현 중 우연히 drift, 모순, stale Scenario를 발견한 경우에는 `openspec-doc-maintenance`를 우선 사용합니다.
+- 단순 MDX 번역/교정 작업은 `translation`, `proofread`, `sync-ko-to-en-ja`를 우선 사용합니다.
 - Confluence 변환 또는 reverse sync 작업은 관련 Confluence/reverse sync skill을 우선 사용합니다.
 
 ## 사전 확인
