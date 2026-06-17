@@ -1,6 +1,6 @@
-# QueryPie 문서 저장소용 Claude Skills
+# QueryPie 문서 저장소용 Agent Skills
 
-이 디렉토리는 QueryPie 문서 저장소에서 다양한 작업을 수행하는 데 도움이 되는 Claude skills을 포함합니다.
+이 디렉토리는 QueryPie 문서 저장소에서 다양한 작업을 수행하는 데 도움이 되는 Agent skills를 포함합니다.
 
 ## 사용 가능한 Skills
 
@@ -27,6 +27,11 @@
 - **commit.md** - Commit 및 PR 작성 가이드
 - **code-review.md** - 코드 변경 사항 검토 가이드라인
 
+### OpenSpec Skills
+- **openspec-authoring.md** - OpenSpec spec, proposal, design, task 문서 작성
+- **openspec-doc-maintenance.md** - OpenSpec drift, 모순, stale scenario, contract 유지보수
+- **openspec-task-execution.md** - OpenSpec `tasks.md`의 남은 구현, 검증, PR-sized 후속 작업 수행
+
 ## Skills과 참조 문서 관계
 
 각 skill은 핵심 원칙과 빠른 시작 가이드를 제공하며, 상세 내용은 프로젝트의 다른 문서를 참조합니다:
@@ -45,6 +50,9 @@
 | xhtml-beautify-diff.md | [confluence-mdx/bin/xhtml_beautify_diff.py](/confluence-mdx/bin/xhtml_beautify_diff.py) |
 | commit.md | [docs/commit-pr-guide.md](/docs/commit-pr-guide.md) (Commit 및 PR 작성) |
 | proofread.md | [docs/api-naming-guide.md](/docs/api-naming-guide.md) |
+| openspec-authoring.md | [AGENTS.md](/AGENTS.md), `openspec/README.md` (OpenSpec 도입 후) |
+| openspec-doc-maintenance.md | [AGENTS.md](/AGENTS.md), `openspec/project.md` (OpenSpec 도입 후) |
+| openspec-task-execution.md | [AGENTS.md](/AGENTS.md), `openspec/changes/**/tasks.md` |
 
 ## 사용법
 
@@ -54,6 +62,7 @@
 - 다국어 콘텐츠 번역
 - Confluence 변환 스크립트 작업
 - 원문과 번역본 MDX 파일 간의 불일치 감지
+- OpenSpec 기반 요구사항, 구현 계약, 후속 task 관리
 - 코드 변경 사항 검토
 
 ## 프로젝트 구조

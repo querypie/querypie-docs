@@ -7,8 +7,9 @@ QueryPie 제품 문서 사이트 (Next.js 16 + Nextra 4 + MDX)
 
 ## Skills
 
-이 프로젝트의 Claude Skills는 `.claude/skills/` 디렉토리에 있습니다.
-목록은 `.claude/skills/README.md`를 참조하세요.
+이 프로젝트의 Agent Skills는 `.agents/skills/` 디렉토리에 있습니다.
+Claude 호환성을 위해 `.claude`는 `.agents`를 가리키는 symbolic link입니다.
+목록은 `.agents/skills/README.md`를 참조하세요.
 
 ## 커밋 및 PR 컨벤션
 

@@ -127,7 +127,7 @@ git push origin HEAD
 
 **PR title prefix 규칙**:
 - `mdx:` — MDX 콘텐츠 파일(`src/content/`)의 추가/수정/번역. Confluence 동기화, 번역, 교정/교열 등.
-- `docs:` — 저장소 내부 문서/지침(`docs/`, `.claude/skills/`, `README.md` 등)의 추가/수정. 콘텐츠가 아닌 개발/운영 문서.
+- `docs:` — 저장소 내부 문서/지침(`docs/`, `.agents/skills/`, `README.md` 등)의 추가/수정. 콘텐츠가 아닌 개발/운영 문서.
 - `feat:`, `fix:`, `chore:` 등 — 코드/인프라 변경에 대한 일반적인 conventional commit prefix.
 
 ```bash
