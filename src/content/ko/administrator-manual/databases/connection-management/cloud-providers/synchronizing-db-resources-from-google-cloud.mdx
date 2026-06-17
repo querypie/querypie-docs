@@ -27,11 +27,14 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers
 
 1. Database 설정 메뉴에서 Cloud Provider 메뉴로 이동합니다.
 2. 우측 상단의 `Create Provider` 버튼을 클릭합니다.
-3. Name 항목에 해당 프로바이더를 구분할 수 있는 이름을 입력합니다.
+3. **Name**항목에 해당 프로바이더를 구분할 수 있는 이름을 입력합니다.
 4. **Cloud Provider** 항목에서 Google Cloud Platform을 선택합니다.
 5. **Project ID** 항목에서 동기화하고자 하는 리소스의 프로젝트를 입력합니다.
 6. 리소스를 동기화하기 위해 필요한 **Credential** 정보를 입력합니다.
-    * `Synchronize` 버튼 클릭 시 GCP의 Service Account를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2부터 "Save Credential for Synchronization" 옵션을 제공하여 Credential type으로 Service Account를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
+    * `Synchronize` 버튼 클릭 시 GCP의 Service Account를 입력하는 수동 동기화 방식을 기본 제공합니다. <br/>QueryPie 10.2.2부터 "Save Credential for Synchronization" 옵션을 제공하여 Credential type으로 `Service Account`를 사용할 때도 스케줄을 통한 동기화가 가능하도록 개선되었습니다.
+    * 11.5.6 부터 Hashcorp Vault 의 Google Cloud secret engine을 지원하여 정적 Credential 저장 없이 동기화를 수행할 수 있습니다. Credential type 항목에서 `Vault(GCP)` 를 지정할 수 있습니다.
+        * 이 기능을 사용하기 위해서는 사전에  General &gt; System &gt; Integration &gt;  HashiCorp Vault 에 “Vault Secret Store” 설정이 필요하고 (`Roleset Path` 지정을 위해) Vault에 `Role set` 설정 을 해야합니다. <br/>&lt; 참고 &gt; [HashiCorp Vault 연동 정보 입력하기 | HashiCorp-Vault-연동-정보-입력하기](../../../general/system/integrations/integrating-with-secret-store#hashicorp-vault-%ec%97%b0%eb%8f%99-%ec%a0%95%eb%b3%b4-%ec%9e%85%eb%a0%a5%ed%95%98%ea%b8%b0) <br/>&lt; 참고 &gt; [Role set : Hashicorp Vault Google Cloud secret engine](https://developer.hashicorp.com/vault/docs/secrets/gcp#rolesets)
+        * Roleset Path는 Vault 설정에 따라 access token 기반 경로와 service account key 기반 경로를 사용할 수 있습니다.
 7. **Database Type Filter** 항목에서 동기화하고자 하는 리소스들을 선택합니다.
 8. **Search Filter** 를 사용하여 동기화하고자 하는 일부 유형의 리소스 목록을 가져올 수 있습니다.
     1. Search Filter는 AWS의 검색 방식과 동일하게 작동합니다. 이름, 호스트, OS, 태그 등의 값을 필터로 사용할 수 있으며 아래 순서대로 Enter 키를 활용하여 검색 조건 및 필터를 편리하게 입력할 수 있습니다.
@@ -81,6 +84,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
         1. “Save Credential for Synchronization” : 비활성화 상태는 활성화로 변경할 수 있으나 활성화 상태를 비활성화로 전환 불가
     5. Database Type Filter: 변경 가능
     6. Replication Frequency: 변경 가능
+    7. Auto Configuration Upon Initial Synchronization : 변경 불가
 
 <Callout type="important">
 "Save Credential for Synchronization" 옵션이 활성화되어 있지 않은 상태로 저장된 동기화 설정은 상세페이지에서 체크박스를 체크하는 것으로 옵션을 활성화할 수 있습니다.
@@ -99,4 +103,3 @@ Administrator &gt; Databases &gt; Connection Management &gt; Cloud Providers &gt
 * CloudSQL : CloudSQL Viewer
 * BigQuery : BigQuery Administrator
 </Callout>
-

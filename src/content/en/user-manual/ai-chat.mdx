@@ -1,0 +1,137 @@
+---
+title: 'AI Chat'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2166521863/AI+Chat'
+---
+
+import { Callout } from 'nextra/components'
+
+# AI Chat
+
+### Overview
+
+AI Chat has been added to QueryPie.
+Users and administrators can perform various tasks in QueryPie through natural language.
+It is connected to the built-in MCP (Model Context Protocol) server in QueryPie ACP and supports Tool calls.
+The following are examples of tasks users and administrators can perform through AI Chat by access control area.
+
+#### Database (DAC)
+
+| **Feature**      | **Description**                                                           |
+| ---------------- | ------------------------------------------------------------------------- |
+| View DB connections | Check the list of database connections that I can access               |
+| Run SQL          | Run a single query (up to 1,000 rows)                                      |
+| Session query    | Run multiple queries that require large result retrieval or transactions   |
+| Workflow request | Request new DB access, schema permissions, or SQL execution approval       |
+| AI Preview       | Validate schemas and analyze expected results without actually running SQL |
+
+#### Server (SAC)
+
+| **Feature**       | **Description**                                                     |
+| ----------------- | ------------------------------------------------------------------- |
+| View servers/roles | Check accessible servers and assigned roles                         |
+| Select role       | Activate a role for access to a specific server                     |
+| Shell session     | Connect to a server through SSH/SFTP and start a shell              |
+| Run commands      | Run Linux/Windows commands in a started shell session               |
+| Web terminal integration | Send commands to a terminal session opened by the user in the web UI |
+
+#### Kubernetes (KAC)
+
+| **Feature**         | **Description**                                      |
+| ------------------- | ---------------------------------------------------- |
+| View clusters       | Check the list of accessible K8s clusters            |
+| Manage resources    | View/create/update/delete Pods, Deployments, Services, and more |
+| Analyze clusters    | Diagnose cluster status and report issues            |
+| Check events/metrics | View node metrics and cluster events                 |
+
+#### Admin
+
+| **Feature**              | **Description**                                                         |
+| ------------------------ | ----------------------------------------------------------------------- |
+| Manage access control    | Grant/revoke DB/server/K8s roles, policies, and permissions             |
+| Manage connections/clusters | Register and update DB connection information, servers, and K8s clusters |
+| Manage users             | View user lists and activate/deactivate users in bulk                   |
+| Audit logs               | View SQL execution history, server access history, command audits, and K8s request audits |
+| Data masking/tagging     | Manage sensitive data tags and masking policies                         |
+
+#### Other supporting features
+
+| **Feature**        | **Description**                                      |
+| ------------------ | ---------------------------------------------------- |
+| Schema validation  | Check actual table column names and types before writing SQL |
+| Chart visualization | Convert query results to bar, line, pie, or area charts |
+| YAML policy validation | Automatically validate YAML formats for SAC and KAC |
+| Usage guide        | Reference official specification documents and run automatic validation |
+
+### Using AI Chat
+
+<Callout type="info">
+To use AI Chat, an administrator must configure it in advance so users can use the feature.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/ai-chat/image-20260602-024138.png" alt="Loading the chat window with the Ask AI button" width="760" />
+<figcaption>
+Loading the chat window with the Ask AI button
+</figcaption>
+</figure>
+
+1. Click the `Ask AI` button on the right side of the top menu in QueryPie to open the chat panel.
+2. The chat panel slides in from the right. You can adjust the panel width by dragging the resize handle at the right edge.
+3. You can use the following features in the header area.
+    * **Conversation list button**<img src="/user-manual/ai-chat/image-20260602-031812.png" alt="image-20260602-031812.png" /> : Opens a dropdown that shows the automatically generated conversation list.
+    * **New conversation button**<img src="/user-manual/ai-chat/image-20260602-032008.png" alt="image-20260602-032008.png" /> : Click the pencil icon button to start a new conversation.
+    * **Tool list**<img src="/user-manual/ai-chat/image-20260602-032112.png" alt="image-20260602-032112.png" />  : Click the wrench icon button to check the list of MCP Tools that AI can use, such as Database, Server, and User.
+    * **Full-screen toggle button**<img src="/user-manual/ai-chat/image-20260602-032232.png" alt="image-20260602-032232.png" /> : Switches the chat panel to full screen.
+    * **Settings button** <img src="/user-manual/ai-chat/image-20260602-032353.png" alt="image-20260602-032353.png" /> : Click the gear icon to refresh the MCP Tool list.
+    * **Close** <img src="/user-manual/ai-chat/image-20260602-032522.png" alt="image-20260602-032522.png" /> : Click the button to close the chat panel.
+4. Enter a question in the chat input field at the bottom and send it.
+  <figure data-layout="center" data-align="center">
+  <img src="/user-manual/ai-chat/image-20260602-032619.png" alt="image-20260602-032619.png" width="636" />
+  </figure>
+    * Model selection : Check the currently used LLM model and switch to another model within the same Provider.
+    * Context information for the page you are currently viewing is entered automatically, such as a Database detail page or SQL Editor.
+    * When you switch pages, the context changes and a warning message is displayed.
+5. AI generates an answer to the question. If needed, it calls MCP Tools and provides answers by referencing QueryPie data.
+    * While a response is being generated, a spinning indicator is displayed at the bottom, and you can click the stop button to stop generation.
+    * AI responses can include various artifacts, such as SQL code and charts.
+
+<Callout type="info">
+**AI Preview**<br/>When you click the AI preview button in the DAC Web editor toolbar, the AI chat window shows the expected execution result for the query.
+You can check the target schema structure, expected row count, expected performance, and potential issues without running the query.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/ai-chat/image-20260602-033757.png" alt="Running AI Preview" width="700" />
+<figcaption>
+Running AI Preview
+</figcaption>
+</figure>
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/ai-chat/image-20260602-033713.png" alt="Example AI Preview result" width="533" />
+<figcaption>
+Example AI Preview result
+</figcaption>
+</figure>
+</Callout>
+
+<Callout type="important">
+AI responses are for reference only. For important tasks, make sure to verify the results.
+</Callout>
+
+### Managing Conversation History
+
+You can view and manage previous conversations.
+
+1. Click the **hamburger menu (☰)** button in the AI Chat panel header to open the recent conversations dropdown.
+2. In the dropdown, you can view and select up to five recent conversations, and you can start a new conversation with the `New Chat` button.
+3. The `View All` button appears at the bottom of the dropdown only when there are six or more conversations. Click it to open the conversation list sidebar.
+4. When the conversation list sidebar is open, you can use the following features.
+    * **Select conversation** : Click a conversation in the list to display its contents.
+    * **Edit conversation title** : When you hover over a conversation item, a more button (`…`) appears on the right. Select `Rename` and edit the title.
+    * **Favorites** : Use the more button (`…`) menu that appears when you hover over a conversation item to add it to or remove it from favorites.
+    * **Delete conversation** : Use the more button (`…`) menu that appears when you hover over a conversation item and select `Delete` to remove the conversation.
+    * **Load more** : The `Load more` button appears at the bottom of the list only when there are additional conversation pages. Click it to load older conversations.
+
+<Callout type="important">
+The current version does not provide conversation search.
+</Callout>

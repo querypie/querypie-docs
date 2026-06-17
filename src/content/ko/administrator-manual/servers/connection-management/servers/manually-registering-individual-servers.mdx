@@ -3,6 +3,8 @@ title: '수동으로 개별 서버 등록하기'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544380774'
 ---
 
+import { Callout } from 'nextra/components'
+
 # 수동으로 개별 서버 등록하기
 
 ### Overview
@@ -23,7 +25,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 </figcaption>
 </figure>
 
-#### 1. Information 입력하기
+#### Information 섹션 입력하기
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240828-154305.png" alt="image-20240828-154305.png" width="651" />
@@ -32,7 +34,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 1. Administrator &gt; Servers &gt; Connection Management &gt; Servers 메뉴로 이동합니다.
 2. 우측 상단의 `Create Server` 버튼을 클릭합니다.
 3. 서버 등록을 위해 다음 정보를 입력합니다.
-    1. **Name**: 해당 서버를 구분할 수 있는 이름을 입력합니다.
+    1. **Server Name**: 해당 서버를 구분할 수 있는 이름을 입력합니다.
     2. **Host**: 서버의 호스트를 입력합니다. 도메인, IP 형태 모두 입력할 수 있습니다.
     3. **Server OS**: 서버의 OS를 선택합니다.
     4. **OS Version**: 서버 OS의 상세 정보를 입력합니다.
@@ -42,7 +44,7 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
         3. FTP : FTP 접속 시 사용할 포트를 입력합니다. [SAC General Configurations](../../sac-general-configurations) 메뉴 “Using insecure protocols“ 항목을 통해 FTP를 활성화한 경우에만 표시됩니다.
         4. RDP : Server OS가 Windows Server인 경우에만 표시됩니다.
 
-#### 2. Tag 입력하기 (Optional)
+#### Tag 입력하기 (Optional)
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20240723-163036.png" alt="image-20240723-163036.png" width="760" />
@@ -58,3 +60,38 @@ Administrator &gt; Servers &gt; Connection Management &gt; Servers &gt; Create S
 
 위 과정을 거친 후 최종 `Save` 버튼을 클릭하면 서버가 성공적으로 등록됩니다.
 
+#### Prompt Separators 설정하기 (Optional)
+
+Prompt Separators는 SSH 서버 접속 시 SAC에서 서버의 셸 프롬프트를 더 정확하게 인식할 수 있도록 추가 프롬프트 구분 문자열을 등록하는 기능입니다.
+(11.2.0 부터 추가되었습니다.)
+
+<Callout type="info">
+**쉘 프롬프트와 명령어 인식의 관계**
+
+QueryPie SAC은 기본적으로 `$` , `#` , `%` , `>` 같은 프롬프트 끝 문자열을 기준으로 사용자가 입력한 명령이 끝났는지, 명령 실행 결과가 끝나고 다시 프롬프트로 돌아왔는지를 판단합니다.
+
+서버가 이 기본 패턴이 아닌 **사용자 정의 프롬프트를 사용하면** (예시: 프롬프트 끝이 `]` , `:~>` , `PROMPT>` 등 기본 패턴과 다른 경우) 명령어 경계 인식이 정확하지 않을 수 있습니다.
+이때 Prompt Separators에 해당 프롬프트 끝 문자열을 추가로 등록해야합니다.
+</Callout>
+
+Prompt separators 입력란에 프롬프트의 끝을 인식할 수 있는 문자를 입력합니다.
+프롬프트 전체를 입력하는 것이 아니아니라 **끝 문자만 입력**합니다.
+끝 문자 여러개를 복수로 입력할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/servers/connection-management/servers/manually-registering-individual-servers/image-20260608-045024.png" alt="image-20260608-045024.png" width="658" />
+</figure>
+
+예 1) `user@host:~]` 와 같은 프롬프트를 사용하는 경우 `]`를 입력합니다.
+
+예 2) `user@host:~>` 와 같은 프롬프트를 사용하는 경우 `>` 를 입력합니다.
+
+예 3) `my-shell>>>` 와 같은 프롬프트를 사용하는 경우 `>>>` 를 입력합니다.
+
+<Callout type="important">
+**주의사항**
+*  `:` , `-` 처럼 일반 출력에도 자주 포함되는 문자열은 잘못된 경계 인식의 원인이 될 수 있습니다.
+* 일반 출력 텍스트와 겹치지 않는 식별 가능한 끝 패턴을 사용하는 것이 좋습니다.
+* `$` , `#` , `%` , `>` 는 기본적으로 구분 문자로 처리되므로 등록할 필요가 없습니다.
+* 저장 시 중복 값은 정리되어 저장됩니다.
+</Callout>

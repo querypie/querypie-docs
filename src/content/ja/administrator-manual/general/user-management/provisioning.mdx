@@ -3,6 +3,8 @@ title: 'Provisioning'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544376236/Provisioning'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Provisioning
 
 ### Overview
@@ -41,8 +43,46 @@ Administrator &gt; General &gt; User Management &gt; Provisioning
         * 実際の一貫性維持のためにユーザーのライフサイクル管理はIdPで進行することをお勧めします。
     * 同期されたユーザーはQueryPie内で変更および削除が不可能です。
 
+<Callout type="info">
+**External IDのサポート**
+
+External IDは、IdPとQueryPie間でユーザーを安定して識別するための外部識別子です。
+（IdPのAユーザーとQueryPieのBユーザーが同一人物であることを安定して識別するためのマッピング要素です。）
+SCIM RFC 7643標準上、External IDは任意項目であるため、IdPに存在しない場合があります。
+ただし、管理者が補助的に明確な識別を必要とする場合は、External IDを追加して管理でき、存在する場合はQueryPieで使用できます。
+
+* 11.5.6からUser resourceのExternal IDを保存し、レスポンスに含めます。
+* 同じAuth Provider内でExternal IDは重複できません。
+* External IDを基準に既存ユーザーを再識別できます。
+* External IDが存在する場合、削除されたユーザーを同じExternal IDで復元できます。つまり、ユーザーがQueryPieで削除された状態（soft-delete）であっても、IdPが同じexternalIdで再度Provisioningすると、既存ユーザーが再有効化される可能性があります。
+
+**Patchのサポート**
+
+* 一部のIdPはユーザー属性の変更時にPatchを使用します。11.5.6からPatchベースの更新を使用するIdPもQueryPieでサポートします。
+
+**SCIM標準エラーの返却**
+
+11.5.6からSCIMエラー発生時、application/scim+json形式の標準エラーレスポンスを返却します。
+
+代表的なエラー例:
+
+* uniqueness`(409)`: 同じexternalIdまたは重複識別子の競合
+    * 通常、「すでに同じユーザーが存在するのに、IdPが新しいユーザーとして再作成しようとする場合」に発生します。
+    * ユーザー再有効化が目的であれば、externalIdが既存ユーザーと一貫して渡されているかを先に確認する必要があります。
+    * 同じユーザーを新しいアカウントとして作成するのか、既存アカウントに再接続するのか、IdPのマッピングルールを確認する必要があります。
+* mutability`(400)`: 変更不可能なuserNameの変更試行
+    * IdPでユーザーのログインIDやアカウント識別子を変更するポリシーを使用すると、このエラーが発生する可能性があります。
+    * QueryPie連携では、userNameを作成後に固定値として維持し、ユーザーの再識別や再接続はexternalIdを基準に運用することが安全です。
+* invalidFilter`(400)`: サポートしていないフィルターの使用
+    * IdPテスト中に特定ユーザーの照会やマッピング検証段階でよく確認されます。
+    * 送信したfilter文字列がQueryPieのサポートする属性や形式であるか確認する必要があります。
+    * 特にカスタム属性や複雑な組み合わせフィルターを使用する場合は、互換性を確認してください。
+* invalidValue`(400)`: サポートしていないPATCH opの使用
+    * 主にIdPが送信するPATCHリクエスト形式がQueryPieの実装範囲と異なる場合に発生します。
+    * PATCH bodyのop値とactive値の形式を先に確認すると、原因を素早く把握できます。
+</Callout>
+
 ### SCIMアカウントシステム連動ガイドショートカット
 
 * [Provisioningの有効化](provisioning/activating-provisioning)
 * [[Okta] プロビジョニング連動ガイド](provisioning/okta-provisioning-integration-guide)
-

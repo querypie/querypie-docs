@@ -1,0 +1,400 @@
+---
+title: 'Multi Agent - qpctl CLI Usage Guide'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2173796362/Multi+Agent+-+qpctl+CLI'
+---
+
+import { Callout } from 'nextra/components'
+
+# Multi Agent - qpctl CLI Usage Guide
+
+### Overview
+
+`qpctl` is a CLI tool provided with QueryPie Multi Agent.
+In addition to Seamless SSH connections, it lets you control QueryPie Hosts, SAC Roles, and authentication sessions managed by Multi Agent from the command line.
+
+#### qpctl Command Structure
+
+| **Category** | **Command**         | **Description**                                           |
+| ------------ | ------------------- | --------------------------------------------------------- |
+| SSH          | `qpctl ssh`         | Wraps the OpenSSH command to perform SSH connections through QueryPie. |
+| SSH          | `qpctl ssh-proxy`   | Performs an SSH proxy connection.                         |
+| Host         | `qpctl host list`   | Lists registered QueryPie Hosts.                          |
+| Host         | `qpctl host use`    | Selects the QueryPie Host to use.                         |
+| Role         | `qpctl role list`   | Lists available SAC Roles.                                |
+| Role         | `qpctl role use`    | Changes the SAC Role to use currently.                    |
+| Auth         | `qpctl auth login`  | Starts a QueryPie authentication session.                 |
+| Auth         | `qpctl auth logout` | Ends the QueryPie authentication session.                 |
+| Auth         | `qpctl auth status` | Checks the current authentication status.                 |
+
+<Callout type="info">
+Role and Auth arguments are supported starting from 11.5.6.
+</Callout>
+
+### Before You Start
+
+Check the following conditions first.
+
+* QueryPie Multi Agent must be installed.
+* You must be able to run the `qpctl` command.
+* QueryPie Multi Agent must be running.
+* To use the `host` command, at least one QueryPie Host must be registered in the app.
+* To use the `role` command, at least one SAC Role must be assigned to the user.
+* To use `auth login`, a QueryPie user account is required.
+
+#### qpctl Installation Method
+
+From the source perspective, `qpctl` is not an independent package downloaded separately from QueryPie Multi Agent. It is a CLI provided together with QueryPie Multi Agent.
+
+* macOS: Installs the `qpctl` executable inside the Multi Agent app as a symbolic link at `/usr/local/bin/qpctl`.
+* Linux: `qpctl` is included in the distribution package, and the release-based installation path is `/usr/bin/qpctl`.
+* Windows: The installer installs `qpctl.exe` together in the system directory.
+
+Therefore, from a general user's perspective, rather than installing `qpctl` separately, install QueryPie Multi Agent and then check that the `qpctl` command can be run from PATH.
+
+Example:
+```bash
+qpctl --help
+```
+
+If the command does not run, check the QueryPie Multi Agent installation status or CLI link/path settings first.
+
+### Basic Usage Flow
+
+The direct `qpctl` usage flow is generally as follows.
+
+1. Select a QueryPie Host.
+2. Use `qpctl ssh-proxy` or `qpctl ssh` to perform an SSH connection through QueryPie.
+3. If needed, reflect it in SSH config or shell aliases for repeated use.
+4. If needed, check the CLI authentication status and log in with `qpctl auth login`.
+5. If needed, list and switch the SAC Role to use with `qpctl role list` and `qpctl role use`.
+
+### Managing QueryPie Hosts
+
+#### `qpctl host list`
+
+Prints the list of registered QueryPie Hosts.
+```bash
+qpctl host list
+```
+
+Output behavior:
+
+* If no Hosts are registered, it prints `No QueryPie hosts configured.`
+* The currently selected Host is printed with `(current)`.
+
+Example:
+```text
+QueryPie Hosts:
+ - https://nightly.dev.querypie.io
+ - http://t8.ec2.querypie.io (current)
+ - https://t3.qa.querypie.io
+```
+
+<Callout type="important">
+The `(current)` shown here means the QueryPie Host that `qpctl` uses by default.
+</Callout>
+
+You can specify the host to use with the `qpctl host use` command.
+
+##### When specifying a Host directly
+
+```bash
+qpctl host use https://develop.dev.querypie.io
+```
+
+If successful, it prints in the following format.
+```text
+✔ Host changed to https://develop.dev.querypie.io
+```
+
+##### When not specifying a Host
+
+```bash
+qpctl host use
+```
+
+In this case, the registered Host list is shown as an interactive selection screen.
+
+Example:
+```text
+Use the arrow keys to navigate: ↓ ↑ → ←
+QueryPie Hosts
+  ▸ https://nightly.dev.querypie.io
+    http://t8.ec2.querypie.io (current)
+    https://t3.qa.querypie.io
+```
+
+### qpctl Commands Used for SSH Connections
+
+#### `qpctl ssh-proxy`
+
+`qpctl ssh-proxy` is a proxy command connected to SSH `ProxyCommand`.
+
+Usage format:
+```bash
+qpctl ssh-proxy <user> <host> <port> [QueryPie Host]
+```
+
+Example:
+```bash
+qpctl ssh-proxy ec2-user 10.0.0.10 22
+qpctl ssh-proxy ec2-user 10.0.0.10 22 https://develop.dev.querypie.io
+```
+
+Argument descriptions:
+
+| **Argument**    | **Description**                  |
+| --------------- | -------------------------------- |
+| `user`          | SSH user name                    |
+| `host`          | SSH target host name             |
+| `port`          | SSH target port                  |
+| `QueryPie Host` | QueryPie Host to use. Optional input |
+
+Behavior:
+
+* If `QueryPie Host` is specified directly, that value is used.
+* If it is not specified, the currently selected default Host is used.
+
+#### Example Used in SSH Config
+
+You can use it in SSH config as follows.
+```text
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+Or, if you have selected the default Host in advance, you can simplify it as follows.
+```bash
+qpctl host use develop.dev.querypie.io
+```
+
+After that, `ProxyCommand` can be used as follows.
+```text
+ProxyCommand qpctl ssh-proxy %r %h %p
+```
+
+#### `qpctl ssh`
+
+`qpctl ssh` is a wrapper command that receives an OpenSSH command line and performs a connection through QueryPie.
+
+Basic example:
+```bash
+qpctl ssh root@ssh.server.io
+```
+
+You can also pass additional OpenSSH options.
+```bash
+qpctl ssh -L 8080:localhost:80 root@ssh.server.io
+qpctl ssh -i ~/.ssh/id_rsa root@ssh.server.io
+```
+
+Behavior:
+
+* Internally, it interprets SSH settings.
+* It automatically attaches the required `ProxyCommand` and runs the actual `ssh` process.
+
+Limitations:
+
+* Specifying the `ProxyCommand` option directly by the user is not supported.
+* If the `-G` flag is included, the original SSH behavior is performed without automatic ProxyCommand injection.
+
+<Callout type="important">
+`qpctl ssh-proxy` connects to `ProxyCommand` in SSH settings, while `qpctl ssh` is a direct execution method that wraps the OpenSSH call itself.
+</Callout>
+
+### Role Commands
+
+Starting from 11.5.6, you can list and change SAC Roles from the CLI.
+
+#### `qpctl role list`
+
+Prints the list of available SAC Roles.
+```bash
+qpctl role list
+```
+
+Output behavior:
+
+* If there are no Roles, it prints `No roles found.`
+* If Roles exist, it prints them in the order of `UUID`, `Name`, and `Description`.
+* Roles without a Description print only `UUID` and `Name`.
+
+Example:
+```text
+Roles:
+ - 11111111-1111-1111-1111-111111111111	DBA	Database administrators
+ - 22222222-2222-2222-2222-222222222222	ReadOnly
+```
+
+##### When filtering by name
+
+```bash
+qpctl role list --name DBA
+```
+
+The `--name` value is applied as a contains search, not an exact name match.
+
+#### `qpctl role use`
+
+Changes the SAC Role to use currently.
+
+##### When specifying the Role UUID directly
+
+```bash
+qpctl role use 11111111-1111-1111-1111-111111111111
+```
+
+If successful, it prints in the following format.
+```text
+✔ Role changed to 11111111-1111-1111-1111-111111111111
+```
+
+##### When finding a Role by name
+
+```bash
+qpctl role use --name DBA
+```
+
+In this case, after filtering by name, you choose a Role through interactive selection.
+
+##### When omitting arguments
+
+```bash
+qpctl role use
+```
+
+In this case, the full list of available Roles is shown through interactive selection.
+
+<Callout type="important">
+`role-uuid` and `--name` cannot be used at the same time.
+If both are specified, an error occurs.
+</Callout>
+
+### Auth Commands
+
+Starting from 11.5.6, you can directly check QueryPie authentication session status and log in/log out from the CLI.
+
+#### `qpctl auth status`
+
+Checks the current login status.
+```bash
+qpctl auth status
+```
+
+Output behavior:
+
+* If not logged in: `Not logged in`
+* If logged in and a user name exists: `Logged in as {username}`
+* If logged in and no user name exists: `Logged in`
+
+#### `qpctl auth login`
+
+Logs in with a QueryPie account.
+```bash
+qpctl auth login --username brendon
+```
+
+Behavior:
+
+1. Checks the current authentication status.
+2. If already logged in, returns an error instead of starting a new login.
+3. If not logged in, displays the `Password:` prompt in the terminal.
+4. The password is entered in a way that is not shown on the screen.
+5. If authentication succeeds, it prints `Logged in as {username}`.
+
+Example:
+```text
+Password:
+Logged in as brendon
+```
+
+#### `qpctl auth logout`
+
+Ends the current authentication session.
+```bash
+qpctl auth logout
+```
+
+If successful, it prints in the following format.
+```text
+Logged out
+```
+
+<Callout type="important">
+If you run `auth login` again while already logged in, an error may be returned instructing you to run `qpctl auth logout` first.
+</Callout>
+
+### Recommended Usage Flows
+
+#### 1. When specifying the default Host first
+
+```bash
+qpctl host list
+qpctl host use
+qpctl auth status
+qpctl auth login --username brendon
+qpctl role list
+qpctl role use --name DBA
+qpctl ssh admin@db-server
+```
+
+This flow is suitable for the following situations.
+
+* When selecting and repeatedly using one of several QueryPie Hosts
+* When first organizing authentication and Role status in the CLI and then continuing to the SSH connection
+
+#### 2. When maintaining SSH config-based Seamless SSH
+
+```text
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p
+```
+
+Even in this case, it is convenient to specify the default Host first with the following command.
+```bash
+qpctl host use develop.dev.querypie.io
+```
+
+After that, use the following commands if needed.
+```bash
+qpctl auth status
+qpctl role list
+qpctl role use --name ReadOnly
+```
+
+In other words, together with SSH connections, authentication and Role control can also be performed from the CLI starting from 11.5.6.
+
+### Troubleshooting
+
+#### When `No QueryPie hosts configured.` is printed
+
+* No QueryPie Host is registered in the app.
+* Add a Host in the Multi Agent app first.
+
+#### When `No roles found.` is printed
+
+* The current user has no available SAC Roles, or
+* There are no results for the `--name` filter.
+
+#### When `auth login` fails
+
+Check the following.
+
+* Whether the `--username` value was entered
+* Whether the password was left empty
+* Whether you are already logged in
+* Whether Multi Agent is running normally
+
+#### When the `ProxyCommand option is not supported` error occurs in the `ssh` command
+
+* `qpctl ssh` does not support the method where the user directly specifies `ProxyCommand`.
+* Use it by passing only regular OpenSSH arguments without `ProxyCommand`.
+
+### Notes
+
+* The `role` command operates against the SAC product in the code.
+* `auth login` does not add a separate new backend password login endpoint. It reuses the existing authentication flow.

@@ -1,0 +1,49 @@
+---
+title: 'LLM Provider設定'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2166784044/LLM+Provider'
+---
+
+import { Callout } from 'nextra/components'
+
+# LLM Provider設定
+
+### Overview
+
+AI Chat機能を使用するには、まずQueryPie ACPでLLM providerを設定し、LLMサーバーと接続する必要があります。
+現在、OpenAI、Anthropic、LiteLLM（OpenAI compatible LLM server）、Z.aiのLLMを通じて提供されるモデルをサポートしています。
+
+### LLM providerを設定する
+
+AI Chat機能を使用するには、まずLLM Provider設定が必要です。
+AdminはLLM Provider接続とAI Chat使用ポリシーを設定できます。
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/general/system/integrations/llm-provider-configuration/image-20260602-035644.png" alt="image-20260602-035644.png" width="760" />
+</figure>
+
+
+1. Admin &gt; General &gt; System &gt; Integrations &gt; LLM Providerメニューに移動します。
+2. ページ上部の**AI Chat ON/OFF**トグルスイッチでAI Chat機能を有効化または無効化できます。
+3. LLM Provider設定で次のオプションを構成します。
+    * **Provider Type** : 使用するLLM Providerを選択します。
+        * **LiteLLM** : 自社運用中のLiteLLMプロキシサーバーまたはOpenAPI互換LLMサーバーに直接接続する場合に使用します。
+        * **OpenAI**, **Claude(Anthropic)**, **Gemini** : 該当クラウドサービスのAPIに直接接続します。公式APIエンドポイントを使用するため、`Provider URL`を別途入力しません。
+        * Z.ai  : Z.aiサービスのAPI URLを`Provider URL`に直接入力します。
+    * **Provider URL** : LiteLLMまたはZ.aiを選択した場合、LLMサービスのAPIエンドポイントURLを入力します。LiteLLM、OpenAI互換LLMサーバーのendpoint URLを入力する際は'/v1'を除外して入力します。
+    * **API Key** : 選択したProviderのAPIキーを入力します。（OpenAI互換LLM serverの場合は空値または任意の値を入力します。）接続テストを通じて正常に動作するか確認できます。
+    * **Default Model** : AI Chatでデフォルトとして使用するモデル名を入力します。接続テスト成功時、使用可能なモデル一覧が自動的に表示されます。
+    * **System Prompt** : AIが回答する際に基準とするシステムプロンプトを入力します。
+    * **Proxy Settings** : LLM Provider接続時にプロキシサーバーが必要な場合に設定します。
+        * **Host** : プロキシサーバーのホストアドレスです。
+        * **Port** : プロキシサーバーのポート番号です。
+        * **Username / Password** : プロキシ認証情報です。
+        * **Skip SSL Verify** : プロキシ接続時のSSL証明書検証をスキップします。
+    * **Context Limit (Tokens)** : 会話コンテキスト維持に使用する最大トークン数を設定します。デフォルト値は100,000トークンです。この値を超えると以前のメッセージが自動的に除外されます。Claude Sonnetは最大20万トークン、GPT-4oは最大12.8万トークンまでサポートするなど、使用するモデルの最大コンテキスト長を参考に設定してください。
+    * **Admin Only** : 有効化すると、Admin権限ユーザーのみAI Chatを使用できます。
+
+<Callout type="info">
+LLM Provider設定を変更した後は、`Save`ボタンをクリックして保存する必要があります。
+保存後、接続テストを通じて正常に動作するか確認してください。
+</Callout>
+
+参考 : [AI Chatの使用](../../../../user-manual/ai-chat)

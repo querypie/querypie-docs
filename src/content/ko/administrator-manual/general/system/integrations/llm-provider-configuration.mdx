@@ -1,0 +1,49 @@
+---
+title: 'LLM Provider 설정'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2166784044/LLM+Provider'
+---
+
+import { Callout } from 'nextra/components'
+
+# LLM Provider 설정
+
+### Overview
+
+AI Chat 기능을 사용하기 위해서는 먼저 QueryPie ACP 에 LLM provider 설정을 하여 LLM 서버와 연결을 해야합니다.
+현재 OpenAI, Anthropic, LiteLLM(OpenAI compatible LLM server), Z.ai 의 LLM을 통해 서빙되는 모델을 지원합니다.
+
+### LLM provider 설정하기
+
+AI Chat 기능을 사용하려면 먼저 LLM Provider 설정이 필요합니다.
+Admin은 LLM Provider 연결과 AI Chat 사용 정책을 설정할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/general/system/integrations/llm-provider-configuration/image-20260602-035644.png" alt="image-20260602-035644.png" width="760" />
+</figure>
+
+
+1. Admin &gt; General &gt; System &gt; Integrations &gt; LLM Provider 메뉴로 이동합니다.
+2. 페이지 상단의 **AI Chat ON/OFF** 토글 스위치로 AI Chat 기능을 활성화하거나 비활성화할 수 있습니다.
+3. LLM Provider 설정에서 다음 옵션을 구성합니다.
+    * **Provider Type** : 사용할 LLM Provider를 선택합니다.
+        * **LiteLLM** : 자체 운영 중인 LiteLLM 프록시 서버나 OpenAPI 호환 LLM 서버와 직접 연결할 때 사용합니다.
+        * **OpenAI**, **Claude(Anthropic)**, **Gemini** : 해당 클라우드 서비스의 API를 직접 연결하며, 공식 API 엔드포인트를 사용하므로 `Provider URL`을 별도로 입력하지 않습니다.
+        * Z.ai  : Z.ai 서비스의 API URL을 `Provider URL`에 직접 입력합니다.
+    * **Provider URL** : LiteLLM 또는 Z.ai 선택 시, LLM 서비스의 API 엔드포인트 URL을 입력합니다. LiteLLM, OpenAI 호환 LLM 서버의 endpoint URL을 입력할 때 '/v1'은 제외하고 입력합니다.
+    * **API Key** : 선택한 Provider의 API 키를 입력합니다.(OpenAI 호환 LLM server의 경우 빈값이나 아무 값을 입력합니다.) 연결 테스트를 통해 정상 여부를 확인할 수 있습니다.
+    * **Default Model** : AI Chat에서 기본으로 사용할 모델명을 입력합니다. 연결 테스트 성공 시 사용 가능한 모델 목록이 자동으로 표시됩니다.
+    * **System Prompt** : AI가 답변할 때 기준으로 삼을 시스템 프롬프트를 입력합니다.
+    * **Proxy Settings** : LLM Provider 연결 시 프록시 서버가 필요한 경우 설정합니다.
+        * **Host** : 프록시 서버 호스트 주소입니다.
+        * **Port** : 프록시 서버 포트 번호입니다.
+        * **Username / Password** : 프록시 인증 정보입니다.
+        * **Skip SSL Verify** : 프록시 연결 시 SSL 인증서 검증을 건너뜁니다.
+    * **Context Limit (Tokens)** : 대화 맥락 유지에 사용할 최대 토큰 수를 설정합니다. 기본값은 100,000 토큰입니다. 이 값을 초과하면 이전 메시지가 자동으로 제외됩니다. Claude Sonnet은 최대 20만 토큰까지, GPT-4o는 최대 12.8만 토큰까지 지원하는 등, 사용하는 모델의 최대 컨텍스트 길이를 참고하여 설정하세요.
+    * **Admin Only** : 활성화하면 Admin 권한 사용자만 AI Chat을 사용할 수 있습니다.
+
+<Callout type="info">
+LLM Provider 설정 변경 후에는 `Save` 버튼을 클릭하여 저장해야 합니다.
+저장 후 연결 테스트를 통해 정상 동작 여부를 확인하시기 바랍니다.
+</Callout>
+
+참고 : [AI Chat 사용하기](../../../../user-manual/ai-chat)

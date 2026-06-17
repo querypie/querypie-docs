@@ -1,0 +1,400 @@
+---
+title: 'Multi Agent - qpctl CLI使用ガイド'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2173796362/Multi+Agent+-+qpctl+CLI'
+---
+
+import { Callout } from 'nextra/components'
+
+# Multi Agent - qpctl CLI使用ガイド
+
+### Overview
+
+`qpctl`はQueryPie Multi Agentとともに提供されるCLIツールです。
+Seamless SSH接続だけでなく、Multi Agentが管理するQueryPie Host、SAC Role、認証セッションをコマンドラインから制御できます。
+
+#### qpctlコマンド構成
+
+| **分類** | **コマンド**        | **説明**                                                     |
+| -------- | ------------------- | ------------------------------------------------------------ |
+| SSH      | `qpctl ssh`         | OpenSSHコマンドをラップし、QueryPie経由のSSH接続を実行します。 |
+| SSH      | `qpctl ssh-proxy`   | SSHプロキシ接続を実行します。                                |
+| Host     | `qpctl host list`   | 登録されたQueryPie Host一覧を照会します。                    |
+| Host     | `qpctl host use`    | 使用するQueryPie Hostを選択します。                          |
+| Role     | `qpctl role list`   | 使用可能なSAC Role一覧を照会します。                         |
+| Role     | `qpctl role use`    | 現在使用するSAC Roleを変更します。                           |
+| Auth     | `qpctl auth login`  | QueryPie認証セッションを開始します。                         |
+| Auth     | `qpctl auth logout` | QueryPie認証セッションを終了します。                         |
+| Auth     | `qpctl auth status` | 現在の認証状態を確認します。                                 |
+
+<Callout type="info">
+Role、Auth引数は11.5.6からサポートされます。
+</Callout>
+
+### 開始する前に
+
+次の条件を先に確認します。
+
+* QueryPie Multi Agentがインストールされている必要があります。
+* `qpctl`コマンドを実行できる必要があります。
+* QueryPie Multi Agentが実行中である必要があります。
+* `host`コマンドを使用するには、アプリにQueryPie Hostが1つ以上登録されている必要があります。
+* `role`コマンドを使用するには、ユーザーにSAC Roleが1つ以上割り当てられている必要があります。
+* `auth login`を使用するには、QueryPieユーザーアカウントが必要です。
+
+#### qpctlのインストール方式
+
+ソース基準では、`qpctl`はQueryPie Multi Agentとは別に受け取る独立パッケージというより、QueryPie Multi Agentとともに提供されるCLIです。
+
+* macOS: Multi Agentアプリ内部の`qpctl`実行ファイルを`/usr/local/bin/qpctl`へsymbolic linkとしてインストールします。
+* Linux: 配布パッケージに`qpctl`が含まれ、release基準のインストールパスは`/usr/bin/qpctl`です。
+* Windows: インストーラーが`qpctl.exe`をシステムディレクトリに一緒にインストールします。
+
+したがって一般ユーザーの観点では、`qpctl`を別途インストールするのではなく、QueryPie Multi Agentをインストールした後、`qpctl`コマンドがPATHで実行できるか確認すればよいです。
+
+例:
+```bash
+qpctl --help
+```
+
+コマンドが実行されない場合は、QueryPie Multi Agentのインストール状態またはCLIリンク/パス設定を先に確認します。
+
+### 基本使用フロー
+
+`qpctl`を直接使用する流れは、大きく次のとおりです。
+
+1. QueryPie Hostを決めます。
+2. `qpctl ssh-proxy`または`qpctl ssh`を使用して、QueryPie経由のSSH接続を実行します。
+3. 必要に応じて、SSH configまたはshell aliasに反映して繰り返し使用します。
+4. 必要に応じて、`qpctl auth login`でCLI認証状態を確認してログインします。
+5. 必要に応じて、`qpctl role list`、`qpctl role use`で使用するSAC Roleを照会して切り替えます。
+
+### QueryPie Hostを管理する
+
+#### `qpctl host list`
+
+登録されたQueryPie Host一覧を出力します。
+```bash
+qpctl host list
+```
+
+出力動作:
+
+* 登録されたHostがない場合は、`No QueryPie hosts configured.`を出力します。
+* 現在選択されているHostは`(current)`表示とともに出力します。
+
+例:
+```text
+QueryPie Hosts:
+ - https://nightly.dev.querypie.io
+ - http://t8.ec2.querypie.io (current)
+ - https://t3.qa.querypie.io
+```
+
+<Callout type="important">
+ここで表示される`(current)`は、`qpctl`がデフォルトで使用するQueryPie Hostを意味します。
+</Callout>
+
+`qpctl host use`コマンドで使用するhostを指定できます。
+
+##### Hostを直接指定する場合
+
+```bash
+qpctl host use https://develop.dev.querypie.io
+```
+
+成功すると、次の形式で出力します。
+```text
+✔ Host changed to https://develop.dev.querypie.io
+```
+
+##### Hostを指定しない場合
+
+```bash
+qpctl host use
+```
+
+この場合、登録されたHost一覧をinteractive選択画面として表示します。
+
+例:
+```text
+Use the arrow keys to navigate: ↓ ↑ → ←
+QueryPie Hosts
+  ▸ https://nightly.dev.querypie.io
+    http://t8.ec2.querypie.io (current)
+    https://t3.qa.querypie.io
+```
+
+### SSH接続に使用するqpctlコマンド
+
+#### `qpctl ssh-proxy`
+
+`qpctl ssh-proxy`はSSH `ProxyCommand`に接続されるプロキシ用コマンドです。
+
+使用形式:
+```bash
+qpctl ssh-proxy <user> <host> <port> [QueryPie Host]
+```
+
+例:
+```bash
+qpctl ssh-proxy ec2-user 10.0.0.10 22
+qpctl ssh-proxy ec2-user 10.0.0.10 22 https://develop.dev.querypie.io
+```
+
+引数の説明:
+
+| **引数**        | **説明**                        |
+| --------------- | ------------------------------- |
+| `user`          | SSHユーザー名                   |
+| `host`          | SSH対象ホスト名                 |
+| `port`          | SSH対象ポート                   |
+| `QueryPie Host` | 使用するQueryPie Host。任意入力 |
+
+動作方式:
+
+* `QueryPie Host`を直接指定すると、その値を使用します。
+* 指定しない場合は、現在選択されているデフォルトHostを使用します。
+
+#### SSH configで使用する例
+
+次のようにSSH configで使用できます。
+```text
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p develop.dev.querypie.io
+```
+
+または、デフォルトHostを事前に選択している場合は、次のように簡略化できます。
+```bash
+qpctl host use develop.dev.querypie.io
+```
+
+その後、`ProxyCommand`は次のように使用できます。
+```text
+ProxyCommand qpctl ssh-proxy %r %h %p
+```
+
+#### `qpctl ssh`
+
+`qpctl ssh`はOpenSSHコマンドラインを受け取り、QueryPie経由の接続を実行するラッパーコマンドです。
+
+基本例:
+```bash
+qpctl ssh root@ssh.server.io
+```
+
+追加のOpenSSHオプションも一緒に渡せます。
+```bash
+qpctl ssh -L 8080:localhost:80 root@ssh.server.io
+qpctl ssh -i ~/.ssh/id_rsa root@ssh.server.io
+```
+
+動作方式:
+
+* 内部的にSSH設定を解釈します。
+* 必要な`ProxyCommand`を自動的に付与し、実際の`ssh`プロセスを実行します。
+
+制約事項:
+
+* ユーザーが直接`ProxyCommand`オプションを指定する方式はサポートしていません。
+* `-G`フラグが含まれる場合は、自動ProxyCommand注入なしで元のSSH動作をそのまま実行します。
+
+<Callout type="important">
+`qpctl ssh-proxy`はSSH設定の`ProxyCommand`に接続する方式であり、`qpctl ssh`はOpenSSH呼び出し自体をラップする直接実行方式です。
+</Callout>
+
+### Roleコマンド
+
+11.5.6からはCLIでSAC Roleを照会および変更できます。
+
+#### `qpctl role list`
+
+使用可能なSAC Role一覧を出力します。
+```bash
+qpctl role list
+```
+
+出力動作:
+
+* Roleがない場合は、`No roles found.`を出力します。
+* Roleがある場合は、`UUID`、`Name`、`Description`の順で出力します。
+* DescriptionがないRoleは、`UUID`、`Name`のみ出力します。
+
+例:
+```text
+Roles:
+ - 11111111-1111-1111-1111-111111111111	DBA	Database administrators
+ - 22222222-2222-2222-2222-222222222222	ReadOnly
+```
+
+##### 名前でフィルタリングする場合
+
+```bash
+qpctl role list --name DBA
+```
+
+`--name`値は名前の完全一致ではなく、部分一致検索方式で適用されます。
+
+#### `qpctl role use`
+
+現在使用するSAC Roleを変更します。
+
+##### Role UUIDを直接指定する場合
+
+```bash
+qpctl role use 11111111-1111-1111-1111-111111111111
+```
+
+成功すると、次の形式で出力します。
+```text
+✔ Role changed to 11111111-1111-1111-1111-111111111111
+```
+
+##### 名前でRoleを探す場合
+
+```bash
+qpctl role use --name DBA
+```
+
+この場合、名前フィルタリング後、interactive選択を通じてRoleを選びます。
+
+##### 引数を省略する場合
+
+```bash
+qpctl role use
+```
+
+この場合、使用可能なRole全体の一覧をinteractive選択として表示します。
+
+<Callout type="important">
+`role-uuid`と`--name`は同時に使用できません。
+両方を指定するとエラーが発生します。
+</Callout>
+
+### Authコマンド
+
+11.5.6からはCLIでQueryPie認証セッション状態を直接確認し、ログイン/ログアウトできます。
+
+#### `qpctl auth status`
+
+現在のログイン状態を確認します。
+```bash
+qpctl auth status
+```
+
+出力動作:
+
+* ログインしていない場合: `Not logged in`
+* ログイン済みでユーザー名がある場合: `Logged in as {username}`
+* ログイン済みでユーザー名がない場合: `Logged in`
+
+#### `qpctl auth login`
+
+QueryPieアカウントでログインします。
+```bash
+qpctl auth login --username brendon
+```
+
+動作方式:
+
+1. 現在の認証状態を確認します。
+2. すでにログインしている場合は、新しいログインではなくエラーを返します。
+3. ログインしていない状態であれば、ターミナルに`Password:`プロンプトを表示します。
+4. パスワードは画面に表示されない方式で入力されます。
+5. 認証に成功すると、`Logged in as {username}`を出力します。
+
+例:
+```text
+Password:
+Logged in as brendon
+```
+
+#### `qpctl auth logout`
+
+現在の認証セッションを終了します。
+```bash
+qpctl auth logout
+```
+
+成功すると、次の形式で出力します。
+```text
+Logged out
+```
+
+<Callout type="important">
+すでにログインしている状態で`auth login`を再実行すると、先に`qpctl auth logout`を実行するよう求めるエラーが返される場合があります。
+</Callout>
+
+### 推奨使用フロー
+
+#### 1. デフォルトHostを先に指定する場合
+
+```bash
+qpctl host list
+qpctl host use
+qpctl auth status
+qpctl auth login --username brendon
+qpctl role list
+qpctl role use --name DBA
+qpctl ssh admin@db-server
+```
+
+このフローは次の状況に適しています。
+
+* 複数のQueryPie Hostのうち1つを選択して繰り返し使用する場合
+* CLIで認証およびRole状態を先に整理した後、SSH接続まで続けて実行する場合
+
+#### 2. SSH configベースのSeamless SSHを維持する場合
+
+```text
+Host {{Server Name}}
+  Hostname {{Server URL}}
+  Port {{Server SSH Port}}
+  ProxyCommand qpctl ssh-proxy %r %h %p
+```
+
+この場合も、先に以下のコマンドでデフォルトHostを指定しておくと管理しやすくなります。
+```bash
+qpctl host use develop.dev.querypie.io
+```
+
+その後、必要に応じて追加で次のコマンドを使用します。
+```bash
+qpctl auth status
+qpctl role list
+qpctl role use --name ReadOnly
+```
+
+つまりSSH接続とともに、11.5.6からは認証とRole制御もCLIで一緒に実行できます。
+
+### トラブルシューティング
+
+#### `No QueryPie hosts configured.`が出力される場合
+
+* アプリにQueryPie Hostが登録されていない状態です。
+* 先にMulti AgentアプリでHostを追加する必要があります。
+
+#### `No roles found.`が出力される場合
+
+* 現在のユーザーに使用可能なSAC Roleがない、または
+* `--name`フィルタの結果がない場合です。
+
+#### `auth login`が失敗する場合
+
+次を確認します。
+
+* `--username`値を入力したか
+* パスワードを空にしていないか
+* すでにログイン済みではないか
+* Multi Agentが正常に実行中か
+
+#### `ssh`コマンドで`ProxyCommand option is not supported`エラーが発生する場合
+
+* `qpctl ssh`は、ユーザーが直接`ProxyCommand`を指定する方式をサポートしていません。
+* `ProxyCommand`なしで通常のOpenSSH引数のみを渡して使用する必要があります。
+
+### 参考事項
+
+* `role`コマンドはコード上SAC productを対象に動作します。
+* `auth login`は別途新しいバックエンドパスワードログインendpointを追加する方式ではなく、既存の認証フローを再利用する構造です。

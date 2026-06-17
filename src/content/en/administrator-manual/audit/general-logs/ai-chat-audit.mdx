@@ -1,0 +1,56 @@
+---
+title: 'AI Chat Audit'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167111691/AI+Chat+Audit'
+---
+
+import { Callout } from 'nextra/components'
+
+# AI Chat Audit
+
+### Overview
+
+You can view audit logs for the AI Chat feature.
+The content users entered in the chat window and the results can both be viewed on the detail screen.
+
+### Viewing AI Chat Audit Logs
+
+View AI Chat usage history from Admin &gt; Audits &gt; General &gt; AI Chat Audit.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/audit/general-logs/ai-chat-audit/image-20260602-042352.png" alt="Admin &gt; Audit &gt; General &gt; AI Chat Audit" width="760" />
+<figcaption>
+Admin &gt; Audit &gt; General &gt; AI Chat Audit
+</figcaption>
+</figure>
+
+1. Navigate to Admin &gt; Audits &gt; AI Chat Audit.
+2. The AI Chat Audit Log list is displayed. You can check the following information in the list.
+    * **Event UUID** : The unique identifier of the audit event.
+    * **User** : Information about the user who used AI Chat.
+    * **Request Type** : The request type, such as CHAT or TOOL_CALL.
+    * **Status** : The request processing status, such as SUCCESS or ERROR.
+    * **Scope** : The request scope.
+    * **Tool Names** : The list of called MCP Tool names.
+    * **Date** : The event date and time.
+3. You can enter search conditions to filter the list.
+    * **Date Range** : Set the query period.
+    * **User** : Search by user ID, name, login ID, or email.
+    * **Request Type** : Filter by request type.
+    * **Status** : Filter by processing status.
+    * **Scope** : Filter by scope.
+    * **Tool Names** : Filter by the MCP Tool used.
+4. Click an item in the list to open the detail Drawer.
+    * **Summary** : Check summary information for the event.
+    * **Prompt** : Check the system prompt and user input that were used.
+    * **Conversation History** : Check the conversation history for the event.
+
+<Callout type="important">
+The AI Chat [Audit Log Export ](../reports/audit-log-export) feature is available from the Audit Log Export menu and is currently provided as Beta.
+</Callout>
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/audit/general-logs/ai-chat-audit/image-20260602-041046.png" alt="Admin &gt; Audit &gt; Reports" width="760" />
+<figcaption>
+Admin &gt; Audit &gt; Reports
+</figcaption>
+</figure>
