@@ -1,5 +1,4 @@
-import matter from 'gray-matter';
-
+import { parseFrontmatter } from '@/lib/doc-search/frontmatter';
 import { normalizeMdxForLLM } from '@/lib/doc-search/normalize-mdx';
 
 export interface ParsedMdxDocument {
@@ -15,7 +14,7 @@ export function parseMdxDocument(
   source: string,
   options: { filePath: string; lang: string },
 ): ParsedMdxDocument {
-  const parsed = matter(source);
+  const parsed = parseFrontmatter(source);
   const normalizedContent = normalizeMdxForLLM(source);
   const headingTitle = normalizedContent
     .split('\n')
