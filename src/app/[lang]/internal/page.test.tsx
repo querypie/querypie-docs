@@ -8,7 +8,7 @@ describe('/[lang]/internal page', () => {
     expect(generateStaticParams()).toEqual([{ lang: 'en' }, { lang: 'ja' }, { lang: 'ko' }]);
   });
 
-  it('renders the Korean internal page title and description only', async () => {
+  it('renders the Korean internal page title, description, and spotlight preview', async () => {
     const container = document.createElement('div');
     const result = render(await InternalPage({ params: Promise.resolve({ lang: 'ko' }) }), {
       baseElement: container,
@@ -20,6 +20,18 @@ describe('/[lang]/internal page', () => {
       within(result.container).getByText('검토와 구현 참고를 위해 유지 중인 내부 컴포넌트 및 페이지 예시 목록입니다.'),
     ).toBeTruthy();
     expect(within(result.container).queryByRole('list')).not.toBeInTheDocument();
+    expect(within(result.container).getByTestId('docs-spotlight-card')).toBeTruthy();
+  });
+
+  it('exposes the localized spotlight preview on the internal page', async () => {
+    const container = document.createElement('div');
+    const result = render(await InternalPage({ params: Promise.resolve({ lang: 'ko' }) }), {
+      baseElement: container,
+      container,
+    });
+
+    expect(within(result.container).getByTestId('docs-spotlight-card')).toBeTruthy();
+    expect(within(result.container).getByText('AI Work OS: 새로운 지능이 기업 안에서 일하는 방식')).toBeTruthy();
   });
 
   it('uses the same copy for route metadata', async () => {

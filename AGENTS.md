@@ -90,4 +90,5 @@ bin/skeleton/cli.py ../src/content/ko/path/to/file.mdx
 - 작업 완료로 간주하기 전에 관련 targeted check를 실행합니다.
 - 문서 또는 skill만 변경한 경우 `git diff --check`와 관련 경로 검색을 우선합니다.
 - 코드 변경은 변경된 동작에 직접 연결되는 테스트를 먼저 실행하고, 위험도에 따라 lint, typecheck, build를 추가합니다.
+- 웹 렌더링 또는 브라우저 테스트는 사용자가 visible browser를 명시적으로 요청하지 않는 한 headless mode로 수행합니다.
 - 사용자가 명시적으로 요청하지 않는 한 local dev server를 시작하지 않습니다.
