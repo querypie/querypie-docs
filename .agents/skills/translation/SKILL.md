@@ -1,3 +1,8 @@
+---
+name: translation
+description: "한국어 QueryPie 문서를 영어 또는 일본어로 번역하고 다국어 콘텐츠 규칙을 적용할 때 사용합니다."
+---
+
 # 번역 가이드라인
 
 ## 개요

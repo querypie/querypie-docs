@@ -1,3 +1,8 @@
+---
+name: confluence-mdx
+description: "Confluence 문서를 QueryPie MDX 콘텐츠로 변환하거나 변환 결과를 검증할 때 사용합니다."
+---
+
 # Confluence에서 MDX로 변환 가이드라인
 
 ## 개요

@@ -1,3 +1,8 @@
+---
+name: commit
+description: "querypie-docs 커밋 메시지와 PR 제목 및 본문을 저장소 규칙에 맞게 작성할 때 사용합니다."
+---
+
 # Commit Log 작성 Skill
 
 querypie-docs 저장소의 commit 관습에 맞게 commit message를 작성합니다.

@@ -1,3 +1,8 @@
+---
+name: openspec-doc-maintenance
+description: "구현, 리뷰, 계획, 디버깅 중 OpenSpec drift, 모순, 누락된 contract를 유지보수할 때 사용합니다."
+---
+
 # OpenSpec 문서 유지보수
 
 QueryPie 문서 저장소에서 구현, 리뷰, 계획, 디버깅 중 OpenSpec 문서와 실제 계약 사이의 차이를 발견했을 때 사용합니다.

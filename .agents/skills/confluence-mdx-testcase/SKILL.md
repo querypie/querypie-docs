@@ -1,3 +1,8 @@
+---
+name: confluence-mdx-testcase
+description: "Confluence XHTML 변환 로직의 재현 테스트케이스를 추가하거나 갱신할 때 사용합니다."
+---
+
 # Confluence XHTML 변환 테스트케이스 추가 가이드
 
 ## 개요

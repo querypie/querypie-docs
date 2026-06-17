@@ -1,3 +1,8 @@
+---
+name: reverse-sync-debugging
+description: "reverse-sync verify 실패 원인을 분석하고 MDX-to-XHTML 역반영 문제를 디버깅할 때 사용합니다."
+---
+
 # Reverse Sync 디버깅 가이드
 
 ## 개요

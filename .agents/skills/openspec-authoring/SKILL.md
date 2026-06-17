@@ -1,3 +1,8 @@
+---
+name: openspec-authoring
+description: "QueryPie 문서 저장소의 OpenSpec spec, proposal, design, tasks를 새로 작성하거나 크게 갱신할 때 사용합니다."
+---
+
 # OpenSpec Authoring
 
 QueryPie 문서 저장소에서 OpenSpec spec, proposal, design, tasks를 새로 작성하거나 크게 갱신할 때 사용합니다.
