@@ -1,6 +1,4 @@
-import matter from 'gray-matter';
-
-const FRONTMATTER_SEPARATOR = /^---\s*$/m;
+import { parseFrontmatter } from './frontmatter';
 
 function decodeHtmlEntities(input: string): string {
   return input
@@ -69,7 +67,7 @@ function normalizeWhitespace(content: string): string {
 }
 
 export function normalizeMdxForLLM(source: string): string {
-  const parsed = source.match(FRONTMATTER_SEPARATOR) ? matter(source) : { content: source };
+  const parsed = parseFrontmatter(source);
   const processed = processFenceAware(parsed.content);
   const withImageAlt = replaceImageTags(processed);
   const withoutTags = stripWrapperTags(withImageAlt);
