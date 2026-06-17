@@ -1,0 +1,42 @@
+---
+title: '11.6.0'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0'
+---
+
+# 11.6.0
+
+### QueryPie 11.6.0 Release
+
+2026年02月13日
+
+
+**New Feature**
+
+* [共通] AI Chat基本機能追加（MCP Tool呼び出し、会話履歴管理サポートを含む）
+* [DAC] AWS Secrets Manager連動サポート - DBコネクションのパスワードをAWS Secrets Managerから自動取得するSecret Store機能追加
+* [DAC] Query Rule機能追加 - SQLクエリパターン基盤の許可（ALLOW）/拒否（DENY）/スキップ（SKIP）フィルタリングルール設定サポート
+* [DAC] Custom JDBC Vendor追加 - カスタムJDBCドライバアップロードおよびCustom JDBC Configurations管理機能サポート、ANSI SQLレベルクエリ分析サポート
+
+
+**Improvement**
+
+* [共通] OAuth Client管理改善 - scope選択、複数redirect URL、詳細ページ導入およびDCR endpointタイプ安定性強化
+* [共通] Email Integrationワークフロー通知無効化時にもメールが送信されていた問題修正
+* [共通] macOS Multi-Agentインストール時/usr/local/binディレクトリ未存在によりqpctlコマンドが見つからない問題修正
+* [DAC] MySQL LOAD DATA LOCAL INFILE大容量ファイル処理改善
+* [DAC] Trinoプロキシ接続時不要なメタデータ照会クエリ改善
+* [DAC] Julian/Gregorianカレンダー差異によるSAP HANA SECONDDATEエラー解決
+* [DAC] SQL Request WorkflowでAborted状態確認 - シングルトンオブジェクト汚染による重複実行バグ修正
+* [DAC] PostgreSQL RETURNING構文に対するポリシーサポート追加
+* [DAC] SAP HANA BLOBタイプカラム照会時minWritableBytes エラー修正
+* [DAC] SAP BTP WebエディタコメントスタイルをANSI SQLに変更
+* [DAC] Web Editorコンテキストメニュー DDL操作（Truncate/Drop/Rename）Audit Log未記録問題修正
+* [DAC] Policy Audit LogでログがWHERE条件の数だけ重複記録される問題修正
+* [DAC] Reverse Tunnel Server Redis TLSサポートおよびクラスタモード自動検知改善
+* [DAC] Reverse Tunnelを通じたRedis Cluster接続不可現象修正
+* [DAC] HTTPS認証書未設定時明確なエラーメッセージ出力するように改善
+* [DAC] New DAC Policy Management無効時Workflow Tag Display機能未表示問題修正
+* [SAC] Server Agentコード署名検証ロジック改善 - 認証書変更互換性確保
+* [SAC] Azure Cloud Provider同期時リソースパス大小文字不一致によりVM漏れていた問題修正
+* [SAC] Cloud Provider同期時IndexOutOfBoundsException発生問題修正
+* [WAC] Root CA Certificate アップロード時Key Pair検証ロジック追加
