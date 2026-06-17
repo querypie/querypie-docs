@@ -5,7 +5,7 @@
 `reverse_sync_cli.py verify` 실행 시 실패하는 문서를 발견했을 때, 원인을 분석하고 수정하는 디버깅 워크플로우이다.
 
 - **소스 코드**: [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py)
-- **관련 Skill**: [reverse-sync.md](reverse-sync.md) — Reverse Sync 기본 사용 가이드
+- **관련 Skill**: [reverse-sync.md](../reverse-sync/SKILL.md) — Reverse Sync 기본 사용 가이드
 
 ## 사전 준비
 

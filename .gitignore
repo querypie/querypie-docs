@@ -41,6 +41,8 @@ next-env.d.ts
 
 .idea
 .vscode
+.agents/settings.local.json
+.claude/settings.local.json
 .env*.local
 /public/_pagefind
 /public/_doc-search
