@@ -1,3 +1,8 @@
+---
+name: mdx-skeleton-comparison
+description: "한국어, 영어, 일본어 MDX 문서의 구조 일관성을 skeleton 비교로 검증할 때 사용합니다."
+---
+
 # MDX 스켈레톤 비교 가이드라인
 
 ## 개요

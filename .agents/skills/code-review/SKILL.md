@@ -1,3 +1,8 @@
+---
+name: code-review
+description: "querypie-docs 변경 사항을 검토하고 위험, 누락된 검증, 개선점을 찾을 때 사용합니다."
+---
+
 # 코드 리뷰 가이드라인
 
 ## 개요

@@ -1,3 +1,8 @@
+---
+name: sync-confluence-url
+description: "한국어 MDX의 confluenceUrl frontmatter를 영어와 일본어 문서에 동기화할 때 사용합니다."
+---
+
 # sync_confluence_url 사용 가이드
 
 ## 개요

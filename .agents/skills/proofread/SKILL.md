@@ -1,3 +1,8 @@
+---
+name: proofread
+description: "QueryPie 문서 콘텐츠를 교정하고 API 명칭, 표현, Markdown 형식을 점검할 때 사용합니다."
+---
+
 # 문서 교정/교열 Skill
 
 Markdown으로 작성된 컨텐츠 문서를 교정, 교열합니다.

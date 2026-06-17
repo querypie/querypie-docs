@@ -1,3 +1,8 @@
+---
+name: openspec-task-execution
+description: "OpenSpec tasks.md의 남은 구현, 검증 보강, PR-sized 후속 작업을 수행할 때 사용합니다."
+---
+
 # OpenSpec Task Execution
 
 QueryPie 문서 저장소에서 OpenSpec changes/specs에 남은 `tasks.md` 항목, 후속 구현, verification 보강, PR-sized 작업 수행을 요청받았을 때 사용합니다.

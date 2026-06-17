@@ -1,3 +1,8 @@
+---
+name: xhtml-beautify-diff
+description: "Confluence XHTML 파일의 의미적 차이를 beautify diff로 비교하고 reverse-sync 결과를 분석할 때 사용합니다."
+---
+
 # XHTML Beautify-Diff Viewer 사용 가이드
 
 ## 개요

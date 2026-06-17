@@ -1,3 +1,8 @@
+---
+name: confluence-pr-update
+description: "Confluence 자동 동기화 PR을 점검하고 누락 이미지, 번역, skeleton 검증을 처리할 때 사용합니다."
+---
+
 # Confluence MDX PR 수정 가이드라인
 
 ## 개요

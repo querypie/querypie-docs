@@ -1,3 +1,8 @@
+---
+name: reverse-sync
+description: "MDX 변경을 Confluence XHTML로 역반영하는 reverse-sync 작업을 수행하거나 검증할 때 사용합니다."
+---
+
 # Reverse Sync 사용 가이드
 
 ## 개요
