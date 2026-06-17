@@ -1,0 +1,12 @@
+.internalPreviewGrid {
+  display: grid;
+  align-items: start;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 288px);
+}
+
+@media (max-width: 1023px) {
+  .internalPreviewGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

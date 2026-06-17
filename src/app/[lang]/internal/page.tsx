@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { DocsSpotlightSidebar } from '@/components/docs-spotlight-sidebar';
+import styles from './internal-page.module.css';
 
 type InternalPageParams = {
   lang: string;
@@ -66,29 +68,34 @@ export default async function InternalPage({ params }: InternalPageProps) {
         padding: '64px 24px',
       }}
     >
-      <h1
-        style={{
-          color: '#111318',
-          fontSize: '36px',
-          fontWeight: 700,
-          letterSpacing: '0',
-          lineHeight: 1.2,
-          margin: '0 0 16px',
-        }}
-      >
-        {copy.title}
-      </h1>
-      <p
-        style={{
-          color: '#454a53',
-          fontSize: '17px',
-          letterSpacing: '0',
-          lineHeight: 1.7,
-          margin: 0,
-        }}
-      >
-        {copy.description}
-      </p>
+      <div className={styles.internalPreviewGrid}>
+        <div>
+          <h1
+            style={{
+              color: '#111318',
+              fontSize: '36px',
+              fontWeight: 700,
+              letterSpacing: '0',
+              lineHeight: 1.2,
+              margin: '0 0 16px',
+            }}
+          >
+            {copy.title}
+          </h1>
+          <p
+            style={{
+              color: '#454a53',
+              fontSize: '17px',
+              letterSpacing: '0',
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
+            {copy.description}
+          </p>
+        </div>
+        <DocsSpotlightSidebar locale={lang} />
+      </div>
     </section>
   );
 }

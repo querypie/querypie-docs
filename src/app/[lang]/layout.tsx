@@ -1,4 +1,3 @@
-/* eslint-env node */
 import { Footer, Layout, Navbar } from 'nextra-theme-docs';
 import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
@@ -10,6 +9,8 @@ import { LastUpdated } from '@/components/last-updated';
 import LanguageSelector2 from "@/components/language-selector2";
 import ConfluenceSourceLink from "@/components/confluence-source-link";
 import { QueryPieLogo } from '@/components/querypie-logo';
+import { DocsSpotlightSidebar } from '@/components/docs-spotlight-sidebar';
+import { filterDynamicPageMapRoutes } from '@/lib/nextra-page-map';
 
 const defaultMetadata: Metadata = {
   title: {
@@ -53,7 +54,7 @@ export default async function RootLayout({ children, params }) {
     />
   );
 
-  const pageMap = await getPageMap(`/${lang || 'en'}`);
+  const pageMap = filterDynamicPageMapRoutes(await getPageMap(`/${lang || 'en'}`));
 
   return (
     <html lang={lang} dir="ltr" suppressHydrationWarning>
@@ -85,7 +86,12 @@ export default async function RootLayout({ children, params }) {
                 <p>On This Page</p>
               </>
             ),
-            extraContent: <ConfluenceSourceLink/>,
+            extraContent: (
+              <>
+                <DocsSpotlightSidebar locale={lang} />
+                <ConfluenceSourceLink/>
+              </>
+            ),
           }}
           lastUpdated={<LastUpdated locale={lang} />}
         >
