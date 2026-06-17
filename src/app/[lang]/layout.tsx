@@ -9,7 +9,6 @@ import { LastUpdated } from '@/components/last-updated';
 import LanguageSelector2 from "@/components/language-selector2";
 import ConfluenceSourceLink from "@/components/confluence-source-link";
 import { QueryPieLogo } from '@/components/querypie-logo';
-import { DocsSpotlightSidebar } from '@/components/docs-spotlight-sidebar';
 import { filterDynamicPageMapRoutes } from '@/lib/nextra-page-map';
 
 const defaultMetadata: Metadata = {
@@ -86,12 +85,7 @@ export default async function RootLayout({ children, params }) {
                 <p>On This Page</p>
               </>
             ),
-            extraContent: (
-              <>
-                <DocsSpotlightSidebar locale={lang} />
-                <ConfluenceSourceLink/>
-              </>
-            ),
+            extraContent: <ConfluenceSourceLink/>,
           }}
           lastUpdated={<LastUpdated locale={lang} />}
         >
