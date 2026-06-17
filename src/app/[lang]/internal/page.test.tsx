@@ -28,4 +28,11 @@ describe('/[lang]/internal page', () => {
       title: '내부 페이지',
     });
   });
+
+  it('falls back to English metadata when static generation omits params', async () => {
+    await expect(generateMetadata({})).resolves.toMatchObject({
+      description: 'A list of internal component and page examples maintained for review and implementation reference.',
+      title: 'Internal Pages',
+    });
+  });
 });

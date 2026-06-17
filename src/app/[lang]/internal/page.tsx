@@ -5,7 +5,7 @@ type InternalPageParams = {
 };
 
 type InternalPageProps = {
-  params: Promise<InternalPageParams>;
+  params?: Promise<InternalPageParams | undefined>;
 };
 
 type InternalPageCopy = {
@@ -34,12 +34,18 @@ function getInternalPageCopy(lang: string) {
   return internalPageCopy[lang] ?? internalPageCopy.en;
 }
 
+async function getInternalPageLang(params: InternalPageProps['params']) {
+  const resolvedParams = await params;
+
+  return resolvedParams?.lang ?? 'en';
+}
+
 export function generateStaticParams() {
   return locales.map(lang => ({ lang }));
 }
 
 export async function generateMetadata({ params }: InternalPageProps): Promise<Metadata> {
-  const { lang } = await params;
+  const lang = await getInternalPageLang(params);
   const copy = getInternalPageCopy(lang);
 
   return {
@@ -49,7 +55,7 @@ export async function generateMetadata({ params }: InternalPageProps): Promise<M
 }
 
 export default async function InternalPage({ params }: InternalPageProps) {
-  const { lang } = await params;
+  const lang = await getInternalPageLang(params);
   const copy = getInternalPageCopy(lang);
 
   return (
