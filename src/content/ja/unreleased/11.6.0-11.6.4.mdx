@@ -1,0 +1,194 @@
+---
+title: '11.6.0 ~ 11.6.4'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.4'
+---
+
+# 11.6.0 ~ 11.6.4
+
+### QueryPie 11.6.4 Release
+
+2026年06月23日
+
+**New Feature**
+
+* None
+
+**Improvement**
+
+* [共通] 10.2.6で削除されたSQLJob機能のトークン関連残存コードがExternal APIで使用される可能性がある脆弱性を修正
+
+### QueryPie 11.6.3 Release
+
+2026年05月29日
+
+
+**New Feature**
+
+* [共通] SCIM 2.0標準プロトコルサポート拡大（PATCHおよびexternalIdサポート、非アクティブユーザーの再アクティブ化を含む）
+* [共通] External API V3 User API追加（ユーザー作成/照会/修正/削除、アクティブ化/非アクティブ化、パスワードリセット、プロファイル/グループ/Allowed Zone管理、認証設定照会およびIdP同期サポート）
+* [DAC] GCP CloudProviderにVault基盤Secret Store連動サポート
+* [DAC] BigQuery、Google Spanner ConnectionのSecret Store連動サポート
+* [DAC] DB Jumphost（SSH Tunnel）構成時Secret Store Auth Typeサポート
+* [DAC] AWS DocumentDB ClusterのRTA接続サポート
+* [DAC] Custom JDBC Vendor AWS Secrets Manager認証サポート
+* [DAC] Custom JDBC Vendor TLSおよびproperties設定サポート
+* [DAC] Custom JDBC Vendor Web Editor自動補完サポート
+* [SAC] CLIで認証およびRole変更機能追加
+* [SAC] Jumphostサーバー認証にSecret Store（Vault SSH CA）Auth Type追加
+* [KAC] K8s Cloud Provider照会/作成/修正/削除External API追加
+* [MAC] MCP Server作成/編集UIとQueryPie Upstream Access Tokenマスキング改善
+
+**Improvement**
+
+* [共通] 環境変数を通じてUser Agentダウンロード項目を非表示にできるよう改善
+* [共通] Audit Log Export作成エラー修正
+* [共通] Workflow上申時にConnection Owner別の個別承認を分離できるよう改善
+* [共通] Attribute基盤Workflow承認ルールおよび指定方式改善
+* [共通] Multi Agent GPUアクセラレーション無効化オプション追加
+* [共通] 新規作成ユーザーのパスワード再利用関連問題修正
+* [共通] 権限満了通知メールに環境情報および満了対象詳細を表示するよう改善
+* [DAC] Cloud Provider同期リージョンにAWS ap-southeast-7（タイ）リージョン追加
+* [DAC] Reverse Tunnel Redis Username基盤認証サポート
+* [DAC] Headless Agent tunnel refresh後のtunnel list sync速度改善
+* [DAC] DB Access Control AdminページのUserNameフィルター/照会ユーザビリティ改善
+* [DAC] Auto Commit Off状態警告文言および視認性改善
+* [DAC] MySQL JSON_TABLE使用時Schema基盤アクセス制御権限チェックエラー修正
+* [DAC] AWS NLBでProxy Protocol v2が有効な場合のClickHouse/Trino/Athena HTTPプロキシ接続失敗問題修正
+* [DAC] Cloud Provider SA Keyで同期したBigQuery Connection設定でService Accountを修正および維持できるよう改善
+* [DAC] ElastiCache/ValkeyのRedis ClusterモードでProxy設定が自動無効化される問題修正（警告メッセージ表示）
+* [DAC] Athena自動補完データ生成問題修正
+* [DAC] 大容量クエリ実行時のLost Connection発生問題修正
+* [DAC] 11.4.3アップグレード後のSQL Server断続接続問題修正
+* [DAC] HBase Driver分離により配布イメージとドライバ管理方式を改善
+* [DAC] Snowflake DML/SQL Request処理改善
+* [SAC] Headless AgentでSeamless SSHサポート
+* [SAC] Headless AgentでInternal DBに対するMFA（OTP）認証サポート
+* [SAC] Cloud Provider Auto ConfigurationでSSH PortおよびTagを修正できるよう改善
+* [SAC] server_policy_versions照会クエリチューニングにより詳細照会性能改善
+* [SAC] コマンドブロックメッセージのセキュリティ改善
+* [SAC] 手動入力アカウントのパスワード変更が必要な場合にRDPセッションがブロックされる問題修正
+* [SAC] Seamless SSH CLI MFA認証メッセージ改善
+* [KAC] K8s Cloud Provider初期同期時Auto Configuration Upon Synchronization（Tag）サポート
+* [KAC] KAC Web Client（ベータ）で作業状態を維持し、運用作業をより安定的に実行できるよう改善
+
+
+### QueryPie 11.6.2 Release
+
+2026年04月21日
+
+
+**New Feature**
+
+* [DAC] Audit Log照会権限制御機能追加
+* [DAC] ClickHouse HTTPS接続サポート
+* [DAC] Custom JDBC Vendor設定ファイルアップロード、Driver Class自動検知、Vault連動およびFirebird系ベンダー対応追加
+* [SAC] Server Policy単件照会API追加
+* [KAC] KAC Web Client（ベータ）追加
+* [MCP] MCPを通じてDAC/SAC/KAC監査ログを照会できるツール追加
+* [AI Chat] 分析結果をチャートで確認できる機能追加
+* [AI Chat] SQL EditorとKAC Web Terminalの作業コンテキストを活用できるよう連動機能改善
+
+**Improvement**
+
+* [共通] Attribute基盤Workflow決裁処理改善
+* [共通] 決裁文書で同姓同名承認者を区別するためemail表示改善
+* [共通] Approval Expiration Job例外状況処理改善
+* [共通] Admin Page Access Control環境でパスワード満了ユーザーのパスワード変更フロー改善
+* [共通] SQL Request処理時に重複権限を保有している状況のエラーメッセージ改善
+* [共通] セキュリティ点検対応のため応答情報露出、Cache-Control、他ユーザーRequest照会可能性を改善
+* [DAC] Data Tab基本照会Row数設定機能追加
+* [DAC] Query Rule UIとShardingSphere Connection作成必須入力表示改善
+* [DAC] Workflow承認履歴で削除されたConnection情報表示改善
+* [DAC] SQL Export Request作成時のテーブル名表示改善
+* [DAC] Start On Approval無効化オプション追加
+* [DAC] テーブル検索ハイライト表示改善
+* [DAC] 新規インストール時DML Snapshot DBにutf8mb4 charset適用
+* [DAC] LedgerポリシーがあるコネクションでDML Snapshot OFFが可能な問題修正
+* [DAC] DML承認強制機能使用時External API SQL Request呼び出しエラー修正
+* [DAC] DB Access History照会エラー対応および安定性改善
+* [DAC] MongoDB insertManyパースエラー改善
+* [DAC] Impala VIEW照会時SHOW CREATE VIEW権限エラー修正
+* [DAC] MySQLホスト指定アカウントの満了パスワード変更エラー修正
+* [DAC] DocumentDB Reader endpoint使用時のWriterインスタンスルーティング問題改善
+* [DAC] SSH Tunneling接続安定性改善
+* [DAC] ClickHouse No TLS接続時のパスワード入力処理改善
+* [DAC] Custom JDBC Vendorアイコン更新表示改善
+* [SAC] Reverse Tunnel Agentのポート枯渇原因修正により新規セッション生成安定性改善
+* [SAC] Web Editor左側サーバーリスト下部UI表示改善
+* [SAC] keyboard-interactive方式アクセス改善
+* [KAC] KAC Web Client（ベータ）で発生したユーザーリクエストをRequest Auditで区別できるよう監査情報改善
+* [KAC] KAC Web Client（ベータ）の安定化およびユーザビリティ改善
+* [MAC] MCP ServersとRole詳細画面ユーザビリティ改善
+
+
+### QueryPie 11.6.1 Release
+
+2026年03月23日
+
+
+**New Feature**
+
+* [DAC] Workflow SQL Execution Request Draft一時保存およびExternal API連動サポート
+* [DAC] TrinoデータソースKerberos認証サポート追加
+* [DAC] HANA Web Editor Auto Commit ON/OFFおよびHanaScriptParser基盤ブロック構文処理サポート
+* [KAC] Vault基盤GCP Cloud ProviderおよびGKE連動サポート追加
+* [AI Chat] AI Chat AuditメニューおよびExportサポート追加
+* [AI Chat] DAC SQL EditorコンテキストをAI Chatに連動する機能追加
+* [MAC] MCP Access Control機能追加によりMCP Servers、Access Control、Role管理基盤を整備
+
+**Improvement**
+
+* [共通] 新規インストール環境で`migrate.sh list`実行エラー修正
+* [共通] OAuth Client Applicationで権限範囲、redirect URL、登録情報をより柔軟に管理できるよう設定フロー改善
+* [共通] ログインエラー応答の詳細内部情報露出改善
+* [共通] HTTPS環境でログインセッションCookieがセキュア接続でのみ送信されるようSecure attribute適用設定追加
+* [DAC] Query Rule UIと安全装置改善 - ALTERNATE_ANALYSIS名称整理、作成/修正UX改善
+* [DAC] Selectable QSI拡張 - 検証済みベンダー中心表示、QSI未提供ベンダー選択許可、CREATE/UNNEST/Trino/HANA関連構文サポート強化
+* [DAC] Custom JDBC Vendor改善 - Kerberos追加認証、iconおよびlimit style、Object info dataタブとSQL Editor互換性補完
+* [DAC] JOINクエリとExpressionカラムExport時のマスキング解除権限適用エラー修正
+* [DAC] Trino、Impala、Vertica、SAP HANAなどデータソース別SQL処理安定性改善
+* [DAC] Policy Exception満了後もSQL実行フローが安定的に処理されるよう例外権限満了処理改善
+* [DAC] Query Auditでtable(s)フィルターにより監査ログを正確に照会できるよう検索動作改善
+* [SAC] SSHシェル方向キー入力時にセッションが終了する問題修正
+* [SAC] kubectlコマンド使用時のCommand Detection例外処理改善
+* [KAC] VaultおよびGKE連動時Activity Log表示とrolesetキー再発行動作改善
+* [KAC] cluster-scoped Kubernetesリソースのnamespace権限チェック漏れ修正
+* [AI Chat] AI Chat Audit権限、時間表示、フィルタリングとチャット結果画面移動安定性改善
+* [MAC] MCP再認証およびAccess Control関連バグ修正
+
+
+### QueryPie 11.6.0 Release
+
+2026年02月13日
+
+
+**New Feature**
+
+* [共通] AI Chat基本機能追加（MCP Tool呼び出し、会話履歴管理サポートを含む）
+* [DAC] AWS Secrets Manager連動サポート - DBコネクションのパスワードをAWS Secrets Managerから自動取得するSecret Store機能追加
+* [DAC] Query Rule機能追加 - SQLクエリパターン基盤の許可（ALLOW）/拒否（DENY）/スキップ（SKIP）フィルタリングルール設定サポート
+* [DAC] Custom JDBC Vendor追加 - カスタムJDBCドライバアップロードおよびCustom JDBC Configurations管理機能サポート、ANSI SQLレベルクエリ分析サポート
+
+
+**Improvement**
+
+* [共通] OAuth Client管理改善 - scope選択、複数redirect URL、詳細ページ導入およびDCR endpointタイプ安定性強化
+* [共通] Email Integrationワークフロー通知無効化時にもメールが送信されていた問題修正
+* [共通] macOS Multi-Agentインストール時/usr/local/binディレクトリ未存在によりqpctlコマンドが見つからない問題修正
+* [DAC] MySQL LOAD DATA LOCAL INFILE大容量ファイル処理改善
+* [DAC] Trinoプロキシ接続時不要なメタデータ照会クエリ改善
+* [DAC] Julian/Gregorianカレンダー差異によるSAP HANA SECONDDATEエラー解決
+* [DAC] SQL Request WorkflowでAborted状態確認 - シングルトンオブジェクト汚染による重複実行バグ修正
+* [DAC] PostgreSQL RETURNING構文に対するポリシーサポート追加
+* [DAC] SAP HANA BLOBタイプカラム照会時minWritableBytes エラー修正
+* [DAC] SAP BTP WebエディタコメントスタイルをANSI SQLに変更
+* [DAC] Web Editorコンテキストメニュー DDL操作（Truncate/Drop/Rename）Audit Log未記録問題修正
+* [DAC] Policy Audit LogでログがWHERE条件の数だけ重複記録される問題修正
+* [DAC] Reverse Tunnel Server Redis TLSサポートおよびクラスタモード自動検知改善
+* [DAC] Reverse Tunnelを通じたRedis Cluster接続不可現象修正
+* [DAC] HTTPS認証書未設定時明確なエラーメッセージ出力するように改善
+* [DAC] New DAC Policy Management無効時Workflow Tag Display機能未表示問題修正
+* [SAC] Server Agentコード署名検証ロジック改善 - 認証書変更互換性確保
+* [SAC] Azure Cloud Provider同期時リソースパス大小文字不一致によりVM漏れていた問題修正
+* [SAC] Cloud Provider同期時IndexOutOfBoundsException発生問題修正
+* [WAC] Root CA Certificate アップロード時Key Pair検証ロジック追加
