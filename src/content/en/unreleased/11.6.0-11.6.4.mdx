@@ -1,0 +1,194 @@
+---
+title: '11.6.0 ~ 11.6.4'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.4'
+---
+
+# 11.6.0 ~ 11.6.4
+
+### QueryPie 11.6.4 Release
+
+June 23, 2026
+
+**New Feature**
+
+* None
+
+**Improvement**
+
+* [Common] Fixed a vulnerability where remaining SQLJob token-related code removed in 10.2.6 could be used in External API
+
+### QueryPie 11.6.3 Release
+
+May 29, 2026
+
+
+**New Feature**
+
+* [Common] Expanded support for the SCIM 2.0 standard protocol (including PATCH, externalId support, and inactive user reactivation)
+* [Common] Added External API V3 User API (supports user create/read/update/delete, activation/deactivation, password reset, profile/group/Allowed Zone management, authentication setting lookup, and IdP synchronization)
+* [DAC] Added Vault-based Secret Store integration support for GCP CloudProvider
+* [DAC] Added Secret Store integration support for BigQuery and Google Spanner Connections
+* [DAC] Added Secret Store Auth Type support when configuring DB Jumphost (SSH Tunnel)
+* [DAC] Added RTA connection support for AWS DocumentDB Cluster
+* [DAC] Added AWS Secrets Manager authentication support for Custom JDBC Vendor
+* [DAC] Added TLS and properties configuration support for Custom JDBC Vendor
+* [DAC] Added Web Editor autocomplete support for Custom JDBC Vendor
+* [SAC] Added authentication and Role switching features in CLI
+* [SAC] Added Secret Store (Vault SSH CA) Auth Type for Jumphost server authentication
+* [KAC] Added External APIs to query, create, update, and delete K8s Cloud Providers
+* [MAC] Improved MCP Server create/edit UI and QueryPie Upstream Access Token masking
+
+**Improvement**
+
+* [Common] Improved to allow User Agent download items to be hidden through environment variables
+* [Common] Fixed Audit Log Export creation error
+* [Common] Improved Workflow submission to allow separate approvals per Connection Owner
+* [Common] Improved Attribute-based Workflow approval rules and assignment method
+* [Common] Added option to disable Multi Agent GPU acceleration
+* [Common] Fixed issue related to password reuse for newly created users
+* [Common] Improved permission expiration notification emails to show environment information and detailed expiration targets
+* [DAC] Added AWS ap-southeast-7 (Thailand) region to Cloud Provider synchronization regions
+* [DAC] Added Redis Username-based authentication support for Reverse Tunnel
+* [DAC] Improved tunnel list sync speed after Headless Agent tunnel refresh
+* [DAC] Improved UserName filter/search usability on the DB Access Control Admin page
+* [DAC] Improved warning text and visibility for Auto Commit Off state
+* [DAC] Fixed Schema-based access control permission check error when using MySQL JSON_TABLE
+* [DAC] Fixed ClickHouse/Trino/Athena HTTP proxy connection failure when Proxy Protocol v2 is enabled on AWS NLB
+* [DAC] Improved BigQuery Connection settings synchronized with Cloud Provider SA Key so Service Account can be edited and retained
+* [DAC] Fixed issue where Proxy settings were automatically disabled in ElastiCache/Valkey Redis Cluster mode (warning message displayed)
+* [DAC] Fixed Athena autocomplete data generation issue
+* [DAC] Fixed Lost Connection issue when running large queries
+* [DAC] Fixed intermittent SQL Server connection issue after upgrading to 11.4.3
+* [DAC] Improved deployment image and driver management by separating the HBase Driver
+* [DAC] Improved Snowflake DML/SQL Request handling
+* [SAC] Added Seamless SSH support in Headless Agent
+* [SAC] Added MFA (OTP) authentication support for Internal DB in Headless Agent
+* [SAC] Improved Cloud Provider Auto Configuration to allow SSH Port and Tag editing
+* [SAC] Improved detail lookup performance by tuning the server_policy_versions query
+* [SAC] Improved security of command block messages
+* [SAC] Fixed issue where RDP sessions were blocked when manually entered account passwords needed to be changed
+* [SAC] Improved Seamless SSH CLI MFA authentication messages
+* [KAC] Added Auto Configuration Upon Synchronization (Tag) support during initial K8s Cloud Provider synchronization
+* [KAC] Improved KAC Web Client (beta) to preserve task state and perform operational tasks more reliably
+
+
+### QueryPie 11.6.2 Release
+
+April 21, 2026
+
+
+**New Feature**
+
+* [DAC] Added access control for Audit Log lookup
+* [DAC] Added ClickHouse HTTPS connection support
+* [DAC] Added Custom JDBC Vendor configuration file upload, Driver Class auto-detection, Vault integration, and Firebird-family vendor support
+* [SAC] Added single Server Policy lookup API
+* [KAC] Added KAC Web Client (beta)
+* [MCP] Added tools to query DAC/SAC/KAC audit logs through MCP
+* [AI Chat] Added ability to view analysis results as charts
+* [AI Chat] Improved integration to use the work context of SQL Editor and KAC Web Terminal
+
+**Improvement**
+
+* [Common] Improved Attribute-based Workflow approval processing
+* [Common] Improved email display in approval documents to distinguish approvers with the same name
+* [Common] Improved exception handling for Approval Expiration Job
+* [Common] Improved password change flow for users with expired passwords in Admin Page Access Control environments
+* [Common] Improved error messages when duplicate permissions exist during SQL Request handling
+* [Common] Improved response information exposure, Cache-Control, and possibility of viewing other users' Requests for security review response
+* [DAC] Added setting for default number of rows queried in the Data Tab
+* [DAC] Improved required input indicators for Query Rule UI and ShardingSphere Connection creation
+* [DAC] Improved display of deleted Connection information in Workflow approval history
+* [DAC] Improved table name display when creating SQL Export Requests
+* [DAC] Added Start On Approval disable option
+* [DAC] Improved table search highlighting
+* [DAC] Applied utf8mb4 charset to the DML Snapshot DB for new installations
+* [DAC] Fixed issue where DML Snapshot could be turned off for Connections with Ledger policies
+* [DAC] Fixed External API SQL Request call error when forced DML approval is used
+* [DAC] Improved DB Access History lookup errors and stability
+* [DAC] Improved MongoDB insertMany parsing error
+* [DAC] Fixed SHOW CREATE VIEW permission error when querying Impala VIEW
+* [DAC] Fixed expired password change error for MySQL host-specified accounts
+* [DAC] Improved writer instance routing issue when using DocumentDB Reader endpoint
+* [DAC] Improved SSH Tunneling connection stability
+* [DAC] Improved password input handling for ClickHouse No TLS connections
+* [DAC] Improved Custom JDBC Vendor icon refresh display
+* [SAC] Improved new session creation stability by fixing the cause of port exhaustion in Reverse Tunnel Agent
+* [SAC] Improved lower UI display in the Web Editor left server list
+* [SAC] Improved keyboard-interactive access
+* [KAC] Improved audit information so user requests from KAC Web Client (beta) can be distinguished in Request Audit
+* [KAC] Stabilized and improved usability of KAC Web Client (beta)
+* [MAC] Improved MCP Servers and Role detail screen usability
+
+
+### QueryPie 11.6.1 Release
+
+March 23, 2026
+
+
+**New Feature**
+
+* [DAC] Added temporary draft saving for Workflow SQL Execution Requests and External API integration support
+* [DAC] Added Trino data source Kerberos authentication support
+* [DAC] Added HANA Web Editor Auto Commit ON/OFF and HanaScriptParser-based block syntax handling support
+* [KAC] Added Vault-based GCP Cloud Provider and GKE integration support
+* [AI Chat] Added AI Chat Audit menu and Export support
+* [AI Chat] Added feature to integrate DAC SQL Editor context with AI Chat
+* [MAC] Added MCP Access Control feature to establish MCP Servers, Access Control, and Role management foundation
+
+**Improvement**
+
+* [Common] Fixed error when running `migrate.sh list` in new installation environments
+* [Common] Improved OAuth Client Application to manage scopes, redirect URLs, and registration information more flexibly
+* [Common] Improved exposure of detailed internal information in login error responses
+* [Common] Added setting to apply Secure attribute so login session cookies are sent only over secure connections in HTTPS environments
+* [DAC] Improved Query Rule UI and safeguards - organized ALTERNATE_ANALYSIS naming, improved create/update UX
+* [DAC] Expanded Selectable QSI - show verified vendors first, allow vendors without QSI, and enhance syntax support for CREATE/UNNEST/Trino/HANA
+* [DAC] Improved Custom JDBC Vendor - added Kerberos additional authentication, icon and limit style, Object info data tab, and SQL Editor compatibility
+* [DAC] Fixed masking exemption permission application error when exporting JOIN query and Expression columns
+* [DAC] Improved SQL handling stability by data source such as Trino, Impala, Vertica, and SAP HANA
+* [DAC] Improved exception permission expiration handling so SQL execution flow remains stable even after Policy Exception expires
+* [DAC] Improved Query Audit search behavior to accurately query audit logs with table(s) filter
+* [SAC] Fixed issue where sessions ended when arrow keys were entered in SSH shell
+* [SAC] Improved Command Detection exception handling when using kubectl commands
+* [KAC] Improved Activity Log display and roleset key reissue behavior during Vault and GKE integration
+* [KAC] Fixed missing namespace permission check for cluster-scoped Kubernetes resources
+* [AI Chat] Improved AI Chat Audit permissions, time display, filtering, and chat result screen navigation stability
+* [MAC] Fixed bugs related to MCP reauthentication and Access Control
+
+
+### QueryPie 11.6.0 Release
+
+February 13, 2026
+
+
+**New Feature**
+
+* [Common] AI Chat basic functionality added (including MCP Tool invocation and conversation history management support)
+* [DAC] AWS Secrets Manager integration support - Secret Store functionality added to automatically retrieve DB connection passwords from AWS Secrets Manager
+* [DAC] Query Rule functionality added - support for configuring ALLOW/DENY/SKIP filtering rules based on SQL query patterns
+* [DAC] Custom JDBC Vendor added - support for uploading custom JDBC drivers and managing Custom JDBC Configurations, with ANSI SQL level query analysis support
+
+
+**Improvement**
+
+* [Common] OAuth Client management improvement - scope selection, multiple redirect URLs, detail page introduction, and DCR endpoint type stability enhancement
+* [Common] Fixed issue where emails were sent even when Email Integration workflow notification was disabled
+* [Common] Fixed issue where qpctl command was not found due to non-existent /usr/local/bin directory during macOS Multi-Agent installation
+* [DAC] MySQL LOAD DATA LOCAL INFILE large file processing improvement
+* [DAC] Unnecessary metadata query improvement during Trino proxy connection
+* [DAC] Resolved SAP HANA SECONDDATE error caused by Julian/Gregorian calendar difference
+* [DAC] Aborted status check in SQL Request Workflow - fixed duplicate execution bug caused by singleton object contamination
+* [DAC] Policy support added for PostgreSQL RETURNING clause
+* [DAC] Fixed minWritableBytes error when querying SAP HANA BLOB type columns
+* [DAC] Changed SAP BTP Web Editor comment style to ANSI SQL
+* [DAC] Fixed missing Audit Log recording for Web Editor context menu DDL operations (Truncate/Drop/Rename)
+* [DAC] Fixed issue where logs were duplicated by the number of WHERE conditions in Policy Audit Log
+* [DAC] Reverse Tunnel Server Redis TLS support and cluster mode auto-detection improvement
+* [DAC] Fixed inability to connect to Redis Cluster through Reverse Tunnel
+* [DAC] Improved to display clear error message when HTTPS certificate is not configured
+* [DAC] Fixed issue where Workflow Tag Display feature was not shown when New DAC Policy Management was disabled
+* [SAC] Server Agent code signing verification logic improvement - certificate change compatibility secured
+* [SAC] Fixed issue where VMs were missing due to resource path case mismatch during Azure Cloud Provider synchronization
+* [SAC] Fixed IndexOutOfBoundsException issue during Cloud Provider synchronization
+* [WAC] Key Pair validation logic added when uploading Root CA Certificate
