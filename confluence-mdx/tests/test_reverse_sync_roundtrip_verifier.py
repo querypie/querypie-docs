@@ -7,6 +7,9 @@ from reverse_sync.roundtrip_verifier import (
     _normalize_link_text_spacing,
     _normalize_sentence_breaks,
     _normalize_table_cell_padding,
+    _normalize_empty_list_items,
+    _normalize_consecutive_blank_lines,
+    _normalize_blank_line_after_br,
 )
 
 
@@ -190,6 +193,78 @@ class TestNormalizeLinkTextSpacing:
         assert result == "* [**A**](a) and [**B**](b)"
 
 
+# --- _normalize_empty_list_items 단위 테스트 ---
+
+
+class TestNormalizeEmptyListItems:
+    def test_removes_number_only_line(self):
+        """번호만 있는 리스트 항목(예: '    12.')을 줄째 제거한다.
+
+        재현: integrating-with-email.mdx — FC가 이미지만 포함된 <li>를
+        '    12.'로 변환하지만, improved.mdx에서는 제거됨.
+        """
+        text = "    11. item\n    12.\n    13. next\n"
+        assert _normalize_empty_list_items(text) == "    11. item\n    13. next\n"
+
+    def test_preserves_item_with_content(self):
+        """내용이 있는 리스트 항목은 제거하지 않는다."""
+        text = "    1. first item\n    2. second item\n"
+        assert _normalize_empty_list_items(text) == text
+
+    def test_removes_with_tab_indent(self):
+        """탭 들여쓰기인 경우에도 제거한다."""
+        text = "\t5.\n\t6. content\n"
+        assert _normalize_empty_list_items(text) == "\t6. content\n"
+
+
+# --- _normalize_consecutive_blank_lines 단위 테스트 ---
+
+
+class TestNormalizeConsecutiveBlankLines:
+    def test_triple_newline_collapsed(self):
+        """3개 이상 연속 개행을 2개로 정규화한다.
+
+        재현: identity-providers.mdx, user-management.mdx — FC가 블록 사이에
+        추가 빈 줄을 삽입하거나, empty list item 제거 후 연속 빈 줄이 남음.
+        """
+        text = "para1\n\n\npara2\n"
+        assert _normalize_consecutive_blank_lines(text) == "para1\n\npara2\n"
+
+    def test_double_newline_unchanged(self):
+        """2개 개행(단일 빈 줄)은 변경하지 않는다."""
+        text = "para1\n\npara2\n"
+        assert _normalize_consecutive_blank_lines(text) == text
+
+    def test_quadruple_newline_collapsed(self):
+        """4개 이상 연속 개행도 2개로 정규화한다."""
+        text = "para1\n\n\n\npara2\n"
+        assert _normalize_consecutive_blank_lines(text) == "para1\n\npara2\n"
+
+
+# --- _normalize_blank_line_after_br 단위 테스트 ---
+
+
+class TestNormalizeBlankLineAfterBr:
+    def test_removes_blank_after_br(self):
+        """<br/> 뒤의 빈 줄을 제거한다.
+
+        재현: integrating-with-email.mdx — improved.mdx에서 빈 리스트 번호
+        제거 후 <br/> 바로 뒤에 빈 줄이 남음. FC는 빈 줄 없이 출력.
+        """
+        text = "text<br/>\n\nnext\n"
+        assert _normalize_blank_line_after_br(text) == "text<br/>\nnext\n"
+
+    def test_preserves_br_without_blank(self):
+        """<br/> 뒤에 빈 줄이 없으면 변경하지 않는다."""
+        text = "text<br/>\nnext\n"
+        assert _normalize_blank_line_after_br(text) == text
+
+    def test_handles_self_closing_variants(self):
+        """<br /> 형태도 처리한다."""
+        text = "text<br />\n\nnext\n"
+        assert _normalize_blank_line_after_br(text) == "text<br />\nnext\n"
+
+
 # --- _normalize_table_cell_padding 단위 테스트 ---
 
 
@@ -238,7 +313,7 @@ def test_minimal_norm_double_space_passes():
 
 
 def test_minimal_norm_br_space_passes():
-    """<br/> 앞 공백 차이는 strict 모드에서도 정규화된다."""
+    """<br/> 앞 공백 차이는 최소 정규화로 통과한다."""
     result = verify_roundtrip(
         expected_mdx="item <br/>next\n",
         actual_mdx="item<br/>next\n",
@@ -270,6 +345,44 @@ def test_minimal_norm_link_spacing_multiple_items():
             "* [**General**](url1) : desc1\n"
             "* [**Security**](url2) : desc2\n"
         ),
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_empty_list_item_passes():
+    """빈 리스트 번호 차이는 최소 정규화로 통과한다.
+
+    재현: integrating-with-email.mdx — improved.mdx에서 '12.' 제거,
+    FC verify.mdx에서 '12.' 출력. 정규화로 양쪽 모두 해당 줄 제거.
+    """
+    result = verify_roundtrip(
+        expected_mdx="    11. item\n    13. next\n",
+        actual_mdx="    11. item\n    12.\n    13. next\n",
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_consecutive_blank_lines_passes():
+    """연속 빈 줄 차이는 최소 정규화로 통과한다.
+
+    재현: identity-providers.mdx — FC가 블록 사이에 빈 줄을 추가 삽입.
+    """
+    result = verify_roundtrip(
+        expected_mdx="para1\n\npara2\n",
+        actual_mdx="para1\n\n\npara2\n",
+    )
+    assert result.passed is True
+
+
+def test_minimal_norm_blank_line_after_br_passes():
+    """<br/> 뒤 빈 줄 차이는 최소 정규화로 통과한다.
+
+    재현: integrating-with-email.mdx — empty list item 제거 후
+    <br/> 뒤에 빈 줄이 남는 차이.
+    """
+    result = verify_roundtrip(
+        expected_mdx="text<br/>\n\nnext\n",
+        actual_mdx="text<br/>\nnext\n",
     )
     assert result.passed is True
 

@@ -106,26 +106,50 @@ def _normalize_empty_bold(text: str) -> str:
 
 
 def _normalize_empty_list_items(text: str) -> str:
-    """내용 없는 번호 리스트 항목(예: ``    12.``)을 빈 줄로 치환한다.
+    """내용 없는 번호 리스트 항목(예: ``    12.``)을 줄째 제거한다.
 
     Forward converter가 XHTML의 텍스트 없는 ``<li>`` (이미지만 포함)를
     번호만 있는 항목(``12.``)으로 변환한다. 이 항목은 시각적으로 무의미하므로
     improved.mdx에서 제거하더라도 XHTML 패치로 ``<li>`` 구조를 삭제할 수 없다.
-    양쪽을 빈 줄로 정규화하여 이 차이를 무시한다.
+    줄 전체(newline 포함)를 제거하여 이 차이를 무시한다.
     """
-    return re.sub(r'^([ \t]+)\d+\.\s*$', '', text, flags=re.MULTILINE)
+    return re.sub(r'^[ \t]+\d+\.\s*\n', '', text, flags=re.MULTILINE)
+
+
+def _normalize_consecutive_blank_lines(text: str) -> str:
+    """연속 빈 줄(3개 이상의 개행)을 단일 빈 줄(2개 개행)로 정규화한다.
+
+    Forward converter가 블록 요소 사이에 추가 빈 줄을 삽입하거나,
+    _normalize_empty_list_items가 줄을 제거한 뒤 남은 연속 빈 줄을
+    정규화한다. MDX에서 빈 줄 수는 시각적으로 동일하다.
+    """
+    return re.sub(r'\n{3,}', '\n\n', text)
+
+
+def _normalize_blank_line_after_br(text: str) -> str:
+    """<br/> 로 끝나는 줄 뒤의 빈 줄을 제거한다.
+
+    <br/> 자체가 줄바꿈을 생성하므로, 뒤따르는 빈 줄은 시각적으로
+    무의미하다. improved.mdx에서 빈 리스트 번호(12.)를 제거한 뒤
+    남은 빈 줄과 FC가 빈 줄 없이 출력하는 차이를 정규화한다.
+    """
+    return re.sub(r'(<br\s*/>\n)\n+', r'\1', text)
 
 
 def _apply_minimal_normalizations(text: str) -> str:
     """항상 적용하는 최소 정규화 (strict/lenient 모드 공통).
 
     forward converter의 체계적 출력 특성에 의한 차이만 처리한다:
-    - 인라인 이중 공백 → 단일 공백 (_normalize_consecutive_spaces_in_text)
-    - <br/> 앞 공백 제거 (_normalize_br_space)
-    - 링크 텍스트 앞뒤 공백 제거 (_normalize_link_text_spacing)
-    - 빈 bold 마커(****) 정규화 (_normalize_empty_bold)
-    - 내용 없는 번호 리스트 항목 제거 (_normalize_empty_list_items)
-    - 문장 경계 줄바꿈 결합 (_normalize_sentence_breaks)
+    - 인라인 이중 공백 → 단일 공백
+    - <br/> 앞 공백 제거
+    - 링크 텍스트 앞뒤 공백 제거
+    - 빈 bold 마커(****) 정규화
+    - 내용 없는 번호 리스트 항목 제거
+    - 연속 빈 줄 정규화
+    - 테이블 셀 패딩 정규화
+    - 문장 경계 줄바꿈 결합
+    - 첫 번째 h1 heading 제거
+    - trailing 빈 줄 정규화
 
     lenient 모드에서는 이 정규화 이후 _apply_normalizations가 추가로 적용된다.
     """
@@ -134,6 +158,8 @@ def _apply_minimal_normalizations(text: str) -> str:
     text = _normalize_link_text_spacing(text)
     text = _normalize_empty_bold(text)
     text = _normalize_empty_list_items(text)
+    text = _normalize_consecutive_blank_lines(text)
+    text = _normalize_blank_line_after_br(text)
     text = _normalize_table_cell_padding(text)
     text = _normalize_sentence_breaks(text)
     text = _strip_first_heading(text)
