@@ -1,9 +1,75 @@
 ---
-title: '11.6.0 ~ 11.6.4'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.4'
+title: '11.6.0 ~ 11.6.5'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.5'
 ---
 
-# 11.6.0 ~ 11.6.4
+# 11.6.0 ~ 11.6.5
+
+### QueryPie 11.6.5 Release
+
+2026年07月02日
+
+**New Feature**
+
+* [共通] ライセンス範囲内のユーザー数および直近30日間のアクセスユーザー集計表示機能を追加
+* [DAC] Databricks Connection、Web Editor、Agent/Agentless Proxy、ポリシーおよび監査ログサポートを追加
+* [DAC] Athena Connectionでクエリ結果再利用（Result Reuse）オプションを追加
+* [DAC] SQL EditorおよびRDB対象でWHERE条件のないSQL実行をブロックする機能を追加
+* [DAC] GCP Cloud SQL同期時のLabel情報収集およびCloud Providerフィルタータグとしての活用をサポート
+* [DAC] DBベンダー別ライセンス使用制限機能を追加
+* [DAC] Custom JDBC VendorおよびQuery Ruleをベータから正式機能へ移行
+* [KAC] GCP Cloud Provider Tagベース同期機能を追加
+* [KAC] Web ClientでYAML編集、ローカル検証、変更内容Diff Review機能を追加
+* [AI Chat] SkillsをAI Chat workspace内で管理できるよう統合
+* [MAC] DCRをサポートしないOAuth MCP ServerもClient ID/Secretベースで接続できるようサポート
+
+**Improvement**
+
+* [共通] SAC/DAC権限満了予定通知メールに満了対象内訳の添付ファイルを提供
+* [共通] User Profile照会および更新External APIにforceオプションをサポート
+* [共通] API Token Allowed Zone変更時に即時更新されるよう改善
+* [共通] Vault AppRole Namespace適用エラーを改善
+* [共通] 削除されたユーザーのJob実行履歴照会時にUser Not Foundエラーが発生する問題を修正
+* [共通] Multi Agentトークン処理のセキュリティを改善
+* [共通] クライアントJavaScriptバンドルに不要な内部IP情報が含まれないよう改善
+* [DAC] Databricks Web Editor自動補完、DataGrip接続、SSH設定、LIMIT/OFFSET処理など接続安定性を改善
+* [DAC] Databricksポリシー適用およびAgentless Agent JDBC URL処理エラーを修正
+* [DAC] PostgreSQL RETURNING構文のデータマスキングポリシーサポートを追加
+* [DAC] Draft Workflow進入時にアクセス権限のないConnectionを参照するとエラーメッセージが表示されるよう改善
+* [DAC] DAC Auditフィルタリング時に断続的に発生していたJavaScriptエラーを修正
+* [DAC] Workflow SQL Export Requestでの複数クエリ処理エラーを修正
+* [DAC] Privilege Type修正時にPrivilege Nameも同時に変更できるよう改善
+* [DAC] MongoDBアクセス時に誤ったProxy portエラーポップアップが表示される問題を修正
+* [DAC] Athena CREATE PROTECTED MULTI DIALECT VIEWパースエラーを修正
+* [DAC] DB Policy Exception Request Approval PermissionがRoles Policy一覧に表示されない問題を改善
+* [DAC] Trino Proxy接続でクエリキャンセルリクエストが正常に反映されるよう改善
+* [DAC] Trino / Presto Proxy parse errorが適切な失敗レスポンスとして伝達されるよう改善
+* [DAC] MongoDB SQL Request処理中のパース遅延によりWorkflowが誤って失敗と表示される問題を修正
+* [DAC] クエリ実行失敗時にQueryPie Webで成功のように見える状態表示問題を修正
+* [DAC] Impalaでパーティションキーカラムinsertエラーを修正
+* [DAC] SQL Request処理中のRedis Cluster read/writeルーティング安定性を改善
+* [DAC] MongoDB Aggregateクエリでマスキング解除されたフィールドがnullとして表示される問題を修正
+* [DAC] Query Ruleでスペースを含む文字列条件も意図通り判定されるよう改善
+* [SAC] Add Account画面で不要な全体設定権限なしに必要な設定のみ照会するよう改善
+* [SAC] 低速ネットワーク環境でもWindows Server Agentのリモートアップグレードが失敗扱いにならないよう改善
+* [SAC] TACACS認証処理ロジックを改善
+* [SAC] RDPセッション生成中にドメインコントローラーのネットワークエラーが発生してもセッション処理が中断されないよう改善
+* [KAC] GCP Cloud Provider APIおよびスケジュール同期が正常に動作するよう改善
+* [KAC] Kubernetes Web Clientリクエストで実際のクライアントIPを維持し、WEB ACLブロック問題を修正
+* [KAC] Kubernetes Web Client内部プロキシ通信経路を改善し、NLB環境で発生していた接続問題を修正
+* [KAC] Kubernetes Web Clientの状態表示、エラー処理、運用UXを改善
+* [KAC] User削除後にRole Assignmentを削除する際にUser Not Foundエラーが発生する問題を修正
+* [AI Chat] MCP tool呼び出し時にユーザー承認ベース実行と自動実行モードを選択できるよう改善
+* [MAC] MCP Server作成時のTransportデフォルト値をStreamable HTTPへ変更
+* [MAC] MAC Policy YAMLでallow/denyポリシー構文を同時に使用できるよう改善
+* [MAC] MCP Server詳細でEndpoint URL変更後のOAuth接続およびTool同期がdraft endpoint基準で動作するよう改善
+* [MAC] MCP Server reset token後の保存エラーを修正
+* [MAC] Tool一覧がないPolicy照会時にクライアントエラーが発生する問題を修正
+* [MAC] Request Audit詳細画面でリクエスト内容を一貫した形式で確認できるよう改善
+* [MAC] Client Request Audit無効化時のInclude Payloadオプション状態表示を明確に改善
+* [MAC] MCP Server一覧とユーザーページのスクロールおよびガイド表示を改善
+* [MAC] Claude Code/CursorなどMCP Client認証および登録フローエラーを修正
+
 
 ### QueryPie 11.6.4 Release
 
@@ -82,6 +148,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/1
 * [DAC] Audit Log照会権限制御機能追加
 * [DAC] ClickHouse HTTPS接続サポート
 * [DAC] Custom JDBC Vendor設定ファイルアップロード、Driver Class自動検知、Vault連動およびFirebird系ベンダー対応追加
+* [DAC] Cubridサポート（ポリシー適用およびProxyは未サポート）
 * [SAC] Server Policy単件照会API追加
 * [KAC] KAC Web Client（ベータ）追加
 * [MCP] MCPを通じてDAC/SAC/KAC監査ログを照会できるツール追加

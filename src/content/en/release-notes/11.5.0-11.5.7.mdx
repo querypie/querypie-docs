@@ -1,9 +1,59 @@
 ---
-title: '11.5.0 ~ 11.5.6'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.6'
+title: '11.5.0 ~ 11.5.7'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.7'
 ---
 
-# 11.5.0 ~ 11.5.6
+# 11.5.0 ~ 11.5.7
+
+### QueryPie 11.5.7 Release
+
+July 2, 2026
+
+
+**New Feature**
+
+* [Common] Added display of licensed user count and users who accessed in the last 30 days within the license scope
+* [DAC] Added Result Reuse option for Athena Connections
+* [DAC] Added ability to block SQL execution without WHERE clauses in SQL Editor and RDB targets
+* [DAC] Added support for collecting Label information during GCP Cloud SQL synchronization and using it as Cloud Provider filter tags
+* [KAC] Added GCP Cloud Provider Tag-based synchronization
+* [KAC] Added YAML editing, local validation, and change Diff Review features in Web Client
+
+**Improvement**
+
+* [Common] Fixed a vulnerability where remaining SQLJob token-related code removed in 10.2.6 could be used in External API
+* [Common] Added attachments with expiring target details to SAC/DAC permission expiration notification emails
+* [Common] Added force option support to User Profile lookup and update External APIs
+* [Common] Improved API Token Allowed Zone changes to be refreshed immediately
+* [Common] Improved Vault AppRole Namespace application error handling
+* [Common] Fixed User Not Found error when viewing Job execution history for deleted users
+* [Common] Improved Multi Agent token handling security
+* [Common] Improved client JavaScript bundle so unnecessary internal IP information is not included
+* [DAC] Added PostgreSQL RETURNING statement support for data masking policies
+* [DAC] Improved Draft Workflow entry to show an error message when referencing a Connection without access permission
+* [DAC] Fixed intermittent JavaScript errors during DAC Audit filtering
+* [DAC] Fixed multiple query handling errors in Workflow SQL Export Requests
+* [DAC] Improved Privilege Type editing so Privilege Name can also be changed
+* [DAC] Fixed issue where an incorrect Proxy port error popup was shown when accessing MongoDB
+* [DAC] Fixed Athena CREATE PROTECTED MULTI DIALECT VIEW parsing error
+* [DAC] Improved DB Policy Exception Request Approval Permission so it is exposed in the Roles Policy list
+* [DAC] Improved Trino Proxy connections so query cancel requests are applied correctly
+* [DAC] Improved Trino / Presto Proxy parse errors so they are delivered as proper failure responses
+* [DAC] Fixed issue where workflows were incorrectly shown as failed due to parsing delay while processing MongoDB SQL Requests
+* [DAC] Fixed status display issue where failed query execution appeared successful in QueryPie Web
+* [DAC] Fixed partition key column insert error in Impala
+* [DAC] Improved Redis Cluster read/write routing stability during SQL Request processing
+* [DAC] Fixed issue where unmasked fields were displayed as null in MongoDB Aggregate queries
+* [SAC] Improved the Add Account screen to query only required settings without unnecessary full configuration permissions
+* [SAC] Improved Windows Server Agent remote upgrades so they are not treated as failed in slow network environments
+* [SAC] Improved TACACS authentication processing logic
+* [SAC] Improved RDP session handling so domain controller network errors during session creation do not interrupt session processing
+* [KAC] Improved GCP Cloud Provider API and scheduled synchronization to work correctly
+* [KAC] Fixed WEB ACL blocking issue by preserving the actual client IP in Kubernetes Web Client requests
+* [KAC] Improved Kubernetes Web Client internal proxy communication path to fix connection issues in NLB environments
+* [KAC] Improved Kubernetes Web Client status display, error handling, and operational UX
+* [KAC] Fixed User Not Found error when deleting Role Assignment after deleting a user
+
 
 ### QueryPie 11.5.6 Release
 
@@ -61,6 +111,7 @@ April 21, 2026
 
 * [DAC] Added permission control for Audit Log viewing
 * [DAC] Added ClickHouse HTTPS connection support
+* [DAC] Added Cubrid support (policy application and Proxy not supported).
 * [SAC] Added support for viewing Server Policy details and an API for retrieving a single policy
 * [KAC] Added KAC Web Client (beta)
 
