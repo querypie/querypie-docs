@@ -74,7 +74,7 @@ ______
 <Callout type="info">
 In DAC, privileges have two time-based limits: `Privilege Deactivation Period` and `Privilege Expiration Date`.
 * **Privilege Deactivation Period** : If a user does not access a target for which they have been granted privileges within the period configured by an administrator in **Privilege Deactivation Period** under `Admin > Databases > General > Configurations`, the privilege becomes “Deactivated”. Administrators can change a “Deactivated” status back to “Active”.
-    * [Switching a Deactivated status to Active | Revoking Access-Control privileges](db-access-control/access-control#access-control-%ea%b6%8c%ed%95%9c-%ed%9a%8c%ec%88%98%ed%95%98%ea%b8%b0)
+    * [Switching a Deactivated status to Active | Revoking Access-Control privileges](db-access-control/access-control#revoking-access-control-privileges)
 * **Privilege Expiration Date** : This time limit is set when an administrator specifies **Expiration Date** while granting a specific user privileges to a specific connection in `Admin > Databases > DB Access Control > Access Control`****, or when a user specifies **Access Expiration Date** while requesting access through a Workflow `DB Access Request`.
 * **Note** : If the `Privilege Deactivation Period` arrives before the `Privilege Expiration Date`, the privilege becomes **Deactivated** and can be changed to Active by an administrator. If the `Privilege Expiration Date` arrives before the `Privilege Deactivation Period`, the privilege is **Expired** and revoked. Once revoked, the user must request access again through Workflow, or an administrator must grant new access.
 </Callout>
