@@ -71,6 +71,13 @@ ______
 
 #### 접근제어 설정
 
+<Callout type="info">
+DAC 에서 권한(Privilege)는 `장기 미접속 기한`과 `권한 만료 기한` 두가지의 시간기반 제한이 있습니다.
+* **장기 미접속 기한** : 관리자가 `Admin > Databases > General > Configurations` 의 **Privilege Deactivation Period** 에서 설정한 기한 동안 사용자가 권한이 부여된 대상에 접속하지 않으면 “Deactivated” 상태가 됩니다. 관리자는 “Deactivated” 상태를 “Active” 상태로 전환할 수 있습니다.
+    * [Deactivated 상태의 Active 전환 | Access-Control-권한-회수하기](db-access-control/access-control#access-control-%ea%b6%8c%ed%95%9c-%ed%9a%8c%ec%88%98%ed%95%98%ea%b8%b0)
+* **권한 만료 기한** : 관리자가  `Admin > Databases > DB Access Control > Access Control`****에서 특정 사용자에게 특정 커넥션에 대해 권한을 부여할 때 **Expiration Date** 를 지정하거나, 사용자가 Workflow 의 `DB Access Request` 를 통해 접근 권한을 신청할 때 **Access Expiration Date** 를 지정하여 기한이 설정됩니다.
+* **참고** : `권한 만료 기한` 보다 `장기 미접속 기한` 이 먼저 도래한 경우 **Deactivated** 상태가 되어 관리자에 의해 Active 상태로 전환될 수 있으나 `권한 만료 기한`이 `장기 미접속 기한` 보다 먼저 도래한 경우는 **Expired** 되어 권한이 회수됩니다. 권한이 회수되면 Workflow를 통해 접근 권한을 재신청하거나 관리자에 의해 접근 권한이 새로 부여되어야 합니다.
+</Callout>
 
 * **Privilege Deactivation Period**: DB 권한(Privilege) 만료를 위한 장기 미사용 기준 기간 (Default : 90일)
 * **Maximum Access Duration**: Privilege 요청 및 할당 시 최대 기간

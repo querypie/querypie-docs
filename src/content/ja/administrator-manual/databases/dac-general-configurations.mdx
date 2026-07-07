@@ -71,6 +71,13 @@ ______
 
 #### アクセス制御設定
 
+<Callout type="info">
+DACの権限（Privilege）には、`長期未アクセス期限`と`権限満了期限`という2つの時間ベースの制限があります。
+* **長期未アクセス期限** : 管理者が `Admin > Databases > General > Configurations` の **Privilege Deactivation Period** で設定した期間、ユーザーが権限を付与された対象にアクセスしない場合、“Deactivated” 状態になります。管理者は “Deactivated” 状態を “Active” 状態に切り替えることができます。
+    * [Deactivated状態をActiveに切り替える | Access-Control権限の回収](db-access-control/access-control#access-control-%ea%b6%8c%ed%95%9c-%ed%9a%8c%ec%88%98%ed%95%98%ea%b8%b0)
+* **権限満了期限** : 管理者が `Admin > Databases > DB Access Control > Access Control`****で特定ユーザーに特定コネクションへの権限を付与する際に **Expiration Date** を指定するか、ユーザーがWorkflowの `DB Access Request` を通じてアクセス権限を申請する際に **Access Expiration Date** を指定することで期限が設定されます。
+* **参考** : `権限満了期限`より`長期未アクセス期限`が先に到来した場合は **Deactivated** 状態となり、管理者によりActive状態へ切り替えることができます。一方、`権限満了期限`が`長期未アクセス期限`より先に到来した場合は **Expired** となり、権限が回収されます。権限が回収された場合、Workflowを通じてアクセス権限を再申請するか、管理者により新しいアクセス権限を付与する必要があります。
+</Callout>
 
 *  **Privilege Deactivation Period** : DB権限（Privilege）の期限切れのための長期未使用基準期間（Default : 90日）
 *  **Maximum Access Duration** : Privilegeリクエストおよび割り当て時の最大期間

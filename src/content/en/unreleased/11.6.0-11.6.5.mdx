@@ -1,9 +1,75 @@
 ---
-title: '11.6.0 ~ 11.6.4'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.4'
+title: '11.6.0 ~ 11.6.5'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.5'
 ---
 
-# 11.6.0 ~ 11.6.4
+# 11.6.0 ~ 11.6.5
+
+### QueryPie 11.6.5 Release
+
+July 2, 2026
+
+**New Feature**
+
+* [Common] Added display of licensed user count and users who accessed in the last 30 days within the license scope
+* [DAC] Added support for Databricks Connection, Web Editor, Agent/Agentless Proxy, policies, and audit logs
+* [DAC] Added Result Reuse option for Athena Connections
+* [DAC] Added ability to block SQL execution without WHERE clauses in SQL Editor and RDB targets
+* [DAC] Added support for collecting Label information during GCP Cloud SQL synchronization and using it as Cloud Provider filter tags
+* [DAC] Added license usage restriction by DB vendor
+* [DAC] Promoted Custom JDBC Vendor and Query Rule from beta to official features
+* [KAC] Added GCP Cloud Provider Tag-based synchronization
+* [KAC] Added YAML editing, local validation, and change Diff Review features in Web Client
+* [AI Chat] Integrated Skills management into the AI Chat workspace
+* [MAC] Added support for connecting OAuth MCP Servers that do not support DCR by using Client ID/Secret
+
+**Improvement**
+
+* [Common] Added attachments with expiring target details to SAC/DAC permission expiration notification emails
+* [Common] Added force option support to User Profile lookup and update External APIs
+* [Common] Improved API Token Allowed Zone changes to be refreshed immediately
+* [Common] Improved Vault AppRole Namespace application error handling
+* [Common] Fixed User Not Found error when viewing Job execution history for deleted users
+* [Common] Improved Multi Agent token handling security
+* [Common] Improved client JavaScript bundle so unnecessary internal IP information is not included
+* [DAC] Improved Databricks connection stability, including Web Editor autocomplete, DataGrip connections, SSH settings, and LIMIT/OFFSET handling
+* [DAC] Fixed Databricks policy application and Agentless Agent JDBC URL handling errors
+* [DAC] Added PostgreSQL RETURNING statement support for data masking policies
+* [DAC] Improved Draft Workflow entry to show an error message when referencing a Connection without access permission
+* [DAC] Fixed intermittent JavaScript errors during DAC Audit filtering
+* [DAC] Fixed multiple query handling errors in Workflow SQL Export Requests
+* [DAC] Improved Privilege Type editing so Privilege Name can also be changed
+* [DAC] Fixed issue where an incorrect Proxy port error popup was shown when accessing MongoDB
+* [DAC] Fixed Athena CREATE PROTECTED MULTI DIALECT VIEW parsing error
+* [DAC] Improved DB Policy Exception Request Approval Permission so it is exposed in the Roles Policy list
+* [DAC] Improved Trino Proxy connections so query cancel requests are applied correctly
+* [DAC] Improved Trino / Presto Proxy parse errors so they are delivered as proper failure responses
+* [DAC] Fixed issue where workflows were incorrectly shown as failed due to parsing delay while processing MongoDB SQL Requests
+* [DAC] Fixed status display issue where failed query execution appeared successful in QueryPie Web
+* [DAC] Fixed partition key column insert error in Impala
+* [DAC] Improved Redis Cluster read/write routing stability during SQL Request processing
+* [DAC] Fixed issue where unmasked fields were displayed as null in MongoDB Aggregate queries
+* [DAC] Improved Query Rule so string conditions containing spaces are evaluated as intended
+* [SAC] Improved the Add Account screen to query only required settings without unnecessary full configuration permissions
+* [SAC] Improved Windows Server Agent remote upgrades so they are not treated as failed in slow network environments
+* [SAC] Improved TACACS authentication processing logic
+* [SAC] Improved RDP session handling so domain controller network errors during session creation do not interrupt session processing
+* [KAC] Improved GCP Cloud Provider API and scheduled synchronization to work correctly
+* [KAC] Fixed WEB ACL blocking issue by preserving the actual client IP in Kubernetes Web Client requests
+* [KAC] Improved Kubernetes Web Client internal proxy communication path to fix connection issues in NLB environments
+* [KAC] Improved Kubernetes Web Client status display, error handling, and operational UX
+* [KAC] Fixed User Not Found error when deleting Role Assignment after deleting a user
+* [AI Chat] Improved MCP tool calls so users can choose approval-based execution or automatic execution mode
+* [MAC] Changed the default Transport to Streamable HTTP when creating MCP Servers
+* [MAC] Improved MAC Policy YAML to support allow and deny policy syntax together
+* [MAC] Improved MCP Server detail behavior so OAuth connection and Tool synchronization after Endpoint URL changes use the draft endpoint
+* [MAC] Fixed save errors after MCP Server token reset
+* [MAC] Fixed client error when viewing a Policy without a Tool list
+* [MAC] Improved the Request Audit detail screen so request contents can be checked in a consistent format
+* [MAC] Improved status display for the Include Payload option when Client Request Audit is disabled
+* [MAC] Improved scrolling and guide display on the MCP Server list and user page
+* [MAC] Fixed MCP Client authentication and registration flow errors for Claude Code, Cursor, and similar clients
+
 
 ### QueryPie 11.6.4 Release
 
@@ -82,6 +148,7 @@ April 21, 2026
 * [DAC] Added access control for Audit Log lookup
 * [DAC] Added ClickHouse HTTPS connection support
 * [DAC] Added Custom JDBC Vendor configuration file upload, Driver Class auto-detection, Vault integration, and Firebird-family vendor support
+* [DAC] Added Cubrid support (policy application and Proxy not supported)
 * [SAC] Added single Server Policy lookup API
 * [KAC] Added KAC Web Client (beta)
 * [MCP] Added tools to query DAC/SAC/KAC audit logs through MCP
