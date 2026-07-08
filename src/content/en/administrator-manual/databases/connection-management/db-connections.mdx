@@ -181,7 +181,8 @@ Secret Store is only supported for DB Connections that use Username/Password aut
 Secret Store is not available for BigQuery, Spanner, Athena, and DynamoDB, which use cloud service-specific authentication.
 
 Secret Store item is displayed when Secret Store usage is enabled in the Admin &gt; General &gt; Company Management &gt; Security settings menu, and to actually use Secret Store, configuration is required on the Admin &gt; General &gt; Integration &gt; Secret Store settings page.
-(Since version 11.4.0, this has been improved to work with only the Integration settings, regardless of this setting.)
+(Since version 11.4.0, this has been improved to work with only the Integration settings, regardless of this setting.
+)
 
 For detailed information, refer to the [Secret Store Integration](../../general/system/integrations/integrating-with-secret-store) document.
 </Callout>
@@ -192,10 +193,6 @@ For detailed information, refer to the [Secret Store Integration](../../general/
 
 DB Account items are displayed differently depending on the Secret Engine type stored in Secret Store settings.
 
-**AWS Secrets Manager**
-
-* **Secret ID** : Enter the name of the Secret stored in AWS Secrets Manager (e.g., `prod/db/credentials`).
-
 * When `Secret Engine` = K/V setting, Username / Password input fields are displayed on the connection information page.
     * Enter the Vault Path in the Username / Password fields.
     * Path can be entered in the format `prod_db/data/mysql?username`.
@@ -205,6 +202,32 @@ DB Account items are displayed differently depending on the Secret Engine type s
     * Enter the Vault Path in the Account field.
     * Path can be entered in the format `prod_db/creds/mysql_role`.
 
+**AWS Secrets Manager**
+
+* **Secret ID** : Enter the name of the Secret stored in AWS Secrets Manager (e.g., `prod/db/credentials`).
+
+#### Notes on Use QSI Parser Settings
+
+<Callout type="info">
+Use QSI Parser Settings
+
+Queries must be parsed before policies can be applied.
+For data sources that are not officially supported by policies, you can use an ANSI SQL-level parser or specify a compatible parser to partially enable policy application.
+(Available starting from version 11.6.0)
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/connection-management/db-connections/image-20260707-060911.png" alt="image-20260707-060911.png" width="615" />
+</figure>
+</Callout>
+
+| **Data Source**    | **Selectable QSI Parser**      | **QueryPie ACP version** |
+| ------------------ | ------------------------------ | ------------------------ |
+| Custom JDBC Vendor | ANSI, PostgreSQL, MySQL, Trino | 11.6.0 ~                 |
+| Tibero             | ANSI, Trino                    | 11.6.1 ~                 |
+| Teradata           | ANSI, PostgreSQL, Trino        | 11.6.1 ~                 |
+| Presto             | ANSI, Trino                    | 11.6.1~                  |
+| Cubrid             | ANSI, MySQL                    | 11.6.2                   |
+| Snowflake          | ANSI, PostgreSQL, Trino        | 11.6.3                   |
 
 ### Additional Settings
 
