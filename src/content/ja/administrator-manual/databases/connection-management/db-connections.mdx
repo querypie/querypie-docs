@@ -50,7 +50,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
     *  **Secret Store**  ：認証情報保存位置
         * QueryPie：QueryPie内部に保存
         * その他、登録したVault名が表示される
-        * 選択した認証情報保存位置属性に 따라追加認証情報表示方式が異なる
+        * 選択した認証情報保存位置の属性に応じて、追加認証情報の表示方式が異なる
     * `Test Connection`ボタンをクリックして、コネクション接続情報が有効かを確認できます。
     * Additional Information：付加情報入力
         * 詳細説明は下部**Additional Information**セクション参照
@@ -169,7 +169,7 @@ Administrator &gt; Databases &gt; DB Connections &gt; List Details &gt; Connecti
 * Secret Store：認証情報保存位置
     * QueryPie：QueryPie内部に保存
     * その他、登録したVault名が表示される
-    * 選択した認証情報保存位置属性に 따라追加認証情報表示方式が異なる
+    * 選択した認証情報保存位置の属性に応じて、追加認証情報の表示方式が異なる
 
 `Test Connection`ボタンをクリックして、コネクション接続情報が有効かを確認できます。
 
@@ -191,11 +191,7 @@ Secret Store項目はAdmin &gt; General &gt; Company Management &gt; Security設
 
 **Harshcorp Vault**
 
-Secret Store設定に保存されたSecret Engineタイプに따라DB Account項目が異なって表示されます。
-
-**AWS Secrets Manager**
-
-* **Secret ID** : AWS Secrets Managerに保存されたSecretの名前を入力します（例：`prod/db/credentials`）。
+Secret Store設定に保存されたSecret Engineタイプに応じてDB Account項目が異なって表示されます。
 
 * `Secret Engine` = K/V設定時、コネクション情報ページでUsername / Password入力項目が表示されます。
     * Username / Password項目にVaultのPathを入力します。
@@ -206,6 +202,32 @@ Secret Store設定に保存されたSecret Engineタイプに따라DB Account項
     * Account項目にVaultのPathを入力します。
     * Pathの形態は`prod_db/creds/mysql_role`形態で入力できます。
 
+**AWS Secrets Manager**
+
+* **Secret ID** : AWS Secrets Managerに保存されたSecretの名前を入力します（例：`prod/db/credentials`）。
+
+#### Use QSI Parser設定に関する参考事項
+
+<Callout type="info">
+Use QSI Parser設定
+
+ポリシーを適用するには、クエリ構文を解析する必要があります。
+公式にポリシーをサポートしていないDatasourceに対してANSIクエリレベルのparserを使用するか、互換性のあるparserを指定すると、部分的にポリシー適用が可能になります。
+（11.6.0以降のバージョンから使用可能）
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/connection-management/db-connections/image-20260707-060911.png" alt="image-20260707-060911.png" width="615" />
+</figure>
+</Callout>
+
+| **Data Source**    | **Selectable QSI Parser**      | **QueryPie ACP version** |
+| ------------------ | ------------------------------ | ------------------------ |
+| Custom JDBC Vendor | ANSI, PostgreSQL, MySQL, Trino | 11.6.0 ~                 |
+| Tibero             | ANSI, Trino                    | 11.6.1 ~                 |
+| Teradata           | ANSI, PostgreSQL, Trino        | 11.6.1 ~                 |
+| Presto             | ANSI, Trino                    | 11.6.1~                  |
+| Cubrid             | ANSI, MySQL                    | 11.6.2                   |
+| Snowflake          | ANSI, PostgreSQL, Trino        | 11.6.3                   |
 
 ### 追加設定
 

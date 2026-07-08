@@ -206,6 +206,28 @@ Secret Store 설정에 저장된 Secret Engine 타입에 따라 DB Account 항�
 
 * **Secret ID** : AWS Secrets Manager에 저장된 Secret의 이름을 입력합니다 (예: `prod/db/credentials`).
 
+#### Use QSI Parser 설정 관련 참고 사항
+
+<Callout type="info">
+Use QSI Parser 설정
+
+정책을 적용하기 위해서는 쿼리 구문에 대해서 해석이 되어야 합니다.
+기존에 공식적으로 정책을 지원하지 않는 Datasource에 대해 ANSI 쿼리 수준의 parser를 사용하거나 호환 가능한 parser를 지정한 뒤, 부분적으로 정책적용을 가능하게 합니다.
+(11.6.0 이상 버전 부터 사용 가능)
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/connection-management/db-connections/image-20260707-060911.png" alt="image-20260707-060911.png" width="615" />
+</figure>
+</Callout>
+
+| **Data Source**    | **Selectable QSI Parser**      | **QueryPie ACP version** |
+| ------------------ | ------------------------------ | ------------------------ |
+| Custom JDBC Vendor | ANSI, PostgreSQL, MySQL, Trino | 11.6.0 ~                 |
+| Tibero             | ANSI, Trino                    | 11.6.1 ~                 |
+| Teradata           | ANSI, PostgreSQL, Trino        | 11.6.1 ~                 |
+| Presto             | ANSI, Trino                    | 11.6.1~                  |
+| Cubrid             | ANSI, MySQL                    | 11.6.2                   |
+| Snowflake          | ANSI, PostgreSQL, Trino        | 11.6.3                   |
 
 ### 추가 설정하기
 
