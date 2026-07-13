@@ -14,9 +14,8 @@ import { Callout } from 'nextra/components'
 従来はQueryPieがデフォルトで提供するDB Vendor（MySQL、PostgreSQLなど）のみ使用可能でしたが、この機能を通じてサポートされていないDB（例：Cubrid、Tibero、Altibaseなど）もJDBCドライバを直接アップロードして接続できます。
 
 <Callout type="info">
-本機能は**ベータ（Beta）**として提供されます。
-使用するには、`Admin > Databases > General > Configurations` ページのExperimentalセクションで **Custom JDBC Configuration** オプションを `Enable` に設定する必要があります。
-有効化後、`Admin > Databases > Connection Management > Custom JDBC Configs` メニューが表示されます。
+本機能は11.6.xバージョン以降で提供されます。
+（11.6.0〜11.6.4まではBeta、11.6.5で正式機能として提供）
 </Callout>
 
 ### Custom JDBC Vendorを登録する

@@ -12,9 +12,7 @@ import { Callout } from 'nextra/components'
 QueryPie ACP 11.6.0から提供されるCustom JDBC Configs機能を通じて、管理者がJDBC Driverを登録し、Databricksコネクションを作成してポリシーを適用できます。<br/>QueryPie ACPでDatabricksに対してサポートするquery parser（QSI）はANSI queryであるため、Databricks特化構文については正常に動作しない場合があります。
 
 <Callout type="info">
-本機能は**ベータ（Beta）**として提供されます。
-使用するには、`Admin > Databases > General > Configurations` ページのExperimentalセクションで **Custom JDBC Configuration** オプションを `Enable` に設定する必要があります。
-有効化後、`Admin > Databases > Connection Management > Custom JDBC Configs` メニューが表示されます。
+本機能は11.6.xバージョン以降で提供されます。（11.6.0〜11.6.4まではBeta、11.6.5で正式機能として提供）
 </Callout>
 
 ### Custom JDBC VendorとしてDatabricksを登録する
@@ -32,7 +30,8 @@ QueryPie ACP 11.6.0から提供されるCustom JDBC Configs機能を通じて、
 8. Default Portに `443` を入力します。
 9. JVM Argumentsに `--add-opens=java.base/java.nio=ALL-UNNAMED` を入力します。
 10. Driver JAR Fileセクションで `Select JAR file to upload` ボタンをクリックしてJDBC Driverをアップロードします。<br/>Databricks：[JDBC Driverダウンロード](https://www.databricks.com/spark/jdbc-drivers-download)
-11. `Save` ボタンを押して設定を保存します。
+11. Dictionary
+12. `Save` ボタンを押して設定を保存します。
 
 ### Custom VendorでDatabricks Connectionを作成する
 

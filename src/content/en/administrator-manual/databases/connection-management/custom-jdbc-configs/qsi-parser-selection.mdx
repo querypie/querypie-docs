@@ -9,35 +9,37 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-**QSI Parser** is an option that can be selected when creating or editing a DB Connection with a Custom JDBC Vendor.
+<Callout type="info">
+This feature is available in version 11.6.x and later. (Provided as Beta from 11.6.0 through 11.6.4 and as a GA feature in 11.6.5)
+</Callout>
+
+**QSI Parser** is an option that can be selected when creating or editing a DB Connection for a Custom JDBC Vendor or a database with selectable parsers.
 QSI Parser refers to the parser that QueryPie uses to analyze SQL, and selecting a Parser that matches the syntax characteristics of the DB Vendor can improve query analysis and policy application compatibility.
 
-<Callout type="info">
-This feature is provided together with the **Custom JDBC Vendor** feature.
-To use it, you must first set the **Custom JDBC Configuration** option to `Enable` in the Experimental section on the `Admin > Databases > General > Configurations` page, and register the Custom JDBC Vendor you want to use at `Admin > Databases > Connection Management > Custom JDBC Configs`.
-</Callout>
+| **Database**       | **Selectable Parsers**                  | Version where parser selection became available |
+| ------------------ | --------------------------------------- | ----------------------------------------------- |
+| Custom Jdbc Vendor | `ANSI`, `PostgreSQL`, `MySQL`, `Trino`  | `11.6.1` and later                              |
+| Tibero             | `ANSI`, `Trino`                         | `11.6.1` and later                              |
+| Presto             | `ANSI`, `Trino`                         | `11.6.1` and later                              |
+| Teradata           | `ANSI`, `PostgreSQL`, `Trino`           | `11.6.1` and later                              |
+| Cubrid             | `ANSI`, `MySQL`                         | `11.6.2` and later                              |
+| Snowflake          | `ANSI`, `PostgreSQL`, `Trino`           | `11.6.3` and later                              |
 
 ### Configuring the QSI Parser
 
-Configure the QSI Parser for a DB Connection that uses a Custom JDBC Vendor.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/databases/connection-management/custom-jdbc-configs/qsi-parser-selection/database-settings_connection-management_db-connections_qsi-parser.png" alt="database-settings_connection-management_db-connections_qsi-parser.png" width="680" />
-</figure>
+Configure the QSI Parser for a DB Connection where parser selection is available.
 
 1. Navigate to `Admin > Databases > Connection Management > DB Connections`.
 2. Click the `Create Connection` button in the upper right corner, or select an existing connection to go to the edit screen.
-3. Scroll down and select the Custom JDBC Vendor you want to use from the **Custom JDBC Vendors** section.
+3. Scroll down and select the Custom JDBC Vendor you want to use from the **Custom JDBC Vendors** section. (Or select one of the previously mentioned Tibero, Presto, Teradata, Cubrid, or Snowflake entries.)
 4. Enter the connection information in the `Connection Information` section.
-5. When the **QSI Parser** field appears, select the appropriate Parser for the Vendor.
-    * For Custom JDBC Vendors, a list of compatible Parsers is provided in a dropdown.
+5. Select the **Use QSI Parser** checkbox.<br/>
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/databases/connection-management/custom-jdbc-configs/qsi-parser-selection/image-20260713-045912.png" alt="image-20260713-045912.png" width="654" />
+  </figure>
+    * A list of compatible Parsers is provided in a dropdown.
     * Examples: `ANSI SQL`, `Oracle`, `PostgreSQL`, `MySQL`, `Trino`
 6. Enter the remaining connection information and click the `Next` button to proceed to the connection creation complete screen.
-
-<Callout type="important">
-As of the 11.6.0 admin UI, the **QSI Parser** field is only displayed when a Custom JDBC Vendor is selected.
-Additionally, the dropdown is only shown when there are two or more selectable Parsers for the Vendor.
-</Callout>
 
 ### QSI Parser Selection Criteria
 
@@ -59,7 +61,7 @@ Select a Parser from the same family as the SQL syntax verified when registering
 You can change the QSI Parser of an existing DB Connection.
 
 1. Select the connection you want to edit from `Admin > Databases > Connection Management > DB Connections`.
-2. Change the **QSI Parser** value in the `Connection Information` section.
+2. Change the **QSI Parser** value in the `Connection Information` section. (You can also clear the Use QSI Parser checkbox if needed. **If policies are configured, they may be invalidated, so review carefully before changing this setting.**)
 3. Click the `Save Changes` button to save.
 
 After changing the setting, query analysis results for the connection may differ, so verify the behavior with representative SQL queries if needed.
