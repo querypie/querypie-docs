@@ -9,35 +9,37 @@ import { Callout } from 'nextra/components'
 
 ### Overview
 
-**QSI Parser**는 Custom JDBC Vendor로 DB Connection을 생성하거나 수정할 때 선택할 수 있는 항목입니다.
+<Callout type="info">
+본 기능은 11.6.x 버전 이상에서 제공됩니다.( 11.6.0 ~ 11.6.4까지 Beta, 11.6.5에서 정식 기능으로 제공)
+</Callout>
+
+**QSI Parser**는 Custom JDBC Vendor 또는 파서가 선택가능한 Database의 DB Connection을 생성하거나 수정할 때 선택할 수 있는 항목입니다.
 QSI Parser는 QueryPie가 SQL을 분석할 때 사용하는 파서를 의미하며, DB Vendor의 문법 특성에 맞는 Parser를 선택하면 쿼리 분석 및 정책 적용 호환성을 높일 수 있습니다.
 
-<Callout type="info">
-본 기능은 **Custom JDBC Vendor** 기능과 함께 제공됩니다.
-사용하려면 먼저 `Admin > Databases > General > Configurations` 페이지의 Experimental 섹션에서 **Custom JDBC Configuration** 옵션을 `Enable`로 설정하고, `Admin > Databases > Connection Management > Custom JDBC Configs`에서 사용할 Custom JDBC Vendor를 등록해야 합니다.
-</Callout>
+| **Database**       | **선택 가능한 파서**                   | Parser 선택 가능해진 버전 |
+| ------------------ | -------------------------------------- | ------------------------- |
+| Custom Jdbc Vendor | `ANSI`, `PostgreSQL`, `MySQL`, `Trino` | `11.6.1` 이상             |
+| Tibero             | `ANSI`, `Trino`                        | `11.6.1` 이상             |
+| Presto             | `ANSI`, `Trino`                        | `11.6.1` 이상             |
+| Teradata           | `ANSI`, `PostgreSQL`, `Trino`          | `11.6.1` 이상             |
+| Cubrid             | `ANSI`, `MySQL`                        | `11.6.2` 이상             |
+| Snowflake          | `ANSI`, `PostgreSQL`, `Trino`          | `11.6.3` 이상             |
 
 ### QSI Parser 설정하기
 
-Custom JDBC Vendor를 사용하는 DB Connection에서 QSI Parser를 설정합니다.
-
-<figure data-layout="center" data-align="center">
-<img src="/administrator-manual/databases/connection-management/custom-jdbc-configs/qsi-parser-selection/database-settings_connection-management_db-connections_qsi-parser.png" alt="database-settings_connection-management_db-connections_qsi-parser.png" width="680" />
-</figure>
+Parser 선택이 가능한 DB Connection에서 QSI Parser를 설정합니다.
 
 1. `Admin > Databases > Connection Management > DB Connections` 메뉴로 이동합니다.
 2. 우측 상단의 `Create Connection` 버튼을 클릭하거나, 기존 커넥션을 선택하여 수정 화면으로 이동합니다.
-3. 화면을 아래로 스크롤한 뒤 **Custom JDBC Vendors** 항목에서 사용할 Custom JDBC Vendor를 선택합니다.
+3. 화면을 아래로 스크롤한 뒤 **Custom JDBC Vendors** 항목에서 사용할 Custom JDBC Vendor를 선택합니다. (또는 앞에서 언급된 Tibero, Presto, Teradata, Cubrid, Snowflake 항목을 선택합니다.)
 4. `Connection Information` 섹션에서 연결 정보를 입력합니다.
-5. **QSI Parser** 항목이 표시되면, 해당 Vendor에 적합한 Parser를 선택합니다.
-    * Custom JDBC Vendor에서는 호환 가능한 Parser 목록이 드롭다운으로 제공됩니다.
+5. **USe QSI Parser** 체크 박스에 체크합니다.<br/>
+  <figure data-layout="center" data-align="center">
+  <img src="/administrator-manual/databases/connection-management/custom-jdbc-configs/qsi-parser-selection/image-20260713-045912.png" alt="image-20260713-045912.png" width="654" />
+  </figure>
+    * 호환 가능한 Parser 목록이 드롭다운으로 제공됩니다.
     * 예: `ANSI SQL`, `Oracle`, `PostgreSQL`, `MySQL`, `Trino`
 6. 나머지 연결 정보를 입력한 뒤 `Next` 버튼을 클릭하여 `커넥션 생성 완료` 화면으로 이동합니다.
-
-<Callout type="important">
-11.6.0 관리자 UI 기준으로 **QSI Parser** 항목은 Custom JDBC Vendor를 선택한 경우에만 표시됩니다.
-또한 해당 Vendor에서 선택 가능한 Parser가 두 개 이상일 때만 드롭다운이 노출됩니다.
-</Callout>
 
 ### QSI Parser 선택 기준
 
@@ -59,7 +61,7 @@ Custom JDBC Vendor를 등록할 때 검증한 SQL 문법과 동일한 계열의 
 기존 DB Connection의 QSI Parser를 변경할 수 있습니다.
 
 1. `Admin > Databases > Connection Management > DB Connections` 메뉴에서 수정할 커넥션을 선택합니다.
-2. `Connection Information` 섹션에서 **QSI Parser** 값을 변경합니다.
+2. `Connection Information` 섹션에서 **QSI Parser** 값을 변경합니다. (필요에 따라 Use QSI Parser의 체크를 해제 할 수도 있습니다. **정책이 설정되어 있는 경우 무효화 될 수 있으므로 신중히 검토 후 설정 권장 드립니다.**)
 3. `Save Changes` 버튼을 클릭하여 저장합니다.
 
 설정 변경 후에는 해당 커넥션을 사용하는 쿼리 분석 결과가 달라질 수 있으므로, 필요한 경우 대표 SQL로 동작을 다시 확인하세요.
