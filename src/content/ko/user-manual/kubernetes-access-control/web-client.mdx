@@ -1,0 +1,206 @@
+---
+title: 'Web Client로 쿠버네티스 클러스터 접속하기'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2262630428/Web+Client'
+---
+
+import { Callout } from 'nextra/components'
+
+# Web Client로 쿠버네티스 클러스터 접속하기
+
+### Overview
+
+<Callout type="info">
+KAC Web Client는 현재 `Beta` 로 제공됩니다.
+</Callout>
+
+KAC Web Client를 사용하면 별도의 Agent 설치 없이 브라우저에서 직접 쿠버네티스 클러스터에 접속하여 리소스를 탐색하고 관리할 수 있습니다.
+
+Kubernetes 메뉴의 클러스터 상세 화면에서 Connect 버튼으로 진입하거나 Role과 특정 클러스터를 이미 선택한 경우 사용자 페이지 상단 메뉴에서 Web Client 항목으로 바로 이동할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/image-20260714-095819.png" alt="클러스터 상세 화면에서 특정 클러스터를 선택 후 `Connect` 버튼을 클릭하여 Web Client 화면으로 이동" width="760" />
+<figcaption>
+클러스터 상세 화면에서 특정 클러스터를 선택 후 `Connect` 버튼을 클릭하여 Web Client 화면으로 이동
+</figcaption>
+</figure>
+
+#### Web Client 화면 구성
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/image-20260714-100251.png" alt="Role과 특정 클러스터에 접속한 뒤 표시되는 Web Client의 `Cluster Overview` " width="760" />
+<figcaption>
+Role과 특정 클러스터에 접속한 뒤 표시되는 Web Client의 `Cluster Overview`
+</figcaption>
+</figure>
+
+접속하면 클러스터의 전체 현황을 확인할 수 있는 **Cluster Overview** 화면이 표시됩니다.
+
+* 좌측 사이드바 (**리소스 브라우저**): 클러스터 내 리소스를 카테고리별로 탐색합니다.
+* 우측 메인 영역: 선택한 리소스의 목록 또는 상세 정보를 표시합니다.
+* 하단 패널: Pod 로그 조회와 Shell 터미널을 탭 형식으로 표시합니다. 목록에서 특정 대상을 클릭하여 표시되는 상세화면에서 `Logs` 또는 `Shell` 버튼을 클릭했을 때 노출됩니다.
+  <figure data-layout="center" data-align="center">
+  <img src="/user-manual/kubernetes-access-control/web-client/image-20260714-101427.png" alt="`Logs` 또는 `Shell` 버튼을 클릭했을 때 탭으로 노출되는 하단 패널" width="736" />
+  <figcaption>
+  `Logs` 또는 `Shell` 버튼을 클릭했을 때 탭으로 노출되는 하단 패널
+  </figcaption>
+  </figure>
+
+### 클러스터에 접속하기
+
+#### Role 선택하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/image-20260714-101804.png" alt="QueryPie Web &gt; Kubernetes &gt; Kubernetes &gt; Select a Role" width="760" />
+<figcaption>
+QueryPie Web &gt; Kubernetes &gt; Kubernetes &gt; Select a Role
+</figcaption>
+</figure>
+
+
+* 상단 메뉴에서 **Kubernetes**를 클릭합니다.
+* **Select a Role** 팝업 다이얼로그에서 접속에 사용할 Role을 선택하고 **Select**를 클릭합니다.
+    * Role에 따라 접근 가능한 클러스터 목록이 달라집니다.
+    * 부여된 Role이 없는 경우 좌측 목록이 표시되지 않습니다. Workflow 메뉴의 Access Role Request 양식을 통해 적절한 권한을 신청하세요.
+
+#### Web Client로 접속하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/image-20260714-102425.png" alt="image-20260714-102425.png" width="760" />
+</figure>
+
+
+* 좌측 패널에서 접속할 클러스터를 클릭합니다.
+* 우측 상세 화면의 `Connect` 버튼을 눌러 Web Client로 접속합니다.
+
+<Callout type="info">
+`Open Agent` 버튼을 클릭하여 기존 Agent 방식으로도 접속할 수 있습니다.
+Agent 설치 및 사용 방법은 Agent 매뉴얼을 참조하세요.
+</Callout>
+
+### 리소스 목록 확인하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-resource-list.png" alt="*QueryPie Web &gt; Web Client &gt; Resource List*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Resource List*
+</figcaption>
+</figure>
+
+좌측 사이드바에서 리소스 종류를 선택하면 해당 리소스 목록이 표시됩니다.
+
+* **All Namespaces** 드롭다운에서 특정 Namespace를 선택해 목록을 필터링할 수 있습니다.
+* **Filter by name** 검색창에 이름의 일부를 입력해 리소스를 검색할 수 있습니다.
+* `+ Create` 버튼으로 새로운 리소스를 생성할 수 있습니다.
+
+탐색 가능한 리소스 카테고리는 다음과 같습니다.
+
+| 카테고리             | 포함 리소스                                                        |
+| -------------------- | ------------------------------------------------------------------ |
+| **Cluster**          | Namespace, Node, PersistentVolume, ClusterRole, ClusterRoleBinding |
+| **Workloads**        | Pod, Deployment, StatefulSet, DaemonSet, ReplicaSet, Job, CronJob  |
+| **Config & Storage** | ConfigMap, Secret, PersistentVolumeClaim, StorageClass             |
+| **Network**          | Service, Ingress, NetworkPolicy, Endpoints                         |
+| **RBAC**             | Role, RoleBinding, ServiceAccount                                  |
+| **Custom Resources** | 클러스터에 정의된 CRD 리소스                                       |
+
+### 리소스 상세 정보 확인하기
+
+리소스 목록에서 항목을 클릭하면 우측에 상세 패널이 열립니다.
+상세 패널은 4개의 탭으로 구성됩니다.
+
+#### Overview 탭
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-resource-detail-overview.png" alt="*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Overview*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Overview*
+</figcaption>
+</figure>
+
+리소스의 메타데이터와 상태를 확인할 수 있습니다.
+
+* **Metadata**: Name, Namespace, UID, 생성 시각, Status, Resource Version
+* **Controlled By**: 해당 리소스를 관리하는 상위 리소스 (예: Pod → DaemonSet) — 이름을 클릭하면 상위 리소스 상세 화면으로 이동합니다.
+* **Containers**: Pod의 경우 컨테이너별 이미지, Ready 상태, Restarts 횟수를 확인할 수 있습니다.
+* **Labels / Annotations**: 리소스에 설정된 레이블과 어노테이션
+
+#### YAML 탭
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-resource-detail-yaml.png" alt="*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; YAML*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; YAML*
+</figcaption>
+</figure>
+
+리소스의 전체 YAML 정의를 확인하고 직접 편집할 수 있습니다. **Edit** 버튼을 클릭하면 편집 모드로 전환되며, 수정 후 저장하면 클러스터에 즉시 반영됩니다.
+
+#### Events 탭
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-resource-detail-events.png" alt="*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Events*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Events*
+</figcaption>
+</figure>
+
+리소스와 관련된 쿠버네티스 이벤트를 확인할 수 있습니다.
+상태 변화, 스케줄링, 오류 발생 시 이벤트가 기록됩니다.
+Pod가 정상적으로 동작 중이면 이벤트가 없을 수 있습니다.
+
+#### Relations 탭
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-resource-detail-relations.png" alt="*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Relations*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Resource Detail &gt; Relations*
+</figcaption>
+</figure>
+
+현재 리소스와 연관된 리소스의 계층 구조를 트리 형태로 시각화합니다.
+부모/자식 관계에 있는 리소스를 한눈에 파악하고, 항목을 클릭해 연관 리소스의 상세 정보로 바로 이동할 수 있습니다.
+
+### Pod 로그 확인하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-log-viewer.png" alt="*QueryPie Web &gt; Web Client &gt; Log Viewer*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Log Viewer*
+</figcaption>
+</figure>
+
+1. 사이드바에서 **Pod**를 선택한 후 목록에서 확인할 Pod를 클릭합니다.
+2. 상세 패널 우측 상단의 **Logs** 버튼을 클릭합니다.
+3. 하단 패널에 해당 Pod의 실시간 로그가 스트리밍됩니다.
+    1. **Search logs** 입력창에 키워드를 입력해 로그를 검색할 수 있습니다.
+    2. **Follow** 체크박스를 선택하면 최신 로그를 자동으로 따라갑니다.
+
+### Pod Shell 터미널 접속하기
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/kubernetes-access-control/web-client/web-client-shell-terminal.png" alt="*QueryPie Web &gt; Web Client &gt; Shell Terminal*" width="760" />
+<figcaption>
+*QueryPie Web &gt; Web Client &gt; Shell Terminal*
+</figcaption>
+</figure>
+
+1. 사이드바에서 **Pod**를 선택한 후 목록에서 접속할 Pod를 클릭합니다.
+2. 상세 패널 우측 상단의 **Shell** 버튼을 클릭합니다.
+3. 하단 패널에 인터랙티브 터미널이 열리며, Pod 컨테이너에 직접 명령어를 실행할 수 있습니다.
+
+<Callout type="info">
+Logs와 Shell은 동시에 여러 탭으로 열어 사용할 수 있습니다.
+각 탭에는 Pod 이름이 표시되어 여러 Pod의 로그와 터미널을 함께 비교하며 작업할 수 있습니다.
+</Callout>
+
+<Callout type="info">
+**Web Client와 기존 Agent 방식의 차이**
+
+Q. Web Client와 기존 Agent 방식의 차이는 무엇인가요?
+
+A. Web Client는 브라우저만으로 쿠버네티스 리소스 탐색, 로그 확인, Shell 접속이 가능합니다.
+Agent 방식은 kubectl을 비롯한 로컬 도구와 연동하여 더 폭넓은 작업이 가능합니다.
+두 방식은 동일한 권한 체계(Role, Policy) 아래에서 동작합니다.
+</Callout>
+
+>
