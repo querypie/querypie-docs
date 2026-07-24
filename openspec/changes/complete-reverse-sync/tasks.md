@@ -128,6 +128,12 @@
 ### 2.7 P1 — CLI와 batch state 전환
 
 - [ ] `reverse_sync_cli.py`를 prepare/verify/push lifecycle orchestration으로 축소합니다.
+  - [x] candidate 준비, roundtrip 검증, local proof/manifest 생성을
+    `reverse_sync/verification_service.py`로 분리하고 CLI는 runtime dependency를
+    주입하는 호환 adapter만 유지합니다.
+  - [ ] batch 대상 선택, online snapshot 준비, publisher 호출의 state 전환을
+    package service로 분리하고 CLI에는 argument parsing, display, orchestration만
+    유지합니다.
 - [x] online verify(`push --dry-run`) 출력에 run ID, base version/hash, local gates,
   push eligibility, reason code를 표시합니다.
 - [x] `push`가 explicit run/manifest를 받도록 합니다.

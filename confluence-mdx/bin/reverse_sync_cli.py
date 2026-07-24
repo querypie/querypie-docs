@@ -4,13 +4,11 @@
 중간 파일은 var/<page_id>/ 에 reverse-sync. prefix로 저장된다.
 """
 import argparse
-import difflib
 import json
 import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -24,27 +22,29 @@ _REPO_ROOT = _PROJECT_DIR.parent                # 레포 루트
 if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
-from mdx_to_storage.parser import parse_mdx_blocks
 from reverse_sync.batch_report import BatchReport
-from reverse_sync.block_diff import diff_blocks
-from reverse_sync.mapping_recorder import record_mapping
-from reverse_sync.roundtrip_verifier import verify_roundtrip
 from reverse_sync.planner import plan_patches
 from reverse_sync.equivalence import (
     PUSH_EQUIVALENCE_POLICY,
     verify_push_equivalence,
 )
-from xhtml_beautify_diff import xhtml_diff
+from reverse_sync.verification_service import (
+    MdxSource,
+    VerificationRuntime,
+    blocked_result as _blocked_result,
+    clean_reverse_sync_artifacts,
+    compile_result as _compile_result,
+    extract_frontmatter_title as _extract_frontmatter_title,
+    find_blockquotes_missing_blank_line as _find_blockquotes_missing_blank_line,
+    parse_and_diff as _parse_and_diff,
+    run_verification,
+    save_diff_yaml as _save_diff_yaml,
+    strip_frontmatter as _strip_frontmatter,
+    validate_improved_mdx as _validate_improved_mdx,
+)
 
 _PUSH_VERIFIER_POLICY = PUSH_EQUIVALENCE_POLICY
 _TOOL_VERSION = "reverse-sync-cli-v5"
-
-
-@dataclass
-class MdxSource:
-    """MDX 파일의 내용과 출처 정보."""
-    content: str        # MDX 파일 내용
-    descriptor: str     # 출처 표시 (예: "main:src/content/ko/...", 파일 경로 등)
 
 
 @dataclass(frozen=True)
@@ -187,193 +187,9 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
 
 
 def _clean_reverse_sync_artifacts(page_id: str) -> Path:
-    """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
-    var_dir = _PROJECT_DIR / 'var' / page_id
-    var_dir.mkdir(parents=True, exist_ok=True)
-    for f in var_dir.glob('reverse-sync.*'):
-        if f.name == 'reverse-sync.backup.xhtml':
-            continue
-        f.unlink()
-    verify_mdx = var_dir / 'verify.mdx'
-    if verify_mdx.exists():
-        verify_mdx.unlink()
-    verify_dir = var_dir / 'verify'
-    if verify_dir.exists():
-        shutil.rmtree(verify_dir)
-    return var_dir
+    """현재 CLI project root를 기준으로 이전 검증 산출물을 정리합니다."""
 
-
-def _parse_and_diff(original_mdx: str, improved_mdx: str):
-    """MDX 블록 파싱 + diff 추출.
-
-    Returns: (changes, alignment, original_blocks, improved_blocks)
-    """
-    original_blocks = parse_mdx_blocks(original_mdx)
-    improved_blocks = parse_mdx_blocks(improved_mdx)
-    changes, alignment = diff_blocks(original_blocks, improved_blocks)
-    return changes, alignment, original_blocks, improved_blocks
-
-
-def _save_diff_yaml(
-    var_dir: Path, page_id: str, now: str,
-    original_descriptor: str, improved_descriptor: str,
-    changes,
-) -> None:
-    """diff.yaml를 var_dir에 저장한다."""
-    diff_data = {
-        'page_id': page_id, 'created_at': now,
-        'original_mdx': original_descriptor, 'improved_mdx': improved_descriptor,
-        'changes': [
-            {'index': c.index,
-             'block_id': f'{(c.old_block or c.new_block).type}-{c.index}',
-             'change_type': c.change_type,
-             'old_content': c.old_block.content if c.old_block else None,
-             'new_content': c.new_block.content if c.new_block else None}
-            for c in changes
-        ],
-    }
-    (var_dir / 'reverse-sync.diff.yaml').write_text(
-        yaml.dump(diff_data, allow_unicode=True, default_flow_style=False))
-
-
-def _extract_frontmatter_title(mdx_blocks) -> str:
-    """MDX frontmatter에서 title 값을 추출한다."""
-    for block in mdx_blocks:
-        if block.type != 'frontmatter':
-            continue
-        for raw_line in block.content.splitlines():
-            line = raw_line.strip()
-            if not line.startswith('title:'):
-                continue
-            value = line.split(':', 1)[1].strip()
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
-                return value[1:-1]
-            return value
-    return ''
-
-
-def _compile_result(
-    var_dir: Path, page_id: str, now: str,
-    changes_count: int,
-    mdx_diff_report: str, xhtml_diff_report: str,
-    verify_result, roundtrip_diff_report: str, title: str = '',
-    skipped_changes: list = None,
-) -> Dict[str, Any]:
-    """검증 결과를 조립하여 저장하고 반환한다."""
-    status = 'pass' if verify_result.passed else 'fail'
-    result = {
-        'page_id': page_id, 'created_at': now,
-        'status': status,
-        'push_eligible': False,
-        'changes_count': changes_count,
-        'mdx_diff_report': mdx_diff_report,
-        'xhtml_diff_report': xhtml_diff_report,
-        'verification': {
-            'exact_match': verify_result.passed,
-            'diff_report': roundtrip_diff_report,
-        },
-    }
-    if isinstance(getattr(verify_result, "policy", None), str):
-        result["verification"].update(
-            policy=verify_result.policy,
-            expected_sha256=verify_result.expected_sha256,
-            actual_sha256=verify_result.actual_sha256,
-        )
-    if title:
-        result['title'] = title
-    if skipped_changes:
-        result['skipped_changes'] = skipped_changes
-    (var_dir / 'reverse-sync.result.yaml').write_text(
-        yaml.dump(result, allow_unicode=True, default_flow_style=False))
-    return result
-
-
-def _blocked_result(
-    var_dir: Path,
-    page_id: str,
-    now: str,
-    reason_code: str,
-    *,
-    detail: str = "",
-) -> Dict[str, Any]:
-    """push proof가 fail-closed된 결과를 저장한다."""
-    result = {
-        "page_id": page_id,
-        "created_at": now,
-        "status": "blocked",
-        "push_eligible": False,
-        "changes_count": 0,
-        "reason_code": reason_code,
-    }
-    if detail:
-        result["detail"] = detail
-    (var_dir / "reverse-sync.result.yaml").write_text(
-        yaml.dump(result, allow_unicode=True, default_flow_style=False)
-    )
-    return result
-
-
-def _find_blockquotes_missing_blank_line(content: str) -> list:
-    """blockquote 다음에 빈 줄이 없는 줄 목록을 반환한다.
-
-    forward converter 가 blockquote 이후 항상 빈 줄을 추가하므로,
-    improved.mdx 도 동일하게 blockquote 이후 빈 줄을 요구한다.
-
-    fenced code block(```) 내부는 검사하지 않는다.
-    multi-line blockquote (연속된 > 줄) 에서는 마지막 줄에서만 검사한다.
-
-    Returns:
-        (1-based line number, line content) 튜플의 리스트.
-    """
-    lines = content.splitlines()
-    in_code_block = False
-    violations = []
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith('```'):
-            in_code_block = not in_code_block
-        if in_code_block:
-            continue
-        if stripped.startswith('>'):
-            next_line = lines[i + 1] if i + 1 < len(lines) else ''
-            next_stripped = next_line.strip()
-            # 다음 줄이 빈 줄이 아니고 blockquote 도 아닌 경우
-            if next_stripped and not next_stripped.startswith('>'):
-                violations.append((i + 1, line))
-    return violations
-
-
-def _validate_improved_mdx(content: str, descriptor: str) -> None:
-    """improved MDX 입력값을 검증한다. 문제가 있으면 ValueError를 raise한다."""
-    trailing_ws_lines = [
-        (i + 1, line)
-        for i, line in enumerate(content.splitlines())
-        if line != line.rstrip()
-    ]
-    if trailing_ws_lines:
-        locations = '\n'.join(
-            f'  line {lineno}: {repr(line)}'
-            for lineno, line in trailing_ws_lines
-        )
-        raise ValueError(
-            f"Trailing whitespace found in improved MDX ({descriptor}).\n"
-            f"This is an input error, not a reverse-sync bug. "
-            f"Please remove trailing whitespace before running reverse-sync.\n"
-            f"Locations:\n{locations}"
-        )
-
-    missing_blank = _find_blockquotes_missing_blank_line(content)
-    if missing_blank:
-        locations = '\n'.join(
-            f'  line {lineno}: {repr(line)}'
-            for lineno, line in missing_blank
-        )
-        raise ValueError(
-            f"Blockquote not followed by a blank line in improved MDX ({descriptor}).\n"
-            f"Forward converter always adds a blank line after blockquotes. "
-            f"Please add a blank line after each blockquote.\n"
-            f"Locations:\n{locations}"
-        )
+    return clean_reverse_sync_artifacts(_PROJECT_DIR, page_id)
 
 
 def run_verify(
@@ -389,456 +205,30 @@ def run_verify(
     attachment_catalog=None,
     for_push: bool = False,
 ) -> Dict[str, Any]:
-    """로컬 검증 파이프라인을 실행한다.
+    """CLI 환경을 주입하여 package verification lifecycle을 실행합니다."""
 
-    모든 중간 파일을 var/<page_id>/ 에 reverse-sync. prefix로 저장한다.
-
-    lenient=True면 변경된 행만 검사하는 관대 모드로 검증한다.
-    """
-    now = datetime.now(timezone.utc).isoformat()
-    var_dir = _clean_reverse_sync_artifacts(page_id)
-
-    original_mdx = original_src.content
-    improved_mdx = improved_src.content
-    dependency_result = None
-    link_resolver = None
-    attachment_filenames: frozenset[str] = frozenset()
-
-    _validate_improved_mdx(improved_mdx, improved_src.descriptor)
-
-    if for_push and base_snapshot is None:
-        return _blocked_result(
-            var_dir,
-            page_id,
-            now,
-            "invalid_page_snapshot",
-            detail="online push에는 remote PageSnapshot이 필요합니다.",
-        )
-    if base_snapshot is not None:
-        from reverse_sync.base_parity import (
-            load_provenance_storage_xhtml,
-            verify_base_parity,
-            verify_repository_source_identity,
-            verify_source_identity,
-        )
-        from reverse_sync.dependencies import verify_dependencies
-
-        if base_snapshot.page_id != str(page_id) or base_snapshot.status != "current":
-            return _blocked_result(
-                var_dir,
-                page_id,
-                now,
-                "invalid_page_snapshot",
-                detail="snapshot page ID 또는 status가 요청과 다릅니다.",
-            )
-        pages_path = _PROJECT_DIR / "var" / "pages.qm.yaml"
-        source_identity = verify_repository_source_identity(
-            base_snapshot,
-            original_mdx,
-            improved_mdx,
-            original_descriptor=original_src.descriptor,
-            improved_descriptor=improved_src.descriptor,
-            pages_path=pages_path,
-        )
-        if not source_identity.passed:
-            return _blocked_result(
-                var_dir,
-                page_id,
-                now,
-                source_identity.reason_code,
-                detail=source_identity.diff_report,
-            )
-        dependency_result, link_resolver = verify_dependencies(
-            page_id=page_id,
-            original_mdx=original_mdx,
-            improved_mdx=improved_mdx,
-            pages_path=pages_path,
-            attachment_catalog=attachment_catalog,
-        )
-        if not dependency_result.passed:
-            return _blocked_result(
-                var_dir,
-                page_id,
-                now,
-                dependency_result.reason_code,
-                detail=dependency_result.detail,
-            )
-        attachment_filenames = frozenset(
-            requirement.filename
-            for requirement in dependency_result.evidence.attachments
-        )
-
-        base_xhtml_path = var_dir / "reverse-sync.base.xhtml"
-        base_mdx_path = var_dir / "reverse-sync.base.mdx"
-        base_xhtml_path.write_text(base_snapshot.storage_xhtml)
-        _forward_convert(
-            str(base_xhtml_path),
-            str(base_mdx_path),
-            page_id,
-            language=language or _detect_language(improved_src.descriptor),
-            page_dir=page_dir,
-        )
-        converted_base_mdx = base_mdx_path.read_text()
-        provenance_dir = (
-            Path(page_dir)
-            if page_dir
-            else _PROJECT_DIR / "var" / page_id
-        )
-        base_parity = verify_base_parity(
-            base_snapshot,
-            original_mdx,
-            converted_base_mdx,
-            provenance_storage_xhtml=load_provenance_storage_xhtml(
-                provenance_dir / "page.v1.yaml",
-                expected_page_id=page_id,
-            ),
-            require_confluence_url=True,
-        )
-        if not base_parity.passed:
-            return _blocked_result(
-                var_dir,
-                page_id,
-                now,
-                base_parity.reason_code,
-                detail=base_parity.diff_report,
-            )
-        xhtml_path = str(base_xhtml_path)
-        xhtml = base_snapshot.storage_xhtml
-    else:
-        if not xhtml_path:
-            xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
-        xhtml = Path(xhtml_path).read_text()
-
-    # Step 1-2: MDX 파싱 + diff
-    changes, alignment, original_blocks, improved_blocks = _parse_and_diff(
-        original_mdx, improved_mdx)
-    title = _extract_frontmatter_title(improved_blocks)
-
-    if not changes:
-        result = {'page_id': page_id, 'created_at': now,
-                  'status': 'no_changes', 'changes_count': 0,
-                  'push_eligible': False,
-                  'mdx_diff_report': '', 'xhtml_diff_report': ''}
-        if title:
-            result['title'] = title
-        (var_dir / 'reverse-sync.result.yaml').write_text(
-            yaml.dump(result, allow_unicode=True, default_flow_style=False))
-        return result
-
-    _save_diff_yaml(var_dir, page_id, now,
-                    original_src.descriptor, improved_src.descriptor, changes)
-
-    # Step 3.5: Roundtrip sidecar v3 구축 — mapping.yaml 재생성 없이 v3 경로로 동작
-    from reverse_sync.sidecar import (
-        build_sidecar,
-        load_page_lost_info,
+    runtime = VerificationRuntime(
+        project_dir=_PROJECT_DIR,
+        forward_convert=_forward_convert,
+        detect_language=_detect_language,
+        planner=plan_patches,
+        verifier_policy=_PUSH_VERIFIER_POLICY,
+        tool_version=_TOOL_VERSION,
     )
-    # forward converter가 생성한 mapping.yaml에서 lost_info만 로드
-    page_lost_info = load_page_lost_info(str(var_dir / 'mapping.yaml'))
-    roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id=page_id)
-
-    # Step 3+4: typed plan → validated renderer operation → patched XHTML
-    patch_plan, original_mappings = plan_patches(
-        changes, original_blocks, improved_blocks,
-        page_xhtml=xhtml,
-        alignment=alignment,
-        page_lost_info=page_lost_info,
-        roundtrip_sidecar=roundtrip_sidecar,
-        link_resolver=link_resolver,
-        attachment_filenames=attachment_filenames,
-        allow_text_identity_fallback=not for_push,
-        enforce_capabilities=for_push,
-        enforce_provenance=for_push,
-    )
-    skipped_changes = patch_plan.to_legacy_skipped_changes()
-
-    # mapping.original.yaml artifact 저장
-    original_mapping_data = {
-        'page_id': page_id, 'created_at': now, 'source_xhtml': 'page.xhtml',
-        'blocks': [m.__dict__ for m in original_mappings],
-    }
-    (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
-        yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
-    if for_push:
-        from reverse_sync.preserving_patcher import render_patch_plan_preserving
-
-        patched_xhtml = render_patch_plan_preserving(
-            xhtml,
-            patch_plan,
-            roundtrip_sidecar,
-        )
-    else:
-        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
-
-        diagnostic_patches = patch_plan.to_patch_dicts()
-        patched_xhtml = patch_xhtml(xhtml, diagnostic_patches)
-    (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
-
-    # XHTML beautify-diff (page.xhtml → patched.xhtml)
-    xhtml_diff_lines = xhtml_diff(
-        xhtml, patched_xhtml,
-        label_a="page.xhtml", label_b="reverse-sync.patched.xhtml",
-    )
-    xhtml_diff_report = '\n'.join(xhtml_diff_lines)
-
-    # Step 5: 검증 매핑 생성 → mapping.patched.yaml 저장
-    verify_mappings = record_mapping(patched_xhtml)
-    verify_mapping_data = {
-        'page_id': page_id, 'created_at': now, 'source_xhtml': 'patched.xhtml',
-        'blocks': [m.__dict__ for m in verify_mappings],
-    }
-    (var_dir / 'reverse-sync.mapping.patched.yaml').write_text(
-        yaml.dump(verify_mapping_data, allow_unicode=True, default_flow_style=False))
-
-    # Step 6: Forward 변환 → verify.mdx 저장
-    # xhtml_path 옆에 있는 page.v1.yaml을 var/<page_id>/로 복사하여
-    # forward converter가 크로스 페이지 링크를 정상 해석할 수 있게 한다.
-    src_page_v1 = Path(xhtml_path).parent / 'page.v1.yaml'
-    dst_page_v1 = var_dir / 'page.v1.yaml'
-    if src_page_v1.exists() and not dst_page_v1.exists():
-        shutil.copy2(src_page_v1, dst_page_v1)
-
-    lang = language or _detect_language(improved_src.descriptor)
-    _forward_convert(
-        str(var_dir / 'reverse-sync.patched.xhtml'),
-        str(var_dir / 'verify.mdx'),
+    return run_verification(
         page_id,
-        language=lang,
+        original_src,
+        improved_src,
+        runtime=runtime,
+        xhtml_path=xhtml_path,
+        lenient=lenient,
+        no_normalize=no_normalize,
+        language=language,
         page_dir=page_dir,
+        base_snapshot=base_snapshot,
+        attachment_catalog=attachment_catalog,
+        for_push=for_push,
     )
-    verify_mdx = (var_dir / 'verify.mdx').read_text()
-    if for_push:
-        candidate_identity = verify_source_identity(
-            base_snapshot,
-            improved_mdx,
-            verify_mdx,
-            require_confluence_url=True,
-        )
-        if not candidate_identity.passed:
-            return _blocked_result(
-                var_dir,
-                page_id,
-                now,
-                candidate_identity.reason_code,
-                detail=candidate_identity.diff_report,
-            )
-
-    # MDX input diff (original → improved)
-    orig_stripped = _strip_frontmatter(original_mdx)
-    impr_stripped = _strip_frontmatter(improved_mdx)
-    mdx_input_diff = difflib.unified_diff(
-        orig_stripped.splitlines(keepends=True),
-        impr_stripped.splitlines(keepends=True),
-        fromfile=original_src.descriptor,
-        tofile=improved_src.descriptor,
-        lineterm='',
-    )
-    mdx_diff_report = ''.join(mdx_input_diff)
-
-    # Step 7: 완전 일치 검증 → result.yaml 저장
-    verify_stripped = _strip_frontmatter(verify_mdx)
-    if for_push:
-        verify_result = verify_push_equivalence(impr_stripped, verify_stripped)
-    else:
-        verify_result = verify_roundtrip(
-            expected_mdx=impr_stripped,
-            actual_mdx=verify_stripped,
-            lenient=lenient,
-            no_normalize=no_normalize,
-        )
-    # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
-    roundtrip_diff_lines = difflib.unified_diff(
-        impr_stripped.splitlines(keepends=True),
-        verify_stripped.splitlines(keepends=True),
-        fromfile='improved.mdx',
-        tofile='verify.mdx (from patched XHTML)',
-        lineterm='',
-    )
-    roundtrip_diff_report = ''.join(roundtrip_diff_lines)
-
-    result = _compile_result(
-        var_dir, page_id, now, len(changes),
-        mdx_diff_report, xhtml_diff_report,
-        verify_result, roundtrip_diff_report, title=title,
-        skipped_changes=skipped_changes)
-
-    if for_push:
-        from reverse_sync.manifest import (
-            create_sync_manifest,
-            update_run_backed_compatibility_outputs,
-        )
-        from reverse_sync.models import sha256_text
-        from reverse_sync.preserving_patcher import render_patch_plan_preserving
-        from reverse_sync.proof import build_local_proof
-
-        plan_json = patch_plan.to_canonical_json()
-        (var_dir / "reverse-sync.plan.json").write_text(plan_json)
-
-        deterministic_plan, _ = plan_patches(
-            changes,
-            original_blocks,
-            improved_blocks,
-            page_xhtml=xhtml,
-            alignment=alignment,
-            page_lost_info=page_lost_info,
-            roundtrip_sidecar=roundtrip_sidecar,
-            link_resolver=link_resolver,
-            attachment_filenames=attachment_filenames,
-            allow_text_identity_fallback=False,
-            enforce_capabilities=True,
-            enforce_provenance=True,
-        )
-        deterministic_plan_json = deterministic_plan.to_canonical_json()
-        deterministic_candidate = render_patch_plan_preserving(
-            xhtml,
-            deterministic_plan,
-            roundtrip_sidecar,
-        )
-
-        try:
-            candidate_sidecar = build_sidecar(
-                patched_xhtml,
-                verify_mdx,
-                page_id=page_id,
-            )
-            (
-                idempotency_changes,
-                idempotency_alignment,
-                idempotency_original_blocks,
-                idempotency_improved_blocks,
-            ) = _parse_and_diff(verify_mdx, improved_mdx)
-            if not idempotency_changes:
-                idempotent_candidate = patched_xhtml
-            else:
-                (
-                    idempotency_plan,
-                    _,
-                ) = plan_patches(
-                    idempotency_changes,
-                    idempotency_original_blocks,
-                    idempotency_improved_blocks,
-                    page_xhtml=patched_xhtml,
-                    alignment=idempotency_alignment,
-                    page_lost_info=page_lost_info,
-                    roundtrip_sidecar=candidate_sidecar,
-                    link_resolver=link_resolver,
-                    attachment_filenames=attachment_filenames,
-                    allow_text_identity_fallback=False,
-                    enforce_capabilities=True,
-                    enforce_provenance=True,
-                )
-                idempotent_candidate = (
-                    ""
-                    if idempotency_plan.issues
-                    else render_patch_plan_preserving(
-                        patched_xhtml,
-                        idempotency_plan,
-                        candidate_sidecar,
-                    )
-                )
-        except (ValueError, KeyError):
-            idempotent_candidate = ""
-
-        proof = build_local_proof(
-            base_xhtml=xhtml,
-            improved_mdx=improved_mdx,
-            roundtrip_mdx=verify_mdx,
-            candidate_xhtml=patched_xhtml,
-            sidecar=roundtrip_sidecar,
-            changes=changes,
-            patches=None,
-            skipped_changes=skipped_changes,
-            plan_json=plan_json,
-            deterministic_plan_json=deterministic_plan_json,
-            deterministic_candidate_xhtml=deterministic_candidate,
-            idempotent_candidate_xhtml=idempotent_candidate,
-            source_identity_passed=True,
-            base_parity_passed=True,
-            dependency_result=dependency_result,
-            plan=patch_plan,
-        )
-        proof_json = proof.to_canonical_json()
-        (var_dir / "reverse-sync.proof.json").write_text(proof_json)
-
-        diagnostics = {}
-        if lenient:
-            diagnostic = verify_roundtrip(
-                expected_mdx=impr_stripped,
-                actual_mdx=verify_stripped,
-                lenient=True,
-            )
-            diagnostics["lenient"] = {
-                "passed": diagnostic.passed,
-                "diff_report": diagnostic.diff_report,
-                "push_eligible": False,
-            }
-        if no_normalize:
-            diagnostic = verify_roundtrip(
-                expected_mdx=impr_stripped,
-                actual_mdx=verify_stripped,
-                no_normalize=True,
-            )
-            diagnostics["raw"] = {
-                "passed": diagnostic.passed,
-                "diff_report": diagnostic.diff_report,
-                "push_eligible": False,
-            }
-
-        result.update(
-            status=proof.status,
-            push_eligible=proof.push_eligible,
-            reason_code=proof.blocked_reasons[0] if proof.blocked_reasons else "",
-            blocked_reasons=list(proof.blocked_reasons),
-            local_gates=[gate.to_dict() for gate in proof.gates],
-            verification=proof.equivalence.to_dict(),
-        )
-        if diagnostics:
-            result["diagnostics"] = diagnostics
-
-        if not proof.push_eligible:
-            (var_dir / "reverse-sync.result.yaml").write_text(
-                yaml.dump(result, allow_unicode=True, default_flow_style=False)
-            )
-            return result
-
-        manifest_path = create_sync_manifest(
-            runs_dir=var_dir / "reverse-sync",
-            base=base_snapshot,
-            original_mdx=original_mdx,
-            original_descriptor=original_src.descriptor,
-            improved_mdx=improved_mdx,
-            improved_descriptor=improved_src.descriptor,
-            patch_plan=plan_json,
-            candidate_xhtml=patched_xhtml,
-            local_proof=proof_json,
-            verifier_policy=_PUSH_VERIFIER_POLICY,
-            tool_version=_TOOL_VERSION,
-            push_eligible=True,
-            gates=proof.gates,
-        )
-        update_run_backed_compatibility_outputs(manifest_path, var_dir)
-        result.update(
-            push_eligible=True,
-            manifest_path=str(manifest_path),
-            run_id=manifest_path.parent.name,
-            base_version=base_snapshot.version,
-            base_storage_sha256=base_snapshot.storage_sha256,
-            candidate_sha256=sha256_text(patched_xhtml),
-        )
-
-    (var_dir / "reverse-sync.result.yaml").write_text(
-        yaml.dump(result, allow_unicode=True, default_flow_style=False)
-    )
-    return result
-
-
-def _strip_frontmatter(mdx: str) -> str:
-    """MDX 문자열에서 YAML frontmatter 블록을 제거한다."""
-    if mdx.startswith('---\n'):
-        end = mdx.find('\n---\n', 4)
-        if end != -1:
-            return mdx[end + 5:]
-    return mdx
 
 
 def _supports_color() -> bool:

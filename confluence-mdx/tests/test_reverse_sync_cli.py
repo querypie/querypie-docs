@@ -124,6 +124,68 @@ def setup_var(tmp_path, monkeypatch):
     return page_id, var_dir
 
 
+def test_run_verify_delegates_to_verification_service(tmp_path, monkeypatch):
+    """CLI adapter는 환경 의존성만 주입하고 lifecycle을 service에 위임합니다."""
+    captured = {}
+
+    def forward_convert(*args, **kwargs):
+        raise AssertionError("service stub에서는 converter를 호출하지 않아야 합니다.")
+
+    def planner(*args, **kwargs):
+        raise AssertionError("service stub에서는 planner를 호출하지 않아야 합니다.")
+
+    def run_verification_stub(page_id, original_src, improved_src, **kwargs):
+        captured.update(
+            page_id=page_id,
+            original_src=original_src,
+            improved_src=improved_src,
+            kwargs=kwargs,
+        )
+        return {"status": "delegated"}
+
+    monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
+    monkeypatch.setattr("reverse_sync_cli._forward_convert", forward_convert)
+    monkeypatch.setattr("reverse_sync_cli.plan_patches", planner)
+    monkeypatch.setattr(
+        "reverse_sync_cli.run_verification",
+        run_verification_stub,
+    )
+
+    original = MdxSource("# Original\n", "main:src/content/ko/test.mdx")
+    improved = MdxSource("# Improved\n", "src/content/ko/test.mdx")
+    result = run_verify(
+        "page-1",
+        original,
+        improved,
+        language="ko",
+        page_dir="/tmp/page-1",
+        for_push=True,
+    )
+
+    runtime = captured["kwargs"].pop("runtime")
+    assert result == {"status": "delegated"}
+    assert captured == {
+        "page_id": "page-1",
+        "original_src": original,
+        "improved_src": improved,
+        "kwargs": {
+            "xhtml_path": None,
+            "lenient": False,
+            "no_normalize": False,
+            "language": "ko",
+            "page_dir": "/tmp/page-1",
+            "base_snapshot": None,
+            "attachment_catalog": None,
+            "for_push": True,
+        },
+    }
+    assert runtime.project_dir == tmp_path
+    assert runtime.forward_convert is forward_convert
+    assert runtime.planner is planner
+    assert runtime.verifier_policy == "reverse-sync-equivalence-v1"
+    assert runtime.tool_version == "reverse-sync-cli-v5"
+
+
 def test_verify_no_changes(setup_var, tmp_path):
     """변경 없으면 no_changes, rsync/result.yaml 생성."""
     page_id, var_dir = setup_var
