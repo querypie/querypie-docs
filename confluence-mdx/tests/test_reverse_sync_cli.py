@@ -564,6 +564,51 @@ def test_do_push_requires_explicit_manifest_path():
         _do_push("page-with-pointer", config=MagicMock())
 
 
+def test_do_push_delegates_to_publish_service(tmp_path, monkeypatch):
+    """CLI adapter는 환경 의존성만 주입하고 publish lifecycle을 위임합니다."""
+    captured = {}
+    config = object()
+
+    def forward_convert(*args, **kwargs):
+        raise AssertionError("publish service stub에서는 converter를 호출하지 않습니다.")
+
+    def load_summary(manifest_path):
+        raise AssertionError("publish service stub에서는 summary를 읽지 않습니다.")
+
+    def publish_stub(page_id, received_config, **kwargs):
+        captured.update(
+            page_id=page_id,
+            config=received_config,
+            kwargs=kwargs,
+        )
+        return {"status": "delegated"}
+
+    monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
+    monkeypatch.setattr("reverse_sync_cli._forward_convert", forward_convert)
+    monkeypatch.setattr(
+        "reverse_sync_cli._load_manifest_push_summary",
+        load_summary,
+    )
+    monkeypatch.setattr("reverse_sync_cli.publish_verified_run", publish_stub)
+
+    result = _do_push(
+        "page-1",
+        config=config,
+        manifest_path="/tmp/run/manifest.json",
+    )
+
+    runtime = captured["kwargs"].pop("runtime")
+    assert result == {"status": "delegated"}
+    assert captured == {
+        "page_id": "page-1",
+        "config": config,
+        "kwargs": {"manifest_path": "/tmp/run/manifest.json"},
+    }
+    assert runtime.project_dir == tmp_path
+    assert runtime.forward_convert is forward_convert
+    assert runtime.load_manifest_summary is load_summary
+
+
 def test_verify_is_dry_run_alias(monkeypatch):
     """verify 커맨드는 push --dry-run과 동일하게 동작한다."""
     mdx_arg = 'src/content/ko/test/page.mdx'
