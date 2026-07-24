@@ -37,8 +37,9 @@ from reverse_sync.models import (
     PageSnapshot,
     SyncStatus,
     VerificationGate,
+    sha256_text,
 )
-from reverse_sync.patch_builder import build_patches as real_build_patches
+from reverse_sync.planner import plan_patches as real_plan_patches
 from reverse_sync.publisher import (
     ActiveDraftError,
     DependencyChangedError,
@@ -153,7 +154,7 @@ def _manifest(
         candidate_xhtml="<p>After</p>",
         local_proof=local_proof,
         verifier_policy="reverse-sync-equivalence-v1",
-        tool_version="reverse-sync-cli-v4",
+        tool_version="reverse-sync-cli-v5",
         push_eligible=True,
         gates=tuple(
             VerificationGate(name, True)
@@ -625,7 +626,7 @@ def test_push_manifest_requires_all_local_proof_gates(tmp_path):
                 '"status":"verified_local"}\n'
             ),
             verifier_policy="reverse-sync-equivalence-v1",
-            tool_version="reverse-sync-cli-v4",
+            tool_version="reverse-sync-cli-v5",
             push_eligible=True,
             gates=(VerificationGate("semantic_roundtrip", True),),
         )
@@ -1115,8 +1116,8 @@ def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatc
         "reverse_sync_cli._forward_convert",
         side_effect=forward_convert,
     ), patch(
-        "reverse_sync_cli.build_patches",
-        wraps=real_build_patches,
+        "reverse_sync_cli.plan_patches",
+        wraps=real_plan_patches,
     ) as planner:
         result = run_verify(
             page_id=page_id,
@@ -1141,13 +1142,27 @@ def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatc
     assert manifest.base_version == 5
     assert manifest.base_storage_sha256 == base.storage_sha256
     assert manifest.verifier_policy == "reverse-sync-equivalence-v1"
-    assert manifest.tool_version == "reverse-sync-cli-v4"
+    assert manifest.tool_version == "reverse-sync-cli-v5"
     assert planner.call_count == 2
     assert all(
         call.kwargs["allow_text_identity_fallback"] is False
         for call in planner.call_args_list
     )
-    assert (manifest_path.parent / "patch-plan.json").is_file()
+    assert all(
+        call.kwargs["enforce_capabilities"] is True
+        and call.kwargs["enforce_provenance"] is True
+        for call in planner.call_args_list
+    )
+    plan_path = manifest_path.parent / "patch-plan.json"
+    assert plan_path.is_file()
+    plan = json.loads(plan_path.read_text())
+    assert plan["schema_version"] == 2
+    assert plan["intent_complete"] is True
+    assert plan["issues"] == []
+    assert plan["operations"][0]["capability_id"] == "paragraph_visible_edit"
+    assert plan["operations"][0]["target"]["base_fragment_sha256"] == (
+        sha256_text("<p>Before</p>")
+    )
     assert (manifest_path.parent / "local-proof.json").is_file()
     assert (manifest_path.parent / "candidate.xhtml").read_text() == (
         tmp_path / "var" / page_id / "reverse-sync.patched.xhtml"

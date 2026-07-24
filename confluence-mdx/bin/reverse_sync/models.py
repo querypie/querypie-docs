@@ -43,6 +43,8 @@ class ReasonCode(str, Enum):
     SEMANTIC_ROUNDTRIP_MISMATCH = "semantic_roundtrip_mismatch"
     NON_DETERMINISTIC_OUTPUT = "non_deterministic_output"
     NON_IDEMPOTENT_OUTPUT = "non_idempotent_output"
+    MISSING_IDENTITY = "missing_identity"
+    UNSUPPORTED_CAPABILITY = "unsupported_capability"
     DEPENDENCY_FAILURE = "dependency_failure"
     MISSING_ATTACHMENT = "missing_attachment"
     INTERNAL_LINK_UNRESOLVED = "internal_link_unresolved"
