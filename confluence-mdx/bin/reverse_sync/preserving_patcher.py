@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any, Iterable
 
 from reverse_sync.models import sha256_text
 from reverse_sync.sidecar import RoundtripSidecar
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patcher import XhtmlPatchError, patch_xhtml
 
 if TYPE_CHECKING:
     from reverse_sync.operations import PatchPlan
@@ -111,7 +111,14 @@ def patch_xhtml_preserving(
     for position, block in enumerate(sidecar.blocks):
         local_patches = fragment_patches.get(position)
         if local_patches:
-            rendered = patch_xhtml(block.xhtml_fragment, local_patches)
+            try:
+                rendered = patch_xhtml(
+                    block.xhtml_fragment,
+                    local_patches,
+                    strict=True,
+                )
+            except XhtmlPatchError as exc:
+                raise PatchApplicationError(str(exc)) from exc
             parts.append(rendered)
         else:
             parts.append(block.xhtml_fragment)

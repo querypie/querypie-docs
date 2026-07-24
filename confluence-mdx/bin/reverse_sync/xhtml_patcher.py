@@ -6,7 +6,16 @@ import re
 from reverse_sync.mapping_recorder import get_text_with_emoticons, iter_block_children
 
 
-def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
+class XhtmlPatchError(ValueError):
+    """strict XHTML renderer가 operation을 정확히 적용하지 못했습니다."""
+
+
+def patch_xhtml(
+    xhtml: str,
+    patches: List[Dict[str, str]],
+    *,
+    strict: bool = False,
+) -> str:
     """XHTML에 패치를 적용한다.
 
     Args:
@@ -22,6 +31,17 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
         패치된 XHTML 문자열
     """
     soup = BeautifulSoup(xhtml, 'html.parser')
+    supported_actions = {'modify', 'delete', 'insert', 'replace_fragment'}
+    if strict:
+        unsupported = [
+            str(patch.get('action', 'modify'))
+            for patch in patches
+            if patch.get('action', 'modify') not in supported_actions
+        ]
+        if unsupported:
+            raise XhtmlPatchError(
+                f"지원하지 않는 XHTML patch action입니다: {unsupported[0]}"
+            )
 
     # 패치를 action별로 분류
     delete_patches = [p for p in patches if p.get('action') == 'delete']
@@ -34,8 +54,13 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
     resolved_deletes = []
     for p in delete_patches:
         el = _find_element_by_xpath(soup, p['xhtml_xpath'])
-        if el is not None:
-            resolved_deletes.append(el)
+        if el is None:
+            if strict:
+                raise XhtmlPatchError(
+                    f"delete target을 찾을 수 없습니다: {p['xhtml_xpath']}"
+                )
+            continue
+        resolved_deletes.append(el)
 
     resolved_inserts = []
     for p in insert_patches:
@@ -44,20 +69,34 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
         if after_xpath is not None:
             anchor = _find_element_by_xpath(soup, after_xpath)
             if anchor is None:
-                continue  # anchor를 못 찾으면 skip
+                if strict:
+                    raise XhtmlPatchError(
+                        f"insert anchor를 찾을 수 없습니다: {after_xpath}"
+                    )
+                continue
         resolved_inserts.append((anchor, p))
 
     resolved_modifies = []
     for p in modify_patches:
         el = _find_element_by_xpath(soup, p['xhtml_xpath'])
-        if el is not None:
-            resolved_modifies.append((el, p))
+        if el is None:
+            if strict:
+                raise XhtmlPatchError(
+                    f"modify target을 찾을 수 없습니다: {p['xhtml_xpath']}"
+                )
+            continue
+        resolved_modifies.append((el, p))
 
     resolved_replacements = []
     for p in replace_patches:
         el = _find_element_by_xpath(soup, p['xhtml_xpath'])
-        if el is not None:
-            resolved_replacements.append((el, p))
+        if el is None:
+            if strict:
+                raise XhtmlPatchError(
+                    f"replace target을 찾을 수 없습니다: {p['xhtml_xpath']}"
+                )
+            continue
+        resolved_replacements.append((el, p))
 
     # 1단계: delete
     for element in resolved_deletes:
@@ -81,6 +120,11 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
             if old_text and current_plain.strip() != old_text.strip():
                 current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
+                    if strict:
+                        raise XhtmlPatchError(
+                            "modify source text가 target fragment와 다릅니다: "
+                            f"{patch['xhtml_xpath']}"
+                        )
                     continue
             _replace_inner_html(element, patch['new_inner_xhtml'])
             if 'ol_start' in patch and isinstance(element, Tag) and element.name == 'ol':
@@ -98,6 +142,11 @@ def patch_xhtml(xhtml: str, patches: List[Dict[str, str]]) -> str:
             if current_plain.strip() != old_text.strip():
                 current_plain_with_emoticons = get_text_with_emoticons(element)
                 if current_plain_with_emoticons.strip() != old_text.strip():
+                    if strict:
+                        raise XhtmlPatchError(
+                            "modify source text가 target fragment와 다릅니다: "
+                            f"{patch['xhtml_xpath']}"
+                        )
                     continue
             _materialize_replaced_emoticons(element, old_text, new_text)
             _apply_text_changes(element, old_text, new_text)

@@ -324,6 +324,13 @@ sidecar와 다시 비교합니다. CLI와 proof는 raw patch dict를 직접 소�
 typed target identity가 바뀌었거나 다른 base에 plan을 적용하려 하면
 `PatchApplicationError`로 중단합니다.
 
+target identity를 통과한 operation은 `xhtml_patcher.patch_xhtml(strict=true)`로
+적용합니다. strict renderer는 rebased target/anchor가 없거나 source visible
+text가 base fragment와 다르거나 action이 미등록이면 조용히 skip하지 않고
+`PatchApplicationError`로 중단합니다. offline diagnostic은 migration fixture
+호환성을 위해 기본 lenient renderer를 계속 사용할 수 있지만 push candidate를
+생성할 수 없습니다.
+
 ### Decision: local proof를 여러 독립 gate로 분해합니다
 
 `verified` 상태는 다음 gate를 모두 통과해야 합니다.
