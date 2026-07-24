@@ -212,8 +212,106 @@ def test_hash_mismatched_sidecar_target_is_not_executable():
 
     assert plan.intent_complete is False
     assert plan.to_patch_dicts() == []
-    assert plan.operations[0].reason_code == "missing_identity"
-    assert {issue.reason_code for issue in plan.issues} == {"missing_identity"}
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "missing_identity"
+    assert plan.issues[0].intent_ordinal == 0
+
+
+def test_push_planner_resolves_exact_provenance_before_renderer_strategy():
+    old = _block("Before")
+    new = _block("After")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = "<p>Wrong</p><p>Before</p>"
+    sidecar = RoundtripSidecar(
+        page_id="123",
+        mdx_sha256=sha256_text(old.content),
+        source_xhtml_sha256=sha256_text(xhtml),
+        blocks=[
+            SidecarBlock(
+                block_index=1,
+                xhtml_xpath="p[2]",
+                xhtml_fragment="<p>Before</p>",
+                mdx_content_hash=sha256_text(old.content),
+                mdx_line_range=(old.line_start, old.line_end),
+            ),
+            SidecarBlock(
+                block_index=0,
+                xhtml_xpath="p[1]",
+                xhtml_fragment="<p>Wrong</p>",
+                mdx_content_hash=sha256_text("Wrong"),
+                mdx_line_range=(old.line_start, old.line_end),
+            ),
+        ],
+        separators=[],
+        document_envelope=DocumentEnvelope(),
+    )
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        # strict mode는 이 legacy caller mapping을 무시해야 합니다.
+        mdx_to_sidecar={
+            0: SidecarEntry(
+                xhtml_xpath="p[1]",
+                xhtml_type="paragraph",
+                mdx_blocks=[0],
+            )
+        },
+        roundtrip_sidecar=sidecar,
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is True
+    assert plan.issues == ()
+    assert len(plan.operations) == 1
+    assert plan.operations[0].target.xpath == "p[2]"
+    assert plan.operations[0].intent_ordinals == (0,)
+
+
+def test_push_planner_blocks_duplicate_exact_provenance_as_ambiguous():
+    old = _block("Repeated")
+    new = _block("Changed")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = "<p>Repeated</p><p>Repeated</p>"
+    sidecar = RoundtripSidecar(
+        page_id="123",
+        mdx_sha256=sha256_text(old.content),
+        source_xhtml_sha256=sha256_text(xhtml),
+        blocks=[
+            SidecarBlock(
+                block_index=index,
+                xhtml_xpath=f"p[{index + 1}]",
+                xhtml_fragment="<p>Repeated</p>",
+                mdx_content_hash=sha256_text(old.content),
+                mdx_line_range=(old.line_start, old.line_end),
+            )
+            for index in range(2)
+        ],
+        separators=[],
+        document_envelope=DocumentEnvelope(),
+    )
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=sidecar,
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is False
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "ambiguous_target"
+    assert plan.issues[0].intent_ordinal == 0
 
 
 def test_empty_source_line_insert_is_removed_before_typed_renderer_boundary():
