@@ -47,6 +47,20 @@ class MdxSource:
     descriptor: str     # 출처 표시 (예: "main:src/content/ko/...", 파일 경로 등)
 
 
+@dataclass(frozen=True)
+class ManifestPushSummary:
+    """explicit manifest push의 확인 화면에 필요한 immutable identity."""
+
+    manifest_path: Path
+    run_id: str
+    page_id: str
+    title: str
+    base_version: int
+    candidate_sha256: str
+    change_count: int
+    operation_count: int
+
+
 def _is_valid_git_ref(ref: str) -> bool:
     """ref가 유효한 git ref인지 확인한다."""
     result = subprocess.run(
@@ -1009,11 +1023,13 @@ Usage:
   reverse-sync debug  --branch <branch> [--lenient] [--no-normalize]
   reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]
   reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]
+  reverse-sync push   --manifest <manifest.json> [--yes]
   reverse-sync -h | --help
 
 Commands:
   push     원격 current snapshot을 기준으로 검증 후 Confluence에 반영
            (--dry-run은 manifest까지만 만들고 PUT을 생략)
+           (--manifest는 이미 검증한 explicit run을 online verify 없이 발행)
   verify   로컬 page.xhtml 기반 진단 (push_eligible은 항상 false)
   debug    로컬 verify + MDX diff, XHTML diff, Verify diff 상세 출력
 
@@ -1059,6 +1075,10 @@ Examples:
   # 원격 snapshot을 사용하되 PUT은 생략
   reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
+  # 이미 검증한 immutable manifest를 명시적으로 발행
+  reverse-sync push --manifest \
+    var/<page-id>/reverse-sync/<run-id>/manifest.json
+
 Run 'reverse-sync <command> -h' for command-specific help and more examples.
 """
 
@@ -1100,6 +1120,10 @@ Examples:
 
   # 브랜치 전체 배치 push
   reverse-sync push --branch proofread/fix-typo
+
+  # 이전 online verify에서 생성한 explicit run을 발행
+  reverse-sync push --manifest \\
+    var/<page-id>/reverse-sync/<run-id>/manifest.json
 
   # original을 명시적으로 지정
   reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx" \\
@@ -1322,31 +1346,78 @@ def _ensure_confluence_config():
     return config
 
 
-def _do_push(page_id: str, config=None, manifest_path: str = None):
+def _load_manifest_push_summary(manifest_path: str) -> ManifestPushSummary:
+    """explicit manifest의 integrity와 typed plan schema를 PUT 전에 검증합니다."""
+    from reverse_sync.manifest import (
+        ArtifactTamperedError,
+        load_sync_manifest,
+        verify_manifest_integrity,
+    )
+
+    resolved_path = Path(manifest_path).expanduser().resolve()
+    manifest = load_sync_manifest(resolved_path)
+    verify_manifest_integrity(resolved_path, manifest)
+    if not manifest.push_eligible:
+        raise ValueError("push eligible이 아닌 manifest는 발행할 수 없습니다")
+
+    plan_ref = manifest.artifact("patch_plan")
+    try:
+        plan = json.loads((resolved_path.parent / plan_ref.path).read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ArtifactTamperedError("patch plan JSON을 읽을 수 없습니다") from exc
+    if not isinstance(plan, dict) or plan.get("schema_version") != 2:
+        raise ArtifactTamperedError("explicit push는 PatchPlan schema v2가 필요합니다")
+    if plan.get("intent_complete") is not True:
+        raise ArtifactTamperedError(
+            "intent_complete가 아닌 PatchPlan은 발행할 수 없습니다"
+        )
+    intents = plan.get("intents")
+    operations = plan.get("operations")
+    if not isinstance(intents, list) or not isinstance(operations, list):
+        raise ArtifactTamperedError(
+            "PatchPlan intents/operations 형식이 올바르지 않습니다"
+        )
+    operation_count = sum(
+        1
+        for operation in operations
+        if isinstance(operation, dict) and operation.get("executable") is True
+    )
+    if operation_count < 1:
+        raise ArtifactTamperedError("PatchPlan에 executable operation이 없습니다")
+
+    candidate_ref = manifest.artifact("candidate_xhtml")
+    return ManifestPushSummary(
+        manifest_path=resolved_path,
+        run_id=manifest.run_id,
+        page_id=manifest.page_id,
+        title=manifest.base_title,
+        base_version=manifest.base_version,
+        candidate_sha256=candidate_ref.sha256,
+        change_count=len(intents),
+        operation_count=operation_count,
+    )
+
+
+def _do_push(page_id: str, config=None, *, manifest_path: str):
     """verified manifest에 결합된 candidate만 안전하게 push한다."""
     from reverse_sync.confluence_client import ConfluenceGateway, VersionConflictError
-    from reverse_sync.manifest import load_sync_manifest, verify_manifest_integrity
+    from reverse_sync.manifest import load_sync_manifest
     from reverse_sync.publisher import publish_verified_manifest
 
     if config is None:
         config = _ensure_confluence_config()
 
+    if not manifest_path:
+        raise ValueError("push에는 explicit manifest_path가 필요합니다")
+
     var_dir = _PROJECT_DIR / 'var' / page_id
-    if manifest_path is None:
-        pointer_path = var_dir / "reverse-sync.manifest.path"
-        if not pointer_path.is_file():
-            raise ValueError(
-                f"페이지 {page_id}의 verified manifest가 없습니다. "
-                "online verify를 다시 실행하세요."
-            )
-        manifest_path = pointer_path.read_text().strip()
-    resolved_manifest_path = Path(manifest_path)
+    summary = _load_manifest_push_summary(manifest_path)
+    resolved_manifest_path = summary.manifest_path
     manifest = load_sync_manifest(resolved_manifest_path)
     if manifest.page_id != str(page_id):
         raise ValueError(
             f"manifest page ID({manifest.page_id})와 요청 page ID({page_id})가 다릅니다."
         )
-    verify_manifest_integrity(resolved_manifest_path, manifest)
 
     def semantic_verifier(snapshot, verified_manifest_path: Path) -> bool:
         improved_ref = manifest.artifact("improved_mdx")
@@ -1392,6 +1463,7 @@ def _do_push(page_id: str, config=None, manifest_path: str = None):
         ) from exc
 
     backup_path = var_dir / 'reverse-sync.backup.xhtml'
+    var_dir.mkdir(parents=True, exist_ok=True)
     base_ref = manifest.artifact("base_xhtml")
     shutil.copy2(resolved_manifest_path.parent / base_ref.path, backup_path)
 
@@ -1425,6 +1497,10 @@ def main():
     _add_common_args(push_parser)
     push_parser.add_argument('--dry-run', action='store_true',
                              help='검증만 수행, Confluence 반영 안 함 (= verify)')
+    push_parser.add_argument(
+        '--manifest',
+        help='online verify에서 생성한 explicit manifest.json을 발행',
+    )
     push_parser.add_argument('--yes', '-y', action='store_true',
                              help='확인 프롬프트 없이 바로 push (CI/자동화용)')
     push_parser.add_argument('--json', action='store_true',
@@ -1457,6 +1533,57 @@ def main():
         show_all_diffs = args.command == 'debug'
 
         try:
+            explicit_manifest = getattr(args, "manifest", None)
+            if explicit_manifest:
+                conflicting = (
+                    args.improved_mdx
+                    or getattr(args, "branch", None)
+                    or args.original_mdx
+                    or getattr(args, "page_dir", None)
+                    or getattr(args, "page_id", None)
+                    or getattr(args, "limit", 0)
+                    or getattr(args, "failures_only", False)
+                    or getattr(args, "lenient", False)
+                    or getattr(args, "no_normalize", False)
+                    or getattr(args, "dry_run", False)
+                )
+                if conflicting:
+                    print(
+                        "Error: --manifest는 MDX/branch/diagnostic 옵션과 "
+                        "동시에 사용할 수 없습니다.",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
+                auto_yes = getattr(args, "yes", False)
+                if not auto_yes and not sys.stdin.isatty():
+                    print(
+                        "Error: 비대화형 환경에서는 --yes 옵션이 필요합니다.",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
+                summary = _load_manifest_push_summary(explicit_manifest)
+                if not auto_yes:
+                    prompt = (
+                        f"Push verified run {summary.run_id} "
+                        f"{summary.title} ({summary.page_id}) "
+                        f"v{summary.base_version}→v{summary.base_version + 1}, "
+                        f"{summary.change_count} change(s), "
+                        f"{summary.operation_count} operation(s), "
+                        f"candidate {summary.candidate_sha256[:12]} "
+                        "to Confluence? [y/N] "
+                    )
+                    if not _confirm(prompt):
+                        print("Push 취소", file=sys.stderr)
+                        sys.exit(0)
+                config = _ensure_confluence_config()
+                push_result = _do_push(
+                    summary.page_id,
+                    config=config,
+                    manifest_path=str(summary.manifest_path),
+                )
+                print(json.dumps(push_result, ensure_ascii=False, indent=2))
+                return
+
             # 인자 검증
             if not args.improved_mdx and not getattr(args, 'branch', None):
                 print('Error: <mdx> 또는 --branch 중 하나를 지정하세요.', file=sys.stderr)
@@ -1581,6 +1708,9 @@ def main():
                     print("Error: online verify 결과가 push eligible 상태가 아닙니다.",
                           file=sys.stderr)
                     sys.exit(1)
+        except PushConflictError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
         except ValueError as e:
             print(f'Error: {e}', file=sys.stderr)
             sys.exit(1)

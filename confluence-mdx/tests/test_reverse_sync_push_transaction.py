@@ -108,7 +108,19 @@ def _manifest(
     required_attachment: str = "",
     required_link: tuple[str, str, str] | None = None,
     malformed_attachment_evidence: bool = False,
+    proof_artifact_overrides: dict[str, str] | None = None,
 ) -> Path:
+    base_snapshot = base or _snapshot()
+    candidate_xhtml = "<p>After</p>"
+    patch_plan = (
+        '{"intent_complete":true,"intents":[{"ordinal":0}],"issues":[],'
+        '"operations":[{"executable":true,"intent_ordinals":[0],'
+        '"operation_id":"op-0001"}],"schema_version":2}\n'
+    )
+    gates = tuple(
+        VerificationGate(name, True)
+        for name in REQUIRED_LOCAL_GATES
+    )
     attachments = []
     if required_attachment:
         attachments.append(
@@ -130,13 +142,22 @@ def _manifest(
                 "page_id": page_id,
             }
         )
+    proof_artifacts = {
+        "base_sha256": base_snapshot.storage_sha256,
+        "candidate_sha256": sha256_text(candidate_xhtml),
+        "plan_sha256": sha256_text(patch_plan),
+    }
+    proof_artifacts.update(proof_artifact_overrides or {})
     local_proof = json.dumps(
         {
+            "artifacts": proof_artifacts,
+            "blocked_reasons": [],
             "dependencies": {
                 "attachment_catalog_sha256": "0" * 64 if attachments else "",
                 "attachments": attachments,
                 "internal_links": internal_links,
             },
+            "gates": [gate.to_dict() for gate in gates],
             "push_eligible": True,
             "status": "verified_local",
         },
@@ -145,21 +166,18 @@ def _manifest(
     ) + "\n"
     return create_sync_manifest(
         runs_dir=tmp_path / "reverse-sync",
-        base=base or _snapshot(),
+        base=base_snapshot,
         original_mdx="# Test page\n\nBefore\n",
         original_descriptor="main:src/content/ko/test.mdx",
         improved_mdx="# Test page\n\nAfter\n",
         improved_descriptor="src/content/ko/test.mdx",
-        patch_plan='{"schema_version":1}\n',
-        candidate_xhtml="<p>After</p>",
+        patch_plan=patch_plan,
+        candidate_xhtml=candidate_xhtml,
         local_proof=local_proof,
         verifier_policy="reverse-sync-equivalence-v1",
         tool_version="reverse-sync-cli-v5",
         push_eligible=True,
-        gates=tuple(
-            VerificationGate(name, True)
-            for name in REQUIRED_LOCAL_GATES
-        ),
+        gates=gates,
     )
 
 
@@ -259,6 +277,20 @@ def test_proof_artifact_tampering_blocks_before_remote_read(
     gateway = FakeGateway([_snapshot()])
 
     with pytest.raises(ArtifactTamperedError, match=artifact_name):
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert gateway.current_calls == 0
+    assert gateway.update_calls == []
+
+
+def test_local_proof_hash_binding_blocks_before_remote_read(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        proof_artifact_overrides={"candidate_sha256": "f" * 64},
+    )
+    gateway = FakeGateway([_snapshot()])
+
+    with pytest.raises(ArtifactTamperedError, match="artifact hash"):
         publish_verified_manifest(manifest_path, gateway)
 
     assert gateway.current_calls == 0

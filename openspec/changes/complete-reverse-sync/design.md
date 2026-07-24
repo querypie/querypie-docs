@@ -410,6 +410,18 @@ push는 file name이 아니라 manifest가 가리키는 candidate hash를 읽습
 artifact는 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다. “최근 파일”을 덮어쓰는 방식은 호환 bridge로만 유지합니다.
 publisher는 local proof manifest를 수정하지 않고, manifest hash를 참조하는 별도 `PushReceipt`와 post-snapshot을 기록합니다.
 
+CLI에서 verify와 publish를 분리할 때는 `push --manifest
+<run-directory>/manifest.json`으로 run을 명시합니다. `_do_push()`는 latest pointer나
+flat compatibility artifact를 암묵적으로 선택하지 않으며 explicit
+`manifest_path`만 받습니다. CLI는 confirmation 전에 manifest와 referenced artifact
+hash, tool/policy version, required gate, PatchPlan schema v2와
+`intent_complete`를 다시 확인합니다. 이때 직렬화된 `intent_complete` boolean만
+신뢰하지 않고 intent ordinal과 executable operation coverage를 다시 계산하여 각
+intent가 정확히 한 번 실행되는지 검증합니다. `local-proof.json`의
+base/candidate/plan hash와 gate 결과도 manifest의 artifact/gate와 교차 검증합니다.
+`--manifest`는 MDX/branch/diagnostic 옵션과 상호 배타적이고 `--yes`는
+confirmation만 생략합니다.
+
 ### Decision: push는 preflight compare-and-set과 postcondition으로 구성합니다
 
 publisher의 순서는 다음과 같습니다.

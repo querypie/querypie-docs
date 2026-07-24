@@ -123,7 +123,14 @@
 - [ ] `reverse_sync_cli.py`를 prepare/verify/push lifecycle orchestration으로 축소합니다.
 - [x] online verify(`push --dry-run`) 출력에 run ID, base version/hash, local gates,
   push eligibility, reason code를 표시합니다.
-- [ ] `push`가 explicit run/manifest를 받도록 합니다.
+- [x] `push`가 explicit run/manifest를 받도록 합니다.
+  - `push --manifest <manifest.json>`은 online verify를 다시 실행하지 않고 해당
+    immutable run만 publisher에 전달합니다.
+  - `_do_push()`의 `reverse-sync.manifest.path` pointer fallback을 제거합니다.
+  - MDX/branch/diagnostic 옵션과의 상호 배제 및 confirmation identity를
+    contract test로 고정합니다.
+  - publisher 진입 전에 PatchPlan intent coverage를 재계산하고 local proof의
+    base/candidate/plan hash와 gate를 manifest에 교차 검증합니다.
 - [x] interactive confirmation에 page ID, base version, target version, change count, candidate hash를 표시합니다.
 - [x] batch는 모든 local proof 후 page별 transaction을 실행합니다.
 - [ ] batch partial success, conflict, postcondition failure exit code와 JSON schema를 정의합니다.
@@ -200,7 +207,7 @@ cd confluence-mdx/tests
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
 
-typed plan 변경 결과: 773 passed입니다.
+explicit manifest 변경 결과: 783 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -257,10 +264,17 @@ typed plan branch 검증 결과:
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
 - 전체 Python test: 1096 passed, 2 skipped
 
+explicit manifest branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- 전체 Python test: 1106 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python CLI/planner 범위이므로 전체 Python test
-(`1096 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1106 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash
