@@ -321,6 +321,16 @@ batch reverse-sync는 각 page를 독립 transaction으로 처리하고 전체 b
 - WHEN batch push가 종료됩니다.
 - THEN 첫 page의 성공을 rollback된 것처럼 표시해서는 안 됩니다(SHALL NOT).
 - AND 전체 상태를 partial success로 표시하고 page별 상태를 반환해야 합니다(SHALL).
+- AND process exit code는 non-zero여야 합니다(SHALL).
+
+#### Scenario: versioned batch JSON report
+
+- GIVEN 사용자가 branch batch에 `--json`을 지정합니다.
+- WHEN batch가 종료됩니다.
+- THEN 도구는 raw page list가 아니라 schema version, command, branch, overall outcome, exit code, summary, page별 result를 가진 JSON object를 반환해야 합니다(SHALL).
+- AND page별 result는 local status와 publish status를 합성한 stable batch status와 reason code를 포함해야 합니다(SHALL).
+- AND overall outcome은 `success`, `partial_success`, `failed`, `cancelled` 중 하나여야 합니다(SHALL).
+- AND `partial_success` 또는 `failed`의 process exit code는 non-zero이고 `success` 또는 사용자 `cancelled`의 process exit code는 zero여야 합니다(SHALL).
 
 #### Scenario: postcondition failure
 
@@ -328,6 +338,7 @@ batch reverse-sync는 각 page를 독립 transaction으로 처리하고 전체 b
 - WHEN 다음 page를 처리하려고 합니다.
 - THEN 기본 동작은 남은 push를 중단해야 합니다(SHALL).
 - AND 사용자가 별도 실행으로 재개할 수 있는 manifest 목록을 제공해야 합니다(SHALL).
+- AND 아직 시도하지 않은 page를 success 또는 단순 `verified_local`로 보고하지 않고 `not_attempted`와 중단 reason으로 표시해야 합니다(SHALL).
 
 ### Requirement: Recoverable and Auditable Operation
 

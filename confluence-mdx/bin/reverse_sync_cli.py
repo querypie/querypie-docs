@@ -25,6 +25,7 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from mdx_to_storage.parser import parse_mdx_blocks
+from reverse_sync.batch_report import BatchReport
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
@@ -859,26 +860,42 @@ def _print_diff_block(lines: str, label: str, c, BOLD, CYAN, RED, GREEN, DIM) ->
 
 
 def _display_status(result: Dict[str, Any]) -> str:
-    """출력/요약용 상태를 계산한다. push 실패가 있으면 verify 결과보다 우선한다."""
+    """출력/요약용 상태를 계산하며 publish 상태를 local 결과보다 우선합니다."""
     push_status = (result.get('push') or {}).get('status')
+    if push_status in ('remote_verified', 'already_applied'):
+        return push_status
     if push_status == 'conflict':
         return 'push_conflict'
     if push_status == 'error':
         return 'push_error'
     if push_status == 'postcondition_failed':
         return 'push_postcondition_failed'
+    if push_status == 'not_attempted':
+        return 'push_not_attempted'
     return result.get('status', 'unknown')
 
 
 def _is_success_status(status: str) -> bool:
     """offline diagnostic pass와 online verified_local을 성공으로 분류한다."""
-    return status in ("pass", "verified_local", "no_changes")
+    return status in (
+        "already_applied",
+        "no_changes",
+        "pass",
+        "remote_verified",
+        "verified_local",
+    )
 
 
 def _display_error(result: Dict[str, Any], status: str) -> str:
     """출력용 에러 메시지를 반환한다."""
-    if status in ('push_conflict', 'push_error', 'push_postcondition_failed'):
-        return (result.get('push') or {}).get('error', '')
+    if status in (
+        'push_conflict',
+        'push_error',
+        'push_postcondition_failed',
+        'push_not_attempted',
+    ):
+        push = result.get('push') or {}
+        return push.get('error') or push.get('reason_code', '')
     return result.get('error', '')
 
 
@@ -905,7 +922,11 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         changes = r.get('changes_count', 0)
 
         # 상태별 컬러 배지
-        if status == 'verified_local':
+        if status == 'remote_verified':
+            badge = c(GREEN, 'REMOTE VERIFIED')
+        elif status == 'already_applied':
+            badge = c(GREEN, 'ALREADY APPLIED')
+        elif status == 'verified_local':
             badge = c(GREEN, 'VERIFIED LOCAL')
         elif status == 'pass':
             badge = c(GREEN, 'PASS')
@@ -917,6 +938,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             badge = c(YELLOW, 'PUSH ERROR')
         elif status == 'push_postcondition_failed':
             badge = c(RED, 'POSTCONDITION FAILED')
+        elif status == 'push_not_attempted':
+            badge = c(YELLOW, 'NOT ATTEMPTED')
         elif status == 'error':
             badge = c(YELLOW, 'ERROR')
         elif status == 'blocked':
@@ -931,9 +954,12 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             'error',
             'push_conflict',
             'push_error',
+            'push_not_attempted',
             'push_postcondition_failed',
         ):
             print(f'  {c(RED, _display_error(r, status))}')
+            if status == 'push_not_attempted' and r.get('manifest_path'):
+                print(f'  resume manifest: {r["manifest_path"]}')
             continue
         if status == "blocked":
             reason_code = r.get("reason_code", "unknown")
@@ -980,6 +1006,12 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     total = len(results)
     display_statuses = [_display_status(r) for r in results]
     passed = sum(1 for status in display_statuses if status == 'pass')
+    remote_verified = sum(
+        1 for status in display_statuses if status == 'remote_verified'
+    )
+    already_applied = sum(
+        1 for status in display_statuses if status == 'already_applied'
+    )
     verified_local = sum(
         1 for status in display_statuses if status == 'verified_local'
     )
@@ -990,11 +1022,18 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     postcondition_failures = sum(
         1 for status in display_statuses if status == 'push_postcondition_failed'
     )
+    not_attempted = sum(
+        1 for status in display_statuses if status == 'push_not_attempted'
+    )
     no_chg = sum(1 for status in display_statuses if status == 'no_changes')
 
     parts = []
     if passed:
         parts.append(c(GREEN, f'{passed} passed'))
+    if remote_verified:
+        parts.append(c(GREEN, f'{remote_verified} remote verified'))
+    if already_applied:
+        parts.append(c(GREEN, f'{already_applied} already applied'))
     if verified_local:
         parts.append(c(GREEN, f'{verified_local} verified local'))
     if failed:
@@ -1007,6 +1046,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         parts.append(c(YELLOW, f'{push_errors} push errors'))
     if postcondition_failures:
         parts.append(c(RED, f'{postcondition_failures} postcondition failures'))
+    if not_attempted:
+        parts.append(c(YELLOW, f'{not_attempted} not attempted'))
     if no_chg:
         parts.append(c(DIM, f'{no_chg} no changes'))
 
@@ -1300,11 +1341,16 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
         )
         if not _confirm(f"{len(pushable)}건을 Confluence에 push 할까요? [y/N] "):
             print("Push 취소", file=sys.stderr)
+            for result in pushable:
+                result["push"] = {
+                    "status": "not_attempted",
+                    "reason_code": "user_cancelled",
+                }
             return results
 
     # 일괄 push
     push_count = 0
-    for r in pushable:
+    for push_index, r in enumerate(pushable):
         page_id = r['page_id']
         try:
             push_result = _do_push(
@@ -1316,14 +1362,34 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             push_count += 1
             print(f"  pushed {page_id} (v{push_result.get('version', '?')})", file=sys.stderr)
         except PushConflictError as e:
-            r['push'] = {'status': 'conflict', 'error': str(e)}
+            r['push'] = {
+                'status': 'conflict',
+                'reason_code': 'version_conflict',
+                'error': str(e),
+            }
             print(f"  conflict {page_id}: {e}", file=sys.stderr)
         except Exception as e:
-            if getattr(e, "reason_code", "") == "postcondition_failed":
-                r['push'] = {'status': 'postcondition_failed', 'error': str(e)}
+            reason_code = getattr(e, "reason_code", "") or "push_error"
+            if reason_code == "postcondition_failed":
+                r['push'] = {
+                    'status': 'postcondition_failed',
+                    'reason_code': reason_code,
+                    'error': str(e),
+                }
+                for pending in pushable[push_index + 1:]:
+                    pending['push'] = {
+                        'status': 'not_attempted',
+                        'reason_code': (
+                            'batch_halted_after_postcondition_failure'
+                        ),
+                    }
                 print(f"  postcondition failed {page_id}: {e}", file=sys.stderr)
                 break
-            r['push'] = {'status': 'error', 'error': str(e)}
+            r['push'] = {
+                'status': 'error',
+                'reason_code': reason_code,
+                'error': str(e),
+            }
             print(f"  error {page_id}: {e}", file=sys.stderr)
 
     print(f"\nPushed {push_count}/{len(pushable)} file(s)", file=sys.stderr)
@@ -1617,30 +1683,30 @@ def main():
                 if args.command == "push" and dry_run:
                     batch_kwargs["prepare_push"] = True
                 results = _do_verify_batch(args.branch, **batch_kwargs)
+                batch_report = BatchReport.from_results(
+                    command=args.command,
+                    branch=args.branch,
+                    results=results,
+                )
                 if use_json:
-                    output = results
-                    if failures_only:
-                        output = [r for r in results
-                                  if not _is_success_status(
-                                      r.get('status', 'unknown')
-                                  )
-                                  or r.get('push', {}).get('status')
-                                  in ('conflict', 'error', 'postcondition_failed')]
-                    print(json.dumps(output, ensure_ascii=False, indent=2))
+                    print(
+                        json.dumps(
+                            batch_report.to_dict(
+                                failures_only=failures_only,
+                            ),
+                            ensure_ascii=False,
+                            indent=2,
+                        )
+                    )
                 else:
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
-                has_failure = any(
-                    not _is_success_status(r.get('status', 'unknown'))
-                    for r in results
-                )
-                has_push_failure = any(
-                    r.get('push', {}).get('status')
-                    in ('conflict', 'error', 'postcondition_failed')
-                    for r in results
-                )
-                if has_failure or has_push_failure:
-                    sys.exit(1)
+                    print(
+                        f"Batch outcome: {batch_report.outcome} "
+                        f"(exit {batch_report.exit_code})"
+                    )
+                if batch_report.exit_code:
+                    sys.exit(batch_report.exit_code)
             else:
                 # 기존 단일 파일 모드
                 config = _ensure_confluence_config() if args.command == 'push' else None
