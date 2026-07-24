@@ -35,6 +35,15 @@ class ReasonCode(str, Enum):
     PERMISSION_DENIED = "permission_denied"
     NETWORK_ERROR = "network_error"
     POSTCONDITION_FAILED = "postcondition_failed"
+    PAGE_IDENTITY_MISMATCH = "page_identity_mismatch"
+    BASE_PARITY_MISMATCH = "base_parity_mismatch"
+    INCOMPLETE_PATCH_PLAN = "incomplete_patch_plan"
+    INVALID_STORAGE_XHTML = "invalid_storage_xhtml"
+    PRESERVATION_MISMATCH = "preservation_mismatch"
+    SEMANTIC_ROUNDTRIP_MISMATCH = "semantic_roundtrip_mismatch"
+    NON_DETERMINISTIC_OUTPUT = "non_deterministic_output"
+    NON_IDEMPOTENT_OUTPUT = "non_idempotent_output"
+    DEPENDENCY_FAILURE = "dependency_failure"
 
 
 @dataclass(frozen=True)

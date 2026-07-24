@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import List, Tuple
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, Comment, NavigableString, Tag
 
 from reverse_sync.mapping_recorder import iter_block_children
 
@@ -46,7 +46,7 @@ def extract_block_fragments(xhtml_text: str) -> FragmentExtractionResult:
     for child in iter_block_children(soup):
         if isinstance(child, Tag):
             top_elements.append(("tag", child.name))
-        elif isinstance(child, NavigableString):
+        elif isinstance(child, NavigableString) and not isinstance(child, Comment):
             text = str(child).strip()
             if text:
                 top_elements.append(("text", text))

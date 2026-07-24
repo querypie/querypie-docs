@@ -299,12 +299,19 @@ canonical model은 block type, nesting, inline token, visible whitespace policy,
 
 기존 `--no-normalize`는 raw diagnosis, `--lenient`는 triage 용도로 유지할 수 있지만 둘 다 push eligibility와 분리합니다.
 
+`reverse-sync-equivalence-v1`의 초기 허용 범위는 Markdown table의 바깥 cell
+padding, separator dash 길이, body block 사이의 빈 source line으로 제한합니다.
+table alignment와 cell content, 연속 공백, list marker 뒤 공백, inline boundary,
+link target, attachment filename, H1은 canonical model에 남겨 비교합니다.
+해석하지 못하는 MDX JSX와 raw HTML은 marker와 source를 exact token으로 보존하여
+equivalence를 임의로 확대하지 않습니다.
+
 ### Decision: `SyncManifest`를 verify와 push 사이의 계약으로 둡니다
 
 manifest는 최소한 다음을 기록합니다.
 
 ```yaml
-schema_version: 1
+schema_version: 2
 run_id: "..."
 tool:
   git_sha: "..."
@@ -327,7 +334,7 @@ plan:
 candidate:
   storage_sha256: "..."
 verification:
-  status: verified
+  status: verified_local
   gates:
     base_parity: pass
     intent_complete: pass

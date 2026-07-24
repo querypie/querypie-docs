@@ -33,6 +33,7 @@ from reverse_sync.publisher import (
     RemoteDriftError,
     publish_verified_manifest,
 )
+from reverse_sync.proof import REQUIRED_LOCAL_GATES
 from reverse_sync_cli import MdxSource, _do_verify, run_verify
 
 
@@ -66,19 +67,15 @@ def _manifest(tmp_path: Path, base: PageSnapshot | None = None) -> Path:
         original_descriptor="main:src/content/ko/test.mdx",
         improved_mdx="# Test page\n\nAfter\n",
         improved_descriptor="src/content/ko/test.mdx",
+        patch_plan='{"schema_version":1}\n',
         candidate_xhtml="<p>After</p>",
-        verifier_policy="reverse-sync-push-v1",
-        tool_version="reverse-sync-cli-v1",
+        local_proof='{"status":"verified_local"}\n',
+        verifier_policy="reverse-sync-equivalence-v1",
+        tool_version="reverse-sync-cli-v2",
         push_eligible=True,
         gates=tuple(
             VerificationGate(name, True)
-            for name in (
-                "source_identity",
-                "base_parity",
-                "intent_complete",
-                "semantic_roundtrip",
-                "artifact_integrity",
-            )
+            for name in REQUIRED_LOCAL_GATES
         ),
     )
 
@@ -148,6 +145,21 @@ def test_candidate_tampering_blocks_before_remote_read(tmp_path):
     gateway = FakeGateway([_snapshot()])
 
     with pytest.raises(ArtifactTamperedError, match="candidate.xhtml"):
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert gateway.current_calls == 0
+    assert gateway.update_calls == []
+
+
+@pytest.mark.parametrize("artifact_name", ["patch-plan.json", "local-proof.json"])
+def test_proof_artifact_tampering_blocks_before_remote_read(
+    tmp_path, artifact_name
+):
+    manifest_path = _manifest(tmp_path)
+    (manifest_path.parent / artifact_name).write_text('{"tampered":true}\n')
+    gateway = FakeGateway([_snapshot()])
+
+    with pytest.raises(ArtifactTamperedError, match=artifact_name):
         publish_verified_manifest(manifest_path, gateway)
 
     assert gateway.current_calls == 0
@@ -339,9 +351,11 @@ def test_push_manifest_requires_all_local_proof_gates(tmp_path):
             original_descriptor="main:src/content/ko/test.mdx",
             improved_mdx="# Test page\n\nAfter\n",
             improved_descriptor="src/content/ko/test.mdx",
+            patch_plan='{"schema_version":1}\n',
             candidate_xhtml="<p>After</p>",
-            verifier_policy="reverse-sync-push-v1",
-            tool_version="reverse-sync-cli-v1",
+            local_proof='{"status":"verified_local"}\n',
+            verifier_policy="reverse-sync-equivalence-v1",
+            tool_version="reverse-sync-cli-v2",
             push_eligible=True,
             gates=(VerificationGate("semantic_roundtrip", True),),
         )
@@ -577,7 +591,11 @@ def test_prepare_push_fetches_one_snapshot_and_passes_it_to_verify():
     base = _snapshot()
     improved = MdxSource("# Test page\n\nAfter\n", "src/content/ko/test.mdx")
     original = MdxSource("# Test page\n\nBefore\n", "main:src/content/ko/test.mdx")
-    expected = {"status": "pass", "page_id": "123", "push_eligible": True}
+    expected = {
+        "status": "verified_local",
+        "page_id": "123",
+        "push_eligible": True,
+    }
 
     with patch(
         "reverse_sync_cli._resolve_mdx_source",
@@ -625,20 +643,62 @@ def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatc
             for_push=True,
         )
 
-    assert result["status"] == "pass"
+    assert result["status"] == "verified_local"
     assert result["push_eligible"] is True
     assert result["base_version"] == 5
     assert result["base_storage_sha256"] == base.storage_sha256
     assert len(result["candidate_sha256"]) == 64
-    assert "semantic_roundtrip" in result["local_gates"]
+    assert any(
+        gate["name"] == "semantic_roundtrip" and gate["passed"]
+        for gate in result["local_gates"]
+    )
     manifest_path = Path(result["manifest_path"])
     assert manifest_path.is_file()
     manifest = load_sync_manifest(manifest_path)
     assert manifest.base_version == 5
     assert manifest.base_storage_sha256 == base.storage_sha256
+    assert manifest.verifier_policy == "reverse-sync-equivalence-v1"
+    assert manifest.tool_version == "reverse-sync-cli-v2"
+    assert (manifest_path.parent / "patch-plan.json").is_file()
+    assert (manifest_path.parent / "local-proof.json").is_file()
     assert (manifest_path.parent / "candidate.xhtml").read_text() == (
         tmp_path / "var" / page_id / "reverse-sync.patched.xhtml"
     ).read_text()
+
+
+def test_online_verify_proves_insert_idempotent_by_replanning(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
+    page_id = "123"
+    (tmp_path / "var" / page_id).mkdir(parents=True)
+    base = _snapshot(
+        title="Test page",
+        body="<h2>Section</h2><p>Before</p>",
+    )
+    original = "# Test page\n\n## Section\n\nBefore\n"
+    improved = "# Test page\n\n## Section\n\nBefore\n\nAdded\n"
+
+    def forward_convert(input_path, output_path, _page_id, **_kwargs):
+        content = original if Path(output_path).name == "reverse-sync.base.mdx" else improved
+        Path(output_path).write_text(content)
+        return content
+
+    with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(original, "main:src/content/ko/test.mdx"),
+            improved_src=MdxSource(improved, "src/content/ko/test.mdx"),
+            base_snapshot=base,
+            for_push=True,
+        )
+
+    assert result["status"] == "verified_local"
+    assert result["push_eligible"] is True
+    idempotency = next(
+        gate for gate in result["local_gates"] if gate["name"] == "idempotency"
+    )
+    assert idempotency["passed"] is True
 
 
 def test_online_verify_blocks_stale_original_before_patch(tmp_path, monkeypatch):
@@ -720,23 +780,44 @@ def test_online_verify_blocks_title_change(tmp_path, monkeypatch):
     assert result["push_eligible"] is False
 
 
-def test_lenient_verify_is_never_push_eligible(tmp_path, monkeypatch):
+def test_lenient_match_is_diagnostic_and_never_grants_push_eligibility(
+    tmp_path, monkeypatch
+):
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
-
-    result = run_verify(
-        page_id=page_id,
-        original_src=MdxSource("# Test page\n\nBefore\n", "original.mdx"),
-        improved_src=MdxSource("# Test page\n\nAfter\n", "improved.mdx"),
-        base_snapshot=_snapshot(title="Test page"),
-        for_push=True,
-        lenient=True,
+    base = _snapshot(
+        title="Test page",
+        body="<h2>Section</h2><p>Before</p>",
     )
+    original = "# Test page\n\n## Section\n\nBefore\n"
+    improved = "# Test page\n\n## Section\n\n2024년 01월 15일\n"
+    diagnostic_roundtrip = "# Test page\n\n## Section\n\nJan 15, 2024\n"
+
+    def forward_convert(_input_path, output_path, _page_id, **_kwargs):
+        content = (
+            original
+            if Path(output_path).name == "reverse-sync.base.mdx"
+            else diagnostic_roundtrip
+        )
+        Path(output_path).write_text(content)
+        return content
+
+    with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(original, "original.mdx"),
+            improved_src=MdxSource(improved, "improved.mdx"),
+            base_snapshot=base,
+            for_push=True,
+            lenient=True,
+        )
 
     assert result["status"] == "blocked"
-    assert result["reason_code"] == "lenient_verification_not_pushable"
+    assert result["reason_code"] == "semantic_roundtrip_mismatch"
     assert result["push_eligible"] is False
+    assert result["diagnostics"]["lenient"]["passed"] is True
+    assert result["diagnostics"]["lenient"]["push_eligible"] is False
 
 
 def test_online_verify_blocks_missing_attachment(tmp_path, monkeypatch):

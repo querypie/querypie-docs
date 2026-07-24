@@ -17,20 +17,32 @@ from reverse_sync.models import (
 )
 
 
-MANIFEST_SCHEMA_VERSION = 1
-SUPPORTED_VERIFIER_POLICIES = frozenset({"reverse-sync-push-v1"})
-CURRENT_TOOL_VERSION = "reverse-sync-cli-v1"
+MANIFEST_SCHEMA_VERSION = 2
+SUPPORTED_VERIFIER_POLICIES = frozenset({"reverse-sync-equivalence-v1"})
+CURRENT_TOOL_VERSION = "reverse-sync-cli-v2"
 REQUIRED_PUSH_GATES = frozenset(
     {
         "source_identity",
         "base_parity",
         "intent_complete",
-        "semantic_roundtrip",
         "artifact_integrity",
+        "storage_well_formed",
+        "preservation",
+        "semantic_roundtrip",
+        "determinism",
+        "idempotency",
+        "dependency",
     }
 )
 REQUIRED_ARTIFACTS = frozenset(
-    {"base_xhtml", "original_mdx", "improved_mdx", "candidate_xhtml"}
+    {
+        "base_xhtml",
+        "original_mdx",
+        "improved_mdx",
+        "patch_plan",
+        "candidate_xhtml",
+        "local_proof",
+    }
 )
 
 
@@ -71,7 +83,9 @@ def _derive_run_id(
     base: PageSnapshot,
     original_mdx: str,
     improved_mdx: str,
+    patch_plan: str,
     candidate_xhtml: str,
+    local_proof: str,
     verifier_policy: str,
     tool_version: str,
 ) -> str:
@@ -82,8 +96,10 @@ def _derive_run_id(
         "base_fetched_at": base.fetched_at,
         "candidate_sha256": sha256_text(candidate_xhtml),
         "improved_sha256": sha256_text(improved_mdx),
+        "local_proof_sha256": sha256_text(local_proof),
         "original_sha256": sha256_text(original_mdx),
         "page_id": base.page_id,
+        "patch_plan_sha256": sha256_text(patch_plan),
         "tool_version": tool_version,
         "verifier_policy": verifier_policy,
     }
@@ -99,7 +115,9 @@ def create_sync_manifest(
     original_descriptor: str,
     improved_mdx: str,
     improved_descriptor: str,
+    patch_plan: str,
     candidate_xhtml: str,
+    local_proof: str,
     verifier_policy: str,
     tool_version: str,
     push_eligible: bool,
@@ -119,7 +137,9 @@ def create_sync_manifest(
         base=base,
         original_mdx=original_mdx,
         improved_mdx=improved_mdx,
+        patch_plan=patch_plan,
         candidate_xhtml=candidate_xhtml,
+        local_proof=local_proof,
         verifier_policy=verifier_policy,
         tool_version=tool_version,
     )
@@ -140,7 +160,9 @@ def create_sync_manifest(
         _artifact_ref(run_dir, "base_xhtml", "base.xhtml", base.storage_xhtml),
         _artifact_ref(run_dir, "original_mdx", "original.mdx", original_mdx),
         _artifact_ref(run_dir, "improved_mdx", "improved.mdx", improved_mdx),
+        _artifact_ref(run_dir, "patch_plan", "patch-plan.json", patch_plan),
         _artifact_ref(run_dir, "candidate_xhtml", "candidate.xhtml", candidate_xhtml),
+        _artifact_ref(run_dir, "local_proof", "local-proof.json", local_proof),
     )
     manifest = SyncManifest(
         schema_version=MANIFEST_SCHEMA_VERSION,
