@@ -585,6 +585,8 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | Confluence snapshot adapter | `reverse_sync/confluence_client.py`, `reverse_sync/snapshot.py` |
 | base parity | `reverse_sync/base_parity.py` |
 | attachment/link dependency gate | `reverse_sync/dependencies.py` |
+| source/page/snapshot prepare lifecycle | `reverse_sync/prepare_service.py` |
+| branch batch state transition | `reverse_sync/batch_service.py` |
 | capability/identity/edit planning | `reverse_sync/planner.py`, `reverse_sync/capabilities.py` |
 | visible edit/node operation | `reverse_sync/visible_model.py`, `reverse_sync/operations.py` |
 | capability별 render | `reverse_sync/strategies/**` |

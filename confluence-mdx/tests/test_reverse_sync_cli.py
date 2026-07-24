@@ -3,6 +3,7 @@ import os
 import pytest
 from datetime import datetime, timezone
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 from reverse_sync_cli import (
     run_verify, main, MdxSource, _resolve_mdx_source,
@@ -184,6 +185,41 @@ def test_run_verify_delegates_to_verification_service(tmp_path, monkeypatch):
     assert runtime.planner is planner
     assert runtime.verifier_policy == "reverse-sync-equivalence-v1"
     assert runtime.tool_version == "reverse-sync-cli-v5"
+
+
+def test_do_verify_delegates_to_prepare_service(monkeypatch):
+    """CLI namespace는 typed request로 변환한 뒤 prepare service에 위임합니다."""
+    captured = {}
+
+    def prepare_stub(request, **kwargs):
+        captured.update(request=request, kwargs=kwargs)
+        return {"status": "delegated"}
+
+    monkeypatch.setattr("reverse_sync_cli.prepare_verification", prepare_stub)
+    args = SimpleNamespace(
+        improved_mdx="branch:src/content/ko/test.mdx",
+        original_mdx="main:src/content/ko/test.mdx",
+        page_id="page-1",
+        page_dir="/tmp/page-1",
+        lenient=True,
+        no_normalize=False,
+    )
+
+    result = _do_verify(args, config="config", prepare_push=True)
+
+    runtime = captured["kwargs"].pop("runtime")
+    assert result == {"status": "delegated"}
+    assert captured["request"].improved_mdx == args.improved_mdx
+    assert captured["request"].original_mdx == args.original_mdx
+    assert captured["request"].page_id == "page-1"
+    assert captured["request"].page_dir == "/tmp/page-1"
+    assert captured["request"].lenient is True
+    assert captured["kwargs"] == {
+        "config": "config",
+        "prepare_push": True,
+    }
+    assert runtime.resolve_mdx_source is _resolve_mdx_source
+    assert runtime.run_verification is run_verify
 
 
 def test_verify_no_changes(setup_var, tmp_path):
@@ -836,6 +872,47 @@ def test_do_verify_batch_no_changes():
     assert len(results) == 1
     assert results[0]['status'] == 'no_changes'
     assert results[0]['branch'] == 'proofread/fix-typo'
+
+
+def test_do_verify_batch_delegates_to_batch_service(monkeypatch):
+    """CLI batch adapter는 lifecycle dependency와 option만 service에 전달합니다."""
+    captured = {}
+
+    def run_batch_stub(branch, **kwargs):
+        captured.update(branch=branch, kwargs=kwargs)
+        return [{"status": "delegated"}]
+
+    monkeypatch.setattr("reverse_sync_cli.run_batch", run_batch_stub)
+
+    results = _do_verify_batch(
+        "proofread/fix-typo",
+        limit=3,
+        failures_only=True,
+        push=True,
+        yes=True,
+        lenient=True,
+        no_normalize=True,
+        prepare_push=True,
+    )
+
+    runtime = captured["kwargs"].pop("runtime")
+    assert results == [{"status": "delegated"}]
+    assert captured == {
+        "branch": "proofread/fix-typo",
+        "kwargs": {
+            "limit": 3,
+            "failures_only": True,
+            "push": True,
+            "yes": True,
+            "lenient": True,
+            "no_normalize": True,
+            "prepare_push": True,
+        },
+    }
+    assert runtime.get_changed_files is _get_changed_ko_mdx_files
+    assert runtime.verify_one is _do_verify
+    assert runtime.publish_one is _do_push
+    assert runtime.confirm is _confirm
 
 
 # --- main() batch tests ---
