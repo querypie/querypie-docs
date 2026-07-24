@@ -89,6 +89,37 @@ def test_supported_paragraph_plan_has_capability_and_exact_target_identity():
     assert plan.to_patch_dicts()[0]["new_inner_xhtml"] == "After"
 
 
+def test_mdx_owned_link_uses_text_block_capability_not_preserved_anchor():
+    old = _block("Before [Link](target)")
+    new = _block("After [Link](target)")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = (
+        '<p>Before <ac:link><ri:page ri:content-title="Target"/>'
+        '<ac:link-body>Link</ac:link-body></ac:link></p>'
+    )
+    sidecar = _sidecar(xhtml, old)
+    sidecar.blocks[0].reconstruction = {
+        "kind": "paragraph",
+        "old_plain_text": "Before Link",
+        "anchors": [],
+    }
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=sidecar,
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is True
+    assert plan.issues == ()
+    assert plan.operations[0].capability_id == "paragraph_visible_edit"
+
+
 def test_raw_html_table_is_explicit_unsupported_capability_in_push_plan():
     old = _block(
         "<table><tr><td>Before</td></tr></table>",
@@ -119,6 +150,7 @@ def test_raw_html_table_is_explicit_unsupported_capability_in_push_plan():
     assert plan.operations[0].reason_code == "unsupported_capability"
     assert plan.issues[0].capability_id == "raw_html_table_edit"
     assert plan.issues[0].reason_code == "unsupported_capability"
+    assert plan.issues[0].intent_ordinal == 0
     assert json.loads(plan.to_canonical_json())["issues"][0]["reason_code"] == (
         "unsupported_capability"
     )

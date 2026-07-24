@@ -7,7 +7,14 @@ from typing import Any, Optional
 from mdx_to_storage.link_resolver import LinkResolver
 from mdx_to_storage.parser import Block as MdxBlock
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
-from reverse_sync.capabilities import SupportLevel, classify_capability
+from reverse_sync.capabilities import (
+    CapabilitySpec,
+    SupportLevel,
+    capability_for_legacy_skip,
+    classify_capability,
+    get_capability,
+    select_renderer_strategy,
+)
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.models import sha256_text
 from reverse_sync.operations import (
@@ -284,37 +291,41 @@ def _intent_ordinals_for_patch(
     return matched
 
 
-def _source_details(
+def _capability_for_operation(
+    *,
+    action: str,
     intent_ordinals: tuple[int, ...],
-    intents: tuple[ChangeIntent, ...],
     changes: list[BlockChange],
-) -> tuple[tuple[str, ...], bool]:
-    by_ordinal = {intent.ordinal: intent for intent in intents}
-    block_types: list[str] = []
-    contains_raw_html_table = False
+    mapping: Optional[BlockMapping],
+    sidecar_block: Optional[SidecarBlock],
+) -> CapabilitySpec:
+    """operation에 대응하는 MDX intent를 typed capability로 분류합니다."""
+    classified: dict[str, CapabilitySpec] = {}
     for ordinal in intent_ordinals:
-        intent = by_ordinal.get(ordinal)
-        if intent is None:
+        if ordinal < 0 or ordinal >= len(changes):
             continue
-        block_types.append(intent.block_type)
         change = changes[ordinal]
-        for block in (change.old_block, change.new_block):
-            if (
-                block is not None
-                and block.type == "html_block"
-                and block.content.lstrip().lower().startswith("<table")
-            ):
-                contains_raw_html_table = True
-    return tuple(block_types), contains_raw_html_table
+        block = change.old_block or change.new_block
+        if block is None or block.type in NON_CONTENT_TYPES:
+            continue
+        strategy = select_renderer_strategy(
+            block_type=block.type,
+            block_content=block.content,
+            mapping=mapping,
+            sidecar_block=sidecar_block,
+        )
+        capability = classify_capability(
+            action=action,
+            strategy=strategy,
+            mapping=mapping,
+            block_type=block.type,
+        )
+        classified[capability.capability_id] = capability
+    if len(classified) == 1:
+        return next(iter(classified.values()))
+    return get_capability("unknown_macro_mutation")
 
 
-_LEGACY_UNSUPPORTED_CAPABILITIES = {
-    "not_markdown_table": "raw_html_table_edit",
-    "preserved_anchor_table": "unknown_macro_mutation",
-    "raw_html_table": "raw_html_table_edit",
-    "unknown_preservation_unit": "unknown_macro_mutation",
-    "unsafe_html_table_edit": "raw_html_table_edit",
-}
 _LEGACY_MISSING_IDENTITY_REASONS = frozenset(
     {"missing_roundtrip_sidecar", "no_mapping"}
 )
@@ -382,9 +393,10 @@ def _legacy_skip_issue(
     )
     capability_id = ""
     reason_code = legacy_reason
-    if enforce_capabilities and legacy_reason in _LEGACY_UNSUPPORTED_CAPABILITIES:
+    unsupported = capability_for_legacy_skip(legacy_reason)
+    if enforce_capabilities and unsupported is not None:
         reason_code = "unsupported_capability"
-        capability_id = _LEGACY_UNSUPPORTED_CAPABILITIES[legacy_reason]
+        capability_id = unsupported.capability_id
     elif (
         enforce_provenance
         and legacy_reason in _LEGACY_MISSING_IDENTITY_REASONS
@@ -578,17 +590,12 @@ def plan_patches(
             )
 
         mapping = _mapping_for_patch(patch, resolved_mappings)
-        source_types, contains_raw_html_table = _source_details(
-            intent_ordinals,
-            intents,
-            changes,
-        )
-        capability = classify_capability(
+        capability = _capability_for_operation(
             action=str(patch.get("action", "modify")),
+            intent_ordinals=intent_ordinals,
+            changes=changes,
             mapping=mapping,
             sidecar_block=sidecar_by_xpath.get(target.root_xpath),
-            source_block_types=source_types,
-            contains_raw_html_table=contains_raw_html_table,
         )
         capability_blocked = (
             enforce_capabilities
@@ -624,6 +631,11 @@ def plan_patches(
                     ),
                     block_id=target.xpath,
                     capability_id=capability.capability_id,
+                    intent_ordinal=(
+                        intent_ordinals[0]
+                        if len(intent_ordinals) == 1
+                        else None
+                    ),
                 )
             )
         elif provenance_blocked:
@@ -636,6 +648,11 @@ def plan_patches(
                     ),
                     block_id=target.xpath,
                     capability_id=capability.capability_id,
+                    intent_ordinal=(
+                        intent_ordinals[0]
+                        if len(intent_ordinals) == 1
+                        else None
+                    ),
                 )
             )
 
