@@ -37,7 +37,7 @@ from reverse_sync.equivalence import (
 from xhtml_beautify_diff import xhtml_diff
 
 _PUSH_VERIFIER_POLICY = PUSH_EQUIVALENCE_POLICY
-_TOOL_VERSION = "reverse-sync-cli-v3"
+_TOOL_VERSION = "reverse-sync-cli-v4"
 
 
 @dataclass
@@ -533,6 +533,7 @@ def run_verify(
         roundtrip_sidecar=roundtrip_sidecar,
         link_resolver=link_resolver,
         attachment_filenames=attachment_filenames,
+        allow_text_identity_fallback=not for_push,
     )
 
     # mapping.original.yaml artifact 저장
@@ -665,6 +666,7 @@ def run_verify(
             roundtrip_sidecar=roundtrip_sidecar,
             link_resolver=link_resolver,
             attachment_filenames=attachment_filenames,
+            allow_text_identity_fallback=False,
         )
         deterministic_plan_json = canonical_plan_json(
             changes=changes,
@@ -706,6 +708,7 @@ def run_verify(
                     roundtrip_sidecar=candidate_sidecar,
                     link_resolver=link_resolver,
                     attachment_filenames=attachment_filenames,
+                    allow_text_identity_fallback=False,
                 )
                 idempotent_candidate = (
                     ""

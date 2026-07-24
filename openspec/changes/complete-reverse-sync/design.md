@@ -220,6 +220,12 @@ frontmatter title과 첫 H1도 각 문서 안에서 같아야 하며 original/im
 
 normalized text prefix는 push-eligible path에서 identity source로 사용하지 않습니다. 중복 block 또는 다중 후보가 있으면 `ambiguous_target`으로 block합니다.
 
+현재 migration adapter는 offline diagnostic fixture 호환성을 위해 list의 normalized
+text prefix fallback을 유지합니다. online verify는
+`allow_text_identity_fallback=false`를 모든 최초·determinism·idempotency planning
+호출에 강제하고, provenance mapping을 찾지 못하면 `no_mapping`으로 기록하여
+`intent_complete` gate에서 block합니다.
+
 추가/삭제/reorder는 stable neighbor identity를 기준으로 계획합니다.
 
 - insert는 `before_block_id`와 `after_block_id` 중 하나 이상을 가져야 합니다.
