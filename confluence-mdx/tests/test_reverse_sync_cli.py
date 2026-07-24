@@ -59,9 +59,13 @@ def _create_push_manifest(
         improved_descriptor="src/content/ko/test.mdx",
         patch_plan='{"schema_version":1}\n',
         candidate_xhtml=candidate_body,
-        local_proof='{"status":"verified_local"}\n',
+        local_proof=(
+            '{"dependencies":{"attachments":[],"internal_links":[],'
+            '"attachment_catalog_sha256":""},"push_eligible":true,'
+            '"status":"verified_local"}\n'
+        ),
         verifier_policy="reverse-sync-equivalence-v1",
-        tool_version="reverse-sync-cli-v2",
+        tool_version="reverse-sync-cli-v3",
         push_eligible=True,
         gates=tuple(
             VerificationGate(name, True)

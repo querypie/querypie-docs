@@ -1,12 +1,18 @@
 """Confluence API 클라이언트 — 일관된 snapshot과 version-bound update."""
-from pathlib import Path
-
-import requests
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Dict, Any, Tuple
+from urllib.parse import urljoin, urlparse
 
-from reverse_sync.models import PageSnapshot, ReasonCode
+import requests
+
+from reverse_sync.models import (
+    AttachmentCatalog,
+    AttachmentRecord,
+    PageSnapshot,
+    ReasonCode,
+)
 
 CONFIG_FILE = Path.home() / '.config' / 'atlassian' / 'confluence.conf'
 
@@ -43,6 +49,10 @@ class InvalidPageSnapshotError(ConfluenceClientError):
     reason_code = ReasonCode.INVALID_PAGE_SNAPSHOT.value
 
 
+class InvalidDependencySnapshotError(ConfluenceClientError):
+    reason_code = ReasonCode.DEPENDENCY_FAILURE.value
+
+
 class VersionConflictError(ConfluenceClientError):
     reason_code = ReasonCode.VERSION_CONFLICT.value
 
@@ -55,12 +65,21 @@ class NetworkError(ConfluenceClientError):
     reason_code = ReasonCode.NETWORK_ERROR.value
 
 
-def _raise_mapped_http_error(exc: requests.HTTPError, *, update: bool = False) -> None:
+def _raise_mapped_http_error(
+    exc: requests.HTTPError,
+    *,
+    update: bool = False,
+    dependency: bool = False,
+) -> None:
     status = exc.response.status_code if exc.response is not None else None
     if status == 409 or (update and status == 400):
         raise VersionConflictError("Confluence page version conflict") from exc
     if status in (401, 403):
         raise PermissionDeniedError("Confluence page 접근 권한이 없습니다") from exc
+    if dependency and status == 404:
+        raise InvalidDependencySnapshotError(
+            "Confluence dependency가 존재하지 않습니다"
+        ) from exc
     raise NetworkError(f"Confluence API 요청이 실패했습니다 (HTTP {status})") from exc
 
 
@@ -111,7 +130,7 @@ def _parse_page_snapshot(
         or representation != "storage"
         or not isinstance(title, str)
         or not title
-        or not isinstance(version, int)
+        or type(version) is not int
         or version < 1
         or not isinstance(storage_xhtml, str)
     )
@@ -136,6 +155,7 @@ def get_page_snapshot(
     page_id: str,
     *,
     fetched_at: datetime | None = None,
+    dependency: bool = False,
 ) -> PageSnapshot:
     """version/title/Storage body를 하나의 v2 response에서 획득한다."""
     url = f"{config.base_url}/api/v2/pages/{page_id}"
@@ -155,15 +175,22 @@ def get_page_snapshot(
         response.raise_for_status()
         data = response.json()
     except requests.HTTPError as exc:
-        _raise_mapped_http_error(exc)
+        _raise_mapped_http_error(exc, dependency=dependency)
     except (requests.RequestException, ValueError) as exc:
         raise NetworkError("Confluence page snapshot을 읽지 못했습니다") from exc
-    return _parse_page_snapshot(
-        data,
-        page_id,
-        expected_status="current",
-        fetched_at=captured_at,
-    )
+    try:
+        return _parse_page_snapshot(
+            data,
+            page_id,
+            expected_status="current",
+            fetched_at=captured_at,
+        )
+    except InvalidPageSnapshotError as exc:
+        if dependency:
+            raise InvalidDependencySnapshotError(
+                f"linked page {page_id} identity가 올바르지 않습니다"
+            ) from exc
+        raise
 
 
 def get_active_draft(
@@ -207,6 +234,120 @@ def get_active_draft(
     )
 
 
+def _validated_next_url(base_url: str, value: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise InvalidDependencySnapshotError(
+            "attachment pagination URL 형식이 올바르지 않습니다"
+        )
+    resolved = urljoin(base_url.rstrip("/") + "/", value)
+    expected = urlparse(base_url)
+    actual = urlparse(resolved)
+    if (
+        actual.scheme != expected.scheme
+        or actual.netloc != expected.netloc
+        or not actual.path.startswith(expected.path.rstrip("/") + "/api/v2/")
+    ):
+        raise InvalidDependencySnapshotError(
+            "attachment pagination URL이 Confluence v2 API 범위를 벗어납니다"
+        )
+    return resolved
+
+
+def get_attachment_catalog(
+    config: ConfluenceConfig,
+    page_id: str,
+    *,
+    fetched_at: datetime | None = None,
+) -> AttachmentCatalog:
+    """page의 current attachment를 pagination 끝까지 조회합니다."""
+    url = f"{config.base_url}/api/v2/pages/{page_id}/attachments"
+    params: dict[str, Any] | None = {
+        "status": ["current"],
+        "limit": 250,
+    }
+    records: list[AttachmentRecord] = []
+    seen_ids: set[str] = set()
+    seen_urls: set[str] = set()
+
+    while url:
+        if url in seen_urls:
+            raise InvalidDependencySnapshotError(
+                "attachment pagination URL이 순환합니다"
+            )
+        seen_urls.add(url)
+        try:
+            response = requests.get(
+                url,
+                params=params,
+                auth=(config.email, config.api_token),
+                headers={"Accept": "application/json"},
+                timeout=config.timeout_seconds,
+            )
+            response.raise_for_status()
+            data = response.json()
+        except requests.HTTPError as exc:
+            _raise_mapped_http_error(exc, dependency=True)
+        except (requests.RequestException, ValueError) as exc:
+            raise NetworkError(
+                "Confluence attachment catalog를 읽지 못했습니다"
+            ) from exc
+
+        results = data.get("results") if isinstance(data, dict) else None
+        if not isinstance(results, list):
+            raise InvalidDependencySnapshotError(
+                "attachment catalog response에 results가 없습니다"
+            )
+        for item in results:
+            try:
+                attachment_id = str(item["id"])
+                status = item["status"]
+                filename = item["title"]
+                response_page_id = str(item["pageId"])
+                version = item["version"]["number"]
+            except (KeyError, TypeError) as exc:
+                raise InvalidDependencySnapshotError(
+                    "attachment catalog item의 필수 field가 없습니다"
+                ) from exc
+            if (
+                not attachment_id
+                or attachment_id in seen_ids
+                or status != "current"
+                or not isinstance(filename, str)
+                or not filename
+                or response_page_id != str(page_id)
+                or type(version) is not int
+                or version < 1
+            ):
+                raise InvalidDependencySnapshotError(
+                    "attachment catalog item identity가 올바르지 않습니다"
+                )
+            seen_ids.add(attachment_id)
+            records.append(
+                AttachmentRecord(
+                    attachment_id=attachment_id,
+                    page_id=response_page_id,
+                    filename=filename,
+                    version=version,
+                )
+            )
+
+        next_value = (
+            response.links.get("next", {}).get("url")
+            if isinstance(response.links, dict)
+            else None
+        )
+        url = _validated_next_url(config.base_url, next_value) if next_value else ""
+        params = None
+
+    captured_at = fetched_at or datetime.now(timezone.utc)
+    return AttachmentCatalog(
+        page_id=str(page_id),
+        attachments=tuple(records),
+        fetched_at=captured_at.astimezone(timezone.utc).isoformat(),
+        api="confluence-v2",
+    )
+
+
 def update_page(
     config: ConfluenceConfig,
     page_id: str,
@@ -247,6 +388,16 @@ class ConfluenceGateway:
 
     def get_active_draft(self, page_id: str) -> PageSnapshot | None:
         return get_active_draft(self.config, page_id)
+
+    def get_page_identity(self, page_id: str) -> PageSnapshot:
+        return get_page_snapshot(
+            self.config,
+            page_id,
+            dependency=True,
+        )
+
+    def get_attachment_catalog(self, page_id: str) -> AttachmentCatalog:
+        return get_attachment_catalog(self.config, page_id)
 
     def update_page(
         self,

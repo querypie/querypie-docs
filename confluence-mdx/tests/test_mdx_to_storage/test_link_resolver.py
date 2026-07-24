@@ -102,3 +102,34 @@ def test_resolve_relative_dotdot_with_current_page(tmp_path: Path):
     title, anchor = resolver.resolve("../sibling", link_text="Sibling")
     assert title == "Sibling"
     assert anchor is None
+
+
+def test_resolve_relative_child_from_current_page_directory(tmp_path: Path):
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "200"
+  title_orig: "Section"
+  path: ["docs", "section"]
+- page_id: "201"
+  title_orig: "Child"
+  path: ["docs", "section", "child"]
+""".strip(),
+        encoding="utf-8",
+    )
+    resolver = LinkResolver(pages_yaml)
+    resolver.set_current_page("200")
+
+    resolution = resolver.resolve_with_evidence("section/child")
+
+    assert resolution.status == "resolved"
+    assert resolution.candidate_page_ids == ("201",)
+
+
+def test_dot_anchor_is_local_to_current_page(tmp_path: Path):
+    resolver = LinkResolver([])
+
+    resolution = resolver.resolve_with_evidence(".#section")
+
+    assert resolution.status == "local_anchor"
+    assert resolution.anchor == "section"

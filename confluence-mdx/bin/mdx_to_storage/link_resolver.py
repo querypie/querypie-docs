@@ -30,6 +30,17 @@ class PageEntry:
     path: list[str] = field(default_factory=list)
 
 
+@dataclass(frozen=True)
+class LinkResolution:
+    """internal link resolution 결과와 fail-closed 상태."""
+
+    status: str
+    href: str
+    content_title: Optional[str] = None
+    anchor: Optional[str] = None
+    candidate_page_ids: tuple[str, ...] = ()
+
+
 def load_pages_yaml(yaml_path: Path) -> list[PageEntry]:
     if not yaml_path.exists():
         return []
@@ -73,56 +84,81 @@ class LinkResolver:
 
         self._by_id: dict[str, PageEntry] = {}
         self._current_page: PageEntry | None = None
-        self._path_to_title: dict[str, str] = {}
-        self._titles: set[str] = set()
+        self._path_to_entries: dict[str, list[PageEntry]] = {}
+        self._title_to_entries: dict[str, list[PageEntry]] = {}
         self._load_pages(pages)
 
     def has_pages(self) -> bool:
-        return bool(self._path_to_title)
+        return bool(self._path_to_entries)
 
     def set_current_page(self, page_id: str) -> None:
         self._current_page = self._by_id.get(str(page_id))
 
     def resolve(self, href: str, link_text: str = "") -> tuple[Optional[str], Optional[str]]:
         """Resolve href to (content_title, anchor) or (None, None)."""
+        resolution = self.resolve_with_evidence(href, link_text=link_text)
+        if resolution.status != "resolved":
+            return None, None
+        return resolution.content_title, resolution.anchor
+
+    def resolve_with_evidence(
+        self,
+        href: str,
+        link_text: str = "",
+    ) -> LinkResolution:
+        """href를 resolve하고 unresolved/ambiguous를 구분합니다."""
         raw_href = href.strip()
         if not raw_href:
-            return None, None
-        if _EXTERNAL_SCHEME_RE.match(raw_href):
-            return None, None
+            return LinkResolution("unresolved", raw_href)
+        if _EXTERNAL_SCHEME_RE.match(raw_href) or raw_href.startswith("//"):
+            return LinkResolution("external", raw_href)
         if raw_href.startswith("#"):
-            return None, None
+            return LinkResolution("local_anchor", raw_href, anchor=raw_href[1:] or None)
 
         path_part, anchor = self._split_anchor(raw_href)
+        if path_part in {".", "./"} and anchor:
+            return LinkResolution(
+                "local_anchor",
+                raw_href,
+                anchor=anchor,
+            )
         normalized_path = self._normalize_path(path_part)
 
         current_page_path = self._resolve_from_current_page(path_part)
         if current_page_path:
-            title = self._path_to_title.get(current_page_path)
-            if title:
-                return title, anchor
+            resolution = self._resolution_for_entries(
+                raw_href,
+                self._path_to_entries.get(current_page_path, []),
+                anchor,
+            )
+            if resolution.status != "unresolved":
+                return resolution
 
         if not normalized_path and link_text:
-            title = self._resolve_by_title(link_text)
-            if title:
-                return title, anchor
+            resolution = self._resolve_by_title(
+                raw_href,
+                link_text,
+                anchor,
+            )
+            if resolution.status != "unresolved":
+                return resolution
 
-        title = self._path_to_title.get(normalized_path)
-        if title:
-            return title, anchor
+        resolution = self._resolution_for_entries(
+            raw_href,
+            self._path_to_entries.get(normalized_path, []),
+            anchor,
+        )
+        if resolution.status != "unresolved":
+            return resolution
 
-        if link_text:
-            title = self._resolve_by_title(link_text)
-            if title:
-                return title, anchor
-        return None, None
+        return LinkResolution("unresolved", raw_href, anchor=anchor)
 
     def _load_pages(self, pages: list[PageEntry]) -> None:
         for page in pages:
             normalized_path = self._normalize_path("/".join(page.path))
             if normalized_path:
-                self._path_to_title[normalized_path] = page.title_orig
-            self._titles.add(page.title_orig)
+                self._path_to_entries.setdefault(normalized_path, []).append(page)
+            self._title_to_entries.setdefault(page.title_orig, []).append(page)
             if page.page_id:
                 self._by_id[page.page_id] = page
 
@@ -149,19 +185,56 @@ class LinkResolver:
             parts.append(segment)
         return "/".join(parts)
 
-    def _resolve_by_title(self, link_text: str) -> Optional[str]:
+    @staticmethod
+    def _resolution_for_entries(
+        href: str,
+        entries: list[PageEntry],
+        anchor: Optional[str],
+    ) -> LinkResolution:
+        if not entries:
+            return LinkResolution("unresolved", href, anchor=anchor)
+        page_ids = tuple(sorted({entry.page_id for entry in entries}))
+        if (
+            len(entries) != 1
+            or len(page_ids) != 1
+            or not page_ids[0]
+        ):
+            return LinkResolution(
+                "ambiguous" if len(entries) > 1 else "unresolved",
+                href,
+                anchor=anchor,
+                candidate_page_ids=page_ids,
+            )
+        return LinkResolution(
+            "resolved",
+            href,
+            content_title=entries[0].title_orig,
+            anchor=anchor,
+            candidate_page_ids=page_ids,
+        )
+
+    def _resolve_by_title(
+        self,
+        href: str,
+        link_text: str,
+        anchor: Optional[str],
+    ) -> LinkResolution:
         title_candidate = link_text.strip()
         if not title_candidate:
-            return None
-        return title_candidate if title_candidate in self._titles else None
+            return LinkResolution("unresolved", href, anchor=anchor)
+        return self._resolution_for_entries(
+            href,
+            self._title_to_entries.get(title_candidate, []),
+            anchor,
+        )
 
     def _resolve_from_current_page(self, path_part: str) -> Optional[str]:
         if self._current_page is None:
             return None
         if not path_part or path_part.startswith("/"):
             return None
-        if not (path_part.startswith(".") or path_part.startswith("..")):
-            return None
+        if path_part in {".", "./"}:
+            return self._normalize_path("/".join(self._current_page.path))
 
         current_dir = "/" + "/".join(self._current_page.path[:-1])
         joined = posixpath.normpath(posixpath.join(current_dir, path_part))

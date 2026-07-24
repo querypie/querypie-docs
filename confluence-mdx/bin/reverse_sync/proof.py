@@ -9,6 +9,7 @@ import re
 from typing import Any, Iterable
 from xml.etree import ElementTree
 
+from reverse_sync.dependencies import DependencyEvidence, DependencyResult
 from reverse_sync.equivalence import EquivalenceResult, verify_push_equivalence
 from reverse_sync.models import SyncStatus, VerificationGate, sha256_text
 from reverse_sync.preserving_patcher import changed_root_xpaths
@@ -47,6 +48,8 @@ class LocalProof:
     base_sha256: str
     candidate_sha256: str
     plan_sha256: str
+    dependencies: DependencyEvidence = DependencyEvidence()
+    dependency_detail: str = ""
     blocked_reasons: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
@@ -57,6 +60,8 @@ class LocalProof:
                 "plan_sha256": self.plan_sha256,
             },
             "blocked_reasons": list(self.blocked_reasons),
+            "dependencies": self.dependencies.to_dict(),
+            "dependency_detail": self.dependency_detail,
             "equivalence": self.equivalence.to_dict(),
             "gates": [gate.to_dict() for gate in self.gates],
             "push_eligible": self.push_eligible,
@@ -199,7 +204,7 @@ def build_local_proof(
     idempotent_candidate_xhtml: str,
     source_identity_passed: bool,
     base_parity_passed: bool,
-    dependency_passed: bool,
+    dependency_result: DependencyResult,
 ) -> LocalProof:
     """모든 required local gate를 독립적으로 계산한다."""
     equivalence = verify_push_equivalence(improved_mdx, roundtrip_mdx)
@@ -236,7 +241,11 @@ def build_local_proof(
         ),
         ("determinism", determinism, "non_deterministic_output"),
         ("idempotency", idempotency, "non_idempotent_output"),
-        ("dependency", dependency_passed, "dependency_failure"),
+        (
+            "dependency",
+            dependency_result.passed,
+            dependency_result.reason_code or "dependency_failure",
+        ),
     )
     gates = tuple(
         VerificationGate(name=name, passed=passed, reason_code="" if passed else reason)
@@ -261,5 +270,7 @@ def build_local_proof(
         base_sha256=sha256_text(base_xhtml),
         candidate_sha256=sha256_text(candidate_xhtml),
         plan_sha256=sha256_text(plan_json),
+        dependencies=dependency_result.evidence,
+        dependency_detail=dependency_result.detail,
         blocked_reasons=blocked_reasons,
     )

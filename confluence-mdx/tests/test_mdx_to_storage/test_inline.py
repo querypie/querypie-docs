@@ -84,6 +84,31 @@ def test_convert_inline_internal_link_to_ac_link(tmp_path):
     )
 
 
+def test_convert_inline_escapes_internal_link_title_and_anchor(tmp_path):
+    pages_yaml = tmp_path / "pages.yaml"
+    pages_yaml.write_text(
+        """
+- page_id: "1"
+  title_orig: "Role & Policy > Guide"
+  path: ["role-policy"]
+""".strip(),
+        encoding="utf-8",
+    )
+    resolver = LinkResolver(pages_yaml)
+
+    got = convert_inline(
+        "[Role & Policy](role-policy#role&policy)",
+        link_resolver=resolver,
+    )
+
+    assert (
+        got
+        == '<ac:link ac:anchor="role&amp;policy">'
+        '<ri:page ri:content-title="Role &amp; Policy &gt; Guide"></ri:page>'
+        "<ac:link-body>Role &amp; Policy</ac:link-body></ac:link>"
+    )
+
+
 def test_convert_inline_unresolved_link_keeps_anchor(tmp_path):
     pages_yaml = tmp_path / "pages.yaml"
     pages_yaml.write_text("[]", encoding="utf-8")

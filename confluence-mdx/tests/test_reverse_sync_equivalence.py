@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 
+from reverse_sync.dependencies import DependencyResult
 from reverse_sync.equivalence import (
     PUSH_EQUIVALENCE_POLICY,
     canonicalize_mdx,
@@ -212,7 +213,7 @@ def test_local_proof_requires_every_gate_and_returns_verified_local():
         idempotent_candidate_xhtml=candidate,
         source_identity_passed=True,
         base_parity_passed=True,
-        dependency_passed=True,
+        dependency_result=DependencyResult(True),
     )
 
     assert proof.status == "verified_local"
@@ -240,7 +241,7 @@ def test_local_proof_blocks_diagnostic_match_skips_and_non_idempotency():
         idempotent_candidate_xhtml=candidate + "<p>duplicate</p>",
         source_identity_passed=True,
         base_parity_passed=True,
-        dependency_passed=True,
+        dependency_result=DependencyResult(True),
     )
 
     assert proof.status == "blocked"
@@ -283,7 +284,7 @@ def test_insert_operation_is_not_claimed_idempotent_when_it_duplicates():
         idempotent_candidate_xhtml=applied_twice,
         source_identity_passed=True,
         base_parity_passed=True,
-        dependency_passed=True,
+        dependency_result=DependencyResult(True),
     )
 
     assert proof.push_eligible is False

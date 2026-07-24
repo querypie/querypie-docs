@@ -19,6 +19,14 @@ def test_golden_page_builds_verified_manifest_without_remote_put():
     original = (page_dir / "original.mdx").read_text()
     improved = (page_dir / "improved.mdx").read_text()
     frontmatter = yaml.safe_load(original.split("---", 2)[1])
+    improved = improved.replace(
+        "title: 'Reverse Sync Test Page'\n",
+        (
+            "title: 'Reverse Sync Test Page'\n"
+            f"confluenceUrl: '{frontmatter['confluenceUrl']}'\n"
+        ),
+        1,
+    )
     snapshot = PageSnapshot(
         page_id=page_id,
         status="current",
@@ -31,8 +39,14 @@ def test_golden_page_builds_verified_manifest_without_remote_put():
 
     result = run_verify(
         page_id=page_id,
-        original_src=MdxSource(original, str(page_dir / "original.mdx")),
-        improved_src=MdxSource(improved, str(page_dir / "improved.mdx")),
+        original_src=MdxSource(
+            original,
+            "main:src/content/ko/unreleased/reverse-sync-test-page.mdx",
+        ),
+        improved_src=MdxSource(
+            improved,
+            "src/content/ko/unreleased/reverse-sync-test-page.mdx",
+        ),
         page_dir=str(page_dir),
         base_snapshot=snapshot,
         for_push=True,

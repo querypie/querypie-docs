@@ -3,15 +3,22 @@
 MDX 블록의 content를 파싱하여 대상 XHTML 요소의 innerHTML로
 직접 교체할 수 있는 HTML 문자열을 생성한다.
 """
-import html
 import re
-from typing import List
+from typing import List, Optional
 
 from bs4 import BeautifulSoup, Tag
-from mdx_to_storage.inline import convert_inline, _BADGE_INLINE_RE, _replace_badge
+from mdx_to_storage.inline import (
+    convert_heading_inline,
+    convert_inline,
+)
+from mdx_to_storage.link_resolver import LinkResolver
 
 
-def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
+def mdx_block_to_inner_xhtml(
+    content: str,
+    block_type: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """MDX 블록 content → XHTML inner HTML.
 
     heading:    "## Title\\n" → "Title"
@@ -22,37 +29,36 @@ def mdx_block_to_inner_xhtml(content: str, block_type: str) -> str:
     text = content.strip()
 
     if block_type == 'heading':
-        return _convert_heading(text)
+        return _convert_heading(text, link_resolver=link_resolver)
     elif block_type == 'paragraph':
-        return _convert_paragraph(text)
+        return _convert_paragraph(text, link_resolver=link_resolver)
     elif block_type == 'callout':
-        return _convert_callout_inner(text)
+        return _convert_callout_inner(text, link_resolver=link_resolver)
     elif block_type == 'blockquote':
-        return _convert_blockquote_inner(text)
+        return _convert_blockquote_inner(text, link_resolver=link_resolver)
     elif block_type == 'list':
-        return _convert_list_content(text)
+        return _convert_list_content(text, link_resolver=link_resolver)
     elif block_type == 'code_block':
         return _convert_code_block(text)
     elif block_type == 'html_block':
-        return _convert_html_block_inner(text)
+        return _convert_html_block_inner(text, link_resolver=link_resolver)
     else:
-        return convert_inline(text)
+        return convert_inline(text, link_resolver=link_resolver)
 
 
-def _convert_heading(text: str) -> str:
+def _convert_heading(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """heading: # 마커 제거 후 인라인 변환 (bold는 마커만 제거)."""
     stripped = re.sub(r'^#+\s+', '', text)
-    # heading 내부의 **bold**는 <strong> 변환 없이 마커만 제거
-    # (forward converter가 heading 내부 strong을 strip하므로)
-    stripped = re.sub(r'\*\*(.+?)\*\*', r'\1', stripped)
-    # code span, link, Badge는 변환
-    stripped = _convert_code_spans(stripped)
-    stripped = _convert_links(stripped)
-    stripped = _BADGE_INLINE_RE.sub(_replace_badge, stripped)
-    return stripped
+    return convert_heading_inline(stripped, link_resolver=link_resolver)
 
 
-def _convert_paragraph(text: str) -> str:
+def _convert_paragraph(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """paragraph: 인라인 변환 적용. 여러 줄이면 join."""
     lines = text.split('\n')
     converted = []
@@ -60,11 +66,14 @@ def _convert_paragraph(text: str) -> str:
         line = line.strip()
         if not line:
             continue
-        converted.append(convert_inline(line))
+        converted.append(convert_inline(line, link_resolver=link_resolver))
     return ' '.join(converted)
 
 
-def _convert_callout_inner(text: str) -> str:
+def _convert_callout_inner(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """callout: <Callout> 래퍼 태그를 제거하고 내부 텍스트를 paragraph로 변환."""
     lines = text.splitlines()
     if lines and lines[0].strip().startswith('<Callout'):
@@ -72,10 +81,13 @@ def _convert_callout_inner(text: str) -> str:
     if lines and lines[-1].strip().startswith('</Callout'):
         lines = lines[:-1]
     inner = '\n'.join(lines).strip()
-    return _convert_paragraph(inner)
+    return _convert_paragraph(inner, link_resolver=link_resolver)
 
 
-def _convert_blockquote_inner(text: str) -> str:
+def _convert_blockquote_inner(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """blockquote: > prefix를 제거하고 내용을 <p>로 감싼다.
 
     XHTML에서 blockquote는 <blockquote><p>...</p></blockquote> 구조를 사용한다.
@@ -89,7 +101,7 @@ def _convert_blockquote_inner(text: str) -> str:
         stripped = re.sub(r'^>\s?', '', line)
         stripped_lines.append(stripped)
     inner = '\n'.join(stripped_lines).strip()
-    converted = _convert_paragraph(inner)
+    converted = _convert_paragraph(inner, link_resolver=link_resolver)
     return f'<p>{converted}</p>'
 
 
@@ -104,14 +116,17 @@ def _convert_code_block(text: str) -> str:
     return '\n'.join(lines)
 
 
-def _convert_html_block_inner(text: str) -> str:
+def _convert_html_block_inner(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """html_block: inline 변환 후 루트 요소의 innerHTML만 반환한다.
 
     html_block content는 ``<table>...**bold**...</table>`` 처럼
     outer 태그를 포함하므로, inline 변환 후 루트 요소를 벗겨내야
     _replace_inner_html()에서 중첩이 발생하지 않는다.
     """
-    converted = convert_inline(text)
+    converted = convert_inline(text, link_resolver=link_resolver)
     soup = BeautifulSoup(converted, 'html.parser')
     root = soup.find(True)  # 첫 번째 태그 요소
     if isinstance(root, Tag):
@@ -119,20 +134,13 @@ def _convert_html_block_inner(text: str) -> str:
     return converted
 
 
-def _convert_code_spans(text: str) -> str:
-    """code span만 변환 (`text` → <code>text</code>)."""
-    return re.sub(r'`([^`]+)`', lambda m: f'<code>{html.escape(m.group(1))}</code>', text)
-
-
-def _convert_links(text: str) -> str:
-    """link만 변환 ([text](url) → <a href="url">text</a>)."""
-    return re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', text)
-
-
-def _convert_list_content(text: str) -> str:
+def _convert_list_content(
+    text: str,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """리스트 블록 → <li><p>...</p></li> 구조의 inner HTML."""
     items = _parse_list_items(text)
-    return _render_list_items(items)
+    return _render_list_items(items, link_resolver=link_resolver)
 
 
 def _parse_list_items(content: str) -> List[dict]:
@@ -180,7 +188,10 @@ def _parse_list_items(content: str) -> List[dict]:
     return items
 
 
-def _render_list_items(items: List[dict]) -> str:
+def _render_list_items(
+    items: List[dict],
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """파싱된 리스트 아이템을 <li><p>...</p></li> HTML로 렌더링한다.
 
     중첩 리스트: indent 기반으로 <li> 안에 <ul>/<ol> 중첩.
@@ -193,7 +204,10 @@ def _render_list_items(items: List[dict]) -> str:
     i = 0
     while i < len(items):
         item = items[i]
-        inner = convert_inline(item['content'])
+        inner = convert_inline(
+            item['content'],
+            link_resolver=link_resolver,
+        )
 
         # 다음 아이템이 더 깊은 indent인지 확인 → 중첩 리스트
         children_start = i + 1
@@ -204,7 +218,10 @@ def _render_list_items(items: List[dict]) -> str:
         if children_end > children_start:
             # 중첩 리스트가 있는 경우
             child_items = items[children_start:children_end]
-            child_html = _render_nested_list(child_items)
+            child_html = _render_nested_list(
+                child_items,
+                link_resolver=link_resolver,
+            )
             result_parts.append(f'<li><p>{inner}</p>{child_html}</li>')
             i = children_end
         else:
@@ -214,20 +231,30 @@ def _render_list_items(items: List[dict]) -> str:
     return ''.join(result_parts)
 
 
-def _render_nested_list(items: List[dict]) -> str:
+def _render_nested_list(
+    items: List[dict],
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """중첩 리스트 아이템을 <ul>/<ol>로 감싸서 렌더링한다."""
     if not items:
         return ''
     ordered = items[0]['ordered']
-    inner = _render_list_items(items)
+    inner = _render_list_items(items, link_resolver=link_resolver)
     if ordered:
         return f'<ol start="1">{inner}</ol>'
     return f'<ul>{inner}</ul>'
 
 
-def mdx_block_to_xhtml_element(block) -> str:
+def mdx_block_to_xhtml_element(
+    block,
+    link_resolver: Optional[LinkResolver] = None,
+) -> str:
     """MDX 블록을 완전한 Confluence XHTML 요소(outer tag 포함)로 변환한다."""
-    inner = mdx_block_to_inner_xhtml(block.content, block.type)
+    inner = mdx_block_to_inner_xhtml(
+        block.content,
+        block.type,
+        link_resolver=link_resolver,
+    )
 
     if block.type == 'heading':
         level = _detect_heading_level(block.content)

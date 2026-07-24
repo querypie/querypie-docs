@@ -37,7 +37,7 @@ from reverse_sync.equivalence import (
 from xhtml_beautify_diff import xhtml_diff
 
 _PUSH_VERIFIER_POLICY = PUSH_EQUIVALENCE_POLICY
-_TOOL_VERSION = "reverse-sync-cli-v2"
+_TOOL_VERSION = "reverse-sync-cli-v3"
 
 
 @dataclass
@@ -372,6 +372,7 @@ def run_verify(
     language: str = None,
     page_dir: str = None,
     base_snapshot=None,
+    attachment_catalog=None,
     for_push: bool = False,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
@@ -385,6 +386,9 @@ def run_verify(
 
     original_mdx = original_src.content
     improved_mdx = improved_src.content
+    dependency_result = None
+    link_resolver = None
+    attachment_filenames: frozenset[str] = frozenset()
 
     _validate_improved_mdx(improved_mdx, improved_src.descriptor)
 
@@ -398,10 +402,12 @@ def run_verify(
         )
     if base_snapshot is not None:
         from reverse_sync.base_parity import (
-            verify_attachment_dependencies,
+            load_provenance_storage_xhtml,
             verify_base_parity,
+            verify_repository_source_identity,
             verify_source_identity,
         )
+        from reverse_sync.dependencies import verify_dependencies
 
         if base_snapshot.page_id != str(page_id) or base_snapshot.status != "current":
             return _blocked_result(
@@ -411,10 +417,14 @@ def run_verify(
                 "invalid_page_snapshot",
                 detail="snapshot page ID 또는 status가 요청과 다릅니다.",
             )
-        source_identity = verify_source_identity(
+        pages_path = _PROJECT_DIR / "var" / "pages.qm.yaml"
+        source_identity = verify_repository_source_identity(
             base_snapshot,
             original_mdx,
             improved_mdx,
+            original_descriptor=original_src.descriptor,
+            improved_descriptor=improved_src.descriptor,
+            pages_path=pages_path,
         )
         if not source_identity.passed:
             return _blocked_result(
@@ -424,19 +434,25 @@ def run_verify(
                 source_identity.reason_code,
                 detail=source_identity.diff_report,
             )
-        dependency = verify_attachment_dependencies(
-            base_snapshot,
-            original_mdx,
-            improved_mdx,
+        dependency_result, link_resolver = verify_dependencies(
+            page_id=page_id,
+            original_mdx=original_mdx,
+            improved_mdx=improved_mdx,
+            pages_path=pages_path,
+            attachment_catalog=attachment_catalog,
         )
-        if not dependency.passed:
+        if not dependency_result.passed:
             return _blocked_result(
                 var_dir,
                 page_id,
                 now,
-                dependency.reason_code,
-                detail=dependency.diff_report,
+                dependency_result.reason_code,
+                detail=dependency_result.detail,
             )
+        attachment_filenames = frozenset(
+            requirement.filename
+            for requirement in dependency_result.evidence.attachments
+        )
 
         base_xhtml_path = var_dir / "reverse-sync.base.xhtml"
         base_mdx_path = var_dir / "reverse-sync.base.mdx"
@@ -449,10 +465,20 @@ def run_verify(
             page_dir=page_dir,
         )
         converted_base_mdx = base_mdx_path.read_text()
+        provenance_dir = (
+            Path(page_dir)
+            if page_dir
+            else _PROJECT_DIR / "var" / page_id
+        )
         base_parity = verify_base_parity(
             base_snapshot,
             original_mdx,
             converted_base_mdx,
+            provenance_storage_xhtml=load_provenance_storage_xhtml(
+                provenance_dir / "page.v1.yaml",
+                expected_page_id=page_id,
+            ),
+            require_confluence_url=True,
         )
         if not base_parity.passed:
             return _blocked_result(
@@ -505,6 +531,8 @@ def run_verify(
         alignment=alignment,
         page_lost_info=page_lost_info,
         roundtrip_sidecar=roundtrip_sidecar,
+        link_resolver=link_resolver,
+        attachment_filenames=attachment_filenames,
     )
 
     # mapping.original.yaml artifact 저장
@@ -564,6 +592,7 @@ def run_verify(
             base_snapshot,
             improved_mdx,
             verify_mdx,
+            require_confluence_url=True,
         )
         if not candidate_identity.passed:
             return _blocked_result(
@@ -634,6 +663,8 @@ def run_verify(
             alignment=alignment,
             page_lost_info=page_lost_info,
             roundtrip_sidecar=roundtrip_sidecar,
+            link_resolver=link_resolver,
+            attachment_filenames=attachment_filenames,
         )
         deterministic_plan_json = canonical_plan_json(
             changes=changes,
@@ -673,6 +704,8 @@ def run_verify(
                     alignment=idempotency_alignment,
                     page_lost_info=page_lost_info,
                     roundtrip_sidecar=candidate_sidecar,
+                    link_resolver=link_resolver,
+                    attachment_filenames=attachment_filenames,
                 )
                 idempotent_candidate = (
                     ""
@@ -701,7 +734,7 @@ def run_verify(
             idempotent_candidate_xhtml=idempotent_candidate,
             source_identity_passed=True,
             base_parity_passed=True,
-            dependency_passed=True,
+            dependency_result=dependency_result,
         )
         proof_json = proof.to_canonical_json()
         (var_dir / "reverse-sync.proof.json").write_text(proof_json)
@@ -1116,12 +1149,22 @@ def _do_verify(args, *, config=None, prepare_push: bool = False) -> dict:
     page_dir = getattr(args, 'page_dir', None)
     xhtml_path = str(Path(page_dir) / 'page.xhtml') if page_dir else None
     base_snapshot = None
+    attachment_catalog = None
     if prepare_push:
-        from reverse_sync.confluence_client import get_page_snapshot
+        from reverse_sync.confluence_client import (
+            get_attachment_catalog,
+            get_page_snapshot,
+        )
+        from reverse_sync.dependencies import added_attachment_filenames
 
         if config is None:
             config = _ensure_confluence_config()
         base_snapshot = get_page_snapshot(config, page_id)
+        if added_attachment_filenames(
+            original_src.content,
+            improved_src.content,
+        ):
+            attachment_catalog = get_attachment_catalog(config, page_id)
 
     return run_verify(
         page_id=page_id,
@@ -1132,6 +1175,7 @@ def _do_verify(args, *, config=None, prepare_push: bool = False) -> dict:
         no_normalize=getattr(args, 'no_normalize', False),
         page_dir=page_dir,
         base_snapshot=base_snapshot,
+        attachment_catalog=attachment_catalog,
         for_push=prepare_push,
     )
 
@@ -1320,7 +1364,12 @@ def _do_push(page_id: str, config=None, manifest_path: str = None):
         actual_mdx = persisted_mdx_path.read_text()
         from reverse_sync.base_parity import verify_source_identity
 
-        identity = verify_source_identity(snapshot, expected_mdx, actual_mdx)
+        identity = verify_source_identity(
+            snapshot,
+            expected_mdx,
+            actual_mdx,
+            require_confluence_url=True,
+        )
         if not identity.passed:
             return False
         return verify_push_equivalence(

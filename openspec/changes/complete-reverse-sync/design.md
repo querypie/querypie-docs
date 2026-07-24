@@ -44,6 +44,8 @@
 
 [Confluence Cloud REST API v2 Page](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-page/)는 Storage representation과 version을 포함한 page 조회 및 version을 포함한 page update를 제공합니다. 또한 current version update가 draft에 reconciliation될 수 있고, 두 content가 크게 다르면 제공한 current body가 draft를 덮을 수 있음을 명시합니다.
 
+[Confluence Cloud REST API v2 Attachment](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-attachment/)는 page attachment 목록과 cursor pagination을 제공합니다. reverse-sync는 모든 page를 조회한 current attachment catalog를 새 attachment reference의 dependency snapshot으로 사용합니다.
+
 따라서 version number만 확인해서는 충분하지 않습니다.
 
 - 검증에 사용한 body와 원격 current body가 같은지 확인해야 합니다.
@@ -192,6 +194,21 @@ active_draft: false
 
 base parity 실패 상태에서 patch를 계속 만들 수는 있지만 결과는 diagnostic이며 push할 수 없습니다. 기본 CLI는 즉시 block합니다.
 
+구현은 `page.v1.yaml`의 page ID와 Storage body를 classification-only provenance로
+사용합니다. 이 provenance body가 현재 remote body와 같으면 converter drift,
+다르면 stale original로 분류합니다. provenance는 실패 사유만 세분화하며
+push eligibility를 부여하지 않습니다.
+
+source identity는 다음 세 값을 하나로 결합합니다.
+
+- current `PageSnapshot.page_id`
+- original/improved frontmatter의 `confluenceUrl` page ID
+- original/improved descriptor의 동일한 `src/content/ko/**.mdx` path와
+  `pages.qm.yaml`의 유일한 page ID/path row
+
+frontmatter title과 첫 H1도 각 문서 안에서 같아야 하며 original/improved 사이에서
+변경되지 않아야 합니다.
+
 ### Decision: block identity는 provenance-first로 해결합니다
 
 우선순위는 다음과 같습니다.
@@ -242,7 +259,8 @@ changed fragment는 capability registry에 따라 다음 전략 중 하나를 �
 | `raw_html_table_edit` | blocked | 명시적으로 승인된 cell text-only 전략 전까지 차단 |
 | `unknown_macro_mutation` | blocked | unchanged macro는 byte-preserving |
 | `page_title_change` | blocked | 별도 page mutation contract 필요 |
-| `new_attachment_reference` | blocked | attachment upload contract 필요 |
+| `existing_attachment_reference` | conditional | current catalog에 유일한 filename이 있어야 함 |
+| `new_attachment_lifecycle` | blocked | attachment upload/update/delete contract 필요 |
 | `active_draft_reconciliation` | blocked | 자동 merge하지 않음 |
 
 registry entry는 다음을 가져야 합니다.
@@ -364,29 +382,37 @@ publisher의 순서는 다음과 같습니다.
 1. verified manifest와 candidate hash를 검증합니다.
 2. 원격 current `PageSnapshot R`을 단일 조회로 가져옵니다.
 3. `R.page_id`, `R.status`, `R.version`, `R.title`, `R.storage_sha256`를 base `B`와 비교합니다.
-4. `R`이 base와 다르지만 이미 improved MDX와 동등하면 PUT을 생략하고 `already_applied`로 기록합니다.
-5. active draft가 확인되면 `active_draft`로 차단합니다.
-6. base와 다른 나머지 경우는 `remote_drift`로 차단하고 PUT을 호출하지 않습니다.
-7. `version = B.version + 1`, `title = B.title`, `body = C`로 update합니다.
-8. API conflict는 HTTP 409만 가정하지 않고 adapter가 version conflict response를 표준 reason으로 변환합니다.
-9. 성공 응답 후 원격 `PageSnapshot P`를 다시 가져옵니다.
-10. `P.version == B.version + 1`이고 `forward(P.body) == I`인지 검증합니다.
-11. 통과하면 `remote_verified`, 실패하면 `postcondition_failed`로 기록합니다.
+4. active draft가 확인되면 `active_draft`로 차단합니다.
+5. local proof가 요구한 attachment filename과 internal page ID/title을 원격에서 다시 확인합니다.
+6. `R`이 base와 다르지만 이미 improved MDX와 동등하면 PUT을 생략하고 `already_applied`로 기록합니다.
+7. base와 다른 나머지 경우는 `remote_drift`로 차단하고 PUT을 호출하지 않습니다.
+8. `version = B.version + 1`, `title = B.title`, `body = C`로 update합니다.
+9. API conflict는 HTTP 409만 가정하지 않고 adapter가 version conflict response를 표준 reason으로 변환합니다.
+10. 성공 응답 후 원격 `PageSnapshot P`를 다시 가져옵니다.
+11. `P.version == B.version + 1`이고 `forward(P.body) == I`인지 검증합니다.
+12. 통과하면 `remote_verified`, 실패하면 `postcondition_failed`로 기록합니다.
 
 preflight와 PUT 사이의 race는 API version compare-and-set이 방어합니다. preflight에서 latest version을 읽어 새 base로 채택하지 않습니다.
 
 active draft 감지 방식은 Confluence v2 adapter contract test와 canary에서 확정합니다. API가 안정적으로 draft 존재 여부를 제공하지 못하면 push를 허용하는 조건과 운영 절차를 별도 승인하기 전까지 자동 push rollout을 중단합니다.
 
-### Decision: title과 attachment를 조용히 무시하지 않습니다
+### Decision: title과 dependency를 조용히 무시하지 않습니다
 
 첫 구현에서 다음은 block reason입니다.
 
 - original/improved frontmatter title 또는 첫 H1이 변경됨
-- frontmatter title과 첫 H1이 일치하지 않음
-- improved MDX가 base에 존재하지 않는 attachment filename을 참조함
-- link resolver가 `#link-error` 또는 ambiguous page를 생성함
+- 각 문서의 frontmatter title과 첫 H1이 일치하지 않음
+- improved MDX가 current attachment catalog에 없는 filename을 새로 참조함
+- link resolver가 target을 resolve하지 못하거나 여러 page가 일치함
+- verify 이후 push preflight에서 attachment가 사라지거나 linked page ID/title이 바뀜
 
-향후 title update와 attachment upload는 별도 capability와 별도 API transaction으로 추가합니다. body update에 암묵적으로 섞지 않습니다.
+이미 page에 존재하는 attachment의 새 reference는 catalog identity를 local proof에
+기록하고 push 직전에 filename 존재를 다시 확인한 경우에만 허용합니다. Markdown
+internal link는 catalog path로 유일하게 resolve하여 Confluence `ac:link`/`ri:page`
+macro로 렌더링하고, target page ID/status/title을 push 직전에 재검증합니다.
+
+향후 title update와 attachment upload/update/delete는 별도 capability와 별도 API
+transaction으로 추가합니다. body update에 암묵적으로 섞지 않습니다.
 
 ### Decision: batch push는 page별 독립 transaction입니다
 
@@ -420,7 +446,7 @@ planned
 - input: `page_identity_mismatch`, `stale_original_mdx`, `base_parity_mismatch`
 - planning: `missing_identity`, `ambiguous_target`, `unsupported_capability`
 - proof: `skipped_change`, `preservation_mismatch`, `semantic_mismatch`, `artifact_tampered`
-- dependency: `missing_attachment`, `link_resolution_error`, `title_change_unsupported`
+- dependency: `missing_attachment`, `internal_link_unresolved`, `ambiguous_target`, `title_change_unsupported`
 - publish: `active_draft`, `remote_drift`, `version_conflict`, `permission_denied`
 - postcondition: `persisted_body_mismatch`, `persisted_version_mismatch`
 - system: `network_error`, `parse_error`, `converter_error`
@@ -447,7 +473,8 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | --- | --- |
 | immutable model/state/reason | `reverse_sync/models.py` |
 | Confluence snapshot adapter | `reverse_sync/confluence_client.py`, `reverse_sync/snapshot.py` |
-| base parity와 dependency gate | `reverse_sync/base_parity.py` |
+| base parity | `reverse_sync/base_parity.py` |
+| attachment/link dependency gate | `reverse_sync/dependencies.py` |
 | capability/identity/edit planning | `reverse_sync/planner.py`, `reverse_sync/capabilities.py` |
 | visible edit/node operation | `reverse_sync/visible_model.py`, `reverse_sync/operations.py` |
 | capability별 render | `reverse_sync/strategies/**` |
@@ -469,7 +496,8 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | normalized/lenient match | 무관 | 불가 | diagnostic only |
 | skipped/unsupported 존재 | 무관 | 불가 | `intent_complete` 실패 |
 | title 변경 | 무관 | 불가 | 첫 구현 범위 밖 |
-| 새 attachment 참조 | 무관 | 불가 | attachment transaction 없음 |
+| 기존 attachment 새 참조 | catalog와 preflight에서 filename 존재 | 가능 | upload는 수행하지 않음 |
+| 존재하지 않는 attachment 참조 | 무관 | 불가 | `missing_attachment` |
 | active draft | 무관 | 불가 | draft reconciliation 자동화 없음 |
 | artifact hash 불일치 | 무관 | 불가 | 검증 payload와 push payload 불일치 |
 
@@ -536,6 +564,8 @@ full emitter는 `owned_replace` 가능한 clean fragment와 insert에만 사용�
 ### Phase 2: base parity와 strict proof
 
 - page identity, base parity, dependency gate를 추가합니다.
+- existing attachment와 internal page dependency evidence를 manifest에 결합하고
+  publisher preflight에서 다시 확인합니다.
 - verifier normalization을 typed equivalence로 분류합니다.
 - skipped change와 diagnostic match가 push eligibility를 얻지 못하도록 합니다.
 
