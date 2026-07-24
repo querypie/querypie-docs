@@ -46,6 +46,8 @@
 
 [Confluence Cloud REST API v2 Attachment](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-attachment/)는 page attachment 목록과 cursor pagination을 제공합니다. reverse-sync는 모든 page를 조회한 current attachment catalog를 새 attachment reference의 dependency snapshot으로 사용합니다.
 
+[Confluence Cloud REST API v1 Content - attachments](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-content---attachments/)는 multipart upload와 attachment ID 기반 binary update를 제공합니다. v2는 attachment delete를 제공하지만 write API가 하나의 versioned transaction으로 통합되어 있지 않으므로 page body update와 attachment mutation을 원자적으로 묶을 수 없습니다.
+
 따라서 version number만 확인해서는 충분하지 않습니다.
 
 - 검증에 사용한 body와 원격 current body가 같은지 확인해야 합니다.
@@ -510,6 +512,148 @@ macro로 렌더링하고, target page ID/status/title을 push 직전에 재검�
 향후 title update와 attachment upload/update/delete는 별도 capability와 별도 API
 transaction으로 추가합니다. body update에 암묵적으로 섞지 않습니다.
 
+### Decision: P2 capability는 현재 body contract와 분리합니다
+
+P2는 현재 publisher의 허용 범위를 넓히지 않습니다. 각 항목은 별도 OpenSpec
+change, typed intent, manifest schema, canary를 가져야 하며 그 전까지 기존
+block reason을 유지합니다.
+
+#### Page title mutation
+
+`page_title_change`는 body block diff가 아니라 page resource mutation입니다.
+후속 change는 최소한 다음 계약을 가져야 합니다.
+
+- `PageTitleMutation(base_title, target_title)`을 body `PatchPlan`과 분리해
+  manifest에 기록합니다.
+- original frontmatter title, original H1, `PageSnapshot.title`이 같은
+  base identity를 가리키고 improved frontmatter title과 improved H1도
+  `target_title`로 일치해야 합니다.
+- preflight에서 page ID, status, version, base title, body hash, active draft를
+  현재 body publisher와 동일하게 확인합니다.
+- title과 body를 함께 바꾸는 경우 `PUT /pages/{id}`의 versioned payload에
+  target title과 candidate body를 함께 넣고, 하나의 target version으로
+  postcondition을 검증합니다.
+- title-only mutation도 base body를 candidate body로 고정한 versioned page
+  update로 처리합니다. version precondition이 없는 `PUT /pages/{id}/title`을
+  reverse-sync publisher의 CAS 경계로 사용하지 않습니다.
+- postcondition은 target version, target title, body hash/semantic roundtrip을
+  모두 확인합니다.
+
+이 capability는 body canary 이후 별도 change로 도입합니다. 현재
+`title_change_unsupported`는 유지합니다.
+
+#### Attachment lifecycle
+
+attachment mutation은 page body PUT과 원자적으로 묶을 수 없으므로
+`new_attachment_lifecycle` 하나로 뭉개지 않고 다음 typed intent로 나눕니다.
+
+```text
+AttachmentCreate(filename, blob_sha256, media_type, expected_absent)
+AttachmentVersionUpdate(attachment_id, filename, base_version, blob_sha256)
+AttachmentDelete(attachment_id, filename, base_version, expected_unreferenced)
+```
+
+각 intent는 source file hash, target page ID, catalog hash, attachment ID와
+version precondition을 manifest에 기록해야 합니다. filename upsert는 같은
+filename의 identity가 유일하게 증명된 create에만 제한하고, 기존 attachment
+update는 attachment ID 기반 endpoint를 사용합니다.
+
+transaction 순서는 다음과 같습니다.
+
+1. current page와 전체 attachment catalog를 preflight합니다.
+2. create/update를 실행하고 post-catalog에서 ID, filename, version, binary
+   identity를 확인합니다.
+3. 해당 attachment를 참조하는 page body를 versioned PUT하고 page
+   postcondition을 확인합니다.
+4. delete는 candidate body에서 reference가 제거되고 page postcondition이
+   통과한 뒤에만 실행합니다.
+
+page update 실패 전에 attachment create/update가 성공하면 orphan 또는 불필요한
+attachment version이 남을 수 있고, delete는 복원 불가능할 수 있습니다. 따라서
+자동 rollback을 성공으로 간주하지 않으며 실행별 receipt와 manual recovery
+절차를 남깁니다. create, update, delete는 각각 별도 canary를 통과하기 전까지
+`missing_attachment` 또는 `new_attachment_lifecycle`로 block합니다.
+
+#### Preserved anchor target
+
+현재 `preserved_anchor_template_rewrite`는 Confluence-owned link/image/macro의
+target metadata를 보존하면서 visible text와 whitespace만 바꾸는 capability로
+고정합니다. preserved unit의 `href`, `ac:anchor`, `ri:page` title/ID,
+`ri:attachment` filename이 바뀌는 mutation은 지원하지 않습니다.
+
+- base/candidate의 preservation-unit target fingerprint가 다르면
+  `unsupported_capability`로 block해야 합니다.
+- Markdown source가 명시적으로 소유하는 link target 변경은 preserved anchor
+  mutation이 아니라 기존 link dependency/owned text capability로 처리합니다.
+- preserved target mutation을 지원하려면 target 종류별 typed intent와
+  dependency preflight/postcondition을 정의하는 별도 change가 필요합니다.
+
+따라서 generic template rewrite에 target 변경 heuristic을 추가하지 않습니다.
+
+#### Raw HTML table cell text mutation
+
+향후 `raw_html_table_edit`를 허용하는 최소 단위는
+`RawTableCellTextMutation`입니다.
+
+```text
+table_root_xpath
+table_fragment_sha256
+row_path / cell_path / text_node_path
+cell_subtree_sha256
+old_visible_text / new_visible_text
+table_structure_fingerprint
+preservation_unit_fingerprint
+```
+
+`table_structure_fingerprint`는 section/row/cell 수, `rowspan`/`colspan`,
+cell tag와 attribute를 포함합니다. 다음 조건을 모두 증명한 경우에만
+executable operation을 만들 수 있습니다.
+
+- 변경 대상은 하나의 cell 안 plain text leaf로 유일하게 식별됩니다.
+- table/cell attribute, row/cell 구조, nested block, link, macro, attachment,
+  inline markup과 preservation unit fingerprint가 base와 같습니다.
+- renderer는 table을 다시 emit하지 않고 지정된 text node만 바꿉니다.
+- 나머지 table fragment는 byte-equal이고 candidate는 well-formed,
+  deterministic, idempotent이며 forward roundtrip이 target MDX와 동등합니다.
+
+row/cell 추가·삭제·reorder, span 변경, nested table, preserved unit 변경은 이
+capability에 포함하지 않습니다. 최소 두 개의 실제 page golden fixture와
+ambiguous text-node negative fixture가 별도 change의 진입 조건입니다.
+
+#### Active draft
+
+active draft가 있는 current page update는 공식 API가 content reconciliation을
+수행하고 diverged draft를 덮을 수 있으므로 계속 `active_draft`로 block합니다.
+첫 draft-aware change는 자동 merge나 강제 overwrite가 아니라 다음 read-only
+reconciliation evidence만 생성합니다.
+
+- current `PageSnapshot`과 `get-draft` 응답의 page ID, status, version, title,
+  body hash
+- `forward(current)`, `forward(draft)`, improved MDX의 typed diff
+- current/draft/improved가 같은 capability target을 변경하는지에 대한 conflict
+  classification
+
+사람이 Confluence UI에서 draft를 publish/discard/reconcile한 뒤 새 current
+snapshot으로 manifest를 다시 만들어야 합니다. 공식 API와 canary에서
+versioned draft update 및 postcondition 계약을 별도로 증명하기 전에는
+draft write mode를 추가하지 않습니다.
+
+#### Remote drift merge
+
+remote drift 자동 three-way merge는 현재 범위에서 도입하지 않기로 결정합니다.
+후속 검토의 진입 조건은 다음과 같습니다.
+
+- base/current/improved 각각의 provenance identity가 같은 stable target을
+  가리킵니다.
+- capability마다 commute 가능한 독립 edit와 conflict edit가 정의됩니다.
+- preservation unit, macro, attachment, title, draft mutation은 conflict
+  semantics가 별도로 존재합니다.
+- merged candidate가 preservation, semantic roundtrip, determinism,
+  idempotency gate를 모두 다시 통과합니다.
+
+이 조건 전에는 `remote_drift`에서 PUT을 0회로 유지하고 fetch → forward
+conversion → repository MDX merge → 새 manifest 생성을 요구합니다.
+
 ### Decision: batch push는 page별 독립 transaction입니다
 
 batch는 다음 순서로 동작합니다.
@@ -741,8 +885,6 @@ P0 push safety를 planner refactor와 분리하여 먼저 적용합니다. 기�
 
 1. QueryPie Confluence space에서 v2 `get-draft`가 active draft를 안정적으로 식별하는지 canary로 확인해야 합니다.
 2. push equivalence v1에서 허용할 formatting-only 차이를 table padding 외에 어디까지 둘지 reviewer 합의가 필요합니다.
-3. page title update를 별도 capability로 언제 도입할지 결정해야 합니다.
-4. 새 attachment upload와 기존 attachment version 변경을 별도 transaction으로 지원할지 결정해야 합니다.
-5. postcondition 실패 시 conditional automatic restore를 도입할지 별도 safety review가 필요합니다.
-6. 실행 artifact 보존 기간과 민감 정보 redaction 정책을 정해야 합니다.
-7. Confluence v1 client를 즉시 제거할지, v2 adapter 안정화 기간 동안 fallback으로 유지할지 결정해야 합니다.
+3. postcondition 실패 시 conditional automatic restore를 도입할지 별도 safety review가 필요합니다.
+4. 실행 artifact 보존 기간과 민감 정보 redaction 정책을 정해야 합니다.
+5. Confluence v1 client를 attachment write 전용 adapter로 격리할지 결정해야 합니다.
