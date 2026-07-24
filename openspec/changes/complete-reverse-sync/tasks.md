@@ -488,7 +488,7 @@ rg -n "api_token|Authorization|confluence\\.conf" confluence-mdx/var confluence-
 
 - [ ] P0/P1 구현과 canary가 완료되면 change-local `contract-reverse-sync`를 accepted spec으로 승격합니다.
 - [ ] `openspec/specs/README.md` inventory에 `contract-reverse-sync`를 추가합니다.
-- [ ] `docs/architecture.md`의 current-state 설명을 최종 module/state 이름과 동기화합니다.
+- [x] `confluence-mdx/docs/architecture.md`의 current-state 설명을 최종 module/state 이름과 동기화합니다.
 - [x] `.agents/skills/reverse-sync/SKILL.md`의 CLI와 artifact 경로를 새 lifecycle에 맞게 갱신합니다.
   - offline diagnostic과 online prepare/publish를 구분합니다.
   - explicit manifest, immutable run artifact, batch partial/resume 계약과
