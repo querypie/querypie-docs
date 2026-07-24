@@ -33,8 +33,8 @@ from reverse_sync.reconstructors import (
     rewrite_on_stored_template,
 )
 from reverse_sync.visible_segments import (
-    extract_list_model_from_mdx,
-    extract_list_model_from_xhtml,
+    extract_visible_model_from_mdx,
+    extract_visible_model_from_xhtml,
 )
 
 
@@ -52,6 +52,24 @@ _GENERATED_LINK = re.compile(
     r"<a\b([^>]*)>(.*?)</a>",
     flags=re.DOTALL | re.IGNORECASE,
 )
+
+
+def _mdx_visible_text(block: MdxBlock) -> str:
+    if block.type in {"paragraph", "heading"}:
+        return extract_visible_model_from_mdx(
+            block.content,
+            block.type,
+        ).visible_text
+    return normalize_mdx_to_plain(block.content, block.type)
+
+
+def _xhtml_visible_text(mapping: BlockMapping, block_type: str) -> str:
+    if block_type in {"paragraph", "heading"}:
+        return extract_visible_model_from_xhtml(
+            mapping.xhtml_text,
+            block_type,
+        ).visible_text
+    return mapping.xhtml_plain_text
 
 
 def _is_container_sidecar(sidecar_block: Optional[SidecarBlock]) -> bool:
@@ -1125,8 +1143,7 @@ def build_patches(
         if change.old_block.type in NON_CONTENT_TYPES:
             continue
 
-        old_plain = normalize_mdx_to_plain(
-            change.old_block.content, change.old_block.type)
+        old_plain = _mdx_visible_text(change.old_block)
 
         strategy, mapping = _resolve_mapping_for_change(
             change, old_plain, mappings, used_ids,
@@ -1200,9 +1217,18 @@ def build_patches(
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
-            old_list_model = extract_list_model_from_mdx(change.old_block.content)
-            new_list_model = extract_list_model_from_mdx(change.new_block.content)
-            xhtml_list_model = extract_list_model_from_xhtml(mapping.xhtml_text)
+            old_list_model = extract_visible_model_from_mdx(
+                change.old_block.content,
+                "list",
+            )
+            new_list_model = extract_visible_model_from_mdx(
+                change.new_block.content,
+                "list",
+            )
+            xhtml_list_model = extract_visible_model_from_xhtml(
+                mapping.xhtml_text,
+                "list",
+            )
             has_content_change = old_list_model.visible_text != new_list_model.visible_text
             has_structure_change = (
                 old_list_model.structural_fingerprint
@@ -1318,8 +1344,7 @@ def build_patches(
                 skipped_changes.append(table_skip)
             continue
 
-        new_plain = normalize_mdx_to_plain(
-            change.new_block.content, change.new_block.type)
+        new_plain = _mdx_visible_text(change.new_block)
 
         if strategy == 'containing':
             if mapping is not None:
@@ -1410,11 +1435,15 @@ def build_patches(
 
         # strategy == 'direct'
         _mark_used(mapping.block_id, mapping)
+        mapping_visible_text = _xhtml_visible_text(
+            mapping,
+            change.old_block.type,
+        )
 
         # 멱등성 체크: push 후 XHTML이 이미 업데이트된 경우 건너뜀
         # (old != xhtml 이고 new == xhtml → 이미 적용된 변경)
-        if (collapse_ws(old_plain) != collapse_ws(mapping.xhtml_plain_text)
-                and collapse_ws(new_plain) == collapse_ws(mapping.xhtml_plain_text)):
+        if (collapse_ws(old_plain) != collapse_ws(mapping_visible_text)
+                and collapse_ws(new_plain) == collapse_ws(mapping_visible_text)):
             continue
 
         sidecar_block = _find_roundtrip_sidecar_block(
@@ -1488,9 +1517,9 @@ def build_patches(
                 continue
             patches.append({
                 'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping.xhtml_plain_text,
+                'old_plain_text': mapping_visible_text,
                 'new_plain_text': _apply_mdx_diff_to_xhtml(
-                    old_plain, new_plain, mapping.xhtml_plain_text),
+                    old_plain, new_plain, mapping_visible_text),
             })
             continue
 
@@ -1503,7 +1532,7 @@ def build_patches(
 
         patches.append({
             'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping.xhtml_plain_text,
+            'old_plain_text': mapping_visible_text,
             'new_inner_xhtml': new_inner,
         })
 

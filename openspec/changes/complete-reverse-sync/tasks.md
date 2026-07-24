@@ -167,7 +167,12 @@
   - exact 후보가 없으면 `missing_identity`, 중복되면 `ambiguous_target`으로
     operation 생성 전에 block합니다.
 - [x] normalized text prefix fallback을 push-eligible path에서 제거합니다.
-- [ ] visible segment model을 paragraph, heading, list에 확장합니다.
+- [x] visible segment model을 paragraph, heading, list에 확장합니다.
+  - paragraph와 heading은 실제 inline emitter 결과에서 visible whitespace와
+    link/attachment/macro preservation unit metadata를 추출합니다.
+  - list는 기존 item path, marker, ordered start, anchor fingerprint를 같은 공통
+    dispatcher로 제공합니다.
+  - arbitrary macro/container는 기존 capability 경계에 남기고 일반화하지 않습니다.
 - [ ] strategy를 text block, list, preserved anchor, container, table로 분리합니다.
 - [x] unsupported table/macro 구조를 explicit block reason으로 전환합니다.
   - operation 생성 전 legacy skip도 원래 intent에 연결합니다.
@@ -317,10 +322,18 @@ provenance-first branch 검증 결과:
 - reverse-sync Python test: 797 passed
 - 전체 Python test: 1120 passed, 2 skipped
 
+visible segment branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- reverse-sync Python test: 801 passed
+- 전체 Python test: 1124 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
-이번 변경은 Python planner 범위이므로 전체 Python test
-(`1120 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+이번 변경은 Python planner/renderer adapter 범위이므로 전체 Python test
+(`1124 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

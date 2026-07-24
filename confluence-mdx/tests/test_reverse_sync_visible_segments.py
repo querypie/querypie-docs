@@ -1,9 +1,72 @@
-"""Visible segment extraction tests for reverse sync list phase 1."""
+"""Visible segment extraction tests for reverse sync text-bearing blocks."""
 
 from reverse_sync.visible_segments import (
     extract_list_model_from_mdx,
     extract_list_model_from_xhtml,
+    extract_visible_model_from_mdx,
+    extract_visible_model_from_xhtml,
 )
+
+
+class TestExtractTextBlockModel:
+    def test_paragraph_uses_rendered_visible_whitespace_and_tracks_link(self):
+        model = extract_visible_model_from_mdx(
+            "  Before **bold**\nnext [Link](https://example.com)  \n",
+            "paragraph",
+        )
+
+        assert model.visible_text == "Before bold next Link"
+        assert model.structural_fingerprint == (
+            "paragraph",
+            None,
+            ("link",),
+        )
+        assert any(
+            segment.kind == "ws" and segment.text == " "
+            for segment in model.segments
+        )
+        link = next(
+            segment
+            for segment in model.segments
+            if segment.kind == "anchor"
+        )
+        assert link.meta["href"] == "https://example.com"
+        assert link.meta["source"] == "mdx"
+
+    def test_heading_tracks_level_and_emitted_visible_text(self):
+        model = extract_visible_model_from_mdx(
+            "### **Title** `Code`\n",
+            "heading",
+        )
+
+        assert model.visible_text == "Title Code"
+        assert model.structural_fingerprint == ("heading", 3, ())
+
+    def test_xhtml_tracks_preservation_units_and_target_metadata(self):
+        model = extract_visible_model_from_xhtml(
+            "<p>앞 <ac:link ac:anchor=\"section\">"
+            "<ri:page ri:content-title=\"Target\"/>"
+            "<ac:link-body>링크</ac:link-body></ac:link> 뒤"
+            "<ac:image><ri:attachment ri:filename=\"screen.png\"/></ac:image>"
+            "</p>",
+            "paragraph",
+        )
+
+        assert model.visible_text == "앞 링크 뒤"
+        assert model.structural_fingerprint == (
+            "paragraph",
+            None,
+            ("link", "attachment"),
+        )
+        anchors = [
+            segment
+            for segment in model.segments
+            if segment.kind == "anchor"
+        ]
+        assert anchors[0].meta["anchor"] == "section"
+        assert anchors[0].meta["page_title"] == "Target"
+        assert anchors[1].meta["filename"] == "screen.png"
+        assert all(segment.meta["source"] == "xhtml" for segment in anchors)
 
 
 class TestExtractListModelFromMdx:
