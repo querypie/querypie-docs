@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+import re
 from typing import Optional
 
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.sidecar import SidecarBlock
+from reverse_sync.visible_segments import extract_visible_model_from_mdx
 
 
 class SupportLevel(str, Enum):
@@ -16,6 +18,26 @@ class SupportLevel(str, Enum):
     SUPPORTED = "supported"
     CONDITIONAL = "conditional"
     BLOCKED = "blocked"
+
+
+class RendererStrategy(str, Enum):
+    """planner와 legacy adapter가 공유하는 renderer strategy."""
+
+    TEXT_BLOCK = "text_block"
+    LIST = "list"
+    PRESERVED_ANCHOR = "preserved_anchor"
+    CONTAINER = "container"
+    TABLE = "table"
+    BLOCKED = "blocked"
+
+
+@dataclass(frozen=True)
+class StrategyDecision:
+    """target mapping을 기준으로 확정한 renderer strategy."""
+
+    strategy: RendererStrategy
+    source_kind: str
+    reason_code: str = ""
 
 
 @dataclass(frozen=True)
@@ -135,6 +157,116 @@ def _contains_preservation_unit(mapping: Optional[BlockMapping]) -> bool:
     if mapping is None:
         return False
     return "<ac:" in mapping.xhtml_text or "<ri:" in mapping.xhtml_text
+
+
+def _contains_only_mdx_owned_links(
+    block_content: str,
+    block_type: str,
+    mapping: BlockMapping,
+) -> bool:
+    """XHTML preservation unit이 MDX link emitter 소유인지 판별합니다."""
+    if block_type not in {"paragraph", "heading"}:
+        return False
+
+    link_fragments = re.findall(
+        r"<ac:link(?:\s|>).*?</ac:link>",
+        mapping.xhtml_text,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    if not link_fragments:
+        return False
+    remainder = mapping.xhtml_text
+    for fragment in link_fragments:
+        remainder = remainder.replace(fragment, "", 1)
+    if "<ac:" in remainder or "<ri:" in remainder:
+        return False
+
+    mdx_model = extract_visible_model_from_mdx(block_content, block_type)
+    mdx_link_count = sum(
+        1
+        for segment in mdx_model.segments
+        if segment.kind == "anchor" and segment.meta.get("kind") == "link"
+    )
+    return mdx_link_count >= len(link_fragments)
+
+
+def is_markdown_table(content: str) -> bool:
+    """MDX content가 pipe table인지 판별합니다."""
+    lines = [line.strip() for line in content.strip().split("\n") if line.strip()]
+    if len(lines) < 2:
+        return False
+    pipe_lines = sum(
+        1
+        for line in lines
+        if line.startswith("|") and line.endswith("|")
+    )
+    return pipe_lines >= 2
+
+
+def is_raw_html_table(content: str, block_type: str) -> bool:
+    return (
+        block_type == "html_block"
+        and bool(re.match(r"^\s*<table(?:\s|>)", content, flags=re.IGNORECASE))
+    )
+
+
+def select_renderer_strategy(
+    *,
+    block_type: str,
+    block_content: str,
+    mapping: Optional[BlockMapping],
+    sidecar_block: Optional[SidecarBlock] = None,
+) -> StrategyDecision:
+    """mapping 이후 renderer 전략을 typed category로 결정합니다.
+
+    identity resolution은 이 함수보다 먼저 수행합니다. mapping이 없으면 list/table
+    diagnostic fallback만 category를 유지하고, 나머지는 fail-closed합니다.
+    """
+    list_source = block_type == "list"
+    raw_html_table = is_raw_html_table(block_content, block_type)
+    markdown_table = is_markdown_table(block_content)
+    table_source = raw_html_table or markdown_table
+
+    if mapping is None:
+        if list_source:
+            return StrategyDecision(RendererStrategy.LIST, "list")
+        if table_source:
+            source_kind = "raw_html_table" if raw_html_table else "table"
+            return StrategyDecision(RendererStrategy.TABLE, source_kind)
+        return StrategyDecision(
+            RendererStrategy.BLOCKED,
+            block_type,
+            reason_code="missing_identity",
+        )
+
+    if block_type == "callout" or mapping.children:
+        if list_source:
+            return StrategyDecision(RendererStrategy.LIST, "list")
+        return StrategyDecision(RendererStrategy.CONTAINER, block_type)
+    if list_source:
+        return StrategyDecision(RendererStrategy.LIST, "list")
+    if table_source:
+        source_kind = "raw_html_table" if raw_html_table else "table"
+        return StrategyDecision(RendererStrategy.TABLE, source_kind)
+    if (
+        _contains_preservation_unit(mapping)
+        and not (
+            sidecar_block is not None
+            and sidecar_block.reconstruction is not None
+            and sidecar_block.reconstruction.get("kind") == "paragraph"
+            and not sidecar_block.reconstruction.get("anchors", [])
+            and _contains_only_mdx_owned_links(
+                block_content,
+                block_type,
+                mapping,
+            )
+        )
+    ):
+        return StrategyDecision(
+            RendererStrategy.PRESERVED_ANCHOR,
+            block_type,
+        )
+    return StrategyDecision(RendererStrategy.TEXT_BLOCK, block_type)
 
 
 def _is_container(

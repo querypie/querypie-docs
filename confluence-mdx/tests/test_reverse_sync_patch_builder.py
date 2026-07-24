@@ -6,8 +6,8 @@ build_patches 분기 경로
 from pathlib import Path
 from bs4 import BeautifulSoup
 
-from reverse_sync.block_diff import BlockChange
-from reverse_sync.block_diff import diff_blocks
+from reverse_sync.block_diff import BlockChange, diff_blocks
+from reverse_sync.capabilities import RendererStrategy
 from reverse_sync.mapping_recorder import BlockMapping
 from reverse_sync.mapping_recorder import record_mapping
 from mdx_to_storage.parser import parse_mdx_blocks
@@ -1665,42 +1665,30 @@ class TestBuildInsertPatch:
 class TestResolveMappingForChange:
     """_resolve_mapping_for_change 매핑 해석 함수 테스트."""
 
-    def _make_context(self, mappings=None, mdx_to_sidecar=None,
-                      xpath_to_mapping=None):
+    def _make_context(self, mdx_to_sidecar=None, xpath_to_mapping=None):
         """공통 컨텍스트 dict를 구성한다."""
-        mappings = mappings or []
         return {
-            'mappings': mappings,
-            'used_ids': set(),
             'mdx_to_sidecar': mdx_to_sidecar or {},
             'xpath_to_mapping': xpath_to_mapping or {},
         }
 
-    def _old_plain(self, change):
-        """change에서 old_plain을 계산한다."""
-        return normalize_mdx_to_plain(
-            change.old_block.content, change.old_block.type)
-
     def test_no_sidecar_match_no_containing_returns_skip(self):
         change = _make_change(0, 'hello', 'world')
         ctx = self._make_context()
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'skip'
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.BLOCKED
         assert mapping is None
 
     def test_sidecar_direct_match_returns_direct(self):
         m = _make_mapping('b1', 'hello', xpath='p[1]')
         se = _make_sidecar('p[1]', [{'mdx_index': 0}])
         ctx = self._make_context(
-            mappings=[m],
             mdx_to_sidecar={0: se},
             xpath_to_mapping={'p[1]': m},
         )
         change = _make_change(0, 'hello', 'world')
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'direct'
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.TEXT_BLOCK
         assert mapping.block_id == 'b1'
 
     def test_sidecar_match_with_children_returns_containing(self):
@@ -1709,39 +1697,115 @@ class TestResolveMappingForChange:
                                children=['c1'])
         se = _make_sidecar('ul[1]', [{'mdx_index': 0}])
         ctx = self._make_context(
-            mappings=[parent, child],
             mdx_to_sidecar={0: se},
             xpath_to_mapping={'ul[1]': parent},
         )
         change = _make_change(0, 'child text', 'new child')
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'containing'
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.CONTAINER
         assert mapping.block_id == 'p1'
 
     def test_no_sidecar_list_type_returns_list(self):
         change = _make_change(0, '- item1\n- item2', '- item1\n- changed', type_='list')
         ctx = self._make_context()
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'list'
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.LIST
 
     def test_no_sidecar_table_type_returns_table(self):
         table = '| a | b |\n| --- | --- |\n| 1 | 2 |'
         change = _make_change(0, table, table.replace('1', 'X'))
         ctx = self._make_context()
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'table'
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.TABLE
+        assert decision.source_kind == 'table'
 
     def test_no_sidecar_containing_match_returns_skip(self):
         m = _make_mapping('b1', 'hello world full text here', xpath='div[1]')
         change = _make_change(0, 'hello world', 'hi world')
-        ctx = self._make_context(mappings=[m])
-        strategy, mapping = _resolve_mapping_for_change(
-            change, self._old_plain(change), **ctx)
-        assert strategy == 'skip'
+        ctx = self._make_context()
+        decision, mapping = _resolve_mapping_for_change(change, **ctx)
+        assert decision.strategy is RendererStrategy.BLOCKED
         assert mapping is None
+
+    def test_raw_html_table_uses_table_strategy(self):
+        mapping = _make_mapping(
+            'table-1',
+            'Before',
+            xpath='table[1]',
+            type_='table',
+        )
+        sidecar = _make_sidecar('table[1]', [{'mdx_index': 0}])
+        change = _make_change(
+            0,
+            '<table><tr><td>Before</td></tr></table>',
+            '<table><tr><td>After</td></tr></table>',
+            type_='html_block',
+        )
+
+        decision, resolved = _resolve_mapping_for_change(
+            change,
+            {0: sidecar},
+            {'table[1]': mapping},
+        )
+
+        assert decision.strategy is RendererStrategy.TABLE
+        assert decision.source_kind == 'raw_html_table'
+        assert resolved is mapping
+
+    def test_preservation_unit_uses_dedicated_strategy(self):
+        mapping = _make_mapping('p1', 'Before', xpath='p[1]')
+        mapping.xhtml_text = (
+            '<p><ac:link><ri:page ri:content-title="Target"/>'
+            '<ac:link-body>Before</ac:link-body></ac:link></p>'
+        )
+        sidecar = _make_sidecar('p[1]', [{'mdx_index': 0}])
+        change = _make_change(0, 'Before', 'After')
+
+        decision, resolved = _resolve_mapping_for_change(
+            change,
+            {0: sidecar},
+            {'p[1]': mapping},
+        )
+
+        assert decision.strategy is RendererStrategy.PRESERVED_ANCHOR
+        assert resolved is mapping
+
+    def test_mdx_owned_link_stays_text_block_strategy(self):
+        mapping = _make_mapping('p1', 'Before Link', xpath='p[1]')
+        mapping.xhtml_text = (
+            'Before <ac:link><ri:page ri:content-title="Target"/>'
+            '<ac:link-body>Link</ac:link-body></ac:link>'
+        )
+        sidecar = _make_sidecar('p[1]', [{'mdx_index': 0}])
+        sidecar_block = SidecarBlock(
+            0,
+            'p[1]',
+            mapping.xhtml_text,
+            '',
+            (1, 1),
+            reconstruction={
+                'kind': 'paragraph',
+                'old_plain_text': 'Before Link',
+                'anchors': [],
+            },
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([sidecar_block])
+        change = _make_change(
+            0,
+            'Before [Link](target)',
+            'After [Link](target)',
+        )
+
+        decision, resolved = _resolve_mapping_for_change(
+            change,
+            {0: sidecar},
+            {'p[1]': mapping},
+            roundtrip_sidecar,
+            {'p[1]': sidecar_block},
+        )
+
+        assert decision.strategy is RendererStrategy.TEXT_BLOCK
+        assert resolved is mapping
 
 
 # ── build_patches 멱등성 (idempotency) 테스트 ──

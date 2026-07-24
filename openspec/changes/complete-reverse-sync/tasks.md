@@ -173,7 +173,16 @@
   - list는 기존 item path, marker, ordered start, anchor fingerprint를 같은 공통
     dispatcher로 제공합니다.
   - arbitrary macro/container는 기존 capability 경계에 남기고 일반화하지 않습니다.
-- [ ] strategy를 text block, list, preserved anchor, container, table로 분리합니다.
+- [x] strategy를 text block, list, preserved anchor, container, table로 분리합니다.
+  - `capabilities.py`의 typed `RendererStrategy`와 `StrategyDecision`이 exact
+    mapping 이후 renderer category를 한 곳에서 결정합니다.
+  - raw HTML table 처리를 generic text block에서 table strategy로 이동하고,
+    preserved anchor와 raw table의 link 보존 분기는 공통 template rewrite
+    helper를 사용합니다.
+  - 계약이 없는 `ac:`/`ri:` preservation unit은 text fallback으로 흘리지 않고
+    `unknown_macro_mutation` capability로 fail-closed 처리합니다.
+  - capability 판별과 strategy handler 자체의 모듈 추출은 위 task에 계속
+    남아 있습니다.
 - [x] unsupported table/macro 구조를 explicit block reason으로 전환합니다.
   - operation 생성 전 legacy skip도 원래 intent에 연결합니다.
   - table/macro 내부 분기 reason은 `unsupported_capability`와
@@ -342,10 +351,19 @@ strict renderer branch 검증 결과:
 - reverse-sync Python test: 805 passed
 - 전체 Python test: 1128 passed, 2 skipped
 
+typed renderer strategy branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- `test_reverse_sync*.py`: 779 passed
+- 전체 Python test: 1132 passed, 2 skipped
+- `openspec validate complete-reverse-sync --strict`: passed
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python renderer 범위이므로 전체 Python test
-(`1128 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1132 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash
