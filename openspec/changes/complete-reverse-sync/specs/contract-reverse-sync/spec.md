@@ -13,7 +13,7 @@ MDX 변경을 기존 Confluence Storage XHTML의 보존 정보와 안전하게 �
 - `confluence-mdx/bin/reverse_sync/**`
 - [Confluence Cloud REST API v2 Page](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-page/)
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Consistent PageSnapshot
 

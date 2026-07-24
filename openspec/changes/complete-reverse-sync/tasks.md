@@ -14,13 +14,13 @@
 
 ### 2.1 P0 — 현재 unsafe push를 red test로 고정
 
-- [ ] `confluence-mdx/tests/test_reverse_sync_push_transaction.py`를 추가합니다.
-- [ ] stale local `page.xhtml` + latest remote version 조합이 PUT으로 이어지는 현재 문제를 재현합니다.
-- [ ] version과 body를 별도 GET으로 읽을 때 서로 다른 snapshot이 될 수 있는 문제를 재현합니다.
-- [ ] preflight 이후 concurrent update가 발생하면 자동 retry하지 않는 계약을 테스트합니다.
-- [ ] verify 후 candidate body가 바뀌면 push를 차단하는 테스트를 추가합니다.
-- [ ] PUT 성공 후 remote body가 target과 다르면 `postcondition_failed`가 되는 테스트를 추가합니다.
-- [ ] active draft, title 변경, missing attachment, lenient-only pass가 push blocked인지 테스트합니다.
+- [x] `confluence-mdx/tests/test_reverse_sync_push_transaction.py`를 추가합니다.
+- [x] stale local `page.xhtml` + latest remote version 조합이 PUT으로 이어지는 현재 문제를 재현합니다.
+- [x] version과 body를 별도 GET으로 읽을 때 서로 다른 snapshot이 될 수 있는 문제를 재현합니다.
+- [x] preflight 이후 concurrent update가 발생하면 자동 retry하지 않는 계약을 테스트합니다.
+- [x] verify 후 candidate body가 바뀌면 push를 차단하는 테스트를 추가합니다.
+- [x] PUT 성공 후 remote body가 target과 다르면 `postcondition_failed`가 되는 테스트를 추가합니다.
+- [x] active draft, title 변경, missing attachment, lenient-only pass가 push blocked인지 테스트합니다.
 
 완료 gate:
 
@@ -29,21 +29,21 @@
 
 ### 2.2 P0 — immutable model과 artifact layout
 
-- [ ] `confluence-mdx/bin/reverse_sync/models.py`를 추가합니다.
+- [x] `confluence-mdx/bin/reverse_sync/models.py`를 추가합니다.
   - `PageSnapshot`
   - `SyncManifest`
   - `VerificationGate`
   - `SyncStatus`
   - `ReasonCode`
   - `PushReceipt`
-- [ ] `confluence-mdx/bin/reverse_sync/manifest.py`를 추가합니다.
+- [x] `confluence-mdx/bin/reverse_sync/manifest.py`를 추가합니다.
   - canonical serialization
   - SHA-256 계산
   - referenced artifact integrity 검사
   - schema version 및 verifier policy 검사
-- [ ] artifact를 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다.
+- [x] artifact를 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다.
 - [ ] 기존 `reverse-sync.*` 경로는 최신 run을 가리키는 read-only compatibility output으로 제한합니다.
-- [ ] email, token, Authorization header redaction test를 추가합니다.
+- [x] email, token, Authorization header redaction test를 추가합니다.
 
 완료 gate:
 
@@ -52,12 +52,12 @@
 
 ### 2.3 P0 — consistent Confluence snapshot adapter
 
-- [ ] `confluence-mdx/bin/reverse_sync/confluence_client.py`에 v2 page snapshot 조회를 추가합니다.
-- [ ] `GET /wiki/api/v2/pages/{id}`에서 Storage body와 version을 한 snapshot으로 획득합니다.
-- [ ] `page_id`, `status=current`, body representation, title, version 필수 필드를 검증합니다.
-- [ ] active draft 조회/감지 adapter를 분리하고 실제 API 응답 fixture를 추가합니다.
-- [ ] HTTP 400/409 등 provider response를 `version_conflict`, `permission_denied`, `network_error`로 변환합니다.
-- [ ] 기존 `get_page_version()` + `get_page_body()` 조합을 push 경로에서 제거합니다.
+- [x] `confluence-mdx/bin/reverse_sync/confluence_client.py`에 v2 page snapshot 조회를 추가합니다.
+- [x] `GET /wiki/api/v2/pages/{id}`에서 Storage body와 version을 한 snapshot으로 획득합니다.
+- [x] `page_id`, `status=current`, body representation, title, version 필수 필드를 검증합니다.
+- [x] active draft 조회/감지 adapter를 분리하고 실제 API 응답 fixture를 추가합니다.
+- [x] HTTP 400/409 등 provider response를 `version_conflict`, `permission_denied`, `network_error`로 변환합니다.
+- [x] 기존 `get_page_version()` + `get_page_body()` 조합을 push 경로에서 제거합니다.
 
 완료 gate:
 
@@ -67,14 +67,14 @@
 
 ### 2.4 P0 — base parity와 dependency gate
 
-- [ ] `confluence-mdx/bin/reverse_sync/base_parity.py`를 추가합니다.
-- [ ] remote snapshot의 forward conversion 결과와 original MDX를 비교합니다.
+- [x] `confluence-mdx/bin/reverse_sync/base_parity.py`를 추가합니다.
+- [x] remote snapshot의 forward conversion 결과와 original MDX를 비교합니다.
 - [ ] page ID, `confluenceUrl`, repository MDX path를 함께 검증합니다.
 - [ ] `stale_original_mdx`, `forward_converter_drift`, `page_identity_mismatch`를 구분합니다.
-- [ ] original/improved title과 첫 H1 invariant를 검증하고 title change를 block합니다.
+- [x] original/improved title과 첫 H1 invariant를 검증하고 title change를 block합니다.
 - [ ] attachment catalog에서 improved MDX의 attachment reference를 검증합니다.
 - [ ] internal link resolver error와 ambiguous target을 dependency failure로 변환합니다.
-- [ ] snapshot metadata가 없는 offline verify는 `push_eligible: false`로 표시합니다.
+- [x] snapshot metadata가 없는 offline verify는 `push_eligible: false`로 표시합니다.
 
 완료 gate:
 
@@ -86,7 +86,7 @@
 - [ ] `confluence-mdx/bin/reverse_sync/proof.py`를 추가하여 필수 gate를 orchestration합니다.
 - [ ] `roundtrip_verifier.py` normalization을 source formatting, rendered-visible, unsupported/lossy로 분류합니다.
 - [ ] push equivalence v1 typed canonical model을 구현합니다.
-- [ ] `skipped_changes > 0`이면 `intent_complete`를 실패시킵니다.
+- [x] `skipped_changes > 0`이면 `intent_complete`를 실패시킵니다.
 - [ ] `--lenient`와 `--no-normalize` 결과를 diagnostic field로 이동합니다.
 - [ ] unchanged fragment, separator, document envelope byte-equal을 proof에 포함합니다.
 - [ ] well-formed Storage XHTML, determinism, idempotency 검사를 추가합니다.
@@ -100,17 +100,17 @@
 
 ### 2.6 P0 — transaction-safe publisher
 
-- [ ] `confluence-mdx/bin/reverse_sync/publisher.py`를 추가합니다.
-- [ ] verified manifest와 candidate artifact hash를 다시 검증합니다.
-- [ ] remote preflight snapshot의 page ID/status/version/title/body hash를 base와 비교합니다.
-- [ ] active draft가 있으면 PUT 전에 block합니다.
-- [ ] base version + 1과 base title, manifest candidate body로 update합니다.
-- [ ] conflict 시 latest version으로 자동 retry하지 않습니다.
-- [ ] update 후 persisted snapshot을 다시 조회합니다.
-- [ ] persisted version과 target MDX semantic postcondition을 검증합니다.
-- [ ] base, candidate, response, post-snapshot을 recovery evidence로 저장합니다.
-- [ ] postcondition failure 시 batch 후속 push를 기본 중단합니다.
-- [ ] 현재 `_do_push()`가 `reverse-sync.patched.xhtml`을 직접 읽는 경로를 제거합니다.
+- [x] `confluence-mdx/bin/reverse_sync/publisher.py`를 추가합니다.
+- [x] verified manifest와 candidate artifact hash를 다시 검증합니다.
+- [x] remote preflight snapshot의 page ID/status/version/title/body hash를 base와 비교합니다.
+- [x] active draft가 있으면 PUT 전에 block합니다.
+- [x] base version + 1과 base title, manifest candidate body로 update합니다.
+- [x] conflict 시 latest version으로 자동 retry하지 않습니다.
+- [x] update 후 persisted snapshot을 다시 조회합니다.
+- [x] persisted version과 target MDX semantic postcondition을 검증합니다.
+- [x] base, candidate, response, post-snapshot을 recovery evidence로 저장합니다.
+- [x] postcondition failure 시 batch 후속 push를 기본 중단합니다.
+- [x] 현재 `_do_push()`가 `reverse-sync.patched.xhtml`을 직접 읽는 경로를 제거합니다.
 
 완료 gate:
 
@@ -121,13 +121,14 @@
 ### 2.7 P1 — CLI와 batch state 전환
 
 - [ ] `reverse_sync_cli.py`를 prepare/verify/push lifecycle orchestration으로 축소합니다.
-- [ ] `verify` 출력에 run ID, base version/hash, local gates, push eligibility, reason code를 표시합니다.
+- [x] online verify(`push --dry-run`) 출력에 run ID, base version/hash, local gates,
+  push eligibility, reason code를 표시합니다.
 - [ ] `push`가 explicit run/manifest를 받도록 합니다.
-- [ ] interactive confirmation에 page ID, base version, target version, change count, candidate hash를 표시합니다.
-- [ ] batch는 모든 local proof 후 page별 transaction을 실행합니다.
+- [x] interactive confirmation에 page ID, base version, target version, change count, candidate hash를 표시합니다.
+- [x] batch는 모든 local proof 후 page별 transaction을 실행합니다.
 - [ ] batch partial success, conflict, postcondition failure exit code와 JSON schema를 정의합니다.
 - [ ] resume는 `remote_verified`/blocked 상태를 재해석하지 않고 명시적 manifest 목록으로 수행합니다.
-- [ ] `--yes`가 safety gate를 우회하지 못하도록 테스트합니다.
+- [x] `--yes`가 safety gate를 우회하지 못하도록 테스트합니다.
 
 완료 gate:
 
@@ -163,20 +164,18 @@
 
 ### 3.1 Focused contract test
 
-- [ ] 다음 명령으로 snapshot, manifest, proof, publisher contract test를 실행합니다.
+- [x] 다음 명령으로 현재 구현된 snapshot, manifest, publisher contract test를 실행합니다.
 
 ```bash
 cd confluence-mdx/tests
-../venv/bin/python3 -m pytest -q \
-  test_reverse_sync_snapshot.py \
-  test_reverse_sync_manifest.py \
-  test_reverse_sync_proof.py \
-  test_reverse_sync_push_transaction.py
+../venv/bin/python3 -m pytest -q test_reverse_sync_push_transaction.py
 ```
+
+`proof.py`와 typed equivalence contract test는 2.5 구현 시 별도 test module로 분리합니다.
 
 ### 3.2 Existing reverse-sync unit regression
 
-- [ ] 기존 reverse-sync unit suite를 실행합니다.
+- [x] 기존 reverse-sync unit suite를 실행합니다.
 
 ```bash
 cd confluence-mdx/tests
@@ -189,7 +188,7 @@ cd confluence-mdx/tests
 
 ### 3.3 Page fixture regression
 
-- [ ] 정밀 golden fixture와 실제 회귀 fixture를 실행합니다.
+- [x] 정밀 golden fixture와 실제 회귀 fixture를 실행합니다.
 
 ```bash
 cd confluence-mdx/tests
@@ -203,7 +202,7 @@ make test-reverse-sync
 
 ### 3.4 Byte preservation
 
-- [ ] fast path와 forced splice byte-equal을 실행합니다.
+- [x] fast path와 forced splice byte-equal을 실행합니다.
 
 ```bash
 cd confluence-mdx/tests
@@ -226,7 +225,10 @@ make test-reverse-sync
 make test-byte-verify
 ```
 
-- [ ] 영향도에 따라 전체 Python test와 render test를 실행합니다.
+- [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
+
+이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1033 passed, 2 skipped`)를
+실행했고 frontend render test는 영향 범위에서 제외했습니다.
 
 ```bash
 cd confluence-mdx/tests
@@ -245,13 +247,13 @@ make test-render
 
 ## 4. Spec / 구현 drift 확인
 
-- [ ] `PageSnapshot` 구현이 version/body를 하나의 논리적 response에서 가져오는지 source scan합니다.
-- [ ] publisher가 latest remote version을 새 base로 채택하는 fallback이 없는지 검색합니다.
-- [ ] `skipped_changes`, `--lenient`, title strip이 push eligibility를 부여하지 않는지 확인합니다.
-- [ ] push가 filename이 아니라 manifest candidate hash를 소비하는지 확인합니다.
-- [ ] 모든 PUT 호출 경로가 preflight와 postcondition을 거치는지 확인합니다.
-- [ ] batch output이 page별 상태와 partial success를 노출하는지 확인합니다.
-- [ ] credential이 manifest/log/fixture에 포함되지 않았는지 검색합니다.
+- [x] `PageSnapshot` 구현이 version/body를 하나의 논리적 response에서 가져오는지 source scan합니다.
+- [x] publisher가 latest remote version을 새 base로 채택하는 fallback이 없는지 검색합니다.
+- [x] `skipped_changes`, `--lenient`, title strip이 push eligibility를 부여하지 않는지 확인합니다.
+- [x] push가 filename이 아니라 manifest candidate hash를 소비하는지 확인합니다.
+- [x] 모든 PUT 호출 경로가 preflight와 postcondition을 거치는지 확인합니다.
+- [x] batch output이 page별 상태와 partial success를 노출하는지 확인합니다.
+- [x] credential이 manifest/log/fixture에 포함되지 않았는지 검색합니다.
 
 ```bash
 rg -n "update_page|requests\\.put|method.?=.?(PUT|put)" confluence-mdx/bin
