@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
 from typing import Any, Optional
 
 from mdx_to_storage.link_resolver import LinkResolver
@@ -232,6 +231,99 @@ def _source_details(
     return tuple(block_types), contains_raw_html_table
 
 
+_LEGACY_UNSUPPORTED_CAPABILITIES = {
+    "not_markdown_table": "raw_html_table_edit",
+    "preserved_anchor_table": "unknown_macro_mutation",
+    "raw_html_table": "raw_html_table_edit",
+    "unsafe_html_table_edit": "raw_html_table_edit",
+}
+_LEGACY_MISSING_IDENTITY_REASONS = frozenset(
+    {"missing_roundtrip_sidecar", "no_mapping"}
+)
+
+
+def _legacy_skip_intent_ordinal(
+    item: dict[str, Any],
+    intents: tuple[ChangeIntent, ...],
+    mappings: list[BlockMapping],
+    mdx_to_sidecar: Optional[dict[int, SidecarEntry]],
+) -> int | None:
+    """legacy skip의 block ID를 원래 ChangeIntent에 유일하게 연결합니다."""
+    block_id = str(item.get("block_id", ""))
+    candidates: list[ChangeIntent] = []
+    if block_id.startswith("idx-"):
+        try:
+            index = int(block_id.removeprefix("idx-"))
+        except ValueError:
+            return None
+        candidates = [intent for intent in intents if intent.index == index]
+    else:
+        roots = {
+            _root_xpath(mapping.xhtml_xpath)
+            for mapping in mappings
+            if mapping.block_id == block_id
+        }
+        candidates = [
+            intent
+            for intent in intents
+            if intent.provenance_xpath in roots
+        ]
+        if not candidates and mdx_to_sidecar:
+            mapped_indexes = {
+                index
+                for index, entry in mdx_to_sidecar.items()
+                if _root_xpath(entry.xhtml_xpath) in roots
+            }
+            candidates = [
+                intent
+                for intent in intents
+                if intent.index in mapped_indexes
+            ]
+    if len(candidates) != 1:
+        return None
+    return candidates[0].ordinal
+
+
+def _legacy_skip_issue(
+    item: dict[str, Any],
+    *,
+    intents: tuple[ChangeIntent, ...],
+    mappings: list[BlockMapping],
+    mdx_to_sidecar: Optional[dict[int, SidecarEntry]],
+    enforce_capabilities: bool,
+    enforce_provenance: bool,
+) -> PlanIssue:
+    """legacy skip을 strict typed reason/capability boundary로 정규화합니다."""
+    legacy_reason = str(item.get("reason", "incomplete_patch_plan"))
+    capability_id = ""
+    reason_code = legacy_reason
+    if enforce_capabilities and legacy_reason in _LEGACY_UNSUPPORTED_CAPABILITIES:
+        reason_code = "unsupported_capability"
+        capability_id = _LEGACY_UNSUPPORTED_CAPABILITIES[legacy_reason]
+    elif (
+        enforce_provenance
+        and legacy_reason in _LEGACY_MISSING_IDENTITY_REASONS
+    ):
+        reason_code = "missing_identity"
+    return PlanIssue(
+        reason_code=reason_code,
+        description=str(
+            item.get(
+                "description",
+                "legacy planner가 변경을 적용하지 못했습니다",
+            )
+        ),
+        block_id=str(item.get("block_id", "")),
+        capability_id=capability_id,
+        intent_ordinal=_legacy_skip_intent_ordinal(
+            item,
+            intents,
+            mappings,
+            mdx_to_sidecar,
+        ),
+    )
+
+
 def plan_patches(
     changes: list[BlockChange],
     original_blocks: list[MdxBlock],
@@ -267,15 +359,13 @@ def plan_patches(
     )
     intents = _build_intents(changes, roundtrip_sidecar)
     issues = [
-        PlanIssue(
-            reason_code=str(item.get("reason", "incomplete_patch_plan")),
-            description=str(
-                item.get(
-                    "description",
-                    "legacy planner가 변경을 적용하지 못했습니다",
-                )
-            ),
-            block_id=str(item.get("block_id", "")),
+        _legacy_skip_issue(
+            item,
+            intents=intents,
+            mappings=resolved_mappings,
+            mdx_to_sidecar=mdx_to_sidecar,
+            enforce_capabilities=enforce_capabilities,
+            enforce_provenance=enforce_provenance,
         )
         for item in legacy_skips
     ]
@@ -284,9 +374,34 @@ def plan_patches(
     operations: list[PatchOperation] = []
 
     for operation_index, patch in enumerate(raw_patches):
+        intent_ordinals = _intent_ordinals_for_patch(
+            patch=patch,
+            intents=intents,
+            changes=changes,
+            already_assigned_inserts=assigned_inserts,
+        )
+        if intent_ordinals == (-1,):
+            continue
         target = _target_identity(patch, roundtrip_sidecar)
         if target is None:
             if enforce_provenance:
+                mapping = _mapping_for_patch(patch, resolved_mappings)
+                issue_intent_ordinal = (
+                    intent_ordinals[0]
+                    if len(intent_ordinals) == 1
+                    else _legacy_skip_intent_ordinal(
+                        {
+                            "block_id": (
+                                mapping.block_id
+                                if mapping is not None
+                                else ""
+                            )
+                        },
+                        intents,
+                        resolved_mappings,
+                        mdx_to_sidecar,
+                    )
+                )
                 issues.append(
                     PlanIssue(
                         reason_code="missing_identity",
@@ -298,6 +413,7 @@ def plan_patches(
                             or patch.get("after_xpath")
                             or "$document-start"
                         ),
+                        intent_ordinal=issue_intent_ordinal,
                     )
                 )
                 continue
@@ -316,14 +432,6 @@ def plan_patches(
                 base_fragment_sha256="",
             )
 
-        intent_ordinals = _intent_ordinals_for_patch(
-            patch=patch,
-            intents=intents,
-            changes=changes,
-            already_assigned_inserts=assigned_inserts,
-        )
-        if intent_ordinals == (-1,):
-            continue
         mapping = _mapping_for_patch(patch, resolved_mappings)
         source_types, contains_raw_html_table = _source_details(
             intent_ordinals,
@@ -392,18 +500,15 @@ def plan_patches(
             for operation in operations
             for ordinal in operation.intent_ordinals
         }
-        legacy_skip_indexes: dict[int, int] = defaultdict(int)
-        for item in legacy_skips:
-            block_id = str(item.get("block_id", ""))
-            if block_id.startswith("idx-"):
-                try:
-                    legacy_skip_indexes[int(block_id.removeprefix("idx-"))] += 1
-                except ValueError:
-                    pass
+        issued_intents = {
+            issue.intent_ordinal
+            for issue in issues
+            if issue.intent_ordinal is not None
+        }
         for intent in intents:
             if intent.ordinal in mapped:
                 continue
-            if legacy_skip_indexes.get(intent.index):
+            if intent.ordinal in issued_intents:
                 continue
             issues.append(
                 PlanIssue(
