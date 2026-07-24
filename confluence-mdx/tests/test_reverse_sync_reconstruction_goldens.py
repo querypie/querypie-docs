@@ -16,7 +16,7 @@ from reverse_sync.sidecar import (
     generate_sidecar_mapping,
 )
 from reverse_sync.xhtml_normalizer import normalize_fragment
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
 
 TESTCASES = Path(__file__).parent / "testcases"

@@ -167,7 +167,7 @@ class TestPatchBuilderInlineAnchor:
             SidecarEntry, build_mdx_to_sidecar_index, build_sidecar,
             build_xpath_to_mapping, generate_sidecar_mapping,
         )
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = (
             '<p>Original text '

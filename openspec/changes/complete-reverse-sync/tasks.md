@@ -205,11 +205,13 @@
     `raw_html_table_edit`/`unknown_macro_mutation` capability ID로 정규화합니다.
   - mapping/sidecar 부재는 `missing_identity`로 정규화하고 같은 intent의 중복
     issue를 제거합니다.
-- [ ] 기존 `xhtml_patcher.py`는 validated operation 적용에 집중하도록 축소합니다.
-  - typed preserving renderer는 `strict=true`로 호출하여 unresolved target,
-    source text mismatch, unknown action을 `PatchApplicationError`로 전환합니다.
-  - offline diagnostic raw patch caller와 legacy helper를 분리하는 작업은 계속
-    남아 있습니다.
+- [x] 기존 `xhtml_patcher.py`는 validated operation 적용에 집중하도록 축소합니다.
+  - typed preserving renderer는 boolean mode가 없는
+    `apply_validated_patches()`를 호출하여 unresolved target, source text
+    mismatch, unknown action을 `PatchApplicationError`로 전환합니다.
+  - offline diagnostic과 raw patch regression fixture는 별도
+    `legacy_xhtml_patcher.patch_xhtml()` 호환 API를 사용하며 publish candidate
+    생성 경로에서는 이 API를 참조하지 않습니다.
 
 완료 gate:
 
@@ -394,10 +396,19 @@ strategy handler extraction branch 검증 결과:
 - 전체 Python test: 1144 passed, 2 skipped
 - `openspec validate complete-reverse-sync --strict`: passed
 
+validated patcher boundary branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- `test_reverse_sync*.py`: 792 passed
+- 전체 Python test: 1145 passed, 2 skipped
+- `openspec validate complete-reverse-sync --strict`: passed
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python renderer 범위이므로 전체 Python test
-(`1144 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1145 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

@@ -677,7 +677,7 @@ def _build_list_item_merge_patch(
     """
     from bs4 import BeautifulSoup
     from reverse_sync.reconstructors import _find_list_item_by_path
-    from reverse_sync.xhtml_patcher import _apply_text_changes
+    from reverse_sync.xhtml_patch_engine import _apply_text_changes
 
     removed_paths = _find_removed_blank_item_paths(old_content, new_content)
     if not removed_paths:

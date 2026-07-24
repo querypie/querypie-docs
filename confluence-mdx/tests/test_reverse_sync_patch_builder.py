@@ -36,7 +36,8 @@ from reverse_sync.patch_builder import (
     build_patches,
     is_markdown_table,
 )
-from reverse_sync.xhtml_patcher import _apply_inline_fixups, patch_xhtml
+from reverse_sync.legacy_xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patch_engine import _apply_inline_fixups
 
 _REVERSE_SYNC_FIXTURE_ROOT = Path(__file__).parent / "reverse-sync"
 
