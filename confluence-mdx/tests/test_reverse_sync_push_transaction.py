@@ -30,6 +30,7 @@ from reverse_sync.manifest import (
     StaleVerificationError,
     create_sync_manifest,
     load_sync_manifest,
+    update_run_backed_compatibility_outputs,
 )
 from reverse_sync.models import (
     AttachmentCatalog,
@@ -254,6 +255,34 @@ def test_manifest_is_deterministic_and_uses_run_scoped_artifacts(tmp_path):
     assert first.read_bytes() == second.read_bytes()
     assert (first.parent / "base.xhtml").read_text() == "<p>Before</p>"
     assert (first.parent / "candidate.xhtml").read_text() == "<p>After</p>"
+
+
+def test_compatibility_outputs_follow_latest_immutable_run(tmp_path):
+    first = _manifest(tmp_path, _snapshot(version=5))
+    (tmp_path / "reverse-sync.patched.xhtml").write_text("legacy copy")
+
+    first_targets = update_run_backed_compatibility_outputs(first, tmp_path)
+
+    assert (tmp_path / "reverse-sync.patched.xhtml").is_symlink()
+    assert (tmp_path / "reverse-sync.patched.xhtml").resolve() == (
+        first.parent / "candidate.xhtml"
+    ).resolve()
+    assert first_targets["reverse-sync.manifest.json"] == first.resolve()
+
+    second = _manifest(tmp_path, _snapshot(version=6))
+    assert second.parent != first.parent
+    update_run_backed_compatibility_outputs(second, tmp_path)
+
+    assert (tmp_path / "reverse-sync.patched.xhtml").resolve() == (
+        second.parent / "candidate.xhtml"
+    ).resolve()
+    assert (tmp_path / "reverse-sync.manifest.json").resolve() == second.resolve()
+    assert (tmp_path / "reverse-sync.plan.json").resolve() == (
+        second.parent / "patch-plan.json"
+    ).resolve()
+    assert (tmp_path / "reverse-sync.proof.json").resolve() == (
+        second.parent / "local-proof.json"
+    ).resolve()
 
 
 def test_candidate_tampering_blocks_before_remote_read(tmp_path):
@@ -1196,9 +1225,18 @@ def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatc
         sha256_text("<p>Before</p>")
     )
     assert (manifest_path.parent / "local-proof.json").is_file()
-    assert (manifest_path.parent / "candidate.xhtml").read_text() == (
-        tmp_path / "var" / page_id / "reverse-sync.patched.xhtml"
-    ).read_text()
+    page_dir = tmp_path / "var" / page_id
+    compatibility_outputs = {
+        "reverse-sync.manifest.json": manifest_path,
+        "reverse-sync.patched.xhtml": manifest_path.parent / "candidate.xhtml",
+        "reverse-sync.plan.json": manifest_path.parent / "patch-plan.json",
+        "reverse-sync.proof.json": manifest_path.parent / "local-proof.json",
+    }
+    for output_name, target in compatibility_outputs.items():
+        output = page_dir / output_name
+        assert output.is_symlink()
+        assert output.resolve() == target.resolve()
+    assert not (page_dir / "reverse-sync.manifest.path").exists()
 
 
 def test_online_verify_proves_insert_idempotent_by_replanning(

@@ -450,7 +450,13 @@ push는 file name이 아니라 manifest가 가리키는 candidate hash를 읽습
 - candidate body hash
 - verifier policy/tool version
 
-artifact는 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다. “최근 파일”을 덮어쓰는 방식은 호환 bridge로만 유지합니다.
+artifact는 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다.
+online prepare의 `reverse-sync.patched.xhtml`, `reverse-sync.plan.json`,
+`reverse-sync.proof.json`, `reverse-sync.manifest.json`은 최신 immutable run의
+대응 artifact를 가리키는 상대 symlink인 read-only compatibility output으로만
+유지합니다. 폐기된 `reverse-sync.manifest.path` pointer는 생성하지 않습니다.
+offline diagnostic의 diff/result/mapping/verify output은 push 비대상 호환
+artifact로 유지합니다.
 publisher는 local proof manifest를 수정하지 않고, manifest hash를 참조하는 별도 `PushReceipt`와 post-snapshot을 기록합니다.
 
 CLI에서 verify와 publish를 분리할 때는 `push --manifest

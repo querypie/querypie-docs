@@ -663,7 +663,10 @@ def run_verify(
         skipped_changes=skipped_changes)
 
     if for_push:
-        from reverse_sync.manifest import create_sync_manifest
+        from reverse_sync.manifest import (
+            create_sync_manifest,
+            update_run_backed_compatibility_outputs,
+        )
         from reverse_sync.models import sha256_text
         from reverse_sync.preserving_patcher import render_patch_plan_preserving
         from reverse_sync.proof import build_local_proof
@@ -813,6 +816,7 @@ def run_verify(
             push_eligible=True,
             gates=proof.gates,
         )
+        update_run_backed_compatibility_outputs(manifest_path, var_dir)
         result.update(
             push_eligible=True,
             manifest_path=str(manifest_path),
@@ -821,7 +825,6 @@ def run_verify(
             base_storage_sha256=base_snapshot.storage_sha256,
             candidate_sha256=sha256_text(patched_xhtml),
         )
-        (var_dir / "reverse-sync.manifest.path").write_text(str(manifest_path) + "\n")
 
     (var_dir / "reverse-sync.result.yaml").write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False)
