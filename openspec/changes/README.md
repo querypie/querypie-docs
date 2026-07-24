@@ -1,7 +1,12 @@
 # OpenSpec Changes
 
 이 디렉토리는 proposed requirement 또는 contract change를 보관합니다.
-현재 active change는 없습니다.
+
+## Active Changes
+
+| Change | 목적 | 상태 |
+| --- | --- | --- |
+| [`complete-reverse-sync`](./complete-reverse-sync/proposal.md) | snapshot-bound MDX → Confluence page update 계약과 구현 계획을 정의합니다. | proposed |
 
 ## Change 구조
 

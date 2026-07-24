@@ -1,8 +1,8 @@
 # Reverse Sync 재구성 후 삭제 대상 범위
 
 > 상태: Superseded
-> 대체 문서: `2026-04-25-reverse-sync-replacement-plan.md`
-> 비고: 이 문서는 2026-03 시점 cleanup 가정과 삭제 범위를 담고 있습니다. 현재 cleanup 계획은 새 replacement plan의 단계별 실행 계획을 기준으로 합니다.
+> 대체 문서: [`openspec/changes/complete-reverse-sync/tasks.md`](../../../openspec/changes/complete-reverse-sync/tasks.md)
+> 비고: 이 문서는 2026-03 시점 cleanup 가정과 삭제 범위를 담고 있습니다. 현재 cleanup 계획은 OpenSpec change의 task를 기준으로 합니다.
 
 > 작성일: 2026-03-15
 > 갱신일: 2026-03-16
