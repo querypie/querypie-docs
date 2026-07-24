@@ -314,6 +314,31 @@ def test_push_planner_blocks_duplicate_exact_provenance_as_ambiguous():
     assert plan.issues[0].intent_ordinal == 0
 
 
+def test_enforce_provenance_disables_legacy_list_text_fallback():
+    old = _block("1. Before\n", "list")
+    new = _block("1. After\n", "list")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = "<ul><li><p>Before</p></li></ul>"
+    sidecar = _sidecar(xhtml, old)
+    sidecar.blocks[0].mdx_content_hash = sha256_text("Different source")
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=sidecar,
+        # allow_text_identity_fallback의 default가 True여도 strict flag가 우선합니다.
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is False
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "missing_identity"
+
+
 def test_empty_source_line_insert_is_removed_before_typed_renderer_boundary():
     original = _block("Before")
     empty = _block("\n", "empty")

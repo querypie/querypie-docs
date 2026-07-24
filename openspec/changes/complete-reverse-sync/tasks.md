@@ -314,13 +314,13 @@ provenance-first branch 검증 결과:
 - `make test-convert`: 21 passed
 - `make test-reverse-sync`: golden 16 passed, regression 43 passed
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
-- reverse-sync Python test: 796 passed
-- 전체 Python test: 1119 passed, 2 skipped
+- reverse-sync Python test: 797 passed
+- 전체 Python test: 1120 passed, 2 skipped
 
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python planner 범위이므로 전체 Python test
-(`1119 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1120 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

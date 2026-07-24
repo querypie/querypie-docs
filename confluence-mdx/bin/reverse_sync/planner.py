@@ -398,6 +398,9 @@ def plan_patches(
             original_blocks,
             roundtrip_sidecar,
         )
+    effective_text_identity_fallback = (
+        allow_text_identity_fallback and not enforce_provenance
+    )
     raw_patches, resolved_mappings, legacy_skips = build_patches(
         changes,
         original_blocks,
@@ -411,7 +414,7 @@ def plan_patches(
         page_xhtml=page_xhtml,
         link_resolver=link_resolver,
         attachment_filenames=attachment_filenames,
-        allow_text_identity_fallback=allow_text_identity_fallback,
+        allow_text_identity_fallback=effective_text_identity_fallback,
     )
     intents = _build_intents(changes, roundtrip_sidecar)
     identity_reasons = (
