@@ -10,6 +10,7 @@ from reverse_sync.xhtml_patcher import (
 
 def test_validated_boundary_does_not_export_legacy_patcher():
     assert not hasattr(validated_patcher, "patch_xhtml")
+    assert not hasattr(validated_patcher, "patch_xhtml_engine")
 
 
 def test_simple_text_replacement():

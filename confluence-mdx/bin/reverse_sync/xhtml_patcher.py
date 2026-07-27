@@ -4,7 +4,7 @@ from typing import Dict, List
 
 from reverse_sync.xhtml_patch_engine import (
     XhtmlPatchError,
-    patch_xhtml_engine,
+    patch_xhtml_engine as _patch_xhtml_engine,
 )
 
 __all__ = ["XhtmlPatchError", "apply_validated_patches"]
@@ -23,4 +23,4 @@ def apply_validated_patches(
     Returns:
         패치된 XHTML 문자열
     """
-    return patch_xhtml_engine(xhtml, patches, strict=True)
+    return _patch_xhtml_engine(xhtml, patches, strict=True)
