@@ -236,12 +236,27 @@
 
 ### 2.9 P2 — capability 확대
 
-- [ ] page title update를 body update와 분리된 capability/change로 설계합니다.
-- [ ] attachment upload/version update/delete transaction을 별도 capability/change로 설계합니다.
-- [ ] preserved anchor target 변경을 지원할지 결정합니다.
-- [ ] raw HTML table cell text-only mutation의 typed proof를 설계합니다.
-- [ ] active draft reconciliation 또는 draft-aware publish를 별도 capability/change로 설계합니다.
-- [ ] remote drift three-way merge는 provenance와 conflict semantics가 준비된 뒤 별도 change로 검토합니다.
+- [x] page title update를 body update와 분리된 capability/change로 설계합니다.
+  - version precondition이 없는 title 전용 endpoint는 사용하지 않고, 후속
+    capability가 title/body/version을 하나의 page postcondition으로 증명합니다.
+- [x] attachment upload/version update/delete transaction을 별도 capability/change로 설계합니다.
+  - create/update/delete intent와 catalog precondition을 분리하고, page PUT과
+    원자적이지 않은 side effect 및 manual recovery evidence를 명시합니다.
+  - 기존 attachment version update는 old binary를 page CAS 성공 시점까지
+    보존하는 staging/body-switch 전략을 별도 change에서 증명하기 전까지
+    `new_attachment_lifecycle`로 block합니다.
+- [x] preserved anchor target 변경을 지원할지 결정합니다.
+  - generic template rewrite에서는 지원하지 않으며 target fingerprint가 바뀌면
+    `unsupported_capability`로 block합니다.
+- [x] raw HTML table cell text-only mutation의 typed proof를 설계합니다.
+  - table/cell/text-node identity, 구조 및 preservation fingerprint, byte
+    preservation과 semantic proof를 진입 조건으로 정의합니다.
+- [x] active draft reconciliation 또는 draft-aware publish를 별도 capability/change로 설계합니다.
+  - 첫 단계는 read-only reconciliation evidence이며, 자동 merge/overwrite는
+    공식 API와 canary에서 versioned draft write를 증명하기 전까지 제외합니다.
+- [x] remote drift three-way merge는 provenance와 conflict semantics가 준비된 뒤 별도 change로 검토합니다.
+  - capability별 commute/conflict semantics가 준비될 때까지 `remote_drift`에서
+    PUT 0회와 manual MDX merge workflow를 유지합니다.
 
 ## 3. Verification
 
