@@ -269,35 +269,48 @@ def select_renderer_strategy(
     return StrategyDecision(RendererStrategy.TEXT_BLOCK, block_type)
 
 
-def _is_container(
-    mapping: Optional[BlockMapping],
-    sidecar_block: Optional[SidecarBlock],
-) -> bool:
-    if mapping is not None and mapping.children:
-        return True
-    reconstruction = sidecar_block.reconstruction if sidecar_block is not None else None
-    return bool(reconstruction and reconstruction.get("kind") == "container")
+_LEGACY_UNSUPPORTED_CAPABILITIES = {
+    "not_markdown_table": "raw_html_table_edit",
+    "preserved_anchor_table": "unknown_macro_mutation",
+    "raw_html_table": "raw_html_table_edit",
+    "unknown_preservation_unit": "unknown_macro_mutation",
+    "unsafe_html_table_edit": "raw_html_table_edit",
+}
+
+
+def capability_for_legacy_skip(reason_code: str) -> Optional[CapabilitySpec]:
+    """legacy renderer skip을 canonical blocked capability로 변환합니다."""
+    capability_id = _LEGACY_UNSUPPORTED_CAPABILITIES.get(reason_code)
+    return get_capability(capability_id) if capability_id else None
+
+
+def _has_supported_preserved_template(mapping: Optional[BlockMapping]) -> bool:
+    if mapping is None:
+        return False
+    return (
+        "<ac:link" in mapping.xhtml_text
+        or "<ri:attachment" in mapping.xhtml_text
+    )
 
 
 def classify_capability(
     *,
     action: str,
+    strategy: StrategyDecision,
     mapping: Optional[BlockMapping],
-    sidecar_block: Optional[SidecarBlock],
-    source_block_types: tuple[str, ...],
-    contains_raw_html_table: bool,
+    block_type: str,
 ) -> CapabilitySpec:
-    """legacy patch 하나를 명시적인 capability로 분류합니다.
+    """typed intent와 renderer strategy를 capability로 분류합니다.
 
-    분류할 수 없는 macro/HTML mutation은 generic success로 흘려보내지 않고
-    blocked capability로 닫습니다.
+    raw patch shape은 capability source로 사용하지 않습니다. 분류할 수 없는
+    macro/HTML mutation은 generic success로 흘려보내지 않고 blocked
+    capability로 닫습니다.
     """
-    if contains_raw_html_table:
+    if strategy.source_kind == "raw_html_table":
         return get_capability("raw_html_table_edit")
 
     mapping_type = mapping.type if mapping is not None else ""
-    source_types = set(source_block_types)
-    unknown_html = mapping_type == "html_block" or "html_block" in source_types
+    unknown_html = mapping_type == "html_block" or block_type == "html_block"
 
     if action == "insert":
         if unknown_html:
@@ -309,20 +322,30 @@ def classify_capability(
             return get_capability("unknown_macro_mutation")
         return get_capability("delete_exact_block")
 
-    if _is_container(mapping, sidecar_block):
+    if strategy.strategy is RendererStrategy.CONTAINER:
         return get_capability("container_body_reconstruct")
     if unknown_html:
         return get_capability("unknown_macro_mutation")
-    if mapping_type == "table" or "table" in source_types:
+    if strategy.strategy is RendererStrategy.TABLE:
+        if _contains_preservation_unit(mapping):
+            return get_capability("unknown_macro_mutation")
         return get_capability("simple_markdown_table_replace")
-    if _contains_preservation_unit(mapping):
-        return get_capability("preserved_anchor_template_rewrite")
-    if mapping_type == "list" or "list" in source_types:
+    if strategy.strategy is RendererStrategy.PRESERVED_ANCHOR:
+        if _has_supported_preserved_template(mapping):
+            return get_capability("preserved_anchor_template_rewrite")
+        return get_capability("unknown_macro_mutation")
+    if strategy.strategy is RendererStrategy.LIST:
+        if _contains_preservation_unit(mapping):
+            if _has_supported_preserved_template(mapping):
+                return get_capability("preserved_anchor_template_rewrite")
+            return get_capability("unknown_macro_mutation")
         return get_capability("clean_list_reconstruct")
-    if mapping_type == "heading" or "heading" in source_types:
+    if strategy.strategy is RendererStrategy.BLOCKED:
+        return get_capability("unknown_macro_mutation")
+    if mapping_type == "heading" or block_type == "heading":
         return get_capability("heading_visible_edit")
-    if mapping_type == "code" or "code_block" in source_types:
+    if mapping_type == "code" or block_type == "code_block":
         return get_capability("code_block_replace")
-    if mapping_type == "paragraph" or "paragraph" in source_types:
+    if mapping_type == "paragraph" or block_type == "paragraph":
         return get_capability("paragraph_visible_edit")
     return get_capability("unknown_macro_mutation")

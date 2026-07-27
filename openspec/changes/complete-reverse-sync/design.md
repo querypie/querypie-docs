@@ -320,9 +320,15 @@ exact target mapping 이후 `text_block`, `list`, `preserved_anchor`, `container
 `table`, `blocked` 중 하나를 선택합니다. raw HTML table은 generic text block
 fallback에서 분리합니다. `preserved_anchor` strategy와 raw HTML table의 보존
 분기는 공통 template rewrite helper를 사용합니다. 알려지지 않은 preservation
-unit은 `unknown_macro_mutation`으로 fail-closed합니다. 각 strategy handler와
-capability 판별을 `patch_builder.py` 밖의 모듈로 추출하는 작업은 계속 남아
-있습니다.
+unit은 `unknown_macro_mutation`으로 fail-closed합니다.
+
+capability 판별은 renderer output의 raw patch payload shape를 재해석하지
+않습니다. canonical operation action만 action contract로 사용합니다.
+planner가 operation에 대응하는 MDX `ChangeIntent`와 typed
+`StrategyDecision`을 `classify_capability()`에 전달하고, legacy renderer skip
+reason의 capability 대응도 `capabilities.py` registry boundary에서 수행합니다.
+각 strategy handler를 `patch_builder.py` 밖의 `reverse_sync/strategies/**`
+모듈로 추출하는 작업은 계속 남아 있습니다.
 
 `render_patch_plan_preserving()`은 executable operation을 raw renderer input으로
 복원하기 직전에 target root fragment hash, sidecar MDX hash, line range를 base

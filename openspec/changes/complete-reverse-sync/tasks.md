@@ -153,7 +153,18 @@
 
 ### 2.8 P1 — planner / renderer 책임 분리
 
-- [ ] `patch_builder.py`의 capability 판별을 `capabilities.py`와 planner로 추출합니다.
+- [x] `patch_builder.py`의 capability 판별을 `capabilities.py`와 planner로 추출합니다.
+  - `classify_capability()`은 raw patch payload shape를 재해석하지 않고 typed
+    `StrategyDecision`, MDX block type, canonical action을 입력으로 capability를
+    결정합니다.
+  - planner는 operation에 대응하는 `ChangeIntent` ordinal에서 capability를
+    계산하고 여러 intent가 서로 다른 capability로 분류되면 fail-closed합니다.
+  - legacy renderer skip reason과 blocked capability의 대응표도
+    `capabilities.py`의 registry boundary로 이동합니다.
+  - MDX-owned link의 text block operation을 preservation capability로 잘못
+    분류하지 않도록 integration test를 고정합니다.
+- [ ] `build_patches()`의 strategy handler를 `reverse_sync/strategies/**`로
+  추출하고 typed strategy dispatch만 남깁니다.
 - [x] planning output을 typed `PatchPlan`/operation으로 바꾸고 raw patch dict를 boundary 안에 가둡니다.
   - `legacy-patch-builder-v2` adapter가 `ChangeIntent`, `TargetIdentity`,
     capability, required proof, reason code를 canonical schema v2 plan에 기록합니다.
@@ -181,8 +192,7 @@
     helper를 사용합니다.
   - 계약이 없는 `ac:`/`ri:` preservation unit은 text fallback으로 흘리지 않고
     `unknown_macro_mutation` capability로 fail-closed 처리합니다.
-  - capability 판별과 strategy handler 자체의 모듈 추출은 위 task에 계속
-    남아 있습니다.
+  - strategy handler 자체의 모듈 추출은 위의 별도 task에 계속 남아 있습니다.
 - [x] unsupported table/macro 구조를 explicit block reason으로 전환합니다.
   - operation 생성 전 legacy skip도 원래 intent에 연결합니다.
   - table/macro 내부 분기 reason은 `unsupported_capability`와
@@ -360,10 +370,19 @@ typed renderer strategy branch 검증 결과:
 - 전체 Python test: 1132 passed, 2 skipped
 - `openspec validate complete-reverse-sync --strict`: passed
 
+typed capability planning branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- `test_reverse_sync*.py`: 789 passed
+- 전체 Python test: 1142 passed, 2 skipped
+- `openspec validate complete-reverse-sync --strict`: passed
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python renderer 범위이므로 전체 Python test
-(`1132 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1142 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash
