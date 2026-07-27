@@ -215,6 +215,41 @@ def test_empty_source_line_insert_is_removed_before_typed_renderer_boundary():
     assert plan.to_patch_dicts()[0]["new_element_xhtml"] == "<p>Added</p>"
 
 
+def test_insert_skips_added_intent_already_covered_by_replacement():
+    original = _block("Before")
+    replacement = _block("First")
+    inserted = Block(
+        type="paragraph",
+        content="Second",
+        line_start=3,
+        line_end=3,
+    )
+    changes = [
+        BlockChange(0, "deleted", original, None),
+        BlockChange(0, "added", None, replacement),
+        BlockChange(1, "added", None, inserted),
+    ]
+    xhtml = "<p>Before</p>"
+
+    plan, _ = plan_patches(
+        changes,
+        [original],
+        [replacement, inserted],
+        page_xhtml=xhtml,
+        alignment={0: 0},
+        roundtrip_sidecar=_sidecar(xhtml, original),
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is True
+    assert len(plan.operations) == 2
+    assert plan.operations[0].intent_ordinals == (0, 1)
+    assert plan.operations[1].intent_ordinals == (2,)
+    assert plan.to_patch_dicts()[1]["new_element_xhtml"] == "<p>Second</p>"
+
+
 def test_plan_serialization_is_deterministic_and_contains_no_untyped_top_level_patch():
     old = _block("Before")
     new = _block("After")

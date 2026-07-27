@@ -189,8 +189,10 @@ def _intent_ordinals_for_patch(
                 # renderer에서 제거합니다.
                 return (-1,)
             intent = intent_by_ordinal.get(ordinal)
-            if intent is None or intent.provenance_xpath:
+            if intent is None:
                 return ()
+            if intent.provenance_xpath:
+                continue
             return (intent.ordinal,)
         return ()
 
