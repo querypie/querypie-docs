@@ -42,7 +42,14 @@
   - referenced artifact integrity 검사
   - schema version 및 verifier policy 검사
 - [x] artifact를 `var/<page_id>/reverse-sync/<run_id>/`에 실행별로 저장합니다.
-- [ ] 기존 `reverse-sync.*` 경로는 최신 run을 가리키는 read-only compatibility output으로 제한합니다.
+- [x] 기존 run-backed `reverse-sync.*` 경로는 최신 immutable run을 가리키는
+  read-only compatibility output으로 제한합니다.
+  - online prepare의 patched XHTML, patch plan, local proof, manifest는
+    run directory artifact를 가리키는 상대 symlink로만 노출합니다.
+  - publisher는 compatibility output을 입력으로 사용하지 않으며 폐기된
+    `reverse-sync.manifest.path` pointer를 생성하지 않습니다.
+  - offline diagnostic의 diff/result/mapping/verify output은 push 비대상
+    compatibility artifact로 유지합니다.
 - [x] email, token, Authorization header redaction test를 추가합니다.
 
 완료 gate:
@@ -405,10 +412,19 @@ validated patcher boundary branch 검증 결과:
 - 전체 Python test: 1145 passed, 2 skipped
 - `openspec validate complete-reverse-sync --strict`: passed
 
+run-backed compatibility artifact branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- `test_reverse_sync*.py`: 793 passed
+- 전체 Python test: 1146 passed, 2 skipped
+- `openspec validate complete-reverse-sync --strict`: passed
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python renderer 범위이므로 전체 Python test
-(`1145 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1146 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

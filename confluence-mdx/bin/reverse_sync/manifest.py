@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from collections import Counter
 from pathlib import Path
 from typing import Iterable
@@ -45,6 +46,12 @@ REQUIRED_ARTIFACTS = frozenset(
         "local_proof",
     }
 )
+RUN_BACKED_COMPATIBILITY_OUTPUTS = {
+    "reverse-sync.manifest.json": None,
+    "reverse-sync.patched.xhtml": "candidate_xhtml",
+    "reverse-sync.plan.json": "patch_plan",
+    "reverse-sync.proof.json": "local_proof",
+}
 
 
 class ArtifactTamperedError(ValueError):
@@ -188,6 +195,59 @@ def create_sync_manifest(
     _write_immutable(manifest_path, manifest_content)
     _write_immutable(run_dir / "manifest.sha256", sha256_text(manifest_content) + "\n")
     return manifest_path
+
+
+def update_run_backed_compatibility_outputs(
+    manifest_path: Path,
+    page_dir: Path,
+) -> dict[str, Path]:
+    """최신 immutable run을 가리키는 read-only compatibility symlink를 갱신합니다.
+
+    이 출력은 운영자 진단과 기존 도구 호환 전용입니다. Publisher는 이 경로를
+    입력으로 사용하지 않고 explicit ``manifest_path``만 받습니다.
+    """
+    path = Path(manifest_path).resolve()
+    page = Path(page_dir).resolve()
+    manifest = load_sync_manifest(path)
+    run_dir = path.parent
+    if run_dir.name != manifest.run_id:
+        raise ArtifactTamperedError(
+            "manifest run_id와 artifact directory가 다릅니다"
+        )
+    if run_dir.parent.parent.resolve() != page:
+        raise ArtifactTamperedError(
+            "compatibility output page directory와 manifest run이 다릅니다"
+        )
+
+    targets: dict[str, Path] = {}
+    for output_name, artifact_name in RUN_BACKED_COMPATIBILITY_OUTPUTS.items():
+        target = (
+            path
+            if artifact_name is None
+            else run_dir / manifest.artifact(artifact_name).path
+        )
+        resolved_target = target.resolve()
+        try:
+            resolved_target.relative_to(run_dir.resolve())
+        except ValueError as exc:
+            raise ArtifactTamperedError(
+                f"compatibility target이 run directory를 벗어납니다: {output_name}"
+            ) from exc
+
+        output_path = page / output_name
+        temporary = page / f".{output_name}.{manifest.run_id}.tmp"
+        if temporary.exists() or temporary.is_symlink():
+            temporary.unlink()
+        try:
+            temporary.symlink_to(
+                os.path.relpath(resolved_target, start=page),
+            )
+            temporary.replace(output_path)
+        finally:
+            if temporary.exists() or temporary.is_symlink():
+                temporary.unlink()
+        targets[output_name] = resolved_target
+    return targets
 
 
 def load_sync_manifest(path: Path) -> SyncManifest:
