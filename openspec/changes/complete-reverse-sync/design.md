@@ -473,6 +473,20 @@ batch는 다음 순서로 동작합니다.
 
 `--all-or-nothing`처럼 보이는 표현을 사용하지 않습니다. 진정한 원자성이 필요하면 별도의 staging/publishing architecture가 필요합니다.
 
+branch batch의 `--json` 출력은 raw result array가 아니라
+`reverse-sync-batch-report` schema v1 object입니다. top-level에는 `command`,
+`branch`, `outcome`, `exit_code`, 고정된 counter를 가진 `summary`, page별
+`results`, `resume_manifests`가 있습니다. page result는 기존 진단 field를
+보존하되 `batch_status`를 추가합니다. 성공과 실패가 함께 있으면
+`partial_success`, 실패만 있으면 `failed`, 전부 통과하면 `success`입니다.
+사용자 confirmation 취소는 side effect가 없는 정상 종료이므로 `cancelled`와 exit
+code 0으로 기록합니다.
+
+postcondition failure 뒤의 남은 verified manifest는 `push.status=not_attempted`,
+`reason_code=batch_halted_after_postcondition_failure`로 명시하고
+`resume_manifests`에 경로를 기록합니다. conflict나 원격 drift가 발생한 manifest는
+같은 base로 재발행하면 안 되므로 resume 목록에 포함하지 않습니다.
+
 ### Decision: 상태와 reason code를 분리합니다
 
 상태는 workflow lifecycle을 표현합니다.

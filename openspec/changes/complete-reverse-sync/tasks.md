@@ -133,8 +133,17 @@
     base/candidate/plan hash와 gate를 manifest에 교차 검증합니다.
 - [x] interactive confirmation에 page ID, base version, target version, change count, candidate hash를 표시합니다.
 - [x] batch는 모든 local proof 후 page별 transaction을 실행합니다.
-- [ ] batch partial success, conflict, postcondition failure exit code와 JSON schema를 정의합니다.
-- [ ] resume는 `remote_verified`/blocked 상태를 재해석하지 않고 명시적 manifest 목록으로 수행합니다.
+- [x] batch partial success, conflict, postcondition failure exit code와 JSON schema를 정의합니다.
+  - branch `--json`은 `reverse-sync-batch-report` schema v1 envelope를
+    반환합니다.
+  - `outcome`, `exit_code`, stable summary, page별 `batch_status`와 reason
+    code를 함께 기록합니다.
+  - partial/failed는 exit 1, success와 사용자 cancellation은 exit 0입니다.
+- [x] resume는 `remote_verified`/blocked 상태를 재해석하지 않고 명시적 manifest 목록으로 수행합니다.
+  - postcondition failure 뒤 미시도 page는
+    `batch_halted_after_postcondition_failure`로 표시합니다.
+  - batch report의 `resume_manifests`에는 이 미시도 run만 포함하고 각 run은
+    `push --manifest`로 명시적으로 재개합니다.
 - [x] `--yes`가 safety gate를 우회하지 못하도록 테스트합니다.
 
 완료 gate:
@@ -207,7 +216,7 @@ cd confluence-mdx/tests
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
 
-explicit manifest 변경 결과: 783 passed입니다.
+batch report 변경 결과: 790 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -271,10 +280,17 @@ explicit manifest branch 검증 결과:
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
 - 전체 Python test: 1106 passed, 2 skipped
 
+batch report branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- 전체 Python test: 1113 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python CLI/planner 범위이므로 전체 Python test
-(`1106 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1113 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

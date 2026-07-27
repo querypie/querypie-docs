@@ -764,10 +764,15 @@ def test_main_push_branch(tmp_path, monkeypatch):
     ]
 
     with patch('reverse_sync_cli._do_verify_batch', return_value=batch_results) as mock_batch, \
-         patch('builtins.print'):
+         patch('builtins.print') as output:
         main()
 
     mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False, no_normalize=False)
+    assert any(
+        call.args
+        and call.args[0] == 'Batch outcome: success (exit 0)'
+        for call in output.call_args_list
+    )
 
 
 def test_main_push_branch_with_failure(monkeypatch):
@@ -786,6 +791,51 @@ def test_main_push_branch_with_failure(monkeypatch):
 
     assert exc_info.value.code == 1
     mock_batch.assert_called_once_with('proofread/fix-typo', limit=0, failures_only=False, push=True, yes=True, lenient=False, no_normalize=False)
+
+
+def test_main_push_branch_json_returns_versioned_partial_report(monkeypatch):
+    monkeypatch.setattr(
+        'sys.argv',
+        [
+            'reverse_sync_cli.py',
+            'push',
+            '--yes',
+            '--json',
+            '--branch',
+            'proofread/fix-typo',
+        ],
+    )
+    batch_results = [
+        {
+            'status': 'verified_local',
+            'page_id': 'p1',
+            'push': {'status': 'remote_verified', 'version': 2},
+        },
+        {
+            'status': 'verified_local',
+            'page_id': 'p2',
+            'push': {
+                'status': 'conflict',
+                'reason_code': 'version_conflict',
+                'error': 'remote changed',
+            },
+        },
+    ]
+
+    with patch(
+        'reverse_sync_cli._do_verify_batch',
+        return_value=batch_results,
+    ), patch('builtins.print') as output:
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    report = json.loads(output.call_args.args[0])
+    assert exc_info.value.code == 1
+    assert report['schema_version'] == 1
+    assert report['outcome'] == 'partial_success'
+    assert report['exit_code'] == 1
+    assert report['summary']['remote_verified'] == 1
+    assert report['summary']['push_conflict'] == 1
 
 
 def test_main_branch_mutual_exclusive(monkeypatch):
@@ -1810,7 +1860,10 @@ class TestPushConfirmPrompt:
             results = _do_verify_batch('test-branch', push=True, yes=False)
 
         mock_push.assert_not_called()
-        assert 'push' not in results[0]
+        assert results[0]['push'] == {
+            'status': 'not_attempted',
+            'reason_code': 'user_cancelled',
+        }
 
     def test_batch_yes_skips_confirm(self, tmp_path, monkeypatch):
         """배치 push --yes 시 확인 없이 push."""
@@ -1879,7 +1932,10 @@ class TestPushConfirmPrompt:
 
         push.assert_called_once()
         assert results[0]['push']['status'] == 'postcondition_failed'
-        assert 'push' not in results[1]
+        assert results[1]['push'] == {
+            'status': 'not_attempted',
+            'reason_code': 'batch_halted_after_postcondition_failure',
+        }
 
 
 class TestPushNonTtyRequiresYes:
@@ -2014,6 +2070,35 @@ class TestPrintResultsPushStatus:
         assert 'version conflict' in out
         assert '1 conflicts' in out
         assert '1 passed' not in out
+
+    def test_halted_page_is_not_reported_as_verified_local(
+        self,
+        monkeypatch,
+        capsys,
+    ):
+        monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
+
+        _print_results([
+            {
+                'file': 'src/content/ko/pending.mdx',
+                'manifest_path': '/tmp/pending/manifest.json',
+                'status': 'verified_local',
+                'changes_count': 1,
+                'push': {
+                    'status': 'not_attempted',
+                    'reason_code': (
+                        'batch_halted_after_postcondition_failure'
+                    ),
+                },
+            }
+        ])
+
+        out = capsys.readouterr().out
+        assert 'NOT ATTEMPTED' in out
+        assert 'batch_halted_after_postcondition_failure' in out
+        assert 'resume manifest: /tmp/pending/manifest.json' in out
+        assert '1 not attempted' in out
+        assert 'VERIFIED LOCAL' not in out
 
     def test_summary_counts_push_error_as_failure(self, monkeypatch, capsys):
         monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
