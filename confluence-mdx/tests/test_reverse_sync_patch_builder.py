@@ -532,6 +532,41 @@ class TestBuildPatches:
         # ac:link 구조가 보존되어야 함
         assert '<ac:link>' in patches[0]['new_element_xhtml']
 
+    def test_multiline_preserved_anchor_uses_rendered_visible_model(self):
+        """paragraph source line break를 rendered space로 계획하고 anchor를 보존한다."""
+        m1 = _make_mapping(
+            'm1',
+            'Before Link',
+            xpath='p[1]',
+        )
+        m1.xhtml_text = (
+            '<p>Before <ac:link>'
+            '<ri:page ri:content-title="Target" />'
+            '<ac:link-body>Link</ac:link-body>'
+            '</ac:link></p>'
+        )
+        mappings = [m1]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        change = _make_change(
+            0,
+            'Before\n[Link](target)',
+            'After\n[Link](target)',
+        )
+
+        patches, *_ = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            mappings,
+            self._setup_sidecar('p[1]', 0),
+            xpath_to_mapping,
+        )
+
+        assert len(patches) == 1
+        assert '<ac:link>' in patches[0]['new_element_xhtml']
+        assert 'After ' in patches[0]['new_element_xhtml']
+        assert '\n' not in patches[0]['new_element_xhtml']
+
     def test_roundtrip_sidecar_paragraph_without_anchors_uses_replace_fragment(self):
         m1 = _make_mapping('m1', 'hello world', xpath='p[1]')
         mappings = [m1]

@@ -258,7 +258,13 @@ changed fragment는 capability registry에 따라 다음 전략 중 하나를 �
 | `delete_exact_fragment` | 삭제 대상 identity가 exact하고 보호 metadata 정책을 충족함 | fragment 삭제 |
 | `blocked` | identity 또는 preservation proof가 부족함 | XHTML을 만들지 않고 reason code 반환 |
 
-기존 `visible_segments.py`의 개념은 paragraph, heading, list 등 text-bearing block의 planning model로 확장합니다. 다만 arbitrary Confluence macro를 universal visible model로 일반화하지 않습니다.
+`visible_segments.py`는 paragraph, heading, list 등 text-bearing block의 planning
+model을 제공합니다. paragraph와 heading은 실제 MDX inline emitter의 결과에서
+visible text와 whitespace segment를 추출하고, link, attachment, macro
+preservation unit의 target metadata를 별도 structural segment로 기록합니다.
+list는 item path, marker kind, ordered start, anchor path를 fingerprint로 유지합니다.
+planner adapter는 이 모델의 visible text를 사용하되 arbitrary Confluence macro와
+container를 universal visible model로 일반화하지 않습니다.
 
 ### Decision: capability registry를 code와 test의 공통 언어로 둡니다
 

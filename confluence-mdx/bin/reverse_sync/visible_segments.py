@@ -1,9 +1,8 @@
-"""Lossless visible segment extraction for reverse sync.
+"""Lossless visible segment extraction for reverse sync text-bearing blocks.
 
-Phase 1 migrates list handling first. The abstraction is intentionally small:
-- keep visible whitespace as explicit segments
-- keep list/item structure in a fingerprint for rebuild decisions
-- expose actual XHTML-visible text without the lossy normalize_mdx_to_plain step
+The model keeps visible whitespace as explicit segments, records preservation
+units separately from visible text, and exposes structural fingerprints for
+paragraph, heading, and list planning.
 """
 
 from __future__ import annotations
@@ -17,6 +16,7 @@ SegmentKind = Literal["list_marker", "ws", "text", "item_boundary", "anchor"]
 
 from bs4 import BeautifulSoup, Tag
 from reverse_sync.mapping_recorder import get_text_with_emoticons
+from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_inner_xhtml
 
 
 @dataclass(frozen=True)
@@ -46,6 +46,133 @@ class _MdxListEntry:
     marker_ws: str
     body: str
     continuation_lines: Tuple[str, ...]
+
+
+_TEXT_BLOCK_TYPES = frozenset({"paragraph", "heading"})
+_PRESERVATION_TAGS = frozenset(
+    {"a", "ac:link", "ac:image", "ac:structured-macro", "ri:attachment"}
+)
+
+
+def extract_visible_model_from_mdx(
+    content: str,
+    block_type: str,
+) -> VisibleContentModel:
+    """MDX paragraph, heading, list를 공통 visible-content model로 변환합니다."""
+    if block_type == "list":
+        return extract_list_model_from_mdx(content)
+    if block_type not in _TEXT_BLOCK_TYPES:
+        raise ValueError(f"지원하지 않는 visible MDX block type입니다: {block_type}")
+
+    rendered_inner = mdx_block_to_inner_xhtml(content, block_type)
+    heading_level = _mdx_heading_level(content) if block_type == "heading" else None
+    return _extract_text_model(
+        rendered_inner,
+        block_type=block_type,
+        heading_level=heading_level,
+        source="mdx",
+    )
+
+
+def extract_visible_model_from_xhtml(
+    fragment: str,
+    block_type: str,
+) -> VisibleContentModel:
+    """Storage XHTML paragraph, heading, list의 visible-content model을 만듭니다."""
+    if block_type == "list":
+        return extract_list_model_from_xhtml(fragment)
+    if block_type not in _TEXT_BLOCK_TYPES:
+        raise ValueError(f"지원하지 않는 visible XHTML block type입니다: {block_type}")
+
+    soup = BeautifulSoup(fragment, "html.parser")
+    heading = soup.find(re.compile(r"^h[1-6]$"))
+    heading_level = (
+        int(heading.name[1])
+        if block_type == "heading" and isinstance(heading, Tag)
+        else None
+    )
+    return _extract_text_model(
+        fragment,
+        block_type=block_type,
+        heading_level=heading_level,
+        source="xhtml",
+    )
+
+
+def _extract_text_model(
+    fragment: str,
+    *,
+    block_type: str,
+    heading_level: int | None,
+    source: str,
+) -> VisibleContentModel:
+    soup = BeautifulSoup(fragment, "html.parser")
+    visible_text = get_text_with_emoticons(soup)
+    segments = _tokenize_visible_text(visible_text)
+    units = _collect_preservation_units(soup)
+    segments.extend(
+        VisibleSegment(
+            kind="anchor",
+            text="",
+            visible=False,
+            structural=True,
+            meta={"kind": kind, "source": source, **metadata},
+        )
+        for kind, metadata in units
+    )
+    return VisibleContentModel(
+        segments=segments,
+        visible_text=visible_text,
+        structural_fingerprint=(
+            block_type,
+            heading_level,
+            tuple(kind for kind, _ in units),
+        ),
+    )
+
+
+def _collect_preservation_units(
+    soup: BeautifulSoup,
+) -> List[Tuple[str, dict[str, Any]]]:
+    units: List[Tuple[str, dict[str, Any]]] = []
+    for tag in soup.find_all(sorted(_PRESERVATION_TAGS)):
+        if tag.name in {"a", "ac:link"}:
+            kind = "link"
+            page = tag.find("ri:page")
+            metadata = {
+                "href": str(tag.get("href", "")),
+                "anchor": str(tag.get("ac:anchor", "")),
+                "page_title": (
+                    str(page.get("ri:content-title", ""))
+                    if isinstance(page, Tag)
+                    else ""
+                ),
+            }
+        elif tag.name == "ac:image":
+            kind = "attachment"
+            attachment = tag.find("ri:attachment")
+            metadata = {
+                "filename": (
+                    str(attachment.get("ri:filename", ""))
+                    if isinstance(attachment, Tag)
+                    else ""
+                ),
+            }
+        elif tag.name == "ri:attachment":
+            if tag.find_parent("ac:image") is not None:
+                continue
+            kind = "attachment"
+            metadata = {"filename": str(tag.get("ri:filename", ""))}
+        else:
+            kind = "macro"
+            metadata = {"name": str(tag.get("ac:name", ""))}
+        units.append((kind, metadata))
+    return units
+
+
+def _mdx_heading_level(content: str) -> int | None:
+    match = re.match(r"^\s*(#{1,6})\s+", content)
+    return len(match.group(1)) if match is not None else None
 
 
 def extract_list_model_from_mdx(content: str) -> VisibleContentModel:
