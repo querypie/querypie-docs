@@ -1167,6 +1167,7 @@ def _do_push(page_id: str, config=None, manifest_path: str = None):
             str(persisted_mdx_path),
             page_id,
             language=_detect_language(manifest.improved_descriptor),
+            page_dir=str(var_dir),
         )
         actual_mdx = persisted_mdx_path.read_text()
         from reverse_sync.base_parity import verify_source_identity

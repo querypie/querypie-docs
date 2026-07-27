@@ -19,7 +19,7 @@ from reverse_sync.confluence_client import (
     get_page_snapshot,
     update_page,
 )
-from reverse_sync.base_parity import verify_base_parity
+from reverse_sync.base_parity import verify_base_parity, verify_source_identity
 from reverse_sync.manifest import (
     ArtifactTamperedError,
     StaleVerificationError,
@@ -677,6 +677,28 @@ def test_push_base_parity_does_not_hide_visible_spacing():
 
     assert result.passed is False
     assert result.reason_code == "base_parity_mismatch"
+
+
+def test_source_identity_ignores_h1_like_shell_comments():
+    original = """---
+title: Test page
+---
+
+```bash
+# old shell comment
+```
+
+# Test page
+"""
+    improved = original.replace("# old shell comment", "# new shell comment")
+
+    result = verify_source_identity(
+        _snapshot(title="Test page"),
+        original,
+        improved,
+    )
+
+    assert result.passed is True
 
 
 def test_online_verify_blocks_title_change(tmp_path, monkeypatch):

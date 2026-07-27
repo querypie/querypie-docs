@@ -35,8 +35,25 @@ def _frontmatter(content: str) -> dict:
 
 
 def _first_h1(content: str) -> str:
-    match = re.search(r"^# ([^\n]+)$", content, flags=re.MULTILINE)
-    return match.group(1).strip() if match else ""
+    fence_char = ""
+    fence_length = 0
+    for line in content.splitlines():
+        fence = re.match(r"^[ \t]{0,3}(`{3,}|~{3,})", line)
+        if fence:
+            marker = fence.group(1)
+            if not fence_char:
+                fence_char = marker[0]
+                fence_length = len(marker)
+            elif marker[0] == fence_char and len(marker) >= fence_length:
+                fence_char = ""
+                fence_length = 0
+            continue
+        if fence_char or line.startswith(("    ", "\t")):
+            continue
+        match = re.match(r"^# ([^\n]+)$", line)
+        if match:
+            return match.group(1).strip()
+    return ""
 
 
 def _content_without_frontmatter(content: str) -> str:

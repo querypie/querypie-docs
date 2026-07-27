@@ -1377,6 +1377,54 @@ class TestPushConflictError:
 class TestPushBackup:
     """push 시 backup.xhtml 생성 확인."""
 
+    def test_postcondition_conversion_uses_page_metadata(
+        self,
+        tmp_path,
+        monkeypatch,
+    ):
+        monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
+        page_id = 'metadata-page'
+        manifest_path, base, persisted = _create_push_manifest(
+            tmp_path,
+            page_id,
+        )
+        persisted = PageSnapshot(
+            page_id=persisted.page_id,
+            status=persisted.status,
+            title=persisted.title,
+            version=persisted.version,
+            storage_xhtml="<p>New</p>\n",
+            fetched_at=persisted.fetched_at,
+            api=persisted.api,
+        )
+        gateway = MagicMock()
+        gateway.get_current_page.side_effect = [base, persisted]
+        gateway.get_active_draft.return_value = None
+        gateway.update_page.return_value = {"version": {"number": 6}}
+        converted = []
+
+        def forward_convert(_input_path, output_path, _page_id, **kwargs):
+            assert kwargs["page_dir"] == str(tmp_path / "var" / page_id)
+            converted.append(Path(output_path))
+            content = "# Test\n\nNew\n"
+            Path(output_path).write_text(content)
+            return content
+
+        with patch(
+            'reverse_sync.confluence_client.ConfluenceGateway',
+            return_value=gateway,
+        ), patch(
+            'reverse_sync_cli._forward_convert',
+            side_effect=forward_convert,
+        ):
+            _do_push(
+                page_id,
+                config=MagicMock(),
+                manifest_path=str(manifest_path),
+            )
+
+        assert converted
+
     def test_backup_created(self, tmp_path, monkeypatch):
         monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
         page_id = 'backup-page'
