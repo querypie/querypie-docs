@@ -312,6 +312,7 @@ _LEGACY_UNSUPPORTED_CAPABILITIES = {
     "not_markdown_table": "raw_html_table_edit",
     "preserved_anchor_table": "unknown_macro_mutation",
     "raw_html_table": "raw_html_table_edit",
+    "unknown_preservation_unit": "unknown_macro_mutation",
     "unsafe_html_table_edit": "raw_html_table_edit",
 }
 _LEGACY_MISSING_IDENTITY_REASONS = frozenset(

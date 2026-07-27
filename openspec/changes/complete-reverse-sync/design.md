@@ -315,8 +315,14 @@ legacy builder가 operation 생성 전에 table/macro 변경을 skip한 경우�
 sidecar 또는 mapping 부재는 `missing_identity`로 정규화합니다. 하나의 legacy
 skip과 같은 intent에서 파생한 추가 `missing_identity` issue를 중복 생성하지
 않습니다.
-capability별 renderer strategy 자체를 `patch_builder.py`에서 추출하는 작업은
-계속 남아 있습니다.
+`reverse_sync/capabilities.py`의 `RendererStrategy`와 `StrategyDecision`은
+exact target mapping 이후 `text_block`, `list`, `preserved_anchor`, `container`,
+`table`, `blocked` 중 하나를 선택합니다. raw HTML table은 generic text block
+fallback에서 분리합니다. `preserved_anchor` strategy와 raw HTML table의 보존
+분기는 공통 template rewrite helper를 사용합니다. 알려지지 않은 preservation
+unit은 `unknown_macro_mutation`으로 fail-closed합니다. 각 strategy handler와
+capability 판별을 `patch_builder.py` 밖의 모듈로 추출하는 작업은 계속 남아
+있습니다.
 
 `render_patch_plan_preserving()`은 executable operation을 raw renderer input으로
 복원하기 직전에 target root fragment hash, sidecar MDX hash, line range를 base

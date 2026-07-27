@@ -159,6 +159,63 @@ def test_legacy_table_skip_is_one_typed_capability_issue():
     assert issue.to_legacy_dict()["reason"] == "unsupported_capability"
 
 
+def test_unknown_preservation_unit_is_blocked_before_text_block_fallback():
+    old = _block("Before")
+    new = _block("After")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = (
+        '<p><ac:structured-macro ac:name="unknown">'
+        '<ac:parameter ac:name="value">Before</ac:parameter>'
+        '</ac:structured-macro></p>'
+    )
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=_sidecar(xhtml, old),
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "unsupported_capability"
+    assert plan.issues[0].capability_id == "unknown_macro_mutation"
+    assert plan.issues[0].intent_ordinal == 0
+
+
+def test_mixed_supported_and_unknown_preservation_units_are_blocked():
+    old = _block("Before Link")
+    new = _block("After Link")
+    change = BlockChange(0, "modified", old, new)
+    xhtml = (
+        '<p><ac:structured-macro ac:name="unknown">'
+        "<ac:rich-text-body>"
+        '<ac:link><ri:page ri:content-title="Target"></ri:page>'
+        "<ac:link-body>Before Link</ac:link-body></ac:link>"
+        "</ac:rich-text-body>"
+        "</ac:structured-macro></p>"
+    )
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=_sidecar(xhtml, old),
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "unsupported_capability"
+    assert plan.issues[0].capability_id == "unknown_macro_mutation"
+    assert plan.issues[0].intent_ordinal == 0
+
+
 def test_push_plan_blocks_operation_without_sidecar_provenance():
     old = _block("Before")
     new = _block("After")

@@ -6,10 +6,17 @@ from pathlib import PurePosixPath
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import unquote, urlparse
 
+from bs4 import BeautifulSoup
 from mdx_to_storage.emitter import emit_block
 from mdx_to_storage.link_resolver import LinkResolver
 from mdx_to_storage.parser import parse_mdx
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
+from reverse_sync.capabilities import (
+    RendererStrategy,
+    StrategyDecision,
+    is_markdown_table,
+    select_renderer_strategy,
+)
 from reverse_sync.mapping_recorder import BlockMapping, record_mapping
 from mdx_to_storage.parser import Block as MdxBlock
 from text_utils import (
@@ -36,16 +43,6 @@ from reverse_sync.visible_segments import (
     extract_visible_model_from_mdx,
     extract_visible_model_from_xhtml,
 )
-
-
-def is_markdown_table(content: str) -> bool:
-    """Content가 Markdown table 형식인지 판별한다."""
-    lines = [l.strip() for l in content.strip().split('\n') if l.strip()]
-    if len(lines) < 2:
-        return False
-    pipe_lines = sum(1 for l in lines if l.startswith('|') and l.endswith('|'))
-    return pipe_lines >= 2
-
 
 _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
 _GENERATED_LINK = re.compile(
@@ -115,6 +112,26 @@ def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
 def _contains_preserved_link_markup(xhtml_text: str) -> bool:
     """링크 계열 preserved anchor가 포함된 경우만 가시 공백 raw transfer 대상이다."""
     return "<ac:link" in xhtml_text
+
+
+def _contains_only_supported_preservation_units(xhtml_text: str) -> bool:
+    """template rewrite 계약이 있는 link/attachment unit만 포함하는지 확인한다."""
+    supported = {
+        "ac:caption",
+        "ac:image",
+        "ac:link",
+        "ac:link-body",
+        "ri:attachment",
+        "ri:page",
+        "ri:space",
+    }
+    soup = BeautifulSoup(xhtml_text, "html.parser")
+    preservation_tags = {
+        tag.name
+        for tag in soup.find_all()
+        if tag.name.startswith(("ac:", "ri:"))
+    }
+    return bool(preservation_tags) and preservation_tags <= supported
 
 
 def _resolve_generated_links(
@@ -465,6 +482,26 @@ def _is_safe_cell_text_edit(old_cells: List[str], new_cells: List[str]) -> bool:
         if oc and oc in new_cells[:i] + new_cells[i + 1:]:
             return False
     return True
+
+
+def _build_preserved_template_patch(
+    mapping: BlockMapping,
+    new_plain: str,
+    mapping_lost_info: dict,
+) -> Dict[str, str]:
+    """원본 Confluence inline unit을 보존하는 fragment patch를 생성합니다."""
+    preserved = rewrite_on_stored_template(
+        mapping.xhtml_text,
+        new_plain,
+    )
+    block_lost = mapping_lost_info.get(mapping.block_id, {})
+    if block_lost:
+        preserved = apply_lost_info(preserved, block_lost)
+    return {
+        'action': 'replace_fragment',
+        'xhtml_xpath': mapping.xhtml_xpath,
+        'new_element_xhtml': preserved,
+    }
 
 
 def _can_replace_table_fragment(
@@ -898,51 +935,34 @@ def _find_best_list_mapping_by_text(
 
 def _resolve_mapping_for_change(
     change: BlockChange,
-    old_plain: str,
-    mappings: List[BlockMapping],
-    used_ids: set,
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
-) -> tuple:
-    """변경에 대한 매핑과 처리 전략을 결정한다.
+    roundtrip_sidecar: Optional[RoundtripSidecar] = None,
+    xpath_to_sidecar_block: Optional[Dict[str, SidecarBlock]] = None,
+) -> Tuple[StrategyDecision, Optional[BlockMapping]]:
+    """exact mapping을 찾은 뒤 typed renderer strategy를 결정합니다.
 
     Returns:
-        (strategy, mapping) 튜플.
-        strategy: 'direct' | 'containing' | 'list' | 'table' | 'skip'
+        (StrategyDecision, mapping) 튜플.
         mapping: 해당 BlockMapping 또는 None
     """
-
-    # Sidecar 직접 조회 (O(1))
     mapping = find_mapping_by_sidecar(
         change.index, mdx_to_sidecar, xpath_to_mapping)
-
-    if mapping is None:
-        if change.old_block.type == 'list':
-            return ('list', None)
-        if is_markdown_table(change.old_block.content):
-            return ('table', None)
-        return ('skip', None)
-
-    # callout 블록은 항상 containing 전략 사용
-    # (_convert_callout_inner가 <li><p> 구조를 생성할 수 없으므로)
-    if change.old_block.type == 'callout':
-        return ('containing', mapping)
-
-    # Parent mapping이 children을 가지면 containing 전략으로 위임
-    if mapping.children:
-        if change.old_block.type == 'list':
-            return ('list', mapping)
-        return ('containing', mapping)
-
-    # list 블록은 list 전략 사용 (direct 교체 시 <ac:image> 등 Confluence 태그 손실 방지)
-    if change.old_block.type == 'list':
-        return ('list', mapping)
-
-    # table 블록은 table 전략 사용 (direct 교체 시 <ac:link> 등 Confluence 태그 손실 방지)
-    if is_markdown_table(change.old_block.content):
-        return ('table', mapping)
-
-    return ('direct', mapping)
+    sidecar_block = _find_roundtrip_sidecar_block(
+        change,
+        mapping,
+        roundtrip_sidecar,
+        xpath_to_sidecar_block or {},
+    )
+    return (
+        select_renderer_strategy(
+            block_type=change.old_block.type,
+            block_content=change.old_block.content,
+            mapping=mapping,
+            sidecar_block=sidecar_block,
+        ),
+        mapping,
+    )
 
 
 def build_patches(
@@ -1145,14 +1165,23 @@ def build_patches(
 
         old_plain = _mdx_visible_text(change.old_block)
 
-        strategy, mapping = _resolve_mapping_for_change(
-            change, old_plain, mappings, used_ids,
-            mdx_to_sidecar, xpath_to_mapping)
+        strategy_decision, mapping = _resolve_mapping_for_change(
+            change,
+            mdx_to_sidecar,
+            xpath_to_mapping,
+            roundtrip_sidecar,
+            xpath_to_sidecar_block,
+        )
+        strategy = strategy_decision.strategy
 
         # legacy sidecar mapping이 커버하지 못한 list 블록:
         # roundtrip sidecar v3 identity로 fallback하여 mapping 복원
         mapping_via_v3_fallback = False
-        if mapping is None and strategy == 'list' and roundtrip_sidecar is not None:
+        if (
+            mapping is None
+            and strategy is RendererStrategy.LIST
+            and roundtrip_sidecar is not None
+        ):
             id_block = change.old_block or change.new_block
             if id_block and id_block.content:
                 fallback_sc = find_sidecar_block_by_identity(
@@ -1171,7 +1200,7 @@ def build_patches(
         if (
             allow_text_identity_fallback
             and mapping is None
-            and strategy == 'list'
+            and strategy is RendererStrategy.LIST
         ):
             text_fallback = _find_best_list_mapping_by_text(
                 old_plain, mappings, used_ids)
@@ -1182,7 +1211,7 @@ def build_patches(
         # sidecar가 잘못된 list mapping을 반환한 경우 (ac: 포함 + plain text 불일치):
         # plain text prefix로 올바른 mapping 복원
         if (allow_text_identity_fallback
-                and strategy == 'list' and mapping is not None
+                and strategy is RendererStrategy.LIST and mapping is not None
                 and _contains_preserved_anchor_markup(mapping.xhtml_text)
                 and old_plain[:40].strip() not in mapping.xhtml_plain_text):
             text_fallback = _find_best_list_mapping_by_text(
@@ -1192,7 +1221,7 @@ def build_patches(
                 mapping_via_v3_fallback = True
         elif (
             not allow_text_identity_fallback
-            and strategy == 'list'
+            and strategy is RendererStrategy.LIST
             and mapping is not None
             and _contains_preserved_anchor_markup(mapping.xhtml_text)
             and old_plain[:40].strip() not in mapping.xhtml_plain_text
@@ -1202,7 +1231,7 @@ def build_patches(
         if mapping is None:
             block = change.old_block or change.new_block
             block_id = f"idx-{change.index}"
-            block_kind = strategy if strategy in ('list', 'table') else block.type
+            block_kind = strategy_decision.source_kind or block.type
             skipped_changes.append({
                 'block_id': block_id,
                 'reason': 'no_mapping',
@@ -1213,7 +1242,7 @@ def build_patches(
             })
             continue
 
-        if strategy == 'list':
+        if strategy is RendererStrategy.LIST:
             list_sidecar = _find_roundtrip_sidecar_block(
                 change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
             )
@@ -1328,7 +1357,47 @@ def build_patches(
                 _mark_used(mapping.block_id, mapping)
             continue
 
-        if strategy == 'table':
+        if strategy is RendererStrategy.TABLE:
+            if strategy_decision.source_kind == "raw_html_table":
+                if (
+                    '<ac:link' in mapping.xhtml_text
+                    or '<ri:attachment' in mapping.xhtml_text
+                ):
+                    _mark_used(mapping.block_id, mapping)
+                    patches.append(
+                        _build_preserved_template_patch(
+                            mapping,
+                            _mdx_visible_text(change.new_block),
+                            mapping_lost_info,
+                        )
+                    )
+                    continue
+                old_cells = _extract_html_table_cells(change.old_block.content)
+                new_cells = _extract_html_table_cells(change.new_block.content)
+                if not _is_safe_cell_text_edit(old_cells, new_cells):
+                    skipped_changes.append({
+                        'block_id': mapping.block_id,
+                        'reason': 'unsafe_html_table_edit',
+                        'description': (
+                            f"블록 {mapping.block_id}: raw HTML 테이블의 셀 구조 변경"
+                            f"(셀 수 변경 또는 셀 내용 재배치)은 안전하지 않아 "
+                            f"건너뜁니다."
+                        ),
+                    })
+                    continue
+                _mark_used(mapping.block_id, mapping)
+                mapping_visible_text = mapping.xhtml_plain_text
+                patches.append({
+                    'xhtml_xpath': mapping.xhtml_xpath,
+                    'old_plain_text': mapping_visible_text,
+                    'new_plain_text': _apply_mdx_diff_to_xhtml(
+                        old_plain,
+                        _mdx_visible_text(change.new_block),
+                        mapping_visible_text,
+                    ),
+                })
+                continue
+
             table_skip = _classify_table_fragment_skip(
                 change, mapping, roundtrip_sidecar)
             if table_skip is None:
@@ -1346,7 +1415,7 @@ def build_patches(
 
         new_plain = _mdx_visible_text(change.new_block)
 
-        if strategy == 'containing':
+        if strategy is RendererStrategy.CONTAINER:
             if mapping is not None:
                 bid = mapping.block_id
                 first_visit = bid not in used_ids
@@ -1433,7 +1502,7 @@ def build_patches(
                             )
             continue
 
-        # strategy == 'direct'
+        # RendererStrategy.TEXT_BLOCK / PRESERVED_ANCHOR
         _mark_used(mapping.block_id, mapping)
         mapping_visible_text = _xhtml_visible_text(
             mapping,
@@ -1449,14 +1518,50 @@ def build_patches(
         sidecar_block = _find_roundtrip_sidecar_block(
             change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
         )
-        if _can_replace_table_fragment(change, mapping, roundtrip_sidecar):
-            patches.append(
-                _build_replace_fragment_patch(
-                    mapping,
-                    change.new_block,
-                    mapping_lost_info=mapping_lost_info,
+
+        if strategy is RendererStrategy.PRESERVED_ANCHOR:
+            if sidecar_block_requires_reconstruction(sidecar_block):
+                patches.append(
+                    _build_replace_fragment_patch(
+                        mapping,
+                        change.new_block,
+                        sidecar_block=sidecar_block,
+                        mapping_lost_info=mapping_lost_info,
+                    )
                 )
-            )
+                continue
+            if not _contains_only_supported_preservation_units(
+                mapping.xhtml_text
+            ):
+                skipped_changes.append({
+                    'block_id': mapping.block_id,
+                    'reason': 'unknown_preservation_unit',
+                    'description': (
+                        f"블록 {mapping.block_id}: 지원 계약이 없는 Confluence "
+                        f"preservation unit을 변경할 수 없어 건너뜁니다."
+                    ),
+                })
+                continue
+            if (
+                '<ac:link' in mapping.xhtml_text
+                or '<ri:attachment' in mapping.xhtml_text
+            ):
+                patches.append(
+                    _build_preserved_template_patch(
+                        mapping,
+                        new_plain,
+                        mapping_lost_info,
+                    )
+                )
+                continue
+            skipped_changes.append({
+                'block_id': mapping.block_id,
+                'reason': 'unknown_preservation_unit',
+                'description': (
+                    f"블록 {mapping.block_id}: 지원 계약이 없는 Confluence "
+                    f"preservation unit을 변경할 수 없어 건너뜁니다."
+                ),
+            })
             continue
 
         if _is_clean_block(change.old_block.type, mapping, sidecar_block):
@@ -1479,48 +1584,6 @@ def build_patches(
                     mapping_lost_info=mapping_lost_info,
                 )
             )
-            continue
-
-        # <ac:link> / <ri:attachment> 포함 블록은 inner XHTML 재생성 시 소실 위험
-        # 원본 XHTML 구조를 template으로 사용하여 텍스트만 갱신
-        if ('<ac:link' in mapping.xhtml_text
-                or '<ri:attachment' in mapping.xhtml_text):
-            preserved = rewrite_on_stored_template(mapping.xhtml_text, new_plain)
-            block_lost = mapping_lost_info.get(mapping.block_id, {})
-            if block_lost:
-                preserved = apply_lost_info(preserved, block_lost)
-            patches.append({
-                'action': 'replace_fragment',
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'new_element_xhtml': preserved,
-            })
-            continue
-
-        # raw HTML table은 text-level 패치로 처리하여 XHTML 구조를 보존한다.
-        # mdx_block_to_inner_xhtml 경로는 forward converter가 markdown table로 변환하여
-        # 원본 HTML table 구조가 파괴된다.
-        # text-level 패치는 셀 경계를 인식하지 못하므로, 셀 내 텍스트 교정만 안전하다.
-        # 셀 수 변경이나 셀 간 내용 재배치는 skip하여 silent corruption을 방지한다.
-        if (change.old_block.type == "html_block"
-                and change.old_block.content.lstrip().startswith("<table")):
-            old_cells = _extract_html_table_cells(change.old_block.content)
-            new_cells = _extract_html_table_cells(change.new_block.content)
-            if not _is_safe_cell_text_edit(old_cells, new_cells):
-                skipped_changes.append({
-                    'block_id': mapping.block_id,
-                    'reason': 'unsafe_html_table_edit',
-                    'description': (
-                        f"블록 {mapping.block_id}: raw HTML 테이블의 셀 구조 변경"
-                        f"(셀 수 변경 또는 셀 내용 재배치)은 안전하지 않아 건너뜁니다."
-                    ),
-                })
-                continue
-            patches.append({
-                'xhtml_xpath': mapping.xhtml_xpath,
-                'old_plain_text': mapping_visible_text,
-                'new_plain_text': _apply_mdx_diff_to_xhtml(
-                    old_plain, new_plain, mapping_visible_text),
-            })
             continue
 
         # inner XHTML 재생성 + 블록 레벨 lost_info 적용
