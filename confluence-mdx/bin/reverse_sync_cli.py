@@ -1087,7 +1087,7 @@ Arguments:
               예) src/content/ko/user-manual/user-agent.mdx
                   /tmp/improved.mdx
 
-    page-id는 경로의 src/content/ko/ 부분에서 var/pages.yaml을 통해
+    page-id는 경로의 src/content/ko/ 부분에서 var/pages.qm.yaml을 통해
     자동 유도된다.
 
 Options:
@@ -1147,7 +1147,7 @@ MDX 소스 지정 방식:
 
   --branch <branch>
             브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 배치 처리한다.
-            <mdx>, --original-mdx, --xhtml과 동시에 사용할 수 없다.
+            <mdx>, --original-mdx, --page-id, --page-dir과 동시에 사용할 수 없다.
 
 Examples:
   # 검증 + Confluence 반영
@@ -1170,10 +1170,10 @@ Examples:
   reverse-sync push "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx" \\
     --original-mdx "main:src/content/ko/user-manual/user-agent.mdx"
 
-  # 로컬 파일로 검증
+  # 로컬 MDX로 online prepare
   reverse-sync push --dry-run /tmp/improved.mdx \\
     --original-mdx /tmp/original.mdx \\
-    --xhtml /tmp/page.xhtml
+    --page-id <page-id>
 """
 
 
@@ -1659,6 +1659,16 @@ def main():
                 sys.exit(1)
             if getattr(args, 'branch', None) and args.original_mdx:
                 print('Error: --branch와 --original-mdx는 동시에 사용할 수 없습니다.', file=sys.stderr)
+                sys.exit(1)
+            if getattr(args, 'branch', None) and (
+                getattr(args, 'page_id', None)
+                or getattr(args, 'page_dir', None)
+            ):
+                print(
+                    'Error: --branch와 --page-id/--page-dir는 '
+                    '동시에 사용할 수 없습니다.',
+                    file=sys.stderr,
+                )
                 sys.exit(1)
 
             use_json = getattr(args, 'json', False)

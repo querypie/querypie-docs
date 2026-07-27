@@ -221,7 +221,7 @@ cd confluence-mdx/tests
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
 
-capability reason 변경 결과: 791 passed입니다.
+lifecycle guide 변경 결과: 794 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -299,10 +299,15 @@ capability reason branch 검증 결과:
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
 - 전체 Python test: 1114 passed, 2 skipped
 
+lifecycle guide branch 검증 결과:
+
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- 전체 Python test: 1117 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python CLI/planner 범위이므로 전체 Python test
-(`1114 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1117 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash
@@ -343,6 +348,9 @@ rg -n "api_token|Authorization|confluence\\.conf" confluence-mdx/var confluence-
 - [ ] P0/P1 구현과 canary가 완료되면 change-local `contract-reverse-sync`를 accepted spec으로 승격합니다.
 - [ ] `openspec/specs/README.md` inventory에 `contract-reverse-sync`를 추가합니다.
 - [ ] `docs/architecture.md`의 current-state 설명을 최종 module/state 이름과 동기화합니다.
-- [ ] `.agents/skills/reverse-sync/SKILL.md`의 CLI와 artifact 경로를 새 lifecycle에 맞게 갱신합니다.
+- [x] `.agents/skills/reverse-sync/SKILL.md`의 CLI와 artifact 경로를 새 lifecycle에 맞게 갱신합니다.
+  - offline diagnostic과 online prepare/publish를 구분합니다.
+  - explicit manifest, immutable run artifact, batch partial/resume 계약과
+    현재 `pages.qm.yaml`/CLI option을 반영합니다.
 - [ ] 중복된 historical plan은 짧은 bridge link만 남기거나 archive합니다.
 - [ ] 완료된 change를 `openspec/archive/<date>-complete-reverse-sync/`로 이동합니다.

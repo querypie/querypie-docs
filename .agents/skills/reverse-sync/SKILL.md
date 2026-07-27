@@ -7,195 +7,217 @@ description: "MDX 변경을 Confluence XHTML로 역반영하는 reverse-sync 작
 
 ## 개요
 
-`reverse-sync`는 MDX 변경사항을 Confluence XHTML에 역반영하는 파이프라인이다.
-교정/교열한 한국어 MDX 파일의 텍스트 변경을 Confluence 원본 XHTML에 패치하고,
-round-trip 검증(MDX → XHTML 패치 → MDX 재변환 → 비교)을 통해 패치 정확성을 보장한다.
+`reverse-sync`는 repository의 original/improved MDX 차이를 기존 Confluence
+Storage XHTML에 적용하고, local proof와 원격 compare-and-set/postcondition을
+통과한 경우에만 page body를 갱신합니다.
 
-**소스 코드**: [confluence-mdx/bin/reverse_sync_cli.py](/confluence-mdx/bin/reverse_sync_cli.py)
+소스는 `confluence-mdx/bin/reverse_sync_cli.py`와
+`confluence-mdx/bin/reverse_sync/**`에 있습니다. durable contract는
+`openspec/changes/complete-reverse-sync`를 따릅니다.
 
-## 파이프라인 단계
+실제 Confluence PUT은 승인된 page에만 수행합니다. 승인된 canary 검증 전에는
+production batch push를 실행하지 않습니다.
 
-1. original / improved MDX를 블록 단위로 파싱
-2. 블록 diff 추출
-3. 원본 XHTML 블록 매핑 생성
-4. XHTML 패치 적용
-5. 패치된 XHTML을 다시 MDX로 forward 변환 (round-trip)
-6. improved MDX와 비교하여 pass/fail 판정
-7. pass인 경우 Confluence API로 업데이트 (`push` 시)
+## lifecycle
+
+```text
+offline diagnostic
+  verify/debug ──> pass/fail/blocked (push_eligible=false)
+
+online prepare
+  push --dry-run ──> PageSnapshot + PatchPlan + local proof
+                  └─> immutable SyncManifest (verified_local)
+
+publish
+  push <mdx>       ──> online prepare + confirmation + publisher
+  push --manifest ──> explicit verified run + confirmation + publisher
+                       └─> preflight → PUT once → postcondition
+```
+
+핵심 원칙:
+
+- `verify`와 `debug`는 로컬 `page.xhtml` 기반 진단입니다. 결과가 `pass`여도
+  publish 권한을 부여하지 않습니다.
+- publish 가능한 검증은 원격 current page를 하나의 `PageSnapshot`으로 읽는
+  online prepare에서만 생성됩니다.
+- publisher는 flat `reverse-sync.patched.xhtml`을 읽지 않고 explicit
+  `manifest.json`이 결합한 candidate만 사용합니다.
+- `--yes`는 사용자 confirmation만 생략합니다. artifact, proof, dependency,
+  remote preflight, postcondition gate는 생략하지 않습니다.
+- remote version/body/title이 verify base와 다르면 최신 version으로 자동
+  재시도하지 않습니다. 새 online prepare가 필요합니다.
 
 ## 커맨드
 
 | 커맨드 | 설명 |
-|--------|------|
-| `verify` | round-trip 검증만 수행 (`push --dry-run`의 alias) |
-| `debug` | verify + MDX diff, XHTML diff, Verify diff 상세 출력 |
-| `push` | verify 수행 후 Confluence에 반영 (`--dry-run`으로 검증만 가능) |
+| --- | --- |
+| `verify` | 로컬 XHTML round-trip 진단. `push_eligible`은 항상 false입니다. |
+| `debug` | `verify`와 같지만 MDX/XHTML/round-trip diff를 모두 출력합니다. |
+| `push --dry-run` | 원격 snapshot으로 online prepare를 수행하고 PUT은 생략합니다. |
+| `push <mdx>` | online prepare 후 생성한 manifest를 확인하고 한 page를 발행합니다. |
+| `push --manifest <path>` | 이미 검증한 explicit immutable run을 다시 online verify하지 않고 발행합니다. |
+| `push --branch <branch>` | 모든 local proof를 먼저 수행한 뒤 page별 독립 transaction으로 발행합니다. |
 
-## 사용법
+## 기본 사용법
 
 ```bash
 cd confluence-mdx
 
-# 단일 파일 검증
+# offline diagnostic
 bin/reverse_sync_cli.py verify \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
-# 브랜치 전체 배치 검증
-bin/reverse_sync_cli.py verify --branch proofread/fix-typo
-
-# 상세 디버그 출력
 bin/reverse_sync_cli.py debug \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
-# 검증 + Confluence 반영
+# 원격 snapshot 기반 online prepare, PUT 없음
+bin/reverse_sync_cli.py push --dry-run \
+  "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
+
+# online prepare + 확인 + 단일 page publish
 bin/reverse_sync_cli.py push \
   "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
-# 브랜치 전체 배치 push
-bin/reverse_sync_cli.py push --branch proofread/fix-typo
-```
+# 이전 prepare의 explicit run publish
+bin/reverse_sync_cli.py push --manifest \
+  var/<page-id>/reverse-sync/<run-id>/manifest.json
 
-## MDX 소스 지정
-
-두 가지 형식을 사용할 수 있다:
-
-| 형식 | 설명 | 예시 |
-|------|------|------|
-| `ref:path` | git ref와 파일 경로를 콜론으로 구분 | `proofread/fix-typo:src/content/ko/overview.mdx` |
-| `path` | 로컬 파일 시스템 경로 | `src/content/ko/overview.mdx` |
-
-`page-id`는 경로의 `src/content/ko/` 부분에서 `var/pages.yaml`을 통해 자동 유도된다.
-
-## 옵션
-
-### 공통 옵션
-
-| 옵션 | 설명 |
-|------|------|
-| `--branch <branch>` | 브랜치의 모든 변경 ko MDX 파일을 자동 발견하여 배치 처리. `<mdx>`와 동시에 사용할 수 없다. |
-| `--original-mdx <mdx>` | 원본 MDX 소스 (기본: `main:<improved 경로>`) |
-| `--xhtml <path>` | 원본 XHTML 경로 (기본: `var/<page-id>/page.xhtml`) |
-| `--limit N` | 배치 모드에서 최대 처리 파일 수 (기본: 0=전체) |
-| `--failures-only` | 실패(fail/error) 결과만 출력. `--limit`과 함께 사용 시 실패 건수 기준으로 제한. |
-| `--json` | 결과를 JSON 형식으로 출력 |
-
-### push 전용 옵션
-
-| 옵션 | 설명 |
-|------|------|
-| `--dry-run` | 검증만 수행, Confluence 반영 안 함 (= `verify`) |
-
-## 배치 모드 옵션 조합
-
-`--branch` 사용 시 `--limit`과 `--failures-only`의 동작:
-
-| 조합 | 처리 범위 | 출력 범위 |
-|------|-----------|-----------|
-| (기본) | 전체 파일 | 전체 결과 |
-| `--failures-only` | 전체 파일 | 실패 결과만 |
-| `--limit N` | 처음 N개 파일 | 전체 결과 |
-| `--failures-only --limit N` | 실패 N건 수집될 때까지 | 실패 결과만 (최대 N건) |
-
-`--failures-only` 사용 시에도 Summary는 실제 처리한 전체 건수 기준으로 출력된다.
-
-## 검증 결과 상태
-
-| 상태 | 의미 |
-|------|------|
-| `pass` | round-trip 검증 통과 — improved MDX와 verify MDX가 일치 |
-| `fail` | round-trip 검증 실패 — 패치 후 재변환 결과가 다름 |
-| `no_changes` | MDX에 변경사항 없음 |
-| `error` | 처리 중 오류 발생 |
-
-## 중간 산출물
-
-`verify`/`debug`/`push` 실행 시 `var/<page_id>/`에 중간 파일이 생성된다:
-
-```
-var/<page_id>/
-├── page.xhtml                          # Confluence 원본 XHTML
-├── reverse-sync.diff.yaml             # MDX 블록 변경 목록
-├── reverse-sync.mapping.original.yaml # 원본 XHTML 블록 매핑
-├── reverse-sync.patched.xhtml         # 패치된 XHTML
-├── reverse-sync.mapping.patched.yaml  # 패치 후 매핑
-├── reverse-sync.result.yaml           # 검증 결과
-└── verify.mdx                         # 패치된 XHTML → MDX 재변환 결과
-```
-
-## 실전 시나리오
-
-### 교정 브랜치의 전체 파일 검증
-
-```bash
+# branch diagnostic
 bin/reverse_sync_cli.py verify --branch proofread/fix-typo
 ```
 
-모든 변경 파일의 PASS/FAIL 상태와 Summary가 출력된다.
+비대화형 환경에서 PUT을 요청하면 `--yes`가 필요합니다. 이 옵션을 사용하기 전에
+page ID, base version, change 수, candidate hash를 별도 로그에서 확인합니다.
 
-### 실패 건만 빠르게 확인
+## MDX와 page 지정
 
-```bash
-bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only
+MDX source는 다음 형식을 사용합니다.
+
+| 형식 | 예시 |
+| --- | --- |
+| `ref:path` | `proofread/fix-typo:src/content/ko/overview.mdx` |
+| local `path` | `src/content/ko/overview.mdx` |
+
+기본 original은 `main:<improved path>`입니다. `--original-mdx`로 명시할 수
+있습니다.
+
+page ID는 `src/content/ko/**.mdx` path와
+`confluence-mdx/var/pages.qm.yaml`의 유일한 row로 확인합니다.
+필요하면 `--page-id`로 명시합니다. offline fixture는 `--page-dir`에
+`page.xhtml`과 page metadata가 있는 디렉터리를 지정할 수 있습니다.
+
+branch mode는 page마다 catalog identity를 계산하므로 `--original-mdx`,
+`--page-id`, `--page-dir`과 함께 사용하지 않습니다.
+
+## 주요 옵션
+
+| 옵션 | 범위 | 설명 |
+| --- | --- | --- |
+| `--branch <branch>` | 공통 | 변경된 `src/content/ko/**.mdx`를 batch 처리합니다. |
+| `--original-mdx <source>` | 단일 | original MDX를 명시합니다. |
+| `--page-id <id>` | 단일 | catalog에서 유도할 page ID를 명시합니다. |
+| `--page-dir <path>` | 단일 diagnostic | `var/<page-id>/` 대신 사용할 fixture 디렉터리입니다. |
+| `--limit N` | batch | 처리할 최대 file 수입니다. |
+| `--failures-only` | batch | 결과 표시만 실패 항목으로 제한합니다. summary는 전체 기준입니다. |
+| `--lenient` | diagnostic | 추가 관대 비교를 기록합니다. push eligibility에는 영향이 없습니다. |
+| `--no-normalize` | diagnostic | raw 비교를 추가합니다. push eligibility에는 영향이 없습니다. |
+| `--dry-run` | push | online prepare까지만 수행합니다. |
+| `--manifest <path>` | push | 다른 source/branch/diagnostic 옵션과 함께 쓸 수 없는 explicit run입니다. |
+| `--yes` | push | confirmation만 생략합니다. |
+| `--json` | 공통 | machine-readable 결과를 출력합니다. |
+
+## 상태
+
+| 상태 | 의미 |
+| --- | --- |
+| `pass` | offline diagnostic round-trip이 통과했습니다. publish 가능 상태가 아닙니다. |
+| `blocked` / `fail` | identity, capability, proof 또는 equivalence가 통과하지 못했습니다. |
+| `verified_local` | online prepare의 모든 local gate를 통과한 manifest가 있습니다. |
+| `remote_verified` | PUT 후 persisted remote snapshot과 target이 동등합니다. |
+| `already_applied` | remote에 target이 이미 적용되어 PUT을 생략했습니다. |
+| `no_changes` | source intent가 없어 PUT을 생략합니다. |
+| `postcondition_failed` | PUT 뒤 persisted 결과를 증명하지 못했습니다. 후속 batch publish를 중단합니다. |
+| `not_attempted` | batch 중단 또는 사용자 취소로 PUT을 시도하지 않았습니다. |
+
+`unsupported_capability`, `missing_identity`, `remote_drift`,
+`version_conflict`, `artifact_tampered` 같은 reason code를 상태와 함께
+확인합니다. `pass` 문자열만으로 publish 가능 여부를 판단하지 않습니다.
+
+## 실행별 immutable artifact
+
+online prepare가 성공하면 다음 run directory를 생성합니다.
+
+```text
+var/<page-id>/reverse-sync/<run-id>/
+├── base.xhtml
+├── original.mdx
+├── improved.mdx
+├── patch-plan.json
+├── candidate.xhtml
+├── local-proof.json
+├── manifest.json
+└── manifest.sha256
 ```
 
-pass/no_changes 결과를 생략하고 fail/error만 출력한다.
+publish 후에는 같은 directory에 preflight/post snapshot, provider evidence,
+`push-receipt.json`이 추가됩니다. `manifest.json`과 referenced artifact는
+검증 후 수정하지 않습니다. 수정되었거나 현재 tool/policy와 schema가 다르면
+publisher가 차단합니다.
 
-### 실패 3건만 수집 후 중단
+`var/<page-id>/reverse-sync.*`와 `verify.mdx`는 fixture/debug 호환 출력입니다.
+publish payload나 verified evidence로 사용하지 않습니다.
+
+## batch report와 재개
+
+branch `--json`은 raw array가 아니라
+`reverse-sync-batch-report` schema v1 object를 반환합니다.
+
+- `outcome`: `success`, `partial_success`, `failed`, `cancelled`
+- `exit_code`: success/cancelled는 0, partial/failed는 1
+- `summary`: stable status counter
+- `results`: page별 `batch_status`와 reason code
+- `resume_manifests`: postcondition failure 뒤 아직 PUT하지 않은 explicit run
+
+batch는 page별 독립 transaction입니다. 앞 page의 `remote_verified`를 뒤 page
+실패 때문에 rollback된 것처럼 해석하지 않습니다. `resume_manifests`의 각
+경로는 별도의 `push --manifest <path>`로 확인 후 재개합니다. conflict 또는
+remote drift가 발생한 manifest는 재사용하지 않고 새 online prepare를
+수행합니다.
+
+## 검증과 문제 분석
 
 ```bash
-bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --limit 3
-```
+# machine-readable online prepare
+bin/reverse_sync_cli.py push --dry-run --json \
+  "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
-실패가 3건 수집되면 나머지 파일 처리를 건너뛴다.
+# branch 실패 결과
+bin/reverse_sync_cli.py verify --branch proofread/fix-typo \
+  --failures-only --json
 
-### FAIL 원인 분석 (debug 모드)
-
-```bash
-bin/reverse_sync_cli.py debug \
-  "proofread/fix-typo:src/content/ko/administrator-manual.mdx"
-```
-
-세 가지 diff가 출력된다:
-1. **MDX diff** (original → improved): 입력 변경 내용
-2. **XHTML diff** (page.xhtml → patched.xhtml): XHTML에 적용된 패치
-3. **Verify diff** (improved.mdx → verify.mdx): round-trip 불일치 부분
-
-### XHTML 패치 상세 비교
-
-`xhtml_beautify_diff.py`와 함께 사용하여 XHTML 레벨의 변경을 정밀 분석:
-
-```bash
+# XHTML 의미 diff는 diagnostic compatibility output에만 사용
 bin/xhtml_beautify_diff.py \
-  var/<page_id>/page.xhtml \
-  var/<page_id>/reverse-sync.patched.xhtml
+  var/<page-id>/page.xhtml \
+  var/<page-id>/reverse-sync.patched.xhtml
 ```
 
-### JSON 출력으로 후처리
+`postcondition_failed`에서는 run directory의 base/candidate/post snapshot과
+receipt를 보존합니다. remote가 attempted candidate인지 확인하지 않은 자동
+restore를 수행하지 않습니다.
 
-```bash
-# 전체 결과를 JSON으로
-bin/reverse_sync_cli.py verify --branch proofread/fix-typo --json
+## Confluence 인증
 
-# 실패 건만 JSON으로
-bin/reverse_sync_cli.py verify --branch proofread/fix-typo --failures-only --json
-```
+online prepare와 publish에는
+`~/.config/atlassian/confluence.conf`가 필요합니다.
 
-### 검증 후 Confluence 반영
-
-```bash
-# 전체 PASS 시에만 push 실행 (일부라도 FAIL이면 중단)
-bin/reverse_sync_cli.py push --branch proofread/fix-typo
-```
-
-## Confluence 인증 설정
-
-`push` 커맨드 사용 시 `~/.config/atlassian/confluence.conf` 파일이 필요하다:
-
-```
+```text
 email:api_token
 ```
 
+credential과 Authorization header를 manifest, report, log에 기록하지 않습니다.
+
 ## 관련 Skill
 
-- [xhtml-beautify-diff.md](../xhtml-beautify-diff/SKILL.md) — XHTML 패치 결과의 의미적 diff 분석
-- [confluence-mdx.md](../confluence-mdx/SKILL.md) — Confluence에서 MDX로의 forward 변환 워크플로우
+- [xhtml-beautify-diff](../xhtml-beautify-diff/SKILL.md)
+- [confluence-mdx](../confluence-mdx/SKILL.md)
+- [reverse-sync-debugging](../reverse-sync-debugging/SKILL.md)

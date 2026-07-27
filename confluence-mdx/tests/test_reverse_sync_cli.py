@@ -9,7 +9,7 @@ from reverse_sync_cli import (
     _extract_ko_mdx_path, _resolve_page_id, _do_verify, _do_push,
     _get_changed_ko_mdx_files, _do_verify_batch, _strip_frontmatter,
     _parse_and_diff, _save_diff_yaml, _compile_result, _print_results,
-    _USAGE_SUMMARY,
+    _PUSH_HELP, _USAGE_SUMMARY,
     _detect_language, _validate_improved_mdx,
     _find_blockquotes_missing_blank_line,
     ManifestPushSummary, PushConflictError, _confirm,
@@ -853,6 +853,35 @@ def test_main_branch_mutual_exclusive(monkeypatch):
     assert exc_info.value.code == 1
 
 
+@pytest.mark.parametrize(
+    "extra_args",
+    [
+        ["--page-id", "123"],
+        ["--page-dir", "/tmp/page-data"],
+    ],
+)
+def test_main_branch_rejects_ignored_page_options(monkeypatch, extra_args):
+    monkeypatch.setattr(
+        'sys.argv',
+        [
+            'reverse_sync_cli.py',
+            'verify',
+            '--branch',
+            'proofread/fix-typo',
+            *extra_args,
+        ],
+    )
+
+    with patch('reverse_sync_cli._do_verify_batch') as batch, patch(
+        'builtins.print'
+    ):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+    batch.assert_not_called()
+
+
 def test_main_branch_no_input(monkeypatch):
     """<mdx>도 --branch도 없음 → exit 1."""
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'verify'])
@@ -916,6 +945,13 @@ def test_usage_summary_includes_push_no_normalize():
     assert 'reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
     assert 'reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
     assert 'reverse-sync push   --manifest <manifest.json> [--yes]' in _USAGE_SUMMARY
+
+
+def test_help_uses_current_page_catalog_and_options():
+    assert 'var/pages.qm.yaml' in _USAGE_SUMMARY
+    assert 'var/pages.yaml' not in _USAGE_SUMMARY
+    assert '--page-id, --page-dir' in _PUSH_HELP
+    assert '--xhtml' not in _PUSH_HELP
 
 
 # --- normalize_mdx_to_plain tests ---
