@@ -12,13 +12,18 @@ from reverse_sync_cli import (
     _USAGE_SUMMARY,
     _detect_language, _validate_improved_mdx,
     _find_blockquotes_missing_blank_line,
-    PushConflictError, _confirm,
+    ManifestPushSummary, PushConflictError, _confirm,
+    _load_manifest_push_summary,
 )
 from text_utils import normalize_mdx_to_plain
 from reverse_sync.patch_builder import build_patches
 from reverse_sync.confluence_client import NetworkError, VersionConflictError
-from reverse_sync.manifest import create_sync_manifest
-from reverse_sync.models import PageSnapshot, VerificationGate
+from reverse_sync.manifest import (
+    ArtifactTamperedError,
+    StaleVerificationError,
+    create_sync_manifest,
+)
+from reverse_sync.models import PageSnapshot, VerificationGate, sha256_text
 from reverse_sync.publisher import PostconditionError
 from reverse_sync.proof import REQUIRED_LOCAL_GATES
 
@@ -30,6 +35,7 @@ def _create_push_manifest(
     base_body: str = "<p>Old</p>",
     candidate_body: str = "<p>New</p>",
     confluence_url: str = "",
+    patch_plan: str | None = None,
 ) -> tuple[Path, PageSnapshot, PageSnapshot]:
     var_dir = tmp_path / "var" / page_id
     var_dir.mkdir(parents=True, exist_ok=True)
@@ -59,6 +65,35 @@ def _create_push_manifest(
             f"confluenceUrl: {confluence_url}\n"
             "---\n\n"
         )
+    plan_json = patch_plan or (
+        '{"intent_complete":true,"intents":[{"ordinal":0}],"issues":[],'
+        '"operations":[{"executable":true,"intent_ordinals":[0],'
+        '"operation_id":"op-0001"}],"schema_version":2}\n'
+    )
+    gates = tuple(
+        VerificationGate(name, True)
+        for name in REQUIRED_LOCAL_GATES
+    )
+    local_proof = json.dumps(
+        {
+            "artifacts": {
+                "base_sha256": sha256_text(base_body),
+                "candidate_sha256": sha256_text(candidate_body),
+                "plan_sha256": sha256_text(plan_json),
+            },
+            "blocked_reasons": [],
+            "dependencies": {
+                "attachments": [],
+                "internal_links": [],
+                "attachment_catalog_sha256": "",
+            },
+            "gates": [gate.to_dict() for gate in gates],
+            "push_eligible": True,
+            "status": "verified_local",
+        },
+        separators=(",", ":"),
+        sort_keys=True,
+    ) + "\n"
     manifest_path = create_sync_manifest(
         runs_dir=var_dir / "reverse-sync",
         base=base,
@@ -66,20 +101,13 @@ def _create_push_manifest(
         original_descriptor="main:src/content/ko/test.mdx",
         improved_mdx=f"{frontmatter}# Test\n\nNew\n",
         improved_descriptor="src/content/ko/test.mdx",
-        patch_plan='{"schema_version":1}\n',
+        patch_plan=plan_json,
         candidate_xhtml=candidate_body,
-        local_proof=(
-            '{"dependencies":{"attachments":[],"internal_links":[],'
-            '"attachment_catalog_sha256":""},"push_eligible":true,'
-            '"status":"verified_local"}\n'
-        ),
+        local_proof=local_proof,
         verifier_policy="reverse-sync-equivalence-v1",
         tool_version="reverse-sync-cli-v5",
         push_eligible=True,
-        gates=tuple(
-            VerificationGate(name, True)
-            for name in REQUIRED_LOCAL_GATES
-        ),
+        gates=gates,
     )
     return manifest_path, base, persisted
 
@@ -311,6 +339,167 @@ def test_push_no_changes_is_successful_noop(monkeypatch):
         main()
 
     push.assert_not_called()
+
+
+def test_push_explicit_manifest_skips_online_reverification(tmp_path, monkeypatch):
+    manifest_path, _, _ = _create_push_manifest(tmp_path, "explicit-page")
+    summary = ManifestPushSummary(
+        manifest_path=manifest_path.resolve(),
+        run_id=manifest_path.parent.name,
+        page_id="explicit-page",
+        title="Test",
+        base_version=5,
+        candidate_sha256="a" * 64,
+        change_count=1,
+        operation_count=1,
+    )
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "reverse_sync_cli.py",
+            "push",
+            "--manifest",
+            str(manifest_path),
+            "--yes",
+            "--json",
+        ],
+    )
+    push_result = {
+        "page_id": "explicit-page",
+        "status": "remote_verified",
+        "title": "Test",
+        "version": 6,
+    }
+
+    with patch(
+        "reverse_sync_cli._load_manifest_push_summary",
+        return_value=summary,
+    ) as load_summary, patch(
+        "reverse_sync_cli._ensure_confluence_config",
+        return_value=MagicMock(),
+    ), patch(
+        "reverse_sync_cli._do_verify",
+    ) as verify, patch(
+        "reverse_sync_cli._do_push",
+        return_value=push_result,
+    ) as push, patch("builtins.print") as output:
+        main()
+
+    load_summary.assert_called_once_with(str(manifest_path))
+    verify.assert_not_called()
+    push.assert_called_once()
+    assert push.call_args.args[0] == "explicit-page"
+    assert push.call_args.kwargs["manifest_path"] == str(manifest_path.resolve())
+    assert json.loads(output.call_args.args[0])["status"] == "remote_verified"
+
+
+def test_push_explicit_manifest_confirmation_shows_run_identity(
+    tmp_path,
+    monkeypatch,
+):
+    manifest_path, _, _ = _create_push_manifest(tmp_path, "explicit-page")
+    summary = _load_manifest_push_summary(str(manifest_path))
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reverse_sync_cli.py", "push", "--manifest", str(manifest_path)],
+    )
+
+    with patch(
+        "reverse_sync_cli.sys.stdin",
+    ) as stdin, patch(
+        "reverse_sync_cli._confirm",
+        return_value=False,
+    ) as confirm, patch(
+        "reverse_sync_cli._ensure_confluence_config",
+    ) as config, patch(
+        "reverse_sync_cli._do_verify",
+    ) as verify, patch(
+        "reverse_sync_cli._do_push",
+    ) as push, patch("builtins.print"):
+        stdin.isatty.return_value = True
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 0
+    prompt = confirm.call_args.args[0]
+    assert summary.run_id in prompt
+    assert "v5→v6" in prompt
+    assert "1 change(s)" in prompt
+    assert "1 operation(s)" in prompt
+    assert f"candidate {summary.candidate_sha256[:12]}" in prompt
+    config.assert_not_called()
+    verify.assert_not_called()
+    push.assert_not_called()
+
+
+def test_push_explicit_manifest_rejects_legacy_plan_schema(tmp_path):
+    manifest_path, _, _ = _create_push_manifest(
+        tmp_path,
+        "explicit-page",
+        patch_plan='{"schema_version":1}\n',
+    )
+
+    with pytest.raises(StaleVerificationError, match="schema v2"):
+        _load_manifest_push_summary(str(manifest_path))
+
+
+def test_push_explicit_manifest_recomputes_intent_coverage(tmp_path):
+    manifest_path, _, _ = _create_push_manifest(
+        tmp_path,
+        "explicit-page",
+        patch_plan=(
+            '{"intent_complete":true,"intents":[{"ordinal":0},{"ordinal":1}],'
+            '"issues":[],"operations":[{"executable":true,'
+            '"intent_ordinals":[0],"operation_id":"op-0001"}],'
+            '"schema_version":2}\n'
+        ),
+    )
+
+    with pytest.raises(ArtifactTamperedError, match="정확히 한 번"):
+        _load_manifest_push_summary(str(manifest_path))
+
+
+@pytest.mark.parametrize(
+    "extra_args",
+    [
+        ["src/content/ko/test/page.mdx"],
+        ["--branch", "proofread/fix-typo"],
+        ["--dry-run"],
+        ["--original-mdx", "main:src/content/ko/test/page.mdx"],
+    ],
+)
+def test_push_explicit_manifest_rejects_conflicting_inputs(
+    tmp_path,
+    monkeypatch,
+    extra_args,
+):
+    manifest_path, _, _ = _create_push_manifest(tmp_path, "explicit-page")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "reverse_sync_cli.py",
+            "push",
+            "--manifest",
+            str(manifest_path),
+            "--yes",
+            *extra_args,
+        ],
+    )
+
+    with patch("reverse_sync_cli._do_verify") as verify, patch(
+        "reverse_sync_cli._do_push"
+    ) as push, patch("builtins.print"):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+    verify.assert_not_called()
+    push.assert_not_called()
+
+
+def test_do_push_requires_explicit_manifest_path():
+    with pytest.raises(TypeError):
+        _do_push("page-with-pointer", config=MagicMock())
 
 
 def test_verify_is_dry_run_alias(monkeypatch):
@@ -676,6 +865,7 @@ def test_usage_summary_includes_push_no_normalize():
     """push usage도 --no-normalize 지원과 일치해야 한다."""
     assert 'reverse-sync push   <mdx> [--original-mdx <mdx>] [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
     assert 'reverse-sync push   --branch <branch> [--dry-run] [--yes] [--lenient] [--no-normalize]' in _USAGE_SUMMARY
+    assert 'reverse-sync push   --manifest <manifest.json> [--yes]' in _USAGE_SUMMARY
 
 
 # --- normalize_mdx_to_plain tests ---

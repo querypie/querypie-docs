@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
@@ -212,6 +213,158 @@ def load_sync_manifest(path: Path) -> SyncManifest:
     return manifest
 
 
+def _verify_patch_plan_contract(path: Path, manifest: SyncManifest) -> None:
+    plan_ref = manifest.artifact("patch_plan")
+    try:
+        plan = json.loads((path.parent / plan_ref.path).read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ArtifactTamperedError("patch plan JSON을 읽을 수 없습니다") from exc
+    if not isinstance(plan, dict):
+        raise ArtifactTamperedError("patch plan은 JSON object여야 합니다")
+    if plan.get("schema_version") != 2:
+        raise StaleVerificationError(
+            "push에는 현재 publisher가 지원하는 PatchPlan schema v2가 필요합니다"
+        )
+    if plan.get("intent_complete") is not True:
+        raise ArtifactTamperedError(
+            "intent_complete가 아닌 PatchPlan은 발행할 수 없습니다"
+        )
+
+    intents = plan.get("intents")
+    operations = plan.get("operations")
+    issues = plan.get("issues")
+    if (
+        not isinstance(intents, list)
+        or not isinstance(operations, list)
+        or not isinstance(issues, list)
+    ):
+        raise ArtifactTamperedError(
+            "PatchPlan intents/operations/issues 형식이 올바르지 않습니다"
+        )
+    if not intents or not operations or issues:
+        raise ArtifactTamperedError(
+            "complete PatchPlan은 intent와 operation이 있고 issue가 없어야 합니다"
+        )
+
+    intent_ordinals: list[int] = []
+    for intent in intents:
+        ordinal = intent.get("ordinal") if isinstance(intent, dict) else None
+        if (
+            not isinstance(ordinal, int)
+            or isinstance(ordinal, bool)
+            or ordinal < 0
+        ):
+            raise ArtifactTamperedError(
+                "PatchPlan intent ordinal이 올바르지 않습니다"
+            )
+        intent_ordinals.append(ordinal)
+    if len(intent_ordinals) != len(set(intent_ordinals)):
+        raise ArtifactTamperedError("PatchPlan intent ordinal이 중복되었습니다")
+
+    operation_ids: list[str] = []
+    coverage: Counter[int] = Counter()
+    for operation in operations:
+        if not isinstance(operation, dict):
+            raise ArtifactTamperedError(
+                "PatchPlan operation 형식이 올바르지 않습니다"
+            )
+        operation_id = operation.get("operation_id")
+        covered = operation.get("intent_ordinals")
+        if not isinstance(operation_id, str) or not operation_id:
+            raise ArtifactTamperedError("PatchPlan operation ID가 올바르지 않습니다")
+        if operation.get("executable") is not True:
+            raise ArtifactTamperedError(
+                "complete PatchPlan에 실행 불가능한 operation이 있습니다"
+            )
+        if not isinstance(covered, list) or not covered:
+            raise ArtifactTamperedError(
+                "PatchPlan operation의 intent coverage가 비어 있습니다"
+            )
+        if any(
+            not isinstance(ordinal, int)
+            or isinstance(ordinal, bool)
+            or ordinal < 0
+            for ordinal in covered
+        ):
+            raise ArtifactTamperedError(
+                "PatchPlan operation intent ordinal이 올바르지 않습니다"
+            )
+        operation_ids.append(operation_id)
+        coverage.update(covered)
+    if len(operation_ids) != len(set(operation_ids)):
+        raise ArtifactTamperedError("PatchPlan operation ID가 중복되었습니다")
+    if set(coverage) != set(intent_ordinals) or any(
+        count != 1 for count in coverage.values()
+    ):
+        raise ArtifactTamperedError(
+            "PatchPlan은 각 intent를 정확히 한 번 실행해야 합니다"
+        )
+
+
+def _verification_gate_map(gates: Iterable[dict]) -> dict[str, dict]:
+    result: dict[str, dict] = {}
+    for gate in gates:
+        if not isinstance(gate, dict):
+            raise ArtifactTamperedError("local proof gate 형식이 올바르지 않습니다")
+        name = gate.get("name")
+        passed = gate.get("passed")
+        reason_code = gate.get("reason_code", "")
+        if (
+            not isinstance(name, str)
+            or not name
+            or type(passed) is not bool
+            or not isinstance(reason_code, str)
+            or name in result
+        ):
+            raise ArtifactTamperedError("local proof gate 형식이 올바르지 않습니다")
+        normalized = {"name": name, "passed": passed}
+        if reason_code:
+            normalized["reason_code"] = reason_code
+        result[name] = normalized
+    return result
+
+
+def _verify_local_proof_binding(path: Path, manifest: SyncManifest) -> None:
+    proof_ref = manifest.artifact("local_proof")
+    try:
+        proof = json.loads((path.parent / proof_ref.path).read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ArtifactTamperedError("local proof JSON을 읽을 수 없습니다") from exc
+    if not isinstance(proof, dict):
+        raise ArtifactTamperedError("local proof는 JSON object여야 합니다")
+    if (
+        proof.get("status") != "verified_local"
+        or proof.get("push_eligible") is not True
+        or proof.get("blocked_reasons") != []
+    ):
+        raise ArtifactTamperedError(
+            "local proof가 verified_local 발행 계약과 일치하지 않습니다"
+        )
+
+    expected_artifacts = {
+        "base_sha256": manifest.artifact("base_xhtml").sha256,
+        "candidate_sha256": manifest.artifact("candidate_xhtml").sha256,
+        "plan_sha256": manifest.artifact("patch_plan").sha256,
+    }
+    if proof.get("artifacts") != expected_artifacts:
+        raise ArtifactTamperedError(
+            "local proof artifact hash가 manifest artifact와 일치하지 않습니다"
+        )
+
+    proof_gates = proof.get("gates")
+    if not isinstance(proof_gates, list):
+        raise ArtifactTamperedError("local proof gate 목록이 없습니다")
+    actual_gate_map = _verification_gate_map(proof_gates)
+    expected_gate_map = {
+        gate.name: gate.to_dict()
+        for gate in manifest.gates
+    }
+    if actual_gate_map != expected_gate_map:
+        raise ArtifactTamperedError(
+            "local proof gate가 manifest gate와 일치하지 않습니다"
+        )
+
+
 def verify_manifest_integrity(path: Path, manifest: SyncManifest) -> None:
     """manifest sidecar와 모든 referenced artifact hash를 재검산한다."""
     path = Path(path)
@@ -270,3 +423,6 @@ def verify_manifest_integrity(path: Path, manifest: SyncManifest) -> None:
     base_ref = manifest.artifact("base_xhtml")
     if base_ref.sha256 != manifest.base_storage_sha256:
         raise ArtifactTamperedError("base snapshot hash와 base.xhtml hash가 다릅니다")
+    if manifest.push_eligible:
+        _verify_patch_plan_contract(path, manifest)
+        _verify_local_proof_binding(path, manifest)
