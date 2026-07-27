@@ -127,6 +127,38 @@ def test_raw_html_table_is_explicit_unsupported_capability_in_push_plan():
     )
 
 
+def test_legacy_table_skip_is_one_typed_capability_issue():
+    old = _block(
+        "<table><tr><td>Before</td></tr></table>",
+        "html_block",
+    )
+    new = _block(
+        "<table><tr><td>After</td><td>Added</td></tr></table>",
+        "html_block",
+    )
+    change = BlockChange(0, "modified", old, new)
+    xhtml = "<table><tr><td>Before</td></tr></table>"
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=_sidecar(xhtml, old),
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    issue = plan.issues[0]
+    assert issue.reason_code == "unsupported_capability"
+    assert issue.capability_id == "raw_html_table_edit"
+    assert issue.intent_ordinal == 0
+    assert issue.to_legacy_dict()["reason"] == "unsupported_capability"
+
+
 def test_push_plan_blocks_operation_without_sidecar_provenance():
     old = _block("Before")
     new = _block("After")
@@ -154,7 +186,9 @@ def test_push_plan_blocks_operation_without_sidecar_provenance():
 
     assert plan.intent_complete is False
     assert plan.operations == ()
-    assert {issue.reason_code for issue in plan.issues} == {"missing_identity"}
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "missing_identity"
+    assert plan.issues[0].intent_ordinal == 0
 
 
 def test_hash_mismatched_sidecar_target_is_not_executable():

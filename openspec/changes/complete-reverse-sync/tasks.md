@@ -164,7 +164,12 @@
 - [x] normalized text prefix fallback을 push-eligible path에서 제거합니다.
 - [ ] visible segment model을 paragraph, heading, list에 확장합니다.
 - [ ] strategy를 text block, list, preserved anchor, container, table로 분리합니다.
-- [ ] unsupported table/macro 구조를 explicit block reason으로 전환합니다.
+- [x] unsupported table/macro 구조를 explicit block reason으로 전환합니다.
+  - operation 생성 전 legacy skip도 원래 intent에 연결합니다.
+  - table/macro 내부 분기 reason은 `unsupported_capability`와
+    `raw_html_table_edit`/`unknown_macro_mutation` capability ID로 정규화합니다.
+  - mapping/sidecar 부재는 `missing_identity`로 정규화하고 같은 intent의 중복
+    issue를 제거합니다.
 - [ ] 기존 `xhtml_patcher.py`는 validated operation 적용에 집중하도록 축소합니다.
 
 완료 gate:
@@ -216,7 +221,7 @@ cd confluence-mdx/tests
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
 
-batch report 변경 결과: 790 passed입니다.
+capability reason 변경 결과: 791 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -287,10 +292,17 @@ batch report branch 검증 결과:
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
 - 전체 Python test: 1113 passed, 2 skipped
 
+capability reason branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- 전체 Python test: 1114 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
 이번 변경은 Python CLI/planner 범위이므로 전체 Python test
-(`1113 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+(`1114 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
 제외했습니다.
 
 ```bash

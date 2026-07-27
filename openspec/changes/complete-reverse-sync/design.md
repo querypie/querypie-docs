@@ -297,6 +297,14 @@ XHTML renderer boundary로만 복원합니다.
 `raw_html_table_edit`와 `unknown_macro_mutation`은
 `unsupported_capability`로 non-executable 처리하며, source formatting을 나타내는
 empty block insert가 `<p></p>` mutation으로 바뀌지 않도록 plan에서 제거합니다.
+legacy builder가 operation 생성 전에 table/macro 변경을 skip한 경우에도
+`unsafe_html_table_edit`, `preserved_anchor_table` 같은 내부 분기명은 strict
+`PatchPlan` reason으로 노출하지 않습니다. adapter는 skip을 원래
+`ChangeIntent`에 연결하고 `unsupported_capability`와
+`raw_html_table_edit`/`unknown_macro_mutation` capability ID로 정규화합니다.
+sidecar 또는 mapping 부재는 `missing_identity`로 정규화합니다. 하나의 legacy
+skip과 같은 intent에서 파생한 추가 `missing_identity` issue를 중복 생성하지
+않습니다.
 capability별 renderer strategy 자체를 `patch_builder.py`에서 추출하는 작업은
 계속 남아 있습니다.
 
