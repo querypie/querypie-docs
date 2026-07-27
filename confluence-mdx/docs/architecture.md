@@ -655,7 +655,7 @@ tests/testcases/
 | `reverse_sync_cli.py push <mdx>` | 원격 snapshot 기반 검증 후 확인을 거쳐 단일 manifest 발행 |
 | `reverse_sync_cli.py push --manifest <manifest.json>` | 이미 검증한 immutable run을 명시적으로 발행 |
 | `reverse_sync_cli.py verify --branch <branch>` | 브랜치의 변경된 한국어 MDX를 로컬 배치 진단 |
-| `reverse_sync_cli.py push --branch <branch> [--dry-run]` | 브랜치 대상을 온라인 검증하고 순차 발행. 첫 실패에서 중단 |
+| `reverse_sync_cli.py push --branch <branch> [--dry-run]` | 브랜치 대상을 온라인 검증하고 순차 발행. version conflict와 일반 발행 오류는 기록하고 계속하며, postcondition 실패 시에만 후속 발행 중단 |
 
 ---
 
