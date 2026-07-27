@@ -158,6 +158,16 @@ def _supported_children(
             or (catalog_node or {}).get("type")
             or "page"
         )
+        status = str(child.get("status") or "current")
+        if status != "current":
+            print(
+                "WARNING: skipping non-current Confluence child "
+                f"parent_id={parent_id} id={child_id} "
+                f"type={child_type} status={status} "
+                f"title={child.get('title', '')!r}",
+                file=sys.stderr,
+            )
+            continue
         if child_type not in _SUPPORTED_CONTENT_TYPES:
             print(
                 "WARNING: skipping unsupported Confluence child "

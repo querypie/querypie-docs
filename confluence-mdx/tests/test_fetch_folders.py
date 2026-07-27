@@ -278,6 +278,13 @@ def test_local_mixed_tree_preserves_types_paths_order_and_warns(
                 "title": "Embed",
                 "childPosition": 5,
             },
+            {
+                "id": "draft-page",
+                "type": "page",
+                "status": "draft",
+                "title": "Draft Page",
+                "childPosition": 6,
+            },
         ],
     })
 
@@ -335,6 +342,10 @@ def test_local_mixed_tree_preserves_types_paths_order_and_warns(
     assert "type=whiteboard" in caplog.text
     assert "type=database" in caplog.text
     assert "type=embed" in caplog.text
+    assert (
+        "parent_id=folder id=draft-page type=page "
+        "status=draft title='Draft Page'"
+    ) in caplog.text
 
 
 class _RemoteTreeApi:

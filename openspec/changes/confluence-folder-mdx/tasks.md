@@ -17,6 +17,7 @@
 - [x] 2.9 `var/convert-manifests/convert-manifest.<sync-code>.yaml`의 atomic update와 stale generated output 안전 삭제를 구현합니다.
 - [x] 2.10 folder MDX가 reverse sync 대상이 아닐 때 명확한 오류를 반환하도록 관련 entry point를 확인하고 필요한 guard를 추가합니다.
 - [x] 2.11 Compose 실행 사이에 profile manifest directory를 host에 보존하고 다른 profile 소유 output을 stale cleanup에서 제외합니다.
+- [x] 2.12 `direct-children`의 `status`가 `current`가 아닌 page/folder를 metadata 조회 전에 제외합니다.
 
 ## 3. Verification
 
@@ -35,6 +36,7 @@
 - [x] 3.13 focused Python test, `git diff --check`, 관련 `rg` source scan을 실행합니다.
 - [x] 3.14 ephemeral container의 manifest directory mount, atomic replace, 공유 output root의 profile 소유권 이전 회귀 테스트를 추가합니다.
 - [x] 3.15 `full-all` catalog 선갱신과 profile 간 current output path 충돌 사전 차단 회귀 테스트를 추가합니다.
+- [x] 3.16 draft child가 catalog traversal과 metadata API 호출에서 제외되고 식별 가능한 경고가 남는지 검증합니다.
 
 권장 focused 명령:
 

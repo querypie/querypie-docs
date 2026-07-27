@@ -2,4 +2,5 @@ export default {
   'premium-support': '프리미엄 지원',
   'standard-edition': 'Standard Edition',
   'standard-edition-license-policy': 'Standard Edition 라이선스 정책',
+  'querypie-acp-operational-log-collection-guide': 'QueryPie ACP 운영 로그 수집 가이드',
 };

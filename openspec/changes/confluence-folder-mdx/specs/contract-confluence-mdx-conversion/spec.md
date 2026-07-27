@@ -31,6 +31,14 @@ Confluence fetcher는 지원되는 모든 content node를 `page` 또는 `folder`
 - THEN 해당 child를 catalog, MDX, navigation에서 제외해야 합니다(SHALL).
 - AND parent ID, child ID, type, title을 식별할 수 있는 경고를 기록해야 합니다(SHALL).
 
+#### Scenario: current가 아닌 child status
+
+- GIVEN `direct-children` 응답에 `status`가 `current`가 아닌 page 또는 folder child가 있습니다.
+- WHEN content tree를 순회합니다.
+- THEN 해당 child를 catalog, MDX, navigation에서 제외해야 합니다(SHALL).
+- AND parent ID, child ID, type, status, title을 식별할 수 있는 경고를 기록해야 합니다(SHALL).
+- AND 해당 child의 page 또는 folder metadata endpoint를 호출하지 않아야 합니다(SHALL NOT).
+
 ### Requirement: Direct children API and pagination
 
 Fetcher는 parent type에 맞는 V2 `direct-children` endpoint를 사용하고 모든 cursor page를 수집해야 합니다(SHALL).

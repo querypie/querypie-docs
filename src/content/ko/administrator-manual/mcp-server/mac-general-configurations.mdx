@@ -1,0 +1,63 @@
+---
+title: 'MAC General Configurations'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167144528/MAC+General+Configurations'
+---
+
+# MAC General Configurations
+
+### Overview
+
+QueryPie MCP Access Control의 General 설정에서 Client-oriented request 감사 영역 설정과 forward proxy 설정과 같은 전역 보안 설정을 할 수 있습니다.
+
+QueryPie MCP Access Control은 보안 감사 기록의 영역이 두개로 나눠져 있습니다. <br/>MCP Client – :1_one_circle_red:  `Client-oriented request` --&gt; QueryPie MAC – :2_two_circle_red:  `upstream request` --&gt;  Remote MCP 서버
+
+General Configuration의 설정은 Client oriented request 의 이벤트를 기록하는 설정입니다.
+upstream request 에대한 이벤트 기록은 각 MCP server의 설정으로 제어합니다.
+
+인터넷이 차단되어 있는 경우 forward proxy 서버를 통해 remote MCP 서버와 통신하도록 구성할 수 있습니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/mcp-server/mac-general-configurations/image-20260602-124439.png" alt="Admin &gt; MCP Servers &gt; General &gt; Configurations" width="760" />
+<figcaption>
+Admin &gt; MCP Servers &gt; General &gt; Configurations
+</figcaption>
+</figure>
+
+Masking pattern을 사용하여 MCP server로 받은 응답을 정규식 기반으로 마스킹 할 수 있습니다.
+
+### Client Request Audit 및 Include payload in Client Request Audit
+
+* Client Request Audit : 기본값은 Enable 입니다. 활성화 되어 있으면 Client가 MCP 서버로 요청한 이벤트를 MCP Client와 QueryPie MAC 사이의 구간에서 기록합니다.
+* Include payload in Client Request Audit : 기본 값은 Enable 입니다. Client Request Audit 이벤트에서 payload의 내용도 기록합니다.
+
+### Forward Proxy
+
+`Admin > MCP Servers > General > Configurations` 화면의 **Forward Proxy** 는 MCP 연결에 공통으로 적용되는 전역 네트워크 설정입니다.
+
+* **Enable Forward Proxy** 를 켜면 **Host**, **Port** 를 입력할 수 있고, 필요 시 **Username**, **Password** 를 함께 설정할 수 있습니다.
+* 이 설정은 admin의 `Test Connection`, `Sync Tools`, OAuth 관련 upstream 호출과 runtime의 MCP proxy upstream 연결에 공통 적용됩니다.
+* remote MCP Server가 직접 reachable 하지 않은 환경에서는 이 **Forward Proxy** 구성이 필요할 수 있습니다.
+* 반대로 QueryPie와 MCP proxy가 해당 remote MCP Server에 네트워크적으로 직접 접근할 수 있다면 Forward Proxy 없이도 연결할 수 있습니다.
+
+### Masking Patterns
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/mcp-server/mac-general-configurations/image-20260602-125151.png" alt="Admin &gt; MCP Servers &gt; General &gt; Masking Patterns" width="760" />
+<figcaption>
+Admin &gt; MCP Servers &gt; General &gt; Masking Patterns
+</figcaption>
+</figure>
+
+기본적으로 사전 정의된 25개의 마스킹 패턴을 제공하고 사용자 정의 마스킹 패턴을 추가하여 관리할 수 있습니다.
+
+* Detecting Pattern : 민감정보 검출 패턴
+* Masking Pattern : 민감정보 마스킹 패턴
+* Masking Pattern Preview : 마스킹 패턴 적용 결과 미리보기
+* Sample Data : 샘플 데이터
+* Detected Data : 샘플 데이터에서 Detecting Pattern에 의해 민감정보로 검출된 영역 (푸른색 음영)
+* Preview 테이블 내 Masked Data에서 샘플 데이터에 대한 민감정보 마스킹 결과를 확인할 수 있음
+
+`Save` 버튼을 클릭하면 변경 내용이 저장됩니다.
+
+`Delete` 버튼을 클릭하고, 확인 모달에서 Delete 버튼을 클릭하면 마스킹 패턴 삭제가 완료됩니다.
+또는 Masking Patterns 목록에서 삭제하려는 아이템을 체크박스로 선택하고 Delete 버튼을 클릭하여 삭제할 수 있습니다.

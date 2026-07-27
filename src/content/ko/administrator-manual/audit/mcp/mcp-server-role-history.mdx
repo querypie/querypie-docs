@@ -1,0 +1,116 @@
+---
+title: 'MCP Server Role History'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167078929/MCP+Server+Role+History'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Server Role History
+
+### Overview
+
+MCP Audit은 QueryPie의 MCP proxy 사용 이력과 MCP 접근 권한 변경 이력을 감사하기 위한 기능입니다.
+
+`Admin > Audit > MCP` 메뉴 아래에는 서로 목적이 다른 두 개의 화면이 있습니다.
+
+* **Request Audit** : MCP 요청 처리 이력을 확인하는 화면
+* **MCP Server Role History** : 사용자 또는 그룹에 MCP 역할이 부여되거나 회수된 이력을 확인하는 화면
+
+즉, `MCP Server settings` 화면의 **Audit Settings** 는 "무엇을 기록할지"를 설정하는 영역이고, 실제로 기록된 감사 이력을 조회하는 화면은 `Admin > Audit > MCP` 아래에 별도로 제공됩니다.
+
+* 메뉴 경로: `Admin > Audit > MCP`
+* 하위 메뉴
+    * `Admin > Audit > MCP > Request Audit`
+    * `Admin > Audit > MCP > MCP Server Role History`
+* 필요 권한: `PERMISSION_MAC_AUDIT`
+
+### MCP Server Role History 이해하기
+
+**MCP Server Role History** 는 사용자 또는 그룹에 MCP 역할(Role)이 언제, 누구에 의해 부여되었거나 회수되었는지를 확인하는 화면입니다.
+
+이 화면은 현재 권한 상태를 관리하는 `Admin > MCP > MCP Access Control > Access Control` 과 별개로, 권한 변경 이력을 감사하기 위한 audit 화면입니다.
+
+#### MCP Server Role History 열기
+
+1. `Admin > Audit > MCP > MCP Server Role History` 메뉴로 이동합니다.
+2. 화면이 열리면 기본적으로 이번 달 시작일~현재까지의 이력을 조회합니다.
+3. 상단 filter에서 조건을 조정해 필요한 이력만 확인합니다.
+4. 우측 상단 refresh 버튼을 클릭하면 현재 조건으로 목록을 다시 조회합니다.
+
+### MCP Server Role History 검색 및 필터
+
+이 화면에서는 다음 조건을 기본 filter로 제공합니다.
+
+* **Event** : `GRANTED`, `REVOKED`
+* **User Type** : `USER`, `GROUP`
+* **Action At** : 작업 시각 범위
+
+목록 역시 cursor 기반으로 이어서 조회됩니다.
+
+### MCP Server Role History 목록에서 확인할 수 있는 정보
+
+목록 컬럼은 다음과 같습니다.
+
+* **No** : 로그 순번
+* **Action At** : 역할 부여/회수 시각
+* **Event** : `GRANTED` 또는 `REVOKED`
+* **User Type** : `USER` 또는 `GROUP`
+* **Name** : 대상 사용자 또는 그룹 이름
+* **Email** : 대상 사용자 이메일. 그룹은 비어 있을 수 있습니다.
+* **Role** : 변경된 MCP 역할 이름
+* **Expiration Date** : 역할 만료 일시
+* **Action By** : 작업을 수행한 관리자 또는 사용자 이름
+
+### MCP Server Role History 상세 보기
+
+목록에서 행을 클릭하면 detail drawer가 열립니다.
+
+detail drawer에서는 다음 정보를 확인할 수 있습니다.
+
+* **Role Name** : 부여 또는 회수된 역할 이름
+* **Event** : `GRANTED` 또는 `REVOKED`
+* **Name** : 대상 사용자 또는 그룹 이름
+* **Email** : 대상 사용자 이메일
+* **User Type** : `USER` 또는 `GROUP`
+* **Action At** : 작업이 발생한 시각
+* **Action By** : 작업 수행자
+* **Expiration Date** : 역할 만료 시각
+* **Role Description** : 역할 설명
+
+역할에 연결된 정책이 있으면 drawer 하단의 **Policies** 섹션에서 다음 정보를 함께 확인할 수 있습니다.
+
+* **Name**
+* **Description**
+* **Version**
+
+<Callout type="important">
+`REVOKED` 이력은 저장 시 `Expiration Date` 가 비어 있을 수 있으므로 화면에서도 `-` 로 표시될 수 있습니다.
+</Callout>
+
+### MCP Server Role History 해석 시 참고 사항
+
+* `GRANTED` 는 역할 부여 이벤트입니다.
+* `REVOKED` 는 역할 회수 이벤트입니다.
+* 이 화면은 "현재 어떤 권한이 남아 있는가"를 보여주는 화면이 아니라, "권한이 어떻게 변경되었는가"를 보여주는 감사 화면입니다.
+* 상세 drawer의 **Role Description** 과 **Policies** 는 조회 시점의 역할 정의를 기준으로 불러옵니다.
+
+### Request Audit과 MCP Server Role History의 차이
+
+두 화면은 모두 MCP Audit 아래에 있지만, 감사 대상이 다릅니다.
+
+* **Request Audit** : 실제 MCP 요청 실행 이력 감사
+* **MCP Server Role History** : MCP 접근 권한 변경 이력 감사
+
+운영 관점에서는 보통 다음과 같이 함께 사용합니다.
+
+* 어떤 요청이 실제로 실행되었는지 확인할 때: **Request Audit**
+* 특정 사용자 또는 그룹에 언제 어떤 역할이 부여/회수되었는지 확인할 때: **MCP Server Role History**
+* 권한 변경 이후 실제 요청 흐름까지 함께 추적할 때: 두 화면을 함께 조회
+
+### 운영 시 참고 사항
+
+* `MCP Server settings` 의 **Enable Request Audit** 과 **Include payload in Request Audit** 은 upstream request 기록 여부와 payload 저장 여부를 제어합니다.
+* `Admin > MCP Servers > General > Configurations` 의 client audit 설정은 client-originated request 기록 여부를 제어합니다.
+* 즉, 설정 화면은 감사 수집 범위를 정하고, `Admin > Audit > MCP` 화면은 수집된 결과를 조회하는 역할을 합니다.
+* Request Audit에서 payload가 보이지 않으면 해당 scope의 payload audit 설정이 비활성화되었는지 먼저 확인하는 것이 좋습니다.
+* MCP Server Role History는 역할 부여/회수 이력 감사에 적합하지만, 현재 시점의 실제 접근 가능 서버 목록은 `Admin > MCP > MCP Access Control > Access Control` 화면에서 별도로 확인해야 합니다.

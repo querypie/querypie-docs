@@ -100,6 +100,14 @@ class ConfluencePageProcessor:
                         child_type = str(child.get("type") or "page")
                         child_id = str(child["id"])
                         title = str(child.get("title") or "")
+                        status = str(child.get("status") or "current")
+                        if status != "current":
+                            self.logger.warning(
+                                "Skipping non-current Confluence child "
+                                f"parent_id={page_id} id={child_id} "
+                                f"type={child_type} status={status} title={title!r}"
+                            )
+                            continue
                         if child_type not in ("page", "folder"):
                             self.logger.warning(
                                 "Skipping unsupported Confluence child "

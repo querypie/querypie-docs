@@ -1,0 +1,153 @@
+---
+title: 'MCP Server Connection Management'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167242794/MCP+Server+Connection+Management'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Server Connection Management
+
+### Overview
+
+MCP Server Connection Management는 QueryPie가 외부 MCP(Model Context Protocol) 서버에 연결할 수 있도록 서버 정보를 등록하고, connection settings, credential settings, audit settings, tool synchronization status를 관리하는 기능입니다.
+
+이 화면에서는 다음 작업을 수행할 수 있습니다.
+
+* MCP Server 목록을 조회할 수 있습니다.
+* 새 MCP Server를 등록할 수 있습니다.
+* 등록된 MCP Server의 Basic Information, Connection Settings, Audit Settings를 수정할 수 있습니다.
+* 서버가 제공하는 Tools 목록을 동기화하고 조회할 수 있습니다.
+* 필요 시 등록된 MCP Server를 삭제할 수 있습니다.
+
+<Callout type="important">
+QueryPie의 `Web Base URL`이 설정되지 않으면 OAuth callback URL을 만들 수 없어 OAuth를 사용하는 MCP server에 대해 `Connect`를 시작할 수 없습니다. [Web Base URL 에 대한 자세한 내용](../../installation/container-environment-variables/querypieweburl)
+</Callout>
+
+### MCP Server 목록 조회하기
+
+등록된 MCP Server 목록을 확인합니다.
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/mcp-server/mcp-server-connection-management/image-20260602-110554.png" alt="Admin &gt; MCP Servers &gt; Connection Management &gt; MCP Servers" width="760" />
+<figcaption>
+Admin &gt; MCP Servers &gt; Connection Management &gt; MCP Servers
+</figcaption>
+</figure>
+
+1. `Admin > MCP Servers > Connection Management > MCP Servers` 메뉴로 이동합니다.
+2. 목록에서 서버 정보를 확인합니다.
+3. 우측 상단의 `Create Server` 버튼으로 새 서버를 등록할 수 있습니다.
+4. 새로고침 버튼을 클릭하면 목록을 다시 조회합니다.
+5. 목록에서 특정 서버를 클릭하면 detail page로 이동합니다.
+
+목록 컬럼은 다음과 같습니다.
+
+* **Name** : 서버의 display name
+* **Identifier** : 내부 server name 값
+* **Endpoint** : MCP Server 주소
+* **Transport** : 연결에 사용하는 transport 유형
+* **Tools** : 동기화된 tool 수
+* **Audit** : Request Audit 활성화 여부
+* **Updated** : 마지막 수정 시각
+
+### MCP Server 추가하기
+
+새 MCP Server를 등록합니다.
+
+1. `Create Server` 버튼을 클릭합니다.
+2. **Basic Information** 섹션에서 다음 항목을 입력합니다.
+    * **Identifier :** 내부적으로 사용하는 remote MCP 서버의 식별 이름입니다. 대문자를 사용할 수 없습니다. 한번 생성한 뒤에는 수정할 수 없습니다.
+    * **Name :** remote MCP 서버의 display name 입니다.
+    * **Icon :** 사용자가 원하는 아이콘을 업로드 하여 등록 할 수 있습니다.
+    * **Description :** 해당 remote MCP 서버에 대한 설명을 입력합니다.
+3. **Connection Settings** 섹션에서 다음 항목을 입력합니다.
+    * **Endpoint URL :** remote MCP 서버의 접속 endpoint URL을 입력합니다.
+    * **Transport :** remote MCP 서버의 transport 유형을 선택합니다. (SSE / Streamable HTTP 둘 중 하나를 선택합니다.)
+    * **Credential Mode :** None / QueryPie Registered Credential / User OAuth 중 하나를 선택합니다.
+        * None : remote MCP 서버가 인증을 요구하지 않는 경우 사용합니다.
+        * QueryPie Registered Credential : QueryPie MAC에서 인증 토큰을 관리하도록 하는 경우 선택합니다. QueryPie Registered Credential을 선택하면 QueryPie Upstream Access Token 입력란이 노출되고  입력란에 MCP 서버의 인증 토큰을 입력합니다. **MCP 서버의 인증토큰은 MAC에서 생성하지 않습니다. 해당 서비스에서 MCP 사용을 위한 인증 토큰을 생성해야하므로 자세한 토큰 생성 방법은 해당 서비스 가이드를 참고 바랍니다.**
+        * User OAuth : remote MCP 서버의 인증 방식이 OAuth 인증 방식인 경우 사용합니다. 관리자는 MCP 서버에서 사용가능한 tool 목록을 조회하기 위해 사용자 대신 OAuth 인증을 해야합니다. 이는 사용자의 OAuth 인증과는 관계가 없고 tool 목록을 조회하는 것에만 사용됩니다.
+4. 필요하면 `Test Connection`을 실행해 현재 입력한 값으로 연결 가능 여부를 확인합니다.
+5. **Audit Settings** 섹션에서 request audit 관련 옵션을 설정합니다.
+    * 아래에 설명된 “Audit Setting 이해하기” 를 참고합니다.
+6. `Save` 버튼을 클릭해 저장합니다.
+
+<Callout type="important">
+`Test Connection`과 이후 `Sync Tools`, OAuth 관련 upstream 통신은 모두 MCP 전역 **Configurations** 의 **Forward Proxy** 설정 영향을 받을 수 있습니다.
+</Callout>
+
+### Audit Settings 이해하기
+
+MCP Access Control의 audit 설정은 감사 대상 범위가 두 층으로 나뉩니다.
+
+* 각 MCP Server detail page의 **Audit Settings** : 특정 upstream MCP Server 로 전달되는 요청에 대한 서버별 audit 설정
+* `Admin > MCP Servers > General > Configurations` 의 audit 설정 : MCP 클라이언트가 QueryPie MAC 로 보낸 요청에 대한 전역 audit 설정
+
+따라서 request audit를 해석할 때는 어떤 설정이 어떤 범위의 로그에 적용되는지 함께 확인해야 합니다.
+
+#### 감사 대상 영역 : QueryPie MAC ~ Remote MCP Server
+
+* 각 MCP Server 설정의 Audit Settings에서 Enable Request Audit 옵션을 활성화 한 경우<br/>QueryPie MAC이 해당 Remote MCP Server로 전달하는 upstream request를 request audit log에 기록합니다.
+    * MCP 서버 목록 화면의 **Audit** 컬럼에도 이 값이 반영됩니다.
+    * 이 옵션을 끄면 해당 서버에 대한 upstream request audit log가 기록되지 않습니다.
+    * request audit log는 `Admin > Audit > MCP > Request Audit` 메뉴에서 확인합니다.
+* 각 MCP Server 설정의 Audit Settings에서 Include payload in Request Audit 옵션을 활성화 한 경우<br/> 해당 MCP Server에 대한 request audit log에 payload와 response를 함께 저장합니다.
+    * upstream request 자체를 기록하는 것에 더해, audit record에 payload/response까지 포함합니다.
+    * `Enable Request Audit`이 활성화된 경우에만 사용할 수 있습니다.
+    * `Enable Request Audit`을 끄면 이 옵션은 비활성화되며, 저장 시 값도 함께 꺼집니다.
+
+#### 감사 대상 영역 : MCP Client ~ QueryPie MAC
+
+`Admin > MCP Servers > General > Configurations` 화면에는 client-originated audit에 대한 전역 설정이 있습니다.
+
+* Client Request Audit : 이 옵션을 켜면 클라이언트가 QueryPie MAC으로 보낸 MCP 요청을 audit log에 기록합니다.
+    * 감사 대상은 개별 upstream MCP Server가 아니라 client-originated MCP request입니다.
+    * 비활성화하면 client request audit event 자체가 생성되지 않습니다.
+* Include payload in Client Request Audit : 이 옵션을 켜면 client-originated MCP request audit log에 payload와 response를 함께 저장합니다.
+    * `Client Request Audit`이 활성화된 경우에만 화면에 표시됩니다.
+    * 비활성화하면 client request audit event는 기록되지만 payload/response 본문은 제외됩니다.
+
+### MCP Server 수정하기
+
+기존 MCP Server의 설정을 변경합니다.
+MCP 서버의 Tool 동기화는 MCP 서버를 등록한 후 수정 상세 화면에서만 가능합니다.
+
+1. MCP Server 목록에서 수정할 서버를 클릭합니다.
+2. 상세 페이지에서 다음 섹션을 확인하고 수정할 수 있습니다.
+    * **Basic Information**
+    * **Connection Settings**
+    * **Audit Settings**
+    * **Tools**<br/>등록된 MCP 서버가 제공하는 tool 목록을 동기화합니다. <br/>인증이 필요한 경우 인증이 되어야 동기화 할 수 있습니다.
+        * `Sync Tools` 버튼을 클릭합니다.
+        * 동기화가 완료되면 감지된 tool 수와 마지막 동기화 시각을 확인할 수 있습니다.
+        * Tools table에서 다음 정보를 조회할 수 있습니다.
+            * Tool Name : tool의 이름입니다.
+            * Description : tool에 대한 상세 설명입니다.
+            * Last Synced : 마지막으로 동기화한 시점입니다.
+3. 수정 후 `Save Changes`를 클릭합니다.
+
+<Callout type="important">
+서버 수정 화면에서는 **Identifier** 는 읽기 전용이며 변경할 수 없습니다.
+</Callout>
+
+### MCP Server 삭제하기
+
+등록된 MCP Server를 삭제합니다.
+
+1. 목록에서 서버를 하나 이상 선택합니다.
+2. 삭제 동작을 실행합니다.
+3. 확인 메시지에서 승인하면 선택한 서버가 삭제됩니다.
+
+또는 detail page에서 단일 서버를 삭제할 수도 있습니다.
+
+
+<Callout type="info">
+**운영 시 참고 사항**
+* 서버 생성 시 기본값 기준으로 **Enable Request Audit** 과 **Include payload in Request Audit** 은 모두 활성화되어 있습니다.
+* 서버 detail page의 **Include payload in Request Audit** 은 단독으로 켤 수 없고, 항상 **Enable Request Audit** 에 종속됩니다.
+* `Admin > MCP Servers > General > Configurations` 의 **Client Request Audit** 과 **Include payload in Client Request Audit** 도 기본값 기준으로 활성화되어 있습니다.
+* **Client Request Audit** 계열 설정과 서버별 **Request Audit** 계열 설정은 상속 관계가 아니라, 서로 다른 request scope에 적용되는 별도 설정입니다.
+* remote MCP Server가 직접 인터넷을 통해 접속할 수 없는 경우 `Admin > MCP Servers > General > Configurations` 의 **Forward Proxy** 구성이 필요할 수 있습니다. forward proxy 는 조직에서 별도 마련해야하고 QueryPie MAC에서 proxy 서버를 제공하지 않습니다.
+* 서버 detail page에서는 Tools 목록을 별도 동기화해야 최신 서버 상태가 반영됩니다.
+* Credential Mode가 User OAuth인 경우, detail page에서 admin OAuth connection status를 별도로 확인할 수 있습니다.
+</Callout>

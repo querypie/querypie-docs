@@ -1,4 +1,5 @@
 - "page_id": "608501837"
+  "type": "page"
   "title": "QueryPie Docs"
   "title_orig": "QueryPie Docs"
   "breadcrumbs":
@@ -8,6 +9,7 @@
   "path":
   - "querypie-docs"
 - "page_id": "544375784"
+  "type": "page"
   "title": "Overview"
   "title_orig": "Overview"
   "breadcrumbs":
@@ -17,6 +19,7 @@
   "path":
   - "overview"
 - "page_id": "544375859"
+  "type": "page"
   "title": "시스템 구성도 개요"
   "title_orig": "시스템 구성도 개요"
   "breadcrumbs":
@@ -29,6 +32,7 @@
   - "overview"
   - "system-architecture-overview"
 - "page_id": "544112942"
+  "type": "page"
   "title": "Proxy Management"
   "title_orig": "Proxy Management"
   "breadcrumbs":
@@ -41,6 +45,7 @@
   - "overview"
   - "proxy-management"
 - "page_id": "544377869"
+  "type": "page"
   "title": "Database Proxy 사용 활성화"
   "title_orig": "Database Proxy 사용 활성화"
   "breadcrumbs":
@@ -56,6 +61,7 @@
   - "proxy-management"
   - "enable-database-proxy"
 - "page_id": "544211126"
+  "type": "page"
   "title": "사용자 매뉴얼"
   "title_orig": "사용자 매뉴얼"
   "breadcrumbs":
@@ -65,6 +71,7 @@
   "path":
   - "user-manual"
 - "page_id": "578945174"
+  "type": "page"
   "title": "My Dashboard"
   "title_orig": "My Dashboard"
   "breadcrumbs":
@@ -77,6 +84,7 @@
   - "user-manual"
   - "my-dashboard"
 - "page_id": "793542657"
+  "type": "page"
   "title": "Email을 통한 사용자 비밀번호 초기화"
   "title_orig": "Email을 통한 사용자 비밀번호 초기화"
   "breadcrumbs":
@@ -92,6 +100,7 @@
   - "my-dashboard"
   - "user-password-reset-via-email"
 - "page_id": "544377922"
+  "type": "page"
   "title": "Workflow"
   "title_orig": "Workflow"
   "breadcrumbs":
@@ -104,6 +113,7 @@
   - "user-manual"
   - "workflow"
 - "page_id": "544377968"
+  "type": "page"
   "title": "DB Access Request 요청하기"
   "title_orig": "DB Access Request 요청하기"
   "breadcrumbs":
@@ -119,6 +129,7 @@
   - "workflow"
   - "requesting-db-access"
 - "page_id": "544378069"
+  "type": "page"
   "title": "SQL Request 요청하기"
   "title_orig": "SQL Request 요청하기"
   "breadcrumbs":
@@ -134,6 +145,7 @@
   - "workflow"
   - "requesting-sql"
 - "page_id": "692355151"
+  "type": "page"
   "title": "실행 계획(Explain) 기능 사용하기"
   "title_orig": "실행 계획(Explain) 기능 사용하기"
   "breadcrumbs":
@@ -152,6 +164,7 @@
   - "requesting-sql"
   - "using-execution-plan-explain-feature"
 - "page_id": "544378182"
+  "type": "page"
   "title": "SQL Export Request 요청하기"
   "title_orig": "SQL Export Request 요청하기"
   "breadcrumbs":
@@ -167,6 +180,7 @@
   - "workflow"
   - "requesting-sql-export"
 - "page_id": "712769539"
+  "type": "page"
   "title": "Unmasking Request 요청하기 (마스킹 해제 요청)"
   "title_orig": "Unmasking Request 요청하기 (마스킹 해제 요청)"
   "breadcrumbs":
@@ -182,6 +196,7 @@
   - "workflow"
   - "requesting-unmasking-mask-removal-request"
 - "page_id": "1060306945"
+  "type": "page"
   "title": "Restricted Data Access 요청하기 (제한된 데이터 접근 요청)"
   "title_orig": "Restricted Data Access 요청하기 (제한된 데이터 접근 요청)"
   "breadcrumbs":
@@ -197,6 +212,7 @@
   - "workflow"
   - "requesting-restricted-data-access"
 - "page_id": "544378254"
+  "type": "page"
   "title": "Server Access Request 요청하기"
   "title_orig": "Server Access Request 요청하기"
   "breadcrumbs":
@@ -212,6 +228,7 @@
   - "workflow"
   - "requesting-server-access"
 - "page_id": "878936417"
+  "type": "page"
   "title": "Server Privilege Request 요청하기"
   "title_orig": "Server Privilege Request 요청하기"
   "breadcrumbs":
@@ -227,6 +244,7 @@
   - "workflow"
   - "requesting-server-privilege"
 - "page_id": "544378348"
+  "type": "page"
   "title": "Access Role Request 요청하기"
   "title_orig": "Access Role Request 요청하기"
   "breadcrumbs":
@@ -242,6 +260,7 @@
   - "workflow"
   - "requesting-access-role"
 - "page_id": "1055358996"
+  "type": "page"
   "title": "IP Registration Request 요청하기"
   "title_orig": "IP Registration Request 요청하기"
   "breadcrumbs":
@@ -257,6 +276,7 @@
   - "workflow"
   - "requesting-ip-registration"
 - "page_id": "1070006273"
+  "type": "page"
   "title": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
   "title_orig": "DB 정책 예외 요청하기 (DB Policy Exception Request)"
   "breadcrumbs":
@@ -272,6 +292,7 @@
   - "workflow"
   - "requesting-db-policy-exception"
 - "page_id": "568918170"
+  "type": "page"
   "title": "결재 부가 기능 (대리 결재, 재상신 등)"
   "title_orig": "결재 부가 기능 (대리 결재, 재상신 등)"
   "breadcrumbs":
@@ -287,6 +308,7 @@
   - "workflow"
   - "approval-additional-features-proxy-approval-resubmission-etc"
 - "page_id": "544380204"
+  "type": "page"
   "title": "Database Access Control"
   "title_orig": "Database Access Control"
   "breadcrumbs":
@@ -299,6 +321,7 @@
   - "user-manual"
   - "database-access-control"
 - "page_id": "544380222"
+  "type": "page"
   "title": "웹 SQL 에디터로 접속하기"
   "title_orig": "웹 SQL 에디터로 접속하기"
   "breadcrumbs":
@@ -314,6 +337,7 @@
   - "database-access-control"
   - "connecting-with-web-sql-editor"
 - "page_id": "544380354"
+  "type": "page"
   "title": "Default Privilege 설정하기"
   "title_orig": "Default Privilege 설정하기"
   "breadcrumbs":
@@ -329,6 +353,7 @@
   - "database-access-control"
   - "setting-default-privilege"
 - "page_id": "559906893"
+  "type": "page"
   "title": "에이전트 없이 프록시 접속하기"
   "title_orig": "에이전트 없이 프록시 접속하기"
   "breadcrumbs":
@@ -344,6 +369,7 @@
   - "database-access-control"
   - "connecting-to-proxy-without-agent"
 - "page_id": "820609510"
+  "type": "page"
   "title": "Google BigQuery OAuth 인증을 통해 접속하기"
   "title_orig": "Google BigQuery OAuth 인증을 통해 접속하기"
   "breadcrumbs":
@@ -359,6 +385,7 @@
   - "database-access-control"
   - "connecting-via-google-bigquery-oauth-authentication"
 - "page_id": "880181257"
+  "type": "page"
   "title": "Custom Data Source 접속하기"
   "title_orig": "Custom Data Source 접속하기"
   "breadcrumbs":
@@ -374,6 +401,7 @@
   - "database-access-control"
   - "connecting-to-custom-data-source"
 - "page_id": "544381369"
+  "type": "page"
   "title": "Server Access Control"
   "title_orig": "Server Access Control"
   "breadcrumbs":
@@ -386,6 +414,7 @@
   - "user-manual"
   - "server-access-control"
 - "page_id": "544381383"
+  "type": "page"
   "title": "권한이 있는 서버에 접속하기"
   "title_orig": "권한이 있는 서버에 접속하기"
   "breadcrumbs":
@@ -401,6 +430,7 @@
   - "server-access-control"
   - "connecting-to-authorized-servers"
 - "page_id": "544381410"
+  "type": "page"
   "title": "웹 터미널 사용하기"
   "title_orig": "웹 터미널 사용하기"
   "breadcrumbs":
@@ -416,6 +446,7 @@
   - "server-access-control"
   - "using-web-terminal"
 - "page_id": "544381477"
+  "type": "page"
   "title": "웹 SFTP 사용하기"
   "title_orig": "웹 SFTP 사용하기"
   "breadcrumbs":
@@ -431,6 +462,7 @@
   - "server-access-control"
   - "using-web-sftp"
 - "page_id": "544384011"
+  "type": "page"
   "title": "Kubernetes Access Control"
   "title_orig": "Kubernetes Access Control"
   "breadcrumbs":
@@ -443,6 +475,7 @@
   - "user-manual"
   - "kubernetes-access-control"
 - "page_id": "544384025"
+  "type": "page"
   "title": "접근 권한 목록 확인하기"
   "title_orig": "접근 권한 목록 확인하기"
   "breadcrumbs":
@@ -458,6 +491,7 @@
   - "kubernetes-access-control"
   - "checking-access-permission-list"
 - "page_id": "2262630428"
+  "type": "page"
   "title": "Web Client로 쿠버네티스 클러스터 접속하기"
   "title_orig": "Web Client로 쿠버네티스 클러스터 접속하기"
   "breadcrumbs":
@@ -467,12 +501,13 @@
   "breadcrumbs_en":
   - "User Manual"
   - "Kubernetes Access Control"
-  - "Web Client로 쿠버네티스 클러스터 접속하기"
+  - "Web Client"
   "path":
   - "user-manual"
   - "kubernetes-access-control"
   - "web-client"
 - "page_id": "1064829218"
+  "type": "page"
   "title": "Web Access Control"
   "title_orig": "Web Access Control"
   "breadcrumbs":
@@ -485,6 +520,7 @@
   - "user-manual"
   - "web-access-control"
 - "page_id": "1073709107"
+  "type": "page"
   "title": "Root CA 인증서 및 Extension 설치하기"
   "title_orig": "Root CA 인증서 및 Extension 설치하기"
   "breadcrumbs":
@@ -500,6 +536,7 @@
   - "web-access-control"
   - "installing-root-ca-certificate-and-extension"
 - "page_id": "1064796396"
+  "type": "page"
   "title": "웹 애플리케이션(웹사이트) 접속하기"
   "title_orig": "웹 애플리케이션(웹사이트) 접속하기"
   "breadcrumbs":
@@ -514,7 +551,37 @@
   - "user-manual"
   - "web-access-control"
   - "accessing-web-applications-websites"
+- "page_id": "2168455203"
+  "type": "folder"
+  "title": "MCP Access Control"
+  "title_orig": "MCP Access Control"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "MCP Access Control"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "MCP Access Control"
+  "path":
+  - "user-manual"
+  - "mcp-access-control"
+- "page_id": "2166816845"
+  "type": "page"
+  "title": "MAC을 통해 Remote MCP Servers 사용하기"
+  "title_orig": "MAC을 통해 Remote MCP Servers 사용하기"
+  "breadcrumbs":
+  - "사용자 매뉴얼"
+  - "MCP Access Control"
+  - "MAC을 통해 Remote MCP Servers 사용하기"
+  "breadcrumbs_en":
+  - "User Manual"
+  - "MCP Access Control"
+  - "Using Remote MCP Servers through MAC"
+  "path":
+  - "user-manual"
+  - "mcp-access-control"
+  - "using-remote-mcp-servers-through-mac"
 - "page_id": "568950885"
+  "type": "page"
   "title": "Preferences"
   "title_orig": "Preferences"
   "breadcrumbs":
@@ -527,6 +594,7 @@
   - "user-manual"
   - "preferences"
 - "page_id": "544112828"
+  "type": "page"
   "title": "User Agent"
   "title_orig": "User Agent"
   "breadcrumbs":
@@ -539,6 +607,7 @@
   - "user-manual"
   - "user-agent"
 - "page_id": "852066413"
+  "type": "page"
   "title": "Multi Agent"
   "title_orig": "Multi Agent"
   "breadcrumbs":
@@ -551,6 +620,7 @@
   - "user-manual"
   - "multi-agent"
 - "page_id": "912425276"
+  "type": "page"
   "title": "Multi Agent Linux 설치 및 사용 가이드"
   "title_orig": "Multi Agent Linux 설치 및 사용 가이드"
   "breadcrumbs":
@@ -566,6 +636,7 @@
   - "multi-agent"
   - "multi-agent-linux-installation-and-usage-guide"
 - "page_id": "912425288"
+  "type": "page"
   "title": "Multi Agent Seamless SSH 사용 가이드"
   "title_orig": "Multi Agent Seamless SSH 사용 가이드"
   "breadcrumbs":
@@ -581,6 +652,7 @@
   - "multi-agent"
   - "multi-agent-seamless-ssh-usage-guide"
 - "page_id": "919240916"
+  "type": "page"
   "title": "Multi Agent OS별 3rd Party Tool 지원 목록"
   "title_orig": "Multi Agent OS별 3rd Party Tool 지원 목록"
   "breadcrumbs":
@@ -596,6 +668,7 @@
   - "multi-agent"
   - "multi-agent-3rd-party-tool-support-list-by-os"
 - "page_id": "2173796362"
+  "type": "page"
   "title": "Multi Agent - qpctl CLI 사용 가이드"
   "title_orig": "Multi Agent - qpctl CLI 사용 가이드"
   "breadcrumbs":
@@ -611,6 +684,7 @@
   - "multi-agent"
   - "multi-agent-qpctl-cli-usage-guide"
 - "page_id": "2166521863"
+  "type": "page"
   "title": "AI Chat"
   "title_orig": "AI Chat"
   "breadcrumbs":
@@ -623,6 +697,7 @@
   - "user-manual"
   - "ai-chat"
 - "page_id": "544178405"
+  "type": "page"
   "title": "관리자 매뉴얼"
   "title_orig": "관리자 매뉴얼"
   "breadcrumbs":
@@ -632,6 +707,7 @@
   "path":
   - "administrator-manual"
 - "page_id": "544080057"
+  "type": "page"
   "title": "General"
   "title_orig": "General"
   "breadcrumbs":
@@ -644,6 +720,7 @@
   - "administrator-manual"
   - "general"
 - "page_id": "543948978"
+  "type": "page"
   "title": "Company Management"
   "title_orig": "Company Management"
   "breadcrumbs":
@@ -659,6 +736,7 @@
   - "general"
   - "company-management"
 - "page_id": "544145591"
+  "type": "page"
   "title": "General"
   "title_orig": "General​"
   "breadcrumbs":
@@ -677,6 +755,7 @@
   - "company-management"
   - "general"
 - "page_id": "544178422"
+  "type": "page"
   "title": "Security"
   "title_orig": "Security"
   "breadcrumbs":
@@ -695,6 +774,7 @@
   - "company-management"
   - "security"
 - "page_id": "544112846"
+  "type": "page"
   "title": "Allowed Zones"
   "title_orig": "Allowed Zones"
   "breadcrumbs":
@@ -713,6 +793,7 @@
   - "company-management"
   - "allowed-zones"
 - "page_id": "544243925"
+  "type": "page"
   "title": "Channels"
   "title_orig": "Channels"
   "breadcrumbs":
@@ -731,6 +812,7 @@
   - "company-management"
   - "channels"
 - "page_id": "543981760"
+  "type": "page"
   "title": "Alerts"
   "title_orig": "Alerts"
   "breadcrumbs":
@@ -749,6 +831,7 @@
   - "company-management"
   - "alerts"
 - "page_id": "793608206"
+  "type": "page"
   "title": "New Request > 요청 타입별 템플릿 변수"
   "title_orig": "New Request > 요청 타입별 템플릿 변수"
   "breadcrumbs":
@@ -770,6 +853,7 @@
   - "alerts"
   - "new-request-template-variables-by-request-type"
 - "page_id": "544178443"
+  "type": "page"
   "title": "Licenses"
   "title_orig": "Licenses"
   "breadcrumbs":
@@ -788,6 +872,7 @@
   - "company-management"
   - "licenses"
 - "page_id": "544375969"
+  "type": "page"
   "title": "User Management"
   "title_orig": "User Management"
   "breadcrumbs":
@@ -803,6 +888,7 @@
   - "general"
   - "user-management"
 - "page_id": "544047331"
+  "type": "page"
   "title": "Users"
   "title_orig": "Users"
   "breadcrumbs":
@@ -821,6 +907,7 @@
   - "user-management"
   - "users"
 - "page_id": "544376787"
+  "type": "page"
   "title": "사용자 프로필"
   "title_orig": "사용자 프로필"
   "breadcrumbs":
@@ -842,6 +929,7 @@
   - "users"
   - "user-profile"
 - "page_id": "920944732"
+  "type": "page"
   "title": "qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능"
   "title_orig": "qp-admin 기본 계정에 대한 패스워드 변경 강제화 및 계정 삭제 기능"
   "breadcrumbs":
@@ -864,6 +952,7 @@
   - "users"
   - "password-change-enforcement-and-account-deletion-feature-for-qp-admin-default-account"
 - "page_id": "544047341"
+  "type": "page"
   "title": "Groups"
   "title_orig": "Groups"
   "breadcrumbs":
@@ -882,6 +971,7 @@
   - "user-management"
   - "groups"
 - "page_id": "543948996"
+  "type": "page"
   "title": "Roles"
   "title_orig": "Roles"
   "breadcrumbs":
@@ -900,6 +990,7 @@
   - "user-management"
   - "roles"
 - "page_id": "544376982"
+  "type": "page"
   "title": "Profile Editor"
   "title_orig": "Profile Editor"
   "breadcrumbs":
@@ -918,6 +1009,7 @@
   - "user-management"
   - "profile-editor"
 - "page_id": "953221256"
+  "type": "page"
   "title": "Custom Attribute"
   "title_orig": "Custom Attribute"
   "breadcrumbs":
@@ -939,6 +1031,7 @@
   - "profile-editor"
   - "custom-attribute"
 - "page_id": "544375984"
+  "type": "page"
   "title": "Authentication"
   "title_orig": "Authentication"
   "breadcrumbs":
@@ -956,28 +1049,8 @@
   - "general"
   - "user-management"
   - "authentication"
-- "page_id": "544376004"
-  "title": "LDAP 연동하기"
-  "title_orig": "LDAP 연동하기"
-  "breadcrumbs":
-  - "관리자 매뉴얼"
-  - "General"
-  - "User Management"
-  - "Authentication"
-  - "LDAP 연동하기"
-  "breadcrumbs_en":
-  - "Administrator Manual"
-  - "General"
-  - "User Management"
-  - "Authentication"
-  - "Integrating with LDAP"
-  "path":
-  - "administrator-manual"
-  - "general"
-  - "user-management"
-  - "authentication"
-  - "integrating-with-ldap"
 - "page_id": "544376100"
+  "type": "page"
   "title": "Okta 연동하기"
   "title_orig": "Okta 연동하기"
   "breadcrumbs":
@@ -998,7 +1071,30 @@
   - "user-management"
   - "authentication"
   - "integrating-with-okta"
+- "page_id": "544376004"
+  "type": "page"
+  "title": "LDAP 연동하기"
+  "title_orig": "LDAP 연동하기"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "LDAP 연동하기"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "General"
+  - "User Management"
+  - "Authentication"
+  - "Integrating with LDAP"
+  "path":
+  - "administrator-manual"
+  - "general"
+  - "user-management"
+  - "authentication"
+  - "integrating-with-ldap"
 - "page_id": "544376183"
+  "type": "page"
   "title": "AWS SSO 연동하기"
   "title_orig": "AWS SSO 연동하기"
   "breadcrumbs":
@@ -1020,6 +1116,7 @@
   - "authentication"
   - "integrating-with-aws-sso"
 - "page_id": "619381289"
+  "type": "page"
   "title": "Google SAML 연동하기"
   "title_orig": "Google SAML 연동하기"
   "breadcrumbs":
@@ -1041,6 +1138,7 @@
   - "authentication"
   - "integrating-with-google-saml"
 - "page_id": "793575425"
+  "type": "page"
   "title": "Multi-Factor Authentication 설정하기"
   "title_orig": "Multi-Factor Authentication 설정하기"
   "breadcrumbs":
@@ -1062,6 +1160,7 @@
   - "authentication"
   - "setting-up-multi-factor-authentication"
 - "page_id": "544376236"
+  "type": "page"
   "title": "Provisioning"
   "title_orig": "Provisioning"
   "breadcrumbs":
@@ -1080,6 +1179,7 @@
   - "user-management"
   - "provisioning"
 - "page_id": "544376265"
+  "type": "page"
   "title": "Provisioning 활성화 하기"
   "title_orig": "Provisioning 활성화 하기"
   "breadcrumbs":
@@ -1101,6 +1201,7 @@
   - "provisioning"
   - "activating-provisioning"
 - "page_id": "544376394"
+  "type": "page"
   "title": "[Okta] 프로비저닝 연동 가이드"
   "title_orig": "[Okta] 프로비저닝 연동 가이드"
   "breadcrumbs":
@@ -1122,6 +1223,7 @@
   - "provisioning"
   - "okta-provisioning-integration-guide"
 - "page_id": "544178462"
+  "type": "page"
   "title": "Workflow Management"
   "title_orig": "Workflow Management"
   "breadcrumbs":
@@ -1137,6 +1239,7 @@
   - "general"
   - "workflow-management"
 - "page_id": "544047359"
+  "type": "page"
   "title": "All Requests"
   "title_orig": "All Requests"
   "breadcrumbs":
@@ -1155,6 +1258,7 @@
   - "workflow-management"
   - "all-requests"
 - "page_id": "544378513"
+  "type": "page"
   "title": "Approval Rules"
   "title_orig": "Approval Rules"
   "breadcrumbs":
@@ -1173,6 +1277,7 @@
   - "workflow-management"
   - "approval-rules"
 - "page_id": "561414376"
+  "type": "page"
   "title": "Workflow Configurations"
   "title_orig": "Workflow Configurations"
   "breadcrumbs":
@@ -1191,6 +1296,7 @@
   - "workflow-management"
   - "workflow-configurations"
 - "page_id": "544112865"
+  "type": "page"
   "title": "System"
   "title_orig": "System"
   "breadcrumbs":
@@ -1206,6 +1312,7 @@
   - "general"
   - "system"
 - "page_id": "544080097"
+  "type": "page"
   "title": "Integrations"
   "title_orig": "Integrations"
   "breadcrumbs":
@@ -1224,6 +1331,7 @@
   - "system"
   - "integrations"
 - "page_id": "544379393"
+  "type": "page"
   "title": "Syslog 연동"
   "title_orig": "Syslog 연동"
   "breadcrumbs":
@@ -1245,6 +1353,7 @@
   - "integrations"
   - "integrating-with-syslog"
 - "page_id": "557940795"
+  "type": "page"
   "title": "Splunk 연동"
   "title_orig": "Splunk 연동"
   "breadcrumbs":
@@ -1266,6 +1375,7 @@
   - "integrations"
   - "integrating-with-splunk"
 - "page_id": "544379587"
+  "type": "page"
   "title": "Secret Store 연동"
   "title_orig": "Secret Store 연동"
   "breadcrumbs":
@@ -1287,6 +1397,7 @@
   - "integrations"
   - "integrating-with-secret-store"
 - "page_id": "798064641"
+  "type": "page"
   "title": "Email 연동"
   "title_orig": "Email 연동"
   "breadcrumbs":
@@ -1308,6 +1419,7 @@
   - "integrations"
   - "integrating-with-email"
 - "page_id": "1267007528"
+  "type": "page"
   "title": "Event Callback 연동"
   "title_orig": "Event Callback 연동"
   "breadcrumbs":
@@ -1329,6 +1441,7 @@
   - "integrations"
   - "integrating-with-event-callback"
 - "page_id": "811401365"
+  "type": "page"
   "title": "OAuth 2.0을 사용하기 위한 Google Cloud API 연동"
   "title_orig": "OAuth 2.0을 사용하기 위한 Google Cloud API 연동"
   "breadcrumbs":
@@ -1350,6 +1463,7 @@
   - "integrations"
   - "integrating-google-cloud-api-for-oauth-20"
 - "page_id": "883654669"
+  "type": "page"
   "title": "Slack DM 연동"
   "title_orig": "Slack DM 연동"
   "breadcrumbs":
@@ -1371,6 +1485,7 @@
   - "integrations"
   - "integrating-with-slack-dm"
 - "page_id": "544378759"
+  "type": "page"
   "title": "Slack DM - Workflow 알림 유형"
   "title_orig": "Slack DM - Workflow 알림 유형"
   "breadcrumbs":
@@ -1395,6 +1510,7 @@
   - "integrating-with-slack-dm"
   - "slack-dm-workflow-notification-types"
 - "page_id": "1453588486"
+  "type": "page"
   "title": "OAuth Client Application"
   "title_orig": "OAuth Client Application"
   "breadcrumbs":
@@ -1416,6 +1532,7 @@
   - "integrations"
   - "oauth-client-application"
 - "page_id": "1454342158"
+  "type": "page"
   "title": "Identity Providers"
   "title_orig": "Identity Providers"
   "breadcrumbs":
@@ -1437,6 +1554,7 @@
   - "integrations"
   - "identity-providers"
 - "page_id": "1495433217"
+  "type": "page"
   "title": "AWS SSO 연동하기 (SAML 2.0)"
   "title_orig": "AWS SSO 연동하기 (SAML 2.0)"
   "breadcrumbs":
@@ -1461,6 +1579,7 @@
   - "identity-providers"
   - "integrating-with-aws-sso-saml-20"
 - "page_id": "2166784044"
+  "type": "page"
   "title": "LLM Provider 설정"
   "title_orig": "LLM Provider 설정"
   "breadcrumbs":
@@ -1482,6 +1601,7 @@
   - "integrations"
   - "llm-provider-configuration"
 - "page_id": "544377652"
+  "type": "page"
   "title": "API Token"
   "title_orig": "API Token"
   "breadcrumbs":
@@ -1500,6 +1620,7 @@
   - "system"
   - "api-token"
 - "page_id": "544211220"
+  "type": "page"
   "title": "Jobs"
   "title_orig": "Jobs"
   "breadcrumbs":
@@ -1518,6 +1639,7 @@
   - "system"
   - "jobs"
 - "page_id": "1456144391"
+  "type": "page"
   "title": "Maintenance"
   "title_orig": "Maintenance"
   "breadcrumbs":
@@ -1536,6 +1658,7 @@
   - "system"
   - "maintenance"
 - "page_id": "544379638"
+  "type": "page"
   "title": "Databases"
   "title_orig": "Databases"
   "breadcrumbs":
@@ -1548,6 +1671,7 @@
   - "administrator-manual"
   - "databases"
 - "page_id": "956071939"
+  "type": "page"
   "title": "DAC General Configurations"
   "title_orig": "DAC General Configurations"
   "breadcrumbs":
@@ -1563,6 +1687,7 @@
   - "databases"
   - "dac-general-configurations"
 - "page_id": "921436219"
+  "type": "page"
   "title": "Unmasking Zones"
   "title_orig": "Unmasking Zones"
   "breadcrumbs":
@@ -1581,6 +1706,7 @@
   - "dac-general-configurations"
   - "unmasking-zones"
 - "page_id": "1275396097"
+  "type": "page"
   "title": "Masking Pattern (메뉴 위치 이동)"
   "title_orig": "Masking Pattern (메뉴 위치 이동)"
   "breadcrumbs":
@@ -1599,6 +1725,7 @@
   - "dac-general-configurations"
   - "masking-pattern-menu-relocated"
 - "page_id": "544379705"
+  "type": "page"
   "title": "Connection Management"
   "title_orig": "Connection Management"
   "breadcrumbs":
@@ -1614,6 +1741,7 @@
   - "databases"
   - "connection-management"
 - "page_id": "544145672"
+  "type": "page"
   "title": "Cloud Providers"
   "title_orig": "Cloud Providers"
   "breadcrumbs":
@@ -1632,6 +1760,7 @@
   - "connection-management"
   - "cloud-providers"
 - "page_id": "544379719"
+  "type": "page"
   "title": "AWS에서 DB 리소스 동기화"
   "title_orig": "AWS에서 DB 리소스 동기화"
   "breadcrumbs":
@@ -1653,6 +1782,7 @@
   - "cloud-providers"
   - "synchronizing-db-resources-from-aws"
 - "page_id": "562167871"
+  "type": "page"
   "title": "MS Azure에서 DB 리소스 동기화"
   "title_orig": "MS Azure에서 DB 리소스 동기화"
   "breadcrumbs":
@@ -1674,6 +1804,7 @@
   - "cloud-providers"
   - "synchronizing-db-resources-from-ms-azure"
 - "page_id": "562167809"
+  "type": "page"
   "title": "Google Cloud에서 DB 리소스 동기화"
   "title_orig": "Google Cloud에서 DB 리소스 동기화"
   "breadcrumbs":
@@ -1695,6 +1826,7 @@
   - "cloud-providers"
   - "synchronizing-db-resources-from-google-cloud"
 - "page_id": "712507393"
+  "type": "page"
   "title": "Dry Run 기능으로 클라우드 동기화 설정 확인하기"
   "title_orig": "Dry Run 기능으로 클라우드 동기화 설정 확인하기"
   "breadcrumbs":
@@ -1716,6 +1848,7 @@
   - "cloud-providers"
   - "verifying-cloud-synchronization-settings-with-dry-run-feature"
 - "page_id": "544014712"
+  "type": "page"
   "title": "DB Connections"
   "title_orig": "DB Connections"
   "breadcrumbs":
@@ -1734,6 +1867,7 @@
   - "connection-management"
   - "db-connections"
 - "page_id": "544380381"
+  "type": "page"
   "title": "MongoDB 전용 가이드"
   "title_orig": "MongoDB 전용 가이드"
   "breadcrumbs":
@@ -1755,6 +1889,7 @@
   - "db-connections"
   - "mongodb-specific-guide"
 - "page_id": "568852692"
+  "type": "page"
   "title": "DocumentDB 전용 가이드"
   "title_orig": "DocumentDB 전용 가이드"
   "breadcrumbs":
@@ -1776,6 +1911,7 @@
   - "db-connections"
   - "documentdb-specific-guide"
 - "page_id": "811434142"
+  "type": "page"
   "title": "Google BigQuery OAuth 인증 설정"
   "title_orig": "Google BigQuery OAuth 인증 설정"
   "breadcrumbs":
@@ -1797,6 +1933,7 @@
   - "db-connections"
   - "google-bigquery-oauth-authentication-configuration"
 - "page_id": "820806182"
+  "type": "page"
   "title": "AWS Athena 전용 가이드"
   "title_orig": "AWS Athena 전용 가이드"
   "breadcrumbs":
@@ -1818,6 +1955,7 @@
   - "db-connections"
   - "aws-athena-specific-guide"
 - "page_id": "880082945"
+  "type": "page"
   "title": "Custom Data Source 설정 및 로그 확인"
   "title_orig": "Custom Data Source 설정 및 로그 확인"
   "breadcrumbs":
@@ -1839,6 +1977,7 @@
   - "db-connections"
   - "custom-data-source-configuration-and-log-verification"
 - "page_id": "544145691"
+  "type": "page"
   "title": "SSL Configurations"
   "title_orig": "SSL Configurations"
   "breadcrumbs":
@@ -1857,6 +1996,7 @@
   - "connection-management"
   - "ssl-configurations"
 - "page_id": "544047436"
+  "type": "page"
   "title": "SSH Configurations"
   "title_orig": "SSH Configurations"
   "breadcrumbs":
@@ -1875,6 +2015,7 @@
   - "connection-management"
   - "ssh-configurations"
 - "page_id": "544112932"
+  "type": "page"
   "title": "Kerberos Configurations"
   "title_orig": "Kerberos Configurations"
   "breadcrumbs":
@@ -1893,6 +2034,7 @@
   - "connection-management"
   - "kerberos-configurations"
 - "page_id": "2010153049"
+  "type": "page"
   "title": "Custom JDBC Configs"
   "title_orig": "Custom JDBC Configs"
   "breadcrumbs":
@@ -1911,6 +2053,7 @@
   - "connection-management"
   - "custom-jdbc-configs"
 - "page_id": "2010120237"
+  "type": "page"
   "title": "QSI Parser Selection"
   "title_orig": "QSI Parser Selection"
   "breadcrumbs":
@@ -1932,6 +2075,7 @@
   - "custom-jdbc-configs"
   - "qsi-parser-selection"
 - "page_id": "2010153057"
+  "type": "page"
   "title": "Custom JDBC Configs - Databricks 예시"
   "title_orig": "Custom JDBC Configs - Databricks 예시"
   "breadcrumbs":
@@ -1953,6 +2097,7 @@
   - "custom-jdbc-configs"
   - "custom-jdbc-configs-databricks-example"
 - "page_id": "544380126"
+  "type": "page"
   "title": "DB Access Control"
   "title_orig": "DB Access Control​"
   "breadcrumbs":
@@ -1968,6 +2113,7 @@
   - "databases"
   - "db-access-control"
 - "page_id": "544380140"
+  "type": "page"
   "title": "Privilege Type"
   "title_orig": "Privilege Type"
   "breadcrumbs":
@@ -1985,7 +2131,30 @@
   - "databases"
   - "db-access-control"
   - "privilege-type"
+- "page_id": "2288549894"
+  "type": "page"
+  "title": "MongoDB / Document DB 의 Privilege Type Mapping"
+  "title_orig": "MongoDB / Document DB 의 Privilege Type Mapping"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Databases"
+  - "DB Access Control"
+  - "Privilege Type"
+  - "MongoDB / Document DB 의 Privilege Type Mapping"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Databases"
+  - "DB Access Control"
+  - "Privilege Type"
+  - "MongoDB / Document DB Privilege Type Mapping"
+  "path":
+  - "administrator-manual"
+  - "databases"
+  - "db-access-control"
+  - "privilege-type"
+  - "mongodb-document-db-privilege-type-mapping"
 - "page_id": "544380173"
+  "type": "page"
   "title": "Access Control"
   "title_orig": "Access Control"
   "breadcrumbs":
@@ -2004,6 +2173,7 @@
   - "db-access-control"
   - "access-control"
 - "page_id": "544379868"
+  "type": "page"
   "title": "Policies"
   "title_orig": "Policies"
   "breadcrumbs":
@@ -2019,6 +2189,7 @@
   - "databases"
   - "policies"
 - "page_id": "544379937"
+  "type": "page"
   "title": "Data Access"
   "title_orig": "Data Access"
   "breadcrumbs":
@@ -2037,6 +2208,7 @@
   - "policies"
   - "data-access"
 - "page_id": "569376769"
+  "type": "page"
   "title": "Masking Pattern"
   "title_orig": "Masking Pattern"
   "breadcrumbs":
@@ -2055,6 +2227,7 @@
   - "policies"
   - "masking-pattern"
 - "page_id": "544379882"
+  "type": "page"
   "title": "Data Masking"
   "title_orig": "Data Masking"
   "breadcrumbs":
@@ -2073,6 +2246,7 @@
   - "policies"
   - "data-masking"
 - "page_id": "544379993"
+  "type": "page"
   "title": "Sensitive Data"
   "title_orig": "Sensitive Data"
   "breadcrumbs":
@@ -2091,6 +2265,7 @@
   - "policies"
   - "sensitive-data"
 - "page_id": "713129986"
+  "type": "page"
   "title": "Policy Exception"
   "title_orig": "Policy Exception"
   "breadcrumbs":
@@ -2109,6 +2284,7 @@
   - "policies"
   - "policy-exception"
 - "page_id": "2010153040"
+  "type": "page"
   "title": "Query Rules"
   "title_orig": "Query Rules"
   "breadcrumbs":
@@ -2127,6 +2303,7 @@
   - "policies"
   - "query-rules"
 - "page_id": "571277577"
+  "type": "page"
   "title": "Ledger Management"
   "title_orig": "Ledger Management"
   "breadcrumbs":
@@ -2142,6 +2319,7 @@
   - "databases"
   - "ledger-management"
 - "page_id": "544380061"
+  "type": "page"
   "title": "Ledger Table Policy"
   "title_orig": "Ledger Table Policy"
   "breadcrumbs":
@@ -2160,6 +2338,7 @@
   - "ledger-management"
   - "ledger-table-policy"
 - "page_id": "571277650"
+  "type": "page"
   "title": "Ledger Approval Rules"
   "title_orig": "Ledger Approval Rules"
   "breadcrumbs":
@@ -2178,6 +2357,7 @@
   - "ledger-management"
   - "ledger-approval-rules"
 - "page_id": "873136365"
+  "type": "page"
   "title": "(New) Policy Management"
   "title_orig": "(New) Policy Management"
   "breadcrumbs":
@@ -2193,6 +2373,7 @@
   - "databases"
   - "new-policy-management"
 - "page_id": "878805502"
+  "type": "page"
   "title": "Data Paths"
   "title_orig": "Data Paths"
   "breadcrumbs":
@@ -2211,6 +2392,7 @@
   - "new-policy-management"
   - "data-paths"
 - "page_id": "879198569"
+  "type": "page"
   "title": "Data Policies"
   "title_orig": "Data Policies"
   "breadcrumbs":
@@ -2229,6 +2411,7 @@
   - "new-policy-management"
   - "data-policies"
 - "page_id": "1064796485"
+  "type": "page"
   "title": "Exception Management"
   "title_orig": "Exception Management"
   "breadcrumbs":
@@ -2247,6 +2430,7 @@
   - "new-policy-management"
   - "exception-management"
 - "page_id": "954139156"
+  "type": "page"
   "title": "Monitoring"
   "title_orig": "Monitoring"
   "breadcrumbs":
@@ -2262,6 +2446,7 @@
   - "databases"
   - "monitoring"
 - "page_id": "954172219"
+  "type": "page"
   "title": "Running Queries"
   "title_orig": "Running Queries‎"
   "breadcrumbs":
@@ -2280,6 +2465,7 @@
   - "monitoring"
   - "running-queries"
 - "page_id": "954204974"
+  "type": "page"
   "title": "Proxy Management"
   "title_orig": "Proxy Management​"
   "breadcrumbs":
@@ -2298,6 +2484,7 @@
   - "monitoring"
   - "proxy-management"
 - "page_id": "544380588"
+  "type": "page"
   "title": "Servers"
   "title_orig": "Servers"
   "breadcrumbs":
@@ -2310,6 +2497,7 @@
   - "administrator-manual"
   - "servers"
 - "page_id": "954336174"
+  "type": "page"
   "title": "SAC General Configurations"
   "title_orig": "SAC General Configurations"
   "breadcrumbs":
@@ -2325,6 +2513,7 @@
   - "servers"
   - "sac-general-configurations"
 - "page_id": "544380635"
+  "type": "page"
   "title": "Connection Management"
   "title_orig": "Connection Management​"
   "breadcrumbs":
@@ -2340,6 +2529,7 @@
   - "servers"
   - "connection-management"
 - "page_id": "544178567"
+  "type": "page"
   "title": "Cloud Providers"
   "title_orig": "Cloud Providers​​"
   "breadcrumbs":
@@ -2358,6 +2548,7 @@
   - "connection-management"
   - "cloud-providers"
 - "page_id": "544380650"
+  "type": "page"
   "title": "AWS에서 서버 리소스 동기화"
   "title_orig": "AWS에서 서버 리소스 동기화"
   "breadcrumbs":
@@ -2379,6 +2570,7 @@
   - "cloud-providers"
   - "synchronizing-server-resources-from-aws"
 - "page_id": "544380741"
+  "type": "page"
   "title": "Azure에서 서버 리소스 동기화"
   "title_orig": "Azure에서 서버 리소스 동기화"
   "breadcrumbs":
@@ -2400,6 +2592,7 @@
   - "cloud-providers"
   - "synchronizing-server-resources-from-azure"
 - "page_id": "544380708"
+  "type": "page"
   "title": "GCP에서 서버 리소스 동기화"
   "title_orig": "GCP에서 서버 리소스 동기화"
   "breadcrumbs":
@@ -2421,6 +2614,7 @@
   - "cloud-providers"
   - "synchronizing-server-resources-from-gcp"
 - "page_id": "544211361"
+  "type": "page"
   "title": "Servers"
   "title_orig": "Servers​"
   "breadcrumbs":
@@ -2439,6 +2633,7 @@
   - "connection-management"
   - "servers"
 - "page_id": "544380774"
+  "type": "page"
   "title": "수동으로 개별 서버 등록하기"
   "title_orig": "수동으로 개별 서버 등록하기"
   "breadcrumbs":
@@ -2460,6 +2655,7 @@
   - "servers"
   - "manually-registering-individual-servers"
 - "page_id": "544080186"
+  "type": "page"
   "title": "Server Groups"
   "title_orig": "Server Groups"
   "breadcrumbs":
@@ -2478,6 +2674,7 @@
   - "connection-management"
   - "server-groups"
 - "page_id": "544380846"
+  "type": "page"
   "title": "서버를 그룹으로 관리하기"
   "title_orig": "서버를 그룹으로 관리하기"
   "breadcrumbs":
@@ -2499,6 +2696,7 @@
   - "server-groups"
   - "managing-servers-as-groups"
 - "page_id": "544211376"
+  "type": "page"
   "title": "Server Agents for RDP"
   "title_orig": "Server Agents for RDP"
   "breadcrumbs":
@@ -2517,6 +2715,7 @@
   - "connection-management"
   - "server-agents-for-rdp"
 - "page_id": "565575990"
+  "type": "page"
   "title": "Server Agent 설치 및 제거하기"
   "title_orig": "Server Agent 설치 및 제거하기"
   "breadcrumbs":
@@ -2538,6 +2737,7 @@
   - "server-agents-for-rdp"
   - "installing-and-removing-server-agent"
 - "page_id": "615710737"
+  "type": "page"
   "title": "ProxyJump Configurations"
   "title_orig": "ProxyJump Configurations"
   "breadcrumbs":
@@ -2556,6 +2756,7 @@
   - "connection-management"
   - "proxyjump-configurations"
 - "page_id": "615743551"
+  "type": "page"
   "title": "ProxyJump 생성하기"
   "title_orig": "ProxyJump 생성하기"
   "breadcrumbs":
@@ -2577,6 +2778,7 @@
   - "proxyjump-configurations"
   - "creating-proxyjump"
 - "page_id": "613777446"
+  "type": "page"
   "title": "Server Account Management"
   "title_orig": "Server Account Management"
   "breadcrumbs":
@@ -2592,6 +2794,7 @@
   - "servers"
   - "server-account-management"
 - "page_id": "544380991"
+  "type": "page"
   "title": "Server Account Templates"
   "title_orig": "Server Account Templates"
   "breadcrumbs":
@@ -2610,6 +2813,7 @@
   - "server-account-management"
   - "server-account-templates"
 - "page_id": "544380960"
+  "type": "page"
   "title": "SSH Key Configurations"
   "title_orig": "SSH Key Configurations"
   "breadcrumbs":
@@ -2628,6 +2832,7 @@
   - "server-account-management"
   - "ssh-key-configurations"
 - "page_id": "615743501"
+  "type": "page"
   "title": "Account Management"
   "title_orig": "Account Management"
   "breadcrumbs":
@@ -2646,6 +2851,7 @@
   - "server-account-management"
   - "account-management"
 - "page_id": "615677962"
+  "type": "page"
   "title": "Password Provisioning"
   "title_orig": "Password Provisioning"
   "breadcrumbs":
@@ -2664,6 +2870,7 @@
   - "server-account-management"
   - "password-provisioning"
 - "page_id": "619380898"
+  "type": "page"
   "title": "패스워드 변경 Job 생성하기"
   "title_orig": "패스워드 변경 Job 생성하기"
   "breadcrumbs":
@@ -2685,6 +2892,7 @@
   - "password-provisioning"
   - "creating-password-change-job"
 - "page_id": "1760657435"
+  "type": "page"
   "title": "Session Monitoring"
   "title_orig": "Session Monitoring"
   "breadcrumbs":
@@ -2700,6 +2908,7 @@
   - "servers"
   - "session-monitoring"
 - "page_id": "543949216"
+  "type": "page"
   "title": "Server Access Control"
   "title_orig": "Server Access Control​"
   "breadcrumbs":
@@ -2715,6 +2924,7 @@
   - "servers"
   - "server-access-control"
 - "page_id": "544381186"
+  "type": "page"
   "title": "Access Control"
   "title_orig": "Access Control​​"
   "breadcrumbs":
@@ -2733,6 +2943,7 @@
   - "server-access-control"
   - "access-control"
 - "page_id": "544381282"
+  "type": "page"
   "title": "Permissions 부여 및 회수하기"
   "title_orig": "Permissions 부여 및 회수하기"
   "breadcrumbs":
@@ -2754,6 +2965,7 @@
   - "access-control"
   - "granting-and-revoking-permissions"
 - "page_id": "544381200"
+  "type": "page"
   "title": "Role 부여 및 회수하기"
   "title_orig": "Role 부여 및 회수하기"
   "breadcrumbs":
@@ -2775,6 +2987,7 @@
   - "access-control"
   - "granting-and-revoking-roles"
 - "page_id": "878838349"
+  "type": "page"
   "title": "Server Privilege 부여하기"
   "title_orig": "Server Privilege 부여하기"
   "breadcrumbs":
@@ -2796,6 +3009,7 @@
   - "access-control"
   - "granting-server-privilege"
 - "page_id": "544381150"
+  "type": "page"
   "title": "Roles"
   "title_orig": "Roles​"
   "breadcrumbs":
@@ -2814,6 +3028,7 @@
   - "server-access-control"
   - "roles"
 - "page_id": "544381025"
+  "type": "page"
   "title": "Policies"
   "title_orig": "Policies​"
   "breadcrumbs":
@@ -2832,6 +3047,7 @@
   - "server-access-control"
   - "policies"
 - "page_id": "544381039"
+  "type": "page"
   "title": "서버 접근 정책 설정하기"
   "title_orig": "서버 접근 정책 설정하기"
   "breadcrumbs":
@@ -2853,6 +3069,7 @@
   - "policies"
   - "setting-server-access-policy"
 - "page_id": "544377895"
+  "type": "page"
   "title": "Server Proxy 사용 활성화"
   "title_orig": "Server Proxy 사용 활성화"
   "breadcrumbs":
@@ -2874,6 +3091,7 @@
   - "policies"
   - "enabling-server-proxy"
 - "page_id": "544381118"
+  "type": "page"
   "title": "Command Templates"
   "title_orig": "Command Templates"
   "breadcrumbs":
@@ -2892,6 +3110,7 @@
   - "server-access-control"
   - "command-templates"
 - "page_id": "544244109"
+  "type": "page"
   "title": "Blocked Accounts"
   "title_orig": "Blocked Accounts"
   "breadcrumbs":
@@ -2910,6 +3129,7 @@
   - "server-access-control"
   - "blocked-accounts"
 - "page_id": "544381596"
+  "type": "page"
   "title": "Kubernetes"
   "title_orig": "Kubernetes"
   "breadcrumbs":
@@ -2922,6 +3142,7 @@
   - "administrator-manual"
   - "kubernetes"
 - "page_id": "954172232"
+  "type": "page"
   "title": "KAC General Configurations"
   "title_orig": "KAC General​​​​​ Configurations"
   "breadcrumbs":
@@ -2937,6 +3158,7 @@
   - "kubernetes"
   - "kac-general-configurations"
 - "page_id": "544381637"
+  "type": "page"
   "title": "Connection Management"
   "title_orig": "Connection Management​​"
   "breadcrumbs":
@@ -2952,6 +3174,7 @@
   - "kubernetes"
   - "connection-management"
 - "page_id": "544381651"
+  "type": "page"
   "title": "Cloud Providers"
   "title_orig": "Cloud Providers​"
   "breadcrumbs":
@@ -2970,6 +3193,7 @@
   - "connection-management"
   - "cloud-providers"
 - "page_id": "544381739"
+  "type": "page"
   "title": "AWS에서 쿠버네티스 리소스 동기화"
   "title_orig": "AWS에서 쿠버네티스 리소스 동기화"
   "breadcrumbs":
@@ -2991,6 +3215,7 @@
   - "cloud-providers"
   - "synchronizing-kubernetes-resources-from-aws"
 - "page_id": "544381839"
+  "type": "page"
   "title": "Clusters"
   "title_orig": "Clusters"
   "breadcrumbs":
@@ -3009,6 +3234,7 @@
   - "connection-management"
   - "clusters"
 - "page_id": "544381877"
+  "type": "page"
   "title": "수동으로 쿠버네티스 클러스터 등록하기"
   "title_orig": "수동으로 쿠버네티스 클러스터 등록하기"
   "breadcrumbs":
@@ -3030,6 +3256,7 @@
   - "clusters"
   - "manually-registering-kubernetes-clusters"
 - "page_id": "544383110"
+  "type": "page"
   "title": "K8s Access Control"
   "title_orig": "K8s Access Control"
   "breadcrumbs":
@@ -3045,6 +3272,7 @@
   - "kubernetes"
   - "k8s-access-control"
 - "page_id": "544383124"
+  "type": "page"
   "title": "Access Control"
   "title_orig": "Access Control​"
   "breadcrumbs":
@@ -3063,6 +3291,7 @@
   - "k8s-access-control"
   - "access-control"
 - "page_id": "544383381"
+  "type": "page"
   "title": "쿠버네티스 역할 부여 및 회수하기"
   "title_orig": "쿠버네티스 역할 부여 및 회수하기"
   "breadcrumbs":
@@ -3084,6 +3313,7 @@
   - "access-control"
   - "granting-and-revoking-kubernetes-roles"
 - "page_id": "544382741"
+  "type": "page"
   "title": "Roles"
   "title_orig": "Rolesㅤㅤㅤ"
   "breadcrumbs":
@@ -3102,6 +3332,7 @@
   - "k8s-access-control"
   - "roles"
 - "page_id": "544382963"
+  "type": "page"
   "title": "쿠버네티스 역할 설정하기"
   "title_orig": "쿠버네티스 역할 설정하기"
   "breadcrumbs":
@@ -3123,6 +3354,7 @@
   - "roles"
   - "setting-kubernetes-roles"
 - "page_id": "544382060"
+  "type": "page"
   "title": "Policies"
   "title_orig": "Policiesㅤㅤㅤ"
   "breadcrumbs":
@@ -3141,6 +3373,7 @@
   - "k8s-access-control"
   - "policies"
 - "page_id": "544382274"
+  "type": "page"
   "title": "쿠버네티스 정책 설정하기"
   "title_orig": "쿠버네티스 정책 설정하기"
   "breadcrumbs":
@@ -3162,6 +3395,7 @@
   - "policies"
   - "setting-kubernetes-policies"
 - "page_id": "544382364"
+  "type": "page"
   "title": "쿠버네티스 정책 YAML Code 문법 안내"
   "title_orig": "쿠버네티스 정책 YAML Code 문법 안내"
   "breadcrumbs":
@@ -3183,6 +3417,7 @@
   - "policies"
   - "kubernetes-policy-yaml-code-syntax-guide"
 - "page_id": "544382445"
+  "type": "page"
   "title": "쿠버네티스 정책 Tips 안내"
   "title_orig": "쿠버네티스 정책 Tips 안내"
   "breadcrumbs":
@@ -3204,6 +3439,7 @@
   - "policies"
   - "kubernetes-policy-tips-guide"
 - "page_id": "544382522"
+  "type": "page"
   "title": "쿠버네티스 정책 UI 코드 헬퍼 안내"
   "title_orig": "쿠버네티스 정책 UI 코드 헬퍼 안내"
   "breadcrumbs":
@@ -3225,6 +3461,7 @@
   - "policies"
   - "kubernetes-policy-ui-code-helper-guide"
 - "page_id": "544382659"
+  "type": "page"
   "title": "쿠버네티스 정책 Action 설정 참고 가이드"
   "title_orig": "쿠버네티스 정책 Action 설정 참고 가이드"
   "breadcrumbs":
@@ -3246,6 +3483,7 @@
   - "policies"
   - "kubernetes-policy-action-configuration-reference-guide"
 - "page_id": "783515900"
+  "type": "page"
   "title": "Web Apps"
   "title_orig": "Web Apps"
   "breadcrumbs":
@@ -3258,6 +3496,7 @@
   - "administrator-manual"
   - "web-apps"
 - "page_id": "1064829276"
+  "type": "page"
   "title": "Connection Management"
   "title_orig": "Connection Management‎‎"
   "breadcrumbs":
@@ -3273,6 +3512,7 @@
   - "web-apps"
   - "connection-management"
 - "page_id": "1070694423"
+  "type": "page"
   "title": "Web Apps"
   "title_orig": "Web Apps‎"
   "breadcrumbs":
@@ -3291,6 +3531,7 @@
   - "connection-management"
   - "web-apps"
 - "page_id": "1064829246"
+  "type": "page"
   "title": "Web App Configurations"
   "title_orig": "Web App Configurations"
   "breadcrumbs":
@@ -3309,6 +3550,7 @@
   - "connection-management"
   - "web-app-configurations"
 - "page_id": "1070596135"
+  "type": "page"
   "title": "Web App Access Control"
   "title_orig": "Web App Access Control"
   "breadcrumbs":
@@ -3324,6 +3566,7 @@
   - "web-apps"
   - "web-app-access-control"
 - "page_id": "1070628904"
+  "type": "page"
   "title": "Access Control"
   "title_orig": "Access Control‎‎‎‎‎‎‎"
   "breadcrumbs":
@@ -3342,6 +3585,7 @@
   - "web-app-access-control"
   - "access-control"
 - "page_id": "1064599910"
+  "type": "page"
   "title": "Role 부여 및 회수하기"
   "title_orig": "Role 부여 및 회수하기‎‎‎"
   "breadcrumbs":
@@ -3363,6 +3607,7 @@
   - "access-control"
   - "granting-and-revoking-roles"
 - "page_id": "1070628923"
+  "type": "page"
   "title": "Roles"
   "title_orig": "Roles‎‎‎"
   "breadcrumbs":
@@ -3381,6 +3626,7 @@
   - "web-app-access-control"
   - "roles"
 - "page_id": "1064829343"
+  "type": "page"
   "title": "Policies"
   "title_orig": "Policies‎‎‎‎‎"
   "breadcrumbs":
@@ -3399,6 +3645,7 @@
   - "web-app-access-control"
   - "policies"
 - "page_id": "783417593"
+  "type": "page"
   "title": "WAC Quickstart"
   "title_orig": "WAC Quickstart"
   "breadcrumbs":
@@ -3414,6 +3661,7 @@
   - "web-apps"
   - "wac-quickstart"
 - "page_id": "783745324"
+  "type": "page"
   "title": "[~10.2.7] WAC Role & Policy Guide"
   "title_orig": "[~10.2.7] WAC Role & Policy Guide"
   "breadcrumbs":
@@ -3432,6 +3680,7 @@
   - "wac-quickstart"
   - "1027-wac-role-policy-guide"
 - "page_id": "924287097"
+  "type": "page"
   "title": "[10.2.8~] WAC RBAC Guide"
   "title_orig": "[10.2.8~] WAC RBAC Guide"
   "breadcrumbs":
@@ -3450,6 +3699,7 @@
   - "wac-quickstart"
   - "1028-wac-rbac-guide"
 - "page_id": "956235931"
+  "type": "page"
   "title": "[10.3.0 ~] WAC JIT 권한 획득 Guide"
   "title_orig": "[10.3.0 ~] WAC JIT 권한 획득 Guide"
   "breadcrumbs":
@@ -3468,6 +3718,7 @@
   - "wac-quickstart"
   - "1030-wac-jit-permission-acquisition-guide"
 - "page_id": "805962425"
+  "type": "page"
   "title": "Root CA 인증서 설치 가이드"
   "title_orig": "Root CA 인증서 설치 가이드"
   "breadcrumbs":
@@ -3486,6 +3737,7 @@
   - "wac-quickstart"
   - "root-ca-certificate-installation-guide"
 - "page_id": "883654785"
+  "type": "page"
   "title": "Web App Configurations에서 WAC 초기 설정하기"
   "title_orig": "Web App Configurations에서 WAC 초기 설정하기"
   "breadcrumbs":
@@ -3504,6 +3756,7 @@
   - "wac-quickstart"
   - "initial-wac-setup-in-web-app-configurations"
 - "page_id": "924319936"
+  "type": "page"
   "title": "WAC 트러블슈팅 가이드"
   "title_orig": "WAC 트러블슈팅 가이드"
   "breadcrumbs":
@@ -3522,6 +3775,7 @@
   - "wac-quickstart"
   - "wac-troubleshooting-guide"
 - "page_id": "927629410"
+  "type": "page"
   "title": "WAC FAQ"
   "title_orig": "WAC FAQ"
   "breadcrumbs":
@@ -3539,7 +3793,69 @@
   - "web-apps"
   - "wac-quickstart"
   - "wac-faq"
+- "page_id": "2167636017"
+  "type": "folder"
+  "title": "MCP Server"
+  "title_orig": "MCP Server"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "MCP Server"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "MCP Server"
+  "path":
+  - "administrator-manual"
+  - "mcp-server"
+- "page_id": "2167242794"
+  "type": "page"
+  "title": "MCP Server Connection Management"
+  "title_orig": "MCP Server Connection Management"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "MCP Server"
+  - "MCP Server Connection Management"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "MCP Server"
+  - "MCP Server Connection Management"
+  "path":
+  - "administrator-manual"
+  - "mcp-server"
+  - "mcp-server-connection-management"
+- "page_id": "2167144528"
+  "type": "page"
+  "title": "MAC General Configurations"
+  "title_orig": "MAC General Configurations"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "MCP Server"
+  - "MAC General Configurations"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "MCP Server"
+  - "MAC General Configurations"
+  "path":
+  - "administrator-manual"
+  - "mcp-server"
+  - "mac-general-configurations"
+- "page_id": "2167799919"
+  "type": "page"
+  "title": "MCP Access Control"
+  "title_orig": "MCP Access Control"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "MCP Server"
+  - "MCP Access Control"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "MCP Server"
+  - "MCP Access Control"
+  "path":
+  - "administrator-manual"
+  - "mcp-server"
+  - "mcp-access-control"
 - "page_id": "544379062"
+  "type": "page"
   "title": "Audit"
   "title_orig": "Audit"
   "breadcrumbs":
@@ -3552,6 +3868,7 @@
   - "administrator-manual"
   - "audit"
 - "page_id": "693043522"
+  "type": "page"
   "title": "Reports"
   "title_orig": "Reportsㅤ"
   "breadcrumbs":
@@ -3567,6 +3884,7 @@
   - "audit"
   - "reports"
 - "page_id": "544384417"
+  "type": "page"
   "title": "Reports"
   "title_orig": "Reports"
   "breadcrumbs":
@@ -3585,6 +3903,7 @@
   - "reports"
   - "reports"
 - "page_id": "544379140"
+  "type": "page"
   "title": "Audit Log Export"
   "title_orig": "Audit Log Export"
   "breadcrumbs":
@@ -3603,6 +3922,7 @@
   - "reports"
   - "audit-log-export"
 - "page_id": "544211450"
+  "type": "page"
   "title": "General Logs"
   "title_orig": "General Logs"
   "breadcrumbs":
@@ -3618,6 +3938,7 @@
   - "audit"
   - "general-logs"
 - "page_id": "544080230"
+  "type": "page"
   "title": "User Access History"
   "title_orig": "User Access History"
   "breadcrumbs":
@@ -3636,6 +3957,7 @@
   - "general-logs"
   - "user-access-history"
 - "page_id": "544113108"
+  "type": "page"
   "title": "Activity Logs"
   "title_orig": "Activity Logs"
   "breadcrumbs":
@@ -3654,6 +3976,7 @@
   - "general-logs"
   - "activity-logs"
 - "page_id": "544047557"
+  "type": "page"
   "title": "Admin Role History"
   "title_orig": "Admin Role History"
   "breadcrumbs":
@@ -3672,6 +3995,7 @@
   - "general-logs"
   - "admin-role-history"
 - "page_id": "705724442"
+  "type": "page"
   "title": "Workflow Logs"
   "title_orig": "Workflow Logs"
   "breadcrumbs":
@@ -3690,6 +4014,7 @@
   - "general-logs"
   - "workflow-logs"
 - "page_id": "775455036"
+  "type": "page"
   "title": "Reverse Tunnels"
   "title_orig": "Reverse Tunnels"
   "breadcrumbs":
@@ -3708,6 +4033,7 @@
   - "general-logs"
   - "reverse-tunnels"
 - "page_id": "811434216"
+  "type": "page"
   "title": "Reverse Tunnel을 통해 서버에 통신하기"
   "title_orig": "Reverse Tunnel을 통해 서버에 통신하기"
   "breadcrumbs":
@@ -3729,6 +4055,7 @@
   - "reverse-tunnels"
   - "communicating-with-servers-through-reverse-tunnel"
 - "page_id": "811466988"
+  "type": "page"
   "title": "Reverse Tunnel을 통해 클러스터에 통신하기"
   "title_orig": "Reverse Tunnel을 통해 클러스터에 통신하기"
   "breadcrumbs":
@@ -3750,6 +4077,7 @@
   - "reverse-tunnels"
   - "communicating-with-clusters-through-reverse-tunnel"
 - "page_id": "955318273"
+  "type": "page"
   "title": "Reverse Tunnel을 통해 DB에 통신하기"
   "title_orig": "Reverse Tunnel을 통해 DB에 통신하기"
   "breadcrumbs":
@@ -3771,6 +4099,7 @@
   - "reverse-tunnels"
   - "communicating-with-db-through-reverse-tunnel"
 - "page_id": "2167111691"
+  "type": "page"
   "title": "AI Chat Audit"
   "title_orig": "AI Chat Audit"
   "breadcrumbs":
@@ -3789,6 +4118,7 @@
   - "general-logs"
   - "ai-chat-audit"
 - "page_id": "544080248"
+  "type": "page"
   "title": "Database Logs"
   "title_orig": "Database Logs"
   "breadcrumbs":
@@ -3804,6 +4134,7 @@
   - "audit"
   - "database-logs"
 - "page_id": "544113141"
+  "type": "page"
   "title": "DB Access History"
   "title_orig": "DB Access History"
   "breadcrumbs":
@@ -3822,6 +4153,7 @@
   - "database-logs"
   - "db-access-history"
 - "page_id": "544244149"
+  "type": "page"
   "title": "Query Audit"
   "title_orig": "Query Audit"
   "breadcrumbs":
@@ -3840,6 +4172,7 @@
   - "database-logs"
   - "query-audit"
 - "page_id": "544145819"
+  "type": "page"
   "title": "Running Queries"
   "title_orig": "Running Queries"
   "breadcrumbs":
@@ -3858,6 +4191,7 @@
   - "database-logs"
   - "running-queries"
 - "page_id": "544244163"
+  "type": "page"
   "title": "DML Snapshots"
   "title_orig": "DML Snapshots"
   "breadcrumbs":
@@ -3876,6 +4210,7 @@
   - "database-logs"
   - "dml-snapshots"
 - "page_id": "544014894"
+  "type": "page"
   "title": "Account Lock History"
   "title_orig": "Account Lock History"
   "breadcrumbs":
@@ -3894,6 +4229,7 @@
   - "database-logs"
   - "account-lock-history"
 - "page_id": "544080264"
+  "type": "page"
   "title": "Access Control Logs"
   "title_orig": "Access Control Logs"
   "breadcrumbs":
@@ -3912,6 +4248,7 @@
   - "database-logs"
   - "access-control-logs"
 - "page_id": "1070694532"
+  "type": "page"
   "title": "Policy Audit Logs"
   "title_orig": "Policy Audit Logs"
   "breadcrumbs":
@@ -3930,6 +4267,7 @@
   - "database-logs"
   - "policy-audit-logs"
 - "page_id": "1164705793"
+  "type": "page"
   "title": "Policy Exception Logs"
   "title_orig": "Policy Exception Logs"
   "breadcrumbs":
@@ -3948,6 +4286,7 @@
   - "database-logs"
   - "policy-exception-logs"
 - "page_id": "544014907"
+  "type": "page"
   "title": "Server Logs"
   "title_orig": "Server Logs"
   "breadcrumbs":
@@ -3963,6 +4302,7 @@
   - "audit"
   - "server-logs"
 - "page_id": "544244182"
+  "type": "page"
   "title": "Server Access History"
   "title_orig": "Server Access History"
   "breadcrumbs":
@@ -3981,6 +4321,7 @@
   - "server-logs"
   - "server-access-history"
 - "page_id": "544244208"
+  "type": "page"
   "title": "Command Audit"
   "title_orig": "Command Audit"
   "breadcrumbs":
@@ -3999,6 +4340,7 @@
   - "server-logs"
   - "command-audit"
 - "page_id": "544014927"
+  "type": "page"
   "title": "Session Logs"
   "title_orig": "Session Logs"
   "breadcrumbs":
@@ -4017,6 +4359,7 @@
   - "server-logs"
   - "session-logs"
 - "page_id": "544014940"
+  "type": "page"
   "title": "Session Monitoring (Moved)"
   "title_orig": "Session Monitoring (Moved)"
   "breadcrumbs":
@@ -4035,6 +4378,7 @@
   - "server-logs"
   - "session-monitoring-moved"
 - "page_id": "544244234"
+  "type": "page"
   "title": "Access Control Logs"
   "title_orig": "Access Control Logs​ㅤ"
   "breadcrumbs":
@@ -4053,6 +4397,7 @@
   - "server-logs"
   - "access-control-logs"
 - "page_id": "544244244"
+  "type": "page"
   "title": "Server Role History"
   "title_orig": "Server Role History"
   "breadcrumbs":
@@ -4071,6 +4416,7 @@
   - "server-logs"
   - "server-role-history"
 - "page_id": "543949311"
+  "type": "page"
   "title": "Account Lock History"
   "title_orig": "Account Lock Historyㅤ"
   "breadcrumbs":
@@ -4089,6 +4435,7 @@
   - "server-logs"
   - "account-lock-history"
 - "page_id": "544383513"
+  "type": "page"
   "title": "Kubernetes Logs"
   "title_orig": "Kubernetes Logs"
   "breadcrumbs":
@@ -4104,6 +4451,7 @@
   - "audit"
   - "kubernetes-logs"
 - "page_id": "544383587"
+  "type": "page"
   "title": "Request Audit"
   "title_orig": "Request Auditㅤ"
   "breadcrumbs":
@@ -4122,6 +4470,7 @@
   - "kubernetes-logs"
   - "request-audit"
 - "page_id": "544383693"
+  "type": "page"
   "title": "Pod Session Recordings"
   "title_orig": "Pod Session Recordingsㅤ"
   "breadcrumbs":
@@ -4140,6 +4489,7 @@
   - "kubernetes-logs"
   - "pod-session-recordings"
 - "page_id": "544383799"
+  "type": "page"
   "title": "Kubernetes Role History"
   "title_orig": "Kubernetes Role Historyㅤ"
   "breadcrumbs":
@@ -4158,6 +4508,7 @@
   - "kubernetes-logs"
   - "kubernetes-role-history"
 - "page_id": "1064829366"
+  "type": "page"
   "title": "Web App Logs"
   "title_orig": "Web App Logs"
   "breadcrumbs":
@@ -4173,6 +4524,7 @@
   - "audit"
   - "web-app-logs"
 - "page_id": "1064829380"
+  "type": "page"
   "title": "Web Access History"
   "title_orig": "Web Access History"
   "breadcrumbs":
@@ -4191,6 +4543,7 @@
   - "web-app-logs"
   - "web-access-history"
 - "page_id": "1070563457"
+  "type": "page"
   "title": "Web Event Audit"
   "title_orig": "Web Event Audit"
   "breadcrumbs":
@@ -4209,6 +4562,7 @@
   - "web-app-logs"
   - "web-event-audit"
 - "page_id": "1070694561"
+  "type": "page"
   "title": "User Activity Recordings"
   "title_orig": "User Activity Recordings"
   "breadcrumbs":
@@ -4227,6 +4581,7 @@
   - "web-app-logs"
   - "user-activity-recordings"
 - "page_id": "1070563469"
+  "type": "page"
   "title": "Web App Role History"
   "title_orig": "Web App Role History"
   "breadcrumbs":
@@ -4245,6 +4600,7 @@
   - "web-app-logs"
   - "web-app-role-history"
 - "page_id": "1070694552"
+  "type": "page"
   "title": "JIT Access Control Logs"
   "title_orig": "JIT Access Control Logs"
   "breadcrumbs":
@@ -4262,7 +4618,62 @@
   - "audit"
   - "web-app-logs"
   - "jit-access-control-logs"
+- "page_id": "2167472160"
+  "type": "folder"
+  "title": "MCP"
+  "title_orig": "MCP"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "MCP"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "MCP"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "mcp"
+- "page_id": "2167308318"
+  "type": "page"
+  "title": "Request Audit"
+  "title_orig": "Request Audit"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "MCP"
+  - "Request Audit"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "MCP"
+  - "Request Audit"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "mcp"
+  - "request-audit"
+- "page_id": "2167078929"
+  "type": "page"
+  "title": "MCP Server Role History"
+  "title_orig": "MCP Server Role History"
+  "breadcrumbs":
+  - "관리자 매뉴얼"
+  - "Audit"
+  - "MCP"
+  - "MCP Server Role History"
+  "breadcrumbs_en":
+  - "Administrator Manual"
+  - "Audit"
+  - "MCP"
+  - "MCP Server Role History"
+  "path":
+  - "administrator-manual"
+  - "audit"
+  - "mcp"
+  - "mcp-server-role-history"
 - "page_id": "851280543"
+  "type": "page"
   "title": "Multi Agent 제약사항"
   "title_orig": "Multi Agent 제약사항"
   "breadcrumbs":
@@ -4275,6 +4686,7 @@
   - "administrator-manual"
   - "multi-agent-limitations"
 - "page_id": "544375335"
+  "type": "page"
   "title": "Release Notes"
   "title_orig": "Release Notes"
   "breadcrumbs":
@@ -4284,6 +4696,7 @@
   "path":
   - "release-notes"
 - "page_id": "1924891357"
+  "type": "page"
   "title": "11.6.0 ~ 11.6.5"
   "title_orig": "11.6.0 ~ 11.6.5"
   "breadcrumbs":
@@ -4296,6 +4709,7 @@
   - "release-notes"
   - "11.6.0-11.6.5"
 - "page_id": "1751810049"
+  "type": "page"
   "title": "11.5.0 ~ 11.5.7"
   "title_orig": "11.5.0 ~ 11.5.7"
   "breadcrumbs":
@@ -4308,6 +4722,7 @@
   - "release-notes"
   - "11.5.0-11.5.7"
 - "page_id": "1568735233"
+  "type": "page"
   "title": "11.4.0"
   "title_orig": "11.4.0"
   "breadcrumbs":
@@ -4320,6 +4735,7 @@
   - "release-notes"
   - "11.4.0"
 - "page_id": "1421475841"
+  "type": "page"
   "title": "11.3.0"
   "title_orig": "11.3.0"
   "breadcrumbs":
@@ -4332,6 +4748,7 @@
   - "release-notes"
   - "11.3.0"
 - "page_id": "1291878563"
+  "type": "page"
   "title": "11.2.0"
   "title_orig": "11.2.0"
   "breadcrumbs":
@@ -4344,6 +4761,7 @@
   - "release-notes"
   - "11.2.0"
 - "page_id": "1171488777"
+  "type": "page"
   "title": "11.1.0 ~ 11.1.2"
   "title_orig": "11.1.0 ~ 11.1.2"
   "breadcrumbs":
@@ -4356,6 +4774,7 @@
   - "release-notes"
   - "11.1.0-11.1.2"
 - "page_id": "1064830173"
+  "type": "page"
   "title": "11.0.0"
   "title_orig": "11.0.0"
   "breadcrumbs":
@@ -4368,6 +4787,7 @@
   - "release-notes"
   - "11.0.0"
 - "page_id": "954335909"
+  "type": "page"
   "title": "10.3.0 ~ 10.3.4"
   "title_orig": "10.3.0 ~ 10.3.4"
   "breadcrumbs":
@@ -4380,6 +4800,7 @@
   - "release-notes"
   - "10.3.0-10.3.4"
 - "page_id": "703463517"
+  "type": "page"
   "title": "10.2.0 ~ 10.2.12"
   "title_orig": "10.2.0 ~ 10.2.12"
   "breadcrumbs":
@@ -4392,6 +4813,7 @@
   - "release-notes"
   - "10.2.0-10.2.12"
 - "page_id": "604995641"
+  "type": "page"
   "title": "10.1.0 ~ 10.1.11"
   "title_orig": "10.1.0 ~ 10.1.11"
   "breadcrumbs":
@@ -4404,6 +4826,7 @@
   - "release-notes"
   - "10.1.0-10.1.11"
 - "page_id": "544375355"
+  "type": "page"
   "title": "10.0.0 ~ 10.0.2"
   "title_orig": "10.0.0 ~ 10.0.2"
   "breadcrumbs":
@@ -4416,6 +4839,7 @@
   - "release-notes"
   - "10.0.0-10.0.2"
 - "page_id": "544375370"
+  "type": "page"
   "title": "9.20.0 ~ 9.20.2"
   "title_orig": "9.20.0 ​~ 9.20.2"
   "breadcrumbs":
@@ -4428,6 +4852,7 @@
   - "release-notes"
   - "9.20.0-9.20.2"
 - "page_id": "544375385"
+  "type": "page"
   "title": "9.19.0 "
   "title_orig": "9.19.0 ​"
   "breadcrumbs":
@@ -4440,6 +4865,7 @@
   - "release-notes"
   - "9.19.0"
 - "page_id": "544375399"
+  "type": "page"
   "title": "9.18.0 ~ 9.18.3"
   "title_orig": "9.18.0 ~ 9.18.3"
   "breadcrumbs":
@@ -4452,6 +4878,7 @@
   - "release-notes"
   - "9.18.0-9.18.3"
 - "page_id": "544375414"
+  "type": "page"
   "title": "9.17.0 ~ 9.17.1"
   "title_orig": "9.17.0 ~ 9.17.1"
   "breadcrumbs":
@@ -4464,6 +4891,7 @@
   - "release-notes"
   - "9.17.0-9.17.1"
 - "page_id": "544375429"
+  "type": "page"
   "title": "9.16.0 ~ 9.16.4"
   "title_orig": "9.16.0 ~ 9.16.4"
   "breadcrumbs":
@@ -4476,6 +4904,7 @@
   - "release-notes"
   - "9.16.0-9.16.4"
 - "page_id": "544375443"
+  "type": "page"
   "title": "9.15.0 ~ 9.15.4"
   "title_orig": "9.15.0 ~ 9.15.4"
   "breadcrumbs":
@@ -4488,6 +4917,7 @@
   - "release-notes"
   - "9.15.0-9.15.4"
 - "page_id": "544375457"
+  "type": "page"
   "title": "9.14.0 ~ 9.14.3"
   "title_orig": "9.14.0 ~ 9.14.3"
   "breadcrumbs":
@@ -4500,6 +4930,7 @@
   - "release-notes"
   - "9.14.0-9.14.3"
 - "page_id": "544375471"
+  "type": "page"
   "title": "9.13.0 ~ 9.13.5"
   "title_orig": "9.13.0 ~ 9.13.5"
   "breadcrumbs":
@@ -4512,6 +4943,7 @@
   - "release-notes"
   - "9.13.0-9.13.5"
 - "page_id": "544375485"
+  "type": "page"
   "title": "9.12.0 ~ 9.12.14"
   "title_orig": "9.12.0 ~ 9.12.14"
   "breadcrumbs":
@@ -4524,6 +4956,7 @@
   - "release-notes"
   - "9.12.0-9.12.14"
 - "page_id": "544375505"
+  "type": "page"
   "title": "메뉴 개선 가이드 (9.12.0)"
   "title_orig": "메뉴 개선 가이드 (9.12.0)"
   "breadcrumbs":
@@ -4539,6 +4972,7 @@
   - "9.12.0-9.12.14"
   - "menu-improvement-guide-9120"
 - "page_id": "544375587"
+  "type": "page"
   "title": "9.11.0 ~ 9.11.5"
   "title_orig": "9.11.0 ~ 9.11.5"
   "breadcrumbs":
@@ -4551,6 +4985,7 @@
   - "release-notes"
   - "9.11.0-9.11.5"
 - "page_id": "544375607"
+  "type": "page"
   "title": "9.10.0 ~ 9.10.4"
   "title_orig": "9.10.0 ~ 9.10.4"
   "breadcrumbs":
@@ -4563,6 +4998,7 @@
   - "release-notes"
   - "9.10.0-9.10.4"
 - "page_id": "544375624"
+  "type": "page"
   "title": "External API 변경사항 (9.10.0 버전)"
   "title_orig": "External API 변경사항 (9.10.0 버전)"
   "breadcrumbs":
@@ -4578,6 +5014,7 @@
   - "9.10.0-9.10.4"
   - "external-api-changes-9100-version"
 - "page_id": "544375659"
+  "type": "page"
   "title": "9.9.0 ~ 9.9.8"
   "title_orig": "9.9.0 ~ 9.9.8"
   "breadcrumbs":
@@ -4590,6 +5027,7 @@
   - "release-notes"
   - "9.9.0-9.9.8"
 - "page_id": "544375685"
+  "type": "page"
   "title": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
   "title_orig": "External API 변경사항 (9.8.10 버전 > 9.9.4 버전)"
   "breadcrumbs":
@@ -4605,6 +5043,7 @@
   - "9.9.0-9.9.8"
   - "external-api-changes-9810-version-994-version"
 - "page_id": "544375741"
+  "type": "page"
   "title": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
   "title_orig": "External API 변경사항 (9.9.4 버전 > 9.9.5 버전)"
   "breadcrumbs":
@@ -4620,6 +5059,7 @@
   - "9.9.0-9.9.8"
   - "external-api-changes-994-version-995-version"
 - "page_id": "544375768"
+  "type": "page"
   "title": "9.8.0 ~ 9.8.12"
   "title_orig": "9.8.0 ~ 9.8.12"
   "breadcrumbs":
@@ -4632,6 +5072,7 @@
   - "release-notes"
   - "9.8.0-9.8.12"
 - "page_id": "544375808"
+  "type": "page"
   "title": "제품 설치"
   "title_orig": "제품 설치"
   "breadcrumbs":
@@ -4641,6 +5082,7 @@
   "path":
   - "installation"
 - "page_id": "1881243653"
+  "type": "page"
   "title": "제품 버전"
   "title_orig": "제품 버전"
   "breadcrumbs":
@@ -4653,6 +5095,7 @@
   - "installation"
   - "product-versions"
 - "page_id": "862126081"
+  "type": "page"
   "title": "설치 전 준비사항"
   "title_orig": "설치 전 준비사항"
   "breadcrumbs":
@@ -4665,6 +5108,7 @@
   - "installation"
   - "prerequisites"
 - "page_id": "1298530305"
+  "type": "page"
   "title": "리눅스 배포본과 Docker, Podman 지원 현황"
   "title_orig": "리눅스 배포본과 Docker, Podman 지원 현황"
   "breadcrumbs":
@@ -4680,6 +5124,7 @@
   - "prerequisites"
   - "linux-distribution-and-docker-podman-support-status"
 - "page_id": "1297383451"
+  "type": "page"
   "title": "Podman 으로 Rootless Mode 구성하기"
   "title_orig": "Podman 으로 Rootless Mode 구성하기"
   "breadcrumbs":
@@ -4695,6 +5140,7 @@
   - "prerequisites"
   - "configuring-rootless-mode-with-podman"
 - "page_id": "1689387010"
+  "type": "page"
   "title": "설치하기"
   "title_orig": "설치하기"
   "breadcrumbs":
@@ -4707,6 +5153,7 @@
   - "installation"
   - "installation"
 - "page_id": "964952065"
+  "type": "page"
   "title": "설치 가이드 - 간단한 구성"
   "title_orig": "설치 가이드 - 간단한 구성"
   "breadcrumbs":
@@ -4722,6 +5169,7 @@
   - "installation"
   - "installation-guide-simple-configuration"
 - "page_id": "1177321474"
+  "type": "page"
   "title": "설치 가이드 - setup.v2.sh"
   "title_orig": "설치 가이드 - setup.v2.sh"
   "breadcrumbs":
@@ -4737,6 +5185,7 @@
   - "installation"
   - "installation-guide-setupv2sh"
 - "page_id": "1261895760"
+  "type": "page"
   "title": "setup.sh, setup.v2.sh 비교"
   "title_orig": "setup.sh, setup.v2.sh 비교"
   "breadcrumbs":
@@ -4752,6 +5201,7 @@
   - "installation"
   - "comparison-of-setupsh-and-setupv2sh"
 - "page_id": "815235967"
+  "type": "page"
   "title": "AWS EKS 환경에서 설치하기"
   "title_orig": "AWS EKS 환경에서 설치하기"
   "breadcrumbs":
@@ -4767,6 +5217,7 @@
   - "installation"
   - "installing-on-aws-eks"
 - "page_id": "1907294209"
+  "type": "page"
   "title": "설치 후 초기 설정"
   "title_orig": "설치 후 초기 설정"
   "breadcrumbs":
@@ -4779,6 +5230,7 @@
   - "installation"
   - "post-installation-setup"
 - "page_id": "862093313"
+  "type": "page"
   "title": "시스템 아키텍처와 네트워크 접근제어"
   "title_orig": "시스템 아키텍처와 네트워크 접근제어"
   "breadcrumbs":
@@ -4791,6 +5243,7 @@
   - "installation"
   - "system-architecture-and-network-access-control"
 - "page_id": "954761289"
+  "type": "page"
   "title": "컨테이너 환경변수"
   "title_orig": "컨테이너 환경변수"
   "breadcrumbs":
@@ -4803,6 +5256,7 @@
   - "installation"
   - "container-environment-variables"
 - "page_id": "876937310"
+  "type": "page"
   "title": "QUERYPIE_WEB_URL"
   "title_orig": "QUERYPIE_WEB_URL"
   "breadcrumbs":
@@ -4818,6 +5272,7 @@
   - "container-environment-variables"
   - "querypieweburl"
 - "page_id": "938016931"
+  "type": "page"
   "title": "DB_MAX_CONNECTION_SIZE 최적화"
   "title_orig": "DB_MAX_CONNECTION_SIZE 최적화"
   "breadcrumbs":
@@ -4833,6 +5288,7 @@
   - "container-environment-variables"
   - "optimizing-dbmaxconnectionsize"
 - "page_id": "912326893"
+  "type": "page"
   "title": "라이선스 설치"
   "title_orig": "라이선스 설치"
   "breadcrumbs":
@@ -4845,6 +5301,7 @@
   - "installation"
   - "license-installation"
 - "page_id": "1690402874"
+  "type": "page"
   "title": "서버구성 요구사항"
   "title_orig": "서버구성 요구사항"
   "breadcrumbs":
@@ -4857,6 +5314,7 @@
   - "installation"
   - "server-configuration-requirements"
 - "page_id": "903086124"
+  "type": "page"
   "title": "Public Cloud 운영서버 요구사항"
   "title_orig": "Public Cloud 운영서버 요구사항"
   "breadcrumbs":
@@ -4872,6 +5330,7 @@
   - "server-configuration-requirements"
   - "public-cloud-production-server-requirements"
 - "page_id": "1688371232"
+  "type": "page"
   "title": "On-Premise VM 요구사항"
   "title_orig": "On-Premise VM 요구사항"
   "breadcrumbs":
@@ -4887,6 +5346,7 @@
   - "server-configuration-requirements"
   - "on-premise-vm-requirements"
 - "page_id": "1692303361"
+  "type": "page"
   "title": "서버구성 요구사항 요약표"
   "title_orig": "서버구성 요구사항 요약표"
   "breadcrumbs":
@@ -4902,6 +5362,7 @@
   - "server-configuration-requirements"
   - "server-configuration-requirements-summary"
 - "page_id": "1239416833"
+  "type": "page"
   "title": "QueryPie ACP Community Edition"
   "title_orig": "QueryPie ACP Community Edition"
   "breadcrumbs":
@@ -4914,6 +5375,7 @@
   - "installation"
   - "querypie-acp-community-edition"
 - "page_id": "1805516819"
+  "type": "page"
   "title": "QueryPie ACP Community Edition 초기 구성 가이드"
   "title_orig": "QueryPie ACP Community Edition 초기 구성 가이드"
   "breadcrumbs":
@@ -4929,6 +5391,7 @@
   - "querypie-acp-community-edition"
   - "querypie-acp-community-edition-initial-configuration-guide"
 - "page_id": "1990000673"
+  "type": "page"
   "title": "QueryPie ACP Community Edition 업그레이드 방법"
   "title_orig": "QueryPie ACP Community Edition 업그레이드 방법"
   "breadcrumbs":
@@ -4944,6 +5407,7 @@
   - "querypie-acp-community-edition"
   - "how-to-upgrade-querypie-acp-community-edition"
 - "page_id": "1972142096"
+  "type": "page"
   "title": "QueryPie ACP Community Edition 제거 방법"
   "title_orig": "QueryPie ACP Community Edition 제거 방법"
   "breadcrumbs":
@@ -4959,6 +5423,7 @@
   - "querypie-acp-community-edition"
   - "how-to-remove-querypie-acp-community-edition"
 - "page_id": "1735589937"
+  "type": "page"
   "title": "MCP 설정 가이드"
   "title_orig": "MCP 설정 가이드"
   "breadcrumbs":
@@ -4974,6 +5439,7 @@
   - "querypie-acp-community-edition"
   - "mcp-configuration-guide"
 - "page_id": "1844969501"
+  "type": "page"
   "title": "지원"
   "title_orig": "지원"
   "breadcrumbs":
@@ -4983,6 +5449,7 @@
   "path":
   - "support"
 - "page_id": "1853358081"
+  "type": "page"
   "title": "프리미엄 지원"
   "title_orig": "프리미엄 지원"
   "breadcrumbs":
@@ -4995,6 +5462,7 @@
   - "support"
   - "premium-support"
 - "page_id": "1924169748"
+  "type": "page"
   "title": "Standard Edition"
   "title_orig": "Standard Edition"
   "breadcrumbs":
@@ -5007,6 +5475,7 @@
   - "support"
   - "standard-edition"
 - "page_id": "1923285023"
+  "type": "page"
   "title": "Standard Edition 라이선스 정책"
   "title_orig": "Standard Edition 라이선스 정책"
   "breadcrumbs":
@@ -5018,7 +5487,21 @@
   "path":
   - "support"
   - "standard-edition-license-policy"
+- "page_id": "2288353307"
+  "type": "page"
+  "title": "QueryPie ACP 운영 로그 수집 가이드"
+  "title_orig": "QueryPie ACP 운영 로그 수집 가이드"
+  "breadcrumbs":
+  - "지원"
+  - "QueryPie ACP 운영 로그 수집 가이드"
+  "breadcrumbs_en":
+  - "Support"
+  - "QueryPie ACP Operational Log Collection Guide"
+  "path":
+  - "support"
+  - "querypie-acp-operational-log-collection-guide"
 - "page_id": "1911423023"
+  "type": "page"
   "title": "Unreleased"
   "title_orig": "Unreleased"
   "breadcrumbs":
@@ -5028,6 +5511,7 @@
   "path":
   - "unreleased"
 - "page_id": "1911652402"
+  "type": "page"
   "title": "Reverse Sync Test Page"
   "title_orig": "Reverse Sync Test Page"
   "breadcrumbs":
