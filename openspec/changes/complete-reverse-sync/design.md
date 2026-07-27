@@ -589,6 +589,7 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | visible edit/node operation | `reverse_sync/visible_model.py`, `reverse_sync/operations.py` |
 | capability별 render | `reverse_sync/strategies/**` |
 | patch apply | 기존 `xhtml_patcher.py` |
+| candidate 준비/local verification lifecycle | `reverse_sync/verification_service.py` |
 | local proof/equivalence | `reverse_sync/proof.py`, `roundtrip_verifier.py` |
 | manifest read/write/integrity | `reverse_sync/manifest.py` |
 | preflight/update/postcondition | `reverse_sync/publisher.py` |
