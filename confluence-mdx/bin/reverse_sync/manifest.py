@@ -19,7 +19,7 @@ from reverse_sync.models import (
 
 MANIFEST_SCHEMA_VERSION = 2
 SUPPORTED_VERIFIER_POLICIES = frozenset({"reverse-sync-equivalence-v1"})
-CURRENT_TOOL_VERSION = "reverse-sync-cli-v3"
+CURRENT_TOOL_VERSION = "reverse-sync-cli-v4"
 REQUIRED_PUSH_GATES = frozenset(
     {
         "source_identity",

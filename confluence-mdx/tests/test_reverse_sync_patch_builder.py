@@ -259,6 +259,77 @@ class TestBuildPatches:
         assert patches[0]['xhtml_xpath'] == 'ul[1]'
         assert patches[0]['action'] == 'replace_fragment'
 
+    def test_path1d_strict_identity_blocks_text_fallback(self):
+        """push path는 normalized text prefix로 list target을 선택하지 않는다."""
+        list_mapping = _make_mapping(
+            'lm1', '검색이 가능합니다 조건으로 검색', xpath='ul[1]', type_='list')
+        mappings = [list_mapping]
+        xpath_to_mapping = {m.xhtml_xpath: m for m in mappings}
+        change = _make_change(
+            0,
+            '1. 검색이 가능합니다 조건으로 검색\n',
+            '1. 검색할 수 있습니다 조건으로 검색\n',
+            type_='list',
+        )
+        roundtrip_sidecar = _make_roundtrip_sidecar([
+            SidecarBlock(
+                0,
+                'ul[1]',
+                '<li><p>검색이 가능합니다 조건으로 검색</p></li>',
+                'different_hash',
+                (10, 10),
+            ),
+        ])
+
+        patches, _, skipped_changes = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            mappings,
+            {},
+            xpath_to_mapping,
+            roundtrip_sidecar=roundtrip_sidecar,
+            allow_text_identity_fallback=False,
+        )
+
+        assert patches == []
+        assert skipped_changes[0]['reason'] == 'no_mapping'
+
+    def test_strict_identity_blocks_stale_preserved_list_mapping(self):
+        """push path는 text가 다른 preserved list sidecar target을 거부한다."""
+        list_mapping = _make_mapping(
+            'lm1',
+            '다른 목록',
+            xpath='ul[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = (
+            '<ul><li><p><ac:link><ri:page ri:content-title="Other">'
+            '</ri:page><ac:link-body>다른 목록</ac:link-body></ac:link>'
+            '</p></li></ul>'
+        )
+        mappings = [list_mapping]
+        xpath_to_mapping = {list_mapping.xhtml_xpath: list_mapping}
+        change = _make_change(
+            0,
+            '1. 원래 목록\n',
+            '1. 수정한 목록\n',
+            type_='list',
+        )
+
+        patches, _, skipped_changes = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            mappings,
+            self._setup_sidecar('ul[1]', 0),
+            xpath_to_mapping,
+            allow_text_identity_fallback=False,
+        )
+
+        assert patches == []
+        assert skipped_changes[0]['reason'] == 'no_mapping'
+
     # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None + content change
     #          → text fallback으로 mapping 복원 → clean list → replace_fragment
     def test_path1e_no_sidecar_match_no_roundtrip_sidecar_with_content_change_patches(self):

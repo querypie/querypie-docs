@@ -940,6 +940,7 @@ def build_patches(
     page_xhtml: Optional[str] = None,
     link_resolver: Optional[LinkResolver] = None,
     attachment_filenames: frozenset[str] = frozenset(),
+    allow_text_identity_fallback: bool = True,
 ) -> Tuple[List[Dict[str, str]], List[BlockMapping], List[Dict[str, str]]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
@@ -1150,7 +1151,11 @@ def build_patches(
 
         # v3 identity fallback도 실패한 경우: old_plain prefix text matching으로 최종 복원
         # type-based sidecar 타입 불일치로 mapping=None이 된 list 블록을 복원한다
-        if mapping is None and strategy == 'list':
+        if (
+            allow_text_identity_fallback
+            and mapping is None
+            and strategy == 'list'
+        ):
             text_fallback = _find_best_list_mapping_by_text(
                 old_plain, mappings, used_ids)
             if text_fallback is not None:
@@ -1159,7 +1164,8 @@ def build_patches(
 
         # sidecar가 잘못된 list mapping을 반환한 경우 (ac: 포함 + plain text 불일치):
         # plain text prefix로 올바른 mapping 복원
-        if (strategy == 'list' and mapping is not None
+        if (allow_text_identity_fallback
+                and strategy == 'list' and mapping is not None
                 and _contains_preserved_anchor_markup(mapping.xhtml_text)
                 and old_plain[:40].strip() not in mapping.xhtml_plain_text):
             text_fallback = _find_best_list_mapping_by_text(
@@ -1167,6 +1173,14 @@ def build_patches(
             if text_fallback is not None:
                 mapping = text_fallback
                 mapping_via_v3_fallback = True
+        elif (
+            not allow_text_identity_fallback
+            and strategy == 'list'
+            and mapping is not None
+            and _contains_preserved_anchor_markup(mapping.xhtml_text)
+            and old_plain[:40].strip() not in mapping.xhtml_plain_text
+        ):
+            mapping = None
 
         if mapping is None:
             block = change.old_block or change.new_block
