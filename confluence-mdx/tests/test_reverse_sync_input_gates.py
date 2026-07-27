@@ -17,7 +17,10 @@ from reverse_sync.models import (
     AttachmentRecord,
     PageSnapshot,
 )
-from reverse_sync.patch_builder import _resolve_generated_links
+from reverse_sync.patch_builder import (
+    _resolve_generated_links,
+    _resolve_patch_links,
+)
 
 
 NOW = datetime(2026, 7, 24, tzinfo=timezone.utc).isoformat()
@@ -340,6 +343,38 @@ def test_attachment_link_renders_as_confluence_attachment_macro():
     assert rendered == (
         '<p><ac:link><ri:attachment ri:filename="guide.pdf"></ri:attachment>'
         '<ac:link-body>Download</ac:link-body></ac:link></p>'
+    )
+
+
+def test_inline_fixup_links_are_resolved_before_patching():
+    resolver = LinkResolver(
+        [
+            PageEntry("123", "Test page", ["test"]),
+            PageEntry("456", "Target", ["target"]),
+        ]
+    )
+    patches = [
+        {
+            "xhtml_xpath": "/p[1]",
+            "inline_fixups": [
+                {
+                    "new_inner_xhtml": (
+                        '<strong><a href="./target">Target</a></strong>'
+                    ),
+                }
+            ],
+        }
+    ]
+
+    resolved = _resolve_patch_links(
+        patches,
+        resolver,
+        frozenset(),
+    )
+
+    assert (
+        '<ri:page ri:content-title="Target"></ri:page>'
+        in resolved[0]["inline_fixups"][0]["new_inner_xhtml"]
     )
 
 

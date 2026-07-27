@@ -71,8 +71,15 @@ class RequiredLink:
 
 
 @dataclass(frozen=True)
+class RequiredAttachment:
+    attachment_id: str
+    filename: str
+    version: int
+
+
+@dataclass(frozen=True)
 class RequiredDependencies:
-    attachment_filenames: tuple[str, ...] = ()
+    attachments: tuple[RequiredAttachment, ...] = ()
     links: tuple[RequiredLink, ...] = ()
 
 
@@ -121,7 +128,7 @@ def _required_dependencies(
             list,
         ):
             raise TypeError("dependency list")
-        filenames = []
+        required_attachments = []
         for item in attachments:
             attachment_id = item["attachment_id"]
             filename = item["filename"]
@@ -136,7 +143,13 @@ def _required_dependencies(
                 or version < 1
             ):
                 raise TypeError("filename")
-            filenames.append(filename)
+            required_attachments.append(
+                RequiredAttachment(
+                    attachment_id=attachment_id,
+                    filename=filename,
+                    version=version,
+                )
+            )
         links = []
         for item in internal_links:
             page_id = item["page_id"]
@@ -173,6 +186,7 @@ def _required_dependencies(
         raise ArtifactTamperedError(
             "attachment requirement 없이 catalog hash가 기록되었습니다"
         )
+    filenames = [attachment.filename for attachment in required_attachments]
     if len(filenames) != len(set(filenames)):
         raise ArtifactTamperedError(
             "local proof attachment requirement가 중복되었습니다"
@@ -193,7 +207,16 @@ def _required_dependencies(
             "같은 internal page dependency에 여러 title이 기록되었습니다"
         )
     return RequiredDependencies(
-        attachment_filenames=tuple(sorted(filenames)),
+        attachments=tuple(
+            sorted(
+                required_attachments,
+                key=lambda item: (
+                    item.filename,
+                    item.attachment_id,
+                    item.version,
+                ),
+            )
+        ),
         links=tuple(
             sorted(
                 links,
@@ -204,7 +227,7 @@ def _required_dependencies(
 
 
 def _assert_attachment_dependencies(
-    required: tuple[str, ...],
+    required: tuple[RequiredAttachment, ...],
     catalog: AttachmentCatalog,
     page_id: str,
 ) -> None:
@@ -212,12 +235,28 @@ def _assert_attachment_dependencies(
         raise DependencyChangedError(
             "preflight attachment catalog page ID가 manifest와 다릅니다"
         )
-    available = {attachment.filename for attachment in catalog.attachments}
-    missing = sorted(set(required) - available)
-    if missing:
+    available = {
+        (
+            attachment.attachment_id,
+            attachment.filename,
+            attachment.version,
+        )
+        for attachment in catalog.attachments
+    }
+    changed = sorted(
+        attachment.filename
+        for attachment in required
+        if (
+            attachment.attachment_id,
+            attachment.filename,
+            attachment.version,
+        )
+        not in available
+    )
+    if changed:
         raise DependencyChangedError(
-            "verify 이후 attachment dependency가 사라졌습니다: "
-            + ", ".join(missing)
+            "verify 이후 attachment dependency identity가 바뀌었습니다: "
+            + ", ".join(changed)
         )
 
 
@@ -303,14 +342,14 @@ def publish_verified_manifest(
         raise ActiveDraftError(
             f"페이지 {manifest.page_id}에 active draft가 있어 push를 중단합니다"
         )
-    if required_dependencies.attachment_filenames:
+    if required_dependencies.attachments:
         attachment_catalog = gateway.get_attachment_catalog(manifest.page_id)
         _write_json(
             run_dir / "preflight.attachments.json",
             attachment_catalog.to_dict(),
         )
         _assert_attachment_dependencies(
-            required_dependencies.attachment_filenames,
+            required_dependencies.attachments,
             attachment_catalog,
             manifest.page_id,
         )

@@ -183,6 +183,20 @@ def _resolve_patch_links(
                     resolver,
                     attachment_filenames,
                 )
+        if "inline_fixups" in current:
+            resolved_fixups = []
+            for fixup in current["inline_fixups"]:
+                resolved_fixup = dict(fixup)
+                if "new_inner_xhtml" in resolved_fixup:
+                    resolved_fixup["new_inner_xhtml"] = (
+                        _resolve_generated_links(
+                            str(resolved_fixup["new_inner_xhtml"]),
+                            resolver,
+                            attachment_filenames,
+                        )
+                    )
+                resolved_fixups.append(resolved_fixup)
+            current["inline_fixups"] = resolved_fixups
         resolved.append(current)
     return resolved
 

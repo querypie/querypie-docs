@@ -29,6 +29,7 @@ def _create_push_manifest(
     *,
     base_body: str = "<p>Old</p>",
     candidate_body: str = "<p>New</p>",
+    confluence_url: str = "",
 ) -> tuple[Path, PageSnapshot, PageSnapshot]:
     var_dir = tmp_path / "var" / page_id
     var_dir.mkdir(parents=True, exist_ok=True)
@@ -50,12 +51,20 @@ def _create_push_manifest(
         fetched_at=datetime(2026, 7, 24, tzinfo=timezone.utc).isoformat(),
         api="confluence-v2",
     )
+    frontmatter = ""
+    if confluence_url:
+        frontmatter = (
+            "---\n"
+            "title: Test\n"
+            f"confluenceUrl: {confluence_url}\n"
+            "---\n\n"
+        )
     manifest_path = create_sync_manifest(
         runs_dir=var_dir / "reverse-sync",
         base=base,
-        original_mdx="# Test\n\nOld\n",
+        original_mdx=f"{frontmatter}# Test\n\nOld\n",
         original_descriptor="main:src/content/ko/test.mdx",
-        improved_mdx="# Test\n\nNew\n",
+        improved_mdx=f"{frontmatter}# Test\n\nNew\n",
         improved_descriptor="src/content/ko/test.mdx",
         patch_plan='{"schema_version":1}\n',
         candidate_xhtml=candidate_body,
@@ -1443,10 +1452,15 @@ class TestPushBackup:
         monkeypatch,
     ):
         monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
-        page_id = 'metadata-page'
+        page_id = '1911652402'
+        confluence_url = (
+            "https://querypie.atlassian.net/wiki/spaces/QM/pages/"
+            f"{page_id}/Test"
+        )
         manifest_path, base, persisted = _create_push_manifest(
             tmp_path,
             page_id,
+            confluence_url=confluence_url,
         )
         persisted = PageSnapshot(
             page_id=persisted.page_id,
@@ -1466,7 +1480,13 @@ class TestPushBackup:
         def forward_convert(_input_path, output_path, _page_id, **kwargs):
             assert kwargs["page_dir"] == str(tmp_path / "var" / page_id)
             converted.append(Path(output_path))
-            content = "# Test\n\nNew\n"
+            content = (
+                "---\n"
+                "title: Test\n"
+                f"confluenceUrl: {confluence_url}\n"
+                "---\n\n"
+                "# Test\n\nNew\n"
+            )
             Path(output_path).write_text(content)
             return content
 

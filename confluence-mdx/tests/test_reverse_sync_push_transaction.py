@@ -351,7 +351,7 @@ def test_existing_attachment_at_preflight_allows_put(tmp_path):
                 attachment_id="att-1",
                 page_id="123",
                 filename="screen.png",
-                version=2,
+                version=1,
             ),
         ),
         fetched_at=NOW.isoformat(),
@@ -370,6 +370,48 @@ def test_existing_attachment_at_preflight_allows_put(tmp_path):
     assert receipt.status is SyncStatus.REMOTE_VERIFIED
     assert gateway.attachment_calls == 1
     assert len(gateway.update_calls) == 1
+
+
+@pytest.mark.parametrize(
+    ("attachment_id", "version"),
+    [
+        ("att-2", 1),
+        ("att-1", 2),
+    ],
+)
+def test_changed_attachment_identity_at_preflight_blocks_before_put(
+    tmp_path,
+    attachment_id,
+    version,
+):
+    manifest_path = _manifest(
+        tmp_path,
+        required_attachment="screen.png",
+    )
+    catalog = AttachmentCatalog(
+        page_id="123",
+        attachments=(
+            AttachmentRecord(
+                attachment_id=attachment_id,
+                page_id="123",
+                filename="screen.png",
+                version=version,
+            ),
+        ),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+    gateway = FakeGateway(
+        [_snapshot()],
+        attachment_catalog=catalog,
+    )
+
+    with pytest.raises(DependencyChangedError) as exc_info:
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert exc_info.value.reason_code == "dependency_failure"
+    assert gateway.attachment_calls == 1
+    assert gateway.update_calls == []
 
 
 def test_internal_link_target_at_preflight_allows_put(tmp_path):
