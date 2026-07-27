@@ -252,158 +252,138 @@ MDX 상대 경로                     Confluence XHTML
 
 ## Reverse Sync: MDX 편집 → Confluence 반영 (`reverse_sync/`)
 
-현재 reverse-sync는 "텍스트만 덮어쓰는 간단한 패처"가 아니라, MDX diff를 XHTML DOM에 보수적으로 되돌려 넣고 다시 forward converter로 검증한 뒤에만 통과시키는 파이프라인입니다. 2026-03 이후 구현은 sidecar 기반 identity preservation과 fragment replacement를 중심으로 재편되었고, 기존 문서에 남아 있던 `text_transfer.py`, `list_patcher.py`, `table_patcher.py` 중심 설명은 더 이상 현재 상태를 반영하지 않습니다.
+현재 reverse-sync는 MDX diff를 Confluence Storage XHTML에 보수적으로 반영하고, 생성 결과를 다시 MDX로 변환해 검증한 뒤, 검증 실행에 결합된 immutable manifest만 발행하는 파이프라인입니다. 로컬 `page.xhtml`을 사용하는 진단 경로와 원격 `current` page snapshot을 사용하는 온라인 경로는 안전성 수준과 산출물이 다릅니다.
 
 ### 전체 흐름
 
 ```
-원본 MDX (main / testcase original.mdx)     교정 MDX (작업 브랜치 / improved.mdx)
-                  │                                          │
-                  ├──────────── parse_mdx_blocks() ───────────┤
-                  ▼                                          ▼
-             original_blocks                           improved_blocks
-                         └──────── diff_blocks() ────────┘
-                                      │
-                                      ▼
-                             BlockChange[] + alignment
-                                      │
-             ┌────────────────────────┼────────────────────────┐
-             ▼                        ▼                        ▼
-   record_mapping(page.xhtml)   generate_sidecar_mapping()   build_sidecar()
-   (현재 XHTML 블록 구조)       (`mapping.yaml`)              (`expected.roundtrip.json` v3)
-             │                        │                        │
-             └────────────────────────┴──────────────┬─────────┘
-                                                     ▼
-                                             build_patches()
-                                                     │
-                                  delete / insert / modify / replace_fragment
-                                                     │
-                                                     ▼
-                                              patch_xhtml()
-                                                     │
-                                                     ▼
-                               record_mapping(patched_xhtml) + converter/cli.py
-                                                     │
-                                                     ▼
-                                            verify_roundtrip()
-                                                     │
-                                                     ▼
-                                   pass → (선택) push / fail → result.yaml 기록
+original MDX + improved MDX
+              │
+              ▼
+       prepare_service
+              │
+              ├── 로컬 진단: var/<page_id>/page.xhtml
+              │
+              └── 온라인 준비: Confluence current PageSnapshot
+                  (page_id, status, title, version, storage_xhtml)
+                              │
+                              ▼
+                    verification_service
+                              │
+             source identity / base parity / dependency gate
+                              │
+                              ▼
+            planner: BlockChange[] → typed PatchPlan v2
+                              │
+                              ▼
+          preserving renderer → candidate Storage XHTML
+                              │
+                              ▼
+              forward conversion + local proof
+     (intent completeness, parse, preservation, equivalence,
+                 determinism, idempotency, dependency)
+                              │
+                              ▼
+        immutable run artifacts + SyncManifest
+                              │
+                              ▼
+                 explicit manifest publish
+                              │
+                              ▼
+             preflight snapshot / draft / dependency
+                              │
+                              ▼
+             version-bound PUT(base.version + 1)
+                              │
+                              ▼
+           persisted snapshot postcondition 검증
 ```
 
-핵심 포인트는 다음과 같습니다.
+### 실행 경로와 상태
 
-- `run_verify()`가 사실상 reverse-sync의 표준 실행 경로입니다.
-- `mapping.yaml`만으로는 현재 구현을 설명할 수 없고, `expected.roundtrip.json` 기반 sidecar v3가 실제 identity fallback과 reconstruction에 깊게 관여합니다.
-- 모호한 변경은 억지로 반영하지 않고 `skipped_changes`로 보고합니다.
-- 성공 조건은 "패치 생성"이 아니라 "patched XHTML을 다시 forward 변환했을 때 improved MDX와 일치"입니다.
+| 경로 | base XHTML | renderer | 결과 상태 | 발행 가능 여부 |
+|------|------------|----------|-----------|----------------|
+| `verify`, `debug` | 로컬 `var/<page_id>/page.xhtml` | `legacy_xhtml_patcher.py` | `pass`, `fail`, `no_changes` | 항상 불가 |
+| `push --dry-run <mdx>` | 원격 `current` `PageSnapshot.storage_xhtml` | `preserving_patcher.py` | `verified_local`, `blocked`, `no_changes` | manifest 생성까지만 수행 |
+| `push <mdx>` | 원격 `current` snapshot | `preserving_patcher.py` | 준비 후 `remote_verified`, `already_applied`, `postcondition_failed` 또는 conflict | 확인 후 발행 |
+| `push --manifest <path>` | manifest에 결합된 base snapshot | candidate를 다시 생성하지 않음 | `remote_verified`, `already_applied`, `postcondition_failed` 또는 conflict | 명시한 manifest만 발행 |
+
+로컬 `verify`와 `debug`는 converter 회귀 진단과 기존 fixture 호환을 위한 경로입니다. `--lenient`와 `--no-normalize`도 이 진단 결과에만 영향을 주며 `push_eligible`을 만들지 않습니다.
+
+온라인 준비는 한 v2 API response에서 `page_id`, `status`, `title`, `version`, `storage_xhtml`을 함께 읽은 `PageSnapshot`을 사용합니다. 로컬 `page.xhtml`이나 별도 version 조회를 온라인 base로 대체하지 않습니다. 원격 snapshot을 forward 변환한 MDX와 repository original MDX가 일치하지 않거나 provenance가 불충분하면 `base_parity_mismatch`, `stale_original_mdx`, `forward_converter_drift` 등의 reason code로 중단합니다.
+
+온라인 planner는 모든 MDX 변경을 typed intent로 만들고 각 intent가 실행 가능한 operation으로 정확히 한 번 커버되는지 확인합니다. 지원하지 않거나 모호한 변경은 진단 경로에서는 `skipped_changes`로 볼 수 있지만, 온라인 경로에서는 `PatchPlan.intent_complete = false`가 되어 전체 실행을 차단합니다.
+
+candidate는 원본 fragment의 보존 대상 구조를 유지하는 renderer로 생성합니다. 이후 다음 gate를 모두 통과해야 `verified_local` manifest를 만들 수 있습니다.
+
+- typed intent completeness
+- Storage XHTML parse
+- 변경하지 않은 구조와 fragment preservation
+- candidate를 forward 변환한 MDX와 improved MDX의 push equivalence
+- 동일 입력으로 plan과 candidate를 다시 만들었을 때의 determinism
+- 생성된 candidate를 base로 같은 변경을 다시 적용했을 때의 idempotency
+- attachment와 internal link dependency identity
+
+### 발행 transaction
+
+Publisher는 CLI의 “최신 결과 파일”을 추측하지 않고 `--manifest`로 지정된 immutable run만 소비합니다. 발행 직전에 다음 순서로 fail-closed 검사를 수행합니다.
+
+1. manifest schema, tool version, verifier policy, artifact hash와 typed plan contract를 검증합니다.
+2. 원격 `current` snapshot의 page identity가 manifest base와 같은지 검사합니다.
+3. active draft가 있으면 발행을 중단합니다.
+4. 검증 때 기록한 attachment와 internal link dependency identity를 다시 검사합니다.
+5. 이미 candidate와 같거나 검증된 의미 동등 상태이면 `already_applied` receipt를 기록하고 PUT하지 않습니다.
+6. 원격 version과 Storage body hash가 manifest base와 같은지 검사합니다.
+7. `base.version + 1`로 page body와 기존 title을 함께 PUT합니다.
+8. 원격 page를 다시 읽어 identity, version, body의 byte 또는 semantic postcondition을 검사합니다.
+
+version conflict나 remote drift가 발생해도 최신 version을 새 base로 채택하거나 PUT을 재시도하지 않습니다. active draft도 자동 병합하거나 덮어쓰지 않습니다. 실패 시 snapshot, API response, receipt를 run directory에 남겨 수동 복구와 판정을 가능하게 합니다.
+
+현재 publisher는 body 변경만 지원합니다. frontmatter title 변경, attachment 생성·갱신·삭제, preserved anchor target 변경은 capability gate에서 차단합니다.
 
 ### 현재 모듈 구성
 
 | 모듈 | 현재 역할 |
 |------|-----------|
-| `reverse_sync_cli.py` | verify / push 오케스트레이션, 결과 파일 생성, 배치 처리, Confluence push 안전장치 |
-| `mdx_block_parser.py` | MDX 블록 파싱 래퍼 |
-| `block_diff.py` | 블록 단위 diff + alignment 계산 |
-| `mapping_recorder.py` | XHTML에서 top-level / child block mapping 추출 |
-| `sidecar.py` | `mapping.yaml` v3 생성, roundtrip sidecar v3 생성/검증, identity 인덱스, lost_info 로딩 |
-| `fragment_extractor.py` | XHTML fragment를 byte-exact 수준으로 추출 |
-| `patch_builder.py` | reverse-sync의 정책 엔진. direct / containing / paired / list / table / skip 분기 결정 |
-| `visible_segments.py` | list 경로에서 visible segment 모델을 사용해 marker/공백/내용 변경을 더 정밀하게 판별 |
-| `reconstructors.py` | preserved anchor, container, list item 등에서 원본 fragment 템플릿을 유지한 채 부분 재구성 |
-| `mdx_to_xhtml_inline.py` | insert/replace용 MDX 블록을 XHTML fragment로 생성 |
-| `xhtml_patcher.py` | patch를 실제 XHTML DOM/fragment에 적용 |
-| `roundtrip_verifier.py` | normalize / lenient / no-normalize 옵션을 포함한 roundtrip 검증 |
-| `rehydrator.py` | sidecar fragment 재조립/검증 보조 유틸 |
-| `confluence_client.py` | Confluence REST API push |
-
-### 단계별 상세
-
-#### Step 1: MDX 블록 파싱과 diff
-
-원본/교정 MDX를 `parse_mdx_blocks()`로 파싱한 뒤 `diff_blocks()`로 `BlockChange[]`와 alignment를 계산합니다.
-
-- non-content 블록(frontmatter, import, empty 등)은 후속 단계에서 제외됩니다.
-- reverse-sync는 line range와 block hash를 이후 sidecar identity lookup에 재사용합니다.
-- 과거 문서에 있던 일부 파싱 버그 설명은 현재 구현과 완전히 일치하지 않습니다. 현재 기준에서 중요한 것은 "블록 경계가 sidecar line range / content hash와 함께 identity로 사용된다"는 점입니다.
-
-#### Step 2: XHTML 구조 기록
-
-`record_mapping(page.xhtml)`는 XHTML에서 블록 구조를 추출해 `BlockMapping` 목록을 만듭니다.
-
-- heading / paragraph / list / table / code / html_block / macro container 등을 추출합니다.
-- callout, ADF panel, expand 같은 compound block은 children 매핑을 함께 기록합니다.
-- reverse-sync는 patched XHTML에도 동일 recorder를 다시 적용해 `reverse-sync.mapping.patched.yaml`을 생성합니다.
-
-#### Step 3: 두 종류의 sidecar 구축
-
-현재 구현은 두 종류의 메타데이터를 함께 사용합니다.
-
-1. `mapping.yaml`
-   - `generate_sidecar_mapping()`이 생성합니다.
-   - 타입 호환성 기반 two-pointer 정렬로 XHTML top-level block과 MDX content block을 연결합니다.
-   - reverse-sync에서는 주로 `mdx_to_sidecar` 역인덱스와 page/block-level `lost_info` 로딩에 사용합니다.
-
-2. `expected.roundtrip.json` (schema v3)
-   - `build_sidecar()`가 생성합니다.
-   - XHTML fragment, `mdx_content_hash`, `mdx_line_range`, `reconstruction` 메타데이터를 함께 저장합니다.
-   - 현재 reverse-sync에서 사실상 더 중요한 메타데이터입니다. list fallback, preserved anchor, container reconstruction, roundtrip integrity 검증에 사용됩니다.
-
-#### Step 4: 패치 생성 (`patch_builder.py`)
-
-`patch_builder.py`가 현재 reverse-sync의 실제 정책 엔진입니다. 이 모듈은 각 변경을 다음 중 하나로 분기합니다.
-
-- `delete`: 기존 XHTML 요소 제거
-- `insert`: 새 MDX 블록을 XHTML로 생성해 삽입
-- `modify`: 안전한 텍스트 수준 변경
-- `replace_fragment`: fragment 전체를 교체하되 sidecar/reconstruction metadata를 활용해 원본 구조를 최대한 보존
-- `skip`: 위험하거나 identity가 불충분한 변경을 명시적으로 보고
-
-현재 구현의 특징:
-
-- delete+add가 같은 인덱스에서 만나면 `paired` 케이스로 보고 전체 fragment replacement를 우선 검토합니다.
-- clean block, container sidecar, preserved anchor, parameter-bearing container, markdown table 여부에 따라 다른 reconstruction 경로를 탑니다.
-- list 경로는 `visible_segments.py`를 사용해 marker 뒤 공백, 선행 공백 축소, continuation line merge 같은 회귀를 줄이도록 강화되었습니다.
-- table 경로는 whole-fragment replacement를 시도하되, 위험한 경우 `no_mapping`, `missing_roundtrip_sidecar`, `preserved_anchor_table`, `raw_html_table`, `not_markdown_table`, `unsafe_html_table_edit` 등 이유로 skip합니다.
-- legacy `mapping.yaml`이 list를 충분히 설명하지 못하는 경우, roundtrip sidecar v3의 `mdx_content_hash + mdx_line_range` identity fallback으로 매핑을 복원합니다.
-
-즉, 현재 reverse-sync는 "가능하면 직접 수정"보다 "안전하면 fragment replacement, 아니면 skip"에 더 가깝습니다.
-
-#### Step 5: XHTML 패치 적용
-
-`xhtml_patcher.py`는 patch 목록을 XHTML에 적용합니다.
-
-- action은 대체로 `delete`, `insert_before`, `insert_after`, `modify`, `replace_fragment` 계열로 정리됩니다.
-- 단순 문자열 치환이 아니라 DOM 요소 탐색 + fragment 재파싱을 조합합니다.
-- replace_fragment는 reconstruction을 거쳐 생성된 XHTML 조각을 그대로 주입하는 경우가 많습니다.
-
-#### Step 6: roundtrip proof
-
-패치가 끝나면 reverse-sync는 여기서 끝나지 않습니다.
-
-1. `reverse-sync.patched.xhtml` 저장
-2. `record_mapping()` 재실행 → `reverse-sync.mapping.patched.yaml` 저장
-3. patched XHTML을 `converter/cli.py`로 다시 MDX로 변환 → `verify.mdx` 생성
-4. `verify_roundtrip(improved_mdx, verify_mdx, ...)`로 최종 비교
-
-`roundtrip_verifier.py`는 다음과 같은 성격을 가집니다.
-
-- 기본값은 비교적 엄격한 exact/normalized match입니다.
-- `--lenient`, `--no-normalize` 옵션이 존재합니다.
-- 최근 커밋에서 sentence break, table padding, inline whitespace, badge/heading roundtrip 같은 케이스에 맞춰 정규화가 계속 조정되었습니다.
+| `reverse_sync_cli.py` | argument parsing, 출력, 사용자 확인, runtime dependency 조립과 service 호출 |
+| `prepare_service.py` | MDX source와 page identity 해석, 원격 snapshot·attachment catalog 준비 |
+| `verification_service.py` | diff, planner, renderer, forward conversion, proof, manifest 생성 lifecycle |
+| `batch_service.py` | 브랜치 대상의 eligibility 판정, 순차 발행, 실패 시 halt와 resume 정보 조립 |
+| `publish_service.py` | explicit manifest 요약·확인 입력, publisher 호출, semantic postcondition adapter, backup 관리 |
+| `models.py` | `PageSnapshot`, `SyncManifest`, `PushReceipt`, reason code 등 불변 모델 |
+| `confluence_client.py` | v2 page/draft/attachment snapshot과 version-bound page update gateway |
+| `base_parity.py`, `dependencies.py` | repository source/provenance, remote base, attachment, internal link gate |
+| `planner.py`, `operations.py`, `capabilities.py` | `BlockChange`를 typed intent와 executable operation을 가진 `PatchPlan` v2로 컴파일 |
+| `strategies/` | text, list, table, container별 operation 생성 전략 |
+| `preserving_patcher.py` | 온라인 plan의 source-range 기반 preservation renderer |
+| `xhtml_patcher.py` | 검증된 operation 적용 primitive |
+| `legacy_xhtml_patcher.py` | 로컬 진단 경로의 호환 패처 |
+| `proof.py`, `equivalence.py` | local proof gate와 push equivalence 검증 |
+| `manifest.py` | 실행별 immutable artifact, manifest hash binding, compatibility symlink |
+| `publisher.py` | preflight, active draft/dependency 검사, CAS PUT, postcondition, receipt |
+| `sidecar.py`, `mapping_recorder.py`, `patch_builder.py` | identity/preservation metadata와 legacy migration adapter |
 
 ### 현재 생성/사용 파일
 
-| 파일 | 위치 | 설명 |
-|------|------|------|
-| `mapping.yaml` | `var/<page_id>/` | XHTML↔MDX top-level mapping + lost_info |
-| `expected.roundtrip.json` | `tests/testcases/<case_id>/` 또는 fixture | roundtrip sidecar v3 |
-| `reverse-sync.diff.yaml` | `var/<page_id>/` | block diff 결과 |
-| `reverse-sync.mapping.original.yaml` | `var/<page_id>/` | 원본 XHTML mapping dump |
-| `reverse-sync.mapping.patched.yaml` | `var/<page_id>/` | patched XHTML mapping dump |
-| `reverse-sync.patched.xhtml` | `var/<page_id>/` | 패치 결과 XHTML |
-| `reverse-sync.result.yaml` | `var/<page_id>/` | verify 결과, skipped_changes, diff 요약 |
-| `verify.mdx` | `var/<page_id>/` | patched XHTML을 다시 forward 변환한 MDX |
+온라인 검증이 통과하면 다음 immutable run을 생성합니다.
+
+```
+var/<page_id>/reverse-sync/<run_id>/
+├── manifest.json
+├── manifest.sha256
+├── base.xhtml
+├── original.mdx
+├── improved.mdx
+├── patch-plan.json
+├── candidate.xhtml
+└── local-proof.json
+```
+
+발행 단계는 같은 run directory에 `preflight.snapshot.json`, `draft.snapshot.json`, dependency snapshot, `update.response.json`, `post.snapshot.json`, `push-receipt.json`을 필요에 따라 추가합니다.
+
+page directory의 `reverse-sync.manifest.json`, `reverse-sync.patched.xhtml`, `reverse-sync.plan.json`, `reverse-sync.proof.json`은 가장 최근 온라인 immutable run을 가리키는 진단·호환 symlink입니다. Publisher는 이 symlink를 자동 탐색하지 않고 explicit manifest path만 입력으로 받습니다.
+
+로컬 진단 경로는 기존 `reverse-sync.diff.yaml`, `reverse-sync.mapping.*.yaml`, `reverse-sync.patched.xhtml`, `reverse-sync.result.yaml`, `verify.mdx`를 page directory에 생성하지만, 이 flat artifact는 manifest가 아니며 발행 입력으로 사용할 수 없습니다.
 
 ---
 
@@ -575,7 +555,8 @@ Markdown 인라인 요소(bold, italic, code, link)와 CJK 문자의 인접 시 
 
 ```
 var/
-├── pages.yaml                           ← 전체 페이지 메타데이터
+├── pages.yaml                           ← forward converter용 전체 페이지 메타데이터
+├── pages.qm.yaml                        ← reverse-sync의 MDX path ↔ page identity 인덱스
 └── <page_id>/
     ├── page.v1.yaml                     ← V1 API 메타데이터 (body.view HTML 포함)
     ├── page.v2.yaml                     ← V2 API 메타데이터
@@ -586,9 +567,22 @@ var/
     ├── reverse-sync.diff.yaml           ← 블록 변경 diff (Reverse Sync 생성)
     ├── reverse-sync.mapping.original.yaml
     ├── reverse-sync.mapping.patched.yaml
-    ├── reverse-sync.patched.xhtml       ← 패치된 XHTML
+    ├── reverse-sync.manifest.json       ← 최신 온라인 run manifest 호환 symlink
+    ├── reverse-sync.patched.xhtml       ← 진단 artifact 또는 최신 candidate 호환 symlink
+    ├── reverse-sync.plan.json           ← 최신 온라인 typed plan 호환 symlink
+    ├── reverse-sync.proof.json          ← 최신 온라인 local proof 호환 symlink
     ├── reverse-sync.result.yaml         ← 검증 결과
     ├── verify.mdx                       ← 라운드트립 검증용: 패치된 XHTML을 정순변환한 MDX
+    ├── reverse-sync/
+    │   └── <run_id>/                    ← immutable online verification run
+    │       ├── manifest.json
+    │       ├── manifest.sha256
+    │       ├── base.xhtml
+    │       ├── original.mdx
+    │       ├── improved.mdx
+    │       ├── patch-plan.json
+    │       ├── candidate.xhtml
+    │       └── local-proof.json
     └── <attachment files>               ← 다운로드된 첨부파일
 ```
 
@@ -600,7 +594,7 @@ tests/testcases/
     ├── page.xhtml                       ← 원본 Confluence XHTML
     ├── expected.mdx                     ← 기대 MDX 출력
     ├── output.mdx                       ← 실제 변환 결과 (테스트 시 생성)
-    └── expected.roundtrip.json          ← Roundtrip sidecar v2 (블록 프래그먼트)
+    └── expected.roundtrip.json          ← Roundtrip sidecar v3 (블록 프래그먼트)
 ```
 
 ### `pages.yaml` 엔트리 구조
@@ -655,52 +649,67 @@ tests/testcases/
 
 | 명령어 | 설명 |
 |--------|------|
-| `reverse_sync_cli.py verify <mdx>` | 단일 파일 역반영 검증 (dry-run) |
-| `reverse_sync_cli.py push <mdx>` | 단일 파일 Confluence 반영 |
-| `reverse_sync_cli.py debug <mdx>` | 검증 + 상세 diff 출력 |
-| `reverse_sync_cli.py --branch <branch>` | 브랜치 전체 배치 검증/반영 |
+| `reverse_sync_cli.py verify <mdx>` | 로컬 `page.xhtml` 기반 단일 파일 진단. 항상 push-ineligible |
+| `reverse_sync_cli.py debug <mdx>` | 로컬 진단 + MDX/XHTML/verify diff 출력 |
+| `reverse_sync_cli.py push --dry-run <mdx>` | 원격 snapshot 기반 검증과 immutable manifest 생성. PUT은 생략 |
+| `reverse_sync_cli.py push <mdx>` | 원격 snapshot 기반 검증 후 확인을 거쳐 단일 manifest 발행 |
+| `reverse_sync_cli.py push --manifest <manifest.json>` | 이미 검증한 immutable run을 명시적으로 발행 |
+| `reverse_sync_cli.py verify --branch <branch>` | 브랜치의 변경된 한국어 MDX를 로컬 배치 진단 |
+| `reverse_sync_cli.py push --branch <branch> [--dry-run]` | 브랜치 대상을 온라인 검증하고 순차 발행. version conflict와 일반 발행 오류는 기록하고 계속하며, postcondition 실패 시에만 후속 발행 중단 |
 
 ---
 
 ## Reverse Sync 설계 불변조건
 
-Reverse Sync 파이프라인의 정확성은 다음 불변조건에 의존한다. **이 조건이 위반된 상태에서 heuristic을 추가하는 것은 근본 원인을 숨기는 것이다.**
+Reverse Sync 파이프라인의 정확성은 다음 불변조건에 의존합니다. 이 조건이 확인되지 않은 실행은 보수적으로 중단합니다.
 
 ### 핵심 흐름
 
 ```
-old_xhtml ──(forward converter)──▶ old_mdx + sidecar(mapping.yaml)
-                                           │
-new_mdx ────────────────────────────── diff(old_mdx, new_mdx)
-                                           │
-                                           ▼
-                                    edit sequence
-                                           │
-                                  sidecar로 MDX 위치 → XHTML 위치 변환
-                                           │
-                                           ▼
-                                    old_xhtml 패치 → new_xhtml
+remote current PageSnapshot ── forward converter ──▶ converted base MDX
+             │                                          │
+             │                               repository original MDX
+             │                                          │
+             └──────── base/provenance parity ───────────┘
+                                │
+improved MDX ── diff ──▶ typed intent / operation plan
+                                │
+                                ▼
+                 preserving render + local proof
+                                │
+                                ▼
+                 immutable manifest-bound candidate
+                                │
+                                ▼
+             identical preflight + version-bound PUT
+                                │
+                                ▼
+                   persisted postcondition proof
 ```
 
-### 불변조건: old_xhtml ↔ old_mdx는 항상 동기화되어 있다
+### 필수 불변조건
 
-`old_mdx`는 `old_xhtml`에서 forward converter가 생성한 결과다. 따라서:
+- 온라인 base는 한 API response로 얻은 원격 `current` `PageSnapshot`입니다.
+- repository original MDX는 snapshot을 forward 변환한 결과 및 저장된 provenance와 일치해야 합니다.
+- 모든 의미 있는 MDX 변경은 typed intent이며, 모든 intent는 실행 가능한 operation으로 정확히 커버되어야 합니다.
+- candidate는 source range와 preservation fingerprint로 보호된 원본 fragment의 비변경 영역을 보존해야 합니다.
+- `--lenient`, `--no-normalize`, text identity fallback은 push eligibility에 사용할 수 없습니다.
+- manifest는 base snapshot, 입력 MDX, plan, candidate, local proof를 hash로 결합하며 생성 후 변경할 수 없습니다.
+- publisher는 명시한 manifest만 소비하고, preflight가 manifest base와 다르면 PUT하지 않습니다.
+- active draft가 있으면 자동 병합이나 덮어쓰기 없이 중단합니다.
+- conflict 시 최신 version으로 재시도하지 않습니다.
+- 성공은 PUT response가 아니라 persisted snapshot의 identity, version, body postcondition으로 판정합니다.
 
-- XHTML 블록과 MDX 블록의 대응 관계는 **변환 시점에 완전히 결정**된다.
-- 정보 유실(emoticon, link 등)이 있더라도 **구조적 대응 관계는 확정적**이다.
-- sidecar 생성 시 two-pointer alignment이 실패할 수 없다.
+### 위반 시 처리
 
-### 위반 징후
-
-sidecar 생성 함수(`build_sidecar`, `generate_sidecar_mapping`)에서 alignment 오류가 발생하거나 이를 보완하는 heuristic이 필요하다면, 다음 중 하나를 의미한다:
-
-| 징후 | 실제 원인 | 올바른 수정 |
-|------|----------|------------|
-| two-pointer alignment MISS | forward converter가 XHTML 구조를 MDX에 올바르게 반영하지 못함 | forward converter 버그 수정 → old_mdx 재생성 |
-| sidecar 없이 현재 MDX로 alignment 시도 | new_mdx(편집본)를 old_mdx로 잘못 사용 | old_mdx 복원 경로 확보 |
-| alignment heuristic 추가 (예: heading lookahead) | 위 두 경우 중 하나 | heuristic 제거, 근본 원인 수정 |
-
-> **교훈:** `_heading_lookahead()`처럼 "XHTML-MDX 구조 불일치를 heading으로 재동기화"하는 코드가 필요하다고 느껴진다면, sidecar.py를 수정할 것이 아니라 forward converter의 변환 결과가 왜 XHTML 구조를 정확히 반영하지 못하는지를 먼저 조사해야 한다.
+| 징후 | 처리 |
+|------|------|
+| repository MDX와 remote snapshot의 forward 결과가 다름 | stale source 또는 converter drift로 차단하고 원인을 먼저 복구 |
+| intent가 없거나 중복·미지원 operation만 존재 | incomplete plan으로 전체 실행 차단 |
+| preservation, determinism, idempotency 불일치 | local proof 실패, manifest 미생성 |
+| preflight version/body/title/status drift | remote drift 또는 conflict로 차단, 자동 재시도 금지 |
+| active draft 발견 | draft snapshot을 기록하고 수동 reconciliation 전까지 차단 |
+| PUT 후 body 또는 version 불일치 | `postcondition_failed` receipt를 남기고 성공으로 보고하지 않음 |
 
 ---
 
