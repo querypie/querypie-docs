@@ -105,6 +105,28 @@ def test_preserving_patcher_fails_when_exact_target_is_missing():
         raise AssertionError("missing target이 block되지 않았습니다")
 
 
+def test_preserving_patcher_fails_when_fragment_source_text_mismatches():
+    base = "<p>Before</p>"
+    sidecar = build_sidecar(base, "# Title\n\nBefore\n", page_id="123")
+
+    try:
+        patch_xhtml_preserving(
+            base,
+            [
+                {
+                    "xhtml_xpath": "p[1]",
+                    "old_plain_text": "Different source",
+                    "new_plain_text": "After",
+                }
+            ],
+            sidecar,
+        )
+    except PatchApplicationError as exc:
+        assert "source text" in str(exc)
+    else:
+        raise AssertionError("source text mismatch가 block되지 않았습니다")
+
+
 def test_preserving_patcher_keeps_envelope_and_separators_across_insert_delete():
     base = " \n<p>First</p>\n<!-- gap -->\n<p>Second</p>\n "
     original_mdx = "# Title\n\nFirst\n\nSecond\n"

@@ -1,6 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patcher import XhtmlPatchError, patch_xhtml
 
 
 def test_simple_text_replacement():
@@ -55,6 +55,43 @@ def test_no_change_when_text_not_found():
     ]
     result = patch_xhtml(xhtml, patches)
     assert result == xhtml  # 변경 없음
+
+
+def test_strict_mode_rejects_source_text_mismatch():
+    xhtml = '<p>Original text.</p>'
+    patches = [
+        {
+            'xhtml_xpath': 'p[1]',
+            'old_plain_text': 'Different source.',
+            'new_plain_text': 'Replaced.',
+        }
+    ]
+
+    with pytest.raises(XhtmlPatchError, match='source text'):
+        patch_xhtml(xhtml, patches, strict=True)
+
+
+def test_strict_mode_rejects_unresolved_nested_target():
+    xhtml = '<p>Original text.</p>'
+    patches = [
+        {
+            'xhtml_xpath': 'macro-info[1]/p[1]',
+            'old_plain_text': 'Original text.',
+            'new_plain_text': 'Replaced.',
+        }
+    ]
+
+    with pytest.raises(XhtmlPatchError, match='modify target'):
+        patch_xhtml(xhtml, patches, strict=True)
+
+
+def test_strict_mode_rejects_unknown_action():
+    with pytest.raises(XhtmlPatchError, match='action'):
+        patch_xhtml(
+            '<p>Original text.</p>',
+            [{'action': 'merge', 'xhtml_xpath': 'p[1]'}],
+            strict=True,
+        )
 
 
 def test_compound_xpath_patches_callout_child():
