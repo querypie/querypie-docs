@@ -44,6 +44,12 @@ class ReasonCode(str, Enum):
     NON_DETERMINISTIC_OUTPUT = "non_deterministic_output"
     NON_IDEMPOTENT_OUTPUT = "non_idempotent_output"
     DEPENDENCY_FAILURE = "dependency_failure"
+    MISSING_ATTACHMENT = "missing_attachment"
+    INTERNAL_LINK_UNRESOLVED = "internal_link_unresolved"
+    AMBIGUOUS_TARGET = "ambiguous_target"
+    STALE_ORIGINAL_MDX = "stale_original_mdx"
+    FORWARD_CONVERTER_DRIFT = "forward_converter_drift"
+    TITLE_CHANGE_UNSUPPORTED = "title_change_unsupported"
 
 
 @dataclass(frozen=True)
@@ -75,6 +81,62 @@ class PageSnapshot:
         if include_body:
             result["storage_xhtml"] = self.storage_xhtml
         return result
+
+
+@dataclass(frozen=True)
+class AttachmentRecord:
+    """dependency gate가 사용하는 current attachment identity."""
+
+    attachment_id: str
+    page_id: str
+    filename: str
+    version: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "attachment_id": self.attachment_id,
+            "filename": self.filename,
+            "page_id": self.page_id,
+            "version": self.version,
+        }
+
+
+@dataclass(frozen=True)
+class AttachmentCatalog:
+    """한 시점에 조회한 page attachment 목록."""
+
+    page_id: str
+    attachments: tuple[AttachmentRecord, ...]
+    fetched_at: str
+    api: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "api": self.api,
+            "attachments": [
+                attachment.to_dict()
+                for attachment in sorted(
+                    self.attachments,
+                    key=lambda item: (
+                        item.filename,
+                        item.attachment_id,
+                        item.version,
+                    ),
+                )
+            ],
+            "fetched_at": self.fetched_at,
+            "page_id": self.page_id,
+        }
+
+    @property
+    def sha256(self) -> str:
+        canonical = json.dumps(
+            self.to_dict(),
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        )
+        return sha256_text(canonical)
 
 
 @dataclass(frozen=True)

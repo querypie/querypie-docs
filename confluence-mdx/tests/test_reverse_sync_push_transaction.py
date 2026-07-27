@@ -3,19 +3,24 @@
 import argparse
 from dataclasses import replace
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
 import requests
+import yaml
 
 from reverse_sync.confluence_client import (
     ConfluenceConfig,
+    ConfluenceGateway,
+    InvalidDependencySnapshotError,
     InvalidPageSnapshotError,
     NetworkError,
     PermissionDeniedError,
     VersionConflictError,
     get_active_draft,
+    get_attachment_catalog,
     get_page_snapshot,
     update_page,
 )
@@ -26,9 +31,16 @@ from reverse_sync.manifest import (
     create_sync_manifest,
     load_sync_manifest,
 )
-from reverse_sync.models import PageSnapshot, SyncStatus, VerificationGate
+from reverse_sync.models import (
+    AttachmentCatalog,
+    AttachmentRecord,
+    PageSnapshot,
+    SyncStatus,
+    VerificationGate,
+)
 from reverse_sync.publisher import (
     ActiveDraftError,
+    DependencyChangedError,
     PostconditionError,
     RemoteDriftError,
     publish_verified_manifest,
@@ -59,7 +71,76 @@ def _snapshot(
     )
 
 
-def _manifest(tmp_path: Path, base: PageSnapshot | None = None) -> Path:
+def _write_page_catalog(tmp_path: Path, page_id: str = "123") -> None:
+    var_dir = tmp_path / "var"
+    var_dir.mkdir(parents=True, exist_ok=True)
+    (var_dir / "pages.qm.yaml").write_text(
+        yaml.safe_dump(
+            [
+                {
+                    "page_id": page_id,
+                    "title_orig": "Test page",
+                    "path": ["test"],
+                }
+            ],
+            allow_unicode=True,
+        )
+    )
+
+
+def _source_mdx(body: str, page_id: str = "123") -> str:
+    return (
+        "---\n"
+        "title: 'Test page'\n"
+        f"confluenceUrl: 'https://example.atlassian.net/wiki/pages/{page_id}'\n"
+        "---\n\n"
+        "# Test page\n\n"
+        f"{body}"
+    )
+
+
+def _manifest(
+    tmp_path: Path,
+    base: PageSnapshot | None = None,
+    *,
+    required_attachment: str = "",
+    required_link: tuple[str, str, str] | None = None,
+    malformed_attachment_evidence: bool = False,
+) -> Path:
+    attachments = []
+    if required_attachment:
+        attachments.append(
+            {
+                "attachment_id": "att-1",
+                "filename": required_attachment,
+                "version": 1,
+            }
+        )
+        if malformed_attachment_evidence:
+            attachments[0].pop("attachment_id")
+    internal_links = []
+    if required_link is not None:
+        page_id, content_title, href = required_link
+        internal_links.append(
+            {
+                "content_title": content_title,
+                "href": href,
+                "page_id": page_id,
+            }
+        )
+    local_proof = json.dumps(
+        {
+            "dependencies": {
+                "attachment_catalog_sha256": "0" * 64 if attachments else "",
+                "attachments": attachments,
+                "internal_links": internal_links,
+            },
+            "push_eligible": True,
+            "status": "verified_local",
+        },
+        separators=(",", ":"),
+        sort_keys=True,
+    ) + "\n"
     return create_sync_manifest(
         runs_dir=tmp_path / "reverse-sync",
         base=base or _snapshot(),
@@ -69,9 +150,9 @@ def _manifest(tmp_path: Path, base: PageSnapshot | None = None) -> Path:
         improved_descriptor="src/content/ko/test.mdx",
         patch_plan='{"schema_version":1}\n',
         candidate_xhtml="<p>After</p>",
-        local_proof='{"status":"verified_local"}\n',
+        local_proof=local_proof,
         verifier_policy="reverse-sync-equivalence-v1",
-        tool_version="reverse-sync-cli-v2",
+        tool_version="reverse-sync-cli-v3",
         push_eligible=True,
         gates=tuple(
             VerificationGate(name, True)
@@ -87,12 +168,18 @@ class FakeGateway:
         *,
         draft: PageSnapshot | None = None,
         update_error: Exception | None = None,
+        attachment_catalog: AttachmentCatalog | None = None,
+        linked_pages: dict[str, PageSnapshot] | None = None,
     ):
         self.current_snapshots = list(current_snapshots)
         self.draft = draft
         self.update_error = update_error
+        self.attachment_catalog = attachment_catalog
+        self.linked_pages = linked_pages or {}
         self.current_calls = 0
         self.draft_calls = 0
+        self.attachment_calls = 0
+        self.link_calls: list[str] = []
         self.update_calls: list[dict] = []
 
     def get_current_page(self, page_id: str) -> PageSnapshot:
@@ -106,6 +193,16 @@ class FakeGateway:
         if self.draft is not None:
             assert self.draft.page_id == page_id
         return self.draft
+
+    def get_attachment_catalog(self, page_id: str) -> AttachmentCatalog:
+        self.attachment_calls += 1
+        assert self.attachment_catalog is not None
+        assert self.attachment_catalog.page_id == page_id
+        return self.attachment_catalog
+
+    def get_page_identity(self, page_id: str) -> PageSnapshot:
+        self.link_calls.append(page_id)
+        return self.linked_pages[page_id]
 
     def update_page(
         self,
@@ -166,6 +263,21 @@ def test_proof_artifact_tampering_blocks_before_remote_read(
     assert gateway.update_calls == []
 
 
+def test_malformed_dependency_evidence_blocks_before_remote_read(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        required_attachment="screen.png",
+        malformed_attachment_evidence=True,
+    )
+    gateway = FakeGateway([_snapshot()])
+
+    with pytest.raises(ArtifactTamperedError, match="dependency evidence"):
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert gateway.current_calls == 0
+    assert gateway.update_calls == []
+
+
 def test_remote_drift_blocks_without_adopting_latest_version(tmp_path):
     manifest_path = _manifest(tmp_path)
     remote_edit = _snapshot(version=6, body="<p>Remote edit</p>")
@@ -200,6 +312,159 @@ def test_active_draft_blocks_before_put(tmp_path):
 
     assert exc_info.value.reason_code == "active_draft"
     assert gateway.update_calls == []
+
+
+def test_missing_attachment_at_preflight_blocks_before_put(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        required_attachment="screen.png",
+    )
+    catalog = AttachmentCatalog(
+        page_id="123",
+        attachments=(),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+    gateway = FakeGateway(
+        [_snapshot()],
+        attachment_catalog=catalog,
+    )
+
+    with pytest.raises(DependencyChangedError) as exc_info:
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert exc_info.value.reason_code == "dependency_failure"
+    assert gateway.attachment_calls == 1
+    assert gateway.update_calls == []
+    assert (manifest_path.parent / "preflight.attachments.json").is_file()
+
+
+def test_existing_attachment_at_preflight_allows_put(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        required_attachment="screen.png",
+    )
+    catalog = AttachmentCatalog(
+        page_id="123",
+        attachments=(
+            AttachmentRecord(
+                attachment_id="att-1",
+                page_id="123",
+                filename="screen.png",
+                version=1,
+            ),
+        ),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+    gateway = FakeGateway(
+        [
+            _snapshot(),
+            _snapshot(version=6, body="<p>After</p>"),
+        ],
+        attachment_catalog=catalog,
+    )
+
+    receipt = publish_verified_manifest(manifest_path, gateway)
+
+    assert receipt.status is SyncStatus.REMOTE_VERIFIED
+    assert gateway.attachment_calls == 1
+    assert len(gateway.update_calls) == 1
+
+
+@pytest.mark.parametrize(
+    ("attachment_id", "version"),
+    [
+        ("att-2", 1),
+        ("att-1", 2),
+    ],
+)
+def test_changed_attachment_identity_at_preflight_blocks_before_put(
+    tmp_path,
+    attachment_id,
+    version,
+):
+    manifest_path = _manifest(
+        tmp_path,
+        required_attachment="screen.png",
+    )
+    catalog = AttachmentCatalog(
+        page_id="123",
+        attachments=(
+            AttachmentRecord(
+                attachment_id=attachment_id,
+                page_id="123",
+                filename="screen.png",
+                version=version,
+            ),
+        ),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+    gateway = FakeGateway(
+        [_snapshot()],
+        attachment_catalog=catalog,
+    )
+
+    with pytest.raises(DependencyChangedError) as exc_info:
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert exc_info.value.reason_code == "dependency_failure"
+    assert gateway.attachment_calls == 1
+    assert gateway.update_calls == []
+
+
+def test_internal_link_target_at_preflight_allows_put(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        required_link=("456", "Target page", "./target"),
+    )
+    gateway = FakeGateway(
+        [
+            _snapshot(),
+            _snapshot(version=6, body="<p>After</p>"),
+        ],
+        linked_pages={
+            "456": _snapshot(
+                page_id="456",
+                version=3,
+                title="Target page",
+                body="<p>Target</p>",
+            )
+        },
+    )
+
+    receipt = publish_verified_manifest(manifest_path, gateway)
+
+    assert receipt.status is SyncStatus.REMOTE_VERIFIED
+    assert gateway.link_calls == ["456"]
+    assert (manifest_path.parent / "preflight.link-pages.json").is_file()
+    assert len(gateway.update_calls) == 1
+
+
+def test_changed_internal_link_target_blocks_before_put(tmp_path):
+    manifest_path = _manifest(
+        tmp_path,
+        required_link=("456", "Target page", "./target"),
+    )
+    gateway = FakeGateway(
+        [_snapshot()],
+        linked_pages={
+            "456": _snapshot(
+                page_id="456",
+                version=4,
+                title="Renamed target",
+                body="<p>Target</p>",
+            )
+        },
+    )
+
+    with pytest.raises(DependencyChangedError, match="internal link"):
+        publish_verified_manifest(manifest_path, gateway)
+
+    assert gateway.link_calls == ["456"]
+    assert gateway.update_calls == []
+    assert (manifest_path.parent / "preflight.link-pages.json").is_file()
 
 
 def test_preflight_put_race_is_not_retried_with_latest_version(tmp_path):
@@ -353,9 +618,13 @@ def test_push_manifest_requires_all_local_proof_gates(tmp_path):
             improved_descriptor="src/content/ko/test.mdx",
             patch_plan='{"schema_version":1}\n',
             candidate_xhtml="<p>After</p>",
-            local_proof='{"status":"verified_local"}\n',
+            local_proof=(
+                '{"dependencies":{"attachments":[],"internal_links":[],'
+                '"attachment_catalog_sha256":""},"push_eligible":true,'
+                '"status":"verified_local"}\n'
+            ),
             verifier_policy="reverse-sync-equivalence-v1",
-            tool_version="reverse-sync-cli-v2",
+            tool_version="reverse-sync-cli-v3",
             push_eligible=True,
             gates=(VerificationGate("semantic_roundtrip", True),),
         )
@@ -397,11 +666,163 @@ def test_v2_snapshot_uses_one_response_for_version_title_and_body():
     assert len(snapshot.storage_sha256) == 64
 
 
+def test_v2_attachment_catalog_reads_every_page():
+    first = MagicMock()
+    first.json.return_value = {
+        "results": [
+            {
+                "id": "a1",
+                "status": "current",
+                "title": "first.png",
+                "pageId": "123",
+                "version": {"number": 2},
+            }
+        ]
+    }
+    first.raise_for_status.return_value = None
+    first.links = {
+        "next": {
+            "url": (
+                "https://example.atlassian.net/wiki/api/v2/pages/"
+                "123/attachments?cursor=next"
+            )
+        }
+    }
+    second = MagicMock()
+    second.json.return_value = {
+        "results": [
+            {
+                "id": "a2",
+                "status": "current",
+                "title": "second.png",
+                "pageId": "123",
+                "version": {"number": 1},
+            }
+        ]
+    }
+    second.raise_for_status.return_value = None
+    second.links = {}
+
+    with patch(
+        "reverse_sync.confluence_client.requests.get",
+        side_effect=[first, second],
+    ) as get:
+        catalog = get_attachment_catalog(
+            ConfluenceConfig(
+                base_url="https://example.atlassian.net/wiki",
+                email="e",
+                api_token="t",
+            ),
+            "123",
+            fetched_at=NOW,
+        )
+
+    assert [item.filename for item in catalog.attachments] == [
+        "first.png",
+        "second.png",
+    ]
+    assert get.call_count == 2
+    assert get.call_args_list[0].kwargs["params"] == {
+        "status": ["current"],
+        "limit": 250,
+    }
+    assert get.call_args_list[1].kwargs["params"] is None
+
+
+def test_v2_attachment_catalog_rejects_cross_page_item():
+    response = MagicMock()
+    response.json.return_value = {
+        "results": [
+            {
+                "id": "a1",
+                "status": "current",
+                "title": "screen.png",
+                "pageId": "999",
+                "version": {"number": 1},
+            }
+        ]
+    }
+    response.raise_for_status.return_value = None
+    response.links = {}
+
+    with patch(
+        "reverse_sync.confluence_client.requests.get",
+        return_value=response,
+    ), pytest.raises(InvalidDependencySnapshotError):
+        get_attachment_catalog(
+            ConfluenceConfig(
+                base_url="https://example.atlassian.net/wiki",
+                email="e",
+                api_token="t",
+            ),
+            "123",
+            fetched_at=NOW,
+        )
+
+
+def test_v2_attachment_catalog_rejects_cross_origin_pagination():
+    response = MagicMock()
+    response.json.return_value = {"results": []}
+    response.raise_for_status.return_value = None
+    response.links = {
+        "next": {
+            "url": "https://attacker.example/api/v2/pages/123/attachments"
+        }
+    }
+
+    with patch(
+        "reverse_sync.confluence_client.requests.get",
+        return_value=response,
+    ), pytest.raises(InvalidDependencySnapshotError, match="범위를 벗어납니다"):
+        get_attachment_catalog(
+            ConfluenceConfig(
+                base_url="https://example.atlassian.net/wiki",
+                email="e",
+                api_token="t",
+            ),
+            "123",
+            fetched_at=NOW,
+        )
+
+
+def test_linked_page_not_found_maps_to_dependency_failure():
+    response = MagicMock()
+    response.status_code = 404
+    response.raise_for_status.side_effect = requests.HTTPError(response=response)
+    gateway = ConfluenceGateway(
+        ConfluenceConfig(
+            base_url="https://example.atlassian.net/wiki",
+            email="e",
+            api_token="t",
+        )
+    )
+
+    with patch(
+        "reverse_sync.confluence_client.requests.get",
+        return_value=response,
+    ), pytest.raises(InvalidDependencySnapshotError) as exc_info:
+        gateway.get_page_identity("456")
+
+    assert exc_info.value.reason_code == "dependency_failure"
+
+
 @pytest.mark.parametrize(
     "payload",
     [
         {"id": "different", "status": "current", "title": "T", "version": {"number": 1}},
         {"id": "123", "status": "draft", "title": "T", "version": {"number": 1}},
+        {
+            "id": "123",
+            "status": "current",
+            "title": "T",
+            "version": {"number": True},
+            "body": {
+                "storage": {
+                    "representation": "storage",
+                    "value": "<p>x</p>",
+                }
+            },
+        },
         {
             "id": "123",
             "status": "current",
@@ -618,16 +1039,71 @@ def test_prepare_push_fetches_one_snapshot_and_passes_it_to_verify():
     assert verify.call_args.kwargs["for_push"] is True
 
 
+def test_prepare_push_fetches_attachment_catalog_for_new_reference():
+    args = argparse.Namespace(
+        improved_mdx="src/content/ko/test.mdx",
+        original_mdx=None,
+        page_id=None,
+        page_dir=None,
+        lenient=False,
+        no_normalize=False,
+    )
+    base = _snapshot()
+    improved = MdxSource(
+        "# Test page\n\nBefore\n\n![screen](./screen.png)\n",
+        "src/content/ko/test.mdx",
+    )
+    original = MdxSource(
+        "# Test page\n\nBefore\n",
+        "main:src/content/ko/test.mdx",
+    )
+    catalog = AttachmentCatalog(
+        page_id="123",
+        attachments=(
+            AttachmentRecord(
+                attachment_id="att-1",
+                page_id="123",
+                filename="screen.png",
+                version=1,
+            ),
+        ),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+
+    with patch(
+        "reverse_sync_cli._resolve_mdx_source",
+        side_effect=[improved, original],
+    ), patch(
+        "reverse_sync_cli._resolve_page_id",
+        return_value="123",
+    ), patch(
+        "reverse_sync.confluence_client.get_page_snapshot",
+        return_value=base,
+    ), patch(
+        "reverse_sync.confluence_client.get_attachment_catalog",
+        return_value=catalog,
+    ) as get_catalog, patch(
+        "reverse_sync_cli.run_verify",
+        return_value={"status": "verified_local"},
+    ) as verify:
+        _do_verify(args, config=MagicMock(), prepare_push=True)
+
+    get_catalog.assert_called_once()
+    assert verify.call_args.kwargs["attachment_catalog"] is catalog
+
+
 def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatch):
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
     base = _snapshot(
         title="Test page",
         body="<h2>Section</h2><p>Before</p>",
     )
-    original = "# Test page\n\n## Section\n\nBefore\n"
-    improved = "# Test page\n\n## Section\n\nAfter\n"
+    original = _source_mdx("## Section\n\nBefore\n", page_id)
+    improved = _source_mdx("## Section\n\nAfter\n", page_id)
 
     def forward_convert(input_path, output_path, _page_id, **_kwargs):
         content = original if Path(output_path).name == "reverse-sync.base.mdx" else improved
@@ -658,7 +1134,7 @@ def test_online_verify_builds_manifest_from_remote_snapshot(tmp_path, monkeypatc
     assert manifest.base_version == 5
     assert manifest.base_storage_sha256 == base.storage_sha256
     assert manifest.verifier_policy == "reverse-sync-equivalence-v1"
-    assert manifest.tool_version == "reverse-sync-cli-v2"
+    assert manifest.tool_version == "reverse-sync-cli-v3"
     assert (manifest_path.parent / "patch-plan.json").is_file()
     assert (manifest_path.parent / "local-proof.json").is_file()
     assert (manifest_path.parent / "candidate.xhtml").read_text() == (
@@ -672,12 +1148,13 @@ def test_online_verify_proves_insert_idempotent_by_replanning(
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
     base = _snapshot(
         title="Test page",
         body="<h2>Section</h2><p>Before</p>",
     )
-    original = "# Test page\n\n## Section\n\nBefore\n"
-    improved = "# Test page\n\n## Section\n\nBefore\n\nAdded\n"
+    original = _source_mdx("## Section\n\nBefore\n", page_id)
+    improved = _source_mdx("## Section\n\nBefore\n\nAdded\n", page_id)
 
     def forward_convert(input_path, output_path, _page_id, **_kwargs):
         content = original if Path(output_path).name == "reverse-sync.base.mdx" else improved
@@ -701,17 +1178,147 @@ def test_online_verify_proves_insert_idempotent_by_replanning(
     assert idempotency["passed"] is True
 
 
+def test_online_verify_renders_new_internal_link_as_confluence_macro(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
+    page_id = "123"
+    (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
+    pages_path = tmp_path / "var" / "pages.qm.yaml"
+    pages = yaml.safe_load(pages_path.read_text())
+    pages.append(
+        {
+            "page_id": "456",
+            "title_orig": "Target page",
+            "path": ["target"],
+        }
+    )
+    pages_path.write_text(yaml.safe_dump(pages, allow_unicode=True))
+    base = _snapshot(
+        title="Test page",
+        body="<h2>Section</h2><p>Before</p>",
+    )
+    original = _source_mdx("## Section\n\nBefore\n", page_id)
+    improved = _source_mdx(
+        "## Section\n\nBefore\n\n[Target](target)\n",
+        page_id,
+    )
+
+    def forward_convert(_input_path, output_path, _page_id, **_kwargs):
+        content = (
+            original
+            if Path(output_path).name == "reverse-sync.base.mdx"
+            else improved
+        )
+        Path(output_path).write_text(content)
+        return content
+
+    with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(
+                original,
+                "main:src/content/ko/test.mdx",
+            ),
+            improved_src=MdxSource(
+                improved,
+                "src/content/ko/test.mdx",
+            ),
+            base_snapshot=base,
+            for_push=True,
+        )
+
+    assert result["status"] == "verified_local"
+    candidate = Path(result["manifest_path"]).parent / "candidate.xhtml"
+    assert (
+        '<ri:page ri:content-title="Target page"></ri:page>'
+        in candidate.read_text()
+    )
+
+
+def test_online_verify_renders_existing_attachment_reference(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
+    page_id = "123"
+    (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
+    base = _snapshot(
+        title="Test page",
+        body="<h2>Section</h2><p>Before</p>",
+    )
+    original = _source_mdx("## Section\n\nBefore\n", page_id)
+    improved = _source_mdx(
+        '## Section\n\nBefore\n\n<figure><img src="./screen.png" /></figure>\n',
+        page_id,
+    )
+    catalog = AttachmentCatalog(
+        page_id=page_id,
+        attachments=(
+            AttachmentRecord(
+                attachment_id="att-1",
+                page_id=page_id,
+                filename="screen.png",
+                version=3,
+            ),
+        ),
+        fetched_at=NOW.isoformat(),
+        api="fixture",
+    )
+
+    def forward_convert(_input_path, output_path, _page_id, **_kwargs):
+        content = (
+            original
+            if Path(output_path).name == "reverse-sync.base.mdx"
+            else improved
+        )
+        Path(output_path).write_text(content)
+        return content
+
+    with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
+        result = run_verify(
+            page_id=page_id,
+            original_src=MdxSource(
+                original,
+                "main:src/content/ko/test.mdx",
+            ),
+            improved_src=MdxSource(
+                improved,
+                "src/content/ko/test.mdx",
+            ),
+            base_snapshot=base,
+            attachment_catalog=catalog,
+            for_push=True,
+        )
+
+    assert result["status"] == "verified_local"
+    run_dir = Path(result["manifest_path"]).parent
+    candidate = (run_dir / "candidate.xhtml").read_text()
+    proof = json.loads((run_dir / "local-proof.json").read_text())
+    assert '<ri:attachment ri:filename="screen.png">' in candidate
+    assert proof["dependencies"]["attachments"] == [
+        {
+            "attachment_id": "att-1",
+            "filename": "screen.png",
+            "version": 3,
+        }
+    ]
+
+
 def test_online_verify_blocks_stale_original_before_patch(tmp_path, monkeypatch):
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
     base = _snapshot(title="Test page", body="<p>Remote edit</p>")
-    original = "# Test page\n\nBefore\n"
-    improved = "# Test page\n\nAfter\n"
+    original = _source_mdx("Before\n", page_id)
+    improved = _source_mdx("After\n", page_id)
 
     def forward_convert(_input_path, output_path, _page_id, **_kwargs):
-        Path(output_path).write_text("# Test page\n\nRemote edit\n")
-        return "# Test page\n\nRemote edit\n"
+        converted = _source_mdx("Remote edit\n", page_id)
+        Path(output_path).write_text(converted)
+        return converted
 
     with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
         result = run_verify(
@@ -786,13 +1393,17 @@ def test_lenient_match_is_diagnostic_and_never_grants_push_eligibility(
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
     base = _snapshot(
         title="Test page",
         body="<h2>Section</h2><p>Before</p>",
     )
-    original = "# Test page\n\n## Section\n\nBefore\n"
-    improved = "# Test page\n\n## Section\n\n2024년 01월 15일\n"
-    diagnostic_roundtrip = "# Test page\n\n## Section\n\nJan 15, 2024\n"
+    original = _source_mdx("## Section\n\nBefore\n", page_id)
+    improved = _source_mdx("## Section\n\n2024년 01월 15일\n", page_id)
+    diagnostic_roundtrip = _source_mdx(
+        "## Section\n\nJan 15, 2024\n",
+        page_id,
+    )
 
     def forward_convert(_input_path, output_path, _page_id, **_kwargs):
         content = (
@@ -806,8 +1417,14 @@ def test_lenient_match_is_diagnostic_and_never_grants_push_eligibility(
     with patch("reverse_sync_cli._forward_convert", side_effect=forward_convert):
         result = run_verify(
             page_id=page_id,
-            original_src=MdxSource(original, "original.mdx"),
-            improved_src=MdxSource(improved, "improved.mdx"),
+            original_src=MdxSource(
+                original,
+                "main:src/content/ko/test.mdx",
+            ),
+            improved_src=MdxSource(
+                improved,
+                "src/content/ko/test.mdx",
+            ),
             base_snapshot=base,
             for_push=True,
             lenient=True,
@@ -824,15 +1441,27 @@ def test_online_verify_blocks_missing_attachment(tmp_path, monkeypatch):
     monkeypatch.setattr("reverse_sync_cli._PROJECT_DIR", tmp_path)
     page_id = "123"
     (tmp_path / "var" / page_id).mkdir(parents=True)
+    _write_page_catalog(tmp_path, page_id)
+    original = _source_mdx("Before\n", page_id)
+    improved = _source_mdx("Before\n\n![new](/images/new.png)\n", page_id)
 
     result = run_verify(
         page_id=page_id,
-        original_src=MdxSource("# Test page\n\nBefore\n", "original.mdx"),
+        original_src=MdxSource(
+            original,
+            "main:src/content/ko/test.mdx",
+        ),
         improved_src=MdxSource(
-            "# Test page\n\nBefore\n\n![new](/images/new.png)\n",
-            "improved.mdx",
+            improved,
+            "src/content/ko/test.mdx",
         ),
         base_snapshot=_snapshot(title="Test page"),
+        attachment_catalog=AttachmentCatalog(
+            page_id=page_id,
+            attachments=(),
+            fetched_at=NOW.isoformat(),
+            api="fixture",
+        ),
         for_push=True,
     )
 

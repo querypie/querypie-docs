@@ -1,9 +1,13 @@
 """패치 빌더 — MDX diff 변경과 XHTML 매핑을 결합하여 XHTML 패치를 생성."""
 import difflib
+import html
 import re
+from pathlib import PurePosixPath
 from typing import Any, Dict, List, Optional, Tuple
+from urllib.parse import unquote, urlparse
 
 from mdx_to_storage.emitter import emit_block
+from mdx_to_storage.link_resolver import LinkResolver
 from mdx_to_storage.parser import parse_mdx
 from reverse_sync.block_diff import BlockChange, NON_CONTENT_TYPES
 from reverse_sync.mapping_recorder import BlockMapping, record_mapping
@@ -22,7 +26,7 @@ from reverse_sync.sidecar import (
 )
 from reverse_sync.lost_info_patcher import apply_lost_info, distribute_lost_info_to_mappings
 from reverse_sync.mdx_to_xhtml_inline import mdx_block_to_xhtml_element, mdx_block_to_inner_xhtml
-from mdx_to_storage.inline import convert_inline
+from mdx_to_storage.inline import convert_inline, escape_bare_xml_ampersands
 from reverse_sync.reconstructors import (
     sidecar_block_requires_reconstruction,
     reconstruct_fragment_with_sidecar,
@@ -44,6 +48,10 @@ def is_markdown_table(content: str) -> bool:
 
 
 _CLEAN_BLOCK_TYPES = frozenset(("heading", "code_block", "hr"))
+_GENERATED_LINK = re.compile(
+    r"<a\b([^>]*)>(.*?)</a>",
+    flags=re.DOTALL | re.IGNORECASE,
+)
 
 
 def _is_container_sidecar(sidecar_block: Optional[SidecarBlock]) -> bool:
@@ -89,6 +97,108 @@ def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
 def _contains_preserved_link_markup(xhtml_text: str) -> bool:
     """링크 계열 preserved anchor가 포함된 경우만 가시 공백 raw transfer 대상이다."""
     return "<ac:link" in xhtml_text
+
+
+def _resolve_generated_links(
+    xhtml: str,
+    resolver: LinkResolver,
+    attachment_filenames: frozenset[str] = frozenset(),
+) -> str:
+    """emitter가 만든 relative <a>를 Confluence ac:link로 변환합니다."""
+    from bs4 import BeautifulSoup
+
+    def replace(match: re.Match[str]) -> str:
+        tag = BeautifulSoup(match.group(0), "html.parser").find("a")
+        if tag is None:
+            return match.group(0)
+        href_value = tag.get("href")
+        if not isinstance(href_value, str):
+            return match.group(0)
+        href = html.unescape(href_value)
+        body = escape_bare_xml_ampersands(match.group(2))
+        link_text = BeautifulSoup(body, "html.parser").get_text()
+        resolution = resolver.resolve_with_evidence(href, link_text=link_text)
+        if resolution.status == "external":
+            return match.group(0)
+        extra_attrs = set(tag.attrs) - {"href"}
+        if extra_attrs:
+            raise ValueError(
+                "generated internal link의 추가 attribute를 보존할 수 없습니다: "
+                + ", ".join(sorted(extra_attrs))
+            )
+        if resolution.status == "local_anchor":
+            anchor = html.escape(resolution.anchor or "", quote=True)
+            if not anchor:
+                raise ValueError("generated local anchor가 비어 있습니다")
+            return (
+                f'<ac:link ac:anchor="{anchor}">'
+                f"<ac:link-body>{body}</ac:link-body>"
+                "</ac:link>"
+            )
+        filename = PurePosixPath(unquote(urlparse(href).path)).name
+        if filename and filename in attachment_filenames:
+            escaped_filename = html.escape(filename, quote=True)
+            return (
+                "<ac:link>"
+                f'<ri:attachment ri:filename="{escaped_filename}">'
+                "</ri:attachment>"
+                f"<ac:link-body>{body}</ac:link-body>"
+                "</ac:link>"
+            )
+        if resolution.status != "resolved":
+            raise ValueError(
+                f"generated internal link를 resolve할 수 없습니다: "
+                f"{href} ({resolution.status})"
+            )
+        anchor_attr = (
+            f' ac:anchor="{html.escape(resolution.anchor, quote=True)}"'
+            if resolution.anchor
+            else ""
+        )
+        title = html.escape(resolution.content_title or "", quote=True)
+        return (
+            f"<ac:link{anchor_attr}>"
+            f'<ri:page ri:content-title="{title}"></ri:page>'
+            f"<ac:link-body>{body}</ac:link-body>"
+            f"</ac:link>"
+        )
+
+    return _GENERATED_LINK.sub(replace, xhtml)
+
+
+def _resolve_patch_links(
+    patches: List[Dict[str, Any]],
+    resolver: LinkResolver | None,
+    attachment_filenames: frozenset[str],
+) -> List[Dict[str, Any]]:
+    if resolver is None:
+        return patches
+    resolved: List[Dict[str, Any]] = []
+    for patch in patches:
+        current = dict(patch)
+        for key in ("new_element_xhtml", "new_inner_xhtml"):
+            if key in current:
+                current[key] = _resolve_generated_links(
+                    str(current[key]),
+                    resolver,
+                    attachment_filenames,
+                )
+        if "inline_fixups" in current:
+            resolved_fixups = []
+            for fixup in current["inline_fixups"]:
+                resolved_fixup = dict(fixup)
+                if "new_inner_xhtml" in resolved_fixup:
+                    resolved_fixup["new_inner_xhtml"] = (
+                        _resolve_generated_links(
+                            str(resolved_fixup["new_inner_xhtml"]),
+                            resolver,
+                            attachment_filenames,
+                        )
+                    )
+                resolved_fixups.append(resolved_fixup)
+            current["inline_fixups"] = resolved_fixups
+        resolved.append(current)
+    return resolved
 
 
 def _is_clean_block(
@@ -548,12 +658,21 @@ def _build_list_item_merge_patch(
     }
 
 
-def _emit_replacement_fragment(block: MdxBlock) -> str:
+def _emit_replacement_fragment(
+    block: MdxBlock,
+    link_resolver: LinkResolver | None = None,
+) -> str:
     """Block content를 현재 forward emitter 기준 fragment로 변환한다."""
     parsed_blocks = [parsed for parsed in parse_mdx(block.content) if parsed.type != "empty"]
     if len(parsed_blocks) == 1:
-        return emit_block(parsed_blocks[0])
-    return mdx_block_to_xhtml_element(block)
+        return emit_block(
+            parsed_blocks[0],
+            context={"link_resolver": link_resolver},
+        )
+    return mdx_block_to_xhtml_element(
+        block,
+        link_resolver=link_resolver,
+    )
 
 
 def _build_replace_fragment_patch(
@@ -819,6 +938,8 @@ def build_patches(
     page_lost_info: Optional[dict] = None,
     roundtrip_sidecar: Optional[RoundtripSidecar] = None,
     page_xhtml: Optional[str] = None,
+    link_resolver: Optional[LinkResolver] = None,
+    attachment_filenames: frozenset[str] = frozenset(),
 ) -> Tuple[List[Dict[str, str]], List[BlockMapping], List[Dict[str, str]]]:
     """diff 변경과 매핑을 결합하여 XHTML 패치 목록을 구성한다.
 
@@ -993,7 +1114,9 @@ def build_patches(
             patch = _build_insert_patch(
                 change, improved_blocks, alignment,
                 mdx_to_sidecar, xpath_to_mapping,
-                page_lost_info=page_lost_info)
+                page_lost_info=page_lost_info,
+                link_resolver=link_resolver,
+            )
             if patch:
                 patches.append(patch)
             continue
@@ -1370,7 +1493,15 @@ def build_patches(
             'new_inner_xhtml': new_inner,
         })
 
-    return patches, mappings, skipped_changes
+    return (
+        _resolve_patch_links(
+            patches,
+            link_resolver,
+            attachment_filenames,
+        ),
+        mappings,
+        skipped_changes,
+    )
 
 
 def _build_delete_patch(
@@ -1396,6 +1527,7 @@ def _build_insert_patch(
     mdx_to_sidecar: Dict[int, SidecarEntry],
     xpath_to_mapping: Dict[str, 'BlockMapping'],
     page_lost_info: Optional[dict] = None,
+    link_resolver: Optional[LinkResolver] = None,
 ) -> Optional[Dict[str, str]]:
     """추가된 블록에 대한 insert 패치를 생성한다."""
     new_block = change.new_block
@@ -1405,7 +1537,13 @@ def _build_insert_patch(
 
     after_xpath = _find_insert_anchor(
         change.index, alignment, mdx_to_sidecar, xpath_to_mapping)
-    new_xhtml = mdx_block_to_xhtml_element(new_block)
+    if link_resolver is None:
+        new_xhtml = mdx_block_to_xhtml_element(new_block)
+    else:
+        new_xhtml = _emit_replacement_fragment(
+            new_block,
+            link_resolver=link_resolver,
+        )
     # L4: lost_info 적용
     if page_lost_info:
         new_xhtml = apply_lost_info(new_xhtml, page_lost_info)

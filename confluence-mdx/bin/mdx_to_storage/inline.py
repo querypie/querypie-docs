@@ -16,6 +16,9 @@ _BR_TAG_RE = re.compile(r"<br\s*/?>", flags=re.IGNORECASE)
 _BADGE_INLINE_RE = re.compile(
     r'<Badge\s+color="([^"]+)">(.*?)</Badge>', flags=re.DOTALL
 )
+_BARE_XML_AMPERSAND_RE = re.compile(
+    r"&(?!(?:#[0-9]+|#x[0-9A-Fa-f]+|[A-Za-z][A-Za-z0-9]+);)"
+)
 _BADGE_COLOR_MAP = {
     "green": "Green",
     "blue": "Blue",
@@ -25,6 +28,11 @@ _BADGE_COLOR_MAP = {
     "gray": "Grey",
     "purple": "Purple",
 }
+
+
+def escape_bare_xml_ampersands(value: str) -> str:
+    """inline markup은 유지하면서 XML entity가 아닌 ampersand만 escape합니다."""
+    return _BARE_XML_AMPERSAND_RE.sub("&amp;", value)
 
 
 def _replace_badge(match: re.Match[str]) -> str:
@@ -110,11 +118,18 @@ def _convert_links(text: str, link_resolver: LinkResolver | None) -> str:
         if not content_title:
             return f'<a href="{href}">{link_text}</a>'
 
-        anchor_attr = f' ac:anchor="{anchor}"' if anchor else ""
+        anchor_attr = (
+            f' ac:anchor="{html.escape(anchor, quote=True)}"'
+            if anchor
+            else ""
+        )
         return (
             f"<ac:link{anchor_attr}>"
-            f'<ri:page ri:content-title="{content_title}"></ri:page>'
-            f"<ac:link-body>{link_text}</ac:link-body>"
+            f'<ri:page ri:content-title="'
+            f'{html.escape(content_title, quote=True)}"></ri:page>'
+            f"<ac:link-body>"
+            f"{escape_bare_xml_ampersands(link_text)}"
+            f"</ac:link-body>"
             f"</ac:link>"
         )
 

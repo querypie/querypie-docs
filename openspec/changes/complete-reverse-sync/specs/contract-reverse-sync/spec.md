@@ -12,6 +12,7 @@ MDX 변경을 기존 Confluence Storage XHTML의 보존 정보와 안전하게 �
 - `confluence-mdx/bin/reverse_sync_cli.py`
 - `confluence-mdx/bin/reverse_sync/**`
 - [Confluence Cloud REST API v2 Page](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-page/)
+- [Confluence Cloud REST API v2 Attachment](https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-attachment/)
 
 ## ADDED Requirements
 
@@ -52,6 +53,14 @@ reverse-sync는 patch를 push eligible로 판정하기 전에 base snapshot을 f
 - WHEN `B.storage_xhtml`을 현재 forward converter와 동일한 dependency catalog로 변환합니다.
 - THEN 변환 결과와 `O`의 page ID, `confluenceUrl`, content가 push equivalence policy에서 일치해야 합니다(SHALL).
 - AND 사용한 converter/tool version과 입력 hash를 manifest에 기록해야 합니다(SHALL).
+
+#### Scenario: repository source identity
+
+- GIVEN original/improved MDX와 current `PageSnapshot B`가 있습니다.
+- WHEN source identity를 검증합니다.
+- THEN 두 MDX descriptor는 같은 `src/content/ko/**.mdx` path를 가리켜야 합니다(SHALL).
+- AND 해당 path, `B.page_id`, 두 MDX의 `confluenceUrl` page ID가 page catalog의 유일한 row에서 일치해야 합니다(SHALL).
+- AND 하나라도 없거나 중복되거나 다르면 `page_identity_mismatch`로 block해야 합니다(SHALL).
 
 #### Scenario: stale original MDX
 
@@ -247,7 +256,11 @@ publisher는 update 응답을 성공의 최종 증거로 취급하지 않고 per
 
 ### Requirement: Explicit Dependency Boundaries
 
-첫 reverse-sync completion 범위는 body content update로 제한하며 title 변경, 새 attachment lifecycle, unresolved link를 암묵적으로 처리해서는 안 됩니다(SHALL NOT).
+reverse-sync는 body에 새로 추가되는 attachment와 internal page dependency를 명시적 catalog 및 preflight gate로 검증해야 합니다(SHALL).
+
+첫 reverse-sync completion 범위는 body content update로 제한하며 title 변경,
+attachment upload/update/delete lifecycle, unresolved link를 암묵적으로
+처리해서는 안 됩니다(SHALL NOT).
 
 #### Scenario: title 변경
 
@@ -255,18 +268,42 @@ publisher는 update 응답을 성공의 최종 증거로 취급하지 않고 per
 - WHEN planner가 변경을 분석합니다.
 - THEN `title_change_unsupported`로 block해야 합니다(SHALL).
 
-#### Scenario: 새 attachment
+#### Scenario: 존재하지 않는 attachment 참조
 
 - GIVEN improved MDX가 base page에 존재하지 않는 attachment filename을 참조합니다.
 - WHEN dependency gate를 실행합니다.
 - THEN `missing_attachment`로 block해야 합니다(SHALL).
 - AND broken `ri:attachment` 참조를 포함한 body를 push해서는 안 됩니다(SHALL NOT).
 
+#### Scenario: 기존 attachment의 새 reference
+
+- GIVEN improved MDX가 current attachment catalog에 유일하게 존재하는 filename을 새로 참조합니다.
+- WHEN dependency gate와 candidate renderer를 실행합니다.
+- THEN attachment ID, filename, version, catalog hash를 local proof에 기록해야 합니다(SHALL).
+- AND candidate는 해당 filename을 가진 `ri:attachment` reference를 생성해야 합니다(SHALL).
+- AND attachment upload 또는 version 변경을 암묵적으로 실행해서는 안 됩니다(SHALL NOT).
+
 #### Scenario: unresolved internal link
 
 - GIVEN link resolver가 target page를 하나로 결정하지 못합니다.
 - WHEN candidate XHTML을 생성합니다.
-- THEN `link_resolution_error`로 block해야 합니다(SHALL).
+- THEN target이 없으면 `internal_link_unresolved`, 여러 target이면 `ambiguous_target`으로 block해야 합니다(SHALL).
+- AND unresolved relative anchor를 일반 HTML link로 조용히 남겨서는 안 됩니다(SHALL NOT).
+
+#### Scenario: resolved internal link
+
+- GIVEN improved MDX의 새 relative link가 page catalog의 유일한 page ID/path와 일치합니다.
+- WHEN candidate XHTML을 생성합니다.
+- THEN target page ID/title/href를 local proof에 기록해야 합니다(SHALL).
+- AND candidate는 target title을 가진 Confluence `ac:link`/`ri:page` macro를 생성해야 합니다(SHALL).
+
+#### Scenario: dependency preflight drift
+
+- GIVEN local proof가 attachment filename 또는 internal page ID/title을 요구합니다.
+- AND verify 이후 attachment가 사라지거나 linked page가 rename/delete되었습니다.
+- WHEN publisher가 PUT 직전 dependency preflight를 실행합니다.
+- THEN `dependency_failure`로 block해야 합니다(SHALL).
+- AND PUT을 호출해서는 안 됩니다(SHALL NOT).
 
 ### Requirement: Page-Scoped Batch Semantics
 

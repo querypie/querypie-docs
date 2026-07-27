@@ -69,11 +69,11 @@
 
 - [x] `confluence-mdx/bin/reverse_sync/base_parity.py`를 추가합니다.
 - [x] remote snapshot의 forward conversion 결과와 original MDX를 비교합니다.
-- [ ] page ID, `confluenceUrl`, repository MDX path를 함께 검증합니다.
-- [ ] `stale_original_mdx`, `forward_converter_drift`, `page_identity_mismatch`를 구분합니다.
+- [x] page ID, `confluenceUrl`, repository MDX path를 함께 검증합니다.
+- [x] `stale_original_mdx`, `forward_converter_drift`, `page_identity_mismatch`를 구분합니다.
 - [x] original/improved title과 첫 H1 invariant를 검증하고 title change를 block합니다.
-- [ ] attachment catalog에서 improved MDX의 attachment reference를 검증합니다.
-- [ ] internal link resolver error와 ambiguous target을 dependency failure로 변환합니다.
+- [x] attachment catalog에서 improved MDX의 attachment reference를 검증합니다.
+- [x] internal link resolver error와 ambiguous target을 dependency failure로 변환합니다.
 - [x] snapshot metadata가 없는 offline verify는 `push_eligible: false`로 표시합니다.
 
 완료 gate:
@@ -176,6 +176,7 @@ strict proof와 typed equivalence는 다음 test module과 golden shadow fixture
 ```bash
 cd confluence-mdx/tests
 ../venv/bin/python3 -m pytest -q \
+  test_reverse_sync_input_gates.py \
   test_reverse_sync_equivalence.py \
   test_reverse_sync_online_proof_fixture.py \
   test_reverse_sync_push_transaction.py
@@ -193,6 +194,8 @@ cd confluence-mdx/tests
 ```
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
+
+현재 변경 결과: 762 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -238,13 +241,13 @@ strict proof 구현 branch 검증 결과:
 - `make test-convert`: 21 passed
 - `make test-reverse-sync`: golden 16 passed, regression 43 passed
 - `make test-byte-verify`: fast/splice 각각 21/21 passed
-- 전체 Python test: 1054 passed, 2 skipped
+- 전체 Python test: 1085 passed, 2 skipped
 - 16개 golden page shadow online verify: 4개 `verified_local`, 나머지는
   visible whitespace, unresolved link, raw HTML table mutation 등에서 fail-closed
 
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
-이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1054 passed, 2 skipped`)를
+이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1085 passed, 2 skipped`)를
 실행했고 frontend render test는 영향 범위에서 제외했습니다.
 
 ```bash
