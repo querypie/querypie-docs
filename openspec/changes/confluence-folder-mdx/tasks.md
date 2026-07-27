@@ -16,6 +16,7 @@
 - [x] 2.8 `_meta.ts` 생성을 `bin/converter/cli.py`의 XHTML side effect에서 catalog-level navigation pass로 이동합니다.
 - [x] 2.9 `var/convert-manifest.<sync-code>.yaml`의 atomic update와 stale generated output 안전 삭제를 구현합니다.
 - [x] 2.10 folder MDX가 reverse sync 대상이 아닐 때 명확한 오류를 반환하도록 관련 entry point를 확인하고 필요한 guard를 추가합니다.
+- [x] 2.11 Compose 실행 사이에 profile manifest를 host에 보존하고 다른 profile 소유 output을 stale cleanup에서 제외합니다.
 
 ## 3. Verification
 
@@ -32,6 +33,7 @@
 - [x] 3.11 conversion 중간 실패 시 stale file 삭제와 manifest 교체가 일어나지 않는지 검증합니다.
 - [ ] 3.12 QM 대상 folder `2167636017`과 QCP folder root profile의 smoke 결과를 확인합니다.
 - [x] 3.13 focused Python test, `git diff --check`, 관련 `rg` source scan을 실행합니다.
+- [x] 3.14 ephemeral container manifest mount와 공유 output root의 profile 소유권 이전 회귀 테스트를 추가합니다.
 
 권장 focused 명령:
 

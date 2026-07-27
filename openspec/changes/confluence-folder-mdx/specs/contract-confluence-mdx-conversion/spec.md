@@ -174,6 +174,21 @@ Converter는 sync profile별 manifest로 자신이 만든 MDX와 navigation을 �
 - THEN 이전 output을 stale file로 삭제하지 않아야 합니다(SHALL NOT).
 - AND 이전 manifest를 교체하지 않아야 합니다(SHALL NOT).
 
+#### Scenario: ephemeral container 재실행
+
+- GIVEN `docker compose run --rm`으로 변환을 실행합니다.
+- WHEN 성공한 변환이 profile manifest를 갱신하고 container가 종료됩니다.
+- THEN manifest 변경은 host의 추적 가능한 경로에 남아야 합니다(SHALL).
+- AND 다음 container 실행은 이전 성공 변환의 manifest를 읽어야 합니다(SHALL).
+
+#### Scenario: 공유 output root의 profile 소유권 이전
+
+- GIVEN 두 sync profile이 같은 output root를 사용합니다.
+- AND 현재 profile에서 stale인 경로를 다른 profile의 manifest가 소유합니다.
+- WHEN 현재 profile의 stale cleanup을 실행합니다.
+- THEN 다른 profile이 소유한 output을 삭제하지 않아야 합니다(SHALL NOT).
+- AND 현재 profile manifest에서는 해당 stale 경로의 소유권을 제거해야 합니다(SHALL).
+
 #### Scenario: unsafe manifest path
 
 - GIVEN manifest entry가 configured output root 밖을 가리키거나 허용되지 않은 파일을 가리킵니다.

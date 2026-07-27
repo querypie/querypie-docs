@@ -28,6 +28,8 @@ _SCRIPT_DIR = Path(__file__).resolve().parent        # confluence-mdx/bin/
 _PROJECT_DIR = _SCRIPT_DIR.parent                    # confluence-mdx/
 _SUPPORTED_CONTENT_TYPES = frozenset({"page", "folder"})
 _DEFAULT_CONFLUENCE_BASE_URL = "https://querypie.atlassian.net/wiki"
+_MANIFEST_PREFIX = "convert-manifest."
+_MANIFEST_SUFFIX = ".yaml"
 
 # Ensure bin/ is on sys.path
 if str(_SCRIPT_DIR) not in sys.path:
@@ -356,6 +358,16 @@ def _manifest_outputs(path: Path, expected_sync_code: str) -> List[Dict[str, str
     return outputs
 
 
+def _manifest_sync_code(path: Path) -> str:
+    name = path.name
+    if not name.startswith(_MANIFEST_PREFIX) or not name.endswith(_MANIFEST_SUFFIX):
+        raise ConversionError(f"Invalid conversion manifest filename: {path}")
+    sync_code = name[len(_MANIFEST_PREFIX):-len(_MANIFEST_SUFFIX)]
+    if not sync_code:
+        raise ConversionError(f"Missing sync code in conversion manifest: {path}")
+    return sync_code
+
+
 def _validated_manifest_path(output_root: Path, relative_value: Any) -> Path:
     if not isinstance(relative_value, str):
         raise ConversionError(f"Manifest path must be a string: {relative_value!r}")
@@ -378,6 +390,27 @@ def _validated_manifest_path(output_root: Path, relative_value: Any) -> Path:
     return resolved
 
 
+def _other_profile_owned_paths(
+    manifest_path: Path,
+    sync_code: str,
+    output_root: Path,
+) -> set[str]:
+    """Load and validate outputs owned by sibling sync profile manifests."""
+    owned_paths: set[str] = set()
+    manifest_pattern = f"{_MANIFEST_PREFIX}*{_MANIFEST_SUFFIX}"
+    for candidate in sorted(manifest_path.parent.glob(manifest_pattern)):
+        if candidate == manifest_path:
+            continue
+        candidate_sync_code = _manifest_sync_code(candidate)
+        if candidate_sync_code == sync_code:
+            continue
+        for entry in _manifest_outputs(candidate, candidate_sync_code):
+            relative_value = entry.get("path")
+            _validated_manifest_path(output_root, relative_value)
+            owned_paths.add(str(relative_value))
+    return owned_paths
+
+
 def _remove_empty_parents(path: Path, output_root: Path) -> None:
     parent = path.parent
     while parent != output_root:
@@ -394,7 +427,7 @@ def finalize_manifest(
     current_outputs: Sequence[Mapping[str, str]],
     output_base_dir: Path,
 ) -> None:
-    """Safely remove stale owned files and atomically replace the manifest."""
+    """Remove exclusively owned stale files and atomically replace the manifest."""
     output_root = output_base_dir.resolve()
     previous_outputs = _manifest_outputs(manifest_path, sync_code)
 
@@ -414,8 +447,13 @@ def finalize_manifest(
             )
         current_by_path[str(relative_value)] = entry
 
+    other_profile_paths = _other_profile_owned_paths(
+        manifest_path,
+        sync_code,
+        output_root,
+    )
     for stale_relative_path in sorted(
-        set(previous_by_path) - set(current_by_path),
+        set(previous_by_path) - set(current_by_path) - other_profile_paths,
         reverse=True,
     ):
         stale_path = _validated_manifest_path(output_root, stale_relative_path)

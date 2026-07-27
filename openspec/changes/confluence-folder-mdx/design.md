@@ -191,18 +191,20 @@ administrator-manual/mcp-server/_meta.ts
 
 ### Decision: sync profile별 manifest로 stale output을 정리합니다
 
-`convert_all.py`는 sync profile별 manifest에 자신이 생성한 MDX와 `_meta.ts`를 기록합니다. Manifest는 `var/convert-manifest.<sync-code>.yaml`에 저장하며 최소 `page_id`, `type`, output 상대 경로를 보존합니다.
+`convert_all.py`는 sync profile별 manifest에 자신이 생성한 MDX와 `_meta.ts`를 기록합니다. Manifest는 `var/convert-manifest.<sync-code>.yaml`에 저장하며 최소 `page_id`, `type`, output 상대 경로를 보존합니다. Docker Compose는 지원 profile의 manifest 파일을 host에 명시적으로 bind mount합니다. 따라서 `docker compose run --rm` container가 종료되어도 manifest가 repository 작업 트리에 남고, 다음 실행과 생성 PR이 같은 소유권 상태를 이어받습니다.
 
 정리 순서는 다음과 같습니다.
 
 1. 이전 manifest를 읽습니다.
-2. 현재 catalog의 page/folder MDX와 navigation을 모두 생성하고 검증합니다.
-3. 하나라도 실패하면 이전 파일 삭제와 manifest 교체를 수행하지 않습니다.
-4. 모두 성공하면 `previous_paths - current_paths`만 삭제합니다.
-5. 빈 directory만 아래에서 위로 제거하고, manifest 밖의 파일이나 비어 있지 않은 directory는 보존합니다.
-6. 현재 manifest를 atomic replace합니다.
+2. 같은 manifest directory의 다른 sync profile manifest를 읽고 공유 output 소유권을 검증합니다.
+3. 현재 catalog의 page/folder MDX와 navigation을 모두 생성하고 검증합니다.
+4. 하나라도 실패하면 이전 파일 삭제와 manifest 교체를 수행하지 않습니다.
+5. 모두 성공하면 `previous_paths - current_paths - other_profile_paths`만 삭제합니다.
+6. 다른 profile이 계속 소유하는 stale 경로는 파일을 보존하되 현재 profile manifest에서는 제거합니다.
+7. 빈 directory만 아래에서 위로 제거하고, manifest 밖의 파일이나 비어 있지 않은 directory는 보존합니다.
+8. 현재 manifest를 atomic replace합니다.
 
-모든 삭제 대상은 resolve 후 configured output root 내부인지 검사합니다. Manifest가 가리키더라도 output root 밖의 경로, 허용하지 않은 suffix, 예상하지 않은 `_meta.ts` 위치는 삭제하지 않고 오류로 처리합니다.
+모든 현재·이전·다른 profile manifest 경로는 resolve 후 configured output root 내부인지 검사합니다. 어느 manifest든 output root 밖의 경로, 허용하지 않은 suffix, 예상하지 않은 `_meta.ts` 위치를 가리키면 삭제를 시작하기 전에 오류로 처리합니다.
 
 Folder 이동·이름 변경 시 folder landing MDX뿐 아니라 경로가 바뀐 descendant page/folder MDX와 generated `_meta.ts`도 같은 방식으로 정리됩니다. Attachment cleanup은 이번 변경 범위에 포함하지 않습니다.
 
@@ -223,7 +225,7 @@ QM의 page root와 QCP의 folder root 모두 typed node로 수집합니다. Root
 1. typed model과 API client pagination을 추가합니다.
 2. `--remote`로 전체 QM/QCP tree를 다시 받아 folder raw snapshot과 typed catalog를 생성합니다.
 3. folder generator와 중앙 navigation pass를 추가합니다.
-4. 최초 `convert_all.py` 성공 시 manifest baseline을 기록합니다. 이 실행에서는 기존 manifest가 없으므로 stale output을 삭제하지 않습니다.
+4. 지원 profile별 빈 manifest baseline과 Compose bind mount를 추가합니다. 최초 `convert_all.py` 성공 시 host manifest에 baseline을 기록하며, 이 실행에서는 이전 소유권이 없으므로 stale output을 삭제하지 않습니다.
 5. 두 번째 fixture run에서 folder 이동·이름 변경·삭제를 재현하여 stale output 정리를 검증합니다.
 6. README에 mode별 hierarchy freshness와 folder 저장/출력 형식을 기록합니다.
 7. 구현과 검증이 완료되면 change-local spec을 accepted `contract-confluence-mdx-conversion` spec으로 승격합니다.

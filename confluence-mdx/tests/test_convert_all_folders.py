@@ -235,6 +235,40 @@ def test_manifest_removes_only_previous_owned_outputs(tmp_path):
     assert yaml.safe_load(manifest_path.read_text())["outputs"] == current_outputs
 
 
+def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):
+    output_dir = tmp_path / "output"
+    manifest_dir = tmp_path / "var"
+    qm_manifest = manifest_dir / "convert-manifest.qm.yaml"
+    qcp_manifest = manifest_dir / "convert-manifest.qcp.yaml"
+    shared_output = output_dir / "shared" / "folder.mdx"
+    shared_output.parent.mkdir(parents=True)
+    shared_output.write_text("fresh QM output")
+    owned_output = {
+        "page_id": "qm-folder",
+        "type": "folder",
+        "kind": "mdx",
+        "path": "shared/folder.mdx",
+    }
+    _write_yaml(qm_manifest, {
+        "version": 1,
+        "sync_code": "qm",
+        "outputs": [owned_output],
+    })
+    _write_yaml(qcp_manifest, {
+        "version": 1,
+        "sync_code": "qcp",
+        "outputs": [{
+            **owned_output,
+            "page_id": "old-qcp-folder",
+        }],
+    })
+
+    finalize_manifest(qcp_manifest, "qcp", [], output_dir)
+
+    assert shared_output.read_text() == "fresh QM output"
+    assert yaml.safe_load(qcp_manifest.read_text())["outputs"] == []
+
+
 def test_first_manifest_does_not_delete_untracked_existing_mdx(tmp_path):
     output_dir = tmp_path / "output"
     existing = output_dir / "legacy.mdx"
@@ -283,6 +317,21 @@ def test_manifest_rejects_different_sync_profile(tmp_path):
 
     with pytest.raises(ConversionError, match="sync_code mismatch"):
         finalize_manifest(manifest_path, "qm", [], output_dir)
+
+
+def test_compose_persists_each_supported_profile_manifest():
+    project_dir = Path(__file__).resolve().parents[1]
+    compose = yaml.safe_load((project_dir / "compose.yml").read_text())
+    volumes = compose["services"]["confluence-mdx"]["volumes"]
+
+    for sync_code in ("qm", "qcp"):
+        relative_path = f"./var/convert-manifest.{sync_code}.yaml"
+        assert (
+            f"{relative_path}:/workdir/var/convert-manifest.{sync_code}.yaml"
+            in volumes
+        )
+        manifest = yaml.safe_load((project_dir / relative_path).read_text())
+        assert manifest["sync_code"] == sync_code
 
 
 def test_conversion_failure_preserves_previous_output_and_manifest(tmp_path):
