@@ -177,7 +177,7 @@ bin/fetch_cli.py --log-level DEBUG
 - folder는 `title`, `confluenceUrl`, `## 하위 문서`와 직계 자식 link 목록을 가진 landing page로 완전히 재생성합니다.
 - 지원되는 직계 자식이 없는 folder에는 `하위 문서가 없습니다.`를 표시합니다.
 - navigation `_meta.ts`는 전체 catalog 변환이 끝난 뒤 생성합니다.
-- `var/convert-manifest.<sync-code>.yaml`에 생성한 MDX와 `_meta.ts`를 기록합니다.
+- `var/convert-manifests/convert-manifest.<sync-code>.yaml`에 생성한 MDX와 `_meta.ts`를 기록합니다.
 - 변환 전체가 성공한 경우에만 이전 manifest가 소유한 stale output을 삭제합니다.
 
 실행 방법:

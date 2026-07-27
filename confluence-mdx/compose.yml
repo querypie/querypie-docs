@@ -55,10 +55,9 @@ services:
       # can read the catalog.  Add a new line here for each new Space.
       - ./var/pages.qm.yaml:/workdir/var/pages.qm.yaml
       - ./var/pages.qcp.yaml:/workdir/var/pages.qcp.yaml
-      # Persist generated-output ownership across `docker compose run --rm`.
-      # Add a manifest mount together with each new sync profile.
-      - ./var/convert-manifest.qm.yaml:/workdir/var/convert-manifest.qm.yaml
-      - ./var/convert-manifest.qcp.yaml:/workdir/var/convert-manifest.qcp.yaml
+      # Persist generated-output ownership across `docker compose run --rm`
+      # while allowing atomic replacement of manifest files.
+      - ./var/convert-manifests:/workdir/var/convert-manifests
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
       - ../src/content/ko:/workdir/target/ko

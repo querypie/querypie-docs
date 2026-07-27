@@ -180,6 +180,8 @@ Converter는 sync profile별 manifest로 자신이 만든 MDX와 navigation을 �
 - WHEN 성공한 변환이 profile manifest를 갱신하고 container가 종료됩니다.
 - THEN manifest 변경은 host의 추적 가능한 경로에 남아야 합니다(SHALL).
 - AND 다음 container 실행은 이전 성공 변환의 manifest를 읽어야 합니다(SHALL).
+- AND manifest directory를 mount하여 atomic file 교체를 지원해야 합니다(SHALL).
+- AND atomic replace 대상 manifest file 자체를 개별 mount point로 사용하지 않아야 합니다(SHALL NOT).
 
 #### Scenario: 공유 output root의 profile 소유권 이전
 

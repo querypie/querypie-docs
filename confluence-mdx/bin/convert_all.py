@@ -626,7 +626,11 @@ def main():
     args.output_dir = _resolve(args.output_dir)
     args.public_dir = _resolve(args.public_dir)
     args.translations = _resolve(args.translations)
-    manifest_path = os.path.join(args.var_dir, f"convert-manifest.{args.sync_code}.yaml")
+    manifest_path = os.path.join(
+        args.var_dir,
+        "convert-manifests",
+        f"convert-manifest.{args.sync_code}.yaml",
+    )
     profile = SYNC_PROFILES.get(args.sync_code)
     space_key = args.space_key or (
         profile.space_key if profile else args.sync_code.upper()

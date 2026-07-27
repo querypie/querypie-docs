@@ -201,7 +201,9 @@ def test_navigation_is_generated_after_page_and_folder_mdx_exist(tmp_path):
 
 def test_manifest_removes_only_previous_owned_outputs(tmp_path):
     output_dir = tmp_path / "output"
-    manifest_path = tmp_path / "var" / "convert-manifest.qm.yaml"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     stale = output_dir / "old" / "folder.mdx"
     manual = output_dir / "old" / "manual.txt"
     current = output_dir / "new" / "folder.mdx"
@@ -237,7 +239,7 @@ def test_manifest_removes_only_previous_owned_outputs(tmp_path):
 
 def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):
     output_dir = tmp_path / "output"
-    manifest_dir = tmp_path / "var"
+    manifest_dir = tmp_path / "var" / "convert-manifests"
     qm_manifest = manifest_dir / "convert-manifest.qm.yaml"
     qcp_manifest = manifest_dir / "convert-manifest.qcp.yaml"
     shared_output = output_dir / "shared" / "folder.mdx"
@@ -274,7 +276,9 @@ def test_first_manifest_does_not_delete_untracked_existing_mdx(tmp_path):
     existing = output_dir / "legacy.mdx"
     existing.parent.mkdir(parents=True)
     existing.write_text("legacy")
-    manifest_path = tmp_path / "var" / "convert-manifest.qm.yaml"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
 
     finalize_manifest(manifest_path, "qm", [], output_dir)
 
@@ -287,7 +291,9 @@ def test_manifest_rejects_path_outside_output_root(tmp_path):
     output_dir.mkdir()
     outside = tmp_path / "outside.mdx"
     outside.write_text("keep")
-    manifest_path = tmp_path / "var" / "convert-manifest.qm.yaml"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     _write_yaml(manifest_path, {
         "version": 1,
         "sync_code": "qm",
@@ -308,7 +314,9 @@ def test_manifest_rejects_path_outside_output_root(tmp_path):
 def test_manifest_rejects_different_sync_profile(tmp_path):
     output_dir = tmp_path / "output"
     output_dir.mkdir()
-    manifest_path = tmp_path / "var" / "convert-manifest.qm.yaml"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     _write_yaml(manifest_path, {
         "version": 1,
         "sync_code": "qcp",
@@ -319,16 +327,20 @@ def test_manifest_rejects_different_sync_profile(tmp_path):
         finalize_manifest(manifest_path, "qm", [], output_dir)
 
 
-def test_compose_persists_each_supported_profile_manifest():
+def test_compose_persists_manifest_directory_for_atomic_replace():
     project_dir = Path(__file__).resolve().parents[1]
     compose = yaml.safe_load((project_dir / "compose.yml").read_text())
     volumes = compose["services"]["confluence-mdx"]["volumes"]
+    manifest_mount = (
+        "./var/convert-manifests:/workdir/var/convert-manifests"
+    )
 
+    assert manifest_mount in volumes
     for sync_code in ("qm", "qcp"):
-        relative_path = f"./var/convert-manifest.{sync_code}.yaml"
-        assert (
-            f"{relative_path}:/workdir/var/convert-manifest.{sync_code}.yaml"
-            in volumes
+        relative_path = (
+            Path("var")
+            / "convert-manifests"
+            / f"convert-manifest.{sync_code}.yaml"
         )
         manifest = yaml.safe_load((project_dir / relative_path).read_text())
         assert manifest["sync_code"] == sync_code
@@ -338,7 +350,9 @@ def test_conversion_failure_preserves_previous_output_and_manifest(tmp_path):
     var_dir = tmp_path / "var"
     output_dir = tmp_path / "output"
     public_dir = tmp_path / "public"
-    manifest_path = var_dir / "convert-manifest.qm.yaml"
+    manifest_path = (
+        var_dir / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     previous_output = output_dir / "old.mdx"
     previous_output.parent.mkdir(parents=True)
     previous_output.write_text("old")
@@ -376,7 +390,9 @@ def test_convert_all_generates_folder_and_manifest(tmp_path):
     var_dir = tmp_path / "var"
     output_dir = tmp_path / "output"
     public_dir = tmp_path / "public"
-    manifest_path = var_dir / "convert-manifest.qm.yaml"
+    manifest_path = (
+        var_dir / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     root = _node("root", "page", "Root", ["root"])
     folder = _node("folder", "folder", "Folder", ["folder"])
     _write_yaml(var_dir / "folder" / "folder.v2.yaml", _folder_data(
@@ -410,7 +426,9 @@ def test_convert_all_generates_page_folder_and_central_navigation(tmp_path):
     var_dir = tmp_path / "var"
     output_dir = tmp_path / "output"
     public_dir = tmp_path / "public"
-    manifest_path = var_dir / "convert-manifest.qm.yaml"
+    manifest_path = (
+        var_dir / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
     pages_yaml = var_dir / "pages.qm.yaml"
     root = _node("root", "page", "Root", ["root"])
     parent = _node("parent", "page", "Parent", ["parent"])

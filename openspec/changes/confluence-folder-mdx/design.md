@@ -191,7 +191,9 @@ administrator-manual/mcp-server/_meta.ts
 
 ### Decision: sync profile별 manifest로 stale output을 정리합니다
 
-`convert_all.py`는 sync profile별 manifest에 자신이 생성한 MDX와 `_meta.ts`를 기록합니다. Manifest는 `var/convert-manifest.<sync-code>.yaml`에 저장하며 최소 `page_id`, `type`, output 상대 경로를 보존합니다. Docker Compose는 지원 profile의 manifest 파일을 host에 명시적으로 bind mount합니다. 따라서 `docker compose run --rm` container가 종료되어도 manifest가 repository 작업 트리에 남고, 다음 실행과 생성 PR이 같은 소유권 상태를 이어받습니다.
+`convert_all.py`는 sync profile별 manifest에 자신이 생성한 MDX와 `_meta.ts`를 기록합니다. Manifest는 `var/convert-manifests/convert-manifest.<sync-code>.yaml`에 저장하며 최소 `page_id`, `type`, output 상대 경로를 보존합니다. Docker Compose는 `var/convert-manifests/` directory를 host에 bind mount합니다. 따라서 `docker compose run --rm` container가 종료되어도 manifest가 repository 작업 트리에 남고, 다음 실행과 생성 PR이 같은 소유권 상태를 이어받습니다.
+
+Manifest file 자체를 개별 bind mount하는 방식은 선택하지 않습니다. Manifest 갱신은 같은 directory의 임시 파일을 `os.replace()`로 교체하는 atomic write이므로, mount point인 개별 file을 교체하면 container runtime에서 `EBUSY`가 발생할 수 있습니다. Directory mount는 host persistence와 atomic replace를 함께 보장합니다.
 
 정리 순서는 다음과 같습니다.
 
@@ -225,7 +227,7 @@ QM의 page root와 QCP의 folder root 모두 typed node로 수집합니다. Root
 1. typed model과 API client pagination을 추가합니다.
 2. `--remote`로 전체 QM/QCP tree를 다시 받아 folder raw snapshot과 typed catalog를 생성합니다.
 3. folder generator와 중앙 navigation pass를 추가합니다.
-4. 지원 profile별 빈 manifest baseline과 Compose bind mount를 추가합니다. 최초 `convert_all.py` 성공 시 host manifest에 baseline을 기록하며, 이 실행에서는 이전 소유권이 없으므로 stale output을 삭제하지 않습니다.
+4. 지원 profile별 빈 manifest baseline과 Compose directory bind mount를 추가합니다. 최초 `convert_all.py` 성공 시 host manifest에 baseline을 기록하며, 이 실행에서는 이전 소유권이 없으므로 stale output을 삭제하지 않습니다.
 5. 두 번째 fixture run에서 folder 이동·이름 변경·삭제를 재현하여 stale output 정리를 검증합니다.
 6. README에 mode별 hierarchy freshness와 folder 저장/출력 형식을 기록합니다.
 7. 구현과 검증이 완료되면 change-local spec을 accepted `contract-confluence-mdx-conversion` spec으로 승격합니다.
