@@ -12,7 +12,7 @@ from reverse_sync.sidecar import (
     build_sidecar,
     build_xpath_to_mapping,
 )
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
 
 def _build_patched_xhtml(xhtml: str, original_mdx: str, improved_mdx: str):

@@ -28,7 +28,6 @@ from mdx_to_storage.parser import parse_mdx_blocks
 from reverse_sync.batch_report import BatchReport
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
-from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
 from reverse_sync.planner import plan_patches
 from reverse_sync.equivalence import (
@@ -569,6 +568,8 @@ def run_verify(
             roundtrip_sidecar,
         )
     else:
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
+
         diagnostic_patches = patch_plan.to_patch_dicts()
         patched_xhtml = patch_xhtml(xhtml, diagnostic_patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)

@@ -189,7 +189,7 @@ class TestParseListItems:
 
 class TestReplaceInnerHtml:
     def test_patch_with_new_inner_xhtml(self):
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = '<p>Old text</p>'
         patches = [{
@@ -201,7 +201,7 @@ class TestReplaceInnerHtml:
         assert '<strong>New</strong> text' in result
 
     def test_legacy_path_still_works(self):
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = '<p>Old text</p>'
         patches = [{
@@ -213,7 +213,7 @@ class TestReplaceInnerHtml:
         assert 'New text' in result
 
     def test_heading_inner_xhtml(self):
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = '<h2>Old Title</h2>'
         patches = [{
@@ -225,7 +225,7 @@ class TestReplaceInnerHtml:
         assert '<h2>New Title</h2>' in result
 
     def test_list_inner_xhtml(self):
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = '<ul><li><p>old item</p></li></ul>'
         patches = [{
@@ -239,7 +239,7 @@ class TestReplaceInnerHtml:
 
     def test_skip_when_old_plain_text_mismatch(self):
         """old_plain_text와 요소 텍스트가 불일치하면 패치를 건너뛴다."""
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = '<p>Actual content</p>'
         patches = [{
@@ -253,7 +253,7 @@ class TestReplaceInnerHtml:
 
     def test_skip_preserves_complex_children(self):
         """검증 가드가 Confluence 전용 자식 요소 파괴를 방지한다."""
-        from reverse_sync.xhtml_patcher import patch_xhtml
+        from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 
         xhtml = (
             '<p>Paragraph text</p>'

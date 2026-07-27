@@ -6,7 +6,7 @@ from pathlib import Path
 from reverse_sync.mdx_block_parser import parse_mdx_blocks
 from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
-from reverse_sync.xhtml_patcher import patch_xhtml
+from reverse_sync.legacy_xhtml_patcher import patch_xhtml
 from reverse_sync_cli import run_verify, MdxSource
 from reverse_sync.patch_builder import build_patches
 from reverse_sync.sidecar import (

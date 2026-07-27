@@ -1,6 +1,16 @@
 import pytest
 from bs4 import BeautifulSoup
-from reverse_sync.xhtml_patcher import XhtmlPatchError, patch_xhtml
+import reverse_sync.xhtml_patcher as validated_patcher
+from reverse_sync.legacy_xhtml_patcher import patch_xhtml
+from reverse_sync.xhtml_patcher import (
+    XhtmlPatchError,
+    apply_validated_patches,
+)
+
+
+def test_validated_boundary_does_not_export_legacy_patcher():
+    assert not hasattr(validated_patcher, "patch_xhtml")
+    assert not hasattr(validated_patcher, "patch_xhtml_engine")
 
 
 def test_simple_text_replacement():
@@ -57,7 +67,7 @@ def test_no_change_when_text_not_found():
     assert result == xhtml  # 변경 없음
 
 
-def test_strict_mode_rejects_source_text_mismatch():
+def test_validated_patches_reject_source_text_mismatch():
     xhtml = '<p>Original text.</p>'
     patches = [
         {
@@ -68,10 +78,10 @@ def test_strict_mode_rejects_source_text_mismatch():
     ]
 
     with pytest.raises(XhtmlPatchError, match='source text'):
-        patch_xhtml(xhtml, patches, strict=True)
+        apply_validated_patches(xhtml, patches)
 
 
-def test_strict_mode_rejects_unresolved_nested_target():
+def test_validated_patches_reject_unresolved_nested_target():
     xhtml = '<p>Original text.</p>'
     patches = [
         {
@@ -82,15 +92,14 @@ def test_strict_mode_rejects_unresolved_nested_target():
     ]
 
     with pytest.raises(XhtmlPatchError, match='modify target'):
-        patch_xhtml(xhtml, patches, strict=True)
+        apply_validated_patches(xhtml, patches)
 
 
-def test_strict_mode_rejects_unknown_action():
+def test_validated_patches_reject_unknown_action():
     with pytest.raises(XhtmlPatchError, match='action'):
-        patch_xhtml(
+        apply_validated_patches(
             '<p>Original text.</p>',
             [{'action': 'merge', 'xhtml_xpath': 'p[1]'}],
-            strict=True,
         )
 
 
