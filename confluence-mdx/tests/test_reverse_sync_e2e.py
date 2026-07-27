@@ -124,6 +124,9 @@ class TestE2ERoundTrip:
         monkeypatch.chdir(tmp_path)
         dest = tmp_path / "var" / "793608206"
         shutil.copytree(VAR_DIR, dest)
+        # var/는 실행 중 정리될 수 있는 cache이므로 canonical testcase를 fallback으로 사용한다.
+        if not (dest / "page.xhtml").exists():
+            shutil.copy2(TESTCASE_DIR / "page.xhtml", dest / "page.xhtml")
         # pages.<code>.yaml 복사 (converter가 {input_dir}/../pages.qm.yaml 을 참조)
         # pages.qm.yaml 우선, 없으면 레거시 pages.yaml fallback
         pages_yaml_src = VAR_DIR.parent / "pages.qm.yaml"

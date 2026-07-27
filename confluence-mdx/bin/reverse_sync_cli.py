@@ -32,6 +32,9 @@ from reverse_sync.roundtrip_verifier import verify_roundtrip
 from reverse_sync.patch_builder import build_patches
 from xhtml_beautify_diff import xhtml_diff
 
+_PUSH_VERIFIER_POLICY = "reverse-sync-push-v1"
+_TOOL_VERSION = "reverse-sync-cli-v1"
+
 
 @dataclass
 class MdxSource:
@@ -242,6 +245,7 @@ def _compile_result(
     result = {
         'page_id': page_id, 'created_at': now,
         'status': status,
+        'push_eligible': False,
         'changes_count': changes_count,
         'mdx_diff_report': mdx_diff_report,
         'xhtml_diff_report': xhtml_diff_report,
@@ -256,6 +260,31 @@ def _compile_result(
         result['skipped_changes'] = skipped_changes
     (var_dir / 'reverse-sync.result.yaml').write_text(
         yaml.dump(result, allow_unicode=True, default_flow_style=False))
+    return result
+
+
+def _blocked_result(
+    var_dir: Path,
+    page_id: str,
+    now: str,
+    reason_code: str,
+    *,
+    detail: str = "",
+) -> Dict[str, Any]:
+    """push proof가 fail-closed된 결과를 저장한다."""
+    result = {
+        "page_id": page_id,
+        "created_at": now,
+        "status": "blocked",
+        "push_eligible": False,
+        "changes_count": 0,
+        "reason_code": reason_code,
+    }
+    if detail:
+        result["detail"] = detail
+    (var_dir / "reverse-sync.result.yaml").write_text(
+        yaml.dump(result, allow_unicode=True, default_flow_style=False)
+    )
     return result
 
 
@@ -331,6 +360,8 @@ def run_verify(
     no_normalize: bool = False,
     language: str = None,
     page_dir: str = None,
+    base_snapshot=None,
+    for_push: bool = False,
 ) -> Dict[str, Any]:
     """로컬 검증 파이프라인을 실행한다.
 
@@ -346,9 +377,95 @@ def run_verify(
 
     _validate_improved_mdx(improved_mdx, improved_src.descriptor)
 
-    if not xhtml_path:
-        xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
-    xhtml = Path(xhtml_path).read_text()
+    if for_push and base_snapshot is None:
+        return _blocked_result(
+            var_dir,
+            page_id,
+            now,
+            "invalid_page_snapshot",
+            detail="online push에는 remote PageSnapshot이 필요합니다.",
+        )
+    if for_push and lenient:
+        return _blocked_result(
+            var_dir,
+            page_id,
+            now,
+            "lenient_verification_not_pushable",
+            detail="--lenient 결과는 진단용이며 push proof로 사용할 수 없습니다.",
+        )
+
+    if base_snapshot is not None:
+        from reverse_sync.base_parity import (
+            verify_attachment_dependencies,
+            verify_base_parity,
+            verify_source_identity,
+        )
+
+        if base_snapshot.page_id != str(page_id) or base_snapshot.status != "current":
+            return _blocked_result(
+                var_dir,
+                page_id,
+                now,
+                "invalid_page_snapshot",
+                detail="snapshot page ID 또는 status가 요청과 다릅니다.",
+            )
+        source_identity = verify_source_identity(
+            base_snapshot,
+            original_mdx,
+            improved_mdx,
+        )
+        if not source_identity.passed:
+            return _blocked_result(
+                var_dir,
+                page_id,
+                now,
+                source_identity.reason_code,
+                detail=source_identity.diff_report,
+            )
+        dependency = verify_attachment_dependencies(
+            base_snapshot,
+            original_mdx,
+            improved_mdx,
+        )
+        if not dependency.passed:
+            return _blocked_result(
+                var_dir,
+                page_id,
+                now,
+                dependency.reason_code,
+                detail=dependency.diff_report,
+            )
+
+        base_xhtml_path = var_dir / "reverse-sync.base.xhtml"
+        base_mdx_path = var_dir / "reverse-sync.base.mdx"
+        base_xhtml_path.write_text(base_snapshot.storage_xhtml)
+        _forward_convert(
+            str(base_xhtml_path),
+            str(base_mdx_path),
+            page_id,
+            language=language or _detect_language(improved_src.descriptor),
+            page_dir=page_dir,
+        )
+        converted_base_mdx = base_mdx_path.read_text()
+        base_parity = verify_base_parity(
+            base_snapshot,
+            original_mdx,
+            converted_base_mdx,
+        )
+        if not base_parity.passed:
+            return _blocked_result(
+                var_dir,
+                page_id,
+                now,
+                base_parity.reason_code,
+                detail=base_parity.diff_report,
+            )
+        xhtml_path = str(base_xhtml_path)
+        xhtml = base_snapshot.storage_xhtml
+    else:
+        if not xhtml_path:
+            xhtml_path = str(_PROJECT_DIR / 'var' / page_id / 'page.xhtml')
+        xhtml = Path(xhtml_path).read_text()
 
     # Step 1-2: MDX 파싱 + diff
     changes, alignment, original_blocks, improved_blocks = _parse_and_diff(
@@ -358,6 +475,7 @@ def run_verify(
     if not changes:
         result = {'page_id': page_id, 'created_at': now,
                   'status': 'no_changes', 'changes_count': 0,
+                  'push_eligible': False,
                   'mdx_diff_report': '', 'xhtml_diff_report': ''}
         if title:
             result['title'] = title
@@ -430,6 +548,20 @@ def run_verify(
         page_dir=page_dir,
     )
     verify_mdx = (var_dir / 'verify.mdx').read_text()
+    if for_push:
+        candidate_identity = verify_source_identity(
+            base_snapshot,
+            improved_mdx,
+            verify_mdx,
+        )
+        if not candidate_identity.passed:
+            return _blocked_result(
+                var_dir,
+                page_id,
+                now,
+                candidate_identity.reason_code,
+                detail=candidate_identity.diff_report,
+            )
 
     # MDX input diff (original → improved)
     orig_stripped = _strip_frontmatter(original_mdx)
@@ -449,7 +581,7 @@ def run_verify(
         expected_mdx=impr_stripped,
         actual_mdx=verify_stripped,
         lenient=lenient,
-        no_normalize=no_normalize,
+        no_normalize=True if for_push else no_normalize,
     )
     # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
     roundtrip_diff_lines = difflib.unified_diff(
@@ -461,11 +593,62 @@ def run_verify(
     )
     roundtrip_diff_report = ''.join(roundtrip_diff_lines)
 
-    return _compile_result(
+    result = _compile_result(
         var_dir, page_id, now, len(changes),
         mdx_diff_report, xhtml_diff_report,
         verify_result, roundtrip_diff_report, title=title,
         skipped_changes=skipped_changes)
+
+    if for_push and result["status"] == "pass" and skipped_changes:
+        result.update(
+            status="blocked",
+            push_eligible=False,
+            reason_code="incomplete_patch_plan",
+        )
+    elif for_push and result["status"] == "pass":
+        from reverse_sync.manifest import create_sync_manifest
+        from reverse_sync.models import VerificationGate, sha256_text
+
+        manifest_path = create_sync_manifest(
+            runs_dir=var_dir / "reverse-sync",
+            base=base_snapshot,
+            original_mdx=original_mdx,
+            original_descriptor=original_src.descriptor,
+            improved_mdx=improved_mdx,
+            improved_descriptor=improved_src.descriptor,
+            candidate_xhtml=patched_xhtml,
+            verifier_policy=_PUSH_VERIFIER_POLICY,
+            tool_version=_TOOL_VERSION,
+            push_eligible=True,
+            gates=(
+                VerificationGate("source_identity", True),
+                VerificationGate("base_parity", True),
+                VerificationGate("intent_complete", True),
+                VerificationGate("semantic_roundtrip", True),
+                VerificationGate("artifact_integrity", True),
+            ),
+        )
+        result.update(
+            push_eligible=True,
+            manifest_path=str(manifest_path),
+            run_id=manifest_path.parent.name,
+            base_version=base_snapshot.version,
+            base_storage_sha256=base_snapshot.storage_sha256,
+            candidate_sha256=sha256_text(patched_xhtml),
+            local_gates=[
+                "source_identity",
+                "base_parity",
+                "intent_complete",
+                "semantic_roundtrip",
+                "artifact_integrity",
+            ],
+        )
+        (var_dir / "reverse-sync.manifest.path").write_text(str(manifest_path) + "\n")
+
+    (var_dir / "reverse-sync.result.yaml").write_text(
+        yaml.dump(result, allow_unicode=True, default_flow_style=False)
+    )
+    return result
 
 
 def _strip_frontmatter(mdx: str) -> str:
@@ -506,12 +689,14 @@ def _display_status(result: Dict[str, Any]) -> str:
         return 'push_conflict'
     if push_status == 'error':
         return 'push_error'
+    if push_status == 'postcondition_failed':
+        return 'push_postcondition_failed'
     return result.get('status', 'unknown')
 
 
 def _display_error(result: Dict[str, Any], status: str) -> str:
     """출력용 에러 메시지를 반환한다."""
-    if status in ('push_conflict', 'push_error'):
+    if status in ('push_conflict', 'push_error', 'push_postcondition_failed'):
         return (result.get('push') or {}).get('error', '')
     return result.get('error', '')
 
@@ -547,6 +732,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             badge = c(YELLOW, 'PUSH CONFLICT')
         elif status == 'push_error':
             badge = c(YELLOW, 'PUSH ERROR')
+        elif status == 'push_postcondition_failed':
+            badge = c(RED, 'POSTCONDITION FAILED')
         elif status == 'error':
             badge = c(YELLOW, 'ERROR')
         else:
@@ -555,7 +742,12 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         print(f'\n{c(BOLD, file_path)}  {badge}  ({changes} change(s))')
 
         # 에러 메시지
-        if status in ('error', 'push_conflict', 'push_error'):
+        if status in (
+            'error',
+            'push_conflict',
+            'push_error',
+            'push_postcondition_failed',
+        ):
             print(f'  {c(RED, _display_error(r, status))}')
             continue
 
@@ -604,6 +796,9 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     errors = sum(1 for status in display_statuses if status == 'error')
     conflicts = sum(1 for status in display_statuses if status == 'push_conflict')
     push_errors = sum(1 for status in display_statuses if status == 'push_error')
+    postcondition_failures = sum(
+        1 for status in display_statuses if status == 'push_postcondition_failed'
+    )
     no_chg = sum(1 for status in display_statuses if status == 'no_changes')
 
     parts = []
@@ -617,6 +812,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         parts.append(c(YELLOW, f'{conflicts} conflicts'))
     if push_errors:
         parts.append(c(YELLOW, f'{push_errors} push errors'))
+    if postcondition_failures:
+        parts.append(c(RED, f'{postcondition_failures} postcondition failures'))
     if no_chg:
         parts.append(c(DIM, f'{no_chg} no changes'))
 
@@ -636,9 +833,10 @@ Usage:
   reverse-sync -h | --help
 
 Commands:
-  push     verify 수행 후 Confluence에 반영 (--dry-run으로 검증만 가능)
-  verify   push --dry-run의 alias
-  debug    verify + MDX diff, XHTML diff, Verify diff 상세 출력
+  push     원격 current snapshot을 기준으로 검증 후 Confluence에 반영
+           (--dry-run은 manifest까지만 만들고 PUT을 생략)
+  verify   로컬 page.xhtml 기반 진단 (push_eligible은 항상 false)
+  debug    로컬 verify + MDX diff, XHTML diff, Verify diff 상세 출력
 
 Arguments:
   <mdx>
@@ -663,8 +861,8 @@ Options:
 
   --lenient
     관대 모드: trailing whitespace, 날짜 형식 등 XHTML↔MDX 변환기 한계에
-    의한 차이를 정규화한 후 비교한다. 기본 동작은 정규화 없이 문자 그대로
-    비교하는 엄격 모드이다.
+    의한 차이를 기본 비교보다 더 넓게 정규화한다.
+    진단 전용이며 push에는 사용할 수 없다.
 
 Examples:
   # 단일 파일 검증
@@ -679,25 +877,26 @@ Examples:
   # 브랜치 전체 배치 push
   reverse-sync push --branch proofread/fix-typo
 
-  # push --dry-run = verify
+  # 원격 snapshot을 사용하되 PUT은 생략
   reverse-sync push --dry-run "proofread/fix-typo:src/content/ko/user-manual/user-agent.mdx"
 
 Run 'reverse-sync <command> -h' for command-specific help and more examples.
 """
 
 _PUSH_HELP = """\
-MDX 변경사항을 XHTML에 패치하고, round-trip 검증 후 Confluence에 반영한다.
+MDX 변경사항을 검증한 Confluence snapshot에 패치하고, manifest로 결합한 뒤 반영한다.
 
 파이프라인:
-  1. original / improved MDX를 블록 단위로 파싱
-  2. 블록 diff 추출
-  3. 원본 XHTML 블록 매핑 생성
-  4. XHTML 패치 적용
-  5. 패치된 XHTML을 다시 MDX로 forward 변환 (round-trip)
-  6. improved MDX와 비교하여 pass/fail 판정
-  7. pass인 경우 Confluence API로 업데이트 (--dry-run 시 생략)
+  1. version/title/Storage body를 단일 remote PageSnapshot으로 조회
+  2. snapshot의 forward conversion과 original MDX base parity 검증
+  3. original / improved MDX diff를 snapshot XHTML에 적용
+  4. candidate XHTML round-trip과 dependency gate 검증
+  5. snapshot/MDX/candidate hash를 immutable SyncManifest로 기록
+  6. PUT 직전 remote snapshot과 manifest base를 다시 비교
+  7. base version + 1로 한 번만 업데이트하고 persisted snapshot을 재검증
 
-중간 산출물은 var/<page-id>/ 에 reverse-sync.* prefix로 저장된다.
+실행별 산출물은 var/<page-id>/reverse-sync/<run-id>/ 에 저장된다.
+기존 reverse-sync.* 파일은 진단용 compatibility output이며 push payload가 아니다.
 
 MDX 소스 지정 방식:
   ref:path  git ref와 파일 경로를 콜론으로 구분
@@ -756,7 +955,7 @@ def _add_common_args(parser: argparse.ArgumentParser):
                         help='원시 모드: 정규화 없이 비교 (FC/패치 차이의 실제 규모를 확인)')
 
 
-def _do_verify(args) -> dict:
+def _do_verify(args, *, config=None, prepare_push: bool = False) -> dict:
     """공통 verify 로직: MDX 소스 해석 → run_verify() 실행 → 결과 반환."""
     improved_src = _resolve_mdx_source(args.improved_mdx)
     if args.original_mdx:
@@ -772,6 +971,13 @@ def _do_verify(args) -> dict:
     # --page-dir: var/<page_id>/ 를 대체하는 디렉토리 (page.xhtml, page.v1.yaml 제공)
     page_dir = getattr(args, 'page_dir', None)
     xhtml_path = str(Path(page_dir) / 'page.xhtml') if page_dir else None
+    base_snapshot = None
+    if prepare_push:
+        from reverse_sync.confluence_client import get_page_snapshot
+
+        if config is None:
+            config = _ensure_confluence_config()
+        base_snapshot = get_page_snapshot(config, page_id)
 
     return run_verify(
         page_id=page_id,
@@ -781,6 +987,8 @@ def _do_verify(args) -> dict:
         lenient=getattr(args, 'lenient', False),
         no_normalize=getattr(args, 'no_normalize', False),
         page_dir=page_dir,
+        base_snapshot=base_snapshot,
+        for_push=prepare_push,
     )
 
 
@@ -802,7 +1010,8 @@ def _confirm(prompt: str) -> bool:
 def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                      push: bool = False, yes: bool = False,
                      lenient: bool = False,
-                     no_normalize: bool = False) -> List[dict]:
+                     no_normalize: bool = False,
+                     prepare_push: bool = False) -> List[dict]:
     """브랜치의 변경 ko MDX 파일을 배치 처리한다.
 
     push=True이면 verify 전체 완료 후 pass 건만 일괄 push한다.
@@ -818,6 +1027,8 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
     print(f"Processing {'up to ' + str(total) if failures_only and limit > 0 else str(len(files))}/{total} file(s) from branch {branch}...", file=sys.stderr)
     results = []
     failure_count = 0
+    online = push or prepare_push
+    config = _ensure_confluence_config() if online else None
     for idx, ko_path in enumerate(files, 1):
         print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
         try:
@@ -827,7 +1038,21 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                 lenient=lenient,
                 no_normalize=no_normalize,
             )
-            result = _do_verify(args)
+            if online:
+                result = _do_verify(
+                    args,
+                    config=config,
+                    prepare_push=True,
+                )
+            else:
+                result = _do_verify(args)
+            if online and result.get("status") == "pass" and not result.get(
+                "push_eligible"
+            ):
+                result.update(
+                    status="blocked",
+                    reason_code="not_push_eligible",
+                )
             result['file'] = ko_path
             status = result.get('status', 'unknown')
             print(status, file=sys.stderr)
@@ -844,7 +1069,10 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
         return results
 
     # push 대상 집계
-    pushable = [r for r in results if r.get('status') == 'pass']
+    pushable = [
+        r for r in results
+        if r.get('status') == 'pass' and r.get('push_eligible') is True
+    ]
     if not pushable:
         print("\nPush 대상 없음 (pass 0건)", file=sys.stderr)
         return results
@@ -857,12 +1085,15 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             return results
 
     # 일괄 push
-    config = _ensure_confluence_config()
     push_count = 0
     for r in pushable:
         page_id = r['page_id']
         try:
-            push_result = _do_push(page_id, config=config)
+            push_result = _do_push(
+                page_id,
+                config=config,
+                manifest_path=r.get("manifest_path"),
+            )
             r['push'] = push_result
             push_count += 1
             print(f"  pushed {page_id} (v{push_result.get('version', '?')})", file=sys.stderr)
@@ -870,6 +1101,10 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
             r['push'] = {'status': 'conflict', 'error': str(e)}
             print(f"  conflict {page_id}: {e}", file=sys.stderr)
         except Exception as e:
+            if getattr(e, "reason_code", "") == "postcondition_failed":
+                r['push'] = {'status': 'postcondition_failed', 'error': str(e)}
+                print(f"  postcondition failed {page_id}: {e}", file=sys.stderr)
+                break
             r['push'] = {'status': 'error', 'error': str(e)}
             print(f"  error {page_id}: {e}", file=sys.stderr)
 
@@ -893,50 +1128,84 @@ def _ensure_confluence_config():
     return config
 
 
-def _do_push(page_id: str, config=None):
-    """verify 통과 후 Confluence에 push한다.
-
-    1. 현재 페이지 XHTML을 백업 (reverse-sync.backup.xhtml)
-    2. patched XHTML을 Confluence에 push
-    3. 409 충돌 시 PushConflictError 발생
-    """
-    from reverse_sync.confluence_client import get_page_version, get_page_body, update_page_body
-    import requests as _requests
+def _do_push(page_id: str, config=None, manifest_path: str = None):
+    """verified manifest에 결합된 candidate만 안전하게 push한다."""
+    from reverse_sync.confluence_client import ConfluenceGateway, VersionConflictError
+    from reverse_sync.manifest import load_sync_manifest, verify_manifest_integrity
+    from reverse_sync.publisher import publish_verified_manifest
 
     if config is None:
         config = _ensure_confluence_config()
 
     var_dir = _PROJECT_DIR / 'var' / page_id
-    patched_path = var_dir / 'reverse-sync.patched.xhtml'
-    xhtml_body = patched_path.read_text()
+    if manifest_path is None:
+        pointer_path = var_dir / "reverse-sync.manifest.path"
+        if not pointer_path.is_file():
+            raise ValueError(
+                f"페이지 {page_id}의 verified manifest가 없습니다. "
+                "online verify를 다시 실행하세요."
+            )
+        manifest_path = pointer_path.read_text().strip()
+    resolved_manifest_path = Path(manifest_path)
+    manifest = load_sync_manifest(resolved_manifest_path)
+    if manifest.page_id != str(page_id):
+        raise ValueError(
+            f"manifest page ID({manifest.page_id})와 요청 page ID({page_id})가 다릅니다."
+        )
+    verify_manifest_integrity(resolved_manifest_path, manifest)
 
-    # 1) 현재 페이지 정보 조회 + XHTML 백업
-    page_info = get_page_version(config, page_id)
-    current_xhtml = get_page_body(config, page_id)
-    backup_path = var_dir / 'reverse-sync.backup.xhtml'
-    backup_path.write_text(current_xhtml)
+    def semantic_verifier(snapshot, verified_manifest_path: Path) -> bool:
+        improved_ref = manifest.artifact("improved_mdx")
+        expected_mdx = (
+            verified_manifest_path.parent / improved_ref.path
+        ).read_text()
+        persisted_xhtml_path = verified_manifest_path.parent / "postcondition.xhtml"
+        persisted_mdx_path = verified_manifest_path.parent / "postcondition.mdx"
+        persisted_xhtml_path.write_text(snapshot.storage_xhtml)
+        _forward_convert(
+            str(persisted_xhtml_path),
+            str(persisted_mdx_path),
+            page_id,
+            language=_detect_language(manifest.improved_descriptor),
+            page_dir=str(var_dir),
+        )
+        actual_mdx = persisted_mdx_path.read_text()
+        from reverse_sync.base_parity import verify_source_identity
 
-    # 2) push (optimistic locking — version mismatch → 409)
-    new_version = page_info['version'] + 1
+        identity = verify_source_identity(snapshot, expected_mdx, actual_mdx)
+        if not identity.passed:
+            return False
+        return verify_roundtrip(
+            expected_mdx=_strip_frontmatter(expected_mdx),
+            actual_mdx=_strip_frontmatter(actual_mdx),
+            no_normalize=True,
+        ).passed
+
     try:
-        resp = update_page_body(config, page_id,
-                                title=page_info['title'],
-                                version=new_version,
-                                xhtml_body=xhtml_body)
-    except _requests.HTTPError as e:
-        if e.response is not None and e.response.status_code == 409:
-            raise PushConflictError(
-                f"페이지 {page_id} ({page_info['title']})가 Confluence에서 변경되었습니다. "
-                f"fetch로 최신 버전을 가져온 후 다시 시도하세요."
-            ) from e
-        raise
+        receipt = publish_verified_manifest(
+            resolved_manifest_path,
+            ConfluenceGateway(config),
+            semantic_verifier=semantic_verifier,
+        )
+    except VersionConflictError as exc:
+        raise PushConflictError(
+            f"페이지 {page_id} ({manifest.base_title})가 preflight 이후 변경되었습니다. "
+            "최신 snapshot으로 online verify를 다시 실행하세요."
+        ) from exc
+
+    backup_path = var_dir / 'reverse-sync.backup.xhtml'
+    base_ref = manifest.artifact("base_xhtml")
+    shutil.copy2(resolved_manifest_path.parent / base_ref.path, backup_path)
 
     return {
         'page_id': page_id,
-        'title': resp.get('title', page_info['title']),
-        'version': resp.get('version', {}).get('number', new_version),
-        'url': resp.get('_links', {}).get('webui', ''),
+        'status': receipt.status.value,
+        'title': receipt.title,
+        'version': receipt.version,
+        'url': '',
         'backup': str(backup_path),
+        'manifest_path': str(resolved_manifest_path),
+        'manifest_sha256': receipt.manifest_sha256,
     }
 
 
@@ -1012,55 +1281,105 @@ def main():
 
             if getattr(args, 'branch', None):
                 # 배치 모드
-                results = _do_verify_batch(args.branch, limit=getattr(args, 'limit', 0),
-                                           failures_only=failures_only, push=not dry_run,
-                                           yes=auto_yes,
-                                           lenient=getattr(args, 'lenient', False),
-                                           no_normalize=getattr(args, 'no_normalize', False))
+                batch_kwargs = {
+                    "limit": getattr(args, "limit", 0),
+                    "failures_only": failures_only,
+                    "push": not dry_run,
+                    "yes": auto_yes,
+                    "lenient": getattr(args, "lenient", False),
+                    "no_normalize": getattr(args, "no_normalize", False),
+                }
+                if args.command == "push" and dry_run:
+                    batch_kwargs["prepare_push"] = True
+                results = _do_verify_batch(args.branch, **batch_kwargs)
                 if use_json:
                     output = results
                     if failures_only:
                         output = [r for r in results
                                   if r.get('status') not in ('pass', 'no_changes')
-                                  or r.get('push', {}).get('status') in ('conflict', 'error')]
+                                  or r.get('push', {}).get('status')
+                                  in ('conflict', 'error', 'postcondition_failed')]
                     print(json.dumps(output, ensure_ascii=False, indent=2))
                 else:
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
                 has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
                 has_push_failure = any(
-                    r.get('push', {}).get('status') in ('conflict', 'error')
+                    r.get('push', {}).get('status')
+                    in ('conflict', 'error', 'postcondition_failed')
                     for r in results
                 )
                 if has_failure or has_push_failure:
                     sys.exit(1)
             else:
                 # 기존 단일 파일 모드
-                result = _do_verify(args)
+                config = _ensure_confluence_config() if args.command == 'push' else None
+                result = _do_verify(
+                    args,
+                    config=config,
+                    prepare_push=args.command == 'push',
+                )
                 if use_json:
                     print(json.dumps(result, ensure_ascii=False, indent=2))
                 else:
                     _print_results([result], show_all_diffs=show_all_diffs)
 
-                if not dry_run and result.get('status') == 'pass':
+                if (not dry_run
+                        and result.get('status') == 'pass'
+                        and result.get('push_eligible') is True):
                     page_id = result['page_id']
                     title = result.get('title', page_id)
                     if not auto_yes:
-                        if not _confirm(f"Push {title} ({page_id}) to Confluence? [y/N] "):
+                        base_version = result.get("base_version", "?")
+                        target_version = (
+                            base_version + 1 if isinstance(base_version, int) else "?"
+                        )
+                        candidate_hash = result.get("candidate_sha256", "unknown")[:12]
+                        changes_count = result.get("changes_count", 0)
+                        prompt = (
+                            f"Push {title} ({page_id}) "
+                            f"v{base_version}→v{target_version}, "
+                            f"{changes_count} change(s), "
+                            f"candidate {candidate_hash} to Confluence? [y/N] "
+                        )
+                        if not _confirm(prompt):
                             print("Push 취소", file=sys.stderr)
                             sys.exit(0)
                     try:
-                        push_result = _do_push(page_id)
+                        push_result = _do_push(
+                            page_id,
+                            config=config,
+                            manifest_path=result.get("manifest_path"),
+                        )
                         print(json.dumps(push_result, ensure_ascii=False, indent=2))
                     except PushConflictError as e:
                         print(f"Error: {e}", file=sys.stderr)
                         sys.exit(1)
+                    except Exception as e:
+                        reason_code = getattr(e, "reason_code", "push_error")
+                        print(f"Error [{reason_code}]: {e}", file=sys.stderr)
+                        sys.exit(1)
+                elif not dry_run and result.get('status') == 'no_changes':
+                    print("변경 사항이 없어 Confluence update를 생략합니다.", file=sys.stderr)
                 elif not dry_run and result.get('status') != 'pass':
                     print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
                           file=sys.stderr)
                     sys.exit(1)
+                elif not dry_run:
+                    print("Error: 검증 결과가 push eligible 상태가 아닙니다.", file=sys.stderr)
+                    sys.exit(1)
+                elif (args.command == "push"
+                      and result.get("status") == "pass"
+                      and result.get("push_eligible") is not True):
+                    print("Error: online verify 결과가 push eligible 상태가 아닙니다.",
+                          file=sys.stderr)
+                    sys.exit(1)
         except ValueError as e:
             print(f'Error: {e}', file=sys.stderr)
+            sys.exit(1)
+        except Exception as e:
+            reason_code = getattr(e, "reason_code", "reverse_sync_error")
+            print(f"Error [{reason_code}]: {e}", file=sys.stderr)
             sys.exit(1)
 
 
