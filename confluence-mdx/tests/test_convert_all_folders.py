@@ -1,3 +1,4 @@
+import subprocess
 from argparse import Namespace
 from pathlib import Path
 
@@ -269,6 +270,176 @@ def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):
 
     assert shared_output.read_text() == "fresh QM output"
     assert yaml.safe_load(qcp_manifest.read_text())["outputs"] == []
+
+
+def test_convert_all_rejects_current_cross_profile_collision_before_write(
+    tmp_path,
+    capsys,
+):
+    var_dir = tmp_path / "var"
+    output_dir = tmp_path / "output"
+    public_dir = tmp_path / "public"
+    manifest_dir = var_dir / "convert-manifests"
+    qm_manifest = manifest_dir / "convert-manifest.qm.yaml"
+    qcp_manifest = manifest_dir / "convert-manifest.qcp.yaml"
+    qm_root = _node("qm-root", "page", "QM Root", ["qm-root"])
+    qm_folder = _node(
+        "qm-folder",
+        "folder",
+        "QM Folder",
+        ["shared", "folder"],
+    )
+    qcp_pages = [
+        _node("qcp-root", "folder", "QCP Root", ["qcp-root"]),
+        _node(
+            "qcp-folder",
+            "folder",
+            "QCP Folder",
+            ["shared", "folder"],
+        ),
+    ]
+    _write_yaml(var_dir / "pages.qcp.yaml", qcp_pages)
+    _write_yaml(
+        var_dir / "qm-folder" / "children.v2.yaml",
+        {"results": []},
+    )
+    _write_yaml(
+        var_dir / "qcp-folder" / "children.v2.yaml",
+        {"results": []},
+    )
+    existing_output = output_dir / "shared" / "folder.mdx"
+    existing_output.parent.mkdir(parents=True)
+    existing_output.write_text("QCP output", encoding="utf-8")
+    _write_yaml(qcp_manifest, {
+        "version": 1,
+        "sync_code": "qcp",
+        "outputs": [{
+            "page_id": "qcp-folder",
+            "type": "folder",
+            "kind": "mdx",
+            "path": "shared/folder.mdx",
+        }],
+    })
+
+    failures = convert_all(
+        [qm_root, qm_folder],
+        str(var_dir),
+        str(output_dir),
+        str(public_dir),
+        "warning",
+        manifest_path=str(qm_manifest),
+        sync_code="qm",
+    )
+
+    assert failures == 1
+    assert existing_output.read_text(encoding="utf-8") == "QCP output"
+    assert not qm_manifest.exists()
+    assert "Current output path collision" in capsys.readouterr().err
+
+
+def test_convert_all_allows_ownership_transfer_after_sibling_catalog_update(
+    tmp_path,
+):
+    var_dir = tmp_path / "var"
+    output_dir = tmp_path / "output"
+    public_dir = tmp_path / "public"
+    manifest_dir = var_dir / "convert-manifests"
+    qm_manifest = manifest_dir / "convert-manifest.qm.yaml"
+    qcp_manifest = manifest_dir / "convert-manifest.qcp.yaml"
+    qm_root = _node("qm-root", "page", "QM Root", ["qm-root"])
+    qm_folder = _node(
+        "qm-folder",
+        "folder",
+        "QM Folder",
+        ["shared", "folder"],
+    )
+    _write_yaml(
+        var_dir / "pages.qcp.yaml",
+        [_node("qcp-root", "folder", "QCP Root", ["qcp-root"])],
+    )
+    _write_yaml(
+        var_dir / "qm-folder" / "folder.v2.yaml",
+        _folder_data("qm-folder", "QM Folder"),
+    )
+    _write_yaml(
+        var_dir / "qm-folder" / "children.v2.yaml",
+        {"results": []},
+    )
+    _write_yaml(qcp_manifest, {
+        "version": 1,
+        "sync_code": "qcp",
+        "outputs": [{
+            "page_id": "old-qcp-folder",
+            "type": "folder",
+            "kind": "mdx",
+            "path": "shared/folder.mdx",
+        }],
+    })
+
+    failures = convert_all(
+        [qm_root, qm_folder],
+        str(var_dir),
+        str(output_dir),
+        str(public_dir),
+        "warning",
+        manifest_path=str(qm_manifest),
+        sync_code="qm",
+    )
+
+    assert failures == 0
+    assert "# QM Folder" in (
+        output_dir / "shared" / "folder.mdx"
+    ).read_text(encoding="utf-8")
+    assert {
+        entry["path"]
+        for entry in yaml.safe_load(qm_manifest.read_text())["outputs"]
+    } == {"shared/folder.mdx"}
+
+
+def test_full_all_fetches_all_catalogs_before_any_conversion(
+    tmp_path,
+    monkeypatch,
+):
+    project_dir = Path(__file__).resolve().parents[1]
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    container_workdir = tmp_path / "workdir"
+    (container_workdir / "var").mkdir(parents=True)
+    entrypoint_path = tmp_path / "entrypoint.sh"
+    entrypoint_path.write_text(
+        (project_dir / "scripts" / "entrypoint.sh")
+        .read_text(encoding="utf-8")
+        .replace("/workdir", str(container_workdir)),
+        encoding="utf-8",
+    )
+    calls_path = tmp_path / "calls.log"
+    for command, label in (
+        ("fetch_cli.py", "fetch"),
+        ("convert_all.py", "convert"),
+    ):
+        command_path = bin_dir / command
+        command_path.write_text(
+            "#!/bin/bash\n"
+            f'echo "{label} $*" >> "$CALLS_PATH"\n',
+            encoding="utf-8",
+        )
+        command_path.chmod(0o755)
+    monkeypatch.setenv("CALLS_PATH", str(calls_path))
+
+    subprocess.run(
+        ["bash", str(entrypoint_path), "full-all"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert calls_path.read_text(encoding="utf-8").splitlines() == [
+        "fetch --sync-code qm",
+        "fetch --sync-code qcp",
+        "convert --sync-code qm",
+        "convert --sync-code qcp",
+    ]
 
 
 def test_first_manifest_does_not_delete_untracked_existing_mdx(tmp_path):

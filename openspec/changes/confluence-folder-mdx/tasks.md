@@ -34,6 +34,7 @@
 - [ ] 3.12 QM 대상 folder `2167636017`과 QCP folder root profile의 smoke 결과를 확인합니다.
 - [x] 3.13 focused Python test, `git diff --check`, 관련 `rg` source scan을 실행합니다.
 - [x] 3.14 ephemeral container의 manifest directory mount, atomic replace, 공유 output root의 profile 소유권 이전 회귀 테스트를 추가합니다.
+- [x] 3.15 `full-all` catalog 선갱신과 profile 간 current output path 충돌 사전 차단 회귀 테스트를 추가합니다.
 
 권장 focused 명령:
 

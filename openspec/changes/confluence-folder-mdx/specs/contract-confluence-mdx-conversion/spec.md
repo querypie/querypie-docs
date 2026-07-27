@@ -191,6 +191,15 @@ Converter는 sync profile별 manifest로 자신이 만든 MDX와 navigation을 �
 - THEN 다른 profile이 소유한 output을 삭제하지 않아야 합니다(SHALL NOT).
 - AND 현재 profile manifest에서는 해당 stale 경로의 소유권을 제거해야 합니다(SHALL).
 
+#### Scenario: 공유 output root의 current path 충돌
+
+- GIVEN 두 sync profile이 같은 output root를 사용합니다.
+- AND 두 profile의 최신 catalog가 동일한 MDX 또는 navigation 경로를 current output으로 계획합니다.
+- WHEN `full-all` 또는 profile conversion을 실행합니다.
+- THEN 모든 profile catalog를 변환 전에 갱신해야 합니다(SHALL).
+- AND 충돌 경로의 output을 생성하거나 기존 output을 덮어쓰기 전에 conversion을 오류로 종료해야 합니다(SHALL).
+- AND 어느 profile의 manifest도 교체하지 않아야 합니다(SHALL NOT).
+
 #### Scenario: unsafe manifest path
 
 - GIVEN manifest entry가 configured output root 밖을 가리키거나 허용되지 않은 파일을 가리킵니다.

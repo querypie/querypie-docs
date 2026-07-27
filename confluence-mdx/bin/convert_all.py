@@ -368,6 +368,18 @@ def _manifest_sync_code(path: Path) -> str:
     return sync_code
 
 
+def _catalog_sync_code(path: Path) -> str:
+    prefix = "pages."
+    suffix = ".yaml"
+    name = path.name
+    if not name.startswith(prefix) or not name.endswith(suffix):
+        raise ConversionError(f"Invalid pages catalog filename: {path}")
+    sync_code = name[len(prefix):-len(suffix)]
+    if not sync_code:
+        raise ConversionError(f"Missing sync code in pages catalog: {path}")
+    return sync_code
+
+
 def _validated_manifest_path(output_root: Path, relative_value: Any) -> Path:
     if not isinstance(relative_value, str):
         raise ConversionError(f"Manifest path must be a string: {relative_value!r}")
@@ -388,6 +400,113 @@ def _validated_manifest_path(output_root: Path, relative_value: Any) -> Path:
             f"Manifest path is not an owned MDX/navigation file: {relative_value}"
         )
     return resolved
+
+
+def _planned_output_paths(
+    pages: Sequence[Mapping[str, Any]],
+    var_dir: Path,
+) -> set[str]:
+    """Calculate all MDX/navigation paths without creating output files."""
+    if not pages:
+        return set()
+
+    root_id = str(pages[0]["page_id"])
+    nodes_by_id = {str(page["page_id"]): page for page in pages}
+    planned_paths: set[str] = set()
+
+    for page in pages:
+        if str(page["page_id"]) == root_id:
+            continue
+        content_type = str(page.get("type") or "page")
+        if content_type in _SUPPORTED_CONTENT_TYPES:
+            planned_paths.add(_output_relative_path(page).as_posix())
+
+    for parent in pages:
+        parent_id = str(parent["page_id"])
+        if parent_id == root_id:
+            continue
+        if _supported_children(parent, var_dir, nodes_by_id):
+            parent_path = _output_relative_path(parent)
+            planned_paths.add(
+                (parent_path.with_suffix("") / "_meta.ts").as_posix()
+            )
+
+    return planned_paths
+
+
+def _other_profile_planned_paths(
+    manifest_path: Path,
+    sync_code: str,
+    var_dir: Path,
+    output_root: Path,
+) -> Dict[str, set[str]]:
+    """Load current sibling catalogs, falling back to manifests if absent."""
+    manifest_dir = manifest_path.parent
+    sibling_codes = {
+        _catalog_sync_code(path)
+        for path in var_dir.glob("pages.*.yaml")
+    }
+    sibling_codes.update(
+        _manifest_sync_code(path)
+        for path in manifest_dir.glob(
+            f"{_MANIFEST_PREFIX}*{_MANIFEST_SUFFIX}"
+        )
+    )
+    sibling_codes.discard(sync_code)
+
+    planned_by_profile: Dict[str, set[str]] = {}
+    for sibling_code in sorted(sibling_codes):
+        catalog_path = var_dir / f"pages.{sibling_code}.yaml"
+        if catalog_path.exists():
+            sibling_pages = load_pages_yaml(str(catalog_path))
+            sibling_paths = _planned_output_paths(sibling_pages, var_dir)
+        else:
+            sibling_manifest = (
+                manifest_dir
+                / f"{_MANIFEST_PREFIX}{sibling_code}{_MANIFEST_SUFFIX}"
+            )
+            sibling_paths = set()
+            for entry in _manifest_outputs(
+                sibling_manifest,
+                sibling_code,
+            ):
+                relative_path = entry.get("path")
+                _validated_manifest_path(output_root, relative_path)
+                sibling_paths.add(str(relative_path))
+
+        for relative_path in sibling_paths:
+            _validated_manifest_path(output_root, relative_path)
+        planned_by_profile[sibling_code] = sibling_paths
+
+    return planned_by_profile
+
+
+def _ensure_exclusive_output_plan(
+    manifest_path: Path,
+    sync_code: str,
+    pages: Sequence[Mapping[str, Any]],
+    var_dir: Path,
+    output_root: Path,
+) -> None:
+    """Reject cross-profile current output collisions before writing files."""
+    current_paths = _planned_output_paths(pages, var_dir)
+    for relative_path in current_paths:
+        _validated_manifest_path(output_root, relative_path)
+    for sibling_code, sibling_paths in _other_profile_planned_paths(
+        manifest_path,
+        sync_code,
+        var_dir,
+        output_root,
+    ).items():
+        conflicts = sorted(current_paths & sibling_paths)
+        if conflicts:
+            conflict_summary = ", ".join(conflicts[:5])
+            if len(conflicts) > 5:
+                conflict_summary += f", ... ({len(conflicts)} total)"
+            raise ConversionError(
+                "Current output path collision between sync profiles "
+                f"{sync_code!r} and {sibling_code!r}: {conflict_summary}"
+            )
 
 
 def _other_profile_owned_paths(
@@ -509,6 +628,19 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
     total = len(targets)
     failures = 0
     generated_outputs: List[Dict[str, str]] = []
+
+    if manifest_path:
+        try:
+            _ensure_exclusive_output_plan(
+                Path(manifest_path),
+                sync_code,
+                pages,
+                var_path,
+                output_base_path.resolve(),
+            )
+        except Exception as exc:
+            print(f"  ERROR: output ownership preflight failed: {exc}", file=sys.stderr)
+            return 1
 
     for i, page in enumerate(targets, 1):
         page_id = str(page['page_id'])

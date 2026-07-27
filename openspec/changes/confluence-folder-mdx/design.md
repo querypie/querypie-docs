@@ -197,14 +197,18 @@ Manifest file 자체를 개별 bind mount하는 방식은 선택하지 않습니
 
 정리 순서는 다음과 같습니다.
 
-1. 이전 manifest를 읽습니다.
-2. 같은 manifest directory의 다른 sync profile manifest를 읽고 공유 output 소유권을 검증합니다.
-3. 현재 catalog의 page/folder MDX와 navigation을 모두 생성하고 검증합니다.
-4. 하나라도 실패하면 이전 파일 삭제와 manifest 교체를 수행하지 않습니다.
-5. 모두 성공하면 `previous_paths - current_paths - other_profile_paths`만 삭제합니다.
-6. 다른 profile이 계속 소유하는 stale 경로는 파일을 보존하되 현재 profile manifest에서는 제거합니다.
-7. 빈 directory만 아래에서 위로 제거하고, manifest 밖의 파일이나 비어 있지 않은 directory는 보존합니다.
-8. 현재 manifest를 atomic replace합니다.
+1. `full-all`은 모든 sync profile의 catalog를 먼저 갱신한 뒤 profile별 변환을 시작합니다.
+2. 현재 catalog의 page/folder MDX와 navigation output plan을 계산합니다.
+3. 같은 `var/`의 다른 sync profile catalog에서 output plan을 계산하고, 현재 plan과 겹치는 경로가 있으면 output 생성 전에 전체 conversion을 실패로 처리합니다.
+4. 이전 manifest와 같은 manifest directory의 다른 sync profile manifest를 읽고 공유 output 소유권을 검증합니다.
+5. 현재 catalog의 page/folder MDX와 navigation을 모두 생성하고 검증합니다.
+6. 하나라도 실패하면 이전 파일 삭제와 manifest 교체를 수행하지 않습니다.
+7. 모두 성공하면 `previous_paths - current_paths - other_profile_paths`만 삭제합니다.
+8. 다른 profile이 계속 소유하는 stale 경로는 파일을 보존하되 현재 profile manifest에서는 제거합니다.
+9. 빈 directory만 아래에서 위로 제거하고, manifest 밖의 파일이나 비어 있지 않은 directory는 보존합니다.
+10. 현재 manifest를 atomic replace합니다.
+
+다른 profile의 최신 catalog가 없고 manifest만 있으면 manifest output을 보수적인 current plan으로 사용합니다. 따라서 단일 profile 실행에서 profile 간 경로 이전이 필요한 경우에는 모든 catalog를 먼저 갱신하는 `full-all`을 사용해야 합니다. 이 preflight는 stable path collision이 뒤 profile의 변환으로 앞 profile의 output을 덮어쓰는 것을 막으면서, 다른 profile의 최신 catalog에서 제거된 경로는 안전하게 소유권을 이전할 수 있게 합니다.
 
 모든 현재·이전·다른 profile manifest 경로는 resolve 후 configured output root 내부인지 검사합니다. 어느 manifest든 output root 밖의 경로, 허용하지 않은 suffix, 예상하지 않은 `_meta.ts` 위치를 가리키면 삭제를 시작하기 전에 오류로 처리합니다.
 
