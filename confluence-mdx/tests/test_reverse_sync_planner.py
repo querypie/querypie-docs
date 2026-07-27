@@ -159,6 +159,34 @@ def test_raw_html_table_is_explicit_unsupported_capability_in_push_plan():
     )
 
 
+def test_replacing_paragraph_with_raw_html_table_is_blocked():
+    old = _block("Before")
+    new = _block(
+        "<table><tr><td>After</td></tr></table>",
+        "html_block",
+    )
+    change = BlockChange(0, "modified", old, new)
+    xhtml = "<p>Before</p>"
+
+    plan, _ = plan_patches(
+        [change],
+        [old],
+        [new],
+        page_xhtml=xhtml,
+        roundtrip_sidecar=_sidecar(xhtml, old),
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is False
+    assert len(plan.operations) == 1
+    assert plan.operations[0].executable is False
+    assert plan.operations[0].capability_id == "raw_html_table_edit"
+    assert plan.operations[0].reason_code == "unsupported_capability"
+    assert plan.issues[0].capability_id == "raw_html_table_edit"
+
+
 def test_legacy_table_skip_is_one_typed_capability_issue():
     old = _block(
         "<table><tr><td>Before</td></tr></table>",

@@ -305,22 +305,24 @@ def _capability_for_operation(
         if ordinal < 0 or ordinal >= len(changes):
             continue
         change = changes[ordinal]
-        block = change.old_block or change.new_block
-        if block is None or block.type in NON_CONTENT_TYPES:
-            continue
-        strategy = select_renderer_strategy(
-            block_type=block.type,
-            block_content=block.content,
-            mapping=mapping,
-            sidecar_block=sidecar_block,
-        )
-        capability = classify_capability(
-            action=action,
-            strategy=strategy,
-            mapping=mapping,
-            block_type=block.type,
-        )
-        classified[capability.capability_id] = capability
+        for block in (change.old_block, change.new_block):
+            if block is None or block.type in NON_CONTENT_TYPES:
+                continue
+            strategy = select_renderer_strategy(
+                block_type=block.type,
+                block_content=block.content,
+                mapping=mapping,
+                sidecar_block=sidecar_block,
+            )
+            capability = classify_capability(
+                action=action,
+                strategy=strategy,
+                mapping=mapping,
+                block_type=block.type,
+            )
+            if capability.capability_id == "raw_html_table_edit":
+                return capability
+            classified[capability.capability_id] = capability
     if len(classified) == 1:
         return next(iter(classified.values()))
     return get_capability("unknown_macro_mutation")
