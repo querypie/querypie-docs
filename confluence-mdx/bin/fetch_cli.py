@@ -12,9 +12,9 @@ The document processing follows 4 distinct stages:
 4. Document Listing: Generate and output a document list with breadcrumbs
 
 Modes:
-  --local: Process local files only, starting from default_start_page_id hierarchically
-  --remote: Download and process via API, starting from default_start_page_id hierarchically
-  --recent: Download recently modified pages, then process like --local (default)
+  --local: Rebuild the catalog from the stored page/folder hierarchy
+  --remote: Refresh the full page/folder hierarchy and content via API
+  --recent: Refresh modified page content, then reuse the stored hierarchy (default)
 
 Usage examples:
   bin/fetch_cli.py  # Same as --recent: download recent pages then process locally
@@ -66,11 +66,11 @@ def main():
     # Mode selection (mutually exclusive)
     mode_group = parser.add_mutually_exclusive_group()
     mode_group.add_argument("--local", action="store_const", dest="mode", const="local",
-                            help="Process local files only, starting from default_start_page_id hierarchically")
+                            help="Rebuild from the stored page/folder hierarchy without API calls")
     mode_group.add_argument("--remote", action="store_const", dest="mode", const="remote",
-                            help="Download and process via API, starting from default_start_page_id hierarchically")
+                            help="Refresh the full page/folder hierarchy and content via API")
     mode_group.add_argument("--recent", action="store_const", dest="mode", const="recent",
-                            help="Download recently modified pages, then process like --local")
+                            help="Refresh modified page content and reuse the stored hierarchy")
 
     parser.add_argument("--output-dir", default=Config().default_output_dir,
                         help="Directory to store output files (default: %(default)s)")

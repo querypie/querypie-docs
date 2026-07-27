@@ -79,11 +79,13 @@ pip3 install requests beautifulsoup4 pyyaml
 ## 데이터 수집, 변환 절차의 개요
 
 1. `confluence-mdx/var/`에 Confluence 문서 데이터를 저장합니다.
-    - 개별 문서마다 `<page_id>/page.xhtml`, `<page_id>/page.v1.yaml` 등을 저장합니다.
+    - page는 `<page_id>/page.xhtml`, `<page_id>/page.v1.yaml` 등을 저장합니다.
+    - folder는 `<folder_id>/folder.v2.yaml`, `<folder_id>/children.v2.yaml`을 저장합니다.
     - 전체 문서 목록을 `var/pages.<code>.yaml`에 저장합니다 (예: `var/pages.qm.yaml`).
     - `fetch_cli.py`를 사용합니다.
 2. `src/content/ko/` 아래에 MDX 문서를 생성합니다.
-    - `var/pages.<code>.yaml`을 기반으로 모든 페이지를 변환합니다.
+    - `var/pages.<code>.yaml`을 기반으로 page와 folder를 변환합니다.
+    - folder MDX에는 Confluence 순서의 직계 자식 page/folder 목록을 표시합니다.
     - `convert_all.py`를 사용합니다.
 
 무작정 따라해 보기
@@ -107,18 +109,27 @@ $ bin/convert_all.py                        # 전체 변환
 
 ### 1. Confluence 문서 데이터 수집 (fetch_cli.py)
 
-`fetch_cli.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 페이지들을 수집하여 저장하는 스크립트입니다. 
+`fetch_cli.py`는 Confluence REST API를 이용하여 지정한 문서와 그 하위 page/folder를 수집하여 저장하는 스크립트입니다.
 이 스크립트는 다음과 같은 기능을 수행합니다:
 
-- 각 페이지의 ID, 탐색 경로(breadcrumbs), 제목을 탭으로 구분된 형식으로 출력합니다.
-- 각 페이지 ID에 대한 디렉토리를 생성하고 다음 파일을 저장합니다:
-  - XHTML 형식의 문서 내용 (`page.xhtml`)
-  - 페이지 메타데이터 (`page.yaml`)
-  - 첨부 파일(있는 경우)
+- 각 content의 ID, 탐색 경로(breadcrumbs), 제목을 탭으로 구분된 형식으로 출력합니다.
+- page는 XHTML, V1/V2 metadata, 직계 자식 snapshot, attachment metadata를 저장합니다.
+- folder는 `folder.v2.yaml`과 pagination을 합친 `children.v2.yaml`만 저장합니다.
+- `pages.<code>.yaml`에는 `type: page|folder`를 기록합니다.
+
+Hierarchy freshness는 실행 mode에 따라 다릅니다.
+
+| Mode | Page 내용 | Page/folder hierarchy |
+| --- | --- | --- |
+| `--remote` | 갱신합니다. | `direct-children` API로 전체 갱신합니다. |
+| `--recent` | CQL로 발견한 기존 page만 갱신합니다. | 저장된 `children.v2.yaml`을 유지합니다. |
+| `--local` | 저장된 data를 사용합니다. | 저장된 `children.v2.yaml`을 유지합니다. |
+
+Folder 생성·이동·이름 변경·삭제를 반영하려면 `--remote`를 실행해야 합니다. `--recent`는 hierarchy를 부분 갱신하지 않습니다.
 
 실행 방법:
 ```bash
-# 기본 설정으로 실행 - Confluence API 를 호출하고, 그 결과를 var/ 아래에 저장합니다.
+# 기본 설정은 --recent이며, 최근 변경된 기존 page 내용만 갱신합니다.
 bin/fetch_cli.py
 
 # API 호출과 함께, 첨부파일을 다운로드하여 저장합니다.
@@ -154,12 +165,20 @@ bin/fetch_cli.py --log-level DEBUG
 
 실행 결과:
 - `var/` 디렉토리에 문서 데이터가 저장됩니다.
-- 각 페이지 ID에 해당하는 디렉토리에 `page.yaml`과 `page.xhtml` 파일이 저장됩니다.
+- page ID 디렉토리에는 `page.v1.yaml`, `page.v2.yaml`, `children.v2.yaml`, `page.xhtml` 등이 저장됩니다.
+- folder ID 디렉토리에는 `folder.v2.yaml`과 `children.v2.yaml`이 저장됩니다.
 
 ### 2. 전체 변환 (convert_all.py)
 
-`convert_all.py`는 `var/pages.<code>.yaml`을 기반으로 모든 페이지를 MDX로 변환하는 스크립트입니다.
+`convert_all.py`는 `var/pages.<code>.yaml`을 기반으로 모든 page와 folder를 MDX로 변환하는 스크립트입니다.
 변환 전에 번역 누락을 자동 검증합니다.
+
+- page는 기존 XHTML converter로 변환합니다.
+- folder는 `title`, `confluenceUrl`, `## 하위 문서`와 직계 자식 link 목록을 가진 landing page로 완전히 재생성합니다.
+- 지원되는 직계 자식이 없는 folder에는 `하위 문서가 없습니다.`를 표시합니다.
+- navigation `_meta.ts`는 전체 catalog 변환이 끝난 뒤 생성합니다.
+- `var/convert-manifest.<sync-code>.yaml`에 생성한 MDX와 `_meta.ts`를 기록합니다.
+- 변환 전체가 성공한 경우에만 이전 manifest가 소유한 stale output을 삭제합니다.
 
 실행 방법:
 ```bash
@@ -174,7 +193,7 @@ bin/convert_all.py --verify-translations
 ```
 
 실행 결과:
-- `target/ko/` 디렉토리에 MDX 파일들이 생성됩니다.
+- `target/ko/` 디렉토리에 page/folder MDX와 `_meta.ts`가 생성됩니다.
 - `target/public/` 디렉토리에 첨부파일이 저장됩니다.
 - 한국어 제목의 번역이 누락된 경우, 오류와 함께 누락 목록을 출력합니다.
   - `etc/korean-titles-translations.txt`에 번역을 추가한 후 재실행합니다.

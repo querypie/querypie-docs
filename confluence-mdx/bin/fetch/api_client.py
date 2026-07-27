@@ -3,7 +3,7 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Protocol
-from urllib.parse import quote
+from urllib.parse import quote, urljoin
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -18,10 +18,10 @@ class ApiClientProtocol(Protocol):
     def make_request(self, url: str, description: str) -> Optional[Dict]:
         ...
 
-    def get_page_data(self, page_id: str) -> Optional[Dict]:
+    def get_page_data_v2(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
         ...
 
-    def get_child_pages(self, page_id: str) -> Optional[Dict]:
+    def get_direct_children(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
         ...
 
     def get_attachments(self, page_id: str) -> Optional[Dict]:
@@ -43,7 +43,20 @@ class ApiClient:
             self.logger.debug(f"Making {description} request to: {url}")
             response = requests.get(url, headers=self.headers, auth=self.auth)
             response.raise_for_status()
-            return response.json()
+            data = response.json()
+            if isinstance(data, dict):
+                response_links = getattr(response, "links", {})
+                next_link = (
+                    response_links.get("next", {}).get("url")
+                    if isinstance(response_links, dict)
+                    else None
+                )
+                if next_link:
+                    links = data.get("_links", {})
+                    links = dict(links) if isinstance(links, dict) else {}
+                    links.setdefault("next", next_link)
+                    data["_links"] = links
+            return data
         except Exception as e:
             self.logger.error(f"Error making {description} request to {url}: {str(e)}")
             raise ApiError(f"Failed to make {description} request: {str(e)}")
@@ -64,18 +77,58 @@ class ApiClient:
             url = f"{self.config.base_url}/api/v2/pages/{page_id}?body-format=atlas_doc_format"
         return self.make_request(url, "V2 API page data")
 
-    def get_child_pages(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
-        """Get child pages using V2 API.
-
-        Uses /api/v2/folders/{id}/children for folder content type,
-        /api/v2/pages/{id}/children for page content type.
-        The type=page filter is omitted so that folder children are also included.
-        """
+    def get_direct_children(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
+        """Get every direct child using the V2 API with cursor pagination."""
         if content_type == "folder":
-            url = f"{self.config.base_url}/api/v2/folders/{page_id}/children?limit=100"
+            url = f"{self.config.base_url}/api/v2/folders/{page_id}/direct-children?limit=100"
         else:
-            url = f"{self.config.base_url}/api/v2/pages/{page_id}/children?limit=100"
-        return self.make_request(url, "V2 API child pages")
+            url = f"{self.config.base_url}/api/v2/pages/{page_id}/direct-children?limit=100"
+
+        combined: Optional[Dict] = None
+        results: List[Dict] = []
+        seen_urls: set[str] = set()
+
+        while url:
+            if url in seen_urls:
+                raise ApiError(f"Detected pagination cycle while fetching direct children for {page_id}")
+            seen_urls.add(url)
+
+            data = self.make_request(url, "V2 API direct children")
+            if not data:
+                if combined is None:
+                    return data
+                break
+
+            if combined is None:
+                combined = dict(data)
+
+            page_results = data.get("results", [])
+            if not isinstance(page_results, list):
+                raise ApiError(f"Invalid direct children response for {page_id}: results is not a list")
+            results.extend(page_results)
+
+            links = data.get("_links", {})
+            next_url = links.get("next") if isinstance(links, dict) else None
+            url = (
+                urljoin(f"{self.config.base_url.rstrip('/')}/", str(next_url))
+                if next_url
+                else ""
+            )
+
+        if combined is None:
+            return None
+
+        combined["results"] = results
+        links = combined.get("_links")
+        if isinstance(links, dict):
+            links = dict(links)
+            links.pop("next", None)
+            combined["_links"] = links
+        return combined
+
+    def get_child_pages(self, page_id: str, content_type: str = "page") -> Optional[Dict]:
+        """Backward-compatible alias for the typed direct-children request."""
+        return self.get_direct_children(page_id, content_type)
 
     def get_attachments(self, page_id: str) -> Optional[Dict]:
         """Get attachments using V1 API"""

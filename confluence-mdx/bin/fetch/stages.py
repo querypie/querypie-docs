@@ -8,7 +8,7 @@ from typing import Dict, List, Optional
 from fetch.config import Config
 from fetch.api_client import ApiClient
 from fetch.file_manager import FileManager
-from fetch.models import Page
+from fetch.models import ContentNode
 from text_utils import clean_text
 
 
@@ -33,53 +33,62 @@ class StageBase:
 class Stage1Processor(StageBase):
     """Stage 1: API Data Collection - Fetch and save API responses to YAML files."""
 
-    def process(self, page_id: str) -> None:
-        self.logger.info(f"Stage 1: Collecting API data for page ID {page_id}")
+    def process(
+        self,
+        page_id: str,
+        content_type: str = "page",
+        include_children: bool = True,
+    ) -> None:
+        self.logger.info(
+            f"Stage 1: Collecting API data for {content_type} ID {page_id}"
+        )
 
         # Skip API calls if using local mode
         if self.config.mode == "local":
-            self.logger.info(f"Stage 1 skipped for page ID {page_id} (local mode)")
+            self.logger.info(f"Stage 1 skipped for {content_type} ID {page_id} (local mode)")
             return
 
         directory = self.get_page_directory(page_id)
         self.file_manager.ensure_directory(directory)
 
-        # Determine content type for API routing:
-        # 1. Prefer the type stored in page.v2.yaml (present on re-runs).
-        # 2. Fall back to config.root_content_type when processing the root
-        #    page on a clean environment (page.v2.yaml does not yet exist).
-        # 3. Default to "page" for all other pages without cached data.
-        v2_path = os.path.join(self.get_page_directory(page_id), "page.v2.yaml")
-        existing_v2 = self.file_manager.load_yaml(v2_path) if os.path.exists(v2_path) else None
-        if existing_v2:
-            content_type = existing_v2.get("type", "page")
-        elif page_id == self.config.default_start_page_id:
-            content_type = self.config.root_content_type
+        if content_type == "folder":
+            api_operations = [
+                {
+                    'operation': lambda: self.api_client.get_page_data_v2(page_id, "folder"),
+                    'description': "V2 API folder data",
+                    'filename': "folder.v2.yaml",
+                    'required': True,
+                },
+            ]
         else:
-            content_type = "page"
+            api_operations = [
+                {
+                    'operation': lambda: self.api_client.get_page_data_v1(page_id),
+                    'description': "V1 API page data",
+                    'filename': "page.v1.yaml",
+                    'required': True,
+                },
+                {
+                    'operation': lambda: self.api_client.get_page_data_v2(page_id, "page"),
+                    'description': "V2 API page data",
+                    'filename': "page.v2.yaml",
+                    'required': True,
+                },
+                {
+                    'operation': lambda: self.api_client.get_attachments(page_id),
+                    'description': "V1 API attachments",
+                    'filename': "attachments.v1.yaml",
+                    'required': False,
+                },
+            ]
 
-        api_operations = [
-            {
-                'operation': lambda: self.api_client.get_page_data_v1(page_id),
-                'description': "V1 API page data",
-                'filename': "page.v1.yaml"
-            },
-            {
-                'operation': lambda: self.api_client.get_page_data_v2(page_id, content_type),
-                'description': "V2 API page data",
-                'filename': "page.v2.yaml"
-            },
-            {
-                'operation': lambda: self.api_client.get_child_pages(page_id, content_type),
-                'description': "V2 API child pages",
-                'filename': "children.v2.yaml"
-            },
-            {
-                'operation': lambda: self.api_client.get_attachments(page_id),
-                'description': "V1 API attachments",
-                'filename': "attachments.v1.yaml"
-            },
-        ]
+        if include_children:
+            api_operations.append({
+                'operation': lambda: self.api_client.get_direct_children(page_id, content_type),
+                'description': "V2 API direct children",
+                'filename': "children.v2.yaml",
+                'required': True,
+            })
 
         for operation_info in api_operations:
             try:
@@ -88,10 +97,16 @@ class Stage1Processor(StageBase):
                     filepath = os.path.join(directory, operation_info['filename'])
                     self.file_manager.save_yaml(filepath, data)
                     self._log_operation_result(page_id, operation_info['description'], data)
+                elif operation_info.get('required', False):
+                    raise ValueError(
+                        f"{operation_info['description']} returned no data for ID {page_id}"
+                    )
             except Exception as e:
                 self.logger.error(f"Failed to collect {operation_info['description']} for page ID {page_id}: {str(e)}")
+                if operation_info.get('required', False):
+                    raise
 
-        self.logger.info(f"Stage 1 completed for page ID {page_id}")
+        self.logger.info(f"Stage 1 completed for {content_type} ID {page_id}")
 
     def _log_operation_result(self, page_id: str, description: str, data: Dict) -> None:
         """Log specific information for different operations."""
@@ -108,7 +123,11 @@ class Stage1Processor(StageBase):
 class Stage2Processor(StageBase):
     """Stage 2: Content Extraction - Extract and save page content."""
 
-    def process(self, page_id: str) -> bool:
+    def process(self, page_id: str, content_type: str = "page") -> bool:
+        if content_type == "folder":
+            self.logger.info(f"Stage 2 skipped for folder ID {page_id}")
+            return True
+
         self.logger.debug(f"Stage 2: Extracting content for page ID {page_id}")
         directory = self.get_page_directory(page_id)
 
@@ -158,7 +177,11 @@ class Stage2Processor(StageBase):
 class Stage3Processor(StageBase):
     """Stage 3: Attachment Download - Download attachments if specified."""
 
-    def process(self, page_id: str) -> bool:
+    def process(self, page_id: str, content_type: str = "page") -> bool:
+        if content_type == "folder":
+            self.logger.info(f"Stage 3 skipped for folder ID {page_id}")
+            return True
+
         # Check if attachments should be downloaded
         if not self.config.download_attachments:
             self.logger.info(f"Stage 3 skipped for page ID {page_id} (attachments not requested)")
@@ -253,18 +276,30 @@ class Stage3Processor(StageBase):
 class Stage4Processor(StageBase):
     """Stage 4: Document Listing - Generate document information for output listing."""
 
-    def process(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Page]:
-        self.logger.debug(f"Stage 4: Generating document list for page ID {page_id}")
+    def process(
+        self,
+        page_id: str,
+        start_page_id: Optional[str] = None,
+        content_type: str = "page",
+        parent_breadcrumbs: Optional[List[str]] = None,
+    ) -> Optional[ContentNode]:
+        self.logger.debug(
+            f"Stage 4: Generating document list for {content_type} ID {page_id}"
+        )
 
         directory = self.get_page_directory(page_id)
         v1_data = self.file_manager.load_yaml(os.path.join(directory, "page.v1.yaml"))
+        v2_filename = "folder.v2.yaml" if content_type == "folder" else "page.v2.yaml"
+        v2_data = self.file_manager.load_yaml(os.path.join(directory, v2_filename))
 
-        if not v1_data:
-            self.logger.error(f"V1 data not available for document listing for page ID {page_id}")
+        if content_type == "folder" and not v2_data:
+            self.logger.error(f"Folder data not available for document listing for ID {page_id}")
+            return None
+        if content_type == "page" and not v1_data and not v2_data:
+            self.logger.error(f"Page data not available for document listing for ID {page_id}")
             return None
 
-        # Extract title from V1 data
-        title_orig = v1_data.get("title")
+        title_orig = (v1_data or {}).get("title") or (v2_data or {}).get("title")
         if not title_orig:
             return None
 
@@ -272,18 +307,19 @@ class Stage4Processor(StageBase):
         if not title:
             return None
 
-        # Extract ancestors from V1 data
-        ancestors = v1_data.get("ancestors", []) if v1_data else []
-
-        # Build breadcrumbs
-        breadcrumbs = self._build_breadcrumbs(page_id, ancestors, title, start_page_id)
+        if parent_breadcrumbs is not None:
+            breadcrumbs = [*parent_breadcrumbs, title]
+        else:
+            ancestors = v1_data.get("ancestors", []) if v1_data else []
+            breadcrumbs = self._build_breadcrumbs(page_id, ancestors, title, start_page_id)
 
         self.logger.debug(f"Stage 4 completed for page ID {page_id}: {title}")
 
-        return Page(
+        return ContentNode(
             page_id=page_id,
             title=title,
             title_orig=title_orig,
+            content_type=content_type,
             breadcrumbs=breadcrumbs,
         )
 
