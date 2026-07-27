@@ -1,0 +1,189 @@
+---
+title: 'MCP Access Control'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167799919/MCP+Access+Control'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Access Control
+
+### Overview
+
+MCP Access Control manages which users or groups can access MCP Servers registered in QueryPie and the Tools they provide, based on Roles and Policies.
+It is available in version 11.6.1 and later.
+
+You can use this feature to perform the following tasks.
+
+* View the MCP access permissions granted to each user or group.
+* Grant one or more MCP roles to a specific user or group, or revoke them.
+* View the MCP Servers that the user or group can actually access, based on the policies associated with their roles.
+* Set an expiration date and time for each role so that access permissions can be automatically cleared after a certain period.
+* Track changes to access permissions based on role grant and revocation history.
+
+In other words, MCP Access Control does more than manage which MCP Servers a user can connect to. It standardizes MCP Server permissions by role and applies policies and expiration dates to support operational control.
+
+On this screen, you can view the number of roles currently granted to each user or group and grant or revoke roles on the detail screen.
+You can also view the policies associated with those roles and the resulting list of accessible MCP Servers.
+
+<Callout type="important">
+MCP access permissions are managed by granting roles to users and groups, not by assigning servers directly to users.
+The servers that can actually be accessed are determined by the policies associated with the granted roles.
+</Callout>
+
+### Menu and permissions
+
+* Menu path: `Admin > MCP > MCP Access Control > Access Control`
+* Required permission: `PERMISSION_MAC_ACL`
+
+The following screens are also available under the same `MCP Access Control` menu.
+
+* **Access Control**: Manage roles granted to each user or group
+* **Roles**: Manage MCP role definitions
+* **Policies**: Manage MCP policy definitions
+
+### Viewing MCP Access Control
+
+View MCP access control status for registered users and groups.
+
+1. Go to `Admin > MCP > MCP Access Control > Access Control`.
+2. Review the access control status for each user or group in the list.
+3. Filter the list using the following fields in the search box.
+    * **Name**
+    * **Email**
+4. Click the refresh button in the upper-right corner to reload the list.
+
+The list contains the following columns.
+
+* **User Type**: `USER` or `GROUP`
+* **Provider**: Authentication provider associated with the account
+* **Name**: User or group name
+* **Email**: Email address of the user account. `-` is displayed for a group.
+* **Members**: Member list for a group. `-` is displayed for a user account.
+* **Roles**: Number of MCP roles currently granted
+
+<Callout type="important">
+The current UI does not provide a button to create a user directly from the `Access Control` list or to add permissions by selecting a server directly.
+First select a user or group, then manage their access permissions by granting roles on the detail screen.
+</Callout>
+
+### Viewing access control details for a user or group
+
+View the roles granted to a specific user or group in detail.
+
+1. Click the user or group in the `Access Control` list.
+2. Review the following metadata at the top of the detail screen.
+    * **Type**: User or group
+    * **Members**: Number of members for a group
+    * **Created**: Creation date and creator
+    * **Updated**: Last update date and updater
+3. The detail screen consists of the following two tabs.
+    * **Roles**: List of currently granted roles
+    * **Accessible Servers**: List of MCP Servers accessible with the current roles
+
+### Granting roles
+
+Grant one or more MCP roles to a user or group.
+
+1. Go to the `Roles` tab on the access control detail screen.
+2. Click `Grant Role` on the right.
+3. Select the role to grant in the `Grant Role` pop-up.
+    * The role list displays only roles that have not yet been granted to the current user or group.
+    * Search for roles by **Name** in the search box.
+4. Review the following information in the role list.
+    * **Name**: Role name. Click it to go to the role detail screen.
+    * **Description**: Role description
+    * **Assigned Policies**: Policies associated with the role
+5. Select an **Expiration Date**.
+    * The default is one year from the current date.
+    * When saved, the expiration time is set to the end of the selected day.
+    * The expiration date is required.
+6. Click `Grant Role` to save.
+
+<Callout type="important">
+If no role is available to grant, the role list in the pop-up is empty and you cannot grant another role.
+</Callout>
+
+### Viewing granted roles
+
+View the roles currently granted to a user or group.
+
+1. Go to the `Roles` tab on the access control detail screen.
+2. Search for a role by **Name** in the search box.
+3. The list displays the following information.
+    * **Name**: Role name
+    * **Description**: Role description
+    * **Expiration**: Role expiration date and time. `(Expired)` appears if the role has already expired.
+    * **Granted At**: Time when the role was granted
+    * **Last Access**: Last access time using the role. `None` appears if there is no access history.
+    * **Granted By**: User who granted the role
+
+### Viewing granted role details
+
+Select a granted role to view its information and associated policies.
+
+1. Click a role row on the `Roles` tab of the access control detail screen.
+2. Review the following information in the detail drawer on the right.
+    * **Role Name**
+    * **Description**
+    * **Granted At**
+    * **Granted By**
+    * **Expiration Date**
+    * **Last Access**
+3. In the **Policies** section at the bottom of the drawer, review the policies associated with the role.
+    * **Name**
+    * **Description**
+    * **Version**
+    * **Assigned At**
+    * **Assigned By**
+
+<Callout type="important">
+If no policy is associated with the role, the policy table is empty.
+</Callout>
+
+### Revoking roles
+
+Revoke roles granted to a user or group.
+
+1. Go to the `Roles` tab on the access control detail screen.
+2. Select one or more roles to revoke.
+3. Click `Revoke` at the top.
+4. Approve the confirmation pop-up to revoke the selected roles.
+
+<Callout type="important">
+Role revocation supports multiple selections.
+</Callout>
+
+### Viewing accessible servers
+
+View the MCP Servers that the current user or group can access.
+
+1. Go to the `Accessible Servers` tab on the access control detail screen.
+2. Search for a server by **Name** in the search box.
+3. The list displays the following information.
+    * **Name**: Server display name
+    * **Identifier**: Server identifier (name)
+    * **Endpoint**: MCP Server endpoint address
+    * **Tools**: Number of tools provided by the MCP Server
+
+<Callout type="important">
+If no roles are granted, or if no servers are accessible through the policies associated with the roles, the server list is empty.
+</Callout>
+
+<Callout type="info">
+**Operational notes**
+* The `Access Control` screen manages access permissions from the perspective of users and groups.
+* Accessible servers are calculated from the policies associated with roles. If a role is granted but no appropriate policy is associated with it, no accessible server may appear.
+* After a role's expiration date and time passes, its access permission becomes eligible for automatic revocation.
+* View role grant and revocation history in the separate Audit menu at `Admin > Audit > MCP > MCP Server Role History`.
+* The `MCP Server Role History` screen tracks who granted or revoked which role for each user or group.
+* This screen generally displays the following information.
+    * **Event**: Role grant or revocation event
+    * **User Type**: `USER` or `GROUP`
+    * **Name**: User or group name
+    * **Email**: User email address
+    * **Role Name**: Name of the granted or revoked role
+    * **Expiration Date**: Role expiration date
+    * **Action By**: User who performed the action
+    * **Action At**: Time when the action occurred
+* The detail screen also shows the role information and policy list associated with the history entry, which is useful when auditing the basis for an access permission change at a specific point in time.
+</Callout>

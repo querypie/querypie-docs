@@ -1,0 +1,346 @@
+---
+title: 'QueryPie ACP Operational Log Collection Guide'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2288353307/QueryPie+ACP'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP Operational Log Collection Guide
+
+### Overview
+
+When you need to analyze an incident or provide information for technical support, collect operational logs and diagnostic data from the QueryPie server according to the symptoms.
+This document describes the basic logs to collect first in an operational environment, data to collect only when additionally required, and information to include when submitting the data.
+
+Whenever possible, the basic collection should cover a range before and after the incident time.
+If the issue can be reproduced, record the reproduction time as well so that the logs can be compared more easily.
+
+### Basic collection items
+
+When an issue requires analysis, collect the following four items first.
+
+1. QueryPie file logs
+2. Container standard output logs
+3. `/api/config/monitoring` dump
+4. Multi Agent or Windows Server Agent logs
+
+<Callout type="info">
+You do not always need to collect every log for every symptom.
+However, if the potential cause has a broad scope or the issue is difficult to reproduce, it is best to collect all four basic items.
+</Callout>
+
+### Collecting QueryPie file logs
+
+File logs are application logs written by each component under `/var/log/querypie`.
+The path inside the container is the same, but the path visible from the host may differ by version.
+
+#### Checking the log path
+
+1. Check the QueryPie version.
+2. Check the log path on the host.
+    * `9.x ~ 10.4.x`: `/var/log/querypie`
+    * `11.0.x+`: Generally the `log` path in the parent directory of the compose file
+3. If necessary, check the log path directly inside the app container.
+
+The following example checks file logs directly from the host.
+```
+ls -al ../log
+```
+
+In an environment where the host path is `/var/log/querypie`, use the following command.
+```
+ls -al /var/log/querypie
+```
+
+The following example checks file logs inside the app container.
+```
+docker exec -it querypie-app-1 sh
+ls -al /var/log/querypie
+```
+
+#### Compressing file logs
+
+1. Prepare a directory for collecting logs from before and after the incident time.
+2. Verify that logs related to `api`, `engine`, `nginx`, and `proxy` are included.
+3. Compress the logs using the path for your environment.
+```
+mkdir -p support-logs
+tar -czf support-logs/querypie-file-logs.tar.gz -C .. log
+```
+
+In an environment where the host path is `/var/log/querypie`, collect the logs as follows.
+```
+mkdir -p support-logs
+tar -czf support-logs/querypie-file-logs.tar.gz /var/log/querypie
+```
+
+### Collecting container standard output logs
+
+Along with file logs, collect the container's `stdout` and `stderr` logs.
+
+1. Save the app container logs.
+2. If the `tools` profile is running, save the tools logs as well.
+```
+mkdir -p support-logs
+docker logs querypie-app-1 > support-logs/app.docker.log
+docker logs querypie-tools-1 > support-logs/tools.docker.log 2>/dev/null || true
+```
+
+<Callout type="important">
+When `kill -3` is used as a thread dump fallback, the result is generally written to the container's standard output. In this case, collecting `docker logs` is especially important.
+</Callout>
+
+### Collecting a monitoring dump
+
+For suspected API hangs, response delays, or deadlocks, use `/api/config/monitoring` first.
+
+<figure data-layout="center" data-align="center">
+<img src="/support/querypie-acp-operational-log-collection-guide/image-20260707-104923.png" alt="Example: https://&lt;QueryPie address&gt;/api/config/monitoring " width="760" />
+<figcaption>
+Example: https://&lt;QueryPie address&gt;/api/config/monitoring
+</figcaption>
+</figure>
+
+
+1. Sign in with the Owner account or an account with the `SYSTEM_PROPERTIES` permission.
+2. In a browser, go to `/api/config/monitoring`.
+3. Check the required time range.<br/>You can also click `Create New Dump` to create a new dump file.
+4. Select one of the following options.
+    * Download only the dump
+    * Download the dump and application logs together using `Dumps + All Logs`
+
+<Callout type="important">
+The default `logHome` value for `Dumps + All Logs` is `/var/log/querypie`.
+If your environment uses a custom log path, verify the actual log home path before using this feature.
+</Callout>
+
+<Callout type="info">
+The monitoring dump archive includes `thread.dump`. Providing it together with the file logs significantly speeds up analysis.
+</Callout>
+
+<Callout type="important">
+**When monitoring dumps are created automatically**
+
+A monitoring dump may be created automatically under the following conditions.
+
+* The number of idle connections in the MetaDB or LogDB connection pool drops to 10% or less of the maximum pool size
+* A `SQLTransientConnectionException` occurs and its message contains `Connection is not available, request timed out after`
+
+Automatic dumps are created at intervals of at least 10 minutes.
+Even if the same symptom repeats within a short time, a new dump may not be created each time.
+</Callout>
+
+### Temporarily changing the log level
+
+Only when the basic logs are insufficient to identify the cause, temporarily raise the log level to debug and collect reproduction logs.
+
+1. Record the time before changing the log level to debug.
+2. Raise the log level of the target component.
+3. Reproduce the same symptom.
+4. Collect the logs.
+5. Restore the original level.
+    1. The default log level is `warn` for `api` and `info` for the other components: `engine`, `arisa`, `cabinet`, `kubepie`, `rotatepie`, and `novas`. (`arisa` is the proxy component.)
+```
+docker exec -it querypie-app-1 /app/change-log-level.sh debug api
+```
+
+To apply the setting to all components, omit the component.
+```
+docker exec -it querypie-app-1 /app/change-log-level.sh debug
+```
+
+The following components are supported.
+
+* `api`
+* `engine`
+* `arisa`
+* `cabinet`
+* `kubepie`
+* `rotatepie`
+* `novas`
+* `all`
+
+<Callout type="important">
+You can specify a timeout in seconds as the third argument.
+Do not operate at debug level for an extended period. Always restore the original level after collection is complete.
+`docker exec -it querypie-app-1 /app/change-log-level.sh debug api 30`
+</Callout>
+
+### Logs to collect first by symptom
+
+You do not always need to raise every component's log level to debug.
+Use the following criteria to collect the logs that match the symptom first, and expand the scope only when necessary.
+
+| **Symptom / Scenario**                                                                                                    | **Logs to collect first**                                                       | **Additional useful logs**                                          |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Sign-in failure, screen API error, settings save failure, or approval request processing error                            | `api` file logs, `docker logs querypie-app-1`, and `api` debug logs if necessary| `nginx` logs                                                        |
+| Web page does not open, 502/504 error, or static page appears but API calls fail                                           | `nginx` file logs, `docker logs querypie-app-1`                                 | `api` file logs                                                     |
+| DAC connection succeeds but query execution fails, or DB session creation or proxy connection is unstable                | `proxy` file logs, `arisa` file logs                                            | `api` logs and `arisa` debug logs if necessary                      |
+| Slow query execution or results, engine processing failure, or snapshot/analysis processing issue                        | `engine` file logs                                                              | `api` logs, `engine` debug logs if necessary, monitoring dump       |
+| KAC cluster connection failure, Kubernetes resource query failure, or kubectl issue                                       | `kubepie` file logs                                                             | `api` logs and `kubepie` debug logs if necessary                    |
+| RotatePie scheduling or rotation processing issue                                                                         | `rotatepie` file logs                                                           | `rotatepie` debug logs if necessary                                 |
+| Nova, SSH, or gateway integration connection failure                                                                      | `novas` file logs                                                              | `novas` debug logs and related gateway logs if necessary            |
+| Multi Agent connection issue, local app connection failure, WebView error, or issue reproduced only on a specific user PC | Multi Agent logs, `webView.log`                                                 | Server-side `proxy` and `api` logs                                  |
+| SAC Windows Server Agent connection failure, RDP timeout, or issue reproduced only in a specific Windows session         | Windows Server Agent service logs                                               | Per-user Agent logs, Multi Agent logs, server-side `proxy`/`api` logs|
+| Suspected API hang, response delay, deadlock, or insufficient DB connection pool                                          | `/api/config/monitoring` dump, `api` file logs                                  | `engine` logs, `docker logs`, thread dump fallback                  |
+
+<Callout type="info">
+If you are unsure which logs to review first, collect `api`, `nginx`, `docker logs`, and the `/api/config/monitoring` dump. For connection or proxy issues, add `proxy` or `arisa`; for client issues, add Multi Agent or Windows Server Agent logs.
+</Callout>
+
+### Collecting Multi Agent logs
+
+If the environment uses Multi Agent, collect the desktop app logs as well.
+
+1. Check the log path for the operating system in use.
+    * Windows: `%USERPROFILE%\.querypie-multi-agent\logs\`
+    * macOS: `$HOME/.querypie-multi-agent/logs/`
+    * Linux: `$HOME/.querypie-multi-agent/logs/`
+2. Collect the general logs and `webView.log`.
+3. If detailed logs are required, turn on `Diagnostic Tools > Enable Tracing`, then reproduce the issue.
+4. Turn tracing off again after collection.
+5. If necessary, use `Diagnostic Tools > Export Log` to create an archive.
+
+<Callout type="important">
+Use the `QPMA_TRACE=1` environment variable only when detailed logs are required from application startup.
+Avoid using it for an extended period during normal operation.
+</Callout>
+
+### Collecting SAC Windows Server Agent logs
+
+If the environment uses Windows Server Agent with SAC, collect the agent logs as well.
+
+#### Collecting basic service logs
+
+1. Check the following path on the Windows Server.
+    * `%ProgramData%\QueryPie\Server Agent\Logs\`
+2. Compress the service logs first.
+```
+$logRoot = "$env:ProgramData\QueryPie\Server Agent\Logs"
+$outFile = "$env:TEMP\querypie-server-agent-logs.zip"
+Compress-Archive -Path "$logRoot\*" -DestinationPath $outFile -Force
+```
+
+#### When per-user logs are required
+
+If the issue is reproduced only in a specific Windows user session or you need to check per-user behavior, collect the following path as well.
+
+* `%ProgramData%\QueryPie\Server Agent\Logs\Users\<WindowsUser>\`
+
+#### When verbose logs are required
+
+1. Open PowerShell on the Windows Server.
+2. Check the current LogLevel.
+```
+Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" | Select-Object LogLevel
+```
+
+3. If necessary, change LogLevel to `Verbose`.
+```
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" -Name "LogLevel" -Value "Verbose"
+```
+
+4. Reproduce the symptom and collect the logs.
+5. Restore it to `Information` after collection.
+```
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" -Name "LogLevel" -Value "Information"
+```
+
+<Callout type="important">
+When tracing an RDP timeout or connection failure, include the QueryPie server-side Proxy/API logs and the Multi Agent logs from the user's PC to make analysis easier.
+</Callout>
+
+### Collecting additional data only when required
+
+Collect the following data only when you need to analyze a configuration issue, deployment difference, or thread dump fallback.
+
+#### Collecting configuration files
+
+1. Check the current deployment configuration files.
+2. Mask sensitive information before submitting them.
+
+Examples of additional items to collect include the following.
+
+* `.env` or `compose-env`
+* `compose.yml` or `docker-compose.yml`
+* `nginx.d/`
+* Custom configuration files
+* `logrotate.d/querypie`
+
+<Callout type="important">
+In some compose packages, `logrotate.d/querypie` may be directly linked to the app container's `/etc/logrotate.d/querypie` configuration.
+Include it only when you need to check log rotation behavior or the retention period.
+</Callout>
+
+#### Collecting a JVM thread dump as a fallback
+
+Use this only when `/api/config/monitoring` is difficult to access or you need to collect a thread dump directly inside the container.
+
+1. Connect to the app container from the host.
+```
+docker exec -it querypie-app-1 bash
+```
+
+2. Find the API Java PID inside the app container and create a thread dump.
+```
+ps -ef | grep '[a]pp/api/api.jar'
+```
+
+3. If available, collect the thread dump using `jcmd`.
+```
+jcmd <PID> Thread.print > /tmp/api-thread-dump.txt
+```
+
+4. Exit the app container, then copy the dump file from the host.
+```
+docker cp querypie-app-1:/tmp/api-thread-dump.txt support-logs/api-thread-dump.txt
+```
+
+5. If `jcmd` is unavailable, use `kill -3` inside the app container.
+```
+kill -3 <PID>
+```
+
+<Callout type="important">
+For this step, use the PID of the `/app/api/api.jar` process, not `commandpie-engine.jar`.
+</Callout>
+
+### Information to include when submitting logs
+
+Providing log files alone can increase the analysis time, so include the following information.
+
+| **Item**            | **Description**                                                       |
+| ------------------- | --------------------------------------------------------------------- |
+| Time of occurrence  | Example: `2026-07-07 14:23 KST`                                       |
+| Server timezone     | Reference for comparing log timestamps                                |
+| Symptom             | Example: A specific API response takes more than 30 seconds after login|
+| Reproducibility     | Reproducible / Not reproducible                                       |
+| Reproduction steps  | Record step by step when possible                                     |
+| Reproduction time   | Actual time when the reproduction was performed                       |
+| Impact scope        | Whether it affects a specific user, a specific server, or all users   |
+| Collected log types | File logs, docker logs, monitoring dump, agent logs, and so on        |
+
+### Checklist template
+
+```
+[기본 정보]
+- 발생 시각:
+- 서버 timezone:
+- 증상:
+- 영향 범위:
+[재현 정보]
+- 재현 가능 여부:
+- 재현 절차:
+- 재현 시각:
+[수집 로그]
+- 파일 로그: 수집 완료 / 미수집
+- docker logs: 수집 완료 / 미수집
+- monitoring dump: 수집 완료 / 미수집
+- Multi Agent 로그: 해당 없음 / 수집 완료 / 미수집
+- Windows Server Agent 로그: 해당 없음 / 수집 완료 / 미수집
+[추가 수집]
+- 설정 파일: 수집 완료 / 미수집
+- JVM thread dump fallback: 수집 완료 / 미수집
+[추가 설명]
+- 특이사항:
+```

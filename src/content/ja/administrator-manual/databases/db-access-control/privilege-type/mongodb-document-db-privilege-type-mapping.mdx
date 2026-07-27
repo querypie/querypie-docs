@@ -1,0 +1,34 @@
+---
+title: 'MongoDB / Document DB Privilege Type Mapping'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2288549894/MongoDB+Document+DB+Privilege+Type+Mapping'
+---
+
+# MongoDB / Document DB Privilege Type Mapping
+
+MongoDBおよびDocument DBの各構文に対応するprivilegeタイプは、次の表のようにマッピングされます。
+
+| **区分** | **Privilege Type**                         | **MongoDB / Document DB**                                                                                                      |
+| -------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| DML      | Select                                     | ~.find(), ~.findOne(), 一般的な~.aggregate()                                                                                    |
+| DML      | Select + Delete                            | ~.findOneAndDelete(), findAndModify `{ remove: true }`                                                                          |
+| DML      | Select + Update                            | ~.findOneAndUpdate(), ~.findOneAndReplace(), findAndModify `{ update: ... }`<br/>upsert: trueの場合はInsertを追加               |
+| DML      | Update                                     | ~.update(), ~.updateOne(), ~.updateMany(), ~.replaceOne()<br/>upsert: trueの場合はInsertを追加                                 |
+| DML      | Insert + Create                            | ~.insert(), ~.insertOne(), ~.insertMany()<br/>対象collectionが存在しない場合はCreateを追加                                     |
+| DML      | Select + Insert + Update                   | aggregateの最終stage：$merge<br/>target collectionが存在しない場合はCreateを追加                                                |
+| DML      | Select + Insert + Create + Rename + Delete | aggregateの最終stage：$out                                                                                                      |
+| DCL      | Grant                                      | db.grantRolesToUser(), db.grantRolesToRole(), db.grantPrivilegesToRole()                                                        |
+| DCL      | Revoke                                     | db.revokeRolesFromUser(), db.revokeRolesFromRole(), db.revokePrivilegesFromRole()                                               |
+| DCL      | Alter                                      | db.updateUser()                                                                                                                 |
+| DCL      | Update                                     | db.updateRole()                                                                                                                 |
+| DDL      | Create                                     | ~.createIndex(), ~.createIndexes(), db.createCollection(), db.createView(), db.createUser(), db.createRole()                    |
+| DDL      | Drop                                       | ~.drop(), db.dropDatabase(), db.dropUser(), db.dropAllUsers(), db.dropRole(), db.dropAllRoles()                                 |
+| DDL      | Rename                                     | ~.renameCollection()                                                                                                            |
+| Others   | Etc.                                       | ~.commitTransaction(), ~.abortTransaction(), ~.startTransaction()                                                               |
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/db-access-control/privilege-type/mongodb-document-db-privilege-type-mapping/image-20260724-045953.png" alt="Privilege Typeの作成例" width="464" />
+<figcaption>
+Privilege Typeの作成例
+</figcaption>
+</figure>
+<br/>

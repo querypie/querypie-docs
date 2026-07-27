@@ -1,0 +1,34 @@
+---
+title: 'MongoDB / Document DB Privilege Type Mapping'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2288549894/MongoDB+Document+DB+Privilege+Type+Mapping'
+---
+
+# MongoDB / Document DB Privilege Type Mapping
+
+The privilege types for each MongoDB and Document DB statement are mapped as shown in the table below.
+
+| **Category** | **Privilege Type**                         | **MongoDB / Document DB**                                                                                                                    |
+| ------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| DML          | Select                                     | ~.find(), ~.findOne(), general ~.aggregate()                                                                                                  |
+| DML          | Select + Delete                            | ~.findOneAndDelete(), findAndModify `{ remove: true }`                                                                                        |
+| DML          | Select + Update                            | ~.findOneAndUpdate(), ~.findOneAndReplace(), findAndModify `{ update: ... }`<br/>Adds Insert when upsert: true                                 |
+| DML          | Update                                     | ~.update(), ~.updateOne(), ~.updateMany(), ~.replaceOne()<br/>Adds Insert when upsert: true                                                   |
+| DML          | Insert + Create                            | ~.insert(), ~.insertOne(), ~.insertMany()<br/>Adds Create when the target collection does not exist                                           |
+| DML          | Select + Insert + Update                   | Final aggregate stage: $merge<br/>Adds Create when the target collection does not exist                                                       |
+| DML          | Select + Insert + Create + Rename + Delete | Final aggregate stage: $out                                                                                                                   |
+| DCL          | Grant                                      | db.grantRolesToUser(), db.grantRolesToRole(), db.grantPrivilegesToRole()                                                                      |
+| DCL          | Revoke                                     | db.revokeRolesFromUser(), db.revokeRolesFromRole(), db.revokePrivilegesFromRole()                                                             |
+| DCL          | Alter                                      | db.updateUser()                                                                                                                               |
+| DCL          | Update                                     | db.updateRole()                                                                                                                               |
+| DDL          | Create                                     | ~.createIndex(), ~.createIndexes(), db.createCollection(), db.createView(), db.createUser(), db.createRole()                                  |
+| DDL          | Drop                                       | ~.drop(), db.dropDatabase(), db.dropUser(), db.dropAllUsers(), db.dropRole(), db.dropAllRoles()                                               |
+| DDL          | Rename                                     | ~.renameCollection()                                                                                                                          |
+| Others       | Etc.                                       | ~.commitTransaction(), ~.abortTransaction(), ~.startTransaction()                                                                             |
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/databases/db-access-control/privilege-type/mongodb-document-db-privilege-type-mapping/image-20260724-045953.png" alt="Example of creating a Privilege Type" width="464" />
+<figcaption>
+Example of creating a Privilege Type
+</figcaption>
+</figure>
+<br/>

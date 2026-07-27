@@ -1,0 +1,346 @@
+---
+title: 'QueryPie ACP運用ログ収集ガイド'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2288353307/QueryPie+ACP'
+---
+
+import { Callout } from 'nextra/components'
+
+# QueryPie ACP運用ログ収集ガイド
+
+### Overview
+
+障害分析やテクニカルサポートへの情報提供が必要な場合は、症状に応じてQueryPie Serverの運用ログと診断データを収集する必要があります。
+このドキュメントでは、運用環境で最初に確保する基本ログ、追加で必要な場合にのみ収集するデータ、および提出時に併せて整理する情報について説明します。
+
+基本収集の対象には、可能な限り障害発生時刻の前後を含めてください。
+再現できる場合は再現時刻も記録すると、ログを照合しやすくなります。
+
+### 基本収集項目
+
+問題の分析が必要な場合は、次の4項目を優先して収集します。
+
+1. QueryPieファイルログ
+2. コンテナの標準出力ログ
+3. `/api/config/monitoring` dump
+4. Multi AgentまたはWindows Server Agentログ
+
+<Callout type="info">
+症状ごとに、常にすべてのログを収集する必要はありません。
+ただし、原因の範囲が広い問題や再現が難しい問題では、4つの基本収集項目をまとめて確保することをお勧めします。
+</Callout>
+
+### QueryPieファイルログを収集する
+
+ファイルログは、各コンポーネントが`/var/log/querypie`配下に出力するアプリケーションログです。
+コンテナ内のパスは同じですが、ホストから見えるパスはバージョンによって異なる場合があります。
+
+#### ログパスを確認する
+
+1. QueryPieのバージョンを確認します。
+2. ホスト上のログパスを確認します。
+    * `9.x ~ 10.4.x` : `/var/log/querypie`
+    * `11.0.x+`：通常はcomposeファイルの親ディレクトリにある`log`パス
+3. 必要に応じて、appコンテナ内でもログパスを直接確認します。
+
+ホストからファイルログを直接確認する例は次のとおりです。
+```
+ls -al ../log
+```
+
+ホストパスが`/var/log/querypie`の環境では、次のように確認できます。
+```
+ls -al /var/log/querypie
+```
+
+appコンテナ内でファイルログを確認する例は次のとおりです。
+```
+docker exec -it querypie-app-1 sh
+ls -al /var/log/querypie
+```
+
+#### ファイルログを圧縮する
+
+1. 障害発生時刻の前後のログを収集するディレクトリを用意します。
+2. `api`、`engine`、`nginx`、`proxy`関連のログが含まれていることを確認します。
+3. 環境に適したパスを基準に圧縮します。
+```
+mkdir -p support-logs
+tar -czf support-logs/querypie-file-logs.tar.gz -C .. log
+```
+
+ホストパスが`/var/log/querypie`の環境では、次のように収集できます。
+```
+mkdir -p support-logs
+tar -czf support-logs/querypie-file-logs.tar.gz /var/log/querypie
+```
+
+### コンテナの標準出力ログを収集する
+
+ファイルログと併せて、コンテナの`stdout`と`stderr`のログも収集します。
+
+1. appコンテナのログを保存します。
+2. `tools` profileが実行中の場合は、toolsログも保存します。
+```
+mkdir -p support-logs
+docker logs querypie-app-1 > support-logs/app.docker.log
+docker logs querypie-tools-1 > support-logs/tools.docker.log 2>/dev/null || true
+```
+
+<Callout type="important">
+thread dump fallbackで`kill -3`を使用した場合、通常は結果がコンテナの標準出力に残ります。この場合、`docker logs`の収集が特に重要です。
+</Callout>
+
+### monitoring dumpを収集する
+
+API hang、レスポンス遅延、deadlockが疑われる場合は、まず`/api/config/monitoring`を使用します。
+
+<figure data-layout="center" data-align="center">
+<img src="/support/querypie-acp-operational-log-collection-guide/image-20260707-104923.png" alt="例：https://&lt;QueryPieのアドレス&gt;/api/config/monitoring " width="760" />
+<figcaption>
+例：https://&lt;QueryPieのアドレス&gt;/api/config/monitoring
+</figcaption>
+</figure>
+
+
+1. Ownerアカウント、または`SYSTEM_PROPERTIES`権限を持つアカウントでログインします。
+2. ブラウザで`/api/config/monitoring`画面に移動します。
+3. 必要な時間範囲を確認します。<br/>`Create New Dump`ボタンをクリックして、新しいDumpファイルを作成することもできます。
+4. 次のいずれかを選択します。
+    * dumpのみをダウンロード
+    * `Dumps + All Logs`でdumpとアプリケーションログをまとめてダウンロード
+
+<Callout type="important">
+`Dumps + All Logs`機能の`logHome`のデフォルト値は`/var/log/querypie`です。
+カスタムログパスを使用する環境では、実際のログホームパスを確認してから使用してください。
+</Callout>
+
+<Callout type="info">
+monitoring dumpの圧縮ファイルには`thread.dump`が含まれます。ファイルログと一緒に提出すると、分析を大幅に迅速化できます。
+</Callout>
+
+<Callout type="important">
+**monitoring dumpが自動生成される場合**
+
+次の条件では、monitoring dumpが自動生成される場合があります。
+
+* MetaDBまたはLogDB connection poolのidle connectionが、最大pool sizeの10%以下に低下した場合
+* `SQLTransientConnectionException`が発生し、メッセージに`Connection is not available, request timed out after`が含まれる場合
+
+自動dumpは、10分以上の間隔を空けて生成されます。
+短時間に同じ症状が繰り返されても、毎回新しいdumpが作成されるとは限りません。
+</Callout>
+
+### ログレベルを一時的に変更する
+
+基本ログだけでは原因を特定できない場合に限り、一時的にdebugレベルに上げて再現ログを収集します。
+
+1. debugレベルに変更する前の時刻を記録します。
+2. 対象コンポーネントのログレベルを上げます。
+3. 同じ症状を再現します。
+4. ログを収集します。
+5. 元のレベルに戻します。
+    1. デフォルトのログレベルは、`api`が`warn`、その他の`engine`、`arisa`、`cabinet`、`kubepie`、`rotatepie`、`novas`が`info`です。（`arisa`はproxyコンポーネントです。）
+```
+docker exec -it querypie-app-1 /app/change-log-level.sh debug api
+```
+
+すべてのコンポーネントに適用する場合は、componentを省略できます。
+```
+docker exec -it querypie-app-1 /app/change-log-level.sh debug
+```
+
+サポートされるcomponentは次のとおりです。
+
+* `api`
+* `engine`
+* `arisa`
+* `cabinet`
+* `kubepie`
+* `rotatepie`
+* `novas`
+* `all`
+
+<Callout type="important">
+3番目の引数にtimeout（秒）を指定できます。
+debugレベルで長時間運用せず、収集が完了したら必ず元のレベルに戻してください。
+`docker exec -it querypie-app-1 /app/change-log-level.sh debug api 30`
+</Callout>
+
+### 症状別に優先して収集するログ
+
+すべてのコンポーネントのログを常にdebugに上げる必要はありません。
+次の基準で症状に合うログを先に収集し、必要な場合にのみ範囲を広げることをお勧めします。
+
+| **症状 / シナリオ**                                                                                                       | **優先して収集するログ**                                                           | **追加で確認するとよいログ**                                         |
+| ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| ログイン失敗、画面APIエラー、設定の保存失敗、承認リクエストの処理エラー                                                   | `api`ファイルログ、`docker logs querypie-app-1`、必要に応じて`api` debugログ        | `nginx`ログ                                                          |
+| Web画面が開かない、502/504、静的画面は表示されるがAPI呼び出しに失敗                                                       | `nginx`ファイルログ、`docker logs querypie-app-1`                                  | `api`ファイルログ                                                    |
+| DAC接続は成功するがクエリ実行に失敗する、またはDBセッション作成やproxy接続が不安定                                        | `proxy`ファイルログ、`arisa`ファイルログ                                            | `api`ログ、必要に応じて`arisa` debugログ                             |
+| クエリ実行または結果照会の遅延、engine処理中の失敗、snapshot/analysis関連の処理異常                                        | `engine`ファイルログ                                                               | `api`ログ、必要に応じて`engine` debugログ、monitoring dump           |
+| KACクラスタ接続失敗、Kubernetesリソースの照会失敗、kubectlの動作異常                                                      | `kubepie`ファイルログ                                                              | `api`ログ、必要に応じて`kubepie` debugログ                           |
+| RotatePie関連のスケジュール処理またはrotation処理の異常                                                                   | `rotatepie`ファイルログ                                                            | 必要に応じて`rotatepie` debugログ                                    |
+| Nova、SSH、gateway連携関連の接続失敗                                                                                       | `novas`ファイルログ                                                               | 必要に応じて`novas` debugログ、関連gatewayログ                       |
+| Multi Agentベースの接続問題、ローカルアプリ接続失敗、WebViewエラー、特定のユーザーPCでのみ再現                            | Multi Agentログ、`webView.log`                                                     | サーバー側の`proxy`、`api`ログ                                      |
+| SAC Windows Server Agent接続失敗、RDP timeout、特定のWindowsセッションでのみ再現                                          | Windows Server Agentサービスログ                                                   | ユーザー別Agentログ、Multi Agentログ、サーバー側の`proxy`/`api`ログ |
+| API hang、レスポンス遅延、deadlock、DB connection pool不足の疑い                                                          | `/api/config/monitoring` dump、`api`ファイルログ                                   | `engine`ログ、`docker logs`、thread dump fallback                    |
+
+<Callout type="info">
+どのログから確認すべきか判断できない場合は、まず`api`、`nginx`、`docker logs`、`/api/config/monitoring` dumpを確保してください。接続またはproxy関連の症状では`proxy`または`arisa`を、クライアント関連ではMulti AgentまたはWindows Server Agentログを追加する方法が実用的です。
+</Callout>
+
+### Multi Agentログを収集する
+
+Multi Agentを使用する環境では、desktop appのログも収集します。
+
+1. 使用中のOSのログパスを確認します。
+    * Windows: `%USERPROFILE%\.querypie-multi-agent\logs\`
+    * macOS: `$HOME/.querypie-multi-agent/logs/`
+    * Linux: `$HOME/.querypie-multi-agent/logs/`
+2. 一般ログと`webView.log`を併せて確保します。
+3. 詳細ログが必要な場合は、`Diagnostic Tools > Enable Tracing`をオンにしてから再現します。
+4. 収集後にtracingを再度オフにします。
+5. 必要に応じて、`Diagnostic Tools > Export Log`で圧縮ファイルを作成します。
+
+<Callout type="important">
+アプリ起動時から詳細ログが必要な場合にのみ、`QPMA_TRACE=1`環境変数を設定して実行します。
+通常の運用状態では長時間使用しないことをお勧めします。
+</Callout>
+
+### SAC Windows Server Agentログを収集する
+
+SACでWindows Server Agentを使用する環境では、agentログも収集します。
+
+#### 基本サービスログを収集する
+
+1. Windows Serverで次のパスを確認します。
+    * `%ProgramData%\QueryPie\Server Agent\Logs\`
+2. まずサービスログを圧縮します。
+```
+$logRoot = "$env:ProgramData\QueryPie\Server Agent\Logs"
+$outFile = "$env:TEMP\querypie-server-agent-logs.zip"
+Compress-Archive -Path "$logRoot\*" -DestinationPath $outFile -Force
+```
+
+#### ユーザー別ログが必要な場合
+
+特定のWindowsユーザーセッションでのみ再現する場合や、ユーザー別の動作確認が必要な場合は、次のパスも収集します。
+
+* `%ProgramData%\QueryPie\Server Agent\Logs\Users\<WindowsUser>\`
+
+#### Verboseログが必要な場合
+
+1. Windows ServerでPowerShellを起動します。
+2. 現在のLogLevelを確認します。
+```
+Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" | Select-Object LogLevel
+```
+
+3. 必要に応じて、LogLevelを`Verbose`に変更します。
+```
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" -Name "LogLevel" -Value "Verbose"
+```
+
+4. 症状を再現してログを収集します。
+5. 収集後に`Information`へ戻します。
+```
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\QueryPie Server Agent Persistent" -Name "LogLevel" -Value "Information"
+```
+
+<Callout type="important">
+RDP timeoutや接続失敗の問題を追跡する場合は、QueryPie Server側のProxy/APIログとユーザーPCのMulti Agentログも併せて提供すると、分析が容易になります。
+</Callout>
+
+### 必要な場合にのみ追加収集する
+
+次のデータは、設定の問題、デプロイの差異、またはthread dump fallbackの分析が必要な場合にのみ追加で収集します。
+
+#### 設定ファイルを収集する
+
+1. 現在のデプロイ設定ファイルを確認します。
+2. 機密情報をマスキングしてから提出します。
+
+追加収集の対象例は次のとおりです。
+
+* `.env`または`compose-env`
+* `compose.yml`または`docker-compose.yml`
+* `nginx.d/`
+* カスタム設定ファイル
+* `logrotate.d/querypie`
+
+<Callout type="important">
+一部のcompose packageでは、`logrotate.d/querypie`がappコンテナの`/etc/logrotate.d/querypie`設定に直接リンクされている場合があります。
+ログのrotation動作や保持期間を確認する必要がある場合にのみ、追加で含めてください。
+</Callout>
+
+#### JVM thread dump fallbackを収集する
+
+`/api/config/monitoring`へのアクセスが難しい場合や、コンテナ内でthread dumpを直接収集する必要がある場合にのみ使用します。
+
+1. ホストからappコンテナに接続します。
+```
+docker exec -it querypie-app-1 bash
+```
+
+2. appコンテナ内でAPI Java PIDを探し、thread dumpを作成します。
+```
+ps -ef | grep '[a]pp/api/api.jar'
+```
+
+3. 使用できる場合は、`jcmd`でthread dumpを収集します。
+```
+jcmd <PID> Thread.print > /tmp/api-thread-dump.txt
+```
+
+4. appコンテナを終了した後、ホストからdumpファイルをコピーします。
+```
+docker cp querypie-app-1:/tmp/api-thread-dump.txt support-logs/api-thread-dump.txt
+```
+
+5. `jcmd`がない場合は、appコンテナ内で`kill -3`を使用します。
+```
+kill -3 <PID>
+```
+
+<Callout type="important">
+この手順では、`commandpie-engine.jar`ではなく`/app/api/api.jar`プロセスのPIDを使用してください。
+</Callout>
+
+### 提出時に併記する内容
+
+ログファイルだけを提出すると分析に時間がかかる場合があるため、次の情報も併せて整理します。
+
+| **項目**           | **説明**                                                               |
+| ------------------ | ---------------------------------------------------------------------- |
+| 発生時刻           | 例：`2026-07-07 14:23 KST`                                             |
+| サーバーtimezone   | ログ時刻を照合する際の基準                                             |
+| 症状               | 例：ログイン後、特定のAPIレスポンスに30秒以上かかる                    |
+| 再現可否           | 可能 / 不可能                                                          |
+| 再現手順           | 可能な場合は手順ごとに記録                                             |
+| 再現時刻           | 再現を実行した実際の時刻                                               |
+| 影響範囲           | 特定のユーザー、特定のサーバー、または全ユーザーか                     |
+| 収集したログの種類 | ファイルログ、docker logs、monitoring dump、agentログなど              |
+
+### チェックリストテンプレート
+
+```
+[기본 정보]
+- 발생 시각:
+- 서버 timezone:
+- 증상:
+- 영향 범위:
+[재현 정보]
+- 재현 가능 여부:
+- 재현 절차:
+- 재현 시각:
+[수집 로그]
+- 파일 로그: 수집 완료 / 미수집
+- docker logs: 수집 완료 / 미수집
+- monitoring dump: 수집 완료 / 미수집
+- Multi Agent 로그: 해당 없음 / 수집 완료 / 미수집
+- Windows Server Agent 로그: 해당 없음 / 수집 완료 / 미수집
+[추가 수집]
+- 설정 파일: 수집 완료 / 미수집
+- JVM thread dump fallback: 수집 완료 / 미수집
+[추가 설명]
+- 특이사항:
+```

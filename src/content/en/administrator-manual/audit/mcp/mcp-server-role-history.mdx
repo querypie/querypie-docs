@@ -1,0 +1,116 @@
+---
+title: 'MCP Server Role History'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167078929/MCP+Server+Role+History'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Server Role History
+
+### Overview
+
+MCP Audit lets you audit MCP proxy usage and changes to MCP access permissions in QueryPie.
+
+Under `Admin > Audit > MCP`, two screens are available for different purposes.
+
+* **Request Audit**: View MCP request processing history
+* **MCP Server Role History**: View the history of MCP roles granted to or revoked from users or groups
+
+In other words, **Audit Settings** on the `MCP Server settings` screen determines what to record, while the screens for viewing the recorded audit history are provided separately under `Admin > Audit > MCP`.
+
+* Menu path: `Admin > Audit > MCP`
+* Submenus
+    * `Admin > Audit > MCP > Request Audit`
+    * `Admin > Audit > MCP > MCP Server Role History`
+* Required permission: `PERMISSION_MAC_AUDIT`
+
+### Understanding MCP Server Role History
+
+**MCP Server Role History** shows when an MCP role was granted to or revoked from a user or group and who performed the action.
+
+This is an audit screen for permission change history, separate from `Admin > MCP > MCP Access Control > Access Control`, where you manage the current permission state.
+
+#### Opening MCP Server Role History
+
+1. Go to `Admin > Audit > MCP > MCP Server Role History`.
+2. When the screen opens, it displays history from the beginning of the current month through the present by default.
+3. Adjust the filters at the top to view only the history you need.
+4. Click the refresh button in the upper-right corner to reload the list with the current conditions.
+
+### Searching and filtering MCP Server Role History
+
+This screen provides the following default filters.
+
+* **Event**: `GRANTED`, `REVOKED`
+* **User Type**: `USER`, `GROUP`
+* **Action At**: Time range when the action occurred
+
+The list also uses cursor-based pagination.
+
+### Information available in the MCP Server Role History list
+
+The list contains the following columns.
+
+* **No**: Log sequence number
+* **Action At**: Time when the role was granted or revoked
+* **Event**: `GRANTED` or `REVOKED`
+* **User Type**: `USER` or `GROUP`
+* **Name**: Name of the target user or group
+* **Email**: Email address of the target user. This may be empty for a group.
+* **Role**: Name of the changed MCP role
+* **Expiration Date**: Role expiration date and time
+* **Action By**: Name of the administrator or user who performed the action
+
+### Viewing MCP Server Role History details
+
+Click a row in the list to open the detail drawer.
+
+The detail drawer shows the following information.
+
+* **Role Name**: Name of the granted or revoked role
+* **Event**: `GRANTED` or `REVOKED`
+* **Name**: Name of the target user or group
+* **Email**: Email address of the target user
+* **User Type**: `USER` or `GROUP`
+* **Action At**: Time when the action occurred
+* **Action By**: User who performed the action
+* **Expiration Date**: Role expiration time
+* **Role Description**: Role description
+
+If policies are associated with the role, the **Policies** section at the bottom of the drawer also shows the following information.
+
+* **Name**
+* **Description**
+* **Version**
+
+<Callout type="important">
+A `REVOKED` history entry may have no `Expiration Date` when saved, so the screen may display `-`.
+</Callout>
+
+### Notes on interpreting MCP Server Role History
+
+* `GRANTED` is a role grant event.
+* `REVOKED` is a role revocation event.
+* This screen shows how permissions changed, not which permissions currently remain.
+* **Role Description** and **Policies** in the detail drawer are loaded from the role definition at the time of the query.
+
+### Differences between Request Audit and MCP Server Role History
+
+Both screens are under MCP Audit, but they audit different subjects.
+
+* **Request Audit**: Audits actual MCP request execution history
+* **MCP Server Role History**: Audits changes to MCP access permissions
+
+From an operational perspective, they are generally used together as follows.
+
+* To see which requests were actually executed: **Request Audit**
+* To see which role was granted to or revoked from a specific user or group and when: **MCP Server Role History**
+* To trace actual request flows after a permission change: Review both screens together
+
+### Operational notes
+
+* **Enable Request Audit** and **Include payload in Request Audit** in `MCP Server settings` control whether upstream requests are recorded and whether payloads are stored.
+* The client audit settings in `Admin > MCP Servers > General > Configurations` control whether client-originated requests are recorded.
+* In other words, the settings screens define the scope of audit collection, while the `Admin > Audit > MCP` screens display the collected results.
+* If a payload is not visible in Request Audit, first check whether payload auditing is disabled for that scope.
+* MCP Server Role History is appropriate for auditing role grants and revocations. To view the servers that are currently accessible, use `Admin > MCP > MCP Access Control > Access Control`.
