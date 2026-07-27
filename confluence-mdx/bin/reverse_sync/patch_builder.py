@@ -39,6 +39,11 @@ from reverse_sync.reconstructors import (
     reconstruct_fragment_with_sidecar,
     rewrite_on_stored_template,
 )
+from reverse_sync.strategies import (
+    StrategyPrimitives,
+    StrategyRenderContext,
+    dispatch_strategy,
+)
 from reverse_sync.visible_segments import (
     extract_visible_model_from_mdx,
     extract_visible_model_from_xhtml,
@@ -1138,6 +1143,24 @@ def build_patches(
     # 같은 부모에 대한 text-level 변경을 순차 집계하는 dict (block_id → patch dict)
     # preserved anchor list와 containing case에서 공용 사용
     _text_change_patches: Dict[str, Dict] = {}
+    strategy_primitives = StrategyPrimitives(
+        apply_mdx_diff_to_xhtml=_apply_mdx_diff_to_xhtml,
+        build_inline_fixups=_build_inline_fixups,
+        offset_inline_fixup_match_indexes=_offset_inline_fixup_match_indexes,
+        detect_list_item_space_change=_detect_list_item_space_change,
+        build_list_item_merge_patch=_build_list_item_merge_patch,
+        build_replace_fragment_patch=_build_replace_fragment_patch,
+        build_preserved_template_patch=_build_preserved_template_patch,
+        classify_table_fragment_skip=_classify_table_fragment_skip,
+        extract_html_table_cells=_extract_html_table_cells,
+        is_safe_cell_text_edit=_is_safe_cell_text_edit,
+        is_clean_block=_is_clean_block,
+        contains_preserved_anchor_markup=_contains_preserved_anchor_markup,
+        contains_only_supported_preservation_units=(
+            _contains_only_supported_preservation_units
+        ),
+        xhtml_visible_text=_xhtml_visible_text,
+    )
 
     for change in changes:
         if change.index in _paired_indices:
@@ -1242,362 +1265,31 @@ def build_patches(
             })
             continue
 
-        if strategy is RendererStrategy.LIST:
-            list_sidecar = _find_roundtrip_sidecar_block(
-                change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-            )
-            old_list_model = extract_visible_model_from_mdx(
-                change.old_block.content,
-                "list",
-            )
-            new_list_model = extract_visible_model_from_mdx(
-                change.new_block.content,
-                "list",
-            )
-            xhtml_list_model = extract_visible_model_from_xhtml(
-                mapping.xhtml_text,
-                "list",
-            )
-            has_content_change = old_list_model.visible_text != new_list_model.visible_text
-            has_structure_change = (
-                old_list_model.structural_fingerprint
-                != new_list_model.structural_fingerprint
-            )
-            old_visible = old_list_model.visible_text
-            new_visible = new_list_model.visible_text
-            # ol start 변경 감지: 숫자 목록의 시작 번호가 달라진 경우
-            _old_start = re.match(r'^\s*(\d+)\.', change.old_block.content)
-            _new_start = re.match(r'^\s*(\d+)\.', change.new_block.content)
-            has_ol_start_change = bool(
-                _old_start and _new_start
-                and int(_old_start.group(1)) != int(_new_start.group(1))
-            )
-            # 인라인 마커 경계 변경 감지 (bold/italic 경계 이동)를
-            # replace_fragment 판단 전에 수행하여 clean list도 재생성하도록 함
-            inline_fixups = _build_inline_fixups(
-                change.old_block.content,
-                change.new_block.content,
-                block_type=change.old_block.type,
-            )
-            has_inline_boundary = bool(inline_fixups)
-            has_patchable_text_change = (
-                has_content_change or has_ol_start_change or has_inline_boundary
-            )
-            has_rebuild_change = has_patchable_text_change or has_structure_change
-            requires_anchor_rebuild = sidecar_block_requires_reconstruction(
-                list_sidecar,
-            )
-            should_replace_clean_list = (
-                mapping is not None
-                and not _contains_preserved_anchor_markup(mapping.xhtml_text)
-                # sidecar 있으면 항상 허용; 없으면 실제 변경(텍스트 또는 번호 시작값)이 있을 때만 허용
-                and (roundtrip_sidecar is not None or has_rebuild_change)
-                and (list_sidecar is None or mapping_via_v3_fallback or has_rebuild_change)
-            )
-            # preserved anchor list의 구조 변경은 item merge를 우선 시도하고,
-            # 실패한 경우에만 fragment 재구성으로 내려간다.
-            if (mapping is not None
-                    and _contains_preserved_anchor_markup(mapping.xhtml_text)):
-                merge_patch = _build_list_item_merge_patch(
-                    mapping,
-                    change.old_block.content,
-                    change.new_block.content,
-                    old_visible,
-                    new_visible,
-                )
-                if merge_patch is not None:
-                    _mark_used(mapping.block_id, mapping)
-                    patches.append(merge_patch)
-                    continue
-            if (mapping is not None
-                    and (
-                        # anchor case: text-only preserved anchor list는 modify로 처리한다.
-                        requires_anchor_rebuild
-                        # clean case: preserved anchor 없는 clean list
-                        or should_replace_clean_list
-                    )):
-                _mark_used(mapping.block_id, mapping)
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        sidecar_block=list_sidecar,
-                        mapping_lost_info=mapping_lost_info,
-                    )
-                )
-                continue
-            # preserved anchor list: text-level 패치로 ac:/ri: XHTML 구조 보존
-            # (_apply_mdx_diff_to_xhtml 경로)
-            # 같은 부모의 다중 변경은 순차 집계한다 (이전 결과에 누적 적용)
-            # inline_fixups, has_inline_boundary는 상단에서 이미 계산됨
-            if mapping is not None and has_patchable_text_change:
-                bid = mapping.block_id
-                if bid not in _text_change_patches:
-                    patch_entry: Dict[str, Any] = {
-                        'xhtml_xpath': mapping.xhtml_xpath,
-                        'old_plain_text': xhtml_list_model.visible_text,
-                        'new_plain_text': xhtml_list_model.visible_text,
-                    }
-                    patches.append(patch_entry)
-                    _text_change_patches[bid] = patch_entry
-                if has_content_change:
-                    transfer_xhtml_plain = _text_change_patches[bid]['new_plain_text']
-                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        old_visible,
-                        new_visible,
-                        transfer_xhtml_plain,
-                    )
-                if has_ol_start_change:
-                    _text_change_patches[bid]['ol_start'] = int(_new_start.group(1))
-                if has_inline_boundary:
-                    existing = _text_change_patches[bid].get(
-                        'inline_fixups', [])
-                    existing.extend(inline_fixups)
-                    _text_change_patches[bid]['inline_fixups'] = existing
-                _mark_used(mapping.block_id, mapping)
-            continue
-
-        if strategy is RendererStrategy.TABLE:
-            if strategy_decision.source_kind == "raw_html_table":
-                if (
-                    '<ac:link' in mapping.xhtml_text
-                    or '<ri:attachment' in mapping.xhtml_text
-                ):
-                    _mark_used(mapping.block_id, mapping)
-                    patches.append(
-                        _build_preserved_template_patch(
-                            mapping,
-                            _mdx_visible_text(change.new_block),
-                            mapping_lost_info,
-                        )
-                    )
-                    continue
-                old_cells = _extract_html_table_cells(change.old_block.content)
-                new_cells = _extract_html_table_cells(change.new_block.content)
-                if not _is_safe_cell_text_edit(old_cells, new_cells):
-                    skipped_changes.append({
-                        'block_id': mapping.block_id,
-                        'reason': 'unsafe_html_table_edit',
-                        'description': (
-                            f"블록 {mapping.block_id}: raw HTML 테이블의 셀 구조 변경"
-                            f"(셀 수 변경 또는 셀 내용 재배치)은 안전하지 않아 "
-                            f"건너뜁니다."
-                        ),
-                    })
-                    continue
-                _mark_used(mapping.block_id, mapping)
-                mapping_visible_text = mapping.xhtml_plain_text
-                patches.append({
-                    'xhtml_xpath': mapping.xhtml_xpath,
-                    'old_plain_text': mapping_visible_text,
-                    'new_plain_text': _apply_mdx_diff_to_xhtml(
-                        old_plain,
-                        _mdx_visible_text(change.new_block),
-                        mapping_visible_text,
-                    ),
-                })
-                continue
-
-            table_skip = _classify_table_fragment_skip(
-                change, mapping, roundtrip_sidecar)
-            if table_skip is None:
-                _mark_used(mapping.block_id, mapping)
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        mapping_lost_info=mapping_lost_info,
-                    )
-                )
-            else:
-                skipped_changes.append(table_skip)
-            continue
-
-        new_plain = _mdx_visible_text(change.new_block)
-
-        if strategy is RendererStrategy.CONTAINER:
-            if mapping is not None:
-                bid = mapping.block_id
-                first_visit = bid not in used_ids
-                _mark_used(bid, mapping)
-                sidecar_block = _find_roundtrip_sidecar_block(
-                    change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
-                )
-                if sidecar_block_requires_reconstruction(sidecar_block):
-                    # anchor 재구성이 필요한 경우: 첫 번째 변경만 replace_fragment
-                    if first_visit:
-                        patches.append(
-                            _build_replace_fragment_patch(
-                                mapping,
-                                change.new_block,
-                                sidecar_block=sidecar_block,
-                                mapping_lost_info=mapping_lost_info,
-                            )
-                        )
-                else:
-                    # clean container / child-of-parent: text-level 누적
-                    # (_apply_mdx_diff_to_xhtml 경로)
-                    if bid not in _text_change_patches:
-                        patch_entry: Dict[str, Any] = {
-                            'xhtml_xpath': mapping.xhtml_xpath,
-                            'old_plain_text': mapping.xhtml_plain_text,
-                            'new_plain_text': mapping.xhtml_plain_text,
-                        }
-                        patches.append(patch_entry)
-                        _text_change_patches[bid] = patch_entry
-                    _text_change_patches[bid]['new_plain_text'] = _apply_mdx_diff_to_xhtml(
-                        old_plain, new_plain,
-                        _text_change_patches[bid]['new_plain_text'])
-                    # 인라인 마커 경계 변경 (bold/italic) 감지 및 누적
-                    inline_fixups = _build_inline_fixups(
-                        change.old_block.content,
-                        change.new_block.content,
-                        block_type=change.old_block.type,
-                    )
-                    if inline_fixups:
-                        existing = _text_change_patches[bid].get(
-                            'inline_fixups', [])
-                        existing.extend(_offset_inline_fixup_match_indexes(
-                            existing, inline_fixups,
-                            parent_xpath=mapping.xhtml_xpath,
-                            change_index=change.index,
-                            improved_blocks=improved_blocks,
-                            mdx_to_sidecar=mdx_to_sidecar,
-                        ))
-                        _text_change_patches[bid]['inline_fixups'] = existing
-                # callout child list의 마커 공백 변경 → replace_fragment 패치
-                # (text transfer는 normalize_mdx_to_plain이 마커를 제거하여 감지 불가)
-                if (change.old_block.type == 'callout'
-                        and hasattr(change.old_block, 'children')
-                        and hasattr(change.new_block, 'children')):
-                    old_lists = [c for c in change.old_block.children
-                                 if c.type == 'list']
-                    new_lists = [c for c in change.new_block.children
-                                 if c.type == 'list']
-                    child_list_mappings = [
-                        id_to_mapping[cid]
-                        for cid in mapping.children
-                        if cid in id_to_mapping
-                        and id_to_mapping[cid].type == 'list'
-                    ]
-                    for old_child, new_child, child_map in zip(
-                            old_lists, new_lists, child_list_mappings):
-                        if _detect_list_item_space_change(
-                                old_child.content, new_child.content):
-                            # preserved anchor 마크업이 있으면 건너뜀
-                            # (replace_fragment가 ac:link 등을 손실시킴)
-                            if _contains_preserved_anchor_markup(
-                                    child_map.xhtml_text):
-                                continue
-                            child_block = MdxBlock(
-                                type='list',
-                                content=new_child.content,
-                                line_start=0, line_end=0,
-                            )
-                            patches.append(
-                                _build_replace_fragment_patch(
-                                    child_map, child_block,
-                                    mapping_lost_info=mapping_lost_info,
-                                )
-                            )
-            continue
-
-        # RendererStrategy.TEXT_BLOCK / PRESERVED_ANCHOR
-        _mark_used(mapping.block_id, mapping)
-        mapping_visible_text = _xhtml_visible_text(
-            mapping,
-            change.old_block.type,
-        )
-
-        # 멱등성 체크: push 후 XHTML이 이미 업데이트된 경우 건너뜀
-        # (old != xhtml 이고 new == xhtml → 이미 적용된 변경)
-        if (collapse_ws(old_plain) != collapse_ws(mapping_visible_text)
-                and collapse_ws(new_plain) == collapse_ws(mapping_visible_text)):
-            continue
-
         sidecar_block = _find_roundtrip_sidecar_block(
             change, mapping, roundtrip_sidecar, xpath_to_sidecar_block,
         )
-
-        if strategy is RendererStrategy.PRESERVED_ANCHOR:
-            if sidecar_block_requires_reconstruction(sidecar_block):
-                patches.append(
-                    _build_replace_fragment_patch(
-                        mapping,
-                        change.new_block,
-                        sidecar_block=sidecar_block,
-                        mapping_lost_info=mapping_lost_info,
-                    )
-                )
-                continue
-            if not _contains_only_supported_preservation_units(
-                mapping.xhtml_text
-            ):
-                skipped_changes.append({
-                    'block_id': mapping.block_id,
-                    'reason': 'unknown_preservation_unit',
-                    'description': (
-                        f"블록 {mapping.block_id}: 지원 계약이 없는 Confluence "
-                        f"preservation unit을 변경할 수 없어 건너뜁니다."
-                    ),
-                })
-                continue
-            if (
-                '<ac:link' in mapping.xhtml_text
-                or '<ri:attachment' in mapping.xhtml_text
-            ):
-                patches.append(
-                    _build_preserved_template_patch(
-                        mapping,
-                        new_plain,
-                        mapping_lost_info,
-                    )
-                )
-                continue
-            skipped_changes.append({
-                'block_id': mapping.block_id,
-                'reason': 'unknown_preservation_unit',
-                'description': (
-                    f"블록 {mapping.block_id}: 지원 계약이 없는 Confluence "
-                    f"preservation unit을 변경할 수 없어 건너뜁니다."
-                ),
-            })
-            continue
-
-        if _is_clean_block(change.old_block.type, mapping, sidecar_block):
-            patches.append(
-                _build_replace_fragment_patch(
-                    mapping,
-                    change.new_block,
-                    sidecar_block=sidecar_block,
-                    mapping_lost_info=mapping_lost_info,
-                )
+        dispatch_strategy(
+            StrategyRenderContext(
+                decision=strategy_decision,
+                change=change,
+                mapping=mapping,
+                old_plain=old_plain,
+                new_plain=_mdx_visible_text(change.new_block),
+                mapping_via_v3_fallback=mapping_via_v3_fallback,
+                roundtrip_sidecar=roundtrip_sidecar,
+                sidecar_block=sidecar_block,
+                mapping_lost_info=mapping_lost_info,
+                improved_blocks=improved_blocks,
+                mdx_to_sidecar=mdx_to_sidecar,
+                id_to_mapping=id_to_mapping,
+                used_ids=used_ids,
+                patches=patches,
+                skipped_changes=skipped_changes,
+                text_change_patches=_text_change_patches,
+                mark_used_callback=_mark_used,
+                primitives=strategy_primitives,
             )
-            continue
-
-        if sidecar_block_requires_reconstruction(sidecar_block):
-            patches.append(
-                _build_replace_fragment_patch(
-                    mapping,
-                    change.new_block,
-                    sidecar_block=sidecar_block,
-                    mapping_lost_info=mapping_lost_info,
-                )
-            )
-            continue
-
-        # inner XHTML 재생성 + 블록 레벨 lost_info 적용
-        new_inner = mdx_block_to_inner_xhtml(
-            change.new_block.content, change.new_block.type)
-        block_lost = mapping_lost_info.get(mapping.block_id, {})
-        if block_lost:
-            new_inner = apply_lost_info(new_inner, block_lost)
-
-        patches.append({
-            'xhtml_xpath': mapping.xhtml_xpath,
-            'old_plain_text': mapping_visible_text,
-            'new_inner_xhtml': new_inner,
-        })
+        )
 
     return (
         _resolve_patch_links(

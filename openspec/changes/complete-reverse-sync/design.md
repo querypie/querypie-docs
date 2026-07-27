@@ -327,8 +327,13 @@ capability 판별은 renderer output의 raw patch payload shape를 재해석하�
 planner가 operation에 대응하는 MDX `ChangeIntent`와 typed
 `StrategyDecision`을 `classify_capability()`에 전달하고, legacy renderer skip
 reason의 capability 대응도 `capabilities.py` registry boundary에서 수행합니다.
-각 strategy handler를 `patch_builder.py` 밖의 `reverse_sync/strategies/**`
-모듈로 추출하는 작업은 계속 남아 있습니다.
+각 strategy handler는 `patch_builder.py` 밖의 `reverse_sync/strategies/**`
+모듈에 둡니다. `StrategyRenderContext`는 한 modified block의 decision, exact
+mapping, sidecar, 누적 patch state를 전달하고, `StrategyPrimitives`는 migration
+중인 기존 patch primitive를 callback으로 주입합니다. 따라서 handler는
+`patch_builder.py`를 역참조하지 않으며 `build_patches()`의 modified block
+rendering path에는 typed context 구성과 registry dispatch만 남습니다.
+`blocked` 또는 미등록 strategy는 dispatch 경계에서 fail-closed합니다.
 
 `render_patch_plan_preserving()`은 executable operation을 raw renderer input으로
 복원하기 직전에 target root fragment hash, sidecar MDX hash, line range를 base
