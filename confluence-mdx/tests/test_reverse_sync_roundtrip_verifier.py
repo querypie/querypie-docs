@@ -1,5 +1,7 @@
 import pytest
 from reverse_sync.roundtrip_verifier import (
+    NORMALIZATION_RULES,
+    NormalizationClass,
     verify_roundtrip,
     VerifyResult,
     _normalize_consecutive_spaces_in_text,
@@ -17,6 +19,32 @@ def test_identical_mdx_passes():
     )
     assert result.passed is True
     assert result.diff_report == ""
+
+
+def test_normalization_rules_are_classified_for_diagnostics():
+    classifications = {rule.name: rule.classification for rule in NORMALIZATION_RULES}
+
+    assert set(classifications) == {
+        "br_space",
+        "consecutive_spaces",
+        "date_reformat",
+        "empty_bold",
+        "empty_list_items",
+        "html_entities_in_code",
+        "inline_code_boundary",
+        "leading_blank_lines",
+        "link_text_spacing",
+        "sentence_break_merge",
+        "smart_quotes",
+        "table_cell_line_merge",
+        "table_cell_padding",
+        "title_removal",
+        "trailing_blank_lines",
+        "trailing_whitespace",
+    }
+    assert classifications["table_cell_padding"] is NormalizationClass.SOURCE_FORMATTING
+    assert classifications["consecutive_spaces"] is NormalizationClass.RENDERED_VISIBLE
+    assert classifications["title_removal"] is NormalizationClass.UNSUPPORTED_LOSSY
 
 
 def test_different_mdx_fails():

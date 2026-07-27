@@ -20,6 +20,7 @@ from reverse_sync.confluence_client import NetworkError, VersionConflictError
 from reverse_sync.manifest import create_sync_manifest
 from reverse_sync.models import PageSnapshot, VerificationGate
 from reverse_sync.publisher import PostconditionError
+from reverse_sync.proof import REQUIRED_LOCAL_GATES
 
 
 def _create_push_manifest(
@@ -56,19 +57,15 @@ def _create_push_manifest(
         original_descriptor="main:src/content/ko/test.mdx",
         improved_mdx="# Test\n\nNew\n",
         improved_descriptor="src/content/ko/test.mdx",
+        patch_plan='{"schema_version":1}\n',
         candidate_xhtml=candidate_body,
-        verifier_policy="reverse-sync-push-v1",
-        tool_version="reverse-sync-cli-v1",
+        local_proof='{"status":"verified_local"}\n',
+        verifier_policy="reverse-sync-equivalence-v1",
+        tool_version="reverse-sync-cli-v2",
         push_eligible=True,
         gates=tuple(
             VerificationGate(name, True)
-            for name in (
-                "source_identity",
-                "base_parity",
-                "intent_complete",
-                "semantic_roundtrip",
-                "artifact_integrity",
-            )
+            for name in REQUIRED_LOCAL_GATES
         ),
     )
     return manifest_path, base, persisted
@@ -162,16 +159,16 @@ def test_push_verify_fail_exits(monkeypatch):
     assert exc_info.value.code == 1
 
 
-def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
-    """push --yes 시 verify pass → _do_push 호출."""
+def test_push_verified_local_then_pushes(tmp_path, monkeypatch):
+    """push --yes 시 verified_local → _do_push 호출."""
     page_id = 'test-page-001'
     mdx_arg = 'src/content/ko/test/page.mdx'
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--json', mdx_arg])
     monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     manifest_path = tmp_path / "manifest.json"
-    pass_result = {
-        'status': 'pass',
+    verified_result = {
+        'status': 'verified_local',
         'page_id': page_id,
         'changes_count': 1,
         'push_eligible': True,
@@ -184,7 +181,7 @@ def test_push_verify_pass_then_pushes(tmp_path, monkeypatch):
         "version": 6,
     }
 
-    with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+    with patch('reverse_sync_cli._do_verify', return_value=verified_result), \
          patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
          patch('reverse_sync_cli._do_push', return_value=push_result) as mock_push, \
          patch('builtins.print') as mock_print:
@@ -205,14 +202,14 @@ def test_push_dry_run_skips_push(monkeypatch):
     """push --dry-run은 verify만 수행하고 push하지 않는다."""
     mdx_arg = 'src/content/ko/test/page.mdx'
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--dry-run', mdx_arg])
-    pass_result = {
-        'status': 'pass',
+    verified_result = {
+        'status': 'verified_local',
         'page_id': 'test-page-001',
         'changes_count': 1,
         'push_eligible': True,
     }
 
-    with patch('reverse_sync_cli._do_verify', return_value=pass_result) as mock_verify, \
+    with patch('reverse_sync_cli._do_verify', return_value=verified_result) as mock_verify, \
          patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
          patch('reverse_sync_cli._do_push') as mock_push, \
          patch('builtins.print'):
@@ -234,6 +231,35 @@ def test_push_yes_does_not_bypass_push_eligibility(monkeypatch):
         'page_id': 'test-page-001',
         'changes_count': 1,
         'push_eligible': False,
+    }
+
+    with patch(
+        'reverse_sync_cli._do_verify',
+        return_value=diagnostic_result,
+    ), patch(
+        'reverse_sync_cli._ensure_confluence_config',
+        return_value=MagicMock(),
+    ), patch('reverse_sync_cli._do_push') as push, patch('builtins.print'):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+    push.assert_not_called()
+
+
+def test_push_rejects_diagnostic_pass_even_if_marked_eligible(monkeypatch):
+    """online 발행은 기존 diagnostic pass 상태를 신뢰하지 않습니다."""
+    mdx_arg = 'src/content/ko/test/page.mdx'
+    monkeypatch.setattr(
+        'sys.argv',
+        ['reverse_sync_cli.py', 'push', '--yes', mdx_arg],
+    )
+    diagnostic_result = {
+        'status': 'pass',
+        'page_id': 'test-page-001',
+        'changes_count': 1,
+        'push_eligible': True,
+        'manifest_path': '/tmp/legacy-manifest.json',
     }
 
     with patch(
@@ -434,6 +460,36 @@ def test_do_verify_batch_all_pass():
     assert all(r['status'] == 'pass' for r in results)
 
 
+def test_do_verify_batch_online_rejects_diagnostic_pass():
+    """online batch는 legacy diagnostic pass를 발행 후보로 승격하지 않습니다."""
+    files = ['src/content/ko/a.mdx']
+    diagnostic_result = {
+        'status': 'pass',
+        'page_id': 'p1',
+        'changes_count': 1,
+        'push_eligible': True,
+    }
+
+    with patch(
+        'reverse_sync_cli._get_changed_ko_mdx_files',
+        return_value=files,
+    ), patch(
+        'reverse_sync_cli._do_verify',
+        return_value=diagnostic_result,
+    ), patch(
+        'reverse_sync_cli._ensure_confluence_config',
+        return_value=MagicMock(),
+    ), patch('builtins.print'):
+        results = _do_verify_batch(
+            'proofread/fix-typo',
+            prepare_push=True,
+        )
+
+    assert results[0]['status'] == 'blocked'
+    assert results[0]['push_eligible'] is False
+    assert results[0]['reason_code'] == 'diagnostic_result_not_pushable'
+
+
 def test_do_verify_batch_with_error():
     """1파일 에러, 나머지 계속 처리."""
     files = [
@@ -499,9 +555,9 @@ def test_main_push_branch(tmp_path, monkeypatch):
     monkeypatch.setattr('reverse_sync_cli._PROJECT_DIR', tmp_path)
 
     batch_results = [
-        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+        {'status': 'verified_local', 'page_id': 'p1', 'changes_count': 1,
          'push': {'page_id': 'p1', 'title': 'T1', 'version': 2, 'url': '/t1'}},
-        {'status': 'pass', 'page_id': 'p2', 'changes_count': 2,
+        {'status': 'verified_local', 'page_id': 'p2', 'changes_count': 2,
          'push': {'page_id': 'p2', 'title': 'T2', 'version': 3, 'url': '/t2'}},
     ]
 
@@ -516,7 +572,7 @@ def test_main_push_branch_with_failure(monkeypatch):
     """배치 push 시 일부 fail → exit 1 (pass한 문서는 이미 push됨)."""
     monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--yes', '--branch', 'proofread/fix-typo'])
     batch_results = [
-        {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+        {'status': 'verified_local', 'page_id': 'p1', 'changes_count': 1,
          'push': {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}},
         {'status': 'fail', 'page_id': 'p2', 'changes_count': 1},
     ]
@@ -1462,8 +1518,8 @@ class TestPushConfirmPrompt:
         """단일 push 시 확인 거부 → push 안 함."""
         mdx_arg = 'src/content/ko/test/page.mdx'
         monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', mdx_arg])
-        pass_result = {
-            'status': 'pass',
+        verified_result = {
+            'status': 'verified_local',
             'page_id': 'p1',
             'title': 'Test',
             'changes_count': 1,
@@ -1473,7 +1529,7 @@ class TestPushConfirmPrompt:
             'candidate_sha256': 'a' * 64,
         }
 
-        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+        with patch('reverse_sync_cli._do_verify', return_value=verified_result), \
              patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
              patch('reverse_sync_cli.sys.stdin') as mock_stdin, \
              patch('reverse_sync_cli._confirm', return_value=False) as confirm, \
@@ -1501,15 +1557,15 @@ class TestPushConfirmPrompt:
         var_dir.mkdir(parents=True)
         (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
 
-        pass_result = {
-            'status': 'pass',
+        verified_result = {
+            'status': 'verified_local',
             'page_id': page_id,
             'changes_count': 1,
             'push_eligible': True,
             'manifest_path': '/tmp/manifest.json',
         }
 
-        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+        with patch('reverse_sync_cli._do_verify', return_value=verified_result), \
              patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
              patch('reverse_sync_cli._do_push', return_value={
                  'page_id': page_id, 'title': 'Test', 'version': 6,
@@ -1524,7 +1580,7 @@ class TestPushConfirmPrompt:
         """배치 push 시 확인 거부 → push 안 함."""
         files = ['src/content/ko/a.mdx']
         verify_result = {
-            'status': 'pass',
+            'status': 'verified_local',
             'page_id': 'p1',
             'changes_count': 1,
             'push_eligible': True,
@@ -1552,7 +1608,7 @@ class TestPushConfirmPrompt:
 
         files = ['src/content/ko/a.mdx']
         verify_result = {
-            'status': 'pass',
+            'status': 'verified_local',
             'page_id': page_id,
             'changes_count': 1,
             'push_eligible': True,
@@ -1577,14 +1633,14 @@ class TestPushConfirmPrompt:
         files = ['src/content/ko/a.mdx', 'src/content/ko/b.mdx']
         verify_results = [
             {
-                'status': 'pass',
+                'status': 'verified_local',
                 'page_id': 'p1',
                 'changes_count': 1,
                 'push_eligible': True,
                 'manifest_path': '/tmp/p1/manifest.json',
             },
             {
-                'status': 'pass',
+                'status': 'verified_local',
                 'page_id': 'p2',
                 'changes_count': 1,
                 'push_eligible': True,
@@ -1636,15 +1692,15 @@ class TestPushNonTtyRequiresYes:
         var_dir.mkdir(parents=True)
         (var_dir / 'reverse-sync.patched.xhtml').write_text('<p>New</p>')
 
-        pass_result = {
-            'status': 'pass',
+        verified_result = {
+            'status': 'verified_local',
             'page_id': page_id,
             'changes_count': 1,
             'push_eligible': True,
             'manifest_path': '/tmp/manifest.json',
         }
 
-        with patch('reverse_sync_cli._do_verify', return_value=pass_result), \
+        with patch('reverse_sync_cli._do_verify', return_value=verified_result), \
              patch('reverse_sync_cli._ensure_confluence_config', return_value=MagicMock()), \
              patch('reverse_sync_cli._do_push', return_value={
                  'page_id': page_id, 'title': 'Test', 'version': 6,
@@ -1660,7 +1716,7 @@ class TestPushExitCode:
         """배치에서 push conflict 발생 시 exit 1."""
         monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'b', '--yes'])
         batch_results = [
-            {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+            {'status': 'verified_local', 'page_id': 'p1', 'changes_count': 1,
              'push': {'status': 'conflict', 'error': 'conflict'}},
         ]
 
@@ -1675,7 +1731,7 @@ class TestPushExitCode:
         """배치에서 모든 push 성공 시 exit 0."""
         monkeypatch.setattr('sys.argv', ['reverse_sync_cli.py', 'push', '--branch', 'b', '--yes'])
         batch_results = [
-            {'status': 'pass', 'page_id': 'p1', 'changes_count': 1,
+            {'status': 'verified_local', 'page_id': 'p1', 'changes_count': 1,
              'push': {'page_id': 'p1', 'title': 'T', 'version': 2, 'url': '/t'}},
         ]
 
@@ -1686,6 +1742,45 @@ class TestPushExitCode:
 
 class TestPrintResultsPushStatus:
     """텍스트 출력이 push 실패 상태를 반영하는지 확인."""
+
+    def test_verified_local_is_distinct_from_diagnostic_pass(
+        self, monkeypatch, capsys
+    ):
+        monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
+
+        _print_results([
+            {
+                'file': 'src/content/ko/verified.mdx',
+                'status': 'verified_local',
+                'changes_count': 1,
+            },
+            {
+                'file': 'src/content/ko/diagnostic.mdx',
+                'status': 'pass',
+                'changes_count': 1,
+            },
+        ])
+
+        out = capsys.readouterr().out
+        assert 'VERIFIED LOCAL' in out
+        assert '1 verified local' in out
+        assert '1 passed' in out
+
+    def test_blocked_result_prints_reason_code(self, monkeypatch, capsys):
+        monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)
+
+        _print_results([
+            {
+                'file': 'src/content/ko/blocked.mdx',
+                'status': 'blocked',
+                'reason_code': 'semantic_roundtrip_mismatch',
+                'changes_count': 1,
+            }
+        ])
+
+        out = capsys.readouterr().out
+        assert 'BLOCKED' in out
+        assert 'reason: semantic_roundtrip_mismatch' in out
 
     def test_failures_only_shows_push_conflict(self, monkeypatch, capsys):
         monkeypatch.setattr('reverse_sync_cli._supports_color', lambda: False)

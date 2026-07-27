@@ -1,8 +1,43 @@
 """Roundtrip Verifier — 패치된 XHTML의 forward 변환 결과와 개선 MDX의 완전 일치를 검증한다."""
 from dataclasses import dataclass
 import difflib
+from enum import Enum
 import html as html_module
 import re
+
+
+class NormalizationClass(str, Enum):
+    """diagnostic normalization이 숨길 수 있는 차이의 성격."""
+
+    SOURCE_FORMATTING = "source_formatting"
+    RENDERED_VISIBLE = "rendered_visible"
+    UNSUPPORTED_LOSSY = "unsupported_lossy"
+
+
+@dataclass(frozen=True)
+class NormalizationRule:
+    name: str
+    classification: NormalizationClass
+
+
+NORMALIZATION_RULES = (
+    NormalizationRule("table_cell_padding", NormalizationClass.SOURCE_FORMATTING),
+    NormalizationRule("leading_blank_lines", NormalizationClass.SOURCE_FORMATTING),
+    NormalizationRule("trailing_blank_lines", NormalizationClass.SOURCE_FORMATTING),
+    NormalizationRule("consecutive_spaces", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("trailing_whitespace", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("br_space", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("link_text_spacing", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("empty_bold", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("empty_list_items", NormalizationClass.RENDERED_VISIBLE),
+    NormalizationRule("title_removal", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("sentence_break_merge", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("date_reformat", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("table_cell_line_merge", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("inline_code_boundary", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("html_entities_in_code", NormalizationClass.UNSUPPORTED_LOSSY),
+    NormalizationRule("smart_quotes", NormalizationClass.UNSUPPORTED_LOSSY),
+)
 
 
 @dataclass

@@ -1,7 +1,7 @@
 """Mapping Recorder — XHTML 블록 요소를 추출하여 매핑 레코드를 생성한다."""
 from dataclasses import dataclass, field
 from typing import List, Optional
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, Comment, NavigableString, Tag
 
 
 @dataclass
@@ -69,6 +69,8 @@ def record_mapping(xhtml: str) -> List[BlockMapping]:
     counters: dict = {}
 
     for child in iter_block_children(soup):
+        if isinstance(child, Comment):
+            continue
         if isinstance(child, NavigableString):
             if child.strip():
                 _add_mapping(mappings, counters, 'p', child.strip(), child.strip())

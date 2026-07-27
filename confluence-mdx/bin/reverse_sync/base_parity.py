@@ -11,7 +11,7 @@ from urllib.parse import unquote, urlparse
 import yaml
 
 from reverse_sync.models import PageSnapshot
-from reverse_sync.roundtrip_verifier import verify_roundtrip
+from reverse_sync.equivalence import verify_push_equivalence
 
 
 @dataclass(frozen=True)
@@ -159,15 +159,11 @@ def verify_base_parity(
 
     expected = _content_without_frontmatter(original_mdx)
     actual = _content_without_frontmatter(converted_base_mdx)
-    result = verify_roundtrip(
-        expected_mdx=expected,
-        actual_mdx=actual,
-        no_normalize=True,
-    )
+    result = verify_push_equivalence(expected, actual)
     if result.passed:
         return BaseParityResult(True)
 
-    diff = "".join(
+    diff = result.diff_report or "".join(
         difflib.unified_diff(
             expected.splitlines(keepends=True),
             actual.splitlines(keepends=True),

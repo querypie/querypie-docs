@@ -30,10 +30,14 @@ from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
 from reverse_sync.patch_builder import build_patches
+from reverse_sync.equivalence import (
+    PUSH_EQUIVALENCE_POLICY,
+    verify_push_equivalence,
+)
 from xhtml_beautify_diff import xhtml_diff
 
-_PUSH_VERIFIER_POLICY = "reverse-sync-push-v1"
-_TOOL_VERSION = "reverse-sync-cli-v1"
+_PUSH_VERIFIER_POLICY = PUSH_EQUIVALENCE_POLICY
+_TOOL_VERSION = "reverse-sync-cli-v2"
 
 
 @dataclass
@@ -171,6 +175,7 @@ def _forward_convert(patched_xhtml_path: str, output_mdx_path: str, page_id: str
 def _clean_reverse_sync_artifacts(page_id: str) -> Path:
     """var/<page_id>/ 내의 이전 reverse-sync 산출물을 정리하고 var_dir을 반환한다."""
     var_dir = _PROJECT_DIR / 'var' / page_id
+    var_dir.mkdir(parents=True, exist_ok=True)
     for f in var_dir.glob('reverse-sync.*'):
         if f.name == 'reverse-sync.backup.xhtml':
             continue
@@ -254,6 +259,12 @@ def _compile_result(
             'diff_report': roundtrip_diff_report,
         },
     }
+    if isinstance(getattr(verify_result, "policy", None), str):
+        result["verification"].update(
+            policy=verify_result.policy,
+            expected_sha256=verify_result.expected_sha256,
+            actual_sha256=verify_result.actual_sha256,
+        )
     if title:
         result['title'] = title
     if skipped_changes:
@@ -385,15 +396,6 @@ def run_verify(
             "invalid_page_snapshot",
             detail="online push에는 remote PageSnapshot이 필요합니다.",
         )
-    if for_push and lenient:
-        return _blocked_result(
-            var_dir,
-            page_id,
-            now,
-            "lenient_verification_not_pushable",
-            detail="--lenient 결과는 진단용이며 push proof로 사용할 수 없습니다.",
-        )
-
     if base_snapshot is not None:
         from reverse_sync.base_parity import (
             verify_attachment_dependencies,
@@ -512,7 +514,16 @@ def run_verify(
     }
     (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
-    patched_xhtml = patch_xhtml(xhtml, patches)
+    if for_push:
+        from reverse_sync.preserving_patcher import patch_xhtml_preserving
+
+        patched_xhtml = patch_xhtml_preserving(
+            xhtml,
+            patches,
+            roundtrip_sidecar,
+        )
+    else:
+        patched_xhtml = patch_xhtml(xhtml, patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
     # XHTML beautify-diff (page.xhtml → patched.xhtml)
@@ -577,12 +588,15 @@ def run_verify(
 
     # Step 7: 완전 일치 검증 → result.yaml 저장
     verify_stripped = _strip_frontmatter(verify_mdx)
-    verify_result = verify_roundtrip(
-        expected_mdx=impr_stripped,
-        actual_mdx=verify_stripped,
-        lenient=lenient,
-        no_normalize=True if for_push else no_normalize,
-    )
+    if for_push:
+        verify_result = verify_push_equivalence(impr_stripped, verify_stripped)
+    else:
+        verify_result = verify_roundtrip(
+            expected_mdx=impr_stripped,
+            actual_mdx=verify_stripped,
+            lenient=lenient,
+            no_normalize=no_normalize,
+        )
     # Roundtrip diff (improved → verify): PASS/FAIL 무관하게 항상 생성
     roundtrip_diff_lines = difflib.unified_diff(
         impr_stripped.splitlines(keepends=True),
@@ -599,15 +613,139 @@ def run_verify(
         verify_result, roundtrip_diff_report, title=title,
         skipped_changes=skipped_changes)
 
-    if for_push and result["status"] == "pass" and skipped_changes:
-        result.update(
-            status="blocked",
-            push_eligible=False,
-            reason_code="incomplete_patch_plan",
-        )
-    elif for_push and result["status"] == "pass":
+    if for_push:
         from reverse_sync.manifest import create_sync_manifest
-        from reverse_sync.models import VerificationGate, sha256_text
+        from reverse_sync.models import sha256_text
+        from reverse_sync.preserving_patcher import patch_xhtml_preserving
+        from reverse_sync.proof import build_local_proof, canonical_plan_json
+
+        plan_json = canonical_plan_json(
+            changes=changes,
+            patches=patches,
+            skipped_changes=skipped_changes,
+        )
+        (var_dir / "reverse-sync.plan.json").write_text(plan_json)
+
+        deterministic_patches, _, deterministic_skips = build_patches(
+            changes,
+            original_blocks,
+            improved_blocks,
+            page_xhtml=xhtml,
+            alignment=alignment,
+            page_lost_info=page_lost_info,
+            roundtrip_sidecar=roundtrip_sidecar,
+        )
+        deterministic_plan_json = canonical_plan_json(
+            changes=changes,
+            patches=deterministic_patches,
+            skipped_changes=deterministic_skips,
+        )
+        deterministic_candidate = patch_xhtml_preserving(
+            xhtml,
+            deterministic_patches,
+            roundtrip_sidecar,
+        )
+
+        try:
+            candidate_sidecar = build_sidecar(
+                patched_xhtml,
+                verify_mdx,
+                page_id=page_id,
+            )
+            (
+                idempotency_changes,
+                idempotency_alignment,
+                idempotency_original_blocks,
+                idempotency_improved_blocks,
+            ) = _parse_and_diff(verify_mdx, improved_mdx)
+            if not idempotency_changes:
+                idempotent_candidate = patched_xhtml
+            else:
+                (
+                    idempotency_patches,
+                    _,
+                    idempotency_skips,
+                ) = build_patches(
+                    idempotency_changes,
+                    idempotency_original_blocks,
+                    idempotency_improved_blocks,
+                    page_xhtml=patched_xhtml,
+                    alignment=idempotency_alignment,
+                    page_lost_info=page_lost_info,
+                    roundtrip_sidecar=candidate_sidecar,
+                )
+                idempotent_candidate = (
+                    ""
+                    if idempotency_skips
+                    else patch_xhtml_preserving(
+                        patched_xhtml,
+                        idempotency_patches,
+                        candidate_sidecar,
+                    )
+                )
+        except (ValueError, KeyError):
+            idempotent_candidate = ""
+
+        proof = build_local_proof(
+            base_xhtml=xhtml,
+            improved_mdx=improved_mdx,
+            roundtrip_mdx=verify_mdx,
+            candidate_xhtml=patched_xhtml,
+            sidecar=roundtrip_sidecar,
+            changes=changes,
+            patches=patches,
+            skipped_changes=skipped_changes,
+            plan_json=plan_json,
+            deterministic_plan_json=deterministic_plan_json,
+            deterministic_candidate_xhtml=deterministic_candidate,
+            idempotent_candidate_xhtml=idempotent_candidate,
+            source_identity_passed=True,
+            base_parity_passed=True,
+            dependency_passed=True,
+        )
+        proof_json = proof.to_canonical_json()
+        (var_dir / "reverse-sync.proof.json").write_text(proof_json)
+
+        diagnostics = {}
+        if lenient:
+            diagnostic = verify_roundtrip(
+                expected_mdx=impr_stripped,
+                actual_mdx=verify_stripped,
+                lenient=True,
+            )
+            diagnostics["lenient"] = {
+                "passed": diagnostic.passed,
+                "diff_report": diagnostic.diff_report,
+                "push_eligible": False,
+            }
+        if no_normalize:
+            diagnostic = verify_roundtrip(
+                expected_mdx=impr_stripped,
+                actual_mdx=verify_stripped,
+                no_normalize=True,
+            )
+            diagnostics["raw"] = {
+                "passed": diagnostic.passed,
+                "diff_report": diagnostic.diff_report,
+                "push_eligible": False,
+            }
+
+        result.update(
+            status=proof.status,
+            push_eligible=proof.push_eligible,
+            reason_code=proof.blocked_reasons[0] if proof.blocked_reasons else "",
+            blocked_reasons=list(proof.blocked_reasons),
+            local_gates=[gate.to_dict() for gate in proof.gates],
+            verification=proof.equivalence.to_dict(),
+        )
+        if diagnostics:
+            result["diagnostics"] = diagnostics
+
+        if not proof.push_eligible:
+            (var_dir / "reverse-sync.result.yaml").write_text(
+                yaml.dump(result, allow_unicode=True, default_flow_style=False)
+            )
+            return result
 
         manifest_path = create_sync_manifest(
             runs_dir=var_dir / "reverse-sync",
@@ -616,17 +754,13 @@ def run_verify(
             original_descriptor=original_src.descriptor,
             improved_mdx=improved_mdx,
             improved_descriptor=improved_src.descriptor,
+            patch_plan=plan_json,
             candidate_xhtml=patched_xhtml,
+            local_proof=proof_json,
             verifier_policy=_PUSH_VERIFIER_POLICY,
             tool_version=_TOOL_VERSION,
             push_eligible=True,
-            gates=(
-                VerificationGate("source_identity", True),
-                VerificationGate("base_parity", True),
-                VerificationGate("intent_complete", True),
-                VerificationGate("semantic_roundtrip", True),
-                VerificationGate("artifact_integrity", True),
-            ),
+            gates=proof.gates,
         )
         result.update(
             push_eligible=True,
@@ -635,13 +769,6 @@ def run_verify(
             base_version=base_snapshot.version,
             base_storage_sha256=base_snapshot.storage_sha256,
             candidate_sha256=sha256_text(patched_xhtml),
-            local_gates=[
-                "source_identity",
-                "base_parity",
-                "intent_complete",
-                "semantic_roundtrip",
-                "artifact_integrity",
-            ],
         )
         (var_dir / "reverse-sync.manifest.path").write_text(str(manifest_path) + "\n")
 
@@ -694,6 +821,11 @@ def _display_status(result: Dict[str, Any]) -> str:
     return result.get('status', 'unknown')
 
 
+def _is_success_status(status: str) -> bool:
+    """offline diagnostic pass와 online verified_local을 성공으로 분류한다."""
+    return status in ("pass", "verified_local", "no_changes")
+
+
 def _display_error(result: Dict[str, Any], status: str) -> str:
     """출력용 에러 메시지를 반환한다."""
     if status in ('push_conflict', 'push_error', 'push_postcondition_failed'):
@@ -718,13 +850,15 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
 
     for r in results:
         status = _display_status(r)
-        if failures_only and status in ('pass', 'no_changes'):
+        if failures_only and _is_success_status(status):
             continue
         file_path = r.get('file', r.get('page_id', '?'))
         changes = r.get('changes_count', 0)
 
         # 상태별 컬러 배지
-        if status == 'pass':
+        if status == 'verified_local':
+            badge = c(GREEN, 'VERIFIED LOCAL')
+        elif status == 'pass':
             badge = c(GREEN, 'PASS')
         elif status == 'no_changes':
             badge = c(DIM, 'NO CHANGES')
@@ -736,6 +870,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
             badge = c(RED, 'POSTCONDITION FAILED')
         elif status == 'error':
             badge = c(YELLOW, 'ERROR')
+        elif status == 'blocked':
+            badge = c(RED, 'BLOCKED')
         else:
             badge = c(RED, 'FAIL')
 
@@ -750,6 +886,9 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
         ):
             print(f'  {c(RED, _display_error(r, status))}')
             continue
+        if status == "blocked":
+            reason_code = r.get("reason_code", "unknown")
+            print(f'  {c(RED, f"reason: {reason_code}")}')
 
         if show_all_diffs:
             # MDX diff (original → improved)
@@ -792,6 +931,9 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     total = len(results)
     display_statuses = [_display_status(r) for r in results]
     passed = sum(1 for status in display_statuses if status == 'pass')
+    verified_local = sum(
+        1 for status in display_statuses if status == 'verified_local'
+    )
     failed = sum(1 for status in display_statuses if status == 'fail')
     errors = sum(1 for status in display_statuses if status == 'error')
     conflicts = sum(1 for status in display_statuses if status == 'push_conflict')
@@ -804,6 +946,8 @@ def _print_results(results: List[Dict[str, Any]], *, show_all_diffs: bool = Fals
     parts = []
     if passed:
         parts.append(c(GREEN, f'{passed} passed'))
+    if verified_local:
+        parts.append(c(GREEN, f'{verified_local} verified local'))
     if failed:
         parts.append(c(RED, f'{failed} failed'))
     if errors:
@@ -862,7 +1006,7 @@ Options:
   --lenient
     관대 모드: trailing whitespace, 날짜 형식 등 XHTML↔MDX 변환기 한계에
     의한 차이를 기본 비교보다 더 넓게 정규화한다.
-    진단 전용이며 push에는 사용할 수 없다.
+    진단 결과만 추가하며 online push eligibility에는 영향을 주지 않는다.
 
 Examples:
   # 단일 파일 검증
@@ -1014,7 +1158,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                      prepare_push: bool = False) -> List[dict]:
     """브랜치의 변경 ko MDX 파일을 배치 처리한다.
 
-    push=True이면 verify 전체 완료 후 pass 건만 일괄 push한다.
+    push=True이면 online verify 전체 완료 후 verified_local 건만 일괄 push한다.
     yes=True이면 확인 프롬프트를 스킵한다.
     lenient=True이면 변경된 행만 검사하는 관대 모드로 검증한다.
     """
@@ -1046,12 +1190,11 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
                 )
             else:
                 result = _do_verify(args)
-            if online and result.get("status") == "pass" and not result.get(
-                "push_eligible"
-            ):
+            if online and result.get("status") == "pass":
                 result.update(
                     status="blocked",
-                    reason_code="not_push_eligible",
+                    push_eligible=False,
+                    reason_code="diagnostic_result_not_pushable",
                 )
             result['file'] = ko_path
             status = result.get('status', 'unknown')
@@ -1060,7 +1203,7 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
         except Exception as e:
             print("error", file=sys.stderr)
             results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
-        if results[-1].get('status') not in ('pass', 'no_changes'):
+        if not _is_success_status(results[-1].get('status', 'unknown')):
             failure_count += 1
         if not push and failures_only and limit > 0 and failure_count >= limit:
             break
@@ -1071,15 +1214,20 @@ def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
     # push 대상 집계
     pushable = [
         r for r in results
-        if r.get('status') == 'pass' and r.get('push_eligible') is True
+        if r.get('status') == 'verified_local'
+        and r.get('push_eligible') is True
     ]
     if not pushable:
-        print("\nPush 대상 없음 (pass 0건)", file=sys.stderr)
+        print("\nPush 대상 없음 (verified_local 0건)", file=sys.stderr)
         return results
 
     # 확인 프롬프트
     if not yes:
-        print(f"\n검증 완료: pass {len(pushable)}건 / 전체 {len(results)}건", file=sys.stderr)
+        print(
+            f"\n검증 완료: verified_local {len(pushable)}건 / "
+            f"전체 {len(results)}건",
+            file=sys.stderr,
+        )
         if not _confirm(f"{len(pushable)}건을 Confluence에 push 할까요? [y/N] "):
             print("Push 취소", file=sys.stderr)
             return results
@@ -1175,10 +1323,9 @@ def _do_push(page_id: str, config=None, manifest_path: str = None):
         identity = verify_source_identity(snapshot, expected_mdx, actual_mdx)
         if not identity.passed:
             return False
-        return verify_roundtrip(
-            expected_mdx=_strip_frontmatter(expected_mdx),
-            actual_mdx=_strip_frontmatter(actual_mdx),
-            no_normalize=True,
+        return verify_push_equivalence(
+            _strip_frontmatter(expected_mdx),
+            _strip_frontmatter(actual_mdx),
         ).passed
 
     try:
@@ -1296,14 +1443,19 @@ def main():
                     output = results
                     if failures_only:
                         output = [r for r in results
-                                  if r.get('status') not in ('pass', 'no_changes')
+                                  if not _is_success_status(
+                                      r.get('status', 'unknown')
+                                  )
                                   or r.get('push', {}).get('status')
                                   in ('conflict', 'error', 'postcondition_failed')]
                     print(json.dumps(output, ensure_ascii=False, indent=2))
                 else:
                     _print_results(results, show_all_diffs=show_all_diffs,
                                    failures_only=failures_only)
-                has_failure = any(r.get('status') not in ('pass', 'no_changes') for r in results)
+                has_failure = any(
+                    not _is_success_status(r.get('status', 'unknown'))
+                    for r in results
+                )
                 has_push_failure = any(
                     r.get('push', {}).get('status')
                     in ('conflict', 'error', 'postcondition_failed')
@@ -1325,7 +1477,7 @@ def main():
                     _print_results([result], show_all_diffs=show_all_diffs)
 
                 if (not dry_run
-                        and result.get('status') == 'pass'
+                        and result.get('status') == 'verified_local'
                         and result.get('push_eligible') is True):
                     page_id = result['page_id']
                     title = result.get('title', page_id)
@@ -1359,17 +1511,21 @@ def main():
                         reason_code = getattr(e, "reason_code", "push_error")
                         print(f"Error [{reason_code}]: {e}", file=sys.stderr)
                         sys.exit(1)
-                elif not dry_run and result.get('status') == 'no_changes':
-                    print("변경 사항이 없어 Confluence update를 생략합니다.", file=sys.stderr)
-                elif not dry_run and result.get('status') != 'pass':
+                elif result.get('status') == 'no_changes':
+                    if not dry_run:
+                        print(
+                            "변경 사항이 없어 Confluence update를 생략합니다.",
+                            file=sys.stderr,
+                        )
+                elif (
+                    args.command == "push"
+                    and result.get('status') != 'verified_local'
+                ):
                     print(f"Error: 검증 상태가 '{result.get('status')}'입니다. push하지 않습니다.",
                           file=sys.stderr)
                     sys.exit(1)
-                elif not dry_run:
-                    print("Error: 검증 결과가 push eligible 상태가 아닙니다.", file=sys.stderr)
-                    sys.exit(1)
                 elif (args.command == "push"
-                      and result.get("status") == "pass"
+                      and result.get("status") == "verified_local"
                       and result.get("push_eligible") is not True):
                     print("Error: online verify 결과가 push eligible 상태가 아닙니다.",
                           file=sys.stderr)

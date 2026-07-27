@@ -83,14 +83,14 @@
 
 ### 2.5 P0 — strict proof와 push eligibility
 
-- [ ] `confluence-mdx/bin/reverse_sync/proof.py`를 추가하여 필수 gate를 orchestration합니다.
-- [ ] `roundtrip_verifier.py` normalization을 source formatting, rendered-visible, unsupported/lossy로 분류합니다.
-- [ ] push equivalence v1 typed canonical model을 구현합니다.
+- [x] `confluence-mdx/bin/reverse_sync/proof.py`를 추가하여 필수 gate를 orchestration합니다.
+- [x] `roundtrip_verifier.py` normalization을 source formatting, rendered-visible, unsupported/lossy로 분류합니다.
+- [x] push equivalence v1 typed canonical model을 구현합니다.
 - [x] `skipped_changes > 0`이면 `intent_complete`를 실패시킵니다.
-- [ ] `--lenient`와 `--no-normalize` 결과를 diagnostic field로 이동합니다.
-- [ ] unchanged fragment, separator, document envelope byte-equal을 proof에 포함합니다.
-- [ ] well-formed Storage XHTML, determinism, idempotency 검사를 추가합니다.
-- [ ] 기존 `pass`를 `verified_local`과 분리합니다.
+- [x] `--lenient`와 `--no-normalize` 결과를 diagnostic field로 이동합니다.
+- [x] unchanged fragment, separator, document envelope byte-equal을 proof에 포함합니다.
+- [x] well-formed Storage XHTML, determinism, idempotency 검사를 추가합니다.
+- [x] 기존 `pass`를 `verified_local`과 분리합니다.
 
 완료 gate:
 
@@ -171,7 +171,15 @@ cd confluence-mdx/tests
 ../venv/bin/python3 -m pytest -q test_reverse_sync_push_transaction.py
 ```
 
-`proof.py`와 typed equivalence contract test는 2.5 구현 시 별도 test module로 분리합니다.
+strict proof와 typed equivalence는 다음 test module과 golden shadow fixture로 검증합니다.
+
+```bash
+cd confluence-mdx/tests
+../venv/bin/python3 -m pytest -q \
+  test_reverse_sync_equivalence.py \
+  test_reverse_sync_online_proof_fixture.py \
+  test_reverse_sync_push_transaction.py
+```
 
 ### 3.2 Existing reverse-sync unit regression
 
@@ -216,7 +224,7 @@ make test-byte-verify
 
 ### 3.5 Broader converter regression
 
-- [ ] verifier/equivalence 또는 emitter를 변경한 PR은 다음을 추가로 실행합니다.
+- [x] verifier/equivalence 또는 emitter를 변경한 PR은 다음을 추가로 실행합니다.
 
 ```bash
 cd confluence-mdx/tests
@@ -225,9 +233,18 @@ make test-reverse-sync
 make test-byte-verify
 ```
 
+strict proof 구현 branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- 전체 Python test: 1054 passed, 2 skipped
+- 16개 golden page shadow online verify: 4개 `verified_local`, 나머지는
+  visible whitespace, unresolved link, raw HTML table mutation 등에서 fail-closed
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
-이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1033 passed, 2 skipped`)를
+이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1054 passed, 2 skipped`)를
 실행했고 frontend render test는 영향 범위에서 제외했습니다.
 
 ```bash
