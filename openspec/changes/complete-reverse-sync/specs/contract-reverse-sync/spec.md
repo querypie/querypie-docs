@@ -283,6 +283,14 @@ attachment upload/update/delete lifecycle, unresolved link를 암묵적으로
 - AND candidate는 해당 filename을 가진 `ri:attachment` reference를 생성해야 합니다(SHALL).
 - AND attachment upload 또는 version 변경을 암묵적으로 실행해서는 안 됩니다(SHALL NOT).
 
+#### Scenario: 기존 attachment binary version update
+
+- GIVEN improved input이 base body가 참조하는 기존 attachment ID와 filename의 binary version을 변경하려고 합니다.
+- WHEN attachment mutation과 page body update를 계획합니다.
+- THEN old binary를 page CAS 성공 시점까지 보존하는 staging/body-switch proof가 없으면 `new_attachment_lifecycle`로 block해야 합니다(SHALL).
+- AND page body CAS 전에 기존 attachment binary를 update해서는 안 됩니다(SHALL NOT).
+- AND staging/body-switch를 지원하는 후속 capability는 새 attachment identity, page reference 전환, page postcondition, 기존 attachment retire 순서를 검증해야 합니다(SHALL).
+
 #### Scenario: unresolved internal link
 
 - GIVEN link resolver가 target page를 하나로 결정하지 못합니다.

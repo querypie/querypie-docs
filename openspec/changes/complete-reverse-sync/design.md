@@ -558,20 +558,34 @@ version precondition을 manifest에 기록해야 합니다. filename upsert는 �
 filename의 identity가 유일하게 증명된 create에만 제한하고, 기존 attachment
 update는 attachment ID 기반 endpoint를 사용합니다.
 
-transaction 순서는 다음과 같습니다.
+`AttachmentCreate`와 `AttachmentDelete`의 transaction 순서는 다음과 같습니다.
 
 1. current page와 전체 attachment catalog를 preflight합니다.
-2. create/update를 실행하고 post-catalog에서 ID, filename, version, binary
-   identity를 확인합니다.
-3. 해당 attachment를 참조하는 page body를 versioned PUT하고 page
+2. create는 기존 reference가 가리키지 않는 새 attachment identity로 실행하고
+   post-catalog에서 ID, filename, version, binary identity를 확인합니다.
+3. 새 attachment를 참조하는 page body를 versioned PUT하고 page
    postcondition을 확인합니다.
 4. delete는 candidate body에서 reference가 제거되고 page postcondition이
    통과한 뒤에만 실행합니다.
 
-page update 실패 전에 attachment create/update가 성공하면 orphan 또는 불필요한
-attachment version이 남을 수 있고, delete는 복원 불가능할 수 있습니다. 따라서
-자동 rollback을 성공으로 간주하지 않으며 실행별 receipt와 manual recovery
-절차를 남깁니다. create, update, delete는 각각 별도 canary를 통과하기 전까지
+`AttachmentVersionUpdate`는 이 순서에 포함하지 않습니다. 기존 attachment의
+binary를 page CAS 전에 갱신하면 base body가 같은 attachment ID와 filename을
+계속 참조하는 동안 새 binary가 즉시 노출됩니다. 이후 page PUT이
+`remote_drift`, version conflict, 또는 `postcondition_failed`로 끝나도 이
+side effect를 되돌릴 수 없으므로 기존 attachment를 먼저 update해서는 안
+됩니다.
+
+후속 `AttachmentVersionUpdate` change는 기존 attachment를 건드리지 않는
+staging/body-switch 전략을 먼저 증명해야 합니다. 예를 들어 충돌하지 않는
+filename과 새 ID로 binary를 staging하고, staged reference로 page body CAS와
+postcondition을 통과한 뒤에만 기존 attachment를 retire할 수 있습니다. API나
+filename 계약 때문에 old binary를 page CAS 성공 시점까지 보존할 수 없다면 이
+capability는 계속 `new_attachment_lifecycle`로 block합니다.
+
+page update 실패 전에 attachment create가 성공하면 orphan attachment가 남을 수
+있고, delete는 복원 불가능할 수 있습니다. 따라서 자동 rollback을 성공으로
+간주하지 않으며 실행별 receipt와 manual recovery 절차를 남깁니다. create,
+version update, delete는 각각 별도 canary를 통과하기 전까지
 `missing_attachment` 또는 `new_attachment_lifecycle`로 block합니다.
 
 #### Preserved anchor target

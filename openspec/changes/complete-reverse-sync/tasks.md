@@ -242,6 +242,9 @@
 - [x] attachment upload/version update/delete transaction을 별도 capability/change로 설계합니다.
   - create/update/delete intent와 catalog precondition을 분리하고, page PUT과
     원자적이지 않은 side effect 및 manual recovery evidence를 명시합니다.
+  - 기존 attachment version update는 old binary를 page CAS 성공 시점까지
+    보존하는 staging/body-switch 전략을 별도 change에서 증명하기 전까지
+    `new_attachment_lifecycle`로 block합니다.
 - [x] preserved anchor target 변경을 지원할지 결정합니다.
   - generic template rewrite에서는 지원하지 않으며 target fingerprint가 바뀌면
     `unsupported_capability`로 block합니다.
