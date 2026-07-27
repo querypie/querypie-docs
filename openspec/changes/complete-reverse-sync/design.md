@@ -226,12 +226,16 @@ text prefix fallback을 유지합니다. online verify는
 호출에 강제하고, provenance mapping을 찾지 못하면 `no_mapping`으로 기록하여
 `intent_complete` gate에서 block합니다.
 
-`legacy-patch-builder-v2` adapter는 `build_patches()`가 선택한 target을 그대로
-신뢰하지 않습니다. online plan에서 MDX content hash와 line range가 모두 일치하는
-유일한 sidecar provenance를 `ChangeIntent`에 기록하고, renderer operation의 root
-fragment와 대응하지 않으면 operation을 `missing_identity`로 non-executable
-처리합니다. 따라서 migration 중에는 legacy builder가 잘못된 candidate를
-제안하더라도 strict proof의 `intent_complete`를 얻을 수 없습니다.
+`legacy-patch-builder-v2` adapter의 online plan은 renderer strategy를 선택하기
+전에 MDX content hash와 line range가 모두 일치하는 유일한 sidecar provenance
+index를 구축합니다. caller가 넘긴 legacy MDX mapping은 strict path에서 사용하지
+않으며, 이 exact index만 `build_patches()`의 target 입력으로 전달합니다. exact
+후보가 없으면 `missing_identity`, 둘 이상이면 `ambiguous_target`으로 operation
+생성 전에 block합니다.
+
+planner는 같은 provenance를 `ChangeIntent`에도 기록하고, renderer operation의
+root fragment와 다시 대응시킵니다. 이 사후 검사는 provenance-first target
+selection을 대체하지 않는 defense-in-depth 경계입니다.
 
 추가/삭제/reorder는 stable neighbor identity를 기준으로 계획합니다.
 

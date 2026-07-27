@@ -30,19 +30,47 @@ def _strict_sidecar_identity(
     sidecar: Optional[RoundtripSidecar],
 ) -> Optional[SidecarBlock]:
     """hash와 line range가 모두 같은 유일한 provenance만 반환합니다."""
-    if sidecar is None or not block.content:
+    matches = _strict_sidecar_matches(block, sidecar)
+    if len(matches) != 1:
         return None
+    return matches[0]
+
+
+def _strict_sidecar_matches(
+    block: MdxBlock,
+    sidecar: Optional[RoundtripSidecar],
+) -> list[SidecarBlock]:
+    """MDX hash와 line range가 모두 같은 sidecar provenance를 반환합니다."""
+    if sidecar is None or not block.content:
+        return []
     content_hash = sha256_text(block.content)
     line_range = (block.line_start, block.line_end)
-    matches = [
+    return [
         candidate
         for candidate in sidecar.blocks
         if candidate.mdx_content_hash == content_hash
         and tuple(candidate.mdx_line_range) == line_range
     ]
-    if len(matches) != 1:
-        return None
-    return matches[0]
+
+
+def _build_strict_provenance_index(
+    original_blocks: list[MdxBlock],
+    sidecar: Optional[RoundtripSidecar],
+) -> dict[int, SidecarEntry]:
+    """renderer 전략 선택 전에 exact sidecar provenance index를 구축합니다."""
+    result: dict[int, SidecarEntry] = {}
+    for index, block in enumerate(original_blocks):
+        if block.type in NON_CONTENT_TYPES:
+            continue
+        identity = _strict_sidecar_identity(block, sidecar)
+        if identity is None:
+            continue
+        result[index] = SidecarEntry(
+            xhtml_xpath=identity.xhtml_xpath,
+            xhtml_type="",
+            mdx_blocks=[index],
+        )
+    return result
 
 
 def _build_intents(
@@ -88,6 +116,24 @@ def _build_intents(
             )
         )
     return tuple(intents)
+
+
+def _intent_identity_reasons(
+    changes: list[BlockChange],
+    sidecar: Optional[RoundtripSidecar],
+) -> dict[int, str]:
+    """기존 fragment가 필요한 intent의 provenance 실패를 typed reason으로 분류합니다."""
+    reasons: dict[int, str] = {}
+    for ordinal, change in enumerate(changes):
+        block = change.old_block
+        if block is None or block.type in NON_CONTENT_TYPES:
+            continue
+        matches = _strict_sidecar_matches(block, sidecar)
+        if len(matches) > 1:
+            reasons[ordinal] = "ambiguous_target"
+        elif not matches:
+            reasons[ordinal] = "missing_identity"
+    return reasons
 
 
 def _sidecar_index(sidecar: Optional[RoundtripSidecar]) -> dict[str, SidecarBlock]:
@@ -163,6 +209,37 @@ def _target_identity(
         mdx_content_sha256=block.mdx_content_hash,
         mdx_line_range=tuple(block.mdx_line_range),
     )
+
+
+def _strict_insert_anchor_reason(
+    *,
+    patch: dict[str, Any],
+    intent_ordinals: tuple[int, ...],
+    changes: list[BlockChange],
+    original_blocks: list[MdxBlock],
+    alignment: Optional[dict[int, int]],
+    sidecar: Optional[RoundtripSidecar],
+) -> str:
+    """document start가 아닌 insert의 predecessor provenance 누락을 분류합니다."""
+    if (
+        patch.get("action") != "insert"
+        or patch.get("after_xpath") is not None
+        or len(intent_ordinals) != 1
+    ):
+        return ""
+    change = changes[intent_ordinals[0]]
+    for improved_index in range(change.index - 1, -1, -1):
+        if alignment is None or improved_index not in alignment:
+            continue
+        original_index = alignment[improved_index]
+        if not 0 <= original_index < len(original_blocks):
+            return "missing_identity"
+        matches = _strict_sidecar_matches(
+            original_blocks[original_index],
+            sidecar,
+        )
+        return "ambiguous_target" if len(matches) > 1 else "missing_identity"
+    return ""
 
 
 def _intent_ordinals_for_patch(
@@ -290,11 +367,18 @@ def _legacy_skip_issue(
     intents: tuple[ChangeIntent, ...],
     mappings: list[BlockMapping],
     mdx_to_sidecar: Optional[dict[int, SidecarEntry]],
+    identity_reasons: dict[int, str],
     enforce_capabilities: bool,
     enforce_provenance: bool,
 ) -> PlanIssue:
     """legacy skip을 strict typed reason/capability boundary로 정규화합니다."""
     legacy_reason = str(item.get("reason", "incomplete_patch_plan"))
+    intent_ordinal = _legacy_skip_intent_ordinal(
+        item,
+        intents,
+        mappings,
+        mdx_to_sidecar,
+    )
     capability_id = ""
     reason_code = legacy_reason
     if enforce_capabilities and legacy_reason in _LEGACY_UNSUPPORTED_CAPABILITIES:
@@ -304,7 +388,7 @@ def _legacy_skip_issue(
         enforce_provenance
         and legacy_reason in _LEGACY_MISSING_IDENTITY_REASONS
     ):
-        reason_code = "missing_identity"
+        reason_code = identity_reasons.get(intent_ordinal, "missing_identity")
     return PlanIssue(
         reason_code=reason_code,
         description=str(
@@ -315,12 +399,7 @@ def _legacy_skip_issue(
         ),
         block_id=str(item.get("block_id", "")),
         capability_id=capability_id,
-        intent_ordinal=_legacy_skip_intent_ordinal(
-            item,
-            intents,
-            mappings,
-            mdx_to_sidecar,
-        ),
+        intent_ordinal=intent_ordinal,
     )
 
 
@@ -342,12 +421,23 @@ def plan_patches(
     enforce_provenance: bool = False,
 ) -> tuple[PatchPlan, list[BlockMapping]]:
     """legacy builder output을 capability/provenance가 있는 typed plan으로 바꿉니다."""
+    effective_mdx_to_sidecar = mdx_to_sidecar
+    if enforce_provenance:
+        # Push-eligible planning은 caller가 제공한 legacy mapping을 신뢰하지 않고,
+        # base sidecar의 exact hash + line range identity를 먼저 확정합니다.
+        effective_mdx_to_sidecar = _build_strict_provenance_index(
+            original_blocks,
+            roundtrip_sidecar,
+        )
+    effective_text_identity_fallback = (
+        allow_text_identity_fallback and not enforce_provenance
+    )
     raw_patches, resolved_mappings, legacy_skips = build_patches(
         changes,
         original_blocks,
         improved_blocks,
         mappings=mappings,
-        mdx_to_sidecar=mdx_to_sidecar,
+        mdx_to_sidecar=effective_mdx_to_sidecar,
         xpath_to_mapping=xpath_to_mapping,
         alignment=alignment,
         page_lost_info=page_lost_info,
@@ -355,19 +445,49 @@ def plan_patches(
         page_xhtml=page_xhtml,
         link_resolver=link_resolver,
         attachment_filenames=attachment_filenames,
-        allow_text_identity_fallback=allow_text_identity_fallback,
+        allow_text_identity_fallback=effective_text_identity_fallback,
     )
     intents = _build_intents(changes, roundtrip_sidecar)
-    issues = [
+    identity_reasons = (
+        _intent_identity_reasons(changes, roundtrip_sidecar)
+        if enforce_provenance
+        else {}
+    )
+    identity_issues = [
+        PlanIssue(
+            reason_code=reason_code,
+            description=(
+                "base sidecar에서 MDX intent의 target provenance가 중복됩니다"
+                if reason_code == "ambiguous_target"
+                else "base sidecar에서 MDX intent의 exact target identity가 없습니다"
+            ),
+            block_id=f"idx-{intent.index}",
+            intent_ordinal=intent.ordinal,
+        )
+        for intent in intents
+        if (reason_code := identity_reasons.get(intent.ordinal)) is not None
+    ]
+    identity_issue_ordinals = {
+        issue.intent_ordinal
+        for issue in identity_issues
+        if issue.intent_ordinal is not None
+    }
+    legacy_issues = [
         _legacy_skip_issue(
             item,
             intents=intents,
             mappings=resolved_mappings,
-            mdx_to_sidecar=mdx_to_sidecar,
+            mdx_to_sidecar=effective_mdx_to_sidecar,
+            identity_reasons=identity_reasons,
             enforce_capabilities=enforce_capabilities,
             enforce_provenance=enforce_provenance,
         )
         for item in legacy_skips
+    ]
+    issues = identity_issues + [
+        issue
+        for issue in legacy_issues
+        if issue.intent_ordinal not in identity_issue_ordinals
     ]
     sidecar_by_xpath = _sidecar_index(roundtrip_sidecar)
     assigned_inserts: set[int] = set()
@@ -381,6 +501,30 @@ def plan_patches(
             already_assigned_inserts=assigned_inserts,
         )
         if intent_ordinals == (-1,):
+            continue
+        insert_anchor_reason = (
+            _strict_insert_anchor_reason(
+                patch=patch,
+                intent_ordinals=intent_ordinals,
+                changes=changes,
+                original_blocks=original_blocks,
+                alignment=alignment,
+                sidecar=roundtrip_sidecar,
+            )
+            if enforce_provenance
+            else ""
+        )
+        if insert_anchor_reason:
+            issues.append(
+                PlanIssue(
+                    reason_code=insert_anchor_reason,
+                    description=(
+                        "insert predecessor의 exact target provenance가 없습니다"
+                    ),
+                    block_id="$document-start",
+                    intent_ordinal=intent_ordinals[0],
+                )
+            )
             continue
         target = _target_identity(patch, roundtrip_sidecar)
         if target is None:
@@ -399,7 +543,7 @@ def plan_patches(
                         },
                         intents,
                         resolved_mappings,
-                        mdx_to_sidecar,
+                        effective_mdx_to_sidecar,
                     )
                 )
                 issues.append(
