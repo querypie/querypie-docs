@@ -6,6 +6,7 @@ from pathlib import PurePosixPath
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import unquote, urlparse
 
+from bs4 import BeautifulSoup
 from mdx_to_storage.emitter import emit_block
 from mdx_to_storage.link_resolver import LinkResolver
 from mdx_to_storage.parser import parse_mdx
@@ -111,6 +112,26 @@ def _contains_preserved_anchor_markup(xhtml_text: str) -> bool:
 def _contains_preserved_link_markup(xhtml_text: str) -> bool:
     """링크 계열 preserved anchor가 포함된 경우만 가시 공백 raw transfer 대상이다."""
     return "<ac:link" in xhtml_text
+
+
+def _contains_only_supported_preservation_units(xhtml_text: str) -> bool:
+    """template rewrite 계약이 있는 link/attachment unit만 포함하는지 확인한다."""
+    supported = {
+        "ac:caption",
+        "ac:image",
+        "ac:link",
+        "ac:link-body",
+        "ri:attachment",
+        "ri:page",
+        "ri:space",
+    }
+    soup = BeautifulSoup(xhtml_text, "html.parser")
+    preservation_tags = {
+        tag.name
+        for tag in soup.find_all()
+        if tag.name.startswith(("ac:", "ri:"))
+    }
+    return bool(preservation_tags) and preservation_tags <= supported
 
 
 def _resolve_generated_links(
@@ -1508,6 +1529,18 @@ def build_patches(
                         mapping_lost_info=mapping_lost_info,
                     )
                 )
+                continue
+            if not _contains_only_supported_preservation_units(
+                mapping.xhtml_text
+            ):
+                skipped_changes.append({
+                    'block_id': mapping.block_id,
+                    'reason': 'unknown_preservation_unit',
+                    'description': (
+                        f"블록 {mapping.block_id}: 지원 계약이 없는 Confluence "
+                        f"preservation unit을 변경할 수 없어 건너뜁니다."
+                    ),
+                })
                 continue
             if (
                 '<ac:link' in mapping.xhtml_text
