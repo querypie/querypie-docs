@@ -211,6 +211,37 @@ def _target_identity(
     )
 
 
+def _strict_insert_anchor_reason(
+    *,
+    patch: dict[str, Any],
+    intent_ordinals: tuple[int, ...],
+    changes: list[BlockChange],
+    original_blocks: list[MdxBlock],
+    alignment: Optional[dict[int, int]],
+    sidecar: Optional[RoundtripSidecar],
+) -> str:
+    """document start가 아닌 insert의 predecessor provenance 누락을 분류합니다."""
+    if (
+        patch.get("action") != "insert"
+        or patch.get("after_xpath") is not None
+        or len(intent_ordinals) != 1
+    ):
+        return ""
+    change = changes[intent_ordinals[0]]
+    for improved_index in range(change.index - 1, -1, -1):
+        if alignment is None or improved_index not in alignment:
+            continue
+        original_index = alignment[improved_index]
+        if not 0 <= original_index < len(original_blocks):
+            return "missing_identity"
+        matches = _strict_sidecar_matches(
+            original_blocks[original_index],
+            sidecar,
+        )
+        return "ambiguous_target" if len(matches) > 1 else "missing_identity"
+    return ""
+
+
 def _intent_ordinals_for_patch(
     *,
     patch: dict[str, Any],
@@ -470,6 +501,30 @@ def plan_patches(
             already_assigned_inserts=assigned_inserts,
         )
         if intent_ordinals == (-1,):
+            continue
+        insert_anchor_reason = (
+            _strict_insert_anchor_reason(
+                patch=patch,
+                intent_ordinals=intent_ordinals,
+                changes=changes,
+                original_blocks=original_blocks,
+                alignment=alignment,
+                sidecar=roundtrip_sidecar,
+            )
+            if enforce_provenance
+            else ""
+        )
+        if insert_anchor_reason:
+            issues.append(
+                PlanIssue(
+                    reason_code=insert_anchor_reason,
+                    description=(
+                        "insert predecessor의 exact target provenance가 없습니다"
+                    ),
+                    block_id="$document-start",
+                    intent_ordinal=intent_ordinals[0],
+                )
+            )
             continue
         target = _target_identity(patch, roundtrip_sidecar)
         if target is None:

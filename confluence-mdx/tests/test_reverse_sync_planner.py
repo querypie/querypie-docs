@@ -407,6 +407,37 @@ def test_insert_skips_added_intent_already_covered_by_replacement():
     assert plan.to_patch_dicts()[1]["new_element_xhtml"] == "<p>Second</p>"
 
 
+def test_strict_insert_blocks_when_predecessor_provenance_is_missing():
+    original = _block("Before")
+    inserted = Block(
+        type="paragraph",
+        content="Added",
+        line_start=3,
+        line_end=3,
+    )
+    xhtml = "<p>Before</p>"
+    sidecar = _sidecar(xhtml, original)
+    sidecar.blocks[0].mdx_content_hash = sha256_text("Different source")
+
+    plan, _ = plan_patches(
+        [BlockChange(1, "added", None, inserted)],
+        [original],
+        [original, inserted],
+        page_xhtml=xhtml,
+        alignment={0: 0},
+        roundtrip_sidecar=sidecar,
+        allow_text_identity_fallback=False,
+        enforce_capabilities=True,
+        enforce_provenance=True,
+    )
+
+    assert plan.intent_complete is False
+    assert plan.operations == ()
+    assert len(plan.issues) == 1
+    assert plan.issues[0].reason_code == "missing_identity"
+    assert plan.issues[0].intent_ordinal == 0
+
+
 def test_plan_serialization_is_deterministic_and_contains_no_untyped_top_level_patch():
     old = _block("Before")
     new = _block("After")
