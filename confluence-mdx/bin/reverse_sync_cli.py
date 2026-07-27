@@ -21,8 +21,14 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from reverse_sync.batch_report import BatchReport
+from reverse_sync.batch_service import BatchRuntime, run_batch
 from reverse_sync.planner import plan_patches
 from reverse_sync.equivalence import PUSH_EQUIVALENCE_POLICY
+from reverse_sync.prepare_service import (
+    PrepareRuntime,
+    VerificationRequest,
+    prepare_verification,
+)
 from reverse_sync.publish_service import (
     ManifestPushSummary,
     PublishRuntime,
@@ -582,50 +588,28 @@ def _add_common_args(parser: argparse.ArgumentParser):
 
 
 def _do_verify(args, *, config=None, prepare_push: bool = False) -> dict:
-    """공통 verify 로직: MDX 소스 해석 → run_verify() 실행 → 결과 반환."""
-    improved_src = _resolve_mdx_source(args.improved_mdx)
-    if args.original_mdx:
-        original_src = _resolve_mdx_source(args.original_mdx)
-    else:
-        ko_path = _extract_ko_mdx_path(improved_src.descriptor)
-        original_src = _resolve_mdx_source(f'main:{ko_path}')
-    if getattr(args, 'page_id', None):
-        page_id = args.page_id
-    else:
-        page_id = _resolve_page_id(_extract_ko_mdx_path(improved_src.descriptor))
+    """CLI 입력을 typed request로 변환하여 prepare lifecycle을 실행합니다."""
 
-    # --page-dir: var/<page_id>/ 를 대체하는 디렉토리 (page.xhtml, page.v1.yaml 제공)
-    page_dir = getattr(args, 'page_dir', None)
-    xhtml_path = str(Path(page_dir) / 'page.xhtml') if page_dir else None
-    base_snapshot = None
-    attachment_catalog = None
-    if prepare_push:
-        from reverse_sync.confluence_client import (
-            get_attachment_catalog,
-            get_page_snapshot,
-        )
-        from reverse_sync.dependencies import added_attachment_filenames
-
-        if config is None:
-            config = _ensure_confluence_config()
-        base_snapshot = get_page_snapshot(config, page_id)
-        if added_attachment_filenames(
-            original_src.content,
-            improved_src.content,
-        ):
-            attachment_catalog = get_attachment_catalog(config, page_id)
-
-    return run_verify(
-        page_id=page_id,
-        original_src=original_src,
-        improved_src=improved_src,
-        xhtml_path=xhtml_path,
-        lenient=getattr(args, 'lenient', False),
-        no_normalize=getattr(args, 'no_normalize', False),
-        page_dir=page_dir,
-        base_snapshot=base_snapshot,
-        attachment_catalog=attachment_catalog,
-        for_push=prepare_push,
+    request = VerificationRequest(
+        improved_mdx=args.improved_mdx,
+        original_mdx=getattr(args, "original_mdx", None),
+        page_id=getattr(args, "page_id", None),
+        page_dir=getattr(args, "page_dir", None),
+        lenient=getattr(args, "lenient", False),
+        no_normalize=getattr(args, "no_normalize", False),
+    )
+    runtime = PrepareRuntime(
+        resolve_mdx_source=_resolve_mdx_source,
+        extract_ko_mdx_path=_extract_ko_mdx_path,
+        resolve_page_id=_resolve_page_id,
+        ensure_config=_ensure_confluence_config,
+        run_verification=run_verify,
+    )
+    return prepare_verification(
+        request,
+        runtime=runtime,
+        config=config,
+        prepare_push=prepare_push,
     )
 
 
@@ -644,138 +628,49 @@ def _confirm(prompt: str) -> bool:
     return answer in ('y', 'yes')
 
 
-def _do_verify_batch(branch: str, limit: int = 0, failures_only: bool = False,
-                     push: bool = False, yes: bool = False,
-                     lenient: bool = False,
-                     no_normalize: bool = False,
-                     prepare_push: bool = False) -> List[dict]:
-    """브랜치의 변경 ko MDX 파일을 배치 처리한다.
+def _emit_batch_progress(
+    message: str,
+    *,
+    end: str = "\n",
+    flush: bool = False,
+) -> None:
+    """batch service event를 CLI stderr에 표시합니다."""
 
-    push=True이면 online verify 전체 완료 후 verified_local 건만 일괄 push한다.
-    yes=True이면 확인 프롬프트를 스킵한다.
-    lenient=True이면 변경된 행만 검사하는 관대 모드로 검증한다.
-    """
-    files = _get_changed_ko_mdx_files(branch)
-    if not files:
-        return [{'status': 'no_changes', 'branch': branch, 'changes_count': 0}]
-    total = len(files)
-    if limit > 0 and not failures_only:
-        files = files[:limit]
-    print(f"Processing {'up to ' + str(total) if failures_only and limit > 0 else str(len(files))}/{total} file(s) from branch {branch}...", file=sys.stderr)
-    results = []
-    failure_count = 0
-    online = push or prepare_push
-    config = _ensure_confluence_config() if online else None
-    for idx, ko_path in enumerate(files, 1):
-        print(f"[{idx}/{len(files)}] {ko_path} ... ", end='', file=sys.stderr, flush=True)
-        try:
-            args = argparse.Namespace(
-                improved_mdx=f"{branch}:{ko_path}",
-                original_mdx=None,
-                lenient=lenient,
-                no_normalize=no_normalize,
-            )
-            if online:
-                result = _do_verify(
-                    args,
-                    config=config,
-                    prepare_push=True,
-                )
-            else:
-                result = _do_verify(args)
-            if online and result.get("status") == "pass":
-                result.update(
-                    status="blocked",
-                    push_eligible=False,
-                    reason_code="diagnostic_result_not_pushable",
-                )
-            result['file'] = ko_path
-            status = result.get('status', 'unknown')
-            print(status, file=sys.stderr)
-            results.append(result)
-        except Exception as e:
-            print("error", file=sys.stderr)
-            results.append({'file': ko_path, 'status': 'error', 'error': str(e)})
-        if not _is_success_status(results[-1].get('status', 'unknown')):
-            failure_count += 1
-        if not push and failures_only and limit > 0 and failure_count >= limit:
-            break
+    print(message, end=end, flush=flush, file=sys.stderr)
 
-    if not push:
-        return results
 
-    # push 대상 집계
-    pushable = [
-        r for r in results
-        if r.get('status') == 'verified_local'
-        and r.get('push_eligible') is True
-    ]
-    if not pushable:
-        print("\nPush 대상 없음 (verified_local 0건)", file=sys.stderr)
-        return results
+def _do_verify_batch(
+    branch: str,
+    limit: int = 0,
+    failures_only: bool = False,
+    push: bool = False,
+    yes: bool = False,
+    lenient: bool = False,
+    no_normalize: bool = False,
+    prepare_push: bool = False,
+) -> List[dict]:
+    """CLI dependency를 주입하여 branch batch lifecycle을 실행합니다."""
 
-    # 확인 프롬프트
-    if not yes:
-        print(
-            f"\n검증 완료: verified_local {len(pushable)}건 / "
-            f"전체 {len(results)}건",
-            file=sys.stderr,
-        )
-        if not _confirm(f"{len(pushable)}건을 Confluence에 push 할까요? [y/N] "):
-            print("Push 취소", file=sys.stderr)
-            for result in pushable:
-                result["push"] = {
-                    "status": "not_attempted",
-                    "reason_code": "user_cancelled",
-                }
-            return results
-
-    # 일괄 push
-    push_count = 0
-    for push_index, r in enumerate(pushable):
-        page_id = r['page_id']
-        try:
-            push_result = _do_push(
-                page_id,
-                config=config,
-                manifest_path=r.get("manifest_path"),
-            )
-            r['push'] = push_result
-            push_count += 1
-            print(f"  pushed {page_id} (v{push_result.get('version', '?')})", file=sys.stderr)
-        except PushConflictError as e:
-            r['push'] = {
-                'status': 'conflict',
-                'reason_code': 'version_conflict',
-                'error': str(e),
-            }
-            print(f"  conflict {page_id}: {e}", file=sys.stderr)
-        except Exception as e:
-            reason_code = getattr(e, "reason_code", "") or "push_error"
-            if reason_code == "postcondition_failed":
-                r['push'] = {
-                    'status': 'postcondition_failed',
-                    'reason_code': reason_code,
-                    'error': str(e),
-                }
-                for pending in pushable[push_index + 1:]:
-                    pending['push'] = {
-                        'status': 'not_attempted',
-                        'reason_code': (
-                            'batch_halted_after_postcondition_failure'
-                        ),
-                    }
-                print(f"  postcondition failed {page_id}: {e}", file=sys.stderr)
-                break
-            r['push'] = {
-                'status': 'error',
-                'reason_code': reason_code,
-                'error': str(e),
-            }
-            print(f"  error {page_id}: {e}", file=sys.stderr)
-
-    print(f"\nPushed {push_count}/{len(pushable)} file(s)", file=sys.stderr)
-    return results
+    runtime = BatchRuntime(
+        get_changed_files=_get_changed_ko_mdx_files,
+        verify_one=_do_verify,
+        ensure_config=_ensure_confluence_config,
+        publish_one=_do_push,
+        confirm=_confirm,
+        is_success_status=_is_success_status,
+        emit=_emit_batch_progress,
+    )
+    return run_batch(
+        branch,
+        runtime=runtime,
+        limit=limit,
+        failures_only=failures_only,
+        push=push,
+        yes=yes,
+        lenient=lenient,
+        no_normalize=no_normalize,
+        prepare_push=prepare_push,
+    )
 
 
 def _ensure_confluence_config():
