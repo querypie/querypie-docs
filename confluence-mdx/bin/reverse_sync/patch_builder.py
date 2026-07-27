@@ -1173,6 +1173,14 @@ def build_patches(
             if text_fallback is not None:
                 mapping = text_fallback
                 mapping_via_v3_fallback = True
+        elif (
+            not allow_text_identity_fallback
+            and strategy == 'list'
+            and mapping is not None
+            and _contains_preserved_anchor_markup(mapping.xhtml_text)
+            and old_plain[:40].strip() not in mapping.xhtml_plain_text
+        ):
+            mapping = None
 
         if mapping is None:
             block = change.old_block or change.new_block

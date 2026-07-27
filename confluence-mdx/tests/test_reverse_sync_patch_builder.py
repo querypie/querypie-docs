@@ -295,6 +295,41 @@ class TestBuildPatches:
         assert patches == []
         assert skipped_changes[0]['reason'] == 'no_mapping'
 
+    def test_strict_identity_blocks_stale_preserved_list_mapping(self):
+        """push path는 text가 다른 preserved list sidecar target을 거부한다."""
+        list_mapping = _make_mapping(
+            'lm1',
+            '다른 목록',
+            xpath='ul[1]',
+            type_='list',
+        )
+        list_mapping.xhtml_text = (
+            '<ul><li><p><ac:link><ri:page ri:content-title="Other">'
+            '</ri:page><ac:link-body>다른 목록</ac:link-body></ac:link>'
+            '</p></li></ul>'
+        )
+        mappings = [list_mapping]
+        xpath_to_mapping = {list_mapping.xhtml_xpath: list_mapping}
+        change = _make_change(
+            0,
+            '1. 원래 목록\n',
+            '1. 수정한 목록\n',
+            type_='list',
+        )
+
+        patches, _, skipped_changes = build_patches(
+            [change],
+            [change.old_block],
+            [change.new_block],
+            mappings,
+            self._setup_sidecar('ul[1]', 0),
+            xpath_to_mapping,
+            allow_text_identity_fallback=False,
+        )
+
+        assert patches == []
+        assert skipped_changes[0]['reason'] == 'no_mapping'
+
     # Path 1e: type-based sidecar 타입 불일치 + roundtrip_sidecar=None + content change
     #          → text fallback으로 mapping 복원 → clean list → replace_fragment
     def test_path1e_no_sidecar_match_no_roundtrip_sidecar_with_content_change_patches(self):
