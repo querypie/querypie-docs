@@ -138,7 +138,12 @@
 ### 2.8 P1 — planner / renderer 책임 분리
 
 - [ ] `patch_builder.py`의 capability 판별을 `capabilities.py`와 planner로 추출합니다.
-- [ ] planning output을 typed `PatchPlan`/operation으로 바꾸고 raw patch dict를 boundary 안에 가둡니다.
+- [x] planning output을 typed `PatchPlan`/operation으로 바꾸고 raw patch dict를 boundary 안에 가둡니다.
+  - `legacy-patch-builder-v2` adapter가 `ChangeIntent`, `TargetIdentity`,
+    capability, required proof, reason code를 canonical schema v2 plan에 기록합니다.
+  - push path는 exact sidecar provenance와 intent가 대응하지 않는 operation을
+    `missing_identity`로 non-executable 처리합니다.
+  - capability별 renderer strategy 추출은 아래 task에 계속 남습니다.
 - [ ] block identity를 provenance-first 순서로 바꿉니다.
 - [x] normalized text prefix fallback을 push-eligible path에서 제거합니다.
 - [ ] visible segment model을 paragraph, heading, list에 확장합니다.
@@ -195,7 +200,7 @@ cd confluence-mdx/tests
 
 기준선: 2026-07-24 `origin/main`에서 676 passed입니다.
 
-현재 변경 결과: 763 passed입니다.
+typed plan 변경 결과: 773 passed입니다.
 
 ### 3.3 Page fixture regression
 
@@ -245,10 +250,18 @@ strict proof 구현 branch 검증 결과:
 - 16개 golden page shadow online verify: 4개 `verified_local`, 나머지는
   visible whitespace, unresolved link, raw HTML table mutation 등에서 fail-closed
 
+typed plan branch 검증 결과:
+
+- `make test-convert`: 21 passed
+- `make test-reverse-sync`: golden 16 passed, regression 43 passed
+- `make test-byte-verify`: fast/splice 각각 21/21 passed
+- 전체 Python test: 1096 passed, 2 skipped
+
 - [x] 영향도에 따라 전체 Python test와 render test를 실행합니다.
 
-이번 변경은 Python CLI/API adapter 범위이므로 전체 Python test(`1086 passed, 2 skipped`)를
-실행했고 frontend render test는 영향 범위에서 제외했습니다.
+이번 변경은 Python CLI/planner 범위이므로 전체 Python test
+(`1096 passed, 2 skipped`)를 실행했고 frontend render test는 영향 범위에서
+제외했습니다.
 
 ```bash
 cd confluence-mdx/tests

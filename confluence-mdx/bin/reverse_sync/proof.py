@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import html.entities
 import json
 import re
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any, Iterable
 from xml.etree import ElementTree
 
 from reverse_sync.dependencies import DependencyEvidence, DependencyResult
@@ -14,6 +14,9 @@ from reverse_sync.equivalence import EquivalenceResult, verify_push_equivalence
 from reverse_sync.models import SyncStatus, VerificationGate, sha256_text
 from reverse_sync.preserving_patcher import changed_root_xpaths
 from reverse_sync.sidecar import RoundtripSidecar
+
+if TYPE_CHECKING:
+    from reverse_sync.operations import PatchPlan
 
 
 REQUIRED_LOCAL_GATES = (
@@ -196,7 +199,7 @@ def build_local_proof(
     candidate_xhtml: str,
     sidecar: RoundtripSidecar,
     changes: Iterable[Any],
-    patches: list[dict[str, Any]],
+    patches: list[dict[str, Any]] | None,
     skipped_changes: list[dict[str, Any]],
     plan_json: str,
     deterministic_plan_json: str,
@@ -205,22 +208,27 @@ def build_local_proof(
     source_identity_passed: bool,
     base_parity_passed: bool,
     dependency_result: DependencyResult,
+    plan: "PatchPlan | None" = None,
 ) -> LocalProof:
     """모든 required local gate를 독립적으로 계산한다."""
+    renderer_patches = plan.to_patch_dicts() if plan is not None else (patches or [])
     equivalence = verify_push_equivalence(improved_mdx, roundtrip_mdx)
     well_formed, well_formed_detail = verify_storage_well_formed(candidate_xhtml)
     preservation, preservation_detail = verify_preservation(
         base_xhtml=base_xhtml,
         candidate_xhtml=candidate_xhtml,
         sidecar=sidecar,
-        patches=patches,
+        patches=renderer_patches,
     )
     changes_tuple = tuple(changes)
-    intent_complete = (
-        bool(changes_tuple)
-        and not skipped_changes
-        and bool(patches)
-    )
+    if plan is not None:
+        intent_complete = plan.intent_complete
+    else:
+        intent_complete = (
+            bool(changes_tuple)
+            and not skipped_changes
+            and bool(renderer_patches)
+        )
     determinism = (
         plan_json == deterministic_plan_json
         and candidate_xhtml == deterministic_candidate_xhtml

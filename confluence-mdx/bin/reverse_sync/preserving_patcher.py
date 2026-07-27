@@ -4,10 +4,14 @@ from __future__ import annotations
 
 from copy import deepcopy
 import re
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any, Iterable
 
+from reverse_sync.models import sha256_text
 from reverse_sync.sidecar import RoundtripSidecar
 from reverse_sync.xhtml_patcher import patch_xhtml
+
+if TYPE_CHECKING:
+    from reverse_sync.operations import PatchPlan
 
 
 class PatchApplicationError(ValueError):
@@ -116,6 +120,73 @@ def patch_xhtml_preserving(
             parts.append(sidecar.separators[position])
     parts.append(sidecar.document_envelope.suffix)
     return "".join(parts)
+
+
+def render_patch_plan_preserving(
+    base_xhtml: str,
+    plan: "PatchPlan",
+    sidecar: RoundtripSidecar,
+) -> str:
+    """typed plan target identity를 재검증한 뒤 XHTML renderer를 호출합니다.
+
+    raw patch dict 복원은 이 validated renderer boundary 안에서만 수행합니다.
+    """
+    if sidecar.reassemble_xhtml() != base_xhtml:
+        raise PatchApplicationError("sidecar가 base XHTML과 byte-equal하지 않습니다")
+
+    sidecar_by_xpath = {
+        block.xhtml_xpath: block
+        for block in sidecar.blocks
+    }
+    if len(sidecar_by_xpath) != len(sidecar.blocks):
+        raise PatchApplicationError("sidecar xpath가 중복되었습니다")
+
+    for operation in plan.executable_operations:
+        target = operation.target
+        if target.kind == "document_start":
+            boundary = (
+                sidecar.document_envelope.prefix
+                + (sidecar.blocks[0].xhtml_xpath if sidecar.blocks else "$empty")
+            )
+            if target.base_fragment_sha256 != sha256_text(boundary):
+                raise PatchApplicationError(
+                    "document start identity hash가 base와 다릅니다"
+                )
+            continue
+
+        block = sidecar_by_xpath.get(target.root_xpath)
+        if block is None:
+            raise PatchApplicationError(
+                f"typed operation target을 찾을 수 없습니다: {target.root_xpath}"
+            )
+        if not target.base_fragment_sha256:
+            raise PatchApplicationError(
+                f"typed operation target hash가 없습니다: {target.xpath}"
+            )
+        if target.base_fragment_sha256 != sha256_text(block.xhtml_fragment):
+            raise PatchApplicationError(
+                f"typed operation target hash가 base와 다릅니다: {target.xpath}"
+            )
+        if (
+            target.mdx_content_sha256
+            and target.mdx_content_sha256 != block.mdx_content_hash
+        ):
+            raise PatchApplicationError(
+                f"typed operation MDX provenance hash가 다릅니다: {target.xpath}"
+            )
+        if (
+            target.mdx_line_range != (0, 0)
+            and tuple(target.mdx_line_range) != tuple(block.mdx_line_range)
+        ):
+            raise PatchApplicationError(
+                f"typed operation MDX line range가 다릅니다: {target.xpath}"
+            )
+
+    return patch_xhtml_preserving(
+        base_xhtml,
+        plan.to_patch_dicts(),
+        sidecar,
+    )
 
 
 def changed_root_xpaths(patches: Iterable[dict[str, Any]]) -> frozenset[str]:

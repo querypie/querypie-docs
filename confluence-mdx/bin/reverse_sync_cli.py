@@ -29,7 +29,7 @@ from reverse_sync.block_diff import diff_blocks
 from reverse_sync.mapping_recorder import record_mapping
 from reverse_sync.xhtml_patcher import patch_xhtml
 from reverse_sync.roundtrip_verifier import verify_roundtrip
-from reverse_sync.patch_builder import build_patches
+from reverse_sync.planner import plan_patches
 from reverse_sync.equivalence import (
     PUSH_EQUIVALENCE_POLICY,
     verify_push_equivalence,
@@ -37,7 +37,7 @@ from reverse_sync.equivalence import (
 from xhtml_beautify_diff import xhtml_diff
 
 _PUSH_VERIFIER_POLICY = PUSH_EQUIVALENCE_POLICY
-_TOOL_VERSION = "reverse-sync-cli-v4"
+_TOOL_VERSION = "reverse-sync-cli-v5"
 
 
 @dataclass
@@ -523,9 +523,8 @@ def run_verify(
     page_lost_info = load_page_lost_info(str(var_dir / 'mapping.yaml'))
     roundtrip_sidecar = build_sidecar(xhtml, original_mdx, page_id=page_id)
 
-    # Step 3+4: XHTML 패치 → patched.xhtml 저장
-    # build_patches()가 내부에서 record_mapping()을 호출하여 mappings를 생성한다
-    patches, original_mappings, skipped_changes = build_patches(
+    # Step 3+4: typed plan → validated renderer operation → patched XHTML
+    patch_plan, original_mappings = plan_patches(
         changes, original_blocks, improved_blocks,
         page_xhtml=xhtml,
         alignment=alignment,
@@ -534,7 +533,10 @@ def run_verify(
         link_resolver=link_resolver,
         attachment_filenames=attachment_filenames,
         allow_text_identity_fallback=not for_push,
+        enforce_capabilities=for_push,
+        enforce_provenance=for_push,
     )
+    skipped_changes = patch_plan.to_legacy_skipped_changes()
 
     # mapping.original.yaml artifact 저장
     original_mapping_data = {
@@ -544,15 +546,16 @@ def run_verify(
     (var_dir / 'reverse-sync.mapping.original.yaml').write_text(
         yaml.dump(original_mapping_data, allow_unicode=True, default_flow_style=False))
     if for_push:
-        from reverse_sync.preserving_patcher import patch_xhtml_preserving
+        from reverse_sync.preserving_patcher import render_patch_plan_preserving
 
-        patched_xhtml = patch_xhtml_preserving(
+        patched_xhtml = render_patch_plan_preserving(
             xhtml,
-            patches,
+            patch_plan,
             roundtrip_sidecar,
         )
     else:
-        patched_xhtml = patch_xhtml(xhtml, patches)
+        diagnostic_patches = patch_plan.to_patch_dicts()
+        patched_xhtml = patch_xhtml(xhtml, diagnostic_patches)
     (var_dir / 'reverse-sync.patched.xhtml').write_text(patched_xhtml)
 
     # XHTML beautify-diff (page.xhtml → patched.xhtml)
@@ -646,17 +649,13 @@ def run_verify(
     if for_push:
         from reverse_sync.manifest import create_sync_manifest
         from reverse_sync.models import sha256_text
-        from reverse_sync.preserving_patcher import patch_xhtml_preserving
-        from reverse_sync.proof import build_local_proof, canonical_plan_json
+        from reverse_sync.preserving_patcher import render_patch_plan_preserving
+        from reverse_sync.proof import build_local_proof
 
-        plan_json = canonical_plan_json(
-            changes=changes,
-            patches=patches,
-            skipped_changes=skipped_changes,
-        )
+        plan_json = patch_plan.to_canonical_json()
         (var_dir / "reverse-sync.plan.json").write_text(plan_json)
 
-        deterministic_patches, _, deterministic_skips = build_patches(
+        deterministic_plan, _ = plan_patches(
             changes,
             original_blocks,
             improved_blocks,
@@ -667,15 +666,13 @@ def run_verify(
             link_resolver=link_resolver,
             attachment_filenames=attachment_filenames,
             allow_text_identity_fallback=False,
+            enforce_capabilities=True,
+            enforce_provenance=True,
         )
-        deterministic_plan_json = canonical_plan_json(
-            changes=changes,
-            patches=deterministic_patches,
-            skipped_changes=deterministic_skips,
-        )
-        deterministic_candidate = patch_xhtml_preserving(
+        deterministic_plan_json = deterministic_plan.to_canonical_json()
+        deterministic_candidate = render_patch_plan_preserving(
             xhtml,
-            deterministic_patches,
+            deterministic_plan,
             roundtrip_sidecar,
         )
 
@@ -695,10 +692,9 @@ def run_verify(
                 idempotent_candidate = patched_xhtml
             else:
                 (
-                    idempotency_patches,
+                    idempotency_plan,
                     _,
-                    idempotency_skips,
-                ) = build_patches(
+                ) = plan_patches(
                     idempotency_changes,
                     idempotency_original_blocks,
                     idempotency_improved_blocks,
@@ -709,13 +705,15 @@ def run_verify(
                     link_resolver=link_resolver,
                     attachment_filenames=attachment_filenames,
                     allow_text_identity_fallback=False,
+                    enforce_capabilities=True,
+                    enforce_provenance=True,
                 )
                 idempotent_candidate = (
                     ""
-                    if idempotency_skips
-                    else patch_xhtml_preserving(
+                    if idempotency_plan.issues
+                    else render_patch_plan_preserving(
                         patched_xhtml,
-                        idempotency_patches,
+                        idempotency_plan,
                         candidate_sidecar,
                     )
                 )
@@ -729,7 +727,7 @@ def run_verify(
             candidate_xhtml=patched_xhtml,
             sidecar=roundtrip_sidecar,
             changes=changes,
-            patches=patches,
+            patches=None,
             skipped_changes=skipped_changes,
             plan_json=plan_json,
             deterministic_plan_json=deterministic_plan_json,
@@ -738,6 +736,7 @@ def run_verify(
             source_identity_passed=True,
             base_parity_passed=True,
             dependency_result=dependency_result,
+            plan=patch_plan,
         )
         proof_json = proof.to_canonical_json()
         (var_dir / "reverse-sync.proof.json").write_text(proof_json)

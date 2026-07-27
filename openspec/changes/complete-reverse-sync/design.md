@@ -226,6 +226,13 @@ text prefix fallback을 유지합니다. online verify는
 호출에 강제하고, provenance mapping을 찾지 못하면 `no_mapping`으로 기록하여
 `intent_complete` gate에서 block합니다.
 
+`legacy-patch-builder-v2` adapter는 `build_patches()`가 선택한 target을 그대로
+신뢰하지 않습니다. online plan에서 MDX content hash와 line range가 모두 일치하는
+유일한 sidecar provenance를 `ChangeIntent`에 기록하고, renderer operation의 root
+fragment와 대응하지 않으면 operation을 `missing_identity`로 non-executable
+처리합니다. 따라서 migration 중에는 legacy builder가 잘못된 candidate를
+제안하더라도 strict proof의 `intent_complete`를 얻을 수 없습니다.
+
 추가/삭제/reorder는 stable neighbor identity를 기준으로 계획합니다.
 
 - insert는 `before_block_id`와 `after_block_id` 중 하나 이상을 가져야 합니다.
@@ -276,6 +283,28 @@ registry entry는 다음을 가져야 합니다.
 - required evidence
 - block reason
 - representative unit test와 page fixture
+
+현재 `reverse_sync/capabilities.py`는 이 registry를 코드로 고정하고,
+`reverse_sync/operations.py`는 immutable `ChangeIntent`, `TargetIdentity`,
+`PatchOperation`, `PatchPlan`을 제공합니다. `PatchOperation`은 capability ID,
+base fragment hash를 포함한 target identity, required proof, executable 여부와
+block reason을 항상 기록합니다. raw patch dict는 canonical
+`renderer_input_json` 안에 격리하고 `PatchPlan.to_patch_dicts()`에서 validated
+XHTML renderer boundary로만 복원합니다.
+
+`reverse_sync/planner.py`는 첫 migration 단계로 기존 `build_patches()`를
+`legacy-patch-builder-v2` adapter 뒤에서 호출합니다. push path의
+`raw_html_table_edit`와 `unknown_macro_mutation`은
+`unsupported_capability`로 non-executable 처리하며, source formatting을 나타내는
+empty block insert가 `<p></p>` mutation으로 바뀌지 않도록 plan에서 제거합니다.
+capability별 renderer strategy 자체를 `patch_builder.py`에서 추출하는 작업은
+계속 남아 있습니다.
+
+`render_patch_plan_preserving()`은 executable operation을 raw renderer input으로
+복원하기 직전에 target root fragment hash, sidecar MDX hash, line range를 base
+sidecar와 다시 비교합니다. CLI와 proof는 raw patch dict를 직접 소비하지 않으며,
+typed target identity가 바뀌었거나 다른 base에 plan을 적용하려 하면
+`PatchApplicationError`로 중단합니다.
 
 ### Decision: local proof를 여러 독립 gate로 분해합니다
 
@@ -490,7 +519,11 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | preflight/update/postcondition | `reverse_sync/publisher.py` |
 | CLI orchestration/display | `reverse_sync_cli.py` |
 
-분리는 한 번에 수행하지 않습니다. 먼저 snapshot/manifest/publisher safety seam을 추가한 뒤 기존 `build_patches()`를 adapter로 감싸고, capability별 planner와 strategy를 점진적으로 추출합니다.
+분리는 한 번에 수행하지 않습니다. 먼저 snapshot/manifest/publisher safety seam을
+추가한 뒤 기존 `build_patches()`를 typed `PatchPlan` adapter로 감싸고,
+capability별 planner와 strategy를 점진적으로 추출합니다. CLI와 local proof는
+schema v2 plan을 소비하며 raw patch dict는 validated renderer boundary 밖으로
+노출하지 않습니다.
 
 ## Push Eligibility Matrix
 
