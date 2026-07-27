@@ -593,6 +593,7 @@ Confluence update는 외부 side effect이며 postcondition 실패 후 완전한
 | local proof/equivalence | `reverse_sync/proof.py`, `roundtrip_verifier.py` |
 | manifest read/write/integrity | `reverse_sync/manifest.py` |
 | preflight/update/postcondition | `reverse_sync/publisher.py` |
+| manifest publish lifecycle | `reverse_sync/publish_service.py` |
 | CLI orchestration/display | `reverse_sync_cli.py` |
 
 분리는 한 번에 수행하지 않습니다. 먼저 snapshot/manifest/publisher safety seam을
