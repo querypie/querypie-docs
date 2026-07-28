@@ -91,7 +91,7 @@ Administrator &gt; Databases &gt; Connection Management &gt; DB Connections &gt;
 </figure>
 
 4. Authentication DB : Authentication DB(authSource)의 값을 입력합니다.
-5. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Vaule]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/>**replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.**
+5. Other Options : Connection string에 사용하는 옵션 중 authSource를 제외한 나머지 값을 입력합니다.<br/>예시 1) 단일 옵션만 사용하는 경우 형식 ( [Key]=[Value] ) : replicaSet=rs0<br/>예시 2) 다중 옵션을 사용하는 경우 형식 ( [Key]=[Value]&[Key]=[Value] ) : replicaSet=rs0&tls=true<br/>**replica set 구성인 경우 replicaSet=[replicaset name] 옵션을 입력해야 합니다.**
 6. Secret Store : 암호 및 키 관리를 3rd party를 사용할 경우를 위한 옵션입니다. 기본값 QueryPie는 QueryPie 내부에서 관리하는 것을 의미합니다.
 7. User Name & Password : 해당 데이터베이스의 사용자 이름과 비밀번호를 입력합니다.
 8. `Test Connection` 버튼을 클릭하여, 입력한 접속 정보가 유효한지 확인할 수 있습니다.
@@ -165,7 +165,7 @@ Cluster 모드에 대한 더 자세한 내용은 [DB Connections](.)에서도 �
 
 위에서 안내된 바와 같이 QueryPie의 SQL editor를 사용하여 접속하는 경우 커넥션 스트링에 tls=true가 필요합니다.
 
-> +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 **tls=true**를 수동으로 입력해줘야 합니다.
+> +srv 스킴은 TLS 옵션이 자동으로 true이므로 standard string으로 변환하면 **tls=true**를 수동으로 입력해야 합니다.
 > (TXT 레코드에 TLS 옵션이 없기 때문입니다.)
 > 따라서 Other options 항목에 위 그림과 같이 **&tls=true**를 입력합니다.
 
@@ -199,7 +199,7 @@ Administrator &gt; Databases &gt; Policies &gt; Data Masking &gt; Add Rule List
 </figcaption>
 </figure>
 
-1. 정책을 생성하고 나면, 실제로 정책을 적용할 데이터의 경로를 규칙으로 등록합니다.<br/>Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 MongoDB 에서 해당 Collection 의 Document 를 조회할 경우 적용한 마스킹 패턴에 따라 사전에 지정한 Attribute 의 Value 값이 `*****@gmail.com`와 같이 마스킹되어 표시됩니다.
+1. 정책을 생성한 뒤 실제로 정책을 적용할 데이터 경로를 규칙으로 등록합니다.<br/>Rule List 탭에서 규칙이 등록된 것을 확인할 수 있습니다. 이제 사용자가 MongoDB에서 해당 Collection의 Document를 조회할 경우 적용한 마스킹 패턴에 따라 사전에 지정한 Attribute의 Value 값이 `*****@gmail.com`와 같이 마스킹되어 표시됩니다.
     1. Data Masking 메뉴에서 생성한 정책을 클릭합니다.
     2. 정책 세부 정보 및 규칙 등록 화면이 표시되고 우측에서 `Add Rule List` 버튼을 클릭합니다.
     3. 정책을 적용할 데이터의 경로를 차례대로 선택합니다.

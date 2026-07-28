@@ -51,7 +51,7 @@ Access Control 페이지 내 Group / Users 탭의 목록에서 특정 사용자 
     * Email : 해당 사용자의 email 주소입니다.
 * Privilege를 부여받은 대상 목록 : privilege를 부여받은 connection이 없는 경우 목록에는 아무것도 표시되지 않습니다.
     * Connection Name : 대상 커넥션의 이름입니다.
-    * Database Type****: DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
+    * Database Type : DB 유형 (eg. MySQL, MariaDB, PostgreSQL…)
     * Host : 커넥션에 등록된 Host 주소입니다.
     * Port : 커넥션에 등록된 Port 주소입니다.
     * Access Control Level : access control의 수준을 나타냅니다. 11.5.0부터 스키마(논리 DB) 수준의 제어를 할 수 있게 되면서 Host 또는 Schema(Logical DB)로 표시됩니다.
@@ -103,8 +103,8 @@ Access Control 페이지 내 Group / Users 탭의 목록에서 특정 사용자 
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-104148.png" alt="image-20251218-104148.png" width="736" />
   </figure>
-5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한 번에 여러 개의 커넥션에 다중 설정이 불가합니다. 커넥션을 선택하면 우측의 privilege 항목에 기본적으로 select 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울 수도 있지만 그랬을 때 Web editor 또는 proxy에서 스키마 구조를 조회하는 시점에 오류가 발생할 수 있으니 가급적 이 항목을 제거하지 않는 것을 권장합니다.
-6. privilege 를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item` 버튼을 누릅니다.<br/>아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS (Oracle, Postgres 등)은 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 의 형식으로 입력해야 합니다. MySQL 과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila
+5. Connections 항목에서 대상 커넥션을 선택합니다. 스키마 레벨은 한 번에 여러 개의 커넥션에 다중 설정할 수 없습니다. 커넥션을 선택하면 우측 privilege 항목에서 기본적으로 SELECT 권한이 필요한 스키마에 자동으로 SELECT privilege가 부여된 것을 볼 수 있습니다. 관리자는 이 항목을 지울 수도 있지만, 그럴 경우 Web editor 또는 proxy에서 스키마 구조를 조회할 때 오류가 발생할 수 있으므로 가급적 제거하지 않는 것을 권장합니다.
+6. privilege를 할당할 특정 스키마(논리 DB)를 지정하기 위해 `Add Item` 버튼을 누릅니다.<br/>아래에 대상을 추가할 수 있는 행이 추가됩니다. schema 구조가 있는 DBMS(Oracle, Postgres 등)는 대상 이름을 입력할 때 반드시 `{database 이름}`.`{schema 이름}` 형식으로 입력해야 합니다. MySQL과 같이 schema 구조가 없는 DBMS는 논리 DB 이름만 입력하면 됩니다.<br/>- Oracle 예시 : ORCLDB.TESTUSER<br/>- PostgreSQL 예시 : testdb.test_schema<br/>- MySQL 예시 : sakila
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/db-access-control/access-control/image-20251218-105030.png" alt="image-20251218-105030.png" width="736" />
   </figure>
@@ -162,7 +162,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Det
 * 해당 권한이 부여된 최초 시점은 **Granted At** 컬럼을 통해 확인할 수 있습니다.
 * 해당 권한을 부여받은 사용자가 커넥션에 마지막으로 접속한 시점은 **Last Access At** 컬럼을 통해 확인할 수 있습니다.
 * 해당 권한이 회수되는 시점은 **Expiration Date** 컬럼을 통해 확인할 수 있습니다.
-* 권한이 부여되었지만 **Expiration Date** 컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기미접속 설정(Deactivation Period)의 영향을 받습니다.
+* 권한이 부여되었지만 **Expiration Date** 컬럼에 아무런 표시가 없는 경우 해당 권한은 회수되지 않습니다. 다만, 해당 커넥션 권한에 대한 기본적인 관리는 커넥션 장기 미접속 설정(Deactivation Period)의 영향을 받습니다.
 </Callout>
 
 
@@ -187,7 +187,7 @@ Administrator &gt; Databases &gt; DB Access Control &gt; Access Control &gt; Loc
 
 
 <Callout type="info">
-**테이블 태그로 접근제어하기**<br/><br/>Databases &gt; General &gt; Configurations에서 New DAC Policy Management 를 활성화한 경우,
+**테이블 태그로 접근 제어하기**<br/><br/>Databases &gt; General &gt; Configurations에서 New DAC Policy Management를 활성화한 경우,
 
 <figure data-layout="center" data-align="center">
 <img src="/administrator-manual/databases/db-access-control/access-control/image-20250703-050924.png" alt="image-20250703-050924.png" width="551" />

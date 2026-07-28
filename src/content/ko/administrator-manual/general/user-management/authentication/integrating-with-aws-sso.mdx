@@ -38,13 +38,13 @@ QueryPie에서는 AWS IAM Identity Center의 사용자를 여러 클라우드 �
 1. 생성된 애플리케이션 우측 상단에서 작업 &gt; 속성 매핑 편집으로 이동합니다.
 2. 애플리케이션 내 사용자 속성과 매핑 값, 형식을 위 스크린샷을 참고하여 다음과 같이 입력합니다.
 
-| **애플리케이션 내 사용자 속성** | **IAM Identity Center 의 문자열 값 또는 사용자 속성으로 매핑** | **형식**     |
-| ------------------------------- | -------------------------------------------------------------- | ------------ |
-| Subject                         | $`{user:email}`                                                | emailAddress |
-| firstName                       | $`{user:givenName}`                                            | basic        |
-| lastName                        | $`{user:familyName}`                                           | basic        |
-| loginId                         | $`{user:email}`                                                | basic        |
-| email                           | $`{user:email}`                                                | basic        |
+| **애플리케이션 내 사용자 속성** | **IAM Identity Center의 문자열 값 또는 사용자 속성으로 매핑** | **형식**     |
+| ------------------------------- | ------------------------------------------------------------- | ------------ |
+| Subject                         | `${user:email}`                                               | emailAddress |
+| firstName                       | `${user:givenName}`                                           | basic        |
+| lastName                        | `${user:familyName}`                                          | basic        |
+| loginId                         | `${user:email}`                                               | basic        |
+| email                           | `${user:email}`                                               | basic        |
 
 `변경 사항 저장` 버튼을 클릭하여 저장합니다.
 
