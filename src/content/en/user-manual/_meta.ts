@@ -5,6 +5,7 @@ export default {
   'server-access-control': 'Server Access Control',
   'kubernetes-access-control': 'Kubernetes Access Control',
   'web-access-control': 'Web Access Control',
+  'mcp-access-control': 'MCP Access Control',
   'preferences': 'Preferences',
   'user-agent': 'User Agent',
   'multi-agent': 'Multi Agent',

@@ -1,0 +1,179 @@
+---
+title: 'Using Remote MCP Servers through MAC'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2166816845/MAC+Remote+MCP+Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+# Using Remote MCP Servers through MAC
+
+### Overview
+
+`MCP Servers` is a user screen where you can view the remote MCP Servers you are allowed to access and connect external MCP Clients through the MCP endpoint provided by QueryPie.
+On this screen, you can view the servers available to you and review each server's `Basic Info`, `Tools`, and `Accessible Roles`. When an MCP Server's Credential Mode is "`User OAuth`" (configured on the administrator page), you can also establish the upstream OAuth connection yourself.
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260605-035129.png" alt="image-20260605-035129.png" width="760" />
+</figure>
+
+This document explains how to perform the following tasks on the user page.
+
+* View the MCP Servers you can access
+* View connection instructions for each MCP Client
+* Review **Basic Info**, **Tools**, and **Accessible Roles** for each server
+* Establish an upstream OAuth connection when necessary
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260602-133009.png" alt="User &gt; MCP Servers" width="760" />
+<figcaption>
+User &gt; MCP Servers
+</figcaption>
+</figure>
+
+### Before you begin
+
+The following conditions must be met.
+
+* QueryPie ACP must have a MAC license.
+* An administrator must grant you a Role that provides access to an MCP Server.
+* The policy associated with the granted Role must provide access to at least one MCP Server.
+
+<Callout type="important">
+If no Role is granted to you, an informational screen appears instead of the server list, and you may need to request access.
+Currently, only an administrator can grant a Role. You cannot request access through a workflow.
+</Callout>
+
+<Callout type="important">
+You connect to the MCP endpoint provided by QueryPie, not directly to the upstream MCP Server's original URL. The connection instructions under `Connect with` are generated based on the QueryPie endpoint (`<QueryPie Instance FQDN>/mac/mcp`).
+</Callout>
+
+### Opening the MCP Servers screen
+
+1. Click `MCP Servers` in the top menu.
+2. The MCP Servers screen consists of the `Connect with` section, the `server list (server cards)`, and the `detail panel`.
+3. If you have permission to access MCP Servers through a granted Role, the server card list appears.
+
+#### Information available on the screen
+
+| **Item**                  | **Description**                                                                                                                                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connect with              | Select the MCP Client you use from the drop-down list to view connection instructions for that Client.                                         |
+| Server list (server cards)| Displays the accessible MCP Servers. Each server card shows the MCP Server name and endpoint address configured by the administrator.          |
+| Authentication badge     | Servers that require OAuth display an `Authenticated` or `Not Authenticated` status.                                                           |
+| Detail panel              | Shows `Basic Information`, `Available Tools`, and `Accessible Roles` for the selected MCP Server.                                               |
+
+### Viewing MCP Client connection information under Connect with
+
+The `Connect with` section shows how to register the QueryPie MCP endpoint in an external MCP Client.
+
+1. Select the MCP Client you want to use from the `Connect with` drop-down.
+2. QueryPie displays connection instructions for that Client.
+3. Copy the command, URL, or configuration example shown in the instructions and register it in the MCP Client.
+
+The supported instruction method may differ by Client.
+
+| **Method**      | **Description**                                                                                                                                                      |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| One-click       | Opens the Client and passes connection information through the `Connect` button. (Example: VS Code)                                                                  |
+| Command         | Copy a terminal command and register it in the MCP Client CLI. (Example: `claude mcp add --transport http querypie-mac "https://<QueryPie Instance FQDN>/mac/mcp"`) |
+| Terminal URL    | Copy the displayed URL and enter it in the Client settings.                                                                                                          |
+| Connector steps | Copy and enter the URL or configuration value on the Client settings screen. (Example: LibreChat)                                                                    |
+
+<Callout type="important">
+The values shown in the connection instructions are generated from QueryPie's common MCP root URL, not the upstream URL of the selected server. <br/>For example, the Notion endpoint URL is "`https://mcp.notion.com/mcp`", but the connection instructions under Connect with for the QueryPie MCP Server show "`https://<QueryPie Instance FQDN>/mac/mcp`".
+</Callout>
+
+### Viewing accessible MCP Servers
+
+1. Click the server you want in the server card list.
+2. The card displays the following information.
+    * MCP Server display name
+    * Endpoint
+    * OAuth authentication status badge (when required)
+3. The detail panel for the selected server opens.
+
+#### Tabs available in the detail panel
+
+<table>
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<td>
+**Tab**
+</td>
+<td>
+**Description**
+</td>
+</tr>
+<tr>
+<td>
+Basic Information
+</td>
+<td>
+* Server Name: Display name that identifies the MCP Server.
+* Identifier: Internal identifier for the remote MCP Server.
+* Upstream Endpoint: Actual endpoint URL for connecting to the remote MCP Server. You cannot use this address to connect.
+* Transport: Transport type of the remote MCP Server. (SSE / Streamable HTTP)
+</td>
+</tr>
+<tr>
+<td>
+Available Tools
+</td>
+<td>
+View the Tools currently available to you. <br/>The list shows only the Tools accessible based on the Roles and Policies granted to you, not every Tool provided by the MCP Server.
+</td>
+</tr>
+<tr>
+<td>
+Accessible Roles
+</td>
+<td>
+* Role Name: Name of the Role assigned to you for the MCP Server.
+* Expiration Date: Time when your access permission to the MCP Server expires.
+* Status: Role grant status. (Active / Expired)
+* Policies: Names of one or more policies associated with the MCP Server.
+</td>
+</tr>
+</tbody>
+</table>
+
+### Connecting to an MCP Server that requires OAuth
+
+When a server's `Credential Mode` is `User OAuth`, an OAuth connection section appears below the `Basic Information` tab.
+
+<Callout type="important">
+Only an administrator can configure Credential Mode. Users cannot change it.
+</Callout>
+
+#### Establishing an OAuth connection
+
+1. Select the server and open the `Basic Information` tab.
+2. If the OAuth status is `Not Authenticated`, click `Connect` to start authentication.
+3. QueryPie opens an OAuth authentication window in your web browser.
+4. Complete authentication on the upstream OAuth provider screen.
+5. When authentication is complete, the status changes to `Authenticated`.
+
+#### Disconnecting OAuth
+
+1. Open a server that already has an OAuth connection.
+2. Click `Reset Token`.
+3. The stored OAuth connection is removed, and the status changes back to `Not Authenticated`.
+
+### When you do not have access or cannot see an MCP Server
+
+#### When you have no Role
+
+* The `MCP Servers` screen displays an empty state instead of a server list.
+  <figure data-layout="center" data-align="center">
+  <img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260605-044959.png" alt="image-20260605-044959.png" width="736" />
+  </figure>
+* In this case, ask an administrator to grant you a MAC Role.
+
+#### When you have a Role but no server
+
+* Even if you have a Role, no server appears if the Role's Policy does not grant access to any server.
+* Ask an administrator to check the Policy associated with the Role or its server access scope.

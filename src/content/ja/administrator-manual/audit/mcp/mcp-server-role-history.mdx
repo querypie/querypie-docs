@@ -1,0 +1,116 @@
+---
+title: 'MCP Server Role History'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167078929/MCP+Server+Role+History'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Server Role History
+
+### Overview
+
+MCP Auditは、QueryPieのMCP proxyの利用履歴とMCPアクセス権限の変更履歴を監査するための機能です。
+
+`Admin > Audit > MCP`メニューには、目的が異なる2つの画面があります。
+
+* **Request Audit**：MCPリクエストの処理履歴を確認する画面
+* **MCP Server Role History**：ユーザーまたはグループにMCPロールが付与または回収された履歴を確認する画面
+
+つまり、`MCP Server settings`画面の**Audit Settings**は「何を記録するか」を設定する領域で、実際に記録された監査履歴を照会する画面は`Admin > Audit > MCP`配下に別途用意されています。
+
+* メニューパス：`Admin > Audit > MCP`
+* サブメニュー
+    * `Admin > Audit > MCP > Request Audit`
+    * `Admin > Audit > MCP > MCP Server Role History`
+* 必要な権限：`PERMISSION_MAC_AUDIT`
+
+### MCP Server Role Historyについて
+
+**MCP Server Role History**は、ユーザーまたはグループにMCPロール（Role）がいつ、誰によって付与または回収されたかを確認する画面です。
+
+この画面は、現在の権限状態を管理する`Admin > MCP > MCP Access Control > Access Control`とは別の、権限変更履歴を監査するための画面です。
+
+#### MCP Server Role Historyを開く
+
+1. `Admin > Audit > MCP > MCP Server Role History`メニューに移動します。
+2. 画面を開くと、デフォルトでは当月の開始日から現在までの履歴が表示されます。
+3. 上部のfilterで条件を調整し、必要な履歴のみを確認します。
+4. 右上のrefreshボタンをクリックすると、現在の条件で一覧が再読み込みされます。
+
+### MCP Server Role Historyの検索とフィルター
+
+この画面では、次の条件がデフォルトのfilterとして提供されます。
+
+* **Event** : `GRANTED`、`REVOKED`
+* **User Type** : `USER`、`GROUP`
+* **Action At**：操作日時の範囲
+
+一覧もcursorベースで続けて照会されます。
+
+### MCP Server Role History一覧で確認できる情報
+
+一覧のカラムは次のとおりです。
+
+* **No**：ログの連番
+* **Action At**：ロールの付与または回収日時
+* **Event**：`GRANTED`または`REVOKED`
+* **User Type**：`USER`または`GROUP`
+* **Name**：対象ユーザーまたはグループ名
+* **Email**：対象ユーザーのメールアドレス。グループの場合は空欄になることがあります。
+* **Role**：変更されたMCPロール名
+* **Expiration Date**：ロールの有効期限
+* **Action By**：操作を実行した管理者またはユーザー名
+
+### MCP Server Role Historyの詳細を表示する
+
+一覧の行をクリックすると、detail drawerが開きます。
+
+detail drawerでは、次の情報を確認できます。
+
+* **Role Name**：付与または回収されたロール名
+* **Event**：`GRANTED`または`REVOKED`
+* **Name**：対象ユーザーまたはグループ名
+* **Email**：対象ユーザーのメールアドレス
+* **User Type**：`USER`または`GROUP`
+* **Action At**：操作が発生した日時
+* **Action By**：操作の実行者
+* **Expiration Date**：ロールの有効期限
+* **Role Description**：ロールの説明
+
+ロールに紐づくポリシーがある場合は、drawer下部の**Policies**セクションで次の情報も確認できます。
+
+* **Name**
+* **Description**
+* **Version**
+
+<Callout type="important">
+`REVOKED`の履歴では、保存時に`Expiration Date`が空の場合があるため、画面でも`-`と表示されることがあります。
+</Callout>
+
+### MCP Server Role Historyを解釈する際の参考事項
+
+* `GRANTED`はロール付与イベントです。
+* `REVOKED`はロール回収イベントです。
+* この画面は「現在どの権限が残っているか」ではなく、「権限がどのように変更されたか」を示す監査画面です。
+* detail drawerの**Role Description**と**Policies**は、照会時点のロール定義を基準に読み込まれます。
+
+### Request AuditとMCP Server Role Historyの違い
+
+どちらもMCP Audit配下の画面ですが、監査対象が異なります。
+
+* **Request Audit**：実際のMCPリクエスト実行履歴を監査
+* **MCP Server Role History**：MCPアクセス権限の変更履歴を監査
+
+運用時には、通常次のように組み合わせて使用します。
+
+* 実際に実行されたリクエストを確認する場合：**Request Audit**
+* 特定のユーザーまたはグループに、いつどのロールが付与または回収されたかを確認する場合：**MCP Server Role History**
+* 権限変更後の実際のリクエストフローまで追跡する場合：両方の画面を併せて照会
+
+### 運用時の参考事項
+
+* `MCP Server settings`の**Enable Request Audit**と**Include payload in Request Audit**は、upstream requestを記録するかどうかとpayloadを保存するかどうかを制御します。
+* `Admin > MCP Servers > General > Configurations`のclient audit設定は、client-originated requestを記録するかどうかを制御します。
+* つまり、設定画面では監査の収集範囲を定め、`Admin > Audit > MCP`画面では収集された結果を照会します。
+* Request Auditでpayloadが表示されない場合は、まず該当scopeのpayload audit設定が無効になっていないか確認してください。
+* MCP Server Role Historyはロール付与・回収履歴の監査に適していますが、現時点で実際にアクセス可能なサーバー一覧は`Admin > MCP > MCP Access Control > Access Control`画面で別途確認する必要があります。

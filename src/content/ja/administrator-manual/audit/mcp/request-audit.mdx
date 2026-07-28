@@ -1,0 +1,135 @@
+---
+title: 'Request Audit'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167308318/Request+Audit'
+---
+
+import { Callout } from 'nextra/components'
+
+# Request Audit
+
+### Overview
+
+MCP Auditは、QueryPieのMCP proxyの利用履歴とMCPアクセス権限の変更履歴を監査するための機能です。
+
+* **Request Audit**：MCPリクエストの処理履歴を確認する画面
+* **MCP Server Role History**：ユーザーまたはグループにMCPロールが付与または回収された履歴を確認する画面
+
+つまり、`MCP Server settings`画面の**Audit Settings**は「何を記録するか」を設定する領域で、実際に記録された監査履歴を照会する画面は`Admin > Audit > MCP`配下に別途用意されています。
+
+* メニューパス：`Admin > Audit > MCP`
+
+* サブメニュー
+    * `Admin > Audit > MCP > Request Audit`
+    * `Admin > Audit > MCP > MCP Server Role History`
+* 必要な権限：`PERMISSION_MAC_AUDIT`
+
+### Request Auditについて
+
+**Request Audit**は、MCPリクエストが各範囲でどのように処理されたかを確認する画面です。
+
+この画面には、次の2種類のログが併せて記録される場合があります。
+
+* `CLIENT`：クライアントがMCP proxyに送信したリクエスト
+* `PROXY_UPSTREAM`：MCP proxyが個別のupstream MCP Serverに転送したリクエスト
+
+そのため、1つのユーザーリクエストに対してparent requestとupstream child requestが一緒に表示されることがあります。
+
+#### Request Auditを開く
+
+1. `Admin > Audit > MCP > Request Audit`メニューに移動します。
+2. 画面を開くと、デフォルトでは当日のログが表示されます。
+3. 上部のfilterで条件を調整し、必要なログ範囲のみを再照会できます。
+4. 右上のrefreshボタンをクリックすると、現在の条件で一覧が再読み込みされます。
+
+### Request Auditの検索とフィルター
+
+`Request Audit`画面では、次の条件がデフォルトのfilterとして提供されます。
+
+* **Server**：特定のMCP Serverに関連するupstreamログのみを確認
+* **Event** : `ALLOW`、`DENY`
+* **Request Scope** : `CLIENT`、`PROXY_UPSTREAM`
+* **Executed At**：ログ発生日時の範囲
+
+一覧はcursorベースで続けて照会され、スクロールすると次のログを追加で読み込めます。
+
+### Request Audit一覧で確認できる情報
+
+一覧のカラムは次のとおりです。
+
+* **No**：ログの連番
+* **Executed At**：リクエストが記録された日時
+* **Request Origin**：`CLIENT`または`PROXY_UPSTREAM`
+* **Root Request ID**：同じリクエストフローをまとめる上位リクエストID
+* **Event**：権限またはポリシーの判定結果（`ALLOW`、`DENY`）
+* **Status**：実際の処理結果（`SUCCESS`、`ERROR`）
+* **Name**：リクエストを実行したユーザー名
+* **Email**：リクエストを実行したユーザーのメールアドレス
+* **Client IP**：リクエストを送信したクライアントIP
+* **Server**：対象MCP Server名
+* **Method**：MCP method名
+* **Client Tool Name**：クライアントがリクエストしたtool名
+* **Target Tool Name**：upstreamの対象として解釈されたtool名
+* **Duration**：処理時間（ms）
+
+<Callout type="important">
+`Event`と`Status`は意味が異なります。
+たとえば、`Event`が`ALLOW`でも、実行中にエラーが発生すると`Status`は`ERROR`として記録されることがあります。
+</Callout>
+
+### Request Auditの詳細を表示する
+
+一覧の行をクリックすると、detail drawerが開きます。
+
+detail drawerでは、次の情報を確認できます。
+
+#### Request Info
+
+* **Request ID**：個別のaudit logレコードの一意なID
+* **Root Request ID**：同じリクエストチェーンに属するログをまとめるID
+* **Request Origin**：`CLIENT`または`PROXY_UPSTREAM`
+* **Executed At**：リクエストが記録された日時
+* **Server**：対象MCP Server名
+* **Method**：MCP methodとtool名
+* **Client Tool Name**：クライアント側のtool名
+* **Target Tool Name**：実際のupstream対象tool名
+* **Transport**：upstream MCP Serverとの通信に使用したtransport
+* **Upstream Endpoint**：upstream MCP Serverのendpoint
+* **HTTP Status**：HTTP処理ステータスコード
+* **Event**：許可または拒否イベント
+* **Status**：成功または失敗ステータス
+* **Duration**：処理時間
+* **Denied Reason**または**Error**：拒否理由またはエラーメッセージ
+
+#### Subject Info
+
+* **Name**
+* **Email**
+* **Subject ID**
+
+#### Client Info
+
+* **Client IP**
+* **User Agent**
+
+#### Payload
+
+payloadが保存されている場合は、**Payload**セクションでリクエスト本文をJSON形式で確認できます。
+
+ただし、payloadを表示するかどうかはaudit設定によって異なります。
+
+* client-originated requestは、`Admin > MCP Servers > General > Configurations`のclient audit payload設定の影響を受けます。
+* upstream requestは、各MCP Serverのdetail pageにある**Include payload in Request Audit**設定の影響を受けます。
+
+また、機密情報と判断された値は、そのまま保存されずマスキングされる場合があります。
+
+<Callout type="important">
+現在のadminの`Request Audit` detail画面には**Payload**が表示されますが、内部で保存される可能性があるresponse本文を別のセクションとして公開することはありません。
+</Callout>
+
+### Request Auditを解釈する際の参考事項
+
+* `Root Request ID`が同じログは、同じリクエストフローで発生したものとみなせます。
+* `CLIENT`ログは、ユーザーがMCP proxyに送信したリクエストを意味します。
+* `PROXY_UPSTREAM`ログは、proxyが特定のMCP Serverに転送したdownstreamリクエストを意味します。
+* `Server`、`Transport`、`Upstream Endpoint`、`Target Tool Name`は、主に`PROXY_UPSTREAM`ログで意味を持ちます。
+* `CLIENT`ログでは、server情報が空の場合があります。

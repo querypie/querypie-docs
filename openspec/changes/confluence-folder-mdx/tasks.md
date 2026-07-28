@@ -17,6 +17,8 @@
 - [x] 2.9 `var/convert-manifests/convert-manifest.<sync-code>.yaml`의 atomic update와 stale generated output 안전 삭제를 구현합니다.
 - [x] 2.10 folder MDX가 reverse sync 대상이 아닐 때 명확한 오류를 반환하도록 관련 entry point를 확인하고 필요한 guard를 추가합니다.
 - [x] 2.11 Compose 실행 사이에 profile manifest directory를 host에 보존하고 다른 profile 소유 output을 stale cleanup에서 제외합니다.
+- [x] 2.12 `direct-children`의 `status`가 `current`가 아닌 page/folder를 metadata 조회 전에 제외합니다.
+- [x] 2.13 표시용 영어 제목과 content ID 기반 canonical slug override를 분리하고 descendant path에 parent override를 상속합니다.
 
 ## 3. Verification
 
@@ -35,6 +37,8 @@
 - [x] 3.13 focused Python test, `git diff --check`, 관련 `rg` source scan을 실행합니다.
 - [x] 3.14 ephemeral container의 manifest directory mount, atomic replace, 공유 output root의 profile 소유권 이전 회귀 테스트를 추가합니다.
 - [x] 3.15 `full-all` catalog 선갱신과 profile 간 current output path 충돌 사전 차단 회귀 테스트를 추가합니다.
+- [x] 3.16 draft child가 catalog traversal과 metadata API 호출에서 제외되고 식별 가능한 경고가 남는지 검증합니다.
+- [x] 3.17 정확한 영어 breadcrumb를 유지하면서 `web-client` canonical slug와 descendant path 상속을 검증합니다.
 
 권장 focused 명령:
 
@@ -61,6 +65,7 @@ bin/convert_all.py --sync-code qm
 - [x] 4.3 README, CLI help, sync profile 설명에서 `--recent`를 full hierarchy sync처럼 설명하는 stale 문구가 없는지 확인합니다.
 - [x] 4.4 folder MDX가 translation/skeleton/reverse-sync workflow에서 일반 page body로 잘못 취급되지 않는지 확인합니다.
 - [x] 4.5 manifest cleanup이 sync code가 다른 출력이나 attachment를 삭제하지 않는지 확인합니다.
+- [x] 4.6 title translation을 route alias로 축약한 항목이 남아 있지 않은지 확인합니다.
 
 ## 5. OpenSpec Cleanup
 

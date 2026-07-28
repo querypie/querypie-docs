@@ -5,4 +5,5 @@ export default {
   'server-logs': 'Server Logs',
   'kubernetes-logs': 'Kubernetes Logs',
   'web-app-logs': 'Web App Logs',
+  'mcp': 'MCP',
 };

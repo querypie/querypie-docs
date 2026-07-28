@@ -1,0 +1,179 @@
+---
+title: 'MACを使用してRemote MCP Serversを利用する'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2166816845/MAC+Remote+MCP+Servers'
+---
+
+import { Callout } from 'nextra/components'
+
+# MACを使用してRemote MCP Serversを利用する
+
+### Overview
+
+`MCP Servers`は、自分に許可されたremote MCP Serverを照会し、QueryPieが提供するMCP endpointを介して外部MCP Clientと接続するためのユーザー画面です。
+この画面では、自分に許可されたサーバー一覧を確認し、サーバーごとの`Basic Info`、`Tools`、`Accessible Roles`情報を照会できます。MCP ServerのCredential Modeが「`User OAuth`」（管理者ページで設定）の場合は、upstream OAuth接続も自分で実行できます。
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260605-035129.png" alt="image-20260605-035129.png" width="760" />
+</figure>
+
+このドキュメントでは、ユーザーページで次の操作を実行する方法について説明します。
+
+* 自分がアクセスできるMCP Server一覧を確認する
+* MCP Clientごとの接続ガイドを確認する
+* サーバーごとの**Basic Info**、**Tools**、**Accessible Roles**を確認する
+* 必要に応じてupstream OAuth接続を実行する
+
+<figure data-layout="center" data-align="center">
+<img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260602-133009.png" alt="User &gt; MCP Servers" width="760" />
+<figcaption>
+User &gt; MCP Servers
+</figcaption>
+</figure>
+
+### はじめる前に
+
+次の条件を満たしている必要があります。
+
+* QueryPie ACPにMACライセンスが必要です。
+* 管理者から、MCP ServerにアクセスできるRoleが付与されている必要があります。
+* 付与されたRoleのPolicyによって、1つ以上のMCP Serverへのアクセス権限が提供されている必要があります。
+
+<Callout type="important">
+ユーザーにRoleが付与されていない場合、サーバー一覧の代わりに案内画面が表示され、アクセス権限のリクエストが必要になることがあります。
+現在、Roleを付与できるのは管理者のみで、workflowから権限を申請することはできません。
+</Callout>
+
+<Callout type="important">
+実際の接続先はupstream MCP Serverの元のURLではなく、QueryPieが提供するMCP endpointです。`Connect with`の接続ガイドはQueryPie endpoint（`<QueryPie Instance FQDN>/mac/mcp`）を基準に生成されます。
+</Callout>
+
+### MCP Servers画面を開く
+
+1. 上部メニューで`MCP Servers`をクリックします。
+2. MCP Servers画面は、`Connect with`領域、`サーバー一覧（サーバーカード）`、`詳細パネル`で構成されています。
+3. 権限のある（Roleが付与されている）MCP Serverがある場合は、サーバーカード一覧が表示されます。
+
+#### 画面で確認できる情報
+
+| **項目**                 | **説明**                                                                                                                      |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Connect with             | ドロップダウンリストで使用するMCP Clientを選択すると、そのClientに対応する接続ガイドが表示されます。                           |
+| サーバー一覧（カード）   | アクセス可能なMCP Server一覧を表示します。各カードには、管理者が指定したMCP Serverの名前とendpointアドレスが表示されます。      |
+| 認証ステータスバッジ     | OAuthが必要なサーバーは、`Authenticated`または`Not Authenticated`ステータスで表示されます。                                    |
+| 詳細パネル               | 選択したMCP Serverの`Basic Information`、`Available Tools`、`Accessible Roles`を確認できます。                                 |
+
+### Connect withでMCP Clientの接続情報を確認する
+
+`Connect with`領域では、QueryPie MCP endpointを外部MCP Clientに登録する方法を確認できます。
+
+1. `Connect with`ドロップダウンで使用するMCP Clientを選択します。
+2. QueryPieが、そのClientに対応する接続ガイドを表示します。
+3. ガイドに表示されたコマンド、URL、または設定例をコピーし、MCP Clientに登録します。
+
+サポートされるガイド方式はClientによって異なる場合があります。
+
+| **方式**        | **説明**                                                                                                                                                             |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| One-click       | `Connect`ボタンでClientを直接開き、接続情報を渡します。（例：VS Code）                                                                                                 |
+| Command         | ターミナルコマンドをコピーし、MCP Client CLIに登録します。（例：`claude mcp add --transport http querypie-mac "https://<QueryPie Instance FQDN>/mac/mcp"`）           |
+| Terminal URL    | 表示されたURLをコピーし、Clientの設定に入力します。                                                                                                                    |
+| Connector steps | Clientの設定画面でURLまたは設定値をコピーして入力します。（例：LibreChat）                                                                                             |
+
+<Callout type="important">
+接続ガイドに表示される値は、選択した特定サーバーのupstream URLではなく、QueryPieの共通MCP root URLを基準に生成されます。<br/>たとえば、Notionのendpoint URLは「`https://mcp.notion.com/mcp`」ですが、QueryPie MCP ServerのConnect withに表示される接続ガイドには「`https://<QueryPie Instance FQDN>/mac/mcp`」と表示されます。
+</Callout>
+
+### アクセス可能なMCP Serverを確認する
+
+1. サーバーカード一覧で、目的のサーバーをクリックします。
+2. カードには次の情報が表示されます。
+    * MCP Serverの表示名
+    * Endpoint
+    * OAuth認証ステータスバッジ（必要な場合）
+3. 選択したサーバーの詳細パネルが開きます。
+
+#### 詳細パネルで確認できるタブ
+
+<table>
+<colgroup>
+<col/>
+<col/>
+</colgroup>
+<tbody>
+<tr>
+<td>
+**タブ**
+</td>
+<td>
+**説明**
+</td>
+</tr>
+<tr>
+<td>
+Basic Information
+</td>
+<td>
+* Server Name：MCP Serverを識別できる表示名です。
+* Identifier：内部で使用するremote MCP Serverの識別名です。
+* Upstream Endpoint：remote MCP Serverの実際の接続endpoint URLです。ユーザーが接続するときは、このアドレスを使用できません。
+* Transport：remote MCP Serverのtransportタイプです。（SSE / Streamable HTTP）
+</td>
+</tr>
+<tr>
+<td>
+Available Tools
+</td>
+<td>
+現在のユーザーに許可されているTool一覧を確認します。<br/>一覧にはMCP ServerのすべてのToolではなく、現在のユーザーに付与されたRoleとPolicyに基づいてアクセスできるToolのみが表示されます。
+</td>
+</tr>
+<tr>
+<td>
+Accessible Roles
+</td>
+<td>
+* Role Name：ユーザーに割り当てられた、該当するMCP ServerのRole名です。
+* Expiration Date：該当するMCP Serverへのアクセス権限が期限切れになる日時です。
+* Status：Roleの付与ステータスを示します。（Active / Expired）
+* Policies：該当するMCP Serverに紐づく1つ以上のpolicy名を示します。
+</td>
+</tr>
+</tbody>
+</table>
+
+### OAuthが必要なMCP Serverに接続する
+
+サーバーの`Credential Mode`が`User OAuth`の場合、`Basic Information`タブの下にOAuth接続セクションが表示されます。
+
+<Callout type="important">
+Credential Modeはユーザーが設定できず、管理者のみが設定できます。
+</Callout>
+
+#### OAuthを接続する
+
+1. サーバーを選択し、`Basic Information`タブを開きます。
+2. OAuthステータスが`Not Authenticated`の場合は、`Connect`ボタンをクリックして認証を開始できます。
+3. QueryPieがWebブラウザでOAuth認証ウィンドウを開きます。
+4. upstream OAuthプロバイダーの画面で認証を完了します。
+5. 認証が完了すると、ステータスが`Authenticated`に変わります。
+
+#### OAuth接続を解除する
+
+1. OAuthがすでに接続されているサーバーを開きます。
+2. `Reset Token`ボタンをクリックします。
+3. 保存済みのOAuth接続が解除され、ステータスが再び`Not Authenticated`に変わります。
+
+### アクセス権限がない、またはMCP Serverが表示されない場合
+
+#### Roleがない場合
+
+* `MCP Servers`画面には、サーバー一覧の代わりに空のステータス画面が表示されます。
+  <figure data-layout="center" data-align="center">
+  <img src="/user-manual/mcp-access-control/using-remote-mcp-servers-through-mac/image-20260605-044959.png" alt="image-20260605-044959.png" width="736" />
+  </figure>
+* この場合は、管理者にMAC Roleの付与を依頼する必要があります。
+
+#### Roleはあるがサーバーがない場合
+
+* Roleがあっても、そのRoleのPolicyによってアクセスできるサーバーがない場合は、利用できるサーバーが表示されません。
+* この場合は、Roleに紐づくPolicyまたはサーバーへのアクセス範囲を管理者に確認してください。

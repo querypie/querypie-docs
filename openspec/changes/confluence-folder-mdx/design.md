@@ -117,6 +117,14 @@ Folder는 V1 ancestor 응답이 없으므로 `Stage4Processor`가 `page.v1.yaml`
 
 이 분리는 `--recent`가 기존 page title/body를 갱신했을 때 folder의 cached child snapshot을 다시 받지 않아도 landing page의 label과 link가 최신 catalog를 사용하게 합니다.
 
+### Decision: 표시용 번역과 canonical slug를 별도 입력으로 관리합니다
+
+`etc/korean-titles-translations.txt`는 한국어 제목의 정확한 영어 표시 번역만 저장합니다. 기존 public route를 유지해야 하는 content는 `etc/content-slug-overrides.yaml`에 Confluence content ID와 canonical slug를 별도로 기록합니다.
+
+Fetcher는 `breadcrumbs_en`을 번역 파일에서 생성하되, `path`는 parent node에서 확정한 path를 상속하고 현재 node의 기본 영어 slug 또는 content ID 기반 override를 마지막 segment로 추가합니다. 따라서 parent에 override가 있으면 모든 descendant path도 같은 canonical parent segment를 사용합니다.
+
+이 분리는 번역을 route alias로 축약하여 public 영어 제목과 catalog metadata가 달라지는 문제를 방지합니다. Title이 바뀌어도 content ID가 유지되는 한 canonical route는 안정적으로 보존할 수 있습니다.
+
 ### Decision: 계층 구조는 `--remote`에서만 갱신합니다
 
 실행 모드별 책임은 다음과 같습니다.

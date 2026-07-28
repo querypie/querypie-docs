@@ -31,6 +31,14 @@ Confluence fetcher는 지원되는 모든 content node를 `page` 또는 `folder`
 - THEN 해당 child를 catalog, MDX, navigation에서 제외해야 합니다(SHALL).
 - AND parent ID, child ID, type, title을 식별할 수 있는 경고를 기록해야 합니다(SHALL).
 
+#### Scenario: current가 아닌 child status
+
+- GIVEN `direct-children` 응답에 `status`가 `current`가 아닌 page 또는 folder child가 있습니다.
+- WHEN content tree를 순회합니다.
+- THEN 해당 child를 catalog, MDX, navigation에서 제외해야 합니다(SHALL).
+- AND parent ID, child ID, type, status, title을 식별할 수 있는 경고를 기록해야 합니다(SHALL).
+- AND 해당 child의 page 또는 folder metadata endpoint를 호출하지 않아야 합니다(SHALL NOT).
+
 ### Requirement: Direct children API and pagination
 
 Fetcher는 parent type에 맞는 V2 `direct-children` endpoint를 사용하고 모든 cursor page를 수집해야 합니다(SHALL).
@@ -83,6 +91,25 @@ Fetcher는 folder API 결과를 해당 content ID 디렉터리에 type별 파일
 - GIVEN page/folder metadata와 `children.v2.yaml`이 `var/`에 저장되어 있습니다.
 - WHEN `fetch_cli.py --local`을 실행합니다.
 - THEN API 호출 없이 같은 typed catalog와 ordering을 재구성해야 합니다(SHALL).
+
+### Requirement: 표시용 번역과 canonical slug 분리
+
+Fetcher는 `breadcrumbs_en`의 표시용 영어 번역과 public route의 canonical slug를 독립적으로 관리해야 합니다(SHALL).
+
+#### Scenario: content ID 기반 slug override
+
+- GIVEN content의 한국어 제목에 정확한 영어 번역이 있습니다.
+- AND 해당 content ID에 canonical slug override가 있습니다.
+- WHEN `--remote`, `--recent`, `--local` 중 하나로 catalog를 생성합니다.
+- THEN `breadcrumbs_en`에는 축약하지 않은 영어 번역을 기록해야 합니다(SHALL).
+- AND 현재 content의 마지막 `path` segment에는 canonical slug override를 기록해야 합니다(SHALL).
+- AND descendant content의 `path`는 override가 적용된 parent path를 상속해야 합니다(SHALL).
+
+#### Scenario: slug override가 없는 content
+
+- GIVEN content ID에 canonical slug override가 없습니다.
+- WHEN catalog를 생성합니다.
+- THEN 기존과 같이 표시용 영어 breadcrumb를 `slugify`하여 `path`를 생성해야 합니다(SHALL).
 
 ### Requirement: Hierarchy freshness by mode
 

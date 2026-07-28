@@ -1,0 +1,153 @@
+---
+title: 'MCP Server Connection Management'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2167242794/MCP+Server+Connection+Management'
+---
+
+import { Callout } from 'nextra/components'
+
+# MCP Server Connection Management
+
+### Overview
+
+MCP Server Connection Managementは、QueryPieが外部のMCP（Model Context Protocol）Serverに接続できるようにサーバー情報を登録し、connection settings、credential settings、audit settings、tool synchronization statusを管理する機能です。
+
+この画面では、次の操作を実行できます。
+
+* MCP Server一覧を照会できます。
+* 新しいMCP Serverを登録できます。
+* 登録済みMCP ServerのBasic Information、Connection Settings、Audit Settingsを変更できます。
+* サーバーが提供するTools一覧を同期して照会できます。
+* 必要に応じて、登録済みMCP Serverを削除できます。
+
+<Callout type="important">
+QueryPieの`Web Base URL`が設定されていない場合、OAuth callback URLを作成できないため、OAuthを使用するMCP Serverに対して`Connect`を開始できません。[Web Base URLの詳細](../../installation/container-environment-variables/querypieweburl)
+</Callout>
+
+### MCP Server一覧を照会する
+
+登録済みMCP Serverの一覧を確認します。
+
+<figure data-layout="center" data-align="center">
+<img src="/administrator-manual/mcp-server/mcp-server-connection-management/image-20260602-110554.png" alt="Admin &gt; MCP Servers &gt; Connection Management &gt; MCP Servers" width="760" />
+<figcaption>
+Admin &gt; MCP Servers &gt; Connection Management &gt; MCP Servers
+</figcaption>
+</figure>
+
+1. `Admin > MCP Servers > Connection Management > MCP Servers`メニューに移動します。
+2. 一覧でサーバー情報を確認します。
+3. 右上の`Create Server`ボタンから新しいサーバーを登録できます。
+4. refreshボタンをクリックすると、一覧が再読み込みされます。
+5. 一覧で特定のサーバーをクリックすると、detail pageに移動します。
+
+一覧のカラムは次のとおりです。
+
+* **Name**：サーバーのdisplay name
+* **Identifier**：内部のserver name値
+* **Endpoint**：MCP Serverのアドレス
+* **Transport**：接続に使用するtransportタイプ
+* **Tools**：同期済みtool数
+* **Audit**：Request Auditが有効かどうか
+* **Updated**：最終更新日時
+
+### MCP Serverを追加する
+
+新しいMCP Serverを登録します。
+
+1. `Create Server`ボタンをクリックします。
+2. **Basic Information**セクションに次の項目を入力します。
+    * **Identifier：** 内部で使用するremote MCP Serverの識別名です。大文字は使用できません。一度作成すると変更できません。
+    * **Name：** remote MCP Serverのdisplay nameです。
+    * **Icon：** 任意のアイコンをアップロードして登録できます。
+    * **Description：** remote MCP Serverの説明を入力します。
+3. **Connection Settings**セクションに次の項目を入力します。
+    * **Endpoint URL：** remote MCP Serverに接続するendpoint URLを入力します。
+    * **Transport：** remote MCP Serverのtransportタイプを選択します。SSEまたはStreamable HTTPのいずれかを選択します。
+    * **Credential Mode：** None、QueryPie Registered Credential、User OAuthのいずれかを選択します。
+        * None：remote MCP Serverが認証を要求しない場合に使用します。
+        * QueryPie Registered Credential：QueryPie MACで認証トークンを管理する場合に選択します。QueryPie Registered Credentialを選択するとQueryPie Upstream Access Token入力欄が表示されるため、MCP Serverの認証トークンを入力します。**MCP Serverの認証トークンはMACでは生成されません。該当サービスでMCP利用用の認証トークンを生成する必要があるため、詳しい生成方法は各サービスのガイドを参照してください。**
+        * User OAuth：remote MCP Serverの認証方式がOAuthの場合に使用します。管理者は、MCP Serverで利用可能なtool一覧を照会するため、ユーザーに代わってOAuth認証を行う必要があります。これはユーザー自身のOAuth認証とは関係なく、tool一覧の照会にのみ使用されます。
+4. 必要に応じて`Test Connection`を実行し、現在入力した値で接続できるか確認します。
+5. **Audit Settings**セクションでrequest audit関連のオプションを設定します。
+    * 以下の「Audit Settingsについて」を参照してください。
+6. `Save`ボタンをクリックして保存します。
+
+<Callout type="important">
+`Test Connection`、その後の`Sync Tools`、OAuth関連のupstream通信は、すべてMCPのグローバル**Configurations**にある**Forward Proxy**設定の影響を受ける場合があります。
+</Callout>
+
+### Audit Settingsについて
+
+MCP Access Controlのaudit設定では、監査対象の範囲が2層に分かれています。
+
+* 各MCP Serverのdetail pageにある**Audit Settings**：特定のupstream MCP Serverに転送されるリクエストに対するサーバー別のaudit設定
+* `Admin > MCP Servers > General > Configurations`のaudit設定：MCPクライアントがQueryPie MACに送信したリクエストに対するグローバルaudit設定
+
+そのため、request auditを解釈するときは、どの設定がどの範囲のログに適用されるかも併せて確認する必要があります。
+
+#### 監査対象範囲：QueryPie MAC～Remote MCP Server
+
+* 各MCP ServerのAudit SettingsでEnable Request Auditオプションを有効にした場合、<br/>QueryPie MACが該当するRemote MCP Serverに転送するupstream requestをrequest audit logに記録します。
+    * MCP Server一覧画面の**Audit**カラムにも、この値が反映されます。
+    * このオプションをオフにすると、そのサーバーに対するupstream request audit logは記録されません。
+    * request audit logは`Admin > Audit > MCP > Request Audit`メニューで確認します。
+* 各MCP ServerのAudit SettingsでInclude payload in Request Auditオプションを有効にした場合、<br/>該当するMCP Serverのrequest audit logにpayloadとresponseを併せて保存します。
+    * upstream request自体の記録に加えて、audit recordにpayloadとresponseも含まれます。
+    * `Enable Request Audit`が有効な場合にのみ使用できます。
+    * `Enable Request Audit`をオフにすると、このオプションは無効になり、保存時に値もオフになります。
+
+#### 監査対象範囲：MCP Client～QueryPie MAC
+
+`Admin > MCP Servers > General > Configurations`画面には、client-originated auditに対するグローバル設定があります。
+
+* Client Request Audit：このオプションをオンにすると、クライアントがQueryPie MACに送信したMCPリクエストをaudit logに記録します。
+    * 監査対象は個別のupstream MCP Serverではなく、client-originated MCP requestです。
+    * 無効にすると、client request audit event自体が作成されません。
+* Include payload in Client Request Audit：このオプションをオンにすると、client-originated MCP request audit logにpayloadとresponseを併せて保存します。
+    * `Client Request Audit`が有効な場合にのみ画面に表示されます。
+    * 無効にするとclient request audit eventは記録されますが、payloadとresponseの本文は除外されます。
+
+### MCP Serverを変更する
+
+既存のMCP Server設定を変更します。
+MCP ServerのTool同期は、MCP Serverを登録した後、編集detail画面でのみ実行できます。
+
+1. MCP Server一覧で変更するサーバーをクリックします。
+2. detail pageで次のセクションを確認し、変更できます。
+    * **Basic Information**
+    * **Connection Settings**
+    * **Audit Settings**
+    * **Tools**<br/>登録済みMCP Serverが提供するtool一覧を同期します。<br/>認証が必要な場合は、認証後に同期できます。
+        * `Sync Tools`ボタンをクリックします。
+        * 同期が完了すると、検出されたtool数と最終同期日時を確認できます。
+        * Tools tableでは、次の情報を照会できます。
+            * Tool Name：tool名です。
+            * Description：toolの詳細な説明です。
+            * Last Synced：最終同期日時です。
+3. 変更後に`Save Changes`をクリックします。
+
+<Callout type="important">
+サーバー編集画面では、**Identifier**は読み取り専用で変更できません。
+</Callout>
+
+### MCP Serverを削除する
+
+登録済みMCP Serverを削除します。
+
+1. 一覧から1つ以上のサーバーを選択します。
+2. 削除操作を実行します。
+3. 確認メッセージで承認すると、選択したサーバーが削除されます。
+
+detail pageから単一のサーバーを削除することもできます。
+
+
+<Callout type="info">
+**運用時の参考事項**
+* サーバー作成時のデフォルトでは、**Enable Request Audit**と**Include payload in Request Audit**の両方が有効です。
+* サーバーdetail pageの**Include payload in Request Audit**は単独では有効にできず、常に**Enable Request Audit**に依存します。
+* `Admin > MCP Servers > General > Configurations`の**Client Request Audit**と**Include payload in Client Request Audit**もデフォルトで有効です。
+* **Client Request Audit**系列の設定とサーバー別の**Request Audit**系列の設定には継承関係がなく、それぞれ異なるrequest scopeに適用される個別の設定です。
+* remote MCP Serverにインターネット経由で直接接続できない場合は、`Admin > MCP Servers > General > Configurations`の**Forward Proxy**設定が必要になることがあります。forward proxyは組織側で別途用意する必要があり、QueryPie MACはproxyサーバーを提供しません。
+* サーバーdetail pageでは、Tools一覧を別途同期して最新のサーバー状態を反映する必要があります。
+* Credential ModeがUser OAuthの場合は、detail pageでadmin OAuth connection statusを別途確認できます。
+</Callout>

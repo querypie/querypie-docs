@@ -177,6 +177,13 @@ def test_navigation_is_generated_after_page_and_folder_mdx_exist(tmp_path):
         "results": [
             {"id": "page", "type": "page", "childPosition": 2},
             {"id": "folder", "type": "folder", "childPosition": 1},
+            {
+                "id": "draft-page",
+                "type": "page",
+                "status": "draft",
+                "title": "Draft Page",
+                "childPosition": 3,
+            },
         ],
     })
     _write_yaml(var_dir / "folder" / "children.v2.yaml", {"results": []})
@@ -191,6 +198,7 @@ def test_navigation_is_generated_after_page_and_folder_mdx_exist(tmp_path):
     meta_path = output_dir / "parent" / "_meta.ts"
     content = meta_path.read_text()
     assert content.index("'folder': 'Folder'") < content.index("'page': 'Page'")
+    assert "Draft Page" not in content
     assert entries == [{
         "page_id": "parent",
         "type": "page",

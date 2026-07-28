@@ -56,6 +56,9 @@ Multi Agent OS별 3rd Party Tool 지원 목록 | Multi Agent 3rd Party Tool Supp
 Multi Agent - qpctl CLI 사용 가이드 | Multi Agent - qpctl CLI Usage Guide
 Multi Agent 제약사항 | Multi Agent Limitations
 
+# MCP Access Control
+MAC을 통해 Remote MCP Servers 사용하기 | Using Remote MCP Servers through MAC
+
 # User Management
 Email을 통한 사용자 비밀번호 초기화 | User Password Reset via Email
 사용자 프로필 | User Profile
@@ -86,6 +89,9 @@ LLM Provider 설정 | LLM Provider Configuration
 
 # Databases > DAC General Configurations
 Masking Pattern (메뉴 위치 이동) | Masking Pattern (Menu Relocated)
+
+# Databases > DB Access Control
+MongoDB / Document DB 의 Privilege Type Mapping | MongoDB / Document DB Privilege Type Mapping
 
 # Databases > Connection Management > Cloud Providers
 AWS에서 DB 리소스 동기화 | Synchronizing DB Resources from AWS
@@ -180,3 +186,4 @@ MCP 설정 가이드 | MCP Configuration Guide
 기술지원 | Technical Support
 프리미엄 지원 | Premium Support
 Standard Edition 라이선스 정책 | Standard Edition License Policy
+QueryPie ACP 운영 로그 수집 가이드 | QueryPie ACP Operational Log Collection Guide
