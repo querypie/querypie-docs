@@ -79,10 +79,10 @@ ignores:
 
   # 사용자가 복사하는 checklist template을 target locale로 번역한 경우
   # Lines 326-345: 한국어 template을 영어로 번역
-  - file: target/en/support/querypie-acp-operational-log-collection-guide.mdx
+  - file: target/en/support/operational-log-collection-guide.mdx
     line_numbers: [326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345]
 
   # 사용자가 복사하는 checklist template을 target locale로 번역한 경우
   # Lines 326-345: 한국어 template을 일본어로 번역
-  - file: target/ja/support/querypie-acp-operational-log-collection-guide.mdx
+  - file: target/ja/support/operational-log-collection-guide.mdx
     line_numbers: [326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345]

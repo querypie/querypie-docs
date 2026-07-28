@@ -27,7 +27,6 @@ class ConfluencePageProcessor:
         self.file_manager = FileManager(logger)
         self.translation_service = TranslationService(
             config.translations_file,
-            config.slug_overrides_file,
             logger,
         )
 
@@ -39,7 +38,6 @@ class ConfluencePageProcessor:
 
         # Load translations
         self.translation_service.load_translations()
-        self.translation_service.load_slug_overrides()
 
     def process_page_complete(
         self,

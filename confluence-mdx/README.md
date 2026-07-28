@@ -197,7 +197,7 @@ bin/convert_all.py --verify-translations
 - `target/public/` 디렉토리에 첨부파일이 저장됩니다.
 - 한국어 제목의 번역이 누락된 경우, 오류와 함께 누락 목록을 출력합니다.
   - `etc/korean-titles-translations.txt`에 번역을 추가한 후 재실행합니다.
-- 표시용 영어 제목과 다른 기존 public route segment를 유지해야 하는 경우 `etc/content-slug-overrides.yaml`에 Confluence content ID와 canonical slug를 추가합니다.
+- Public route는 현재 영어 제목 번역을 slugify하여 생성합니다. 제목 변경으로 route가 바뀌면 conversion manifest가 이전 route를 감지해 `src/content-route-redirects.yaml`에 기본 8주 임시 redirect를 기록합니다.
 
 ## Confluence xhtml 을 Markdown 으로 변환하기
 

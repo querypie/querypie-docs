@@ -1,0 +1,8 @@
+- source: /support/querypie-acp-operational-log-collection-guide
+  destination: /support/operational-log-collection-guide
+  created_on: '2026-07-28'
+  expires_on: '2026-09-22'
+- source: /user-manual/kubernetes-access-control/web-client
+  destination: /user-manual/kubernetes-access-control/connecting-to-kubernetes-clusters-with-web-client
+  created_on: '2026-07-28'
+  expires_on: '2026-09-22'
