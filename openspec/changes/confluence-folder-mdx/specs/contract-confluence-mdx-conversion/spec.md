@@ -92,6 +92,25 @@ Fetcher는 folder API 결과를 해당 content ID 디렉터리에 type별 파일
 - WHEN `fetch_cli.py --local`을 실행합니다.
 - THEN API 호출 없이 같은 typed catalog와 ordering을 재구성해야 합니다(SHALL).
 
+### Requirement: 표시용 번역과 canonical slug 분리
+
+Fetcher는 `breadcrumbs_en`의 표시용 영어 번역과 public route의 canonical slug를 독립적으로 관리해야 합니다(SHALL).
+
+#### Scenario: content ID 기반 slug override
+
+- GIVEN content의 한국어 제목에 정확한 영어 번역이 있습니다.
+- AND 해당 content ID에 canonical slug override가 있습니다.
+- WHEN `--remote`, `--recent`, `--local` 중 하나로 catalog를 생성합니다.
+- THEN `breadcrumbs_en`에는 축약하지 않은 영어 번역을 기록해야 합니다(SHALL).
+- AND 현재 content의 마지막 `path` segment에는 canonical slug override를 기록해야 합니다(SHALL).
+- AND descendant content의 `path`는 override가 적용된 parent path를 상속해야 합니다(SHALL).
+
+#### Scenario: slug override가 없는 content
+
+- GIVEN content ID에 canonical slug override가 없습니다.
+- WHEN catalog를 생성합니다.
+- THEN 기존과 같이 표시용 영어 breadcrumb를 `slugify`하여 `path`를 생성해야 합니다(SHALL).
+
 ### Requirement: Hierarchy freshness by mode
 
 Fetcher는 hierarchy snapshot을 `--remote`에서 갱신하고 `--recent`와 `--local`에서는 저장된 snapshot을 사용해야 합니다(SHALL).

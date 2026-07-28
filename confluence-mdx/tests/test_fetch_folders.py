@@ -8,8 +8,10 @@ from fetch.api_client import ApiClient
 from fetch.config import Config
 from fetch.exceptions import ApiError
 from fetch.file_manager import FileManager
+from fetch.models import ContentNode
 from fetch.processor import ConfluencePageProcessor
 from fetch.stages import Stage1Processor
+from fetch.translation import TranslationService
 
 
 def _config(tmp_path: Path, *, mode: str = "local", root_type: str = "page") -> Config:
@@ -18,6 +20,7 @@ def _config(tmp_path: Path, *, mode: str = "local", root_type: str = "page") -> 
         default_output_dir=str(tmp_path / "var"),
         cache_dir=str(tmp_path / "cache"),
         translations_file=str(tmp_path / "translations.txt"),
+        slug_overrides_file=str(tmp_path / "content-slug-overrides.yaml"),
         default_start_page_id="root",
         root_content_type=root_type,
         mode=mode,
@@ -346,6 +349,108 @@ def test_local_mixed_tree_preserves_types_paths_order_and_warns(
         "parent_id=folder id=draft-page type=page "
         "status=draft title='Draft Page'"
     ) in caplog.text
+
+
+def test_local_tree_separates_display_translation_from_canonical_slug(
+    tmp_path,
+):
+    config = _config(tmp_path, mode="local")
+    var_dir = Path(config.default_output_dir)
+    Path(config.translations_file).write_text(
+        "부모 문서 | Descriptive Parent Title\n"
+        "자식 문서 | Child Document\n",
+        encoding="utf-8",
+    )
+    _write_yaml(
+        Path(config.slug_overrides_file),
+        {"parent": "stable-parent"},
+    )
+
+    _write_yaml(var_dir / "root" / "page.v1.yaml", _page_data("root", "Root"))
+    _write_yaml(var_dir / "root" / "page.v2.yaml", {"id": "root", "title": "Root"})
+    _write_yaml(var_dir / "root" / "children.v2.yaml", {
+        "results": [{
+            "id": "parent",
+            "type": "page",
+            "title": "부모 문서",
+            "childPosition": 1,
+        }],
+    })
+    _write_yaml(
+        var_dir / "parent" / "page.v1.yaml",
+        _page_data("parent", "부모 문서"),
+    )
+    _write_yaml(
+        var_dir / "parent" / "page.v2.yaml",
+        {"id": "parent", "type": "page", "title": "부모 문서"},
+    )
+    _write_yaml(var_dir / "parent" / "children.v2.yaml", {
+        "results": [{
+            "id": "child",
+            "type": "page",
+            "title": "자식 문서",
+            "childPosition": 1,
+        }],
+    })
+    _write_yaml(
+        var_dir / "child" / "page.v1.yaml",
+        _page_data("child", "자식 문서"),
+    )
+    _write_yaml(
+        var_dir / "child" / "page.v2.yaml",
+        {"id": "child", "type": "page", "title": "자식 문서"},
+    )
+    _write_yaml(var_dir / "child" / "children.v2.yaml", {"results": []})
+
+    processor = ConfluencePageProcessor(config, logging.getLogger(__name__))
+    nodes = list(processor.fetch_page_tree_recursive(
+        "root",
+        "root",
+        use_local=True,
+        content_type="page",
+    ))
+
+    assert nodes[1].breadcrumbs_en == ["Descriptive Parent Title"]
+    assert nodes[1].path == ["stable-parent"]
+    assert nodes[2].breadcrumbs_en == [
+        "Descriptive Parent Title",
+        "Child Document",
+    ]
+    assert nodes[2].path == ["stable-parent", "child-document"]
+
+
+def test_web_client_uses_full_translation_and_stable_repository_slug():
+    project_dir = Path(__file__).resolve().parents[1]
+    service = TranslationService(
+        str(project_dir / "etc" / "korean-titles-translations.txt"),
+        str(project_dir / "etc" / "content-slug-overrides.yaml"),
+        logging.getLogger(__name__),
+    )
+    service.load_translations()
+    service.load_slug_overrides()
+    page = ContentNode(
+        page_id="2262630428",
+        title="Web Client로 쿠버네티스 클러스터 접속하기",
+        title_orig="Web Client로 쿠버네티스 클러스터 접속하기",
+        breadcrumbs=[
+            "사용자 매뉴얼",
+            "Kubernetes Access Control",
+            "Web Client로 쿠버네티스 클러스터 접속하기",
+        ],
+    )
+
+    service.translate_page(page)
+
+    assert page.breadcrumbs_en == [
+        "User Manual",
+        "Kubernetes Access Control",
+        "Connecting to Kubernetes Clusters with Web Client",
+    ]
+    assert page.path == [
+        "user-manual",
+        "kubernetes-access-control",
+        "web-client",
+    ]
 
 
 class _RemoteTreeApi:

@@ -13,7 +13,6 @@ from fetch.file_manager import FileManager
 from fetch.translation import TranslationService
 from fetch.stages import Stage1Processor, Stage2Processor, Stage3Processor, Stage4Processor
 from fetch.models import ContentNode, ContentRef
-from text_utils import slugify
 
 
 class ConfluencePageProcessor:
@@ -26,7 +25,11 @@ class ConfluencePageProcessor:
         # Initialize services with dependency injection
         self.api_client = ApiClient(config, logger)
         self.file_manager = FileManager(logger)
-        self.translation_service = TranslationService(config.translations_file, logger)
+        self.translation_service = TranslationService(
+            config.translations_file,
+            config.slug_overrides_file,
+            logger,
+        )
 
         # Initialize stage processors
         self.stage1 = Stage1Processor(config, self.api_client, self.file_manager, logger)
@@ -36,6 +39,7 @@ class ConfluencePageProcessor:
 
         # Load translations
         self.translation_service.load_translations()
+        self.translation_service.load_slug_overrides()
 
     def process_page_complete(
         self,
@@ -151,6 +155,7 @@ class ConfluencePageProcessor:
         use_local: bool = False,
         content_type: Optional[str] = None,
         parent_breadcrumbs: Optional[List[str]] = None,
+        parent_path: Optional[List[str]] = None,
         visited: Optional[Set[str]] = None,
     ) -> Generator[ContentNode, None, None]:
         """Recursively fetch a typed content tree."""
@@ -194,18 +199,15 @@ class ConfluencePageProcessor:
                 )
 
             if page:
-                # Update translations if available
-                if self.translation_service.translations:
-                    self.translation_service.translate_page(page)
-                else:
-                    # If no translations available, use original breadcrumbs for English and path
-                    page.breadcrumbs_en = page.breadcrumbs
-                    page.path = [slugify(crumb) for crumb in page.breadcrumbs]
+                self.translation_service.translate_page(page, parent_path)
 
                 yield page
 
                 child_parent_breadcrumbs = (
                     [] if page_id == start_page_id else list(page.breadcrumbs)
+                )
+                child_parent_path = (
+                    [] if page_id == start_page_id else list(page.path)
                 )
                 for child in self.get_child_content_refs(page_id):
                     yield from self.fetch_page_tree_recursive(
@@ -214,6 +216,7 @@ class ConfluencePageProcessor:
                         use_local,
                         content_type=child.type,
                         parent_breadcrumbs=child_parent_breadcrumbs,
+                        parent_path=child_parent_path,
                         visited=visited,
                     )
         except Exception as e:
@@ -353,12 +356,7 @@ class ConfluencePageProcessor:
                             include_children=False,
                         )
                         if page:
-                            # Update translations if available
-                            if self.translation_service.translations:
-                                self.translation_service.translate_page(page)
-                            else:
-                                page.breadcrumbs_en = page.breadcrumbs
-                                page.path = [slugify(crumb) for crumb in page.breadcrumbs]
+                            self.translation_service.translate_page(page)
 
                             # Output to stdout during download
                             breadcrumbs_str = " />> ".join(page.breadcrumbs) if page.breadcrumbs else ""
