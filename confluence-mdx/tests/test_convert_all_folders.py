@@ -244,6 +244,7 @@ def test_manifest_removes_only_previous_owned_outputs(tmp_path):
     assert manual.read_text() == "manual"
     assert current.read_text() == "new"
     assert yaml.safe_load(manifest_path.read_text())["outputs"] == current_outputs
+    assert manifest_path.stat().st_mode & 0o777 == 0o644
 
 
 def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):

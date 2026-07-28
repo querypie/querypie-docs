@@ -615,6 +615,7 @@ def finalize_manifest(
             sort_keys=False,
         )
         temp_path = Path(temp_file.name)
+    temp_path.chmod(0o644)
     os.replace(temp_path, manifest_path)
 
 

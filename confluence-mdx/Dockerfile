@@ -19,16 +19,23 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY bin/ ./bin/
 RUN chmod +x bin/*.py bin/*.sh
 COPY etc/ ./etc/
+COPY var/pages.*.yaml ./var/
 
 # Restore cache at its expected path (for Stage 3 attachment fallback)
 COPY cache/ ./cache/
 
 # Populate var/ baseline from cache and fetch updates in one step.
-# cp -a creates var/ with all cached YAML/content/attachment files,
-# then fetch_cli.py downloads pages according to FETCH_ARGS.
-# Default: --recent --attachments (incremental). Use --remote --attachments for full fetch.
+# The tracked catalogs preserve Spaces that are not part of this fetch plan.
+# cp -a adds all cached YAML/content/attachment files,
+# then fetch_cli.py downloads each Space according to FETCH_ARGS.
+# Defaults: qm with --recent --attachments (incremental).
+# Use FETCH_SYNC_CODES="qm qcp" and --remote --attachments for multiple full fetches.
 ARG FETCH_ARGS="--recent --attachments"
-RUN cp -a cache/. var/ && python3 bin/fetch_cli.py ${FETCH_ARGS}
+ARG FETCH_SYNC_CODES="qm"
+RUN cp -a cache/. var/ && \
+    for sync_code in ${FETCH_SYNC_CODES}; do \
+      python3 bin/fetch_cli.py --sync-code "${sync_code}" ${FETCH_ARGS}; \
+    done
 
 # ── Stage 2: Final image ────────────────────────────
 FROM python:3.12-slim
