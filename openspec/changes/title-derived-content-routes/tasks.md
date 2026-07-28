@@ -14,7 +14,7 @@
 ## 3. Verification
 
 - [x] 3.1 title translation에서 새 canonical route가 생성되는 unit test를 추가합니다.
-- [x] 3.2 route 이동, 56일 만료일, 만료 cleanup, 연속 rename을 Python test로 검증합니다.
+- [x] 3.2 route 이동, route 재사용, 56일 만료일, 만료 cleanup, 연속 rename을 Python test로 검증합니다.
 - [x] 3.3 active/expired registry loading과 locale redirect 확장을 TypeScript test로 검증합니다.
 - [x] 3.4 변경된 ko/en/ja 문서의 Skeleton 구조와 내부 link를 검증합니다.
 - [x] 3.5 lint, converter test, Next build를 실행합니다.

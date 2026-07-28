@@ -55,6 +55,8 @@ Next.js loader는 각 active record를 `ko`, `en`, `ja` locale route와 locale �
 
 새 live route와 같은 `source`를 가진 과거 redirect는 제거해 실제 content route와 redirect가 충돌하지 않도록 합니다.
 
+Chain collapse 대상은 reconciliation을 시작할 때 이미 존재한 active redirect로 제한합니다. 같은 conversion에서 새로 생성한 redirect는 다른 content가 비운 route를 우연히 destination으로 사용할 수 있으므로, 이후 처리하는 다른 content의 이동에 따라 목적지를 다시 변경하지 않습니다.
+
 ## Risks / Trade-offs
 
 - 제목 번역 수정만으로도 public route가 바뀌므로 번역 review가 route review를 포함하게 됩니다.

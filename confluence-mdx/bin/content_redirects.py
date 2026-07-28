@@ -140,6 +140,7 @@ def reconcile_content_redirects(
         item for item in redirects
         if item["source"] not in live_routes
     ]
+    preexisting_redirects = list(redirects)
 
     moves = sorted(
         (
@@ -152,7 +153,7 @@ def reconcile_content_redirects(
     )
 
     for _, old_route, new_route in moves:
-        for item in redirects:
+        for item in preexisting_redirects:
             if item["destination"] == old_route:
                 item["destination"] = new_route
 

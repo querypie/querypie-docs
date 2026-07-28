@@ -84,7 +84,7 @@ Active content route redirect는 `ko`, `en`, `ja` locale route와 locale prefix�
 
 ### Requirement: Redirect chain prevention
 
-같은 content가 redirect 유지 기간 안에 다시 이동하면 기존 redirect의 목적지를 최신 canonical route로 갱신해야 합니다(SHALL). 새 live route와 source가 같은 과거 redirect는 제거해야 합니다(SHALL).
+같은 content가 redirect 유지 기간 안에 다시 이동하면 기존 redirect의 목적지를 최신 canonical route로 갱신해야 합니다(SHALL). 새 live route와 source가 같은 과거 redirect는 제거해야 합니다(SHALL). 같은 conversion에서 서로 다른 content가 비워진 route를 재사용하면 각 이전 route는 해당 route를 비운 content의 최신 route를 가리켜야 합니다(SHALL).
 
 #### Scenario: 연속 제목 변경
 
@@ -93,3 +93,12 @@ Active content route redirect는 `ko`, `en`, `ja` locale route와 locale prefix�
 - THEN `/title-a`의 목적지는 `/title-c`로 갱신되어야 합니다(SHALL).
 - AND `/title-b` → `/title-c` redirect를 생성해야 합니다(SHALL).
 - AND `/title-a` redirect의 기존 생성일과 만료일을 연장해서는 안 됩니다(SHALL NOT).
+
+#### Scenario: 같은 conversion에서 비워진 route 재사용
+
+- GIVEN content A가 `/title-a`에서 `/title-b`로 이동합니다.
+- AND content B가 같은 conversion에서 `/title-b`에서 `/title-c`로 이동합니다.
+- WHEN redirect registry를 reconcile합니다.
+- THEN `/title-a`는 content A의 최신 live route인 `/title-b`로 redirect해야 합니다(SHALL).
+- AND live route인 `/title-b`를 source로 하는 redirect를 생성해서는 안 됩니다(SHALL NOT).
+- AND 같은 reconciliation에서 새로 생성한 `/title-a` redirect를 content B의 이동에 따라 `/title-c`로 변경해서는 안 됩니다(SHALL NOT).

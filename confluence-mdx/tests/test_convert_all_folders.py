@@ -387,6 +387,58 @@ def test_consecutive_route_moves_collapse_redirect_chain():
     ]
 
 
+@pytest.mark.parametrize(
+    ("content_a_id", "content_b_id"),
+    [
+        ("page-1", "page-2"),
+        ("page-2", "page-1"),
+    ],
+)
+def test_route_reuse_preserves_redirect_created_in_same_pass(
+    content_a_id,
+    content_b_id,
+):
+    redirects = reconcile_content_redirects(
+        [],
+        [
+            {
+                "page_id": content_a_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-a.mdx",
+            },
+            {
+                "page_id": content_b_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-b.mdx",
+            },
+        ],
+        [
+            {
+                "page_id": content_a_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-b.mdx",
+            },
+            {
+                "page_id": content_b_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-c.mdx",
+            },
+        ],
+        date(2026, 7, 28),
+    )
+
+    assert redirects == [{
+        "source": "/title-a",
+        "destination": "/title-b",
+        "created_on": "2026-07-28",
+        "expires_on": "2026-09-22",
+    }]
+
+
 def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):
     output_dir = tmp_path / "output"
     manifest_dir = tmp_path / "var" / "convert-manifests"
