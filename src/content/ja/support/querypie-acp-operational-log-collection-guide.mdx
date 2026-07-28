@@ -82,8 +82,8 @@ tar -czf support-logs/querypie-file-logs.tar.gz /var/log/querypie
 2. `tools` profileが実行中の場合は、toolsログも保存します。
 ```
 mkdir -p support-logs
-docker logs querypie-app-1 > support-logs/app.docker.log
-docker logs querypie-tools-1 > support-logs/tools.docker.log 2>/dev/null || true
+docker logs querypie-app-1 > support-logs/app.docker.log 2>&1
+docker logs querypie-tools-1 > support-logs/tools.docker.log 2>&1 || true
 ```
 
 <Callout type="important">
@@ -323,24 +323,24 @@ kill -3 <PID>
 ### チェックリストテンプレート
 
 ```
-[기본 정보]
-- 발생 시각:
-- 서버 timezone:
-- 증상:
-- 영향 범위:
-[재현 정보]
-- 재현 가능 여부:
-- 재현 절차:
-- 재현 시각:
-[수집 로그]
-- 파일 로그: 수집 완료 / 미수집
-- docker logs: 수집 완료 / 미수집
-- monitoring dump: 수집 완료 / 미수집
-- Multi Agent 로그: 해당 없음 / 수집 완료 / 미수집
-- Windows Server Agent 로그: 해당 없음 / 수집 완료 / 미수집
-[추가 수집]
-- 설정 파일: 수집 완료 / 미수집
-- JVM thread dump fallback: 수집 완료 / 미수집
-[추가 설명]
-- 특이사항:
+[基本情報]
+- 発生時刻:
+- サーバーのタイムゾーン:
+- 症状:
+- 影響範囲:
+[再現情報]
+- 再現可否:
+- 再現手順:
+- 再現時刻:
+[収集ログ]
+- ファイルログ: 収集済み / 未収集
+- docker logs: 収集済み / 未収集
+- monitoring dump: 収集済み / 未収集
+- Multi Agentログ: 該当なし / 収集済み / 未収集
+- Windows Server Agentログ: 該当なし / 収集済み / 未収集
+[追加収集]
+- 設定ファイル: 収集済み / 未収集
+- JVM thread dump fallback: 収集済み / 未収集
+[追加説明]
+- 特記事項:
 ```

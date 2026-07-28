@@ -82,8 +82,8 @@ Along with file logs, collect the container's `stdout` and `stderr` logs.
 2. If the `tools` profile is running, save the tools logs as well.
 ```
 mkdir -p support-logs
-docker logs querypie-app-1 > support-logs/app.docker.log
-docker logs querypie-tools-1 > support-logs/tools.docker.log 2>/dev/null || true
+docker logs querypie-app-1 > support-logs/app.docker.log 2>&1
+docker logs querypie-tools-1 > support-logs/tools.docker.log 2>&1 || true
 ```
 
 <Callout type="important">
@@ -323,24 +323,24 @@ Providing log files alone can increase the analysis time, so include the followi
 ### Checklist template
 
 ```
-[기본 정보]
-- 발생 시각:
-- 서버 timezone:
-- 증상:
-- 영향 범위:
-[재현 정보]
-- 재현 가능 여부:
-- 재현 절차:
-- 재현 시각:
-[수집 로그]
-- 파일 로그: 수집 완료 / 미수집
-- docker logs: 수집 완료 / 미수집
-- monitoring dump: 수집 완료 / 미수집
-- Multi Agent 로그: 해당 없음 / 수집 완료 / 미수집
-- Windows Server Agent 로그: 해당 없음 / 수집 완료 / 미수집
-[추가 수집]
-- 설정 파일: 수집 완료 / 미수집
-- JVM thread dump fallback: 수집 완료 / 미수집
-[추가 설명]
-- 특이사항:
+[Basic Information]
+- Time of occurrence:
+- Server timezone:
+- Symptom:
+- Impact scope:
+[Reproduction Information]
+- Reproducibility:
+- Reproduction steps:
+- Reproduction time:
+[Collected Logs]
+- File logs: Collected / Not collected
+- docker logs: Collected / Not collected
+- monitoring dump: Collected / Not collected
+- Multi Agent logs: Not applicable / Collected / Not collected
+- Windows Server Agent logs: Not applicable / Collected / Not collected
+[Additional Collection]
+- Configuration files: Collected / Not collected
+- JVM thread dump fallback: Collected / Not collected
+[Additional Notes]
+- Notes:
 ```
