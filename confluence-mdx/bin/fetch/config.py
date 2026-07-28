@@ -29,7 +29,6 @@ class Config:
     default_output_dir: str = "var"
     cache_dir: str = "cache"
     translations_file: str = "etc/korean-titles-translations.txt"
-    slug_overrides_file: str = "etc/content-slug-overrides.yaml"
     email: Optional[str] = None
     api_token: Optional[str] = None
     download_attachments: bool = False
@@ -51,7 +50,6 @@ class Config:
             'default_output_dir',
             'cache_dir',
             'translations_file',
-            'slug_overrides_file',
         ):
             value = getattr(self, field)
             if not os.path.isabs(value):

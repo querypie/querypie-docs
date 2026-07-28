@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Sequence
 from urllib.parse import quote, urlsplit
@@ -36,6 +37,7 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from fetch.sync_profiles import SYNC_PROFILES
+from content_redirects import update_content_redirects
 
 
 def _resolve(rel: str) -> str:
@@ -555,8 +557,10 @@ def finalize_manifest(
     sync_code: str,
     current_outputs: Sequence[Mapping[str, str]],
     output_base_dir: Path,
+    redirects_path: Path | None = None,
+    redirect_date: date | None = None,
 ) -> None:
-    """Remove exclusively owned stale files and atomically replace the manifest."""
+    """Update route redirects, remove stale files, and replace the manifest."""
     output_root = output_base_dir.resolve()
     previous_outputs = _manifest_outputs(manifest_path, sync_code)
 
@@ -581,6 +585,14 @@ def finalize_manifest(
         sync_code,
         output_root,
     )
+    if redirects_path is not None:
+        update_content_redirects(
+            redirects_path,
+            previous_outputs,
+            current_outputs,
+            redirect_date,
+        )
+
     for stale_relative_path in sorted(
         set(previous_by_path) - set(current_by_path) - other_profile_paths,
         reverse=True,
@@ -623,7 +635,8 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
                 log_level: str, pages_yaml: str = '',
                 manifest_path: str = '', sync_code: str = 'qm',
                 base_url: str = _DEFAULT_CONFLUENCE_BASE_URL,
-                space_key: str = '') -> int:
+                space_key: str = '', redirects_path: str = '',
+                redirect_date: date | None = None) -> int:
     """Convert typed catalog nodes and return the number of failures."""
     # Skip the root page
     root_page_id = pages[0]['page_id'] if pages else None
@@ -724,6 +737,8 @@ def convert_all(pages: List[Dict], var_dir: str, output_base_dir: str, public_di
                 sync_code,
                 generated_outputs,
                 output_base_path,
+                Path(redirects_path) if redirects_path else None,
+                redirect_date,
             )
         except Exception as exc:
             failures += 1
@@ -748,6 +763,11 @@ def main():
                         help='Public assets directory (default: target/public)')
     parser.add_argument('--translations', default='etc/korean-titles-translations.txt',
                         help='Path to translations file')
+    parser.add_argument(
+        '--redirects-file',
+        default='target/content-route-redirects.yaml',
+        help='Path to temporary content route redirects registry',
+    )
     parser.add_argument('--base-url', default=_DEFAULT_CONFLUENCE_BASE_URL,
                         help='Confluence base URL for generated folder links')
     parser.add_argument('--space-key', default=None,
@@ -769,6 +789,7 @@ def main():
     args.output_dir = _resolve(args.output_dir)
     args.public_dir = _resolve(args.public_dir)
     args.translations = _resolve(args.translations)
+    args.redirects_file = _resolve(args.redirects_file)
     manifest_path = os.path.join(
         args.var_dir,
         "convert-manifests",
@@ -805,7 +826,8 @@ def main():
                            manifest_path=manifest_path,
                            sync_code=args.sync_code,
                            base_url=args.base_url,
-                           space_key=space_key)
+                           space_key=space_key,
+                           redirects_path=args.redirects_file)
 
     if failures:
         print(f"\nCompleted with {failures} failure(s) out of {len(pages)} pages", file=sys.stderr)

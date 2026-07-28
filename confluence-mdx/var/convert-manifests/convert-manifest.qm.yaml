@@ -1365,14 +1365,14 @@ outputs:
   type: page
   kind: navigation
   path: support/_meta.ts
+- page_id: '2288353307'
+  type: page
+  kind: mdx
+  path: support/operational-log-collection-guide.mdx
 - page_id: '1853358081'
   type: page
   kind: mdx
   path: support/premium-support.mdx
-- page_id: '2288353307'
-  type: page
-  kind: mdx
-  path: support/querypie-acp-operational-log-collection-guide.mdx
 - page_id: '1923285023'
   type: page
   kind: mdx
@@ -1448,7 +1448,7 @@ outputs:
 - page_id: '2262630428'
   type: page
   kind: mdx
-  path: user-manual/kubernetes-access-control/web-client.mdx
+  path: user-manual/kubernetes-access-control/connecting-to-kubernetes-clusters-with-web-client.mdx
 - page_id: '2168455203'
   type: folder
   kind: mdx

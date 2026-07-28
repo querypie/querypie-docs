@@ -1,5 +1,6 @@
 import subprocess
 from argparse import Namespace
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -12,6 +13,7 @@ from convert_all import (
     generate_folder_mdx,
     generate_navigation,
 )
+from content_redirects import reconcile_content_redirects
 
 
 def _write_yaml(path: Path, data) -> None:
@@ -245,6 +247,196 @@ def test_manifest_removes_only_previous_owned_outputs(tmp_path):
     assert current.read_text() == "new"
     assert yaml.safe_load(manifest_path.read_text())["outputs"] == current_outputs
     assert manifest_path.stat().st_mode & 0o777 == 0o644
+
+
+def test_manifest_records_route_move_with_eight_week_redirect(tmp_path):
+    output_dir = tmp_path / "output"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
+    redirects_path = tmp_path / "content-redirects.yaml"
+    old_output = output_dir / "support" / "old-title.mdx"
+    new_output = output_dir / "support" / "new-title.mdx"
+    old_output.parent.mkdir(parents=True)
+    old_output.write_text("old", encoding="utf-8")
+    new_output.write_text("new", encoding="utf-8")
+    _write_yaml(manifest_path, {
+        "version": 1,
+        "sync_code": "qm",
+        "outputs": [{
+            "page_id": "page-1",
+            "type": "page",
+            "kind": "mdx",
+            "path": "support/old-title.mdx",
+        }],
+    })
+    _write_yaml(redirects_path, [])
+    current_outputs = [{
+        "page_id": "page-1",
+        "type": "page",
+        "kind": "mdx",
+        "path": "support/new-title.mdx",
+    }]
+
+    finalize_manifest(
+        manifest_path,
+        "qm",
+        current_outputs,
+        output_dir,
+        redirects_path,
+        date(2026, 7, 28),
+    )
+
+    assert not old_output.exists()
+    assert yaml.safe_load(redirects_path.read_text()) == [{
+        "source": "/support/old-title",
+        "destination": "/support/new-title",
+        "created_on": "2026-07-28",
+        "expires_on": "2026-09-22",
+    }]
+
+
+def test_manifest_prunes_expired_redirects(tmp_path):
+    output_dir = tmp_path / "output"
+    manifest_path = (
+        tmp_path / "var" / "convert-manifests" / "convert-manifest.qm.yaml"
+    )
+    redirects_path = tmp_path / "content-redirects.yaml"
+    current_output = output_dir / "current.mdx"
+    current_output.parent.mkdir(parents=True)
+    current_output.write_text("current", encoding="utf-8")
+    output = {
+        "page_id": "page-1",
+        "type": "page",
+        "kind": "mdx",
+        "path": "current.mdx",
+    }
+    _write_yaml(manifest_path, {
+        "version": 1,
+        "sync_code": "qm",
+        "outputs": [output],
+    })
+    _write_yaml(redirects_path, [
+        {
+            "source": "/expired",
+            "destination": "/current",
+            "created_on": "2026-05-01",
+            "expires_on": "2026-06-26",
+        },
+        {
+            "source": "/active",
+            "destination": "/current",
+            "created_on": "2026-07-01",
+            "expires_on": "2026-08-26",
+        },
+    ])
+
+    finalize_manifest(
+        manifest_path,
+        "qm",
+        [output],
+        output_dir,
+        redirects_path,
+        date(2026, 7, 28),
+    )
+
+    assert yaml.safe_load(redirects_path.read_text()) == [{
+        "source": "/active",
+        "destination": "/current",
+        "created_on": "2026-07-01",
+        "expires_on": "2026-08-26",
+    }]
+
+
+def test_consecutive_route_moves_collapse_redirect_chain():
+    redirects = reconcile_content_redirects(
+        [{
+            "source": "/title-a",
+            "destination": "/title-b",
+            "created_on": "2026-07-01",
+            "expires_on": "2026-08-26",
+        }],
+        [{
+            "page_id": "page-1",
+            "type": "page",
+            "kind": "mdx",
+            "path": "title-b.mdx",
+        }],
+        [{
+            "page_id": "page-1",
+            "type": "page",
+            "kind": "mdx",
+            "path": "title-c.mdx",
+        }],
+        date(2026, 7, 28),
+    )
+
+    assert redirects == [
+        {
+            "source": "/title-a",
+            "destination": "/title-c",
+            "created_on": "2026-07-01",
+            "expires_on": "2026-08-26",
+        },
+        {
+            "source": "/title-b",
+            "destination": "/title-c",
+            "created_on": "2026-07-28",
+            "expires_on": "2026-09-22",
+        },
+    ]
+
+
+@pytest.mark.parametrize(
+    ("content_a_id", "content_b_id"),
+    [
+        ("page-1", "page-2"),
+        ("page-2", "page-1"),
+    ],
+)
+def test_route_reuse_preserves_redirect_created_in_same_pass(
+    content_a_id,
+    content_b_id,
+):
+    redirects = reconcile_content_redirects(
+        [],
+        [
+            {
+                "page_id": content_a_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-a.mdx",
+            },
+            {
+                "page_id": content_b_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-b.mdx",
+            },
+        ],
+        [
+            {
+                "page_id": content_a_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-b.mdx",
+            },
+            {
+                "page_id": content_b_id,
+                "type": "page",
+                "kind": "mdx",
+                "path": "title-c.mdx",
+            },
+        ],
+        date(2026, 7, 28),
+    )
+
+    assert redirects == [{
+        "source": "/title-a",
+        "destination": "/title-b",
+        "created_on": "2026-07-28",
+        "expires_on": "2026-09-22",
+    }]
 
 
 def test_manifest_preserves_stale_output_owned_by_another_profile(tmp_path):

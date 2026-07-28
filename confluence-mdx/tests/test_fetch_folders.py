@@ -20,7 +20,6 @@ def _config(tmp_path: Path, *, mode: str = "local", root_type: str = "page") -> 
         default_output_dir=str(tmp_path / "var"),
         cache_dir=str(tmp_path / "cache"),
         translations_file=str(tmp_path / "translations.txt"),
-        slug_overrides_file=str(tmp_path / "content-slug-overrides.yaml"),
         default_start_page_id="root",
         root_content_type=root_type,
         mode=mode,
@@ -351,7 +350,7 @@ def test_local_mixed_tree_preserves_types_paths_order_and_warns(
     ) in caplog.text
 
 
-def test_local_tree_separates_display_translation_from_canonical_slug(
+def test_local_tree_uses_display_translation_for_canonical_slug(
     tmp_path,
 ):
     config = _config(tmp_path, mode="local")
@@ -361,11 +360,6 @@ def test_local_tree_separates_display_translation_from_canonical_slug(
         "자식 문서 | Child Document\n",
         encoding="utf-8",
     )
-    _write_yaml(
-        Path(config.slug_overrides_file),
-        {"parent": "stable-parent"},
-    )
-
     _write_yaml(var_dir / "root" / "page.v1.yaml", _page_data("root", "Root"))
     _write_yaml(var_dir / "root" / "page.v2.yaml", {"id": "root", "title": "Root"})
     _write_yaml(var_dir / "root" / "children.v2.yaml", {
@@ -411,23 +405,24 @@ def test_local_tree_separates_display_translation_from_canonical_slug(
     ))
 
     assert nodes[1].breadcrumbs_en == ["Descriptive Parent Title"]
-    assert nodes[1].path == ["stable-parent"]
+    assert nodes[1].path == ["descriptive-parent-title"]
     assert nodes[2].breadcrumbs_en == [
         "Descriptive Parent Title",
         "Child Document",
     ]
-    assert nodes[2].path == ["stable-parent", "child-document"]
+    assert nodes[2].path == [
+        "descriptive-parent-title",
+        "child-document",
+    ]
 
 
-def test_web_client_uses_full_translation_and_stable_repository_slug():
+def test_web_client_uses_full_translation_for_canonical_slug():
     project_dir = Path(__file__).resolve().parents[1]
     service = TranslationService(
         str(project_dir / "etc" / "korean-titles-translations.txt"),
-        str(project_dir / "etc" / "content-slug-overrides.yaml"),
         logging.getLogger(__name__),
     )
     service.load_translations()
-    service.load_slug_overrides()
     page = ContentNode(
         page_id="2262630428",
         title="Web Client로 쿠버네티스 클러스터 접속하기",
@@ -449,7 +444,7 @@ def test_web_client_uses_full_translation_and_stable_repository_slug():
     assert page.path == [
         "user-manual",
         "kubernetes-access-control",
-        "web-client",
+        "connecting-to-kubernetes-clusters-with-web-client",
     ]
 
 

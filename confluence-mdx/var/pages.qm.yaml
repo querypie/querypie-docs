@@ -505,7 +505,7 @@
   "path":
   - "user-manual"
   - "kubernetes-access-control"
-  - "web-client"
+  - "connecting-to-kubernetes-clusters-with-web-client"
 - "page_id": "1064829218"
   "type": "page"
   "title": "Web Access Control"
@@ -5489,17 +5489,17 @@
   - "standard-edition-license-policy"
 - "page_id": "2288353307"
   "type": "page"
-  "title": "QueryPie ACP 운영 로그 수집 가이드"
-  "title_orig": "QueryPie ACP 운영 로그 수집 가이드"
+  "title": "운영 로그 수집 가이드"
+  "title_orig": "운영 로그 수집 가이드"
   "breadcrumbs":
   - "지원"
-  - "QueryPie ACP 운영 로그 수집 가이드"
+  - "운영 로그 수집 가이드"
   "breadcrumbs_en":
   - "Support"
-  - "QueryPie ACP Operational Log Collection Guide"
+  - "Operational Log Collection Guide"
   "path":
   - "support"
-  - "querypie-acp-operational-log-collection-guide"
+  - "operational-log-collection-guide"
 - "page_id": "1911423023"
   "type": "page"
   "title": "Unreleased"

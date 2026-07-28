@@ -7,6 +7,7 @@
 | Change | 목적 | 상태 |
 | --- | --- | --- |
 | [`complete-reverse-sync`](./complete-reverse-sync/proposal.md) | snapshot-bound MDX → Confluence page update 계약과 구현 계획을 정의합니다. | proposed |
+| [`title-derived-content-routes`](./title-derived-content-routes/proposal.md) | Confluence 제목 기반 canonical route와 8주 임시 redirect lifecycle을 정의합니다. | proposed |
 
 ## Change 구조
 

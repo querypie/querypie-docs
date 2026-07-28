@@ -1,4 +1,4 @@
 export default {
   'checking-access-permission-list': 'Checking Access Permission List',
-  'web-client': 'Connecting to Kubernetes Clusters with Web Client',
+  'connecting-to-kubernetes-clusters-with-web-client': 'Connecting to Kubernetes Clusters with Web Client',
 };

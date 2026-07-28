@@ -1,5 +1,9 @@
 import nextra from 'nextra';
 import { releaseNotesRedirects } from './src/content/release-notes/_redirects';
+import {
+  expandContentRouteRedirects,
+  loadActiveContentRouteRedirects,
+} from './src/lib/content-route-redirects';
 
 // Set up Nextra with its configuration
 // Note: nextra includes remark-gfm by default, so no custom mdxOptions needed
@@ -55,6 +59,9 @@ export default withNextra({
   },
   // Configure redirects for Previous Version Documentation
   async redirects() {
+    const contentRouteRedirectRules = expandContentRouteRedirects(
+      loadActiveContentRouteRedirects(),
+    );
     // release-notes 리다이렉트: src/content/release-notes/_redirects.ts에서 관리
     const releaseNotesRedirectRules = releaseNotesRedirects.flatMap(([oldPath, newPath]) => [
       {
@@ -70,6 +77,7 @@ export default withNextra({
     ]);
 
     return [
+      ...contentRouteRedirectRules,
       ...releaseNotesRedirectRules,
 
       // querypie-overview -> overview 경로 변경에 대한 redirect (2026-01-22)
