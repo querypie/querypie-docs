@@ -1,0 +1,7 @@
+diff --git a/node_modules/@redocly/openapi-core/node_modules/minimatch/minimatch.js b/node_modules/@redocly/openapi-core/node_modules/minimatch/minimatch.js
+index 8545b3a..c8d9d8e 100644
+--- a/node_modules/@redocly/openapi-core/node_modules/minimatch/minimatch.js
++++ b/node_modules/@redocly/openapi-core/node_modules/minimatch/minimatch.js
+@@ -19 +19 @@
+-const expand = require('brace-expansion')
++const expand = require('brace-expansion').expand
