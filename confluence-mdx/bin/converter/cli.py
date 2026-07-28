@@ -11,9 +11,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Optional, List
-
-import yaml
+from typing import Optional
 
 # Resolve project root (confluence-mdx/) from this script's location
 # bin/converter/cli.py -> .parent=converter/ -> .parent=bin/ -> .parent=confluence-mdx/
@@ -27,86 +25,11 @@ if str(_SCRIPT_DIR) not in sys.path:
 import converter.context as ctx
 from converter.context import (
     PAGES_BY_TITLE, PAGES_BY_ID,
-    PagesDict, PageV1,
+    PageV1,
     load_pages_yaml, load_page_v1_yaml, build_link_mapping,
-    set_page_v1, get_page_v1, get_attachments,
-    clean_text,
+    set_page_v1, get_attachments,
 )
 from converter.core import ConfluenceToMarkdown
-
-
-def generate_meta_from_children(input_dir: str, output_file_path: str, pages_by_id: PagesDict) -> None:
-    """Generate a Nextra sidebar _meta.ts file using children.v2.yaml in input_dir.
-    - Reads children.v2.yaml if present.
-    - Sorts children by childPosition.
-    - Uses pages_by_id to resolve each child's filename slug from pages.yaml path.
-    - Warns when a child id is not found in pages_by_id.
-    - Validates that a corresponding MDX file (slug_key.mdx) exists next to _meta.ts; otherwise warns and skips.
-    - Writes _meta.ts under dirname(output_file_path)/stem/_meta.ts.
-    Swallows exceptions with logging to keep conversion resilient.
-    """
-    try:
-        children_yaml_path = os.path.join(input_dir, 'children.v2.yaml')
-        if os.path.exists(children_yaml_path):
-            with open(children_yaml_path, 'r', encoding='utf-8') as yf:
-                children_data = yaml.safe_load(yf)
-            results = children_data.get('results') if isinstance(children_data, dict) else None
-            if isinstance(results, list) and len(results) > 0:
-                def _pos(item: dict) -> int:
-                    try:
-                        return int(item.get('childPosition', 0))
-                    except Exception:
-                        return 0
-                ordered = sorted(results, key=_pos)
-
-                # Determine where _meta.ts and child mdx files should live
-                meta_dir = os.path.join(os.path.dirname(output_file_path), Path(output_file_path).stem)
-                os.makedirs(meta_dir, exist_ok=True)
-
-                entries: List[str] = []
-                for child in ordered:
-                    if not isinstance(child, dict):
-                        continue
-                    child_id = str(child.get('id')) if child.get('id') is not None else None
-                    title = clean_text(child.get('title'))
-                    if not child_id:
-                        logging.warning(f"children.v2.yaml entry missing id: {child}")
-                        continue
-                    page_info = pages_by_id.get(child_id)
-                    if not page_info:
-                        logging.warning(f"Child page id {child_id} not found in pages.yaml while generating _meta.ts from {children_yaml_path}")
-                        # Continue but skip since we cannot determine filename
-                        continue
-                    # Determine slug/filename from page_info.path if available
-                    slug_key: Optional[str] = None
-                    try:
-                        path_list = page_info.get('path') if isinstance(page_info, dict) else None
-                        if isinstance(path_list, list) and len(path_list) > 0:
-                            slug_key = str(path_list[-1])
-                    except Exception:
-                        slug_key = None
-                    if not slug_key:
-                        logging.warning(f"Child page id {child_id} has no valid path in pages.yaml; skipping entry in _meta.ts")
-                        continue
-
-                    key_repr = f"'{slug_key}'"
-                    title_repr = (title or '').strip().replace("'", "\\'")
-                    entries.append(f"  {key_repr}: '{title_repr}',")
-
-                if entries:
-                    meta_path = os.path.join(meta_dir, '_meta.ts')
-                    content = 'export default {\n' + "\n".join(entries) + '\n};\n'
-                    with open(meta_path, 'w', encoding='utf-8') as mf:
-                        mf.write(content)
-                    logging.info(f"Generated sidebar meta at {meta_path} from {children_yaml_path}")
-                else:
-                    logging.info("No sidebar entries generated: children list empty after processing")
-            else:
-                logging.info("children.v2.yaml has no 'results' or it is empty; skipping _meta.ts")
-        else:
-            logging.debug("No children.v2.yaml found; skipping _meta.ts generation")
-    except Exception as meta_err:
-        logging.error(f"Failed to generate _meta.ts: {meta_err}")
 
 
 def main():
@@ -178,7 +101,7 @@ def main():
         # 원본 XHTML 보존 — sidecar mapping에서 사용
         xhtml_original = html_content
 
-        # Load pages YAML for internal link resolution and _meta.ts generation.
+        # Load pages YAML for internal link resolution.
         # Priority: --pages-yaml arg > pages.qm.yaml (new naming) > pages.yaml (legacy).
         var_dir = os.path.join(input_dir, '..')
         if args.pages_yaml:
@@ -225,9 +148,6 @@ def main():
                 f.write(sidecar_yaml)
         except Exception as e:
             logging.warning(f"Sidecar mapping 생성 실패 (변환은 성공): {e}")
-
-        # Generate _meta.ts from children.v2.yaml to preserve child order for Netra sidebar
-        generate_meta_from_children(input_dir, ctx.OUTPUT_FILE_PATH, PAGES_BY_ID)
 
         logging.info(f"Successfully converted {args.input_file} to {args.output_file}")
 

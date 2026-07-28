@@ -1,18 +1,18 @@
-"""Confluence page processing orchestrator."""
+"""Confluence page/folder processing orchestrator."""
 
 import logging
 import os
 import sys
 import traceback
 from datetime import datetime, timezone
-from typing import Dict, Generator, List, Optional
+from typing import Dict, Generator, List, Optional, Set
 
 from fetch.config import Config
 from fetch.api_client import ApiClient
 from fetch.file_manager import FileManager
 from fetch.translation import TranslationService
 from fetch.stages import Stage1Processor, Stage2Processor, Stage3Processor, Stage4Processor
-from fetch.models import Page
+from fetch.models import ContentNode, ContentRef
 from text_utils import slugify
 
 
@@ -37,32 +37,44 @@ class ConfluencePageProcessor:
         # Load translations
         self.translation_service.load_translations()
 
-    def process_page_complete(self, page_id: str, start_page_id: Optional[str] = None) -> Optional[Page]:
-        """Process a single page through all 4 stages"""
+    def process_page_complete(
+        self,
+        page_id: str,
+        start_page_id: Optional[str] = None,
+        content_type: str = "page",
+        parent_breadcrumbs: Optional[List[str]] = None,
+        include_children: bool = True,
+    ) -> Optional[ContentNode]:
+        """Process a page or folder through the applicable stages."""
         try:
-            self.logger.info(f"Processing page ID {page_id} through all stages")
+            self.logger.info(f"Processing {content_type} ID {page_id}")
 
             # Stage 1: API Data Collection
-            self.stage1.process(page_id)
+            self.stage1.process(page_id, content_type, include_children)
 
             # Stage 2: Content Extraction
-            self.stage2.process(page_id)
+            self.stage2.process(page_id, content_type)
 
             # Stage 3: Attachment Download
-            self.stage3.process(page_id)
+            self.stage3.process(page_id, content_type)
 
             # Stage 4: Document Listing
-            page = self.stage4.process(page_id, start_page_id)
+            page = self.stage4.process(
+                page_id,
+                start_page_id,
+                content_type=content_type,
+                parent_breadcrumbs=parent_breadcrumbs,
+            )
 
-            self.logger.info(f"Completed all stages for page ID {page_id}")
+            self.logger.info(f"Completed all stages for {content_type} ID {page_id}")
             return page
 
         except Exception as e:
-            self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
-            return None
+            self.logger.error(f"Error processing {content_type} ID {page_id}: {str(e)}")
+            raise
 
-    def get_child_page_ids(self, page_id: str) -> List[str]:
-        """Get child page IDs for recursive processing"""
+    def get_child_content_refs(self, page_id: str) -> List[ContentRef]:
+        """Load supported typed child references for recursive processing."""
         try:
             directory = self.stage1.get_page_directory(page_id)
             yaml_filepath = os.path.join(directory, "children.v2.yaml")
@@ -70,33 +82,108 @@ class ConfluencePageProcessor:
             if os.path.exists(yaml_filepath):
                 data = self.file_manager.load_yaml(yaml_filepath)
                 if data:
-                    child_ids = [child["id"] for child in data.get("results", [])]
-                    self.logger.debug(f"Found {len(child_ids)} child pages for page ID {page_id}")
-                    return child_ids
+                    refs: List[ContentRef] = []
+                    results = data.get("results", [])
+                    if not isinstance(results, list):
+                        self.logger.error(
+                            f"Invalid children.v2.yaml for parent {page_id}: results is not a list"
+                        )
+                        return []
+
+                    for child in results:
+                        if not isinstance(child, dict) or child.get("id") is None:
+                            self.logger.warning(
+                                f"Skipping malformed child for parent {page_id}: {child}"
+                            )
+                            continue
+
+                        child_type = str(child.get("type") or "page")
+                        child_id = str(child["id"])
+                        title = str(child.get("title") or "")
+                        if child_type not in ("page", "folder"):
+                            self.logger.warning(
+                                "Skipping unsupported Confluence child "
+                                f"parent_id={page_id} id={child_id} "
+                                f"type={child_type} title={title!r}"
+                            )
+                            continue
+
+                        try:
+                            position = int(child.get("childPosition", 0))
+                        except (TypeError, ValueError):
+                            position = 0
+                        refs.append(ContentRef(
+                            id=child_id,
+                            type=child_type,
+                            title=title,
+                            child_position=position,
+                        ))
+
+                    refs.sort(key=lambda ref: ref.child_position)
+                    self.logger.debug(
+                        f"Found {len(refs)} supported children for parent ID {page_id}"
+                    )
+                    return refs
             else:
                 self.logger.warning(f"No children.v2.yaml found for page ID {page_id}")
                 return []
         except Exception as e:
-            self.logger.error(f"Error getting child page IDs for page ID {page_id}: {str(e)}")
+            self.logger.error(f"Error getting child content for page ID {page_id}: {str(e)}")
             return []
+        return []
 
-    def fetch_page_tree_recursive(self, page_id: str, start_page_id: Optional[str] = None, use_local: bool = False) -> Generator[Page, None, None]:
-        """Recursively fetch page tree through all 4 stages"""
+    def get_child_page_ids(self, page_id: str) -> List[str]:
+        """Backward-compatible helper returning supported child IDs."""
+        return [ref.id for ref in self.get_child_content_refs(page_id)]
+
+    def fetch_page_tree_recursive(
+        self,
+        page_id: str,
+        start_page_id: Optional[str] = None,
+        use_local: bool = False,
+        content_type: Optional[str] = None,
+        parent_breadcrumbs: Optional[List[str]] = None,
+        visited: Optional[Set[str]] = None,
+    ) -> Generator[ContentNode, None, None]:
+        """Recursively fetch a typed content tree."""
         try:
             self.logger.debug(f"Processing page tree for page ID {page_id}")
 
             # If start_page_id is not provided, use the current page_id as the starting point
             if start_page_id is None:
                 start_page_id = page_id
+            if content_type is None:
+                content_type = (
+                    self.config.root_content_type
+                    if page_id == start_page_id
+                    else "page"
+                )
+            if visited is None:
+                visited = set()
+            if page_id in visited:
+                self.logger.warning(f"Skipping cycle or duplicate content ID {page_id}")
+                return
+            visited.add(page_id)
 
             # Process current page through all 4 stages
             if use_local:
                 # In local mode, skip Stage 1 (API calls) and Stage 3 (attachment download)
                 # Only process Stage 2 (content extraction) and Stage 4 (document listing)
-                self.stage2.process(page_id)
-                page = self.stage4.process(page_id, start_page_id)
+                self.stage2.process(page_id, content_type)
+                page = self.stage4.process(
+                    page_id,
+                    start_page_id,
+                    content_type=content_type,
+                    parent_breadcrumbs=parent_breadcrumbs,
+                )
             else:
-                page = self.process_page_complete(page_id, start_page_id)
+                page = self.process_page_complete(
+                    page_id,
+                    start_page_id,
+                    content_type=content_type,
+                    parent_breadcrumbs=parent_breadcrumbs,
+                    include_children=True,
+                )
 
             if page:
                 # Update translations if available
@@ -109,13 +196,22 @@ class ConfluencePageProcessor:
 
                 yield page
 
-                # Process child pages recursively
-                child_ids = self.get_child_page_ids(page_id)
-                for child_id in child_ids:
-                    yield from self.fetch_page_tree_recursive(child_id, start_page_id, use_local)
+                child_parent_breadcrumbs = (
+                    [] if page_id == start_page_id else list(page.breadcrumbs)
+                )
+                for child in self.get_child_content_refs(page_id):
+                    yield from self.fetch_page_tree_recursive(
+                        child.id,
+                        start_page_id,
+                        use_local,
+                        content_type=child.type,
+                        parent_breadcrumbs=child_parent_breadcrumbs,
+                        visited=visited,
+                    )
         except Exception as e:
             self.logger.error(f"Error processing page ID {page_id}: {str(e)}")
             self.logger.debug(traceback.format_exc())
+            raise
 
     def _get_fetch_state_path(self, start_page_id: str) -> str:
         """Return the path to the fetch state file for a specific start_page_id."""
@@ -242,7 +338,12 @@ class ConfluencePageProcessor:
                             skipped_count += 1
                             continue
 
-                        page = self.process_page_complete(page_id, start_page_id)
+                        page = self.process_page_complete(
+                            page_id,
+                            start_page_id,
+                            content_type="page",
+                            include_children=False,
+                        )
                         if page:
                             # Update translations if available
                             if self.translation_service.translations:
@@ -268,7 +369,12 @@ class ConfluencePageProcessor:
                 page_count = 0
                 yaml_entries = []
 
-                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
+                for page in self.fetch_page_tree_recursive(
+                    start_page_id,
+                    start_page_id,
+                    use_local=True,
+                    content_type=self.config.root_content_type,
+                ):
                     if page:
                         page_count += 1
                         yaml_entries.append(page.to_dict())
@@ -279,7 +385,12 @@ class ConfluencePageProcessor:
                 page_count = 0
                 yaml_entries = []
 
-                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=True):
+                for page in self.fetch_page_tree_recursive(
+                    start_page_id,
+                    start_page_id,
+                    use_local=True,
+                    content_type=self.config.root_content_type,
+                ):
                     if page:
                         page_count += 1
                         yaml_entries.append(page.to_dict())
@@ -291,7 +402,12 @@ class ConfluencePageProcessor:
                 page_count = 0
                 yaml_entries = []
 
-                for page in self.fetch_page_tree_recursive(start_page_id, start_page_id, use_local=False):
+                for page in self.fetch_page_tree_recursive(
+                    start_page_id,
+                    start_page_id,
+                    use_local=False,
+                    content_type=self.config.root_content_type,
+                ):
                     if page:
                         # Exclude start_page_id from stdout (root page is not converted to MDX)
                         if page.page_id != start_page_id:

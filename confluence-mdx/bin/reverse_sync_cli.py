@@ -125,8 +125,30 @@ def _resolve_page_id(ko_mdx_path: str) -> str:
     pages = yaml.safe_load(pages_path.read_text())
     for page in pages:
         if page.get('path') == path_parts:
+            if page.get('type', 'page') == 'folder':
+                raise ValueError(
+                    f"MDX path '{ko_mdx_path}' is a generated Confluence folder "
+                    "landing page and cannot be reverse-synced"
+                )
             return page['page_id']
     raise ValueError(f"MDX path '{ko_mdx_path}' not found in var/pages.qm.yaml")
+
+
+def _ensure_reverse_sync_page(page_id: str) -> None:
+    """Reject generated folder landing pages even when --page-id is explicit."""
+    pages_path = _PROJECT_DIR / 'var' / 'pages.qm.yaml'
+    if not pages_path.exists():
+        return
+    pages = yaml.safe_load(pages_path.read_text()) or []
+    for page in pages:
+        if str(page.get('page_id')) != str(page_id):
+            continue
+        if page.get('type', 'page') == 'folder':
+            raise ValueError(
+                f"Content ID '{page_id}' is a generated Confluence folder "
+                "landing page and cannot be reverse-synced"
+            )
+        return
 
 
 def _resolve_attachment_dir(page_id: str) -> str:
@@ -589,6 +611,10 @@ def _add_common_args(parser: argparse.ArgumentParser):
 
 def _do_verify(args, *, config=None, prepare_push: bool = False) -> dict:
     """CLI 입력을 typed request로 변환하여 prepare lifecycle을 실행합니다."""
+
+    explicit_page_id = getattr(args, "page_id", None)
+    if explicit_page_id:
+        _ensure_reverse_sync_page(explicit_page_id)
 
     request = VerificationRequest(
         improved_mdx=args.improved_mdx,

@@ -62,9 +62,11 @@ case "${1:-help}" in
     print_image_info
     shift
     for CODE in qm qcp; do
-      echo "# Starting full workflow for Space: $CODE..."
       echo "+ bin/fetch_cli.py --sync-code $CODE $@"
       bin/fetch_cli.py --sync-code "$CODE" "$@"
+    done
+    for CODE in qm qcp; do
+      echo "# Starting conversion for Space: $CODE..."
       echo "+ bin/convert_all.py --sync-code $CODE"
       bin/convert_all.py --sync-code "$CODE"
     done
