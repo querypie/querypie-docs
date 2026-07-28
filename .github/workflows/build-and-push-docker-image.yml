@@ -36,8 +36,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Determine fetch arguments
-        id: fetch-args
+      - name: Determine fetch plan
+        id: fetch-plan
         env:
           EVENT_NAME: ${{ github.event_name }}
           BEFORE_SHA: ${{ github.event.before }}
@@ -47,18 +47,37 @@ jobs:
           set -o errexit -o nounset -o pipefail
 
           fetch_arguments='--recent --attachments'
+          fetch_sync_codes='qm'
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             fetch_arguments="${INPUT_FETCH_ARGUMENTS:---recent --attachments}"
           elif [[ "$EVENT_NAME" == "push" ]]; then
-            if ! git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null ||
-              ! git diff --quiet "$BEFORE_SHA" "$CURRENT_SHA" -- \
-                ':(glob)confluence-mdx/var/pages.*.yaml'; then
+            if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+              changed_catalogs="$(
+                git diff --name-only "$BEFORE_SHA" "$CURRENT_SHA" -- \
+                  ':(glob)confluence-mdx/var/pages.*.yaml'
+              )"
+            else
+              changed_catalogs="$(
+                find confluence-mdx/var -maxdepth 1 -type f \
+                  -name 'pages.*.yaml' -print
+              )"
+            fi
+
+            if [[ -n "$changed_catalogs" ]]; then
               fetch_arguments='--remote --attachments'
+              fetch_sync_codes="$(
+                printf '%s\n' "$changed_catalogs" |
+                  sed -E 's#^confluence-mdx/var/pages\.([a-z0-9_-]+)\.yaml$#\1#' |
+                  sort -u |
+                  paste -sd ' ' -
+              )"
             fi
           fi
 
           echo "arguments=$fetch_arguments" >> "$GITHUB_OUTPUT"
+          echo "sync-codes=$fetch_sync_codes" >> "$GITHUB_OUTPUT"
           echo "Fetch arguments: $fetch_arguments"
+          echo "Fetch sync codes: $fetch_sync_codes"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -81,7 +100,8 @@ jobs:
         run: |
           set -o errexit -o nounset -o pipefail -o xtrace
           docker compose --progress=plain build \
-            --build-arg "FETCH_ARGS=${{ steps.fetch-args.outputs.arguments }}"
+            --build-arg "FETCH_ARGS=${{ steps.fetch-plan.outputs.arguments }}" \
+            --build-arg "FETCH_SYNC_CODES=${{ steps.fetch-plan.outputs.sync-codes }}"
 
       - name: Push Docker image
         if: github.event_name != 'pull_request'
