@@ -80,9 +80,9 @@ Along with file logs, collect the container's `stdout` and `stderr` logs.
 
 1. Save the app container logs.
 2. If the `tools` profile is running, save the tools logs as well.
-```
+```bash
 mkdir -p support-logs
-docker logs querypie-app-1 > support-logs/app.docker.log 2>&1
+docker logs querypie-app-1 > support-logs/app.docker.log 2>&1 || true
 docker logs querypie-tools-1 > support-logs/tools.docker.log 2>&1 || true
 ```
 
