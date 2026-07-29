@@ -82,7 +82,7 @@ tar -czf support-logs/querypie-file-logs.tar.gz /var/log/querypie
 2. `tools` profile이 실행 중이면 tools 로그도 함께 저장합니다.
 ```
 mkdir -p support-logs
-docker logs querypie-app-1 > support-logs/app.docker.log 2>&1
+docker logs querypie-app-1 > support-logs/app.docker.log
 docker logs querypie-tools-1 > support-logs/tools.docker.log 2>&1 || true
 ```
 
