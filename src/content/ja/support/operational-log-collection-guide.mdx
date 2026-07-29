@@ -80,9 +80,9 @@ tar -czf support-logs/querypie-file-logs.tar.gz /var/log/querypie
 
 1. appコンテナのログを保存します。
 2. `tools` profileが実行中の場合は、toolsログも保存します。
-```
+```bash
 mkdir -p support-logs
-docker logs querypie-app-1 > support-logs/app.docker.log
+docker logs querypie-app-1 > support-logs/app.docker.log 2>&1 || true
 docker logs querypie-tools-1 > support-logs/tools.docker.log 2>&1 || true
 ```
 
