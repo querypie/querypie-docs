@@ -283,8 +283,8 @@ O
     1. 네임스페이스를 액션에서 정의하여 클러스터 내 허용 대상 네임스페이스를 리소스별로 제어할 수 있습니다.
     2. 와일드카드와 정규표현식 모두 허용합니다.
         * `namespace: "*"`
-    3. namespaces 외 네임스페이스에 존속되지 않는 리소스의 경우, 해당 namespace를 작성하지 않아도 됩니다.
-        1. 대상 예) `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings` 등
+    3. namespaces 외 네임스페이스에 종속되지 않는 리소스의 경우, 해당 namespace를 작성하지 않아도 됩니다.
+        1. 대상 예) `persistentvolumes`, `customresourcedefinitions`, `nodes`, `clusterroles`, `clusterrolebindings` 등 ([https://kubernetes.io/docs/reference/kubectl/#resource-types](https://kubernetes.io/docs/reference/kubectl/#resource-types) 의 Namespaced 가 False 인 대상)
 4. `name` : 대상 리소스명을 정의하여 클러스터 내 허용 리소스 중 네이밍을 바탕으로 제어가 가능합니다.
     1. 와일드카드와 정규표현식 모두 허용합니다.
         * `name: "pods-*"`

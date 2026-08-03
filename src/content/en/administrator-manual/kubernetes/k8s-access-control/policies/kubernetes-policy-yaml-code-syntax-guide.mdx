@@ -283,8 +283,8 @@ Each action requires `apiGroups`, `resources`, `namespace`, `name`, `verbs` entr
     1. By defining namespaces in actions, you can control allowed target namespaces within the cluster for each resource.
     2. Both wildcards and regular expressions are allowed.
         * `namespace: "*"`
-    3. For resources that do not belong to namespaces other than namespaces, you do not need to write the namespace.
-        1. Examples) `persistentvolumes`, `persistentvolumeclaims`, `serviceaccounts`, `customresourcedefinitions`, `endpoints`, `nodes`, `clusterroles`, `clusterrolebindings`, etc.
+    3. For resources that are not namespace-scoped, you can omit the namespace.
+        1. Examples) `persistentvolumes`, `customresourcedefinitions`, `nodes`, `clusterroles`, `clusterrolebindings`, etc. (resources whose Namespaced value is False in [https://kubernetes.io/docs/reference/kubectl/#resource-types](https://kubernetes.io/docs/reference/kubectl/#resource-types))
 4. `name` : By defining target resource names, you can control based on naming among allowed resources within the cluster.
     1. Both wildcards and regular expressions are allowed.
         * `name: "pods-*"`
