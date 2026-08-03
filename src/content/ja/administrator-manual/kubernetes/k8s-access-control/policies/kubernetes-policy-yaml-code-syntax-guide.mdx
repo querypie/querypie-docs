@@ -283,8 +283,8 @@ KubernetesクラスターAPIサーバー内で許可/拒否するResource APIを
     1. ネームスペースをアクションで定義することで、クラスター内の許可対象ネームスペースをリソースごとに制御できます。
     2. ワイルドカードと正規表現の両方を許可します。
         * `namespace: "*"`
-    3. namespaces以外のネームスペースに属さないリソースの場合、該当namespaceを記述しなくても構いません。
-        1. 対象例）`persistentvolumes`、`persistentvolumeclaims`、`serviceaccounts`、`customresourcedefinitions`、`endpoints`、`nodes`、`clusterroles`、`clusterrolebindings`など
+    3. Namespaceに属さないリソースの場合、namespaceを記述する必要はありません。
+        1. 対象例）`persistentvolumes`、`customresourcedefinitions`、`nodes`、`clusterroles`、`clusterrolebindings`など（[https://kubernetes.io/docs/reference/kubectl/#resource-types](https://kubernetes.io/docs/reference/kubectl/#resource-types)でNamespacedがFalseのリソース）
 4. `name` : 対象リソース名を定義して、クラスター内の許可リソースの中からネーミングに基づいて制御が可能です。
     1. ワイルドカードと正規表現の両方を許可します。
         * `name: "pods-*"`
