@@ -106,7 +106,7 @@ RDP Server Agent가 설치되지 않은 Windows Server에 접속할 경우 아�
         * Provisioning 계정과 One Time Account를 시스템에 등록할 수 있습니다.
         * 서버 접속 시, 시스템이 자동으로 서버에 임시 계정을 생성합니다.
 
-#### 서버 권한 신청의 기본 정책 설정
+#### Server Access Request Default Settings
 
 Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 접근 정책을 관리합니다.
 
@@ -122,7 +122,10 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 </Callout>
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.09.36-PM.png" alt="Screenshot-2025-07-22-at-3.09.36-PM.png" width="729" />
+<img src="/administrator-manual/servers/sac-general-configurations/image-20260804-071014.png" alt="Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings" width="709" />
+<figcaption>
+Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings
+</figcaption>
 </figure>
 
 * Maximum Access Duration : 서버 접근 권한의 최대 사용 기간을 설정
@@ -138,6 +141,9 @@ Workflow 요청을 통한 Direct Permission 할당 시에 적용되는 서버 �
 * **Proxy Usage**: Agent를 통한 프록시 접속 허용 여부
 * **Allow Local Port Forwarding**: Client에서의 Port Forwarding 허용 여부
     * VSCode 등 Port Forwarding을 사용하는 경우 사용
+* **Allow RDP Clipboard** : RDP 세션에서 클립보드 사용 허용 여부
+* **Session Recording** : Server Access Request를 통해 부여되는 서버 접근 권한의 기본 세션 레코딩 사용 여부를 설정합니다. 기본값은 On입니다. Off로 설정하면 해당 요청으로 생성되는 Permission의 세션 레코딩 옵션이 Off로 설정됩니다. (11.5.8, 11.6.6 부터 지원)
+* **Session Recording Max Size** :  세션 레코딩 파일의 최대 청크 크기를 MB 단위로 설정합니다. 기본값은 100MB이며, 10MB부터 1024MB까지 입력할 수 있습니다. Session Recording이 Off이면 이 항목은 설정할 수 없습니다. (11.5.8, 11.6.6 부터 지원)
 * **Max Sessions**: 서버 당 최대 동시 접속수
 * **Session Timeout**: 서버 세션 타임아웃 기준 시간 (분)
 * **Show Server Groups in Workflow if Assigned as Member**: 체크된 경우, 이용자가 Server Access Request 신청 시 Server Group Member로 지정된 서버 그룹만 표시
