@@ -85,7 +85,7 @@ Allowed Zonesは広い範囲の許可IP帯域を意味します。
 *  **Password Provisioning :** パスワードプロビジョニング使用可否設定
     * 登録されたサーバーのサーバーアカウントパスワードを定期的に変更
     * Onに設定時、以下のように変更
-        * [サーバーをグループで管理する | 3.-Accounts-登録する](connection-management/server-groups/managing-servers-as-groups#3-accounts登録)でパスワードプロビジョニングに使用するアカウント選択オプション追加
+        * [サーバーをグループで管理する | 3.-Accounts-登録する](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0)でパスワードプロビジョニングに使用するアカウント選択オプション追加
         * [Password Provisioning](server-account-management/password-provisioning)メニュー有効化とPassword変更Job登録
         * [Account Management](server-account-management/account-management)メニュー有効化とQueryPieで管理するサーバーのアカウントリスト照会機能提供
 *  **Allow RDP Connection without Server Agent :**  RDP Server AgentがインストールされていないWindows Server接続許可設定
@@ -106,7 +106,7 @@ RDP Server AgentがインストールされていないWindows Serverに接続�
         * ProvisioningアカウントとOne Time Accountをシステムに登録できます。
         * サーバー接続時、システムが自動的にサーバーに一時アカウントを生成します。
 
-#### サーバー権限申請の基本ポリシー設定
+#### Server Access Request Default Settings
 
 Workflow要求を通じたDirect Permission割り当て時に適用されるサーバーアクセスポリシーを管理します。
 
@@ -122,7 +122,10 @@ Workflow要求を通じたDirect Permission割り当て時に適用されるサ�
 </Callout>
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.09.36-PM.png" alt="Screenshot-2025-07-22-at-3.09.36-PM.png" width="729" />
+<img src="/administrator-manual/servers/sac-general-configurations/image-20260804-071014.png" alt="Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings" width="709" />
+<figcaption>
+Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings
+</figcaption>
 </figure>
 
 * Maximum Access Duration : サーバーアクセス権限の最大使用期間を設定
@@ -138,6 +141,9 @@ Workflow要求を通じたDirect Permission割り当て時に適用されるサ�
 *  **Proxy Usage**: Agentを通じたプロキシ接続許可可否
 *  **Allow Local Port Forwarding**: ClientからのPort Forwarding許可可否
     * VSCodeなどPort Forwardingを使用する場合に使用
+* **Allow RDP Clipboard** : RDPセッションでのクリップボード使用許可有無
+* **Session Recording** : Server Access Requestを通じて付与されるサーバーアクセス権限のデフォルトのセッションレコーディング使用有無を設定します。デフォルト値はOnです。Offに設定すると、該当リクエストで作成されるPermissionのセッションレコーディングオプションがOffに設定されます。（11.5.8、11.6.6からサポート）
+* **Session Recording Max Size** : セッションレコーディングファイルの最大チャンクサイズをMB単位で設定します。デフォルト値は100MBで、10MBから1024MBまで入力できます。Session RecordingがOffの場合、この項目は設定できません。（11.5.8、11.6.6からサポート）
 *  **Max Sessions**: サーバー当たり最大同時接続数
 *  **Session Timeout**: サーバーセッションタイムアウト基準時間（分）
 *  **Show Server Groups in Workflow if Assigned as Member :**  チェックされた場合、利用者がServer Access Request申請時、Server Group Memberに指定されたサーバーグループのみ表示

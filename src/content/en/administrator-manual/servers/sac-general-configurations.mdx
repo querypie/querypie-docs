@@ -85,7 +85,7 @@ Therefore, even if you are within the displayed IP range, final access may be de
 *  **Password Provisioning :** Setting for using password provisioning
     * Periodically change passwords for server accounts of registered servers
     * When set to On, the following changes occur:
-        * In [Managing Servers as Groups | 3.-Registering-Accounts](connection-management/server-groups/managing-servers-as-groups#3-registering-accounts), account selection options for password provisioning are added
+        * In [Managing Servers as Groups | 3.-Registering-Accounts](connection-management/server-groups/managing-servers-as-groups#3.-accounts-%eb%93%b1%eb%a1%9d%ed%95%98%ea%b8%b0), account selection options for password provisioning are added
         * [Password Provisioning](server-account-management/password-provisioning) menu is activated and Password change Jobs can be registered
         * [Account Management](server-account-management/account-management) menu is activated and provides account list lookup functionality for servers managed by QueryPie
 *  **Allow RDP Connection without Server Agent :**  Setting for allowing access to Windows Servers without RDP Server Agent installed
@@ -106,7 +106,7 @@ When accessing Windows Servers without RDP Server Agent installed, the following
         * Provisioning accounts and One Time Accounts can be registered in the system.
         * When accessing servers, the system automatically creates temporary accounts on the server.
 
-#### Default Policy Settings for Server Permission Requests
+#### Server Access Request Default Settings
 
 Manage server access policies applied when assigning Direct Permissions through Workflow requests.
 
@@ -122,7 +122,10 @@ For more details, please refer to [Requesting Server Access Request](../../user-
 </Callout>
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/sac-general-configurations/Screenshot-2025-07-22-at-3.09.36-PM.png" alt="Screenshot-2025-07-22-at-3.09.36-PM.png" width="729" />
+<img src="/administrator-manual/servers/sac-general-configurations/image-20260804-071014.png" alt="Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings" width="709" />
+<figcaption>
+Admin &gt; Servers &gt; General &gt; Configurations &gt; Server Access Request Default Settings
+</figcaption>
 </figure>
 
 * Maximum Access Duration : Set the maximum usage period for server access permissions
@@ -138,6 +141,9 @@ For more details, please refer to [Requesting Server Access Request](../../user-
 *  **Proxy Usage**: Whether to allow proxy access through Agent for this permission
 *  **Allow Local Port Forwarding**: Whether to allow Port Forwarding from Client
     * Used when using Port Forwarding such as VSCode
+*  **Allow RDP Clipboard**: Whether to allow clipboard use in RDP sessions
+*  **Session Recording**: Sets whether session recording is enabled by default for server access Permissions granted through Server Access Request. The default is On. When set to Off, the session recording option for Permissions created by the request is set to Off. (Supported from 11.5.8 and 11.6.6)
+*  **Session Recording Max Size**: Sets the maximum chunk size of session recording files in MB. The default is 100 MB, and you can enter a value from 10 MB to 1024 MB. This item cannot be configured when Session Recording is Off. (Supported from 11.5.8 and 11.6.6)
 *  **Max Sessions**: Maximum concurrent connections per server
 *  **Session Timeout**: Server session timeout criteria time (minutes)
 *  **Show Server Groups in Workflow if Assigned as Member :**  When checked, only server groups assigned as Server Group Members are displayed when users apply for Server Access Request

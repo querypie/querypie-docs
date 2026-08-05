@@ -80,19 +80,24 @@ Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Contr
     9.  **Expiration Date**  : Permission grant expiration date (scheduled revocation date)
     10.  **Account**  : Server account
     11.  **Action By**  : Administrator name or System who performed the permission grant/revocation
-        1. When permissions are granted through Workflow, an Access Request link appears and opens the corresponding Request page in a new window.
 2. The bottom lists policies applied to the granted/revoked Permission:
     1. Access Control related logs - Policy
         1.  **Access Time**  : Access allowed time
         2.  **Weekday Access Allow**  : Access allowed weekdays
         3.  **IP Addresses**  : Access allowed IP addresses
         4.  **Command Audit**  : Command recording status
-        5.  **Proxy Usage**  : Access through Proxy (Agent) availability
-        6.  **Max Sessions**  : Maximum number of access sessions
-        7.  **Session Timeout (minutes)**  : Session timeout time setting
-        8.  **Protocols**  : Access protocols
-        9.  **Command Template**  : Applied prohibited command set
+        5.  **Session Recording**: Whether session recording was enabled when the Permission was granted. (Supported from 11.5.8 and 11.6.6)
+        6.  **Session Recording Max Size (MB)**: Maximum chunk size of the session recording file applied when the Permission was granted. (Supported from 11.5.8 and 11.6.6)
+        7.  **Proxy Usage**  : Access through Proxy (Agent) availability
+        8.  **Require Privilege**  : Whether privilege elevation is required
+        9.  **Allow Local Port Forwarding**  : Whether local port forwarding is allowed (Supported from 10.3.0)
+        10.  **Allow RDP Clipboard**  : Whether RDP clipboard use is allowed (Supported from 11.5.8 and 11.6.6)
+        11.  **Max Sessions**  : Maximum number of access sessions
+        12.  **Session Timeout (minutes)**  : Session timeout time setting
+        13.  **Protocols**  : Access protocols
+        14.  **Command Template**  : Applied prohibited command set
     2. Whitelist related logs - Whitelisted Commands
         1.  **Keyword**  : Exception handling keyword
         2.  **RegEx**  : Exception handling regular expression
         3.  **Whitelist Expiration Date**  : Exception handling expiration date
+

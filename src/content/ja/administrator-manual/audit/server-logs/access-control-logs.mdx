@@ -80,19 +80,24 @@ Administrator &gt; Audit &gt; Servers &gt; Access Control Logs &gt; Access Contr
     9.  **Expiration Date**  : 権限付与期限日（回収予定日）
     10.  **Account**  : サーバーAccount
     11.  **Action By**  : Permission付与/回収を進行した管理者名またはSystem
-        1. Workflowを通じて権限を付与された場合Access Requestリンクが表示され、該当Requestページを新窓で開きます。
 2. 下部には付与/回収されたPermissionに適用された政策を列挙します:
     1. Access Control関連ログ - Policy
         1.  **Access Time**  : 接続許可時間
         2.  **Weekday Access Allow**  : 接続許可曜日
         3.  **IP Addresses**  : 接続許可IP
         4.  **Command Audit**  : コマンド記録の有無
-        5.  **Proxy Usage**  : Proxy（Agent）を通じた接続可能の有無
-        6.  **Max Sessions**  : 最大接続セッション数
-        7.  **Session Timeout (minutes)**  : セッションタイムアウト時間設定
-        8.  **Protocols**  : 接続プロトコル
-        9.  **Command Template**  : 適用された禁止コマンドセット
+        5. **Session Recording**: 権限が付与された時点で適用されたセッションレコーディングの使用有無です。（11.5.8、11.6.6からサポート）
+        6. **Session Recording Max Size (MB)**: 権限が付与された時点で適用されたセッションレコーディングファイルの最大チャンクサイズです。（11.5.8、11.6.6からサポート）
+        7.  **Proxy Usage**  : Proxy（Agent）を通じた接続可能の有無
+        8. **Require Privilege** : 権限昇格の使用有無
+        9. **Allow Local Port Forwarding**  : ローカルポートフォワーディングの許可有無（10.3.0からサポート）
+        10. **Allow RDP Clipboard** : RDPクリップボードの使用許可有無（11.5.8、11.6.6からサポート）
+        11.  **Max Sessions**  : 最大接続セッション数
+        12.  **Session Timeout (minutes)**  : セッションタイムアウト時間設定
+        13.  **Protocols**  : 接続プロトコル
+        14.  **Command Template**  : 適用された禁止コマンドセット
     2. Whitelist関連ログ - Whitelisted Commands
         1.  **Keyword**  : 例外処理キーワード
         2.  **RegEx**  : 例外処理正規表現
         3.  **Whitelist Expiration Date**  : 例外処理期限日
+

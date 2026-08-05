@@ -50,7 +50,7 @@ If more than 1000 servers are registered in a single server group, add servers t
 #### 3. <Badge color="blue">Step 2</Badge>: Set access policies for the selected servers.
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/Screenshot-2025-07-27-at-5.28.54-PM.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2" width="760" />
+<img src="/administrator-manual/servers/server-access-control/access-control/granting-and-revoking-permissions/3.-Permissions-부여-및-회수하기.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2" width="760" />
 <figcaption>
 Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; Details &gt; Grant Permissions Step 2
 </figcaption>
@@ -60,30 +60,30 @@ Administrator &gt; Servers &gt; Server Access Control &gt; Access Control &gt; D
 2. Each policy item is as follows:
     1.  **`{n}` Server(s) selected**: This item displays the number of Servers selected in <Badge color="blue">Step 1</Badge> x the number of Accounts. Clicking shows each item in list format.
     2.  **Set Permissions by Minute**: When this option is selected, server access permissions can be set in minutes. When the checkbox is selected, the following setting items are activated.
-        1. Start Trigger : Select the permission grant start condition
+        1. **Start Trigger** : Select the permission grant start condition
             1. Access to the Server : Permissions are activated immediately when the user accesses the server. Regardless of server session maintenance, you can access the server for the specified period from the activation time.
             2. Grant : The timer starts immediately upon permission grant, and permissions are valid only for the specified period regardless of the user's actual access.
         2.  **Duration(Minutes)**: Enter the valid time in minutes for the permission.
     3.  **Expiration Date**: Set the access permission expiration date. Can be set up to a maximum of 1 year. (Default = 1 year later)
     4.  **Protocols**: Use the protocol to be used for server access.
     5.  **Command Template**: Set the command set that cannot be used after accessing the server. You can check the detailed conditions set by clicking Command Template Details below.<br/>*Limitation: (10.2.1) Only Command Templates set to Deny can be used in Grant Permissions.
-    6.  **Configure Whitelist**: Supports exception handling for specific commands in the process of controlling commands through Command Template. When the Configure Whitelist checkbox is checked, the following settings appear:
-        1.  **Commands**: Enter commands that need to be allowed.
-            1.  **Keyword**: Enter as keyword (ls, cat, etc.)
-            2.  **RegEx**: Enter as regular expression (^sudo\b[^&|;\n]*$, etc.)
-        2.  **Whitelist Expiration Date**: Specify a separate exception handling expiration date for the above commands.
-    7.  **Require Privilege**: When this option is activated, users must go through an approval process through Server Privilege Request workflow to access servers with that account. This is useful when temporarily allowing and managing access to high-privilege accounts such as administrator (Admin) accounts on Windows servers.
+    6.  **Configure Server Privilege**: Adds Server Privilege settings to apply to the Permission. When selected, you can configure the commands available through Server Privilege and the Privilege Expiration Date. For minute-based Permissions, you can also configure Privilege Start Trigger and Privilege Duration (Minutes).
+    7.  **Access Start Time**: Set the allowed access start time.
+    8.  **Access End Time**: Set the allowed access end time.
+    9.  **Access Weekday**: Set the days of the week when access is allowed.
+    10.  **IP Addresses**: Set the IP addresses allowed for access.
+    11.  **Command Audit**: Set whether to log commands used in sessions connected through this Permission.
+    12.  **Command Detection**: Set whether to detect prohibited commands within Script/Alias when they are called.<br/>*Limitation: (10.2.1) Only works in Bash Shell, commands that call other Scripts from Script are blocked
+    13.  **Session Recording**: Sets the session recording option for SSH, SFTP, TELNET, and FTP sessions associated with this Permission. The default is `On`. Actual session recording follows the combined result of all policies applied at connection time. (Supported from 11.5.8 and 11.6.6)
+    14.  **Session Recording Max Size (MB)**: Sets the maximum chunk size of session recording files in MB. The default is 100 MB, and you can enter a value from 10 MB to 1024 MB. This item is disabled when Session Recording is Off. (Supported from 11.5.8 and 11.6.6)
+    15.  **Proxy Usage**: Set whether to allow server access through QueryPie Agent with this Permission.
+    16.  **Require Privilege**: When this option is activated, users must go through an approval process through Server Privilege Request workflow to access servers with that account. This is useful when temporarily allowing and managing access to high-privilege accounts such as administrator (Admin) accounts on Windows servers.
         * When attempting to access with an account where this option is activated, the `Connect` button is disabled when accessing the server from the user dashboard, and a message is displayed indicating that an access permission request must be submitted.
         * The Require Privilege option can be applied to all accounts regardless of the server's OS type.
-    8.  **Access Start Time**: Set the allowed access start time.
-    9.  **Access End Time**: Set the allowed access end time.
-    10.  **Access Weekday**: Set the days of the week when access is allowed.
-    11.  **IP Addresses**: Set the IP addresses allowed for access.
-    12.  **Command Audit**: Set whether to log commands used in sessions connected through this Permission.
-    13.  **Command Detection**: Set whether to detect prohibited commands within Script/Alias when they are called.<br/>*Limitation: (10.2.1) Only works in Bash Shell, commands that call other Scripts from Script are blocked
-    14.  **Proxy Usage**: Set whether to allow server access through QueryPie Agent with this Permission.
-    15.  **Max Sessions**: Limit the number of concurrent sessions a user can have on a single server.
-    16.  **Session Timeout (minutes)**: Sessions are terminated if inactive for the entered time (minutes).
+    17.  **Allow Local Port Forwarding**: Allows clients connected through this Permission to forward local ports to the remote server. This is required for clients that use local port forwarding, such as VS Code Remote SSH. (Supported from 10.3.0)
+    18.  **Allow RDP Clipboard**: Sets whether clipboard redirection is allowed for RDP sessions connected through this Permission. When set to Disable, clipboard redirection is unavailable in the RDP session. (Supported from 11.5.8 and 11.6.6)
+    19.  **Max Sessions**: Limit the number of concurrent sessions a user can have on a single server.
+    20.  **Session Timeout (minutes)**: Sessions are terminated if inactive for the entered time (minutes).
 3.  Click the `Grant` button in the bottom right to complete permission grant.
 
 
