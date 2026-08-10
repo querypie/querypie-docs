@@ -1,11 +1,11 @@
 ---
-title: 'ウェブSQLエディターで接続する'
+title: 'Web SQLエディターを使用する'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544380222/SQL'
 ---
 
 import { Callout } from 'nextra/components'
 
-# ウェブSQLエディターで接続する
+# Web SQLエディターを使用する
 
 ### Overview
 
@@ -17,7 +17,7 @@ QueryPieではウェブブラウザを通じてクエリを実行し、データ
 個別ユーザーまたはグループにアクセス権限が付与されたデータベースコネクションリストを確認でき、作業を実行するコネクションを選択してデータベースに接続できます。
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20251218-115500.png" alt="User &gt; Databasesのコネクション選択および接続画面" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20251218-115500.png" alt="User &gt; Databasesのコネクション選択および接続画面" width="760" />
 <figcaption>
 User &gt; Databasesのコネクション選択および接続画面
 </figcaption>
@@ -37,7 +37,7 @@ User &gt; Databasesのコネクション選択および接続画面
 #### 1. 左上オブジェクトパネル
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png" alt="SQL Editor &gt; Connection Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/screenshot-20240802-141439.png" alt="SQL Editor &gt; Connection Panel" width="760" />
 <figcaption>
 SQL Editor &gt; Connection Panel
 </figcaption>
@@ -50,7 +50,7 @@ SQL Editor &gt; Connection Panel
 #### 2. 左側オブジェクトパネル
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png" alt="SQL Editor &gt; Connection Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/screenshot-20240802-141927.png" alt="SQL Editor &gt; Connection Panel" width="760" />
 <figcaption>
 SQL Editor &gt; Connection Panel
 </figcaption>
@@ -65,7 +65,7 @@ SQL Editor &gt; Connection Panel
 #### 3. 上部ツールバー
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png" alt="QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240731-115955.png" alt="QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar" width="760" />
 <figcaption>
 QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
 </figcaption>
@@ -90,7 +90,7 @@ QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
 
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052240.png" alt="SQL Editor &gt; Editor Tab & Result" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-052240.png" alt="SQL Editor &gt; Editor Tab & Result" width="760" />
 <figcaption>
 SQL Editor &gt; Editor Tab & Result
 </figcaption>
@@ -104,7 +104,7 @@ SQL Editor &gt; Editor Tab & Result
 #### 3. Queriesパネル
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png" alt="SQL Editor &gt; Queries Panel " width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-052539.png" alt="SQL Editor &gt; Queries Panel " width="760" />
 <figcaption>
 SQL Editor &gt; Queries Panel
 </figcaption>
@@ -120,7 +120,7 @@ SQL Editor &gt; Queries Panel
 #### 4. Object Infoパネル
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png" alt="SQL Editor &gt; Object Info Panel " width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-053427.png" alt="SQL Editor &gt; Object Info Panel " width="760" />
 <figcaption>
 SQL Editor &gt; Object Info Panel
 </figcaption>
@@ -137,7 +137,7 @@ SQL Editor &gt; Object Info Panel
 #### 5. SQL Historyパネル
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png" alt="SQL Editor &gt; SQL History Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-054007.png" alt="SQL Editor &gt; SQL History Panel" width="760" />
 <figcaption>
 SQL Editor &gt; SQL History Panel
 </figcaption>
@@ -171,6 +171,14 @@ Ledger政策または接続政策によってクエリ実行時に理由入力�
 総300文字まで入力可能です。
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20241031-233232.png" alt="image-20241031-233232.png" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20241031-233232.png" alt="image-20241031-233232.png" width="760" />
 </figure>
 
+#### 7. ポリシー例外の申請
+
+マスキングポリシーによりカラムの内容がマスキングされる場合や、アクセス制限ポリシーによりRestrictedデータを表示できない場合は、Workflowメニューからポリシー例外を直接申請するか、Webエディターから申請を開始できます。
+クエリ結果パネルを右クリックし、表示されるメニューで`Send Unmasking Request`または`Send Restricted Data Request`を選択すると、Workflowの該当する申請画面に移動します。<br/>Workflowで申請する方法については、以下のページを参照してください。
+
+* [Unmasking Requestの申請（マスキング解除申請）](../workflow/requesting-unmasking-mask-removal-request)
+* [Restricted Data Accessの申請（制限データアクセス申請）](../workflow/requesting-restricted-data-access)
+* [DBポリシー例外の申請（DB Policy Exception Request）](../workflow/requesting-db-policy-exception) <br/>
