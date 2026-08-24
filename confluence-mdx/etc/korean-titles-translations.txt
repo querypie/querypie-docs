@@ -131,6 +131,7 @@ Server Proxy 사용 활성화 | Enabling Server Proxy
 
 # Kubernetes Connection Management
 AWS에서 쿠버네티스 리소스 동기화 | Synchronizing Kubernetes Resources from AWS
+Google 클라우드 GKE 리소스 동기화 | Synchronizing GKE Resources from Google Cloud
 수동으로 쿠버네티스 클러스터 등록하기 | Manually Registering Kubernetes Clusters
 
 # Kubernetes Access Control

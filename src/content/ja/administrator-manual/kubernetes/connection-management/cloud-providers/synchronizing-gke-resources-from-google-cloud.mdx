@@ -1,0 +1,198 @@
+---
+title: 'Google CloudからGKEリソースを同期する'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2325086215/Google+GKE'
+---
+
+import { Callout } from 'nextra/components'
+
+# Google CloudからGKEリソースを同期する
+
+### 概要
+
+QueryPieは、Kubernetesクラスターの登録と管理のためのGCP連携をサポートしています。
+GCP Project内のGKEクラスターを同期してQueryPieの管理対象クラスターとして登録し、同期したクラスターに対するKubernetes APIアクセス権限をユーザーおよびグループに付与して、ポリシーを設定できます。
+
+このドキュメントでは、GCP Service Account Key JSONをQueryPieに直接登録し、GKE StandardまたはAutopilotクラスターを同期する手順について説明します。
+
+<Callout type="info">
+GCPのGKEリソース同期機能は、バージョン11.5.4以降および11.6.1以降で提供されます。
+</Callout>
+
+### 前提条件
+
+1. 対象のGCP Project IDを確認します。
+2. 同期対象のGKEクラスターがGKE StandardまたはAutopilotとして作成されていることを確認します。
+3. GCPでService Accountの作成、IAMロールの付与、Service Account Keyの作成が可能な管理者権限を用意します。
+4. QueryPieでKAC Cloud Providerを作成して同期できる管理者権限を用意します。
+5. GCP Projectで次のAPIが有効になっていることを確認します。
+
+| **API**                               | **用途**                                                         |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| `container.googleapis.com`            | GKEクラスター一覧、Endpoint、CAの取得、およびKubernetes APIへの接続 |
+| `iam.googleapis.com`                  | Service AccountおよびKeyの作成                                  |
+| `cloudresourcemanager.googleapis.com` | Project IAM Bindingの設定                                       |
+
+APIが有効になっていない場合は、GCP Consoleの**APIs & Services &gt; Enabled APIs & services**メニューで有効にするか、次のコマンドを実行します。
+```
+gcloud services enable \
+  container.googleapis.com \
+  iam.googleapis.com \
+  cloudresourcemanager.googleapis.com \
+  --project=<PROJECT_ID>
+```
+
+### GCP Service Accountの作成と権限付与
+
+QueryPieがGCPおよびGKEで認証できるように、QueryPie専用のService Accountを作成します。
+```
+gcloud iam service-accounts create querypie-kac-gke \
+  --display-name="QueryPie KAC GKE" \
+  --project=<PROJECT_ID>
+export QUERYPIE_GKE_SA="querypie-kac-gke@<PROJECT_ID>.iam.gserviceaccount.com"
+```
+
+作成したService Accountに、GKEクラスターの同期とKubernetes APIへの接続に必要なIAMロールを付与します。
+```
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+  --member="serviceAccount:${QUERYPIE_GKE_SA}" \
+  --role="roles/container.admin"
+```
+
+`roles/container.admin`には、QueryPie KACのクラスター同期とユーザーおよびグループのimpersonationに必要な`container.clusters.impersonate`権限が含まれます。
+
+### Service Account Key JSONの作成
+
+QueryPie Cloud Provider Credentialに登録するService Account Key JSONファイルを作成します。
+```
+gcloud iam service-accounts keys create querypie-kac-gke-key.json \
+  --iam-account="${QUERYPIE_GKE_SA}" \
+  --project=<PROJECT_ID>
+```
+
+生成されたJSONファイルはBase64に変換せず、ファイルのJSON全体をQueryPieに入力します。
+
+<Callout type="important">
+セキュリティ上の注意：Service Account Key JSONのprivate_keyは長期認証情報です。
+元の内容をGit、Wiki、メッセンジャー、チケットなどにアップロードしないでください。QueryPieへの登録に使用した後は、組織のKey保管および削除ポリシーに従って元のファイルを管理してください。
+QueryPieにCloud Providerを保存した後は、Service Account JSONを変更したり別のService Accountに置き換えたりできません。Credentialを変更する必要がある場合は、新しいCloud Providerを登録してください。
+</Callout>
+
+### QueryPieにGCP連携情報を登録する
+
+1. **Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers**メニューに移動します。
+2. 右上の`+ Create Provider`ボタンをクリックします。
+3. **Name**項目にプロバイダーを識別できる名前を入力します。
+4. **Cloud Provider**項目で**GCP**を選択します。
+5. **Project ID**項目にGKEクラスターが存在するGCP Project IDを入力します。
+6. **Credential**項目で**Service Account**を選択します。
+7. **Service Account JSON**項目に`querypie-kac-gke-key.json`ファイルのJSON全体を入力します。
+8. 必要に応じて**Search Filter**または**Auto Configuration Upon Synchronization &gt; Tag**を設定します。
+9. **Replication Frequency**項目で同期方法を選択します。
+    * **Manual**：同期を実行した時点でのみ手動でリソースを同期します。
+    * **Scheduling**：Cron Expressionに基づく定期スケジュールでリソースを同期します。
+10. `Dry Run`ボタンをクリックし、Credentialとクラスターの取得結果を事前に確認します。
+11. `Save`ボタンをクリックしてCloud Providerを保存します。
+
+### 登録したGCP Cloud Providerを同期および管理する
+
+1. **Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers**メニューに移動します。
+2. 登録したGCP Cloud Providerをクリックして詳細画面に移動します。
+3. 右上の`Synchronize`ボタンをクリックし、GCPからGKEクラスターを同期します。
+4. 表示される**Synchronization Log**で同期の進行状況を確認します。
+5. **Settings &gt; Systems &gt; Jobs**メニューでも同期履歴を確認できます。
+6. **Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters**一覧でGKEクラスターが登録されていることを確認します。
+
+QueryPieは`projects/<PROJECT_ID>/locations/-/clusters` APIを使用し、Project内のすべてのlocationからGKEクラスターを取得します。
+StandardとAutopilotの両方のGKEクラスターを同期できます。
+
+Cloud Providerを一度登録すると、プロバイダー情報の一部は変更できません。
+
+| **項目**                                                                | **変更可否** |
+| ----------------------------------------------------------------------- | ------------ |
+| Name                                                                    | 変更可能     |
+| Cloud Provider                                                          | 変更不可     |
+| Project ID                                                              | 変更不可     |
+| Credential                                                              | 変更不可     |
+| Service Account JSON                                                    | 変更不可     |
+| Vault Secret Store（Credentialで「Vault(GCP)」を選択した場合のみ）      | 変更不可     |
+| Roleset Path（Credentialで「Vault(GCP)」を選択した場合のみ）            | 変更不可     |
+| Search Filter                                                           | 変更可能     |
+| Auto Configuration Upon Synchronization &gt; Tag                        | 変更不可     |
+| Use Regular Expression Search                                           | 変更可能     |
+| Use Case-sensitive Search                                               | 変更可能     |
+| Replication Frequency                                                   | 変更可能     |
+
+### GKE StandardとAutopilotの違い
+
+| **項目**                                | **Standard** | **Autopilot** |
+| --------------------------------------- | ------------ | ------------- |
+| クラスター同期                          | サポート     | サポート      |
+| カスタムユーザーおよびグループのimpersonation | サポート     | サポート      |
+| `system:*`ユーザーおよびグループのimpersonation | サポート     | 未サポート    |
+
+Autopilotでは、KAC Policyのimpersonationグループとして`system:masters`などの`system:*`グループを使用できません。
+カスタムグループを使用する場合は、StandardとAutopilotのどちらでも、対象のGKEクラスターに、そのグループを必要なKubernetes `ClusterRole`に接続する`ClusterRoleBinding`を作成する必要があります。
+
+たとえば、QueryPieで`querypie:kac-admins`グループをimpersonationグループとして使用する場合は、対象のGKEクラスターに次のような`ClusterRoleBinding`を設定できます。
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: querypie-kac-admins
+subjects:
+  - kind: Group
+    name: querypie:kac-admins
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+```
+
+本番環境では、`cluster-admin`の代わりに、組織のポリシーに沿った最小権限の`ClusterRole`を使用することを推奨します。
+
+<Callout type="info">
+詳細については、次のリンクを参照してください。
+* [Google Cloud: GKE roles and permissions](https://cloud.google.com/iam/docs/roles-permissions/container)
+* [Google Cloud: GKE Autopilot security](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-security)
+</Callout>
+
+### Dry Run/Synchronization Logのメッセージ
+
+| **発生時点**                                    | **メッセージ**                                                                                                                                            |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dry RunまたはSynchronizeの同期開始              | `Cluster synchronize started.`                                                                                                                            |
+| 新規クラスターの追加完了                        | `New Cluster is added: {Cluster Name} (https://{Endpoint}).`                                                                                              |
+| 既存クラスター情報の更新完了                    | `Cluster {Cluster Name} is updated.`                                                                                                                      |
+| 既存クラスターの削除完了                        | `Cluster {Cluster Name} is removed.`                                                                                                                      |
+| Dry RunまたはSynchronizeの同期成功終了          | `Cluster synchronize succeeded.`                                                                                                                          |
+| 重複するクラスター名が確認され同期に失敗        | `Cluster synchronization failed. The cluster name “{Cluster Name}” is already in use by another cluster. To synchronize it, delete the existing cluster.` |
+| Dry RunまたはSynchronizeの同期失敗終了          | `Cluster synchronize failed. {additional statement}`                                                                                                      |
+| クラスターのEndpointを取得できず同期をスキップ  | `Skipping cluster {Cluster Name}: endpoint not available (cluster may be provisioning).`                                                                  |
+| クラスターのCA証明書を取得できず同期をスキップ  | `Skipping cluster {Cluster Name}: CA certificate not available.`                                                                                          |
+| 新規クラスターの追加に失敗                      | `Failed to add cluster {Cluster Name}: {additional statement}`                                                                                            |
+| 既存クラスターの更新に失敗                      | `Failed to update cluster {Cluster Name}: {additional statement}`                                                                                         |
+| 既存クラスターの削除に失敗                      | `Failed to delete cluster {Cluster Name}: {additional statement}`                                                                                         |
+
+### よくある質問
+
+#### Q. Service Account JSONはBase64でエンコードして入力する必要がありますか？
+
+A. いいえ。`querypie-kac-gke-key.json`ファイルのJSON全体をそのまま入力します。
+
+#### Q. GKE Autopilotクラスターも同期できますか？
+
+A. はい。
+GKE StandardとAutopilotの両方のクラスターを同期できます。
+ただし、Autopilotでは`system:masters`などの`system:*`ユーザーおよびグループのimpersonationを使用できないため、カスタムグループと必要なKubernetes RBAC Bindingを使用することを推奨します。
+
+#### Q. Cloud Providerの保存後にProject IDやCredentialを変更できますか？
+
+A. いいえ。
+Providerを保存した後は、Cloud Provider、Project ID、Credential、Service Account JSONなどの主要な接続情報を変更できません。
+別のProjectまたはCredentialを使用する必要がある場合は、Cloud Providerを新しく登録します。
+
+#### Q. 同期には成功しましたが、ユーザーがクラスターに接続できません。
+
+A. QueryPieにクラスターを登録した後も、ユーザーまたはグループに対するKACアクセス権限とポリシーを別途設定する必要があります。
+カスタムimpersonationグループを使用する場合は、対象のGKEクラスターで、そのグループがKubernetes `RoleBinding`または`ClusterRoleBinding`に接続されていることを確認します。

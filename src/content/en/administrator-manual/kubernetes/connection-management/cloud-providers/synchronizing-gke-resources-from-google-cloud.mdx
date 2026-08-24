@@ -1,0 +1,198 @@
+---
+title: 'Synchronizing GKE Resources from Google Cloud'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2325086215/Google+GKE'
+---
+
+import { Callout } from 'nextra/components'
+
+# Synchronizing GKE Resources from Google Cloud
+
+### Overview
+
+QueryPie supports GCP integration for Kubernetes cluster registration and management.
+You can synchronize GKE clusters in a GCP Project, register them as clusters managed by QueryPie, and grant users and groups Kubernetes API access and configure policies for the synchronized clusters.
+
+This document explains how to register a GCP Service Account Key JSON directly in QueryPie and synchronize GKE Standard or Autopilot clusters.
+
+<Callout type="info">
+GKE resource synchronization from GCP is available in versions 11.5.4 and later and 11.6.1 and later.
+</Callout>
+
+### Prerequisites
+
+1. Identify the target GCP Project ID.
+2. Verify that the GKE cluster to synchronize was created as a GKE Standard or Autopilot cluster.
+3. Prepare GCP administrator permissions to create a Service Account, grant IAM roles, and create a Service Account Key.
+4. Prepare QueryPie administrator permissions to create and synchronize a KAC Cloud Provider.
+5. Verify that the following APIs are enabled in the GCP Project.
+
+| **API**                               | **Purpose**                                                      |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| `container.googleapis.com`            | List GKE clusters, retrieve Endpoint and CA, and access the Kubernetes API |
+| `iam.googleapis.com`                  | Create the Service Account and Key                               |
+| `cloudresourcemanager.googleapis.com` | Configure Project IAM Binding                                    |
+
+If the APIs are not enabled, enable them from **APIs & Services &gt; Enabled APIs & services** in the GCP Console, or run the following command.
+```
+gcloud services enable \
+  container.googleapis.com \
+  iam.googleapis.com \
+  cloudresourcemanager.googleapis.com \
+  --project=<PROJECT_ID>
+```
+
+### Creating and Granting Permissions to a GCP Service Account
+
+Create a dedicated QueryPie Service Account so that QueryPie can authenticate with GCP and GKE.
+```
+gcloud iam service-accounts create querypie-kac-gke \
+  --display-name="QueryPie KAC GKE" \
+  --project=<PROJECT_ID>
+export QUERYPIE_GKE_SA="querypie-kac-gke@<PROJECT_ID>.iam.gserviceaccount.com"
+```
+
+Grant the Service Account the IAM role required for GKE cluster synchronization and Kubernetes API access.
+```
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+  --member="serviceAccount:${QUERYPIE_GKE_SA}" \
+  --role="roles/container.admin"
+```
+
+The `roles/container.admin` role includes the `container.clusters.impersonate` permission required for QueryPie KAC cluster synchronization and user and group impersonation.
+
+### Creating a Service Account Key JSON
+
+Create the Service Account Key JSON file to register as a QueryPie Cloud Provider Credential.
+```
+gcloud iam service-accounts keys create querypie-kac-gke-key.json \
+  --iam-account="${QUERYPIE_GKE_SA}" \
+  --project=<PROJECT_ID>
+```
+
+Enter the entire contents of the generated JSON file in QueryPie without converting it to Base64.
+
+<Callout type="important">
+Security notice: The private_key in the Service Account Key JSON is a long-lived credential.
+Do not upload the original content to Git, a Wiki, messenger, or a ticket. After registering it in QueryPie, manage the original file according to your organization's key retention and deletion policies.
+After saving a Cloud Provider in QueryPie, you cannot modify the Service Account JSON or replace it with another Service Account. Register a new Cloud Provider if you need to change the Credential.
+</Callout>
+
+### Registering GCP Integration Information in QueryPie
+
+1. Navigate to **Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers**.
+2. Click the `+ Create Provider` button in the upper-right corner.
+3. In **Name**, enter a name that identifies the provider.
+4. In **Cloud Provider**, select **GCP**.
+5. In **Project ID**, enter the GCP Project ID containing the GKE clusters.
+6. In **Credential**, select **Service Account**.
+7. In **Service Account JSON**, enter the entire contents of the `querypie-kac-gke-key.json` file.
+8. Configure **Search Filter** or **Auto Configuration Upon Synchronization &gt; Tag** as needed.
+9. In **Replication Frequency**, select a synchronization method.
+    * **Manual**: Synchronizes resources manually only when synchronization is initiated.
+    * **Scheduling**: Synchronizes resources periodically based on a Cron Expression.
+10. Click `Dry Run` to preview the Credential and cluster lookup results.
+11. Click `Save` to save the Cloud Provider.
+
+### Synchronizing and Managing a Registered GCP Cloud Provider
+
+1. Navigate to **Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers**.
+2. Click the registered GCP Cloud Provider to open its details page.
+3. Click `Synchronize` in the upper-right corner to synchronize GKE clusters from GCP.
+4. Check the synchronization progress in the displayed **Synchronization Log**.
+5. You can also check the synchronization history in **Settings &gt; Systems &gt; Jobs**.
+6. Verify that the GKE clusters are registered in **Administrator &gt; Kubernetes &gt; Connection Management &gt; Clusters**.
+
+QueryPie uses the `projects/<PROJECT_ID>/locations/-/clusters` API to retrieve GKE clusters from every location in the Project.
+You can synchronize both Standard and Autopilot GKE clusters.
+
+After registering a Cloud Provider, some provider information cannot be changed.
+
+| **Field**                                                               | **Editable** |
+| ----------------------------------------------------------------------- | ------------ |
+| Name                                                                    | Yes          |
+| Cloud Provider                                                          | No           |
+| Project ID                                                              | No           |
+| Credential                                                              | No           |
+| Service Account JSON                                                    | No           |
+| Vault Secret Store (only when “Vault(GCP)” is selected for Credential)  | No           |
+| Roleset Path (only when “Vault(GCP)” is selected for Credential)        | No           |
+| Search Filter                                                           | Yes          |
+| Auto Configuration Upon Synchronization &gt; Tag                        | No           |
+| Use Regular Expression Search                                           | Yes          |
+| Use Case-sensitive Search                                               | Yes          |
+| Replication Frequency                                                   | Yes          |
+
+### Differences Between GKE Standard and Autopilot
+
+| **Field**                                | **Standard** | **Autopilot** |
+| ---------------------------------------- | ------------ | ------------- |
+| Cluster synchronization                  | Supported    | Supported     |
+| Custom user and group impersonation      | Supported    | Supported     |
+| `system:*` user and group impersonation  | Supported    | Not supported |
+
+In Autopilot, you cannot use `system:*` groups such as `system:masters` as impersonation groups in a KAC Policy.
+When using a custom group, create a `ClusterRoleBinding` in the target GKE cluster that connects the group to the required Kubernetes `ClusterRole` for both Standard and Autopilot.
+
+For example, if you use the `querypie:kac-admins` group as an impersonation group in QueryPie, you can configure the following `ClusterRoleBinding` in the target GKE cluster.
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: querypie-kac-admins
+subjects:
+  - kind: Group
+    name: querypie:kac-admins
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+```
+
+In a production environment, we recommend using a least-privilege `ClusterRole` that follows your organization's policies instead of `cluster-admin`.
+
+<Callout type="info">
+For more information, refer to the following links.
+* [Google Cloud: GKE roles and permissions](https://cloud.google.com/iam/docs/roles-permissions/container)
+* [Google Cloud: GKE Autopilot security](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-security)
+</Callout>
+
+### Dry Run/Synchronization Log Messages
+
+| **When it occurs**                              | **Message**                                                                                                                                               |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dry Run or Synchronize starts                   | `Cluster synchronize started.`                                                                                                                            |
+| A new cluster is added                          | `New Cluster is added: {Cluster Name} (https://{Endpoint}).`                                                                                              |
+| An existing cluster is updated                  | `Cluster {Cluster Name} is updated.`                                                                                                                      |
+| An existing cluster is removed                  | `Cluster {Cluster Name} is removed.`                                                                                                                      |
+| Dry Run or Synchronize completes successfully   | `Cluster synchronize succeeded.`                                                                                                                          |
+| Synchronization fails due to a duplicate cluster name | `Cluster synchronization failed. The cluster name “{Cluster Name}” is already in use by another cluster. To synchronize it, delete the existing cluster.` |
+| Dry Run or Synchronize fails                    | `Cluster synchronize failed. {additional statement}`                                                                                                      |
+| Synchronization skips a cluster because its Endpoint cannot be retrieved | `Skipping cluster {Cluster Name}: endpoint not available (cluster may be provisioning).`                                                                  |
+| Synchronization skips a cluster because its CA certificate cannot be retrieved | `Skipping cluster {Cluster Name}: CA certificate not available.`                                                                                          |
+| Adding a new cluster fails                      | `Failed to add cluster {Cluster Name}: {additional statement}`                                                                                            |
+| Updating an existing cluster fails              | `Failed to update cluster {Cluster Name}: {additional statement}`                                                                                         |
+| Deleting an existing cluster fails              | `Failed to delete cluster {Cluster Name}: {additional statement}`                                                                                         |
+
+### Frequently Asked Questions
+
+#### Q. Do I need to encode the Service Account JSON in Base64 before entering it?
+
+A. No. Enter the entire contents of the `querypie-kac-gke-key.json` file as-is.
+
+#### Q. Can I synchronize GKE Autopilot clusters?
+
+A. Yes.
+You can synchronize both GKE Standard and Autopilot clusters.
+However, Autopilot does not support `system:*` user and group impersonation such as `system:masters`. We recommend using a custom group and the required Kubernetes RBAC Binding.
+
+#### Q. Can I modify the Project ID or Credential after saving the Cloud Provider?
+
+A. No.
+After saving the provider, you cannot change core connection information such as Cloud Provider, Project ID, Credential, or Service Account JSON.
+Register a new Cloud Provider if you need to use another Project or Credential.
+
+#### Q. Synchronization succeeded, but the user cannot connect to the cluster.
+
+A. Even after the cluster is registered in QueryPie, the user or group must be granted KAC access and assigned a policy separately.
+If you use a custom impersonation group, verify that the group is connected to a Kubernetes `RoleBinding` or `ClusterRoleBinding` in the target GKE cluster.

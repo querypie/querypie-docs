@@ -705,6 +705,10 @@ outputs:
   type: page
   kind: navigation
   path: administrator-manual/kubernetes/connection-management/cloud-providers/_meta.ts
+- page_id: '2325086215'
+  type: page
+  kind: mdx
+  path: administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-gke-resources-from-google-cloud.mdx
 - page_id: '544381739'
   type: page
   kind: mdx
