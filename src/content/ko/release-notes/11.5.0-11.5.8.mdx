@@ -1,9 +1,61 @@
 ---
-title: '11.5.0 ~ 11.5.7'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.7'
+title: '11.5.0 ~ 11.5.8'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.8'
 ---
 
-# 11.5.0 ~ 11.5.7
+# 11.5.0 ~ 11.5.8
+
+### QueryPie 11.5.8 Release
+
+2026년 08월 25일
+
+**New Feature**
+
+* [공통] External API V3(베타)에 Audit 로그 조회 및 DAC 운영 API 추가
+* [DAC] AWS Cloud Provider로 동기화한 ElastiCache Connection의 IAM 인증 지원
+* [SAC] RDP 접속 시 클립보드 사용 여부를 Policy로 제어할 수 있도록 지원
+* [SAC] SAC Policy에서 세션 레코딩 사용 여부를 설정할 수 있도록 지원
+
+**Improvement**
+
+* [공통] Authentication Job Change History에 최신 이력 1건만 표시되던 문제 수정
+* [공통] 삭제된 DB Connection의 연결 정보 때문에 Allowed Zone 삭제가 차단되던 문제 수정
+* [공통] Multi Agent Access Token을 만료 전에 갱신해 연결 안정성 개선
+* [공통] HTTPS_PROXY 설정 환경에서도 Multi Agent를 통한 SAC·DAC 연결이 정상 동작하도록 개선
+* [공통] Okta 동기화 시 기존 사용자의 First Name과 Last Name도 갱신되도록 개선
+* [DAC] Audit Log Export의 SQL Export Request Workflow에서 일부 요청이 누락되거나 중복되던 문제 수정
+* [DAC] SQL Request Workflow Audit Log Export에 Draft 요청이 포함되어 발생하던 오류 수정
+* [DAC] ClickHouse DateTime·DateTime64 결과가 QueryPie 실행 환경의 Timezone에 따라 달라지던 문제 수정
+* [DAC] ClickHouse Web Editor에서 View의 Object Info 조회 시 발생하던 엔진 오류 수정
+* [DAC] DataGrip에서 PostgreSQL 테이블 DDL 조회 시 WITH ORDINALITY 구문 파싱 오류 수정
+* [DAC] Data Policy Exclude Group에서 제거된 사용자가 계속 마스킹 제외 대상으로 처리되던 문제 수정
+* [DAC] DB Connection의 Accessible Users 목록에서 권한 갱신 시점인 Renewed At을 확인할 수 있도록 개선
+* [DAC] Dynamic Proxy의 예상 가능한 접속 실패가 반복적인 Error Stack Trace로 기록되지 않도록 개선
+* [DAC] Excel Export 옵션에 잘못 표시되던 Not Implemented 안내 문구 제거
+* [DAC] External API에서 Ledger 미지원 DB에 Policy와 Rule이 등록되지 않도록 검증 강화
+* [DAC] MariaDB View의 GROUP_CONCAT LIMIT 구문 사용 시 발생하던 Data Masking 파싱 오류 수정
+* [DAC] MongoDB Aggregate의 중첩된 `$addFields` 표현식 처리 오류 수정
+* [DAC] MongoDB createUser와 updateUser 명령의 권한 검사가 Web과 Proxy에서 동일하게 적용되도록 개선
+* [DAC] MongoDB 신규 Collection Insert 시 Create 권한도 함께 검증하도록 개선
+* [DAC] MongoDB Aggregate의 `$out` 및 `$merge` 실행 시 데이터 변경에 필요한 권한을 검증하도록 개선
+* [DAC] MongoDB DB Policy Exception Request에서 쉼표가 포함된 컬럼 경로가 정상 처리되지 않던 문제 수정
+* [DAC] MySQL Ledger Policy 적용 시 ALTER 구문이 SQL Request 대상으로 잘못 처리되던 문제 수정
+* [DAC] MySQL 접속 실패 시 내부 파싱 오류 대신 Target DB의 실제 오류가 표시되도록 개선
+* [DAC] MySQL Router 환경에서 mysql_native_password 계정으로 Web SQL 접속이 실패하던 문제 수정
+* [DAC] Query Audit 필터 조회 시 동일한 이력이 중복 표시되던 문제 수정
+* [DAC] Redshift Datashare Shared Database에서 쿼리 실행 시 발생하던 오류 수정
+* [DAC] Redshift Connection에 Import Batch Size 설정을 추가해 CSV·Excel Import 성능 개선
+* [DAC] Trino Proxy에서 후속 요청이 새 TCP 연결로 전송되어도 쿼리가 정상 처리되도록 개선
+* [DAC] Web SQL Editor의 MongoDB·DocumentDB·DynamoDB와 Proxy의 MongoDB·DocumentDB에서 조건 없는 변경 및 삭제를 차단하도록 적용 범위 확대
+* [DAC] 전체 스캔 경고와 WHERE 조건 없는 쿼리 차단을 사용하지 않을 때 불필요한 DML 분석을 생략하도록 개선
+* [DAC] Workflow Assignee를 여러 명 선택할 때 드롭다운이 닫히지 않도록 개선
+* [SAC] Azure Cloud Provider API 응답 지연 시 동기화 Job이 계속 Running 상태로 남지 않도록 개선
+* [KAC] GCP Cloud Provider로 동기화한 Cluster에 AWS 아이콘이 표시되던 문제 수정
+* [KAC] Cluster API URL에 Scheme이 누락된 경우 등록 전에 오류를 확인할 수 있도록 검증 개선
+* [KAC] Kubernetes 1.36.1 Cluster의 Node 개요 조회 시 declaredFeatures 파싱 오류 수정
+* [KAC] KAC Proxy 경유 kubectl 조회에서 기본 및 Wide 출력 컬럼이 누락되던 문제 수정
+* [KAC] 삭제된 사용자가 Roles의 Users / Groups 목록에 남아 있던 문제 수정
+
 
 ### QueryPie 11.5.7 Release
 
@@ -63,7 +115,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/1
 **New Feature**
 
 * [공통] SCIM 2.0 표준 프로토콜 지원 확대(PATCH 및 externalId 지원, 비활성 사용자 재활성화 포함)
-* [공통] External API V3 User API 추가(사용자 생성/조회/수정/삭제, 활성화/비활성화, 비밀번호 초기화, 프로필/그룹/Allowed Zone 관리, 인증 설정 조회 및 IdP 동기화 지원)
+* [공통] External API V3(베타) User API 추가(사용자 생성/조회/수정/삭제, 활성화/비활성화, 비밀번호 초기화, 프로필/그룹/Allowed Zone 관리, 인증 설정 조회 및 IdP 동기화 지원)
 * [DAC] GCP CloudProvider에 Vault 기반 Secret Store 연동 지원
 * [DAC] BigQuery, Google Spanner Connection의 Secret Store 연동 지원
 * [DAC] DB Jumphost(SSH Tunnel) 구성 시 Secret Store Auth Type 지원
