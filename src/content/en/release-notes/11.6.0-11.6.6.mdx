@@ -1,9 +1,74 @@
 ---
-title: '11.6.0 ~ 11.6.5'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.5'
+title: '11.6.0 ~ 11.6.6'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.6'
 ---
 
-# 11.6.0 ~ 11.6.5
+# 11.6.0 ~ 11.6.6
+
+### QueryPie 11.6.6 Release
+
+August 25, 2026
+
+**New Feature**
+
+* [Common] Added Audit log lookup and DAC operations APIs to External API V3 (beta)
+* [Common] Added integrated audit event lookup by user in User Timeline (beta)
+* [DAC] Added IAM authentication support for ElastiCache Connections synchronized through AWS Cloud Provider
+* [SAC] Added Policy-based control over clipboard use for RDP connections
+* [SAC] Added support for configuring session recording in SAC Policy
+* [MAC] Added support for configuring Forward Proxy usage for each MCP Server
+* [MAC] Added support for users to enter QueryPie Registered Credentials directly when connecting to an MCP Server
+* [MAC] Added Policy support for requiring users to enter a reason when using an MCP Server
+
+**Improvement**
+
+* [Common] Fixed issue where Authentication Job Change History displayed only the latest entry
+* [Common] Fixed issue where connection information for deleted DB Connections blocked Allowed Zone deletion
+* [Common] Improved connection stability by refreshing Multi Agent Access Tokens before expiration
+* [Common] Improved SAC and DAC connections through Multi Agent to work correctly in environments configured with HTTPS_PROXY
+* [Common] Improved Okta synchronization so existing users' First Name and Last Name are also updated
+* [DAC] Fixed missing or duplicate requests in SQL Export Request Workflow results from Audit Log Export
+* [DAC] Fixed errors caused by Draft requests being included in SQL Request Workflow Audit Log Export
+* [DAC] Fixed ClickHouse DateTime and DateTime64 results varying by the QueryPie execution environment's Timezone
+* [DAC] Fixed an engine error when viewing Object Info for a View in ClickHouse Web Editor
+* [DAC] Fixed a WITH ORDINALITY parsing error when DataGrip retrieves PostgreSQL table DDL
+* [DAC] Fixed issue where users removed from a Data Policy Exclude Group continued to be excluded from masking
+* [DAC] Improved DB Connection Accessible Users to show Renewed At, the time permissions were renewed
+* [DAC] Improved Dynamic Proxy so expected connection failures do not repeatedly log Error Stack Traces
+* [DAC] Removed an incorrect Not Implemented message from Excel Export options
+* [DAC] Strengthened External API validation to prevent Policy and Rule registration for DBs that do not support Ledger
+* [DAC] Fixed Data Masking parsing errors when MariaDB Views use the GROUP_CONCAT LIMIT clause
+* [DAC] Fixed handling errors for nested `$addFields` expressions in MongoDB Aggregate
+* [DAC] Improved permission checks for MongoDB createUser and updateUser commands to work consistently in Web and Proxy
+* [DAC] Improved MongoDB inserts into new Collections to also validate Create permission
+* [DAC] Improved MongoDB Aggregate `$out` and `$merge` operations to validate the permissions required to modify data
+* [DAC] Fixed comma-containing column paths not being processed correctly in MongoDB DB Policy Exception Requests
+* [DAC] Fixed ALTER statements being incorrectly treated as SQL Requests when MySQL Ledger Policy is applied
+* [DAC] Improved MySQL connection failures to display the Target DB's actual error instead of an internal parsing error
+* [DAC] Fixed Web SQL connection failures for mysql_native_password accounts in MySQL Router environments
+* [DAC] Fixed duplicate history entries when filtering Query Audit results
+* [DAC] Fixed errors when running queries against Redshift Datashare Shared Databases
+* [DAC] Added an Import Batch Size setting to Redshift Connections to improve CSV and Excel Import performance
+* [DAC] Improved Trino Proxy so queries are processed correctly when follow-up requests are sent over a new TCP connection
+* [DAC] Expanded blocking of unconditional changes and deletions to MongoDB, DocumentDB, and DynamoDB in Web SQL Editor and MongoDB and DocumentDB in Proxy
+* [DAC] Improved performance by skipping unnecessary DML analysis when full scan warnings and unconditional query blocking are disabled
+* [DAC] Improved the Workflow Assignee dropdown so it remains open while selecting multiple assignees
+* [SAC] Fixed Azure Cloud Provider synchronization Jobs remaining in Running state when API responses are delayed
+* [KAC] Fixed AWS icons being displayed for Clusters synchronized through GCP Cloud Provider
+* [KAC] Improved validation to identify a missing Scheme in a Cluster API URL before registration
+* [KAC] Fixed a declaredFeatures parsing error when viewing Node summaries for Kubernetes 1.36.1 Clusters
+* [KAC] Fixed missing default and Wide output columns in kubectl lookups through KAC Proxy
+* [KAC] Fixed deleted users remaining in the Users / Groups list for Roles
+* [AI Chat] Improved Audit Log recording for Context Management and configuration changes
+* [AI Chat] Improved QueryPie AI Agent so it can reference the current time
+* [MAC] Improved usability for masking Policy settings in MAC Policy YAML and the Policy UI
+* [MAC] Improved compatibility for scope and token response handling across MCP OAuth Providers
+* [MAC] Improved lookup performance and selection behavior on MCP Profile list and edit screens
+* [MAC] Improved handling stability for missing data in MCP Request Audit and SIEM integrations
+* [MAC] Added a warning before Tool initialization when MCP Server connection information changes
+* [MAC] Improved stability for saving and refreshing MCP Server Tool lists and displaying the default connection guide
+* [MAC] Improved UX for user MCP Server lists, Workflow request lists, and hidden MCP Roles
+
 
 ### QueryPie 11.6.5 Release
 
@@ -91,7 +156,7 @@ May 29, 2026
 **New Feature**
 
 * [Common] Expanded support for the SCIM 2.0 standard protocol (including PATCH, externalId support, and inactive user reactivation)
-* [Common] Added External API V3 User API (supports user create/read/update/delete, activation/deactivation, password reset, profile/group/Allowed Zone management, authentication setting lookup, and IdP synchronization)
+* [Common] Added External API V3 (beta) User API (supports user create/read/update/delete, activation/deactivation, password reset, profile/group/Allowed Zone management, authentication setting lookup, and IdP synchronization)
 * [DAC] Added Vault-based Secret Store integration support for GCP CloudProvider
 * [DAC] Added Secret Store integration support for BigQuery and Google Spanner Connections
 * [DAC] Added Secret Store Auth Type support when configuring DB Jumphost (SSH Tunnel)

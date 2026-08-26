@@ -1,9 +1,74 @@
 ---
-title: '11.6.0 ~ 11.6.5'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.5'
+title: '11.6.0 ~ 11.6.6'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.6'
 ---
 
-# 11.6.0 ~ 11.6.5
+# 11.6.0 ~ 11.6.6
+
+### QueryPie 11.6.6 Release
+
+2026年08月25日
+
+**New Feature**
+
+* [共通] External API V3（ベータ）にAuditログ照会およびDAC運用APIを追加
+* [共通] User Timelineでユーザー別の監査イベントを統合照会できるようサポート（ベータ）
+* [DAC] AWS Cloud Providerで同期したElastiCache ConnectionのIAM認証をサポート
+* [SAC] RDP接続時のクリップボード使用可否をPolicyで制御できるようサポート
+* [SAC] SAC Policyでセッションレコーディングの使用可否を設定できるようサポート
+* [MAC] MCP ServerごとにForward Proxyの使用可否を設定できるようサポート
+* [MAC] ユーザーがMCP Server接続時にQueryPie Registered Credentialを直接入力できるようサポート
+* [MAC] MCP Server使用時に理由入力を必須とするPolicyをサポート
+
+**Improvement**
+
+* [共通] Authentication Job Change Historyに最新履歴1件のみ表示される問題を修正
+* [共通] 削除済みDB Connectionの接続情報によりAllowed Zoneの削除がブロックされる問題を修正
+* [共通] Multi Agent Access Tokenを有効期限前に更新し、接続安定性を改善
+* [共通] HTTPS_PROXY設定環境でもMulti Agent経由のSAC・DAC接続が正常に動作するよう改善
+* [共通] Okta同期時に既存ユーザーのFirst NameとLast Nameも更新されるよう改善
+* [DAC] Audit Log ExportのSQL Export Request Workflowで一部リクエストが欠落または重複する問題を修正
+* [DAC] SQL Request Workflow Audit Log ExportにDraftリクエストが含まれて発生するエラーを修正
+* [DAC] ClickHouse DateTime・DateTime64の結果がQueryPie実行環境のTimezoneによって異なる問題を修正
+* [DAC] ClickHouse Web EditorでViewのObject Info照会時に発生するエンジンエラーを修正
+* [DAC] DataGripでPostgreSQLテーブルDDL照会時に発生するWITH ORDINALITY構文のパースエラーを修正
+* [DAC] Data Policy Exclude Groupから削除したユーザーが引き続きマスキング除外対象として処理される問題を修正
+* [DAC] DB ConnectionのAccessible Users一覧で権限更新時点のRenewed Atを確認できるよう改善
+* [DAC] Dynamic Proxyの想定可能な接続失敗がError Stack Traceとして繰り返し記録されないよう改善
+* [DAC] Excel Exportオプションに誤って表示されるNot Implemented案内を削除
+* [DAC] External APIでLedger未対応DBにPolicyとRuleを登録できないよう検証を強化
+* [DAC] MariaDB ViewでGROUP_CONCAT LIMIT構文を使用した際に発生するData Maskingパースエラーを修正
+* [DAC] MongoDB Aggregateのネストされた`$addFields`式の処理エラーを修正
+* [DAC] MongoDB createUserおよびupdateUserコマンドの権限チェックがWebとProxyで同一に適用されるよう改善
+* [DAC] MongoDBの新規CollectionへのInsert時にCreate権限も検証するよう改善
+* [DAC] MongoDB Aggregateの`$out`および`$merge`実行時にデータ変更に必要な権限を検証するよう改善
+* [DAC] MongoDB DB Policy Exception Requestでカンマを含むカラムパスが正常に処理されない問題を修正
+* [DAC] MySQL Ledger Policy適用時にALTER構文がSQL Request対象として誤処理される問題を修正
+* [DAC] MySQL接続失敗時に内部パースエラーではなくTarget DBの実際のエラーが表示されるよう改善
+* [DAC] MySQL Router環境でmysql_native_passwordアカウントによるWeb SQL接続が失敗する問題を修正
+* [DAC] Query Auditフィルター照会時に同一履歴が重複表示される問題を修正
+* [DAC] Redshift Datashare Shared Databaseでクエリ実行時に発生するエラーを修正
+* [DAC] Redshift ConnectionにImport Batch Size設定を追加し、CSV・Excel Import性能を改善
+* [DAC] Trino Proxyで後続リクエストが新しいTCP接続に送信されてもクエリが正常に処理されるよう改善
+* [DAC] WHERE条件のない変更・削除のブロック対象をWeb SQL EditorのMongoDB・DocumentDB・DynamoDBとProxyのMongoDB・DocumentDBへ拡大
+* [DAC] 全体スキャン警告とWHERE条件のないクエリブロックを使用しない場合、不要なDML分析を省略するよう改善
+* [DAC] Workflow Assigneeを複数選択する際にドロップダウンが閉じないよう改善
+* [SAC] Azure Cloud Provider APIレスポンス遅延時に同期JobがRunning状態のまま残る問題を修正
+* [KAC] GCP Cloud Providerで同期したClusterにAWSアイコンが表示される問題を修正
+* [KAC] Cluster API URLにSchemeがない場合、登録前にエラーを確認できるよう検証を改善
+* [KAC] Kubernetes 1.36.1 ClusterのNode概要照会時に発生するdeclaredFeaturesパースエラーを修正
+* [KAC] KAC Proxy経由のkubectl照会でデフォルトおよびWide出力カラムが欠落する問題を修正
+* [KAC] 削除済みユーザーがRolesのUsers / Groups一覧に残る問題を修正
+* [AI Chat] Context Managementおよび設定変更のAudit Log記録を改善
+* [AI Chat] QueryPie AI Agentが現在時刻を参照できるよう改善
+* [MAC] MAC Policy YAMLとPolicy UIのマスキングPolicy設定の使いやすさを改善
+* [MAC] MCP OAuth Providerごとのscopeおよびtokenレスポンス処理の互換性を改善
+* [MAC] MCP Profile一覧と編集画面の照会性能および選択動作を改善
+* [MAC] MCP Request AuditおよびSIEM連携の欠落データ処理安定性を改善
+* [MAC] MCP Server接続情報変更時にTool初期化前の警告を表示するよう改善
+* [MAC] MCP ServerのTool一覧保存、更新、デフォルト接続ガイド表示の安定性を改善
+* [MAC] ユーザーMCP Server一覧、Workflow申請一覧、非表示MCP Role処理のUXを改善
+
 
 ### QueryPie 11.6.5 Release
 
@@ -91,7 +156,7 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/1
 **New Feature**
 
 * [共通] SCIM 2.0標準プロトコルサポート拡大（PATCHおよびexternalIdサポート、非アクティブユーザーの再アクティブ化を含む）
-* [共通] External API V3 User API追加（ユーザー作成/照会/修正/削除、アクティブ化/非アクティブ化、パスワードリセット、プロファイル/グループ/Allowed Zone管理、認証設定照会およびIdP同期サポート）
+* [共通] External API V3（ベータ）User API追加（ユーザー作成/照会/修正/削除、アクティブ化/非アクティブ化、パスワードリセット、プロファイル/グループ/Allowed Zone管理、認証設定照会およびIdP同期サポート）
 * [DAC] GCP CloudProviderにVault基盤Secret Store連動サポート
 * [DAC] BigQuery、Google Spanner ConnectionのSecret Store連動サポート
 * [DAC] DB Jumphost（SSH Tunnel）構成時Secret Store Auth Typeサポート
