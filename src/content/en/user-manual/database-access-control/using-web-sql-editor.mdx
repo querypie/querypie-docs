@@ -1,11 +1,11 @@
 ---
-title: 'Connecting with Web SQL Editor'
+title: 'Using Web SQL Editor'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544380222/SQL'
 ---
 
 import { Callout } from 'nextra/components'
 
-# Connecting with Web SQL Editor
+# Using Web SQL Editor
 
 ### Overview
 
@@ -17,7 +17,7 @@ QueryPie provides a web SQL editor that allows you to execute queries and view d
 You can check the list of database connections with access permissions granted to individual users or groups, and select the connection to work with to connect to the database.
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20251218-115500.png" alt="Connection selection and connection screen in User &gt; Databases" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20251218-115500.png" alt="Connection selection and connection screen in User &gt; Databases" width="760" />
 <figcaption>
 Connection selection and connection screen in User &gt; Databases
 </figcaption>
@@ -37,7 +37,7 @@ The editor consists of a left object panel, top toolbar, center SQL editor, and 
 #### 1. Top Left Object Panel
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141439.png" alt="SQL Editor &gt; Connection Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/screenshot-20240802-141439.png" alt="SQL Editor &gt; Connection Panel" width="760" />
 <figcaption>
 SQL Editor &gt; Connection Panel
 </figcaption>
@@ -50,7 +50,7 @@ SQL Editor &gt; Connection Panel
 #### 2. Left Object Panel
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/screenshot-20240802-141927.png" alt="SQL Editor &gt; Connection Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/screenshot-20240802-141927.png" alt="SQL Editor &gt; Connection Panel" width="760" />
 <figcaption>
 SQL Editor &gt; Connection Panel
 </figcaption>
@@ -65,7 +65,7 @@ SQL Editor &gt; Connection Panel
 #### 3. Top Toolbar
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240731-115955.png" alt="QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240731-115955.png" alt="QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar" width="760" />
 <figcaption>
 QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
 </figcaption>
@@ -90,7 +90,7 @@ QueryPie Web &gt; Database Access Control &gt; SQL Editor &gt; Toolbar
 
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052240.png" alt="SQL Editor &gt; Editor Tab & Result" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-052240.png" alt="SQL Editor &gt; Editor Tab & Result" width="760" />
 <figcaption>
 SQL Editor &gt; Editor Tab & Result
 </figcaption>
@@ -104,7 +104,7 @@ SQL Editor &gt; Editor Tab & Result
 #### 3. Queries Panel
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-052539.png" alt="SQL Editor &gt; Queries Panel " width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-052539.png" alt="SQL Editor &gt; Queries Panel " width="760" />
 <figcaption>
 SQL Editor &gt; Queries Panel
 </figcaption>
@@ -120,7 +120,7 @@ To use this feature, administrators must pre-configure query sharing settings.
 #### 4. Object Info Panel
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-053427.png" alt="SQL Editor &gt; Object Info Panel " width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-053427.png" alt="SQL Editor &gt; Object Info Panel " width="760" />
 <figcaption>
 SQL Editor &gt; Object Info Panel
 </figcaption>
@@ -137,7 +137,7 @@ SQL Editor &gt; Object Info Panel
 #### 5. SQL History Panel
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20240802-054007.png" alt="SQL Editor &gt; SQL History Panel" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20240802-054007.png" alt="SQL Editor &gt; SQL History Panel" width="760" />
 <figcaption>
 SQL Editor &gt; SQL History Panel
 </figcaption>
@@ -171,6 +171,14 @@ As shown in the figure below, enter the reason for executing the query in the "W
 You can enter up to 300 characters.
 
 <figure data-layout="center" data-align="center">
-<img src="/user-manual/database-access-control/connecting-with-web-sql-editor/image-20241031-233232.png" alt="image-20241031-233232.png" width="760" />
+<img src="/user-manual/database-access-control/using-web-sql-editor/image-20241031-233232.png" alt="image-20241031-233232.png" width="760" />
 </figure>
 
+#### 7. Requesting Policy Exceptions
+
+When masking policies mask column values or access restriction policies prevent you from viewing restricted data, you can request a policy exception directly from Workflow or start the request from the web editor.
+Right-click the query results panel and select `Send Unmasking Request` or `Send Restricted Data Request` to open the corresponding Workflow request page.<br/>For instructions on submitting requests in Workflow, refer to the following pages.
+
+* [Requesting Unmasking (Mask Removal)](../workflow/requesting-unmasking-mask-removal-request)
+* [Requesting Restricted Data Access](../workflow/requesting-restricted-data-access)
+* [Requesting a DB Policy Exception](../workflow/requesting-db-policy-exception) <br/>

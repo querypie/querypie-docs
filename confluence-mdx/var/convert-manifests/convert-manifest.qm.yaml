@@ -705,6 +705,10 @@ outputs:
   type: page
   kind: navigation
   path: administrator-manual/kubernetes/connection-management/cloud-providers/_meta.ts
+- page_id: '2325086215'
+  type: page
+  kind: mdx
+  path: administrator-manual/kubernetes/connection-management/cloud-providers/synchronizing-gke-resources-from-google-cloud.mdx
 - page_id: '544381739'
   type: page
   kind: mdx
@@ -1425,14 +1429,14 @@ outputs:
   type: page
   kind: mdx
   path: user-manual/database-access-control/connecting-via-google-bigquery-oauth-authentication.mdx
-- page_id: '544380222'
-  type: page
-  kind: mdx
-  path: user-manual/database-access-control/connecting-with-web-sql-editor.mdx
 - page_id: '544380354'
   type: page
   kind: mdx
   path: user-manual/database-access-control/setting-default-privilege.mdx
+- page_id: '544380222'
+  type: page
+  kind: mdx
+  path: user-manual/database-access-control/using-web-sql-editor.mdx
 - page_id: '544384011'
   type: page
   kind: mdx

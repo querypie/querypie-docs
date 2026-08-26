@@ -3,6 +3,8 @@ title: 'サーバーアクセスポリシー設定'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544381039'
 ---
 
+import { Callout } from 'nextra/components'
+
 # サーバーアクセスポリシー設定
 
 ### Overview
@@ -18,25 +20,32 @@ PolicyはIaCのような形態でYAML Codeを基盤に動作します。
 *  **serverGroup**: 接続を許可するサーバーグループ
 *  **account**: サーバーグループに登録されたAccount
 *  **protocols**: 許可プロトコル（10.2基準、SSH、SFTP、TELNET、FTP、RDPサポート）
-*  **commandRef**: 接続時適用するコマンドテンプレート
+*  **commandsRef**: 接続時適用するコマンドテンプレート
     * 選択したCommand Templateの内容は`Command Policy Detail`アコーディオンを展開して確認可能
     * コマンドテンプレートの生成と管理方法は[Command Templates](../command-templates)参照
     * Allow / Denyコマンドテンプレートをすべて適用した場合、Deny優先適用
 *  **accessTime**: 接続許可時間
 *  **accessWeekday**: 接続可能曜日
-*  **ipAddress**: 接続可能IP設定<br/>*Security &gt; Resource IP Access Control Configuration設定に該当する場合、許可した範囲内のIPのみアクセス許可
+*  **ipAddresses**: 接続可能IP設定<br/>*Security &gt; Resource IP Access Control Configuration設定に該当する場合、許可した範囲内のIPのみアクセス許可
 *  **commandAudit**: 接続時のコマンド監査適用の有無
 *  **commandDetection**: ScriptとAliasが呼び出される時、内部の禁止コマンド検出の有無設定<br/>*制約事項: (10.2.1) Bash Shellでのみ動作、Scriptで他のScriptを呼び出すコマンドは実行ブロック
-*  **proxyUsage**: Agentを通じたプロキシ接続許可の有無
+* **sessionRecording**: セッションレコーディングの使用有無を設定します。デフォルト値は`On(true)`です。複数のポリシーが同時に適用される場合、いずれか一つでも`On(true)`であればセッションレコーディングが有効化されます。そのため、セッションレコーディングを無効化するには、一致するすべてのポリシーで`Off(false)`に設定する必要があります。（11.5.8、11.6.6からサポート）
+* **sessionRecordingMaxSizeMb**: セッションレコーディングファイルの最大チャンクサイズをMB単位で設定します。デフォルト値は`100`で、10から1024まで入力できます。複数のポリシーが同時に適用される場合は、最も小さい値が適用されます。（11.5.8、11.6.6からサポート）
+*  **useProxy**: Agentを通じたプロキシ接続許可の有無
 *  **maxSessions**: サーバー当たり最大同時接続数
 *  **sessionTimeout**: サーバーセッションタイムアウト基準時間（分）
-*  **requirePrivilege**: サーバー接続時の権限承認必要の有無<br/>*このオプションを有効化（Enable）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けなければサーバーに接続できません。
+*  **requirePrivilege**: サーバー接続時の権限承認必要の有無<br/>*このオプションを有効化（`Enable`）すると、該当アカウントはサーバー権限要求（Server Privilege Request）ワークフローを通じた承認を受けなければサーバーに接続できません。
+* **allowLocalPortForwarding** : クライアントからリモートサーバーへのローカルポートフォワーディングを許可します。デフォルト値は`Disable(false)`です。VS Code Remote SSHなど、ローカルポートフォワーディングを使用するクライアントでは`Enable(true)`に設定する必要があります。
+* **allowClipboard** (**Allow RDP Clipboard**): RDPセッションのクリップボードリダイレクト許可有無を設定します。デフォルト値は`true`で、`false`に設定するとRDPセッションでclipboard redirectionをブロックできます。（11.5.8、11.6.6からサポート）
 
+<Callout type="info">
+Clipboard Redirectionとは？ <br/>ローカルデバイスとリモートWindowsデスクトップセッション間でクリップボードを共有し、コピーしたテキストやファイルなどを相互に貼り付けられるようにするRemote Desktop Protocol（RDP）の機能です。
+</Callout>
 
-### Policyコードの編集
+#### Editor Modeでポリシーを編集する
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
+<img src="/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/image-20260804-101830.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
 <figcaption>
 Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
 </figcaption>

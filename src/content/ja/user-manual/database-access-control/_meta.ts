@@ -1,5 +1,5 @@
 export default {
-  'connecting-with-web-sql-editor': 'Web SQLエディターでの接続',
+  'using-web-sql-editor': 'Web SQLエディターを使用する',
   'setting-default-privilege': 'Default Privilegeの設定',
   'connecting-to-proxy-without-agent': 'エージェントなしでのプロキシ接続',
   'connecting-via-google-bigquery-oauth-authentication': 'Google BigQuery OAuth認証による接続',

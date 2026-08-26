@@ -2,6 +2,10 @@
   destination: /support/operational-log-collection-guide
   created_on: '2026-07-28'
   expires_on: '2026-09-22'
+- source: /user-manual/database-access-control/connecting-with-web-sql-editor
+  destination: /user-manual/database-access-control/using-web-sql-editor
+  created_on: '2026-08-10'
+  expires_on: '2026-10-05'
 - source: /user-manual/kubernetes-access-control/web-client
   destination: /user-manual/kubernetes-access-control/connecting-to-kubernetes-clusters-with-web-client
   created_on: '2026-07-28'

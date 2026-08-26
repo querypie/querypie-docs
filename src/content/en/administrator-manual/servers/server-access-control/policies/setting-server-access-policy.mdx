@@ -3,6 +3,8 @@ title: 'Setting Server Access Policies'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/544381039'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Setting Server Access Policies
 
 ### Overview
@@ -18,25 +20,32 @@ In addition, you can set the number of allowed sessions per user.
 *  **serverGroup**: Server group to allow access to
 *  **account**: Account registered in the server group
 *  **protocols**: Allowed protocols (as of 10.2, supports SSH, SFTP, TELNET, FTP, RDP)
-*  **commandRef**: Command template to apply when accessing
+*  **commandsRef**: Command template to apply when accessing
     * You can check the content of the selected Command Template by expanding the `Command Policy Detail` accordion
     * For creating and managing command templates, refer to [Command Templates](../command-templates)
     * When both Allow / Deny command templates are applied, Deny takes priority
 *  **accessTime**: Access allowed time
 *  **accessWeekday**: Access allowed days of the week
-*  **ipAddress**: Access allowed IP settings<br/>*When corresponding to Security &gt; Resource IP Access Control Configuration settings, only IPs within the allowed range are permitted access
+*  **ipAddresses**: Access allowed IP settings<br/>*When corresponding to Security &gt; Resource IP Access Control Configuration settings, only IPs within the allowed range are permitted access
 *  **commandAudit**: Whether to apply command auditing when accessing
 *  **commandDetection**: Whether to detect prohibited commands within Script and Alias when they are called<br/>*Limitation: (10.2.1) Only works in Bash Shell, commands that call other Scripts from Script are blocked
-*  **proxyUsage**: Whether to allow proxy access through Agent
+*  **sessionRecording**: Sets whether session recording is enabled. The default is `On(true)`. When multiple policies apply, session recording is enabled if any policy has this option set to `On(true)`. To disable session recording, set it to `Off(false)` in all matching policies. (Supported from 11.5.8 and 11.6.6)
+*  **sessionRecordingMaxSizeMb**: Sets the maximum chunk size of session recording files in MB. The default is `100`, and you can enter a value from 10 to 1024. When multiple policies apply, the smallest value is used. (Supported from 11.5.8 and 11.6.6)
+*  **useProxy**: Whether to allow proxy access through Agent
 *  **maxSessions**: Maximum concurrent connections per server
 *  **sessionTimeout**: Server session timeout criteria time (minutes)
-*  **requirePrivilege**: Whether privilege approval is required for server access<br/>*When this option is activated (Enable), the account must receive approval through the server privilege request (Server Privilege Request) workflow to access the server.
+*  **requirePrivilege**: Whether privilege approval is required for server access<br/>*When this option is activated (`Enable`), the account must receive approval through the server privilege request (Server Privilege Request) workflow to access the server.
+*  **allowLocalPortForwarding**: Allows clients to forward local ports to the remote server. The default is `Disable(false)`. Set it to `Enable(true)` for clients that use local port forwarding, such as VS Code Remote SSH.
+*  **allowClipboard** (**Allow RDP Clipboard**): Sets whether clipboard redirection is allowed for RDP sessions. The default is `true`; setting it to `false` blocks clipboard redirection in the RDP session. (Supported from 11.5.8 and 11.6.6)
 
+<Callout type="info">
+What is Clipboard Redirection?<br/>Clipboard Redirection is a Remote Desktop Protocol (RDP) feature that shares the clipboard between a local device and a remote Windows desktop session, allowing copied text or files to be pasted between them.
+</Callout>
 
-### Editing Policy Code
+#### Editing Policies in Editor Mode
 
 <figure data-layout="center" data-align="center">
-<img src="/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/Screenshot-2025-07-27-at-5.40.59-PM.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
+<img src="/administrator-manual/servers/server-access-control/policies/setting-server-access-policy/image-20260804-101830.png" alt="Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode" width="760" />
 <figcaption>
 Administrator &gt; Servers &gt; Server Access Control &gt; Policies &gt; List Details &gt; Go to Editor Mode
 </figcaption>
