@@ -30,7 +30,7 @@ QueryPie ACP 는 MySQL Database 에 이용자 계정, 접근 대상 Database 나
 * querypie
     * 접근제어 대상과 정책 정보를 저장합니다. QueryPie Meta DB 라고 지칭합니다. 이용자 계정, 접근 대상이 되는 자산, 해당 시스템에 접근하기 위한 비밀정보, 접근제어 정책 등 ACP 를 운영하는데 필요한 대부분의 데이터는 이 데이터베이스에 저장됩니다.
 * querypie_snapshot
-    * 이용자가 대상 시스템에 접속하여 SQL Query 를 실행하거나 시스템에 접근하여 활동하는 기록을 일시적으로 보관합니다. 접속 세션이 살아있는 동안 사용되며, 접속 세션이 종료되면 querypie_log 로 이관됩니다.
+    * 이용자가 대상 시스템에 접속하여 SQL Query 를 실행하거나 시스템에 접근하여 활동하는 기록을 일시적으로 보관합니다. 접속 세션이 살아있는 동안 사용되며, 접속 세션이 종료되면 querypie_log 로 이관됩니다. 이 데이터베이스는 DDL 은 복원되어야 하지만, 데이터 자체는 복원하지 않아도 무방하며, 백업 후 복구된 데이터는 무시됩니다.
 * querypie_log
     * 감사기록을 저장합니다. 이용자가 Database, Server 등 자산에 접속한 기록, 이용자의 활동 내역이 기록됩니다.
 
@@ -45,21 +45,21 @@ QueryPie ACP 컨테이너를 정상적으로 복구하려면 컨테이너 실행
 
 다음 정보를 포함하여 실제 운영 환경의 컨테이너 설정 전체를 보관합니다.
 
-* 데이터베이스와 Redis 연결 정보
-* KEY_ENCRYPTION_KEY
+* 컨테이너 환경변수 - 데이터베이스와 Redis 연결 정보
+* 컨테이너 환경변수 - `KEY_ENCRYPTION_KEY`
 * TLS 인증서와 Private Key
 * 외부 시스템 연결 정보
 * 컨테이너에 마운트한 인증서와 설정 파일
-* QueryPie 컨테이너 이미지 버전
+* QueryPie 컨테이너 이미지 버전과 이미지 자체
 
 특히 `KEY_ENCRYPTION_KEY`는 백업 당시의 값을 그대로 보관해야 합니다.
 이 값이 유실되거나 다른 값으로 복원되면 데이터베이스에 암호화되어 저장된 Connection 비밀번호, SSH Key 등의 비밀 정보를 사용할 수 없습니다.
 
 환경 변수와 인증서에는 비밀번호와 Private Key가 포함될 수 있으므로 암호화된 저장소에 보관하고 접근 권한을 제한해야 합니다.
 
-AGENT_SECRET, REDIS_PASSWORD 는 복구 과정에서 변경할 수 있는 값입니다.
+컨테이너 환경변수 가운데, `AGENT_SECRET`, `REDIS_PASSWORD` 는 복구 과정에서 변경할 수 있는 값입니다.
 
-Custom JDBC Driver, TLS 인증서, DAC_SKIP_SQL_COMMAND_RULE_FILE (`skip_command_config.json`) 등 파일을 사용하는 경우, 이를 백업하고 복구하여야 합니다.
+Custom JDBC Driver, TLS 인증서, `DAC_SKIP_SQL_COMMAND_RULE_FILE` (`skip_command_config.json`) 등 파일을 사용하는 경우, 이를 백업하고 복구하여야 합니다.
 
 #### Secret Store 에 보관되는 정보
 
@@ -121,6 +121,7 @@ mysqldump \
   --password \
   --single-transaction \
   --hex-blob \
+  --routines \
   --databases querypie querypie_snapshot querypie_log \
   > "querypie-backup-$(date +%Y%m%d-%H%M%S).sql"
 ```
@@ -130,6 +131,10 @@ mysqldump \
 
 `--single-transaction`은 트랜잭션을 지원하는 테이블을 일관된 시점으로 백업하는 데 사용합니다.
 백업 중에는 스키마 변경 작업을 수행하지 않는 것을 권장합니다.
+
+`--routines`는 일부 이전 QueryPie 버전에서 사용하는 stored procedure를 포함하여 백업하기 위해 지정합니다.
+QueryPie 기본 구성에서는 MySQL Event를 생성하지 않으므로 `--events`는 사용하지 않습니다.
+고객이 별도의 Event를 생성한 경우에만 `--events`를 추가하십시오.
 
 백업 계정에는 세 데이터베이스를 조회하고 스키마를 덤프하는 데 필요한 권한이 있어야 합니다.
 명령의 종료 상태와 생성된 파일의 크기를 확인하고, 생성된 SQL 파일은 비밀 정보와 감사 로그가 포함된 중요 자료로 취급하여 안전하게 보관하십시오.
