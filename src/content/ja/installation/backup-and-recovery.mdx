@@ -30,7 +30,7 @@ QueryPie ACP は、ユーザーアカウント、アクセス対象の Database 
 * querypie
     * アクセス制御の対象とポリシー情報を保存します。このデータベースは QueryPie Meta DB と呼ばれます。ユーザーアカウント、アクセス対象の資産、対象システムへのアクセスに必要な秘密情報、アクセス制御ポリシーなど、ACP の運用に必要なデータの大部分がこのデータベースに保存されます。
 * querypie_snapshot
-    * ユーザーが対象システムに接続して SQL Query を実行した記録や、システムにアクセスして行った操作の記録を一時的に保存します。接続セッションが有効な間に使用され、セッションが終了すると querypie_log に移行されます。
+    * ユーザーが対象システムに接続して SQL Query を実行した記録や、システムにアクセスして行った操作の記録を一時的に保存します。接続セッションが有効な間に使用され、セッションが終了すると querypie_log に移行されます。このデータベースは DDL を復元する必要がありますが、データ自体を復元する必要はなく、バックアップから復元されたデータは無視されます。
 * querypie_log
     * 監査記録を保存します。ユーザーが Database や Server などの資産にアクセスした記録と、ユーザーの操作履歴が記録されます。
 
@@ -45,21 +45,21 @@ QueryPie ACP コンテナを正常にリカバリするには、コンテナの�
 
 次の情報を含む、実際の運用環境のコンテナ設定全体を保管します。
 
-* データベースと Redis の接続情報
-* KEY_ENCRYPTION_KEY
+* コンテナ環境変数 - データベースと Redis の接続情報
+* コンテナ環境変数 - `KEY_ENCRYPTION_KEY`
 * TLS 証明書と Private Key
 * 外部システムの接続情報
 * コンテナにマウントした証明書と設定ファイル
-* QueryPie コンテナイメージのバージョン
+* QueryPie コンテナイメージのバージョンとイメージ本体
 
 特に、`KEY_ENCRYPTION_KEY` はバックアップ時の値をそのまま保管する必要があります。
 この値が失われたり、異なる値でリカバリされたりすると、データベースに暗号化して保存された Connection パスワードや SSH Key などの秘密情報を使用できません。
 
 環境変数と証明書にはパスワードや Private Key が含まれる場合があるため、暗号化された保存先に保管し、アクセス権限を制限してください。
 
-AGENT_SECRET と REDIS_PASSWORD は、リカバリ中に変更できます。
+コンテナ環境変数のうち、`AGENT_SECRET` と `REDIS_PASSWORD` はリカバリ中に変更できます。
 
-Custom JDBC Driver、TLS 証明書、DAC_SKIP_SQL_COMMAND_RULE_FILE（`skip_command_config.json`）などのファイルを使用している場合は、これらもバックアップしてリカバリする必要があります。
+Custom JDBC Driver、TLS 証明書、`DAC_SKIP_SQL_COMMAND_RULE_FILE`（`skip_command_config.json`）などのファイルを使用している場合は、これらもバックアップしてリカバリする必要があります。
 
 #### Secret Store に保存される情報
 
@@ -121,6 +121,7 @@ mysqldump \
   --password \
   --single-transaction \
   --hex-blob \
+  --routines \
   --databases querypie querypie_snapshot querypie_log \
   > "querypie-backup-$(date +%Y%m%d-%H%M%S).sql"
 ```
@@ -130,6 +131,10 @@ mysqldump \
 
 `--single-transaction` は、トランザクションをサポートするテーブルを一貫した時点でバックアップするために使用します。
 バックアップ中はスキーマ変更を実行しないことを推奨します。
+
+`--routines` は、一部の旧バージョンの QueryPie で使用する stored procedure をバックアップに含めるために指定します。
+QueryPie のデフォルト構成では MySQL Event を作成しないため、`--events` は使用しません。
+お客様が別途 Event を作成している場合にのみ、`--events` を追加してください。
 
 バックアップアカウントには、3 つのデータベースを参照し、スキーマをダンプするために必要な権限が必要です。
 コマンドの終了ステータスと生成されたファイルのサイズを確認し、秘密情報と監査ログを含む SQL ファイルは機密情報として安全に保管してください。

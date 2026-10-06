@@ -30,7 +30,7 @@ This data is divided into three logical databases with the following roles.
 * querypie
     * Stores access control targets and policy information. This database is referred to as the QueryPie Meta DB. Most of the data required to operate ACP, including user accounts, target assets, secrets for accessing those systems, and access control policies, is stored in this database.
 * querypie_snapshot
-    * Temporarily stores records generated when users run SQL queries on target systems or perform activities after accessing those systems. The records remain while the connection session is active and are transferred to querypie_log when the session ends.
+    * Temporarily stores records generated when users run SQL queries on target systems or perform activities after accessing those systems. The records remain while the connection session is active and are transferred to querypie_log when the session ends. The DDL for this database must be restored, but the data itself does not need to be restored, and any data restored from a backup is ignored.
 * querypie_log
     * Stores audit records, including records of users accessing assets such as databases and servers and records of user activities.
 
@@ -45,21 +45,21 @@ For details about the environment variables, see [Container Environment Variable
 
 Retain the complete container configuration for the production environment, including the following information.
 
-* Database and Redis connection information
-* KEY_ENCRYPTION_KEY
+* Container environment variables - Database and Redis connection information
+* Container environment variables - `KEY_ENCRYPTION_KEY`
 * TLS certificates and private keys
 * External system connection information
 * Certificates and configuration files mounted in the containers
-* QueryPie container image version
+* QueryPie container image version and the image itself
 
 In particular, retain the exact value of `KEY_ENCRYPTION_KEY` used at the time of backup.
 If this value is lost or restored with a different value, secrets encrypted in the database, such as connection passwords and SSH keys, cannot be used.
 
 Because environment variables and certificates may contain passwords and private keys, store them in an encrypted repository and restrict access to them.
 
-You can change AGENT_SECRET and REDIS_PASSWORD during the recovery process.
+Among the container environment variables, you can change `AGENT_SECRET` and `REDIS_PASSWORD` during the recovery process.
 
-If you use files such as a custom JDBC driver, TLS certificates, or DAC_SKIP_SQL_COMMAND_RULE_FILE (`skip_command_config.json`), back up and restore them as well.
+If you use files such as a custom JDBC driver, TLS certificates, or `DAC_SKIP_SQL_COMMAND_RULE_FILE` (`skip_command_config.json`), back up and restore them as well.
 
 #### Information Stored in the Secret Store
 
@@ -121,6 +121,7 @@ mysqldump \
   --password \
   --single-transaction \
   --hex-blob \
+  --routines \
   --databases querypie querypie_snapshot querypie_log \
   > "querypie-backup-$(date +%Y%m%d-%H%M%S).sql"
 ```
@@ -130,6 +131,10 @@ Do not enter the password directly on the command line because it may be exposed
 
 The `--single-transaction` option creates a consistent point-in-time backup of tables that support transactions.
 We recommend avoiding schema changes while the backup is running.
+
+The `--routines` option includes stored procedures used by some earlier QueryPie versions in the backup.
+QueryPie does not create MySQL Events in its default configuration, so do not use `--events`.
+Add `--events` only if your organization has created separate Events.
 
 The backup account must have the permissions required to read the three databases and dump their schemas.
 Check the command's exit status and the size of the generated file, and treat the SQL file as sensitive because it contains secrets and audit logs.
