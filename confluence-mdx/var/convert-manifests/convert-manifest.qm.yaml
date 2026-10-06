@@ -1089,6 +1089,10 @@ outputs:
   type: page
   kind: navigation
   path: installation/_meta.ts
+- page_id: '2463465478'
+  type: page
+  kind: mdx
+  path: installation/backup-and-recovery.mdx
 - page_id: '954761289'
   type: page
   kind: mdx
