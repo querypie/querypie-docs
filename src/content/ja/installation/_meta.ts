@@ -7,5 +7,6 @@ export default {
   'container-environment-variables': 'コンテナ環境変数',
   'license-installation': 'ライセンスインストール',
   'server-configuration-requirements': 'サーバ構成要件',
+  'backup-and-recovery': 'バックアップとリカバリ',
   'querypie-acp-community-edition': 'QueryPie ACP Community Edition',
 };

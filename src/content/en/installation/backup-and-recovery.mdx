@@ -1,0 +1,200 @@
+---
+title: 'Backup and Recovery'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/2463465478'
+---
+
+# Backup and Recovery
+
+This document explains how to back up and recover the entire QueryPie ACP system to prepare for failures and data loss in the installation environment.
+
+### Overview
+
+QueryPie ACP has characteristics similar to those of a typical stateful web application.
+You can treat its backup and recovery process as equivalent to that of a typical web application.
+
+QueryPie ACP runs in containers and stores its primary state information in MySQL databases.
+To recover the system, you must therefore back up both the databases used by QueryPie and the configuration required to run the containers.
+
+Depending on your system settings and configuration, you may also need to back up and recover integrated external systems.
+In particular, if you use an external system such as HashiCorp Vault or AWS Secrets Manager for the Secret Store, you must be able to access the Secret Store after recovery.
+
+### Backup and Recovery Targets
+
+To prepare for a failure in the system running QueryPie ACP and perform recovery, back up the following targets.
+
+#### MySQL Databases for QueryPie ACP
+
+QueryPie ACP stores user accounts, assets such as target databases and servers, secrets for accessing those systems, access control policies, and access logs in MySQL databases.
+This data is divided into three logical databases with the following roles.
+
+* querypie
+    * Stores access control targets and policy information. This database is referred to as the QueryPie Meta DB. Most of the data required to operate ACP, including user accounts, target assets, secrets for accessing those systems, and access control policies, is stored in this database.
+* querypie_snapshot
+    * Temporarily stores records generated when users run SQL queries on target systems or perform activities after accessing those systems. The records remain while the connection session is active and are transferred to querypie_log when the session ends.
+* querypie_log
+    * Stores audit records, including records of users accessing assets such as databases and servers and records of user activities.
+
+To retain audit records, back up all three databases.
+If retaining audit records is not required and your goal is to quickly restore access control capabilities after a failure, you only need to back up the `querypie` database.
+You can use standard MySQL database backup and recovery tools to back up the databases.
+
+#### Information Required to Run Containers
+
+To restore QueryPie ACP containers successfully, back up the environment variables and mounted files used to run the containers.
+For details about the environment variables, see [Container Environment Variables](container-environment-variables).
+
+Retain the complete container configuration for the production environment, including the following information.
+
+* Database and Redis connection information
+* KEY_ENCRYPTION_KEY
+* TLS certificates and private keys
+* External system connection information
+* Certificates and configuration files mounted in the containers
+* QueryPie container image version
+
+In particular, retain the exact value of `KEY_ENCRYPTION_KEY` used at the time of backup.
+If this value is lost or restored with a different value, secrets encrypted in the database, such as connection passwords and SSH keys, cannot be used.
+
+Because environment variables and certificates may contain passwords and private keys, store them in an encrypted repository and restrict access to them.
+
+You can change AGENT_SECRET and REDIS_PASSWORD during the recovery process.
+
+If you use files such as a custom JDBC driver, TLS certificates, or DAC_SKIP_SQL_COMMAND_RULE_FILE (`skip_command_config.json`), back up and restore them as well.
+
+#### Information Stored in the Secret Store
+
+If you use an external Secret Store instead of the Secret Store built into QueryPie ACP, ensure that its data is not lost and remains accessible. When you configure secrets to be stored in HashiCorp Vault, Microsoft Active Directory, AWS Secrets Manager, or another system as described in [Integrating with Secret Store](../administrator-manual/general/system/integrations/integrating-with-secret-store), we recommend verifying in advance that the system will remain accessible, that its connection information is stored securely, and that it can be connected to after recovery.
+
+#### Infrastructure Configuration
+
+You must be able to back up and recover the infrastructure configuration used to run and operate ACP.
+The information that must be backed up and recovered depends on your infrastructure, such as whether ACP runs on a VM using Compose or in a Kubernetes environment.
+
+Back up the Application Load Balancer and Network Load Balancer configurations and the access control settings described in [System Architecture and Network Access Control](system-architecture-and-network-access-control).
+If you use TLS certificates, prepare a procedure for restoring them.
+
+#### Information That Does Not Need to Be Backed Up or Recovered
+
+The data stored in Redis, which provides caching to improve QueryPie ACP response times and supports smooth operation and temporary data sharing among multiple containers, does not need to be backed up or recovered.
+
+#### Summary of the Backup Scope
+
+To recover QueryPie ACP, back up both the databases and the container runtime configuration.
+The backup scope for each database is as follows.
+
+| Backup Target        | Backup Scope                     | Recovery Purpose                                                  |
+| -------------------- | -------------------------------- | ----------------------------------------------------------------- |
+| `querypie`           | Schema and data                  | Accounts, assets, secrets, access control policies, and settings  |
+| `querypie_log`       | Schema and data                  | Access logs, execution logs, and other audit records              |
+| `querypie_snapshot`  | Schema and DDL                   | Database structure for processing new sessions after recovery     |
+| Container runtime configuration | Complete configuration | Restarting the QueryPie service                                   |
+| `KEY_ENCRYPTION_KEY` | Original value                   | Decrypting encrypted secrets                                      |
+| External Secret Store | Backup according to your operational policy | Ensuring that the recovered QueryPie instance can access existing secrets |
+
+The data in `querypie_snapshot` is tied to active sessions.
+If the server process restarts or a container is replaced, existing sessions become invalid, and restoring this data does not restore those sessions.
+Therefore, back up only the schema and DDL; you do not need to back up table data.
+
+### Backup Procedure
+
+We recommend managing the QueryPie ACP databases and runtime configuration as a single backup set captured at the same point in time.
+
+1. Check the QueryPie container image version and the method used to run the containers in production.
+2. Identify the `querypie`, `querypie_snapshot`, and `querypie_log` databases used by QueryPie and the locations of the container environment variables, certificates, and mounted files.
+3. Check the backup status of the external Secret Store and infrastructure configuration.
+4. If possible, block new requests to QueryPie or stop the containers to establish a consistent backup point. If you cannot stop the service, use a consistent online backup provided by MySQL or a snapshot feature provided by a managed database service.
+5. Back up the `querypie`, `querypie_snapshot`, and `querypie_log` databases defined in the backup scope within the same backup operation or backup cycle.
+6. Back up the container environment variables, certificates, custom JDBC drivers, and other mounted files.
+7. Back up the external Secret Store and infrastructure configuration according to your organization's operational policies.
+8. Confirm that the backup completed and verify the integrity of the backup files.
+9. Record the backup time and QueryPie container image version, and store the backup files in a location separate from the production system.
+
+#### Backup Example Using mysqldump
+
+The following example backs up the three databases used by QueryPie ACP to a single SQL file.
+Replace the values in angle brackets with your actual MySQL connection information.
+```bash
+mysqldump \
+  --host="<MYSQL_HOST>" \
+  --port="<MYSQL_PORT>" \
+  --user="<MYSQL_USER>" \
+  --password \
+  --single-transaction \
+  --hex-blob \
+  --databases querypie querypie_snapshot querypie_log \
+  > "querypie-backup-$(date +%Y%m%d-%H%M%S).sql"
+```
+
+When you use the `--password` option, a password prompt appears after you run the command.
+Do not enter the password directly on the command line because it may be exposed in the shell history or process list.
+
+The `--single-transaction` option creates a consistent point-in-time backup of tables that support transactions.
+We recommend avoiding schema changes while the backup is running.
+
+The backup account must have the permissions required to read the three databases and dump their schemas.
+Check the command's exit status and the size of the generated file, and treat the SQL file as sensitive because it contains secrets and audit logs.
+
+### Recovery Procedure
+
+1. Prepare the same QueryPie container image version and runtime environment used at the time of backup.
+2. Prepare MySQL and Redis and configure the required network access. Do not restore the previous Redis data.
+3. Do not start the QueryPie containers until database recovery is complete.
+4. Restore the `querypie`, `querypie_snapshot`, and `querypie_log` databases from the same backup set.
+5. Restore the container environment variables, certificates, custom JDBC drivers, and other mounted files.
+6. Set `KEY_ENCRYPTION_KEY` to the exact value used at the time of backup.
+7. If you use an external Secret Store, verify that it can be accessed from the recovered environment.
+8. Restore the infrastructure configuration, including load balancers, firewalls, and access control settings.
+9. After confirming the database connection information and recovery status, start the QueryPie containers.
+10. Check the QueryPie startup status and application logs.
+
+If the server process restarts or a container is replaced, user sessions that existed before the failure are not restored.
+Users must sign in again and reconnect to the target systems.
+
+#### Recovery Example Using the mysql CLI
+
+The following example restores an SQL file created with the preceding `mysqldump` command to MySQL.
+Before starting the recovery, confirm that the QueryPie containers are stopped, and replace the values in angle brackets and the backup file name with values appropriate for your environment.
+```bash
+mysql \
+  --host="<MYSQL_HOST>" \
+  --port="<MYSQL_PORT>" \
+  --user="<MYSQL_USER>" \
+  --password \
+  < "querypie-backup-YYYYMMDD-HHMMSS.sql"
+```
+
+When you use the `--password` option, a password prompt appears after you run the command.
+Do not enter the password directly on the command line because it may be exposed in the shell history or process list.
+
+Because the backup file was created with the `--databases` option, it includes database selection information for `querypie`, `querypie_snapshot`, and `querypie_log`.
+The recovery account must have the permissions required to create the databases and schemas and restore the data.
+
+Check the command's exit status, and start the QueryPie containers only if there are no errors.
+If you restore an existing database, back up the current data first and verify the recovery procedure in a separate environment.
+
+### Post-Recovery Checks
+
+After recovery is complete, check the following items.
+
+* QueryPie containers start successfully
+* Administrators can sign in
+* Users and groups are displayed correctly
+* Target databases and servers are displayed correctly
+* Roles, permissions, and access control policies are displayed correctly
+* Target systems can be accessed using the stored connection information
+* Details of existing access logs, execution logs, and audit logs are available
+* New access and activity are recorded correctly in audit logs
+* External Secret Stores are accessible, if used
+* Load balancers and network access paths work correctly
+* Application logs contain no database connection or initialization errors
+
+### Precautions
+
+* Use an official backup tool provided by MySQL or the backup feature of a managed database service to back up the databases. Do not back up active MySQL data files by copying them as regular files.
+* Manage `querypie`, `querypie_snapshot`, and `querypie_log` as one backup set and restore them from the same set.
+* Use the same `KEY_ENCRYPTION_KEY` value that was in use at the time of backup. A different value prevents encrypted secrets from being decrypted correctly.
+* Do not start the QueryPie containers until database recovery is complete.
+* User sessions that were open before the failure are not restored.
+* Store backup files and configuration information in a location separate from the production system and restrict access to them.
+* A successful backup alone does not guarantee recoverability. We recommend regularly verifying the recovery procedure in a separate environment.
+* We recommend restoring the backup with the QueryPie version used at the time of backup and performing any upgrade as a separate procedure afterward.
