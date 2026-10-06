@@ -7,5 +7,6 @@ export default {
   'container-environment-variables': '컨테이너 환경변수',
   'license-installation': '라이선스 설치',
   'server-configuration-requirements': '서버구성 요구사항',
+  'backup-and-recovery': '백업과 복구',
   'querypie-acp-community-edition': 'QueryPie ACP Community Edition',
 };
