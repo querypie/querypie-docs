@@ -718,6 +718,20 @@ def test_compose_persists_manifest_directory_for_atomic_replace():
         assert manifest["sync_code"] == sync_code
 
 
+def test_compose_mounts_redirects_parent_directory_for_atomic_replace():
+    project_dir = Path(__file__).resolve().parents[1]
+    compose = yaml.safe_load((project_dir / "compose.yml").read_text())
+    volumes = compose["services"]["confluence-mdx"]["volumes"]
+
+    # A single-file bind mount cannot be replaced with os.replace() (EBUSY),
+    # so the redirects registry must be reachable through a directory mount.
+    assert "../src:/workdir/target" in volumes
+    assert not any(
+        volume.endswith(":/workdir/target/content-route-redirects.yaml")
+        for volume in volumes
+    )
+
+
 def test_conversion_failure_preserves_previous_output_and_manifest(tmp_path):
     var_dir = tmp_path / "var"
     output_dir = tmp_path / "output"

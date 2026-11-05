@@ -59,7 +59,10 @@ services:
       # while allowing atomic replacement of manifest files.
       - ./var/convert-manifests:/workdir/var/convert-manifests
       # Persist temporary content route redirects and their expiration metadata.
-      - ../src/content-route-redirects.yaml:/workdir/target/content-route-redirects.yaml
+      # Mount the parent directory (not the file) so that convert_all.py can
+      # atomically replace content-route-redirects.yaml via os.replace().
+      # A single-file bind mount fails with EBUSY on rename.
+      - ../src:/workdir/target
       # Mount output directories to host (matching symlink structure in target/)
       # target/ko -> ../../src/content/ko
       - ../src/content/ko:/workdir/target/ko

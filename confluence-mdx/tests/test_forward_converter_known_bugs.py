@@ -35,3 +35,34 @@ class TestTableCjkWidth:
         # '설명'(display=4) vs '조회만 가능'(display=11) → col_width=11 → 구분선 11자
         col2_sep_len = len(sep_parts[1])
         assert col2_sep_len == 11, f"expected 11 dashes, got {col2_sep_len}"
+
+
+class TestCalloutMacroParameters:
+    """Callout 매크로의 <ac:parameter>는 본문으로 변환되지 않아야 한다."""
+
+    def test_info_macro_parameters_are_not_emitted_as_body(self):
+        xhtml = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:parameter ac:name="containerLevel">panel_c1</ac:parameter>'
+            '<ac:rich-text-body><p>본문 내용입니다.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        result = _convert_xhtml(xhtml)
+        assert 'containerLevel' not in result
+        assert 'panel_c1' not in result
+        assert 'Unexpected NavigableString' not in result
+        assert '본문 내용입니다.' in result
+
+    def test_info_macro_breakout_parameters_are_not_emitted_as_body(self):
+        xhtml = (
+            '<ac:structured-macro ac:name="info" ac:schema-version="1">'
+            '<ac:parameter ac:name="breakoutMode">wide</ac:parameter>'
+            '<ac:parameter ac:name="breakoutWidth">760</ac:parameter>'
+            '<ac:rich-text-body><p>본문 내용입니다.</p></ac:rich-text-body>'
+            '</ac:structured-macro>'
+        )
+        result = _convert_xhtml(xhtml)
+        assert 'breakoutMode' not in result
+        assert 'breakoutWidth' not in result
+        assert 'Unexpected NavigableString' not in result
+        assert '본문 내용입니다.' in result
