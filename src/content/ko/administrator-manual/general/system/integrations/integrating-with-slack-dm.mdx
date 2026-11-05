@@ -16,10 +16,21 @@ Slack App을 QueryPie에 연동하고, QueryPie로부터 Direct Message 알림�
 10.2.5 또는 그 이하 버전의 Slack 연동 방법은 [10.1.0 버전 매뉴얼 문서](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)를 참고해주세요.
 </Callout>
 
-#### 구성 시 사전에 필요한 권한
+#### Slack DM 연동 전 확인해야 할 사항
+
+##### 권한 및 계정
 
 * Slack Workspace 관리자 권한 계정 (Slack Workspace에 App을 설치하기 위해 필요)
 * QueryPie Owner 및 Approval Admin 권한 계정
+
+##### 네트워크 요구사항
+
+QueryPie ACP server 에서 Slack으로 다음의 방화벽 허용을 사전에 설정해야합니다.
+
+* Protocol : TCP
+* Port : 443
+* 용도 : Slack API 및 Socket Mode WebSocket
+* 방향 : Outbound (Inbound 포트 오픈 불필요)
 
 ### Slack API 에서 DM App 생성 (via Manifest Files)
 

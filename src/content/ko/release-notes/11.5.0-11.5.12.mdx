@@ -1,9 +1,127 @@
 ---
-title: '11.5.0 ~ 11.5.8'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.8'
+title: '11.5.0 ~ 11.5.12'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.12'
 ---
 
-# 11.5.0 ~ 11.5.8
+# 11.5.0 ~ 11.5.12
+
+### QueryPie 11.5.12 Release
+
+2026년 11월 03일
+
+**Improvement**
+
+* [공통] Java 런타임 보안 취약점(CVE-2026-114820) 조치
+    * CVE-2026-114820
+        * Java 런타임 신뢰 저장소에 포함된 침해된 루트 인증기관(CA) 인증서로 인해, 해당 루트 CA를 신뢰 기반으로 사용하는 TLS 통신에서 인증서 검증의 신뢰가 무너질 수 있는 문제
+        * 조치: Corretto 17.0.21.0.11 이상으로 업그레이드 및 신뢰 저장소(cacerts)에서 해당 루트 CA 제거
+
+### <br/>QueryPie 11.5.11 Release
+
+2026년 11월 03일
+
+**Improvement**
+
+* [공통] Apache Tomcat 및 Java 런타임 보안 취약점 조치
+    * CVE-2026-101356
+        * HTTP/2 비동기 처리 시 요청·응답이 혼선될 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    * CVE-2026-101296
+        * JNDIRealm의 non-GSSAPI SASL 인증에서 잘못된 비밀번호가 허용될 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    * CVE-2026-93446
+        * TLS 1.3 연결이 간헐적으로 실패할 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    * CVE-2026-88041
+        * 이전 HTTP/2 요청의 trailer 정보가 다음 요청에 섞여 노출될 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    * CVE-2026-74049
+        * JSTL c:redirect 이후 페이지 처리가 중단되지 않고 계속 실행될 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    *  CVE-2026-74048
+        * FIPS 활성화 실패 시 non-FIPS 모드로 계속 동작할 수 있는 문제
+        * 조치: Tomcat Embed 10.1.61 이상으로 업그레이드
+    * CVE-2026-91403
+        * eMudhra 중간 CA 개인키 유출로 위조된 TLS 인증서 체인이 신뢰될 수 있는 문제
+        * 조치: Corretto 17.0.21.0.10 이상 업그레이드 및 Engine bundled JRE 조치
+
+### <br/>QueryPie 11.5.10 Release
+
+2026년 11월 03일
+
+**Improvement**
+
+* [공통] Multi Agent에서 신규 DB·SSH 연결 시 토큰 갱신 후 HTTP 쿠키가 동기화되지 않아 Agent가 로그아웃되던 문제 수정
+
+### <br/>QueryPie 11.5.9 Release
+
+2026년 11월 03일
+
+**New Feature**
+
+* [공통] Multi Agent에서 QueryPie 접속 상태를 진단하고 결과를 리포트로 저장할 수 있는 기능 추가
+* [공통] Multi Agent의 DB 연결 모드를 선택하고 공용 SOCKS 서버를 경유해 DAC 커넥션에 접속할 수 있도록 지원
+* [공통] Agentless 접속을 위한 SOCKS Proxy(9001)와 대용량 TCP Relay 지원
+* [공통] Cloud Provider Credential을 저장하기 전에 변경 내용으로 연결 테스트(Dry Run)를 수행할 수 있도록 지원
+* [공통] GCP Cloud Provider Default Tag에서 VPC Network Name 동적 치환 지원
+* [DAC] DynamoDB PartiQL 실행에 Scan Guard, Timeout, Pagination Guard 적용
+* [DAC] WHERE 절 없는 UPDATE·DELETE 차단(WHERE Guard)을 Proxy 경로와 추가 RDB 벤더로 확대
+* [DAC] External API v2 Agentless Proxy 응답에 대상 객체 식별 정보(objectType, objectUuid) 추가
+* [DAC] External API v3에 MongoDB SRV Lookup 후 Save API 추가
+* [DAC] ShardingSphere 접속 시 database 파라미터 필수 제한 해제
+* [DAC] 삭제된 Connection의 미사용 Proxy Port 자동 회수
+* [DAC] DAC Audit Role에서 전체 범위(ALL) 감사 로그 조회 지원
+* [SAC] External API v2로 서버 SSH Port 일괄 수정 지원
+* [SAC] Audit Role에서 Server Group 단위로 감사 범위를 지정할 수 있도록 지원
+* [KAC] External API v2로 Cluster Custom Tag 일괄 추가·수정 지원
+* [KAC] KAC Web Client 리소스 브라우저를 트리 구조로 개선하고 리소스별 컬럼 및 목록 내 Shell·Log 실행 지원
+
+**Improvement**
+
+* [공통] Owner가 아닌 관리자 계정에서 IdP(Identity Providers) 설정 조회·수정·동기화 시 invalid authorization 및 Page not found 오류가 발생하던 문제 수정
+* [공통] Audit Export에서 2,000건 이상 Workflow를 내보낼 때 cursor 길이 초과로 즉시 실패하던 문제 수정
+* [공통] 로그인 후 최초 페이지 진입 시 무한 로딩이 발생하던 문제 수정
+* [공통] SAC 기본 태그가 초기 동기화 시 덮어써지던 정책을 원복
+* [공통] 커넥션 선택 화면에 검색과 페이지 이동을 지원하는 Picker를 제공해 대량 커넥션 환경의 선택 UX 개선
+* [공통] Multi Agent 연결 안내에 실제 사용 중인 로컬 포트와 SOCKS·TCP 연결 모드를 표시하도록 개선
+* [공통] 관리자 롤 조회 권한만 가진 사용자가 관리자 권한을 설정할 수 있던 권한 상승 취약점 수정
+* [DAC] MySQL Ledger Policy에서 ALTER 구문이 SQL Request 결재 대상으로 잘못 처리되던 문제 추가 수정
+* [DAC] Oracle EDITIONABLE 트리거 실행 시 SQL이 분리되어 INVALID 트리거가 생성되던 문제 수정
+* [DAC] pgjdbc 42.7.7 이상에서 Agent 경유 PostgreSQL 연결이 유효하지 않다고 판단되던 문제 수정
+* [DAC] Proxy 연결 종료 시 DB Access History에 client/upstream 종료 사유를 구분해 기록하도록 개선
+* [DAC] SAP HANA DECIMAL 컬럼의 음수 scale 값이 잘못 표시되던 문제 수정
+* [DAC] DAC Audit Report의 연도가 실제와 다르게 표시되던 문제 수정
+* [DAC] MongoDB 신정책 Proxy 경로에서 Unmasking 예외가 반영되지 않던 문제 수정
+* [DAC] 커넥션과 권한이 많은 환경에서 쿼리 실행 시 권한 검사 지연과 API CPU 사용량이 증가하던 문제 개선
+* [DAC] DB Access Request의 부분 승인을 제거하고 최초 승인 범위로 최종 승인되도록 개선
+* [DAC] DB Access Request(Schema Level) Resubmit 후 바로 상신되지 않던 문제 수정
+* [DAC] DB Connection 생성 후 Connection 이름이 사라지던 문제 수정
+* [DAC] Cloud DB Connection의 사용자 지정 이름이 동기화 후에도 유지되도록 개선
+* [DAC] DB Connection·Access Control·DB Access Request 목록에 서버 페이지네이션과 서버 검색을 적용해 대량 커넥션 환경의 조회 성능 개선
+* [DAC] DB Connection 목록 테이블의 컬럼 정렬이 동작하지 않던 문제 수정
+* [DAC] Configuration에서 신규 Policy 변경 이력이 Activity Log에 남지 않던 문제 수정
+* [DAC] Alert Provider 선택자 조회 권한을 분리해 권한 오류가 발생하지 않도록 개선
+* [DAC] GCP Credential을 Vault로 전환한 뒤 저장 시 오류가 발생하던 문제 수정
+* [DAC] SQL Request에서 DB Connection 선택 시 오류가 발생하던 문제 수정
+* [DAC] SQL Request의 Connection 선택 항목에 Ledger 적용 여부를 표시하도록 개선
+* [DAC] Secret Store만 갱신할 때 Max Display·Export Rows가 -1로 저장되던 문제 수정
+* [DAC] Access Request Workflow 상세에서 삭제된 Privilege Type이 잘못 표시되던 문제 수정
+* [DAC] 대량 Redis 커맨드 실행과 Streaming RPC 토큰 갱신 안정성 개선
+* [DAC] Proxy Management 목록에 페이지네이션을 적용해 대규모 커넥션 환경에서도 표시되도록 개선
+* [SAC] 리버스 터널 환경에서 Windows/MSTSC로 RDP 접속이 실패하던 문제 수정
+* [SAC] SAC CloudProvider Sync API 호출 시 400 오류가 발생하던 문제 수정
+* [SAC] Scheduled Cross Account Role CloudProvider 수정 시 QPS-2082 오류가 발생하던 문제 수정
+* [SAC] AWS Cloud Provider 상세 화면에 DAC용 정책 목록이 노출되던 문제 수정
+* [SAC] 접속 계정 HOME 경로에 Script.sh 생성이 실패할 때 대체 방식으로 동작하도록 개선
+* [SAC] Command Audit에서 동일 시각 로그가 페이지 경계에 걸릴 때 조회가 실패하던 문제 수정
+* [SAC] AIO 이미지의 Windows Server Agent 설치 파일 권한을 644로 제한
+* [SAC] 리버스 터널 세션 상태를 1분 주기로 로그에 남기도록 개선
+* [SAC] Audit 화면 새로고침 시 변경된 감사 범위가 재조회되지 않던 문제 수정
+* [KAC] Access Entry가 없는 EKS 클러스터의 Dry Run이 실패하던 문제 수정
+* [KAC] GCP Cloud Provider Search Filter 동기화 시 진행률이 100%에 도달하지 않던 문제 수정
+* [KAC] 긴 kubectl exec 명령 실행 시 Request Audit 저장이 실패하던 문제 수정
+* [KAC] KAC Web Client 재진입 시 URL 상태가 동기화되지 않던 문제 수정
+* [KAC] KAC Web Client에서 하단 탭을 띄운 뒤 목록 페이지로 이동하면 목록이 사라지던 문제 수정<br/>
 
 ### QueryPie 11.5.8 Release
 
@@ -34,10 +152,10 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/1
 * [DAC] Excel Export 옵션에 잘못 표시되던 Not Implemented 안내 문구 제거
 * [DAC] External API에서 Ledger 미지원 DB에 Policy와 Rule이 등록되지 않도록 검증 강화
 * [DAC] MariaDB View의 GROUP_CONCAT LIMIT 구문 사용 시 발생하던 Data Masking 파싱 오류 수정
-* [DAC] MongoDB Aggregate의 중첩된 `$addFields` 표현식 처리 오류 수정
+* [DAC] MongoDB Aggregate의 중첩된 $addFields 표현식 처리 오류 수정
 * [DAC] MongoDB createUser와 updateUser 명령의 권한 검사가 Web과 Proxy에서 동일하게 적용되도록 개선
 * [DAC] MongoDB 신규 Collection Insert 시 Create 권한도 함께 검증하도록 개선
-* [DAC] MongoDB Aggregate의 `$out` 및 `$merge` 실행 시 데이터 변경에 필요한 권한을 검증하도록 개선
+* [DAC] MongoDB Aggregate의 $out 및 $merge 실행 시 데이터 변경에 필요한 권한을 검증하도록 개선
 * [DAC] MongoDB DB Policy Exception Request에서 쉼표가 포함된 컬럼 경로가 정상 처리되지 않던 문제 수정
 * [DAC] MySQL Ledger Policy 적용 시 ALTER 구문이 SQL Request 대상으로 잘못 처리되던 문제 수정
 * [DAC] MySQL 접속 실패 시 내부 파싱 오류 대신 Target DB의 실제 오류가 표시되도록 개선

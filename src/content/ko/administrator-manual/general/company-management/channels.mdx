@@ -132,6 +132,14 @@ Slack API &gt; Apps &gt; Create an App
 3. 위 화면에서 알림을 보낼 App Name 과 Slack Workspace 를 선택합니다.
 4. `Create App` 을 클릭합니다.
 
+<Callout type="info">
+**네트워크 (방화벽)설정 참고사항**
+* Slack API 방식: QueryPie -&gt; slack.com, TCP 443, outbound
+* Webhook 방식: QueryPie -&gt; hooks.slack.com, TCP 443, outbound
+* Inbound: 필요 없음
+* 상세: Slack DM 연동 문서의 네트워크 요구사항 참고
+</Callout>
+
 #### 2-1. Webhook 타입으로 연동하기
 
 <figure data-layout="center" data-align="center">
