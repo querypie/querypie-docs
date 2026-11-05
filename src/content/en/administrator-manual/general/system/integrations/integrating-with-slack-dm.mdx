@@ -16,10 +16,21 @@ This document applies to **version 10.2.6 or higher**.
 For Slack integration methods for version 10.2.5 or lower, please refer to the [10.1.0 version manual documentation](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations).
 </Callout>
 
-#### Required Permissions for Configuration
+#### Prerequisites for Slack DM Integration
+
+##### Permissions and Accounts
 
 * Slack Workspace administrator account (required to install App in Slack Workspace)
 * QueryPie Owner and Approval Admin account
+
+##### Network Requirements
+
+You must configure the following firewall allowances from the QueryPie ACP server to Slack in advance.
+
+* Protocol: TCP
+* Port: 443
+* Purpose: Slack API and Socket Mode WebSocket
+* Direction: Outbound (no inbound port opening required)
 
 ### Creating DM App in Slack API (via Manifest Files)
 

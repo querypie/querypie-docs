@@ -132,6 +132,14 @@ Slack API &gt; Apps &gt; Create an App
 3. Select the App Name and Slack Workspace to send notifications to in the above screen.
 4. Click `Create App`.
 
+<Callout type="info">
+**Network (Firewall) Configuration Notes**
+* Slack API method: QueryPie -&gt; slack.com, TCP 443, outbound
+* Webhook method: QueryPie -&gt; hooks.slack.com, TCP 443, outbound
+* Inbound: Not required
+* Details: See the network requirements in the Slack DM integration document
+</Callout>
+
 #### 2-1. Integrating with Webhook Type
 
 <figure data-layout="center" data-align="center">

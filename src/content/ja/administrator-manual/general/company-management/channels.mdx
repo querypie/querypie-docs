@@ -132,6 +132,14 @@ Slack API &gt; Apps &gt; Create an App
 3. 上画面で通知を送信するApp NameとSlack Workspaceを選択します。
 4. `Create App`をクリックします。
 
+<Callout type="info">
+**ネットワーク(ファイアウォール)設定の参考事項**
+* Slack API 方式: QueryPie -&gt; slack.com、TCP 443、outbound
+* Webhook 方式: QueryPie -&gt; hooks.slack.com、TCP 443、outbound
+* Inbound: 不要
+* 詳細: Slack DM 連携ドキュメントのネットワーク要件を参照
+</Callout>
+
 #### 2-1. Webhookタイプで連携
 
 <figure data-layout="center" data-align="center">

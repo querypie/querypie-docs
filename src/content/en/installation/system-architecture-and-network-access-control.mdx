@@ -3,6 +3,8 @@ title: 'System Architecture and Network Access Control'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/862093313'
 ---
 
+import { Callout } from 'nextra/components'
+
 # System Architecture and Network Access Control
 
 
@@ -21,6 +23,7 @@ It does not include web services with TLS certificates applied, multi-configurat
 Overview of QueryPie System Architecture
 </figcaption>
 </figure>
+
 
 Descriptions of each component are as follows.
 
@@ -78,6 +81,7 @@ QueryPie Server performs an intermediary role between users and Target Database.
 This is a system such as Linux Server or Windows Server that users want to access.
 QueryPie Server performs an intermediary role between users and Target Server System.
 
+
 ### Network Access Control Settings
 
 #### Network Access Types
@@ -93,6 +97,15 @@ Centered on the Linux VM where QueryPie is installed, network connections are di
 | ----------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- | ---------- | ---------------------------------------------------------------------------- |
 | Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | This is a website for downloading configuration files for product installation.                                            |
 | Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | This is a website for downloading Docker Images for product installation. In Docker terms, this is a Docker Registry. |
+
+<Callout type="info">
+**Network Notes for Slack Integration**
+* Slack API method: QueryPie -&gt; [slack.com](http://slack.com), TCP 443, outbound
+* Webhook method: QueryPie -&gt; [hooks.slack.com](http://hooks.slack.com), TCP 443, outbound
+* Inbound: Not required
+* Details: See the network requirements in the Slack DM integration document
+</Callout>
+
 
 #### Network Access for Product Use
 

@@ -3,6 +3,8 @@ title: 'システムアーキテクチャとネットワークアクセス制御
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/862093313'
 ---
 
+import { Callout } from 'nextra/components'
+
 # システムアーキテクチャとネットワークアクセス制御
 
 
@@ -21,6 +23,7 @@ TLS証明書を適用したウェブサービス、高可用性のための多�
 Overview of QueryPie System Architecture
 </figcaption>
 </figure>
+
 
 各コンポーネントに関する説明は以下のとおりです。
 
@@ -78,6 +81,7 @@ QueryPie Serverは利用者とTarget Database間の中継役割を実行しま�
 利用者がアクセスを希望するLinux Server、Windows Serverなどのシステムです。
 QueryPie Serverは利用者とTarget Server System間の中継役割を実行します。
 
+
 ### ネットワークアクセス制御設定
 
 #### ネットワークアクセスタイプ
@@ -93,6 +97,15 @@ QueryPieがインストールされたLinux VMを中心に、ネットワーク�
 | ----------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- | ---------- | ---------------------------------------------------------------------------- |
 | Outbound          | QueryPie Server | FQDN: `dl.querypie.com`<br/>IPv4 Address: <br/>`18.67.51.51`,<br/>`18.67.51.67`,<br/>`18.67.51.73`,<br/>`18.67.51.76` | TCP            | 443        | 製品インストールのための設定ファイルをダウンロードするwebsiteです。                                            |
 | Outbound          | QueryPie Server | FQDN: `harbor.querypie.io`<br/>IPv4 Address:<br/>`15.164.47.8`, `52.79.197.102`                                       | TCP            | 443        | 製品インストールのために、Docker Imageをダウンロードするwebsiteです。docker用語ではDocker Registryです。 |
+
+<Callout type="info">
+**Slack 連携のためのネットワーク参考事項**
+* Slack API 方式: QueryPie -&gt; [slack.com](http://slack.com)、TCP 443、outbound
+* Webhook 方式: QueryPie -&gt; [hooks.slack.com](http://hooks.slack.com)、TCP 443、outbound
+* Inbound: 不要
+* 詳細: Slack DM 連携ドキュメントのネットワーク要件を参照
+</Callout>
+
 
 #### 製品使用のためのネットワークアクセス
 
