@@ -813,6 +813,10 @@ class MultiLineParser:
         ]:
             for child in node.children:
                 self.convert_recursively(child)
+        elif node.name in ['ac:parameter']:
+            # <ac:parameter>는 매크로 메타데이터(containerLevel, breakoutMode 등)이므로
+            # 본문으로 변환하지 않는다. 매크로별로 필요한 파라미터는 각 변환기가 직접 읽는다.
+            logging.debug(f"Skip <ac:parameter ac:name={node.get('ac:name', '')!r}> from {ancestors(node)} in {ctx.INPUT_FILE_PATH}")
         elif node.name == 'table':
             native_markdown = TableToNativeMarkdown(node, collector=self.collector)
             if native_markdown.applicable:

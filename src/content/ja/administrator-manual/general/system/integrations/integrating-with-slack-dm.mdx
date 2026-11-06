@@ -16,10 +16,21 @@ Slack AppをQueryPieに連携し、QueryPieからDirect Message通知を受信�
 10.2.5またはそれ以下のバージョンのSlack連携方法は[10.1.0バージョンマニュアルドキュメント](https://docs.querypie.com/ko/querypie-manual/10.1.0/workflow-configurations)を参照してください。
 </Callout>
 
-#### 構成時事前に必要な権限
+#### Slack DM 連携前に確認すべき事項
+
+##### 権限およびアカウント
 
 * Slack Workspace管理者権限アカウント（Slack WorkspaceにAppをインストールするために必要）
 * QueryPie OwnerおよびApproval Admin権限アカウント
+
+##### ネットワーク要件
+
+QueryPie ACP server から Slack へ、次のファイアウォール許可を事前に設定する必要があります。
+
+* Protocol: TCP
+* Port: 443
+* 用途: Slack API および Socket Mode WebSocket
+* 方向: Outbound（Inbound ポートの開放は不要）
 
 ### Slack APIでDM App生成（via Manifest Files）
 

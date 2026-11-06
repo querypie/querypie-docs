@@ -1,9 +1,128 @@
 ---
-title: '11.6.0 ~ 11.6.6'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.6'
+title: '11.6.0 ~ 11.6.10'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1924891357/11.6.0+~+11.6.10'
 ---
 
-# 11.6.0 ~ 11.6.6
+# 11.6.0 ~ 11.6.10
+
+### QueryPie 11.6.10 Release
+
+November 03, 2026
+
+**Improvement**
+
+* [Common] Addressed Java runtime security vulnerability (CVE-2026-114820)
+    * CVE-2026-114820
+        * A compromised root CA certificate included in the Java runtime trust store could undermine certificate validation trust in TLS communications that rely on that root CA
+        * Action: Upgrade to Corretto 17.0.21.0.11 or later and remove the affected root CA from the trust store (cacerts)
+
+### <br/>QueryPie 11.6.9 Release
+
+October 29, 2026
+
+**Improvement**
+
+* [Common] Addressed Apache Tomcat and Java runtime security vulnerabilities
+    * CVE-2026-101356
+        * Requests and responses could be mixed up during HTTP/2 asynchronous processing
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    * CVE-2026-101296
+        * Incorrect passwords could be accepted in non-GSSAPI SASL authentication for JNDIRealm
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    * CVE-2026-93446
+        * TLS 1.3 connections could intermittently fail
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    * CVE-2026-88041
+        * Trailer information from a previous HTTP/2 request could leak into the next request
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    * CVE-2026-74049
+        * Page processing could continue after a JSTL c:redirect instead of stopping
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    *  CVE-2026-74048
+        * The system could keep running in non-FIPS mode when FIPS activation fails
+        * Action: Upgrade to Tomcat Embed 10.1.61 or later
+    * CVE-2026-91403
+        * Forged TLS certificate chains could be trusted due to the eMudhra intermediate CA private key leak
+        * Action: Upgrade to Corretto 17.0.21.0.10 or later and apply the Engine bundled JRE measures
+
+### <br/>QueryPie 11.6.8 Release
+
+October 27, 2026
+
+**Improvement**
+
+* [Common] Fixed an issue where the Agent logged out because HTTP cookies were not synchronized after token refresh when creating new DB or SSH connections in Multi Agent
+
+### <br/>QueryPie 11.6.7 Release
+
+October 23, 2026
+
+**New Feature**
+
+* [Common] Added the ability to diagnose QueryPie connection status in Multi Agent and save the results as a report
+* [Common] Added support for selecting the DB connection mode of Multi Agent and connecting to DAC connections through a shared SOCKS server
+* [Common] Added support for SOCKS Proxy (9001) and large-capacity TCP Relay for agentless connections
+* [Common] Added support for running a connection test (Dry Run) with the changed content before saving Cloud Provider Credentials
+* [Common] Added support for dynamic substitution of the VPC Network Name in GCP Cloud Provider Default Tags
+* [DAC] Applied Scan Guard, Timeout, and Pagination Guard to DynamoDB PartiQL execution
+* [DAC] Extended blocking of UPDATE and DELETE without a WHERE clause (WHERE Guard) to the Proxy path and additional RDB vendors
+* [DAC] Added target object identification information (objectType, objectUuid) to External API v2 Agentless Proxy responses
+* [DAC] Added a Save API after MongoDB SRV Lookup to External API v3
+* [DAC] Removed the requirement for the database parameter when connecting to ShardingSphere
+* [DAC] Automatically reclaim unused Proxy Ports of deleted Connections
+* [DAC] Added support for querying audit logs across the full scope (ALL) in DAC Audit Roles
+* [SAC] Added support for bulk updating server SSH Ports through External API v2
+* [SAC] Added support for specifying the audit scope by Server Group in Audit Roles
+* [KAC] Added support for bulk adding and updating Cluster Custom Tags through External API v2
+* [KAC] Improved the KAC Web Client resource browser with a tree structure and added per-resource columns plus Shell and Log execution within the list
+
+**Improvement**
+
+* [Common] Fixed an issue where exporting more than 2,000 Workflows from Audit Export failed immediately due to cursor length overflow
+* [Common] Fixed an issue where infinite loading occurred on the first page entry after login
+* [Common] Reverted the policy that overwrote SAC default tags during the initial synchronization
+* [Common] Improved the selection UX in large connection environments by providing a Picker with search and pagination on the connection selection screen
+* [Common] Improved the Multi Agent connection guide to display the actual local port in use and the SOCKS/TCP connection mode
+* [Common] Fixed a privilege escalation vulnerability where a user with only administrator role view permission could set administrator privileges
+* [DAC] Disabled the Custom JDBC Driver upload and usage feature by default to address a server-side code execution vulnerability
+* [DAC] Fixed an issue where executing an Oracle EDITIONABLE trigger split the SQL and created an INVALID trigger
+* [DAC] Fixed an issue where PostgreSQL connections through the Agent were considered invalid with pgjdbc 42.7.7 or later
+* [DAC] Improved DB Access History to record client and upstream termination reasons separately when a Proxy connection ends
+* [DAC] Fixed an issue where negative scale values of SAP HANA DECIMAL columns were displayed incorrectly
+* [DAC] Fixed an issue where the year in DAC Audit Reports was displayed incorrectly
+* [DAC] Fixed an issue where Unmasking exceptions were not applied on the new policy Proxy path for MongoDB
+* [DAC] Fixed an issue where sorting and pagination did not work in the Query Rules list
+* [DAC] Improved permission check latency and API CPU usage when executing queries in environments with many connections and permissions
+* [DAC] Improved DB Access Requests to be finally approved with the initial approval scope by removing partial approval
+* [DAC] Fixed an issue where DB Access Requests (Schema Level) were not submitted immediately after Resubmit
+* [DAC] Fixed an issue where the Connection name disappeared after creating a DB Connection
+* [DAC] Improved custom names of Cloud DB Connections to be preserved after synchronization
+* [DAC] Improved lookup performance in large connection environments by applying server-side pagination and server-side search to the DB Connection, Access Control, and DB Access Request lists
+* [DAC] Fixed an issue where column sorting did not work in the DB Connection list table
+* [DAC] Fixed an issue where new Policy change history was not recorded in Activity Log in Configuration
+* [DAC] Improved Alert Provider selector lookup permissions to be separated so that permission errors do not occur
+* [DAC] Fixed an issue where an error occurred when saving after converting GCP Credentials to Vault
+* [DAC] Fixed an issue where an error occurred when selecting a DB Connection in SQL Request
+* [DAC] Improved the Connection selection items in SQL Request to display whether Ledger is applied
+* [DAC] Fixed an issue where Max Display and Export Rows were saved as -1 when only the Secret Store was updated
+* [DAC] Fixed an issue where deleted Privilege Types were displayed incorrectly in Access Request Workflow details
+* [DAC] Improved the stability of bulk Redis command execution and Streaming RPC token refresh
+* [DAC] Improved the Proxy Management list to be displayed even in large connection environments by applying pagination
+* [SAC] Fixed an issue where RDP connections with Windows/MSTSC failed in reverse tunnel environments
+* [SAC] Fixed an issue where a 400 error occurred when calling the SAC CloudProvider Sync API
+* [SAC] Fixed an issue where a QPS-2082 error occurred when modifying a Scheduled Cross Account Role CloudProvider
+* [SAC] Fixed an issue where the DAC policy list was exposed on the AWS Cloud Provider detail screen
+* [SAC] Improved Script.sh creation to fall back to an alternative method when it fails in the connection account HOME path
+* [SAC] Fixed an issue where lookups failed when logs with the same timestamp fell on a page boundary in Command Audit
+* [SAC] Restricted the permissions of the Windows Server Agent installer in the AIO image to 644
+* [SAC] Improved reverse tunnel session status to be logged every minute
+* [SAC] Fixed an issue where the changed audit scope was not re-queried when refreshing the Audit screen
+* [KAC] Fixed an issue where Dry Run failed for EKS clusters without an Access Entry
+* [KAC] Fixed an issue where the progress did not reach 100% when synchronizing GCP Cloud Provider Search Filters
+* [KAC] Fixed an issue where saving Request Audit failed when executing long kubectl exec commands
+* [KAC] Fixed an issue where the URL state was not synchronized when re-entering the KAC Web Client
+* [KAC] Fixed an issue where the list disappeared when navigating to the list page after opening a bottom tab in the KAC Web Client
+
 
 ### QueryPie 11.6.6 Release
 
@@ -38,10 +157,10 @@ August 25, 2026
 * [DAC] Removed an incorrect Not Implemented message from Excel Export options
 * [DAC] Strengthened External API validation to prevent Policy and Rule registration for DBs that do not support Ledger
 * [DAC] Fixed Data Masking parsing errors when MariaDB Views use the GROUP_CONCAT LIMIT clause
-* [DAC] Fixed handling errors for nested `$addFields` expressions in MongoDB Aggregate
+* [DAC] Fixed handling errors for nested $addFields expressions in MongoDB Aggregate
 * [DAC] Improved permission checks for MongoDB createUser and updateUser commands to work consistently in Web and Proxy
 * [DAC] Improved MongoDB inserts into new Collections to also validate Create permission
-* [DAC] Improved MongoDB Aggregate `$out` and `$merge` operations to validate the permissions required to modify data
+* [DAC] Improved MongoDB Aggregate $out and $merge operations to validate the permissions required to modify data
 * [DAC] Fixed comma-containing column paths not being processed correctly in MongoDB DB Policy Exception Requests
 * [DAC] Fixed ALTER statements being incorrectly treated as SQL Requests when MySQL Ledger Policy is applied
 * [DAC] Improved MySQL connection failures to display the Target DB's actual error instead of an internal parsing error
