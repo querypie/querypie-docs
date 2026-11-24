@@ -3,6 +3,8 @@ title: 'Verifying Cloud Synchronization Settings with Dry Run Feature'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/712507393/Dry+Run'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Verifying Cloud Synchronization Settings with Dry Run Feature
 
 ### Overview
@@ -19,8 +21,76 @@ To prevent such problems in advance, users can change existing information and t
 <img src="/administrator-manual/databases/connection-management/cloud-providers/verifying-cloud-synchronization-settings-with-dry-run-feature/image-20241101-001430.png" alt="image-20241101-001430.png" width="760" />
 </figure>
 
-3. Check the "Dry Run" results displayed in the popup window, and if there are any problems, modify the entered content. If there are no problems, click the `Save Changes` button to save the changes. <br/>   <br/>
+3. Check the "Dry Run" results displayed in the popup window, and if there are any problems, modify the entered content. If there are no problems, click the `Save Changes` button to save the changes.
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/connection-management/cloud-providers/verifying-cloud-synchronization-settings-with-dry-run-feature/image-20241101-002631.png" alt="image-20241101-002631.png" width="524" />
   </figure>
+
+### Running Dry Run Before Saving When Credentials Have Changed
+
+Even before saving after changing credentials, you can run Dry Run with the changed values to preview authentication and synchronization targets.
+
+Previously, Dry Run ran based on the saved Cloud Provider information.
+Now it uses the credentials and Search Filter currently entered on the screen, so you can validate changes before saving.
+
+<Callout type="info">
+This feature is supported from **11.5.9 and 11.6.7**.
+</Callout>
+
+#### Dry Run Validation Scope
+
+Dry Run checks the following items.
+
+* Whether the cloud platform can be authenticated with the entered credentials
+* Whether resources matching the Search Filter conditions are retrieved
+* The list and count of resources to be synchronized
+
+Dry Run does not perform actual synchronization, so Cloud Providers, resources, and access control settings are not changed.
+
+#### Running Dry Run Before Saving
+
+1. Navigate to `Admin > Databases > Connection Management > Cloud Providers`.
+2. Click the target Cloud Provider to open its detail screen.
+3. Change the credential or Search Filter.
+4. Click the `Dry Run` button in the upper right corner.
+5. If you changed the credential method and one-time input is required, the `Insert more information to synchronize` popup appears.
+    * **Cloud Access Key** : Enter the AWS Access Key ID.
+    * **Cloud Secret Key** : Enter the AWS Secret Access Key.
+    * **Service Account JSON** : Enter the GCP Service Account JSON.
+    * **Client Secret ID** / **Client Secret Value** : Enter the Azure Client Secret information.
+6. Check the progress and logs in the `Dry Run` popup.
+
+<Callout type="important">
+If any item other than `Name` and `Cron Expression` is invalid, Dry Run does not run.
+Check the input error message first.
+The `Dry Run` button is disabled for deleted Cloud Providers.
+</Callout>
+
+#### When One-Time Credential Input Is Required
+
+Depending on the credential method, Dry Run may request the secret value again.
+
+* **One-time input required**: Methods that directly enter a secret value, such as `Access Key`, `Service Account`, and `Client Secret`. If the `Save Credential for Synchronization` option is off, the credential is not saved, so Dry Run asks for the secret value once more.
+* **One-time input not required**: Methods that use authentication information already configured outside QueryPie, such as `Cross Account Role`, `Instance Profile`, `Profile Credential`, `Workload Identity`, and `Vault (GCP)`. Dry Run runs without additional input.
+
+<Callout type="important">
+If you turn on the `Save Credential for Synchronization` option, the credential is saved, so you do not need to re-enter the secret value when running Dry Run.
+However, you must save with this option enabled; until then, one-time input is requested.
+</Callout>
+
+#### Saving and Synchronizing After Dry Run
+
+1. If the Dry Run result is normal, click the `Save Changes` button to save the credential and settings.
+2. Click the `Synchronize` button to run the actual synchronization.
+3. Check the synchronization result.
+
+<Callout type="important">
+If you click `Synchronize` without saving after changing credentials, the message `Save credential changes before synchronizing.` appears and synchronization does not run.
+Save the credential first, then synchronize.
+</Callout>
+
+<Callout type="info">
+The `Dry Run` button is not provided on the Cloud Provider creation screen.
+When creating, run Dry Run from the detail screen after saving.
+</Callout>
 

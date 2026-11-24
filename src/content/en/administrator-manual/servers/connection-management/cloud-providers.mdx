@@ -58,3 +58,67 @@ Administrator &gt; Servers &gt; Connection Management &gt; Cloud Providers
 <Callout type="important">
 Please note that when deleting a Cloud Provider, all resources synchronized through that cloud provider will be bulk deleted together.
 </Callout>
+
+
+### Running Dry Run Before Saving When Credentials Have Changed
+
+Even before saving after changing credentials, you can run Dry Run with the changed values to preview authentication and synchronization targets.
+
+Previously, Dry Run ran based on the saved Cloud Provider information.
+Now it uses the credentials and Search Filter currently entered on the screen, so you can validate changes before saving.
+
+<Callout type="info">
+This feature is supported from **11.5.9 and 11.6.7**.
+</Callout>
+
+#### Dry Run Validation Scope
+
+Dry Run checks the following items.
+
+* Whether the cloud platform can be authenticated with the entered credentials
+* Whether resources matching the Search Filter conditions are retrieved
+* The list and count of resources to be synchronized
+
+Dry Run does not perform actual synchronization, so Cloud Providers, server resources, and access control settings are not changed.
+
+#### Running Dry Run Before Saving
+
+1. Navigate to `Admin > Servers > Connection Management > Cloud Providers`.
+2. Click the target Cloud Provider to open its detail screen.
+3. Change the credential or Search Filter.
+4. Click the `Dry Run` button in the upper right corner.
+5. If the credential method requires one-time input, enter the secret value in the `Insert more information to dry run` popup.
+6. Check the progress and logs in the `Dry run` popup.
+
+<Callout type="important">
+All items except `Name` and the Cron Expression of `Replication Frequency` are subject to validation.
+Dry Run works the same way for AWS, GCP, and Azure.
+</Callout>
+
+#### When One-Time Credential Input Is Required
+
+Depending on the credential method, Dry Run may request the secret value again.
+
+* **One-time input required**: Methods that directly enter a secret value, such as `Access Key`, `Service Account`, and `Client Secret`. If the `Save Credential for Synchronization` option is off, the credential is not saved, so Dry Run asks for the secret value once more.
+* **One-time input not required**: Methods that use authentication information already configured outside QueryPie, such as `Cross Account Role`, `Instance Profile`, `Profile Credential`, and `Vault (GCP)`. Dry Run runs without additional input.
+
+<Callout type="important">
+If you turn on the `Save Credential for Synchronization` option, the credential is saved, so you do not need to re-enter the secret value when running Dry Run.
+However, you must save with this option enabled; until then, one-time input is requested.
+</Callout>
+
+#### Saving and Synchronizing After Dry Run
+
+1. If the Dry Run result is normal, click the `Save Changes` button to save the credential and settings.
+2. Click the `Synchronize` button to run the actual synchronization.
+3. Check the synchronization result.
+
+<Callout type="important">
+If you click `Synchronize` without saving after changing credentials, the message `Save credential changes before synchronizing.` appears and synchronization does not run.
+Save the credential first, then synchronize.
+</Callout>
+
+<Callout type="info">
+You can also use the `Dry Run` button on the Cloud Provider creation screen.
+On the creation screen, Dry Run runs immediately with the values entered before saving.
+</Callout>

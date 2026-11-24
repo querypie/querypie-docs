@@ -57,3 +57,58 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers
 <Callout type="important">
 Cloud Provider削除時、該当クラウドプロバイダーを通じて同期してきたすべてのリソースが一緒に一括削除されるため、この点にご注意ください。
 </Callout>
+
+### Credential を変更した場合、設定を保存する前に Dry Run を実行する
+
+Credential を変更した後、保存していない状態でも、変更内容で Dry Run を実行して認証と同期対象を事前に確認できます。
+
+従来の Dry Run は保存済みの Cloud Provider 情報を基準に実行されていました。
+現在は画面に入力された Credential と Search Filter をそのまま使用するため、保存前に変更内容を検証できます。
+
+<Callout type="info">
+本機能は **11.5.9、11.6.7** からサポートされます。
+</Callout>
+
+#### Dry Run の検証範囲
+
+Dry Run は次の項目を確認します。
+
+* 入力した Credential でクラウドプラットフォームの認証が可能か
+* Search Filter の条件に一致するクラスターリソースが照会されるか
+* 同期対象リソースの一覧と件数
+
+Dry Run は実際の同期を実行しないため、Cloud Provider、クラスターリソース、アクセス制御設定は変更されません。
+
+#### 保存前に Dry Run を実行する
+
+1. `Admin > Kubernetes > Connection Management > Cloud Providers` メニューに移動します。
+2. 対象の Cloud Provider をクリックして詳細画面に移動します。
+3. Credential または Search Filter を変更します。
+4. 右上の `Dry Run` ボタンをクリックします。
+5. `Dry Run` ポップアップで進行状況とログを確認します。
+
+<Callout type="important">
+画面のすべての必須項目が検証された後に Dry Run が実行されます。
+必須値が欠けている場合、Dry Run ポップアップは開かず入力エラーが表示されます。
+</Callout>
+
+#### Dry Run 後の保存と同期
+
+1. Dry Run の結果が正常であれば、`Save` ボタンをクリックして Credential と設定を保存します。
+2. `Synchronize` ボタンをクリックして実際の同期を実行します。
+3. 同期結果を確認します。
+
+<Callout type="important">
+Credential を変更した後、保存せずに `Synchronize` をクリックすると `Save credential changes before synchronizing.` の案内が表示され、同期は実行されません。
+先に Credential を保存してから同期します。
+</Callout>
+
+<Callout type="info">
+Credential を保存すると、画面の Credential フィールドはサーバーに保存された値で再び同期されます。
+保存後はマスキングされた値が表示されるため、追加の変更が必要な場合は値を再入力します。
+</Callout>
+
+<Callout type="info">
+Cloud Provider の作成画面でも `Dry Run` ボタンを使用できます。
+作成画面では、保存前に 入力した値でそのまま Dry Run を実行します。
+</Callout>
