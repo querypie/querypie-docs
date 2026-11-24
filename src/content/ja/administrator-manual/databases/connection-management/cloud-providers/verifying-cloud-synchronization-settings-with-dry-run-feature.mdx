@@ -3,6 +3,8 @@ title: 'Dry Run機能でクラウド同期設定確認'
 confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/712507393/Dry+Run'
 ---
 
+import { Callout } from 'nextra/components'
+
 # Dry Run機能でクラウド同期設定確認
 
 ### Overview
@@ -19,8 +21,76 @@ confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/712507393/Dr
 <img src="/administrator-manual/databases/connection-management/cloud-providers/verifying-cloud-synchronization-settings-with-dry-run-feature/image-20241101-001430.png" alt="image-20241101-001430.png" width="760" />
 </figure>
 
-3. ポップアップ窓に出力される「Dry Run」結果を確認し、もし問題があれば入力した内容を修正します。問題がなければ`Save Changes`ボタンを押して変更事項を保存します。 <br/>   <br/>
+3. ポップアップ窓に出力される「Dry Run」結果を確認し、もし問題があれば入力した内容を修正します。問題がなければ`Save Changes`ボタンを押して変更事項を保存します。
   <figure data-layout="center" data-align="center">
   <img src="/administrator-manual/databases/connection-management/cloud-providers/verifying-cloud-synchronization-settings-with-dry-run-feature/image-20241101-002631.png" alt="image-20241101-002631.png" width="524" />
   </figure>
+
+### Credential を変更した場合、設定を保存する前に Dry Run を実行する
+
+Credential を変更した後、保存していない状態でも、変更内容で Dry Run を実行して認証と同期対象を事前に確認できます。
+
+従来の Dry Run は保存済みの Cloud Provider 情報を基準に実行されていました。
+現在は画面に入力された Credential と Search Filter をそのまま使用するため、保存前に変更内容を検証できます。
+
+<Callout type="info">
+本機能は **11.5.9、11.6.7** からサポートされます。
+</Callout>
+
+#### Dry Run の検証範囲
+
+Dry Run は次の項目を確認します。
+
+* 入力した Credential でクラウドプラットフォームの認証が可能か
+* Search Filter の条件に一致するリソースが照会されるか
+* 同期対象リソースの一覧と件数
+
+Dry Run は実際の同期を実行しないため、Cloud Provider、リソース、アクセス制御設定は変更されません。
+
+#### 保存前に Dry Run を実行する
+
+1. `Admin > Databases > Connection Management > Cloud Providers` メニューに移動します。
+2. 対象の Cloud Provider をクリックして詳細画面に移動します。
+3. Credential または Search Filter を変更します。
+4. 右上の `Dry Run` ボタンをクリックします。
+5. Credential 方式を変更し、ワンタイム入力が必要な場合は `Insert more information to synchronize` ポップアップが表示されます。
+    * **Cloud Access Key** : AWS Access Key ID を入力します。
+    * **Cloud Secret Key** : AWS Secret Access Key を入力します。
+    * **Service Account JSON** : GCP Service Account JSON を入力します。
+    * **Client Secret ID** / **Client Secret Value** : Azure Client Secret 情報を入力します。
+6. `Dry Run` ポップアップで進行状況とログを確認します。
+
+<Callout type="important">
+`Name`、`Cron Expression` を除く項目が有効でない場合、Dry Run は実行されません。
+入力エラーメッセージを先に確認します。
+削除された Cloud Provider では `Dry Run` ボタンが無効になります。
+</Callout>
+
+#### ワンタイム Credential 入力が必要な場合
+
+Credential 方式によっては、Dry Run 実行時に Secret 値を追加で要求する場合があります。
+
+* **ワンタイム入力が必要** : `Access Key`、`Service Account`、`Client Secret` のように Secret 値を直接入力する方式です。`Save Credential for Synchronization` オプションがオフの場合、Credential は保存されないため、Dry Run 実行時にもう一度 Secret 値の入力を求められます。
+* **ワンタイム入力が不要** : `Cross Account Role`、`Instance Profile`、`Profile Credential`、`Workload Identity`、`Vault (GCP)` のように QueryPie 外部ですでに構成された認証情報を使用する方式です。追加入力なしで Dry Run が実行されます。
+
+<Callout type="important">
+`Save Credential for Synchronization` オプションをオンにすると Credential が保存されるため、Dry Run 実行時に Secret 値を再入力する必要はありません。
+ただし、このオプションをオンにした状態で保存する必要があり、保存するまではワンタイム入力が要求されます。
+</Callout>
+
+#### Dry Run 後の保存と同期
+
+1. Dry Run の結果が正常であれば、`Save Changes` ボタンをクリックして Credential と設定を保存します。
+2. `Synchronize` ボタンをクリックして実際の同期を実行します。
+3. 同期結果を確認します。
+
+<Callout type="important">
+Credential を変更した後、保存せずに `Synchronize` をクリックすると `Save credential changes before synchronizing.` の案内が表示され、同期は実行されません。
+先に Credential を保存してから同期します。
+</Callout>
+
+<Callout type="info">
+Cloud Provider の作成画面には `Dry Run` ボタンが提供されません。
+作成時は保存後に詳細画面で Dry Run を実行します。
+</Callout>
 

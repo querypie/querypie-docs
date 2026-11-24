@@ -1,20 +1,52 @@
 ---
-title: '11.5.0 ~ 11.5.12'
-confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.12'
+title: '11.5.0 ~ 11.5.13'
+confluenceUrl: 'https://querypie.atlassian.net/wiki/spaces/QM/pages/1751810049/11.5.0+~+11.5.13'
 ---
 
-# 11.5.0 ~ 11.5.12
+# 11.5.0 ~ 11.5.13
 
-### QueryPie 11.5.12 Release
+### QueryPie 11.5.13 Release
+
+November 20, 2026
+
+**Improvement**
+
+* [Common] Addressed NGINX security vulnerabilities
+    * Updated NGINX to Alpine nginx 1.28.3-r8 to resolve the following vulnerabilities. (Includes Alpine security patch backports)
+    * CVE-2026-15176: A buffer overflow could occur when alias and rewrite are used together
+    * CVE-2026-93479: A buffer overflow could occur during script evaluation
+    * CVE-2026-95101: A request body could be injected while processing HTTP/3 request bodies
+    * CVE-2026-97205: A use-after-free could occur while processing files
+    * CVE-2026-97629: A session could be forged through TLS session tickets
+    * CVE-2026-113425: A use-after-free could occur in the mail proxy module
+    * CVE-2026-118899: An infinite loop could occur while processing TLS 1.3 client request bodies
+    * CVE-2026-120967: SNI bypass was possible when validating stream client certificates
+    * CVE-2026-121810: A use-after-free could occur while processing HTTP/3
+    * CVE-2026-123007: Memory corruption could occur while processing HTTP/2 flow control
+    * CVE-2026-123633: A use-after-free could occur while processing HTTP/2
+    * CVE-2026-123634: A use-after-free could occur while processing resolver responses
+    * CVE-2026-123640: Insufficient validation in the stream ssl_preread module could cause unexpected behavior
+    * CVE-2026-125283: A buffer overflow could occur when alias and try_files are used together
+* [Common] Addressed Java runtime security vulnerabilities
+    * Updated the Java runtime to Corretto 17.0.21.1.2 / Temurin 21.0.13.1+2 to resolve the following vulnerabilities.
+    * CVE-2026-114938: A heap-based buffer overflow in the Java compiler could allow remote code execution when processing untrusted data
+    * CVE-2026-114939: Insufficient access control in the Java runtime could allow an unauthenticated attacker to create, delete, or modify critical data without authorization, or access it
+    * CVE-2026-114940: Insufficient access control in TLS handling in the Java runtime could allow unauthorized access to or modification of critical data in TLS communications
+    * CVE-2026-114941: Resource exhaustion in the Java compiler could cause denial of service and unauthorized modification or reading of some data (Temurin 21 only)
+    * CVE-2026-114942: Resource exhaustion in Java libraries could cause denial of service and unauthorized modification or reading of some data
+    * CVE-2026-114943: Resource exhaustion in the Java runtime could cause denial of service and unauthorized modification or reading of some data
+    * CVE-2026-114944: Insufficient access control in the Java runtime could allow unauthorized creation, deletion, or modification of critical data
+    * CVE-2026-114945: Insufficient access control in the Java runtime could allow unauthorized modification of some data
+    * CVE-2026-114946: Insufficient access control in the Java runtime could allow unauthorized modification or reading of some data
+
+### <br/>QueryPie 11.5.12 Release
 
 November 03, 2026
 
 **Improvement**
 
 * [Common] Addressed Java runtime security vulnerability (CVE-2026-114820)
-    * CVE-2026-114820
-        * A compromised root CA certificate included in the Java runtime trust store could undermine certificate validation trust in TLS communications that rely on that root CA
-        * Action: Upgrade to Corretto 17.0.21.0.11 or later and remove the affected root CA from the trust store (cacerts)
+    * CVE-2026-114820: A compromised root CA certificate included in the Java runtime trust store could undermine certificate validation trust in TLS communications that rely on that root CA
 
 ### <br/>QueryPie 11.5.11 Release
 
@@ -23,27 +55,13 @@ November 03, 2026
 **Improvement**
 
 * [Common] Addressed Apache Tomcat and Java runtime security vulnerabilities
-    * CVE-2026-101356
-        * Requests and responses could be mixed up during HTTP/2 asynchronous processing
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    * CVE-2026-101296
-        * Incorrect passwords could be accepted in non-GSSAPI SASL authentication for JNDIRealm
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    * CVE-2026-93446
-        * TLS 1.3 connections could intermittently fail
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    * CVE-2026-88041
-        * Trailer information from a previous HTTP/2 request could leak into the next request
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    * CVE-2026-74049
-        * Page processing could continue after a JSTL c:redirect instead of stopping
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    *  CVE-2026-74048
-        * The system could keep running in non-FIPS mode when FIPS activation fails
-        * Action: Upgrade to Tomcat Embed 10.1.61 or later
-    * CVE-2026-91403
-        * Forged TLS certificate chains could be trusted due to the eMudhra intermediate CA private key leak
-        * Action: Upgrade to Corretto 17.0.21.0.10 or later and apply the Engine bundled JRE measures
+    * CVE-2026-101356: Requests and responses could be mixed up during HTTP/2 asynchronous processing
+    * CVE-2026-101296: Incorrect passwords could be accepted in non-GSSAPI SASL authentication for JNDIRealm
+    * CVE-2026-93446: TLS 1.3 connections could intermittently fail
+    * CVE-2026-88041: Trailer information from a previous HTTP/2 request could leak into the next request
+    * CVE-2026-74049: Page processing could continue after a JSTL c:redirect instead of stopping
+    * CVE-2026-74048: The system could keep running in non-FIPS mode when FIPS activation fails
+    * CVE-2026-91403: Forged TLS certificate chains could be trusted due to the eMudhra intermediate CA private key leak
 
 ### <br/>QueryPie 11.5.10 Release
 

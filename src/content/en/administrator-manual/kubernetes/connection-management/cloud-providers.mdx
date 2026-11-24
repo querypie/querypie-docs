@@ -57,3 +57,58 @@ Administrator &gt; Kubernetes &gt; Connection Management &gt; Cloud Providers
 <Callout type="important">
 Please note that when deleting a Cloud Provider, all resources synchronized through that cloud provider will be bulk deleted together.
 </Callout>
+
+### Running Dry Run Before Saving When Credentials Have Changed
+
+Even before saving after changing credentials, you can run Dry Run with the changed values to preview authentication and synchronization targets.
+
+Previously, Dry Run ran based on the saved Cloud Provider information.
+Now it uses the credentials and Search Filter currently entered on the screen, so you can validate changes before saving.
+
+<Callout type="info">
+This feature is supported from **11.5.9 and 11.6.7**.
+</Callout>
+
+#### Dry Run Validation Scope
+
+Dry Run checks the following items.
+
+* Whether the cloud platform can be authenticated with the entered credentials
+* Whether cluster resources matching the Search Filter conditions are retrieved
+* The list and count of resources to be synchronized
+
+Dry Run does not perform actual synchronization, so Cloud Providers, cluster resources, and access control settings are not changed.
+
+#### Running Dry Run Before Saving
+
+1. Navigate to `Admin > Kubernetes > Connection Management > Cloud Providers`.
+2. Click the target Cloud Provider to open its detail screen.
+3. Change the credential or Search Filter.
+4. Click the `Dry Run` button in the upper right corner.
+5. Check the progress and logs in the `Dry Run` popup.
+
+<Callout type="important">
+Dry Run runs after all required items on the screen are validated.
+If a required value is missing, the Dry Run popup does not open and an input error is displayed.
+</Callout>
+
+#### Saving and Synchronizing After Dry Run
+
+1. If the Dry Run result is normal, click the `Save` button to save the credential and settings.
+2. Click the `Synchronize` button to run the actual synchronization.
+3. Check the synchronization result.
+
+<Callout type="important">
+If you click `Synchronize` without saving after changing credentials, the message `Save credential changes before synchronizing.` appears and synchronization does not run.
+Save the credential first, then synchronize.
+</Callout>
+
+<Callout type="info">
+When you save the credential, the credential fields on the screen are synchronized again with the values stored on the server.
+After saving, masked values are displayed, so re-enter the values if further changes are needed.
+</Callout>
+
+<Callout type="info">
+You can also use the `Dry Run` button on the Cloud Provider creation screen.
+On the creation screen, Dry Run runs immediately with the values entered before saving.
+</Callout>
